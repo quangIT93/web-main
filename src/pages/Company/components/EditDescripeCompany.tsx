@@ -19,6 +19,7 @@ interface IEditDescripeCompany {
   setDataCompany: any;
   dataCompany: any;
   is_profile: boolean;
+  setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
@@ -28,7 +29,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { dataCompany, setDataCompany, is_profile } = props;
+  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges } = props;
   // const [language, setLanguageState] = React.useState<any>();
 
   // const getlanguageApi = async () => {
@@ -53,6 +54,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { value } = e.target;
+    setUnsavedChanges(true);
     setDataCompany((preValue: any) => ({
       ...preValue,
       description: value,
@@ -82,26 +84,26 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           onChange={handleEditCompanyDes}
           sx={{ width: '100%', marginTop: '8px', fontSize: '14px' }}
           placeholder={language?.company_page?.place_des}
-        //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
-            {dataCompany?.description.length === 0 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Thông tin thêm không được bỏ trống'
-                  : 'Additional information cannot be empty'}
-              </span>
-            ) : dataCompany?.description.length > 1000 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Thông tin thêm không được vượt quá 1000 ký tự'
-                  : 'Additional information cannot exceed 1000 characters'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${dataCompany?.description.length}/1000`}</span>
-          </div>
+          {dataCompany?.description.length === 0 ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Thông tin thêm không được bỏ trống'
+                : 'Additional information cannot be empty'}
+            </span>
+          ) : dataCompany?.description.length > 1000 ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Thông tin thêm không được vượt quá 1000 ký tự'
+                : 'Additional information cannot exceed 1000 characters'}
+            </span>
+          ) : (
+            <></>
+          )}
+          <span className="number-text">{`${dataCompany?.description.length}/1000`}</span>
+        </div>
       </div>
     </div>
   );

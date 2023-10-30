@@ -314,7 +314,7 @@ const NewJobs: React.FC = () => {
       // }
     }, 2500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux, profileV3]);
+  }, [languageRedux]);
 
   const handleClickHelpSearch = () => { };
 

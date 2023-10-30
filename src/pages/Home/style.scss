@@ -15,22 +15,22 @@
 }
 
 .home__main {
-  padding: 0 0px;
+  // padding: 0 0px;
   margin: 0 auto;
   transition: all l;
-  margin-bottom: 36px;
+  // margin-bottom: 36px;
   max-width: 1280px;
 
-  @media screen and (min-width:1025px) and (max-width: 1280px) {
-    padding-inline: 24px;
-    // padding-inline: 10px;
-  }
+  // @media screen and (min-width:1025px) and (max-width: 1280px) {
+  //   padding-inline: 24px;
+  //   // padding-inline: 10px;
+  // }
 
-  @media screen and (max-width: 1220px) {
-    padding-inline: 24px;
-  }
+  // @media screen and (max-width: 1220px) {
+  //   padding-inline: 24px;
+  // }
 
-  @media screen and (max-width: 1200px) {
-    padding-inline: 24px;
-  }
+  // @media screen and (max-width: 1200px) {
+  //   padding-inline: 24px;
+  // }
 }

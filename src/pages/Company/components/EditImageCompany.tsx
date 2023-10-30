@@ -13,9 +13,10 @@ interface IEditImageCompany {
   dataCompany: any;
   setDataCompany: any;
   is_profile: boolean;
+  setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
-  const { dataCompany, setDataCompany, is_profile } = props;
+  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -39,20 +40,20 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
   };
 
   useEffect(() => {
-    setSelectedImages(dataCompany.images)
-    //have to set array of existed iamge ids . 
-    // Because when adding new images, 
+    setSelectedImages(dataCompany.images);
+    //have to set array of existed iamge ids .
+    // Because when adding new images,
     // the images array of dataCompany have only file image to upload server
     // it doesn't have containing existing images.
-    setExistedIamgeId(dataCompany.images.map((image: any) => image.id))
-  }, [])
+    setExistedIamgeId(dataCompany.images.map((image: any) => image.id));
+  }, []);
   // console.log(dataCompany);
 
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const files = event.target.files;
-
+    setUnsavedChanges(true);
     // setImage(event.target.files && event.target.files[0]);
 
     const imagesUpload: any = Array.from(
@@ -75,7 +76,6 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
     // console.log('imagesToCheck', imagesToCheck);
 
     // console.log(dataCompany.images);
-
 
     if (imagesToCheck.length > 0) {
       const validateImagesReply = validatePostImages(imagesToCheck);
@@ -111,7 +111,6 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
               ...preValue,
               images: compressedImages,
             }));
-
           }
         } catch (error) {
           console.log(error);
@@ -209,7 +208,6 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
           ...preValue,
           images: newFileSelected,
         }));
-
       }
 
       const newImages: string[] = [];
@@ -247,8 +245,8 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
   });
 
   const handleDeleteImage = async (index: number, deleteId: any) => {
-    console.log("index", index);
-    console.log("deleteId", deleteId);
+    console.log('index', index);
+    console.log('deleteId', deleteId);
 
     setSelectedImages((prevImages) => {
       const updatedImages = [...prevImages];
@@ -289,13 +287,12 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       // for (const pair of formDataImages.entries()) {
       //   console.log(`${pair[0]}, ${pair[1]}`);
       // }
-      const resultImages = await apiCompany.updateCampanyImages(dataCompany.id, formDataImages);
+      const resultImages = await apiCompany.updateCampanyImages(
+        dataCompany.id,
+        formDataImages,
+      );
     }
   };
-
-  console.log('dataCompany', dataCompany);
-
-
 
   return (
     <div
@@ -359,7 +356,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
                     display:
                       (selectedImages.length === 0 &&
                         selectedFiles.length === 0) ||
-                        isDragActive
+                      isDragActive
                         ? 'flex'
                         : 'none',
                   }}

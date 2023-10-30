@@ -31,13 +31,13 @@ const CustomOption = ({
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     const valueRender = data.find((item: any) => item.id === value);
 
-    // console.log('valueRender Loai cong viec', valueRender);
     // console.log('valueRender Loai cong viec value', value);
     setValueRender(valueRender);
 
     setValue(value);
     setCookie('userTypejobFiltered', JSON.stringify(valueRender), 365);
   };
+
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -47,7 +47,7 @@ const CustomOption = ({
       style={{ width: '100%' }}
       name="radiogroup"
       onChange={onChange}
-      value={jobType ? jobType : 5}
+      value={jobType ? jobType : undefined}
       // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
@@ -144,12 +144,20 @@ const FilterTypeJob: React.FC<TypeJob> = ({
       <div className="filter-input_icon">
         <PaperFilterIcon width={20} height={20} />
       </div>
+
       <Select
+        getPopupContainer={(triggerNode) => triggerNode.parentElement}
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
         value={
-          reset ? language?.all : valueRender ? valueRender.name : undefined
+          reset
+            ? languageRedux === 1
+              ? 'Loại công việc'
+              : 'Job type'
+            : valueRender
+            ? valueRender.name
+            : undefined
         }
         className="inputTypeSalary input-filter_nav"
         size="large"
@@ -157,6 +165,18 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="5" label="">
+          <div
+            style={{
+              padding: '10px 0',
+              textAlign: 'center',
+              borderBottom: '1px solid #ccc',
+              marginBottom: '12px',
+              fontWeight: '600',
+              fontSize: '16px',
+            }}
+          >
+            {languageRedux === 1 ? 'Loại hình công việc' : 'Job type'}
+          </div>
           <CustomOption
             jobType={TYPE_JOB}
             data={data}

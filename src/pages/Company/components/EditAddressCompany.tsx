@@ -21,6 +21,7 @@ interface IEditPostAddress {
   setDataCompany: any;
   dataCompany: any;
   is_profile: boolean;
+  setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
@@ -30,7 +31,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { setDataCompany, dataCompany, is_profile } = props;
+  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges } = props;
 
   // const [dataProvinces, setDataProvinces] = useState<any>(null);
   const [dataDistricts, setDataDistrict] = useState<any>(null);
@@ -199,6 +200,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   }, [selectedDistrict, languageRedux]);
 
   const handleProvinceChange = (event: any, value: any) => {
+    setUnsavedChanges(true);
     setSelectedDistrict(null);
     setSelectedWard(null);
     setSelectedProvince(value);
@@ -207,17 +209,19 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   };
 
   const handleDistrictChange = (event: any, value: any) => {
+    setUnsavedChanges(true);
     setSelectedDistrict(value);
     setSelectedWard(null);
   };
 
   const handleChangeWardId = (event: any, value: any) => {
+    setUnsavedChanges(true);
     setSelectedWard(value);
 
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyLocation: {
-        id: value ? value.id : ""
+        id: value ? value.id : '',
       },
     }));
   };
@@ -401,8 +405,8 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             ) : (
               <></>
             )}
-            <span className="number-text">{`${dataCompany ? dataCompany?.address?.length : '0'
-              }/255`}
+            <span className="number-text">
+              {`${dataCompany ? dataCompany?.address?.length : '0'}/255`}
             </span>
           </div>
         </div>

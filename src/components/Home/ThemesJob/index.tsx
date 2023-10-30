@@ -119,37 +119,37 @@ const ThemesJob: React.FC = () => {
     ? searchParams.get(`theme-id`)
     : listTheme?.data[0]?.id;
 
-  const handleChange = async (
-    event: React.ChangeEvent<unknown>,
-    value: number,
-  ) => {
-    setPage(value);
-    setOpenBackdrop(!openBackdrop);
-    // const test = [1, 2]
-    // const p = createSearchParams({ page: `${test}`})
-    // navigate(`/?${p}`);
-    // console.log(searchParams.get(`page`))
-    const themeId = searchParams.get(`theme-id`)
-      ? searchParams.get(`theme-id`)
-      : listTheme?.data[0].id;
+  // const handleChange = async (
+  //   event: React.ChangeEvent<unknown>,
+  //   value: number,
+  // ) => {
+  //   setPage(value);
+  //   setOpenBackdrop(!openBackdrop);
+  //   // const test = [1, 2]
+  //   // const p = createSearchParams({ page: `${test}`})
+  //   // navigate(`/?${p}`);
+  //   // console.log(searchParams.get(`page`))
+  //   const themeId = searchParams.get(`theme-id`)
+  //     ? searchParams.get(`theme-id`)
+  //     : listTheme?.data[0].id;
 
-    const threshold = post.data.posts[post.data.posts.length - 1].id;
-    const result = await postApi.getPostByThemeId(
-      Number(themeId),
-      9,
-      threshold,
-      languageRedux === 1 ? 'vi' : 'en',
-    );
+  //   const threshold = post.data.posts[post.data.posts.length - 1].id;
+  //   const result = await postApi.getPostByThemeId(
+  //     Number(themeId),
+  //     9,
+  //     threshold,
+  //     languageRedux === 1 ? 'vi' : 'en',
+  //   );
 
-    if (result) {
-      if (result.data.posts.length === 0) {
-        setEndData(result.data.posts.length);
-      }
-      setPostThemeMore(result);
+  //   if (result) {
+  //     if (result.data.posts.length === 0) {
+  //       setEndData(result.data.posts.length);
+  //     }
+  //     setPostThemeMore(result);
 
-      setOpenBackdrop(false);
-    }
-  };
+  //     setOpenBackdrop(false);
+  //   }
+  // };
 
   // handle click post details
   // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -165,15 +165,15 @@ const ThemesJob: React.FC = () => {
   const getPostByThemeId = async () => {
     try {
       let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
-      setLoadingCarousel(true)
+      setLoadingCarousel(true);
       const result = await themeApi.getThemesEnable(
         languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
-        setLoadingCarousel(false)
+        setLoadingCarousel(false);
         setListThem(result);
-        setLoadingThemeList(true)
+        setLoadingThemeList(true);
         const list = await postApi?.getPostByThemeId(
           storedSettings?.placeId
             ? storedSettings?.placeId
@@ -185,7 +185,7 @@ const ThemesJob: React.FC = () => {
         if (list) {
           setPostByTheme(list);
           setAutomatic(true);
-          setLoadingThemeList(false)
+          setLoadingThemeList(false);
         }
       }
     } catch (error) {
@@ -225,7 +225,7 @@ const ThemesJob: React.FC = () => {
     window.open('/more-jobs', '_parent');
   };
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
   return (
     <Box
       sx={{ flexGrow: 1, paddingBottom: '24px' }}
@@ -324,7 +324,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-              //   onClick={handleClose}
+                //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>

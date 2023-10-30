@@ -9,8 +9,11 @@ import { FaceBookIcon } from '#components/Icons';
 
 import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
+import './style.scss';
+import { getCookie } from 'cookies';
+import { getLanguages } from 'store/reducer/dataLanguage';
 
 const { mobile, tablet } = breakpoints;
 
@@ -74,12 +77,28 @@ const Visibility = styled('div')({
 });
 
 const Footer: React.FC = () => {
+  const dispatch = useDispatch();
+
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
 
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
+
+  // Language
+  const [languageId, setLanguageId] = useState<number>(languageRedux);
+
+  React.useEffect(() => {
+    let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
+    if (userLanguageSelected) {
+      setLanguageId(userLanguageSelected);
+      dispatch(getLanguages(userLanguageSelected) as any);
+    } else {
+      setLanguageId(1);
+      dispatch(getLanguages('1') as any);
+    }
+  }, [languageId]);
 
   const [windowWidth, setWindowWidth] = useState(false);
   // const [position, setPosition] = React.useState('0')
@@ -89,7 +108,7 @@ const Footer: React.FC = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-
+  console.log(language);
   // const mail = useRef('contact.hijob@gmail.com');
   // const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];
 
@@ -130,7 +149,7 @@ const Footer: React.FC = () => {
     // console.log('Current window width:', currentWidth);
   });
 
-  useEffect(() => { }, [languageRedux]);
+  useEffect(() => {}, [languageRedux]);
 
   useEffect(() => {
     if (windowWidth) {
@@ -167,15 +186,15 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-              transform: 'translateY(calc(-100% - 36px))',
-              borderTop: '1px solid #ccc',
-            }
+                transform: 'translateY(calc(-100% - 36px))',
+                borderTop: '1px solid #ccc',
+              }
             : !open && !windowWidth
-              ? {
+            ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-              : { transform: 'none' }
+            : { transform: 'none' }
         }
       >
         <div

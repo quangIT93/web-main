@@ -9,7 +9,7 @@ import './style.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { ArrowIcon, IconMenu } from '#components/Icons';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { DivRef1 } from 'context/HomeValueContextProvider';
 import ModalLogin from '#components/Home/ModalLogin';
@@ -459,7 +459,8 @@ const CategoryDropdown: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <button
+                <Link
+                  to={'/post'}
                   style={{
                     display:
                       profileV3.length !== 0
@@ -469,12 +470,13 @@ const CategoryDropdown: React.FC = () => {
                         : 'none',
                   }}
                   className="category-dropdown-btn__post"
-                  onClick={() => {
+                  onClick={(event: any) => {
                     if (profileV3 && localStorage.getItem('refreshToken')) {
                       if (profileV3.companyInfomation === null) {
                         setOpenModalNoteCreateCompany(true);
+                        event.preventDefault();
                       } else {
-                        window.open('/post', '_parent');
+                        // window.location.href = '/post';
                       }
                     } else {
                       setOpenModalLogin(true);
@@ -485,7 +487,7 @@ const CategoryDropdown: React.FC = () => {
                   <p style={{ marginLeft: 10, color: 'white' }}>
                     {languageData && languageData.post}
                   </p>
-                </button>
+                </Link>
               </div>
             ) : (
               <></>

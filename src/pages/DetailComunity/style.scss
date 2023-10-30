@@ -2,37 +2,21 @@
 
 .comunity-container {
     // margin-top: 70px;
-    margin-top: 115px;
+    // margin-top: 115px;
 
     .comunity-content {
-        padding: 24px 0px 50px;
+
         max-width: 1080px;
         margin: 0 auto;
         transition: all l;
-        margin-bottom: 36px;
-        // 
+
         display: flex;
         align-items: center;
         justify-content: center;
-        // .comunityNew {
-
-        // }
-        @media screen and (min-width: 767px) and (max-width: 1280px) {
-            padding: 24px 24px;
-        }
-
-        @media screen and (max-width: 768px) {
-            padding: 24px 24px;
-        }
 
         .comunity-detail_post {
             width: 100%;
             max-width: 1080px;
-
-            @media screen and (min-width: 1120px) and (max-width: 1280px) {
-                // width: 98%;
-                padding: 0 24px;
-            }
 
             @media screen and (max-width: 768px) {
                 width: 98%;

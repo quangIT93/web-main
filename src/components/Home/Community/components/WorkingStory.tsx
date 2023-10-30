@@ -33,7 +33,7 @@ const WorkingStory = () => {
 
   const handleGetWorkingStory = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const result = await communityApi.getCommunityNews(
         '',
         '5',
@@ -43,7 +43,7 @@ const WorkingStory = () => {
       );
       if (result) {
         setStories(result?.data?.communications);
-        setLike(result?.data?.communications?.liked);
+        setLike(false);
         setTimeout(() => {
           setLoading(false);
         }, 3000);

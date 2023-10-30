@@ -10,13 +10,18 @@ const nearByApi = {
     threshold: Number | null,
     lang: string
   ) => {
-    const URL = `/v1/posts/nearby?${pvId && pvId.length > 0 ?
-      `${(pvId?.filter(item => pvId.indexOf(item) === pvId.lastIndexOf(item)))
-        ?.map((n: any, index) => `pvid=${n}`).join('&')}&`
-      : `pvid=${79}&`}` +
-      `${pcid ? `pcid=${pcid}&` : ``}` +
-      `${ccid ? `ccid=${ccid}&` : ``}` +
-      `limit=${limit}&threshold=${threshold ? threshold : ''}&lang=${lang}`
+    if (pvId && Array.isArray(pvId)) {
+      pvId = [...new Set(pvId)] as string[];
+    } else {
+      // Handle the case when pvId is null or not an array
+      pvId = ['79'];  // Default value when pvId is not usable
+    }
+    
+    const URL = `/v1/posts/nearby?${pvId.map((n: any, index) => `pvid=${n}`).join('&')}&` +
+    `${pcid ? `pcid=${pcid}&` : ''}` +
+    `${ccid ? `ccid=${ccid}&` : ''}` +
+    `limit=${limit}&threshold=${threshold ? threshold : ''}&lang=${lang}`;
+
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

@@ -19,6 +19,9 @@ import HomeValueContextProvider from 'context/HomeValueContextProvider';
 import ChatContextProvider from 'context/ChatContextProvider';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+
+import Loading from '#components/Loading';
+
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 // Initialize Firebase
@@ -35,7 +38,7 @@ const App: React.FC = () => {
   let persistor = persistStore(store);
 
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
+    <React.Suspense fallback={<Loading />}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <BrowserRouter>

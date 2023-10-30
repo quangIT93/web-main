@@ -27,6 +27,7 @@ interface IEditPhoneMailCompany {
   setDataCompany: any;
   dataCompany: any;
   is_profile: boolean;
+  setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const NumericInput = (props: NumericInputProps) => {
@@ -57,9 +58,7 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder={
-        language?.post_page?.place_phone
-      }
+      placeholder={language?.post_page?.place_phone}
       inputProps={{ maxLength: 10 }}
       size="small"
       sx={{ width: '100%', marginTop: '8px' }}
@@ -69,11 +68,13 @@ const NumericInput = (props: NumericInputProps) => {
 };
 
 const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { dataCompany, setDataCompany, is_profile } = props;
+  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges } = props;
   let regexCheckPhone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
   const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // const [language, setLanguageState] = React.useState<any>();
@@ -100,6 +101,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { value } = e.target;
+    setUnsavedChanges(true);
     setDataCompany((preValue: any) => ({
       ...preValue,
       email: value,
@@ -125,10 +127,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          {
-            language?.phone_number
-          }{' '}
-          <span style={{ color: 'red' }}>*</span>
+          {language?.phone_number} <span style={{ color: 'red' }}>*</span>
         </Typography>
         <NumericInput
           value={dataCompany?.phone}
@@ -138,23 +137,25 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           is_profile={is_profile}
         />
         <div className="wrap-noti_input">
-            {regexCheckPhone.test(dataCompany?.phone) === false ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Số điện thoại không đúng định dạng'
-                  : 'The phone number is not in the correct format'}
-              </span>
-            ) : dataCompany && dataCompany?.phone.length === 0 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Số điện thoại không được bỏ trống'
-                  : 'Phone cannot be empty'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${dataCompany ? dataCompany?.phone.length: "0"}/10`}</span>
-          </div>
+          {regexCheckPhone.test(dataCompany?.phone) === false ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Số điện thoại không đúng định dạng'
+                : 'The phone number is not in the correct format'}
+            </span>
+          ) : dataCompany && dataCompany?.phone.length === 0 ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Số điện thoại không được bỏ trống'
+                : 'Phone cannot be empty'}
+            </span>
+          ) : (
+            <></>
+          )}
+          <span className="number-text">{`${
+            dataCompany ? dataCompany?.phone.length : '0'
+          }/10`}</span>
+        </div>
       </div>
       <div className="edit-mail-company">
         <Typography
@@ -173,36 +174,34 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           onChange={handleEditCompanyMail}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={
-            language?.company_page?.place_email
-          }
+          placeholder={language?.company_page?.place_email}
           disabled={is_profile ? true : false}
-        //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi
         />
-         <div className="wrap-noti_input">
-            {dataCompany?.email.length === 0 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Email không được bỏ trống'
-                  : 'Email cannot be empty'}
-              </span>
-            ) : dataCompany?.email.length > 50 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Email không được bỏ trống'
-                  : 'Email cannot exceed 50 characters'}
-              </span>
-            ) : regexCheckEmail.test(dataCompany?.email) === false ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Email không đúng định dạng'
-                  : 'The Email is not in the correct format'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${dataCompany?.email.length}/50`}</span>
-          </div>
+        <div className="wrap-noti_input">
+          {dataCompany?.email.length === 0 ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Email không được bỏ trống'
+                : 'Email cannot be empty'}
+            </span>
+          ) : dataCompany?.email.length > 50 ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Email không được bỏ trống'
+                : 'Email cannot exceed 50 characters'}
+            </span>
+          ) : regexCheckEmail.test(dataCompany?.email) === false ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Email không đúng định dạng'
+                : 'The Email is not in the correct format'}
+            </span>
+          ) : (
+            <></>
+          )}
+          <span className="number-text">{`${dataCompany?.email.length}/50`}</span>
+        </div>
       </div>
     </div>
   );

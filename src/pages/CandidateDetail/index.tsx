@@ -20,9 +20,6 @@ import {
 import postApi from 'api/postApi';
 import historyRecruiter from 'api/historyRecruiter';
 // import component
-import RollTop from '#components/RollTop';
-
-import Footer from '../../components/Footer/Footer';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
@@ -32,7 +29,6 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 // import icon
 
 // @ts-ignore
-import { Navbar } from '#components';
 
 // import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
@@ -54,7 +50,6 @@ import { RootState } from '../../store/reducer';
 // import { candidateDetailEn } from 'validations/lang/en/cnadidateDetail';
 // import { historyVi } from 'validations/lang/vi/history';
 // import { historyEn } from 'validations/lang/en/history';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 // const SmallAvatar = styled(Avatar)(({ theme }) => ({
 //   width: 22,
@@ -141,7 +136,7 @@ const CandidateDetail: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataCandidate]);
-  console.log('dataCandidate', dataCandidate?.applicationProfile?.avatar);
+  console.log('dataCandidateDetail', dataCandidate?.applicationProfile?.avatar);
 
   const getPostById = async () => {
     try {
@@ -227,11 +222,11 @@ const CandidateDetail: React.FC = () => {
     'dataCandidate?.applicationProfile?.avatar',
     dataCandidate?.applicationProfile?.avatar,
   );
-
+  console.log('dataCandidate', dataCandidate);
   return (
     <div className="candidate-detail">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       <Box className="containerCandidate">
         <Skeleton loading={loading} active>
           <Card
@@ -464,10 +459,7 @@ const CandidateDetail: React.FC = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <Badge
-                    overlap="circular"
-
-                  >
+                  <Badge overlap="circular">
                     <Avatar
                       src={
                         dataCandidate?.applicationProfile?.avatar as any
@@ -483,7 +475,6 @@ const CandidateDetail: React.FC = () => {
                         ? dataCandidate?.applicationProfile?.name
                         : language?.unupdated}
                     </h2>
-
                   </div>
                 </div>
                 <Box>
@@ -507,7 +498,8 @@ const CandidateDetail: React.FC = () => {
                         window.open(
                           `/message?post_id=${searchParams.get(
                             'post-id',
-                          )}&user_id=${dataCandidate.applicationProfile.account_id
+                          )}&user_id=${
+                            dataCandidate.applicationProfile.account_id
                           }&application_id=${searchParams.get(
                             'application_id',
                           )} `,
@@ -556,8 +548,8 @@ const CandidateDetail: React.FC = () => {
                   <p>
                     {dataCandidate?.applicationProfile?.birthday
                       ? moment(
-                        new Date(dataCandidate?.applicationProfile?.birthday),
-                      ).format('DD/MM/yyyy')
+                          new Date(dataCandidate?.applicationProfile?.birthday),
+                        ).format('DD/MM/yyyy')
                       : language?.unupdated}
                   </p>
                   <p>
@@ -660,12 +652,12 @@ const CandidateDetail: React.FC = () => {
               <Space wrap className="item-info-work">
                 {dataCandidate?.categories?.length !== 0
                   ? dataCandidate?.categories?.map(
-                    (item: ICategories, index: number) => (
-                      <Button key={index} className="btn" type="text">
-                        {item.child_category}
-                      </Button>
-                    ),
-                  )
+                      (item: ICategories, index: number) => (
+                        <Button key={index} className="btn" type="text">
+                          {item.child_category}
+                        </Button>
+                      ),
+                    )
                   : language?.unupdated}
               </Space>
             </div>
@@ -682,12 +674,12 @@ const CandidateDetail: React.FC = () => {
               <Space wrap className="item-info-work">
                 {dataCandidate?.locations?.length !== 0
                   ? dataCandidate?.locations?.map(
-                    (item: any, index: number) => (
-                      <Button key={index} className="btn" type="text">
-                        {item?.district}
-                      </Button>
-                    ),
-                  )
+                      (item: any, index: number) => (
+                        <Button key={index} className="btn" type="text">
+                          {item?.district}
+                        </Button>
+                      ),
+                    )
                   : language?.unupdated}
               </Space>
             </div>
@@ -750,8 +742,8 @@ const CandidateDetail: React.FC = () => {
           </Box>
         </Skeleton>
       </Box>
-      <RollTop />
-      <Footer />
+      {/* <RollTop />
+      <Footer /> */}
     </div>
   );
 };

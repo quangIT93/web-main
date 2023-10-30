@@ -1,0 +1,15 @@
+@import '../../scss/mixins';
+
+.childrenContainer {
+    margin-top: 141px;
+    margin-bottom: 59px;
+    padding: 0 24px;
+
+    @include breakpoint(tablet) {
+        margin-bottom: 24px;
+    }
+
+    @include breakpoint(mobile) {
+        margin-bottom: 24px;
+    }
+}

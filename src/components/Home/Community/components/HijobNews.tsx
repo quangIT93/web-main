@@ -28,7 +28,7 @@ const HijobNews = () => {
   const [loading, setLoading] = React.useState<any>(false);
   const handleGetHijobNews = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const result = await communityApi.getCommunityNews(
         '',
         '5',

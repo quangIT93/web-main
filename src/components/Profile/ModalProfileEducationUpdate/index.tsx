@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, TextField, Modal, Typography, MenuItem } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -57,6 +58,31 @@ const styleChildBox = {
   display: 'flex',
   flexDirection: 'column',
 };
+
+// style MUI
+const theme = createTheme({
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        body1: {
+          fontSize: '14px',
+        },
+        h6: {
+          fontSize: '20px',
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        InputProps: {
+          style: {
+            fontSize: '14px',
+          },
+        },
+      },
+    },
+  },
+});
 
 // interface IEducation {
 //   id?: number | null;
@@ -365,222 +391,235 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   };
 
   return (
-    <Modal
-      open={openModalEducationUpdate}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      onKeyDown={handleKeyDown}
-    >
-      <Box
-        sx={style}
-        className="Modal-personnal-info modal-person modal-educationProfileUpdate"
+    <ThemeProvider theme={theme}>
+      <Modal
+        open={openModalEducationUpdate}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        onKeyDown={handleKeyDown}
       >
-        {contextHolder}
-        <div
-          style={{
-            position: 'absolute',
-            right: '20px',
-            top: '20px',
-            cursor: 'pointer',
-            // border: '1px solid',
-            borderRadius: '50%',
-            padding: '1px',
-          }}
-          onClick={handleClose}
+        <Box
+          sx={style}
+          className="Modal-personnal-info modal-person modal-educationProfileUpdate"
         >
-          <CloseOutlined style={{ fontSize: '30px' }} />
-        </div>
-        <Typography
-          id="modal-modal-title"
-          variant="h6"
-          component="h2"
-          align="center"
-          sx={{ marginBottom: '12px' }}
-        >
-          {language?.profile_page?.edit_education}
-        </Typography>
-        <Box sx={styleChildBox}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
+          {contextHolder}
+          <div
+            style={{
+              position: 'absolute',
+              right: '20px',
+              top: '20px',
+              cursor: 'pointer',
+              // border: '1px solid',
+              borderRadius: '50%',
+              padding: '1px',
+            }}
+            onClick={handleClose}
           >
-            {language?.school_organization}{' '}
-            <span className="color-asterisk">*</span>
-          </Typography>
-          <TextField
-            type="text"
-            id="nameProfile"
-            name="title"
-            value={education.companyName}
-            onChange={handleChangeSchool}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={language?.profile_page?.place_school}
-            // error={titleError} // Đánh dấu lỗi
-          />
-          <div className="wrap-noti_input">
-            {education.companyName && education.companyName.length > 50 ? (
-              <span className="helper-text">Bạn đã nhập quá 50 ký tự</span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${
-              education.companyName ? education.companyName.length : '0'
-            }/50`}</span>
+            <CloseOutlined style={{ fontSize: '30px' }} />
           </div>
-        </Box>
-
-        <Box sx={styleChildBox}>
           <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            align="center"
+            sx={{ marginBottom: '12px' }}
           >
-            {language?.major} <span className="color-asterisk">*</span>
+            {language?.profile_page?.edit_education}
           </Typography>
-          <TextField
-            type="text"
-            id="nameProfile"
-            name="title"
-            value={education.major}
-            onChange={handleChangeMajor}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={language?.major}
-            // error={titleError} // Đánh dấu lỗi
-          />
-          <div className="wrap-noti_input">
-            {education.major && education.major.length > 50 ? (
-              <span className="helper-text">Bạn đã nhập quá 50 ký tự</span>
-            ) : !education.major ? (
-              <span className="helper-text">Vui lòng nhập chuyên ngành</span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${
-              education.major ? education.major.length : '0'
-            }/50`}</span>
-          </div>
-        </Box>
-        <Box sx={styleChildBox}>
-          <LocalizationProvider dateAdapter={AdapterMoment}>
-            <DemoContainer
-              components={['DatePicker', 'DatePicker']}
-              sx={{ display: 'flex' }}
+          <Box sx={styleChildBox}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
             >
-              <div className="wrapTimeDay">
-                <Typography
-                  // sx={styleLabel}
-                  variant="body1"
-                  component="label"
-                  htmlFor="startTime"
-                >
-                  {language?.start_time}{' '}
-                  <span className="color-asterisk">*</span>
-                </Typography>
-                <DatePicker
-                  value={
-                    moment(education.startDate)
-                    // && new Date().getTime()
-                  }
-                  defaultValue={moment(new Date().getTime())}
-                  onChange={handleChangeStartTime}
-                  views={['year', 'month']}
-                  openTo="month"
-                  format="MM/YYYY"
-                />
-                <div className="wrap-noti_input">
-                  {education.startDate &&
-                  new Date(education.startDate).getFullYear() >
-                    new Date().getFullYear() ? (
-                    <span className="helper-text">
-                      Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
-                    </span>
-                  ) : !new Date(education.startDate).getFullYear() ? (
-                    <span className="helper-text">
-                      Vui lòng nhập Thời gian bắt đầu
-                    </span>
-                  ) : new Date(education.startDate).getFullYear() < 1900 ? (
-                    <span className="helper-text">
-                      Thời gian bắt đầu không thể nhỏ hơn 1900
-                    </span>
-                  ) : (
-                    <></>
-                  )}
+              {language?.school_organization}{' '}
+              <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              type="text"
+              id="nameProfile"
+              name="title"
+              value={education.companyName}
+              onChange={handleChangeSchool}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder={language?.profile_page?.place_school}
+              // error={titleError} // Đánh dấu lỗi
+            />
+            <div className="wrap-noti_input">
+              {education.companyName && education.companyName.length > 50 ? (
+                <span className="helper-text">Bạn đã nhập quá 50 ký tự</span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${
+                education.companyName ? education.companyName.length : '0'
+              }/50`}</span>
+            </div>
+          </Box>
+
+          <Box sx={styleChildBox}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
+            >
+              {language?.major} <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              type="text"
+              id="nameProfile"
+              name="title"
+              value={education.major}
+              onChange={handleChangeMajor}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder={language?.major}
+              // error={titleError} // Đánh dấu lỗi
+            />
+            <div className="wrap-noti_input">
+              {education.major && education.major.length > 50 ? (
+                <span className="helper-text">Bạn đã nhập quá 50 ký tự</span>
+              ) : !education.major ? (
+                <span className="helper-text">Vui lòng nhập chuyên ngành</span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${
+                education.major ? education.major.length : '0'
+              }/50`}</span>
+            </div>
+          </Box>
+          <Box sx={styleChildBox}>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DemoContainer
+                components={['DatePicker', 'DatePicker']}
+                sx={{ display: 'flex' }}
+              >
+                <div className="wrapTimeDay">
+                  <Typography
+                    // sx={styleLabel}
+                    variant="body1"
+                    component="label"
+                    htmlFor="startTime"
+                  >
+                    {language?.start_time}{' '}
+                    <span className="color-asterisk">*</span>
+                  </Typography>
+                  <DatePicker
+                    value={
+                      moment(education.startDate)
+                      // && new Date().getTime()
+                    }
+                    defaultValue={moment(new Date().getTime())}
+                    onChange={handleChangeStartTime}
+                    views={['year', 'month']}
+                    openTo="month"
+                    format="MM/YYYY"
+                    sx={{
+                      '& input': {
+                        fontSize: '14px',
+                        padding: '8.5px 14px',
+                      },
+                    }}
+                  />
+                  <div className="wrap-noti_input">
+                    {education.startDate &&
+                    new Date(education.startDate).getFullYear() >
+                      new Date().getFullYear() ? (
+                      <span className="helper-text">
+                        Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
+                      </span>
+                    ) : !new Date(education.startDate).getFullYear() ? (
+                      <span className="helper-text">
+                        Vui lòng nhập Thời gian bắt đầu
+                      </span>
+                    ) : new Date(education.startDate).getFullYear() < 1900 ? (
+                      <span className="helper-text">
+                        Thời gian bắt đầu không thể nhỏ hơn 1900
+                      </span>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="wrapTimeDay">
-                <Typography
-                  // sx={styleLabel}
-                  variant="body1"
-                  component="label"
-                  htmlFor="startTime"
-                >
-                  {language?.finish_time}{' '}
-                  <span className="color-asterisk">*</span>
-                </Typography>
-                <DatePicker
-                  value={moment(education.endDate)}
-                  defaultValue={moment(new Date().getTime())}
-                  onChange={handleChangeEndTime}
-                  views={['year', 'month']}
-                  openTo="month"
-                  minDate={moment(education.startDate)}
-                  format="MM/YYYY"
-                />
-                <div className="wrap-noti_input">
-                  {education.endDate &&
-                  new Date(education.endDate).getFullYear() >
-                    new Date().getFullYear() ? (
-                    <span className="helper-text">
-                      Thời gian kết thúc không thể lớn hơn thời gian hiện tại
-                    </span>
-                  ) : !new Date(education.endDate).getFullYear() ? (
-                    <span className="helper-text">
-                      Vui lòng nhập Thời gian kết thúc
-                    </span>
-                  ) : new Date(education.endDate).getFullYear() < 1900 ? (
-                    <span className="helper-text">
-                      Thời gian kết thúc không thể nhỏ hơn 1900
-                    </span>
-                  ) : (
-                    <></>
-                  )}
+                <div className="wrapTimeDay" style={{ marginTop: '0px' }}>
+                  <Typography
+                    // sx={styleLabel}
+                    variant="body1"
+                    component="label"
+                    htmlFor="startTime"
+                  >
+                    {language?.finish_time}{' '}
+                    <span className="color-asterisk">*</span>
+                  </Typography>
+                  <DatePicker
+                    value={moment(education.endDate)}
+                    defaultValue={moment(new Date().getTime())}
+                    onChange={handleChangeEndTime}
+                    views={['year', 'month']}
+                    openTo="month"
+                    minDate={moment(education.startDate)}
+                    format="MM/YYYY"
+                    sx={{
+                      '& input': {
+                        fontSize: '14px',
+                        padding: '8.5px 14px',
+                      },
+                    }}
+                  />
+                  <div className="wrap-noti_input">
+                    {education.endDate &&
+                    new Date(education.endDate).getFullYear() >
+                      new Date().getFullYear() ? (
+                      <span className="helper-text">
+                        Thời gian kết thúc không thể lớn hơn thời gian hiện tại
+                      </span>
+                    ) : !new Date(education.endDate).getFullYear() ? (
+                      <span className="helper-text">
+                        Vui lòng nhập Thời gian kết thúc
+                      </span>
+                    ) : new Date(education.endDate).getFullYear() < 1900 ? (
+                      <span className="helper-text">
+                        Thời gian kết thúc không thể nhỏ hơn 1900
+                      </span>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </DemoContainer>
-          </LocalizationProvider>
-        </Box>
-        <Box sx={styleChildBox}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="startTime"
-          >
-            {languageRedux === 1 ? 'Trình độ học vấn ' : 'Academic level '}
-            <span className="color-asterisk">*</span>
-          </Typography>
-          <TextField
-            select
-            id="sex"
-            value={education.academicTypeId}
-            defaultValue={education.academicTypeId && 8}
-            onChange={handleChangeAcademic}
-            variant="outlined"
-            placeholder={'Loại công việc'}
-            size="small"
-            sx={{ width: '100%' }}
-            // error={!gender} // Đánh dấu lỗi
-          >
-            {typeAcademic?.map((value: any, index: number) => {
-              return <MenuItem value={index + 1}>{value.data}</MenuItem>;
-            })}
-            {/* <MenuItem value={1}>
+              </DemoContainer>
+            </LocalizationProvider>
+          </Box>
+          <Box sx={styleChildBox}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="startTime"
+            >
+              {languageRedux === 1 ? 'Trình độ học vấn ' : 'Academic level '}
+              <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              select
+              id="sex"
+              value={education.academicTypeId}
+              defaultValue={education.academicTypeId && 8}
+              onChange={handleChangeAcademic}
+              variant="outlined"
+              placeholder={'Loại công việc'}
+              size="small"
+              sx={{ width: '100%' }}
+              // error={!gender} // Đánh dấu lỗi
+            >
+              {typeAcademic?.map((value: any, index: number) => {
+                return <MenuItem value={index + 1}>{value.data}</MenuItem>;
+              })}
+              {/* <MenuItem value={1}>
               {languageRedux === 1 ? 'Toàn thời gian' : 'Fulltime'}
             </MenuItem>
             <MenuItem value={2}>
@@ -592,49 +631,50 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             <MenuItem value={7}>
               {languageRedux === 1 ? 'Thực tập' : 'Intern'}
             </MenuItem> */}
-          </TextField>
-        </Box>
-        <Box sx={styleChildBox}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="startTime"
-          >
-            {language?.additional_information}{' '}
-            <span className="color-asterisk">*</span>
-          </Typography>
-          <TextField
-            // className={classes.textarea}
-            value={education.extraInformation}
-            onChange={handleChangeExtraInfo}
-            sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
-            multiline
-            rows={4}
-            id="extra-info"
-            // label="Một số đặc điểm nhận diện công ty"
-            placeholder={language?.profile_page?.place_additional_information}
-          />
-          <div className="wrap-noti_input">
-            {education.extraInformation &&
-            education.extraInformation.length > 500 ? (
-              <span className="helper-text">Bạn đã nhập quá 500 ký tự</span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${
-              education.extraInformation
-                ? education.extraInformation.length
-                : '0'
-            }/500`}</span>
-          </div>
-        </Box>
+            </TextField>
+          </Box>
+          <Box sx={styleChildBox}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="startTime"
+            >
+              {language?.additional_information}{' '}
+              <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              // className={classes.textarea}
+              value={education.extraInformation}
+              onChange={handleChangeExtraInfo}
+              sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
+              multiline
+              rows={4}
+              id="extra-info"
+              // label="Một số đặc điểm nhận diện công ty"
+              placeholder={language?.profile_page?.place_additional_information}
+            />
+            <div className="wrap-noti_input">
+              {education.extraInformation &&
+              education.extraInformation.length > 500 ? (
+                <span className="helper-text">Bạn đã nhập quá 500 ký tự</span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${
+                education.extraInformation
+                  ? education.extraInformation.length
+                  : '0'
+              }/500`}</span>
+            </div>
+          </Box>
 
-        <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {language?.profile_page?.save_info}
-        </Button>
-      </Box>
-    </Modal>
+          <Button variant="contained" fullWidth onClick={handleSubmit}>
+            {language?.profile_page?.save_info}
+          </Button>
+        </Box>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

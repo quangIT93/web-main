@@ -409,7 +409,9 @@ const Notificate = () => {
                   return (
                     <div
                       key={index}
-                      className="wrap-system"
+                      className={`wrap-system ${
+                        !notificate.data.isRead ? `` : ``
+                      }`}
                       onClick={() =>
                         handleClickNotiKey(
                           notificate.data.postId,
@@ -496,7 +498,12 @@ const Notificate = () => {
                   return (
                     <div
                       key={index}
-                      className="wrap-notificate_system"
+                      className={`wrap-notificate_system ${
+                        notificate.data?.isRead !== undefined &&
+                        !notificate.data?.isRead
+                          ? ''
+                          : ''
+                      }`}
                       onClick={() =>
                         handleClickNoty(
                           notificate.data.postId,

@@ -52,6 +52,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
     (state: RootState) => state.changeLaguage.language,
   );
   const [collapseOpen, setCollapseOpen] = useState(false);
+  const [selectAll, setSelectAll] = useState(false);
   const collapseRef = useRef<any>(null);
   // const [searchParams, setSearchParams] = useSearchParams();
   let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
@@ -143,6 +144,20 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
     }
   };
 
+  const handleChangAll = (e: any) => {
+    if (e.target.checked) {
+      setReset(false);
+      // setChecksetIsRemotely(1);
+      setIsRemotely(1);
+      setIsWorkingWeekend(1);
+    } else {
+      setReset(false);
+      // setChecksetIsRemotely(0);
+      setIsRemotely(0);
+      setIsWorkingWeekend(0);
+    }
+  };
+
   useEffect(() => {
     const handleOutsideClick = (e: any) => {
       if (collapseRef && !collapseRef?.current?.contains(e.target)) {
@@ -188,15 +203,15 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
             
             ${isRemotely ? language?.remote_work : ''}`
               : languageRedux === 1
-              ? 'Làm việc từ xa'
-              : 'Remote work'
+              ? 'Thời gian làm việc'
+              : 'Working period'
           }
           key="1"
           style={{ fontSize: '12px' }}
         >
-          <Text className="title-filter_timeJob">
+          {/* <Text className="title-filter_timeJob">
             {languageRedux === 1 ? 'Thời gian làm việc' : 'Working period'}
-          </Text>
+          </Text> */}
 
           {/* <Radio.Group
           value={selectedValue}
@@ -212,6 +227,21 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         </div> */}
 
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <FormControlLabel
+              label={languageRedux === 1 ? 'Tất cả' : 'All'}
+              control={
+                <Checkbox
+                  checked={
+                    reset
+                      ? false
+                      : isWorkingWeekend === 0 || isRemotely === 0
+                      ? false
+                      : true
+                  }
+                  onChange={handleChangAll}
+                />
+              }
+            />
             <FormControlLabel
               label={language?.working_on_the_weekend}
               control={

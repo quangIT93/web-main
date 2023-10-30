@@ -5,12 +5,11 @@
   // padding: 0 180px;
   margin: 0 auto;
   // margin-top: 100px;
-  margin-top: 176px;
-  margin-bottom: 50px;
   max-width: 1080px;
+  width: 100%;
 
   @media screen and (min-width: 320px) and (max-width: 1080px) {
-    padding-inline: 24px;
+    // padding-inline: 24px;
     // padding-inline: 10px;
   }
 
@@ -28,7 +27,7 @@
     margin: 20px 0;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 0;
+    padding-bottom: 8px;
 
     @media screen and (max-width: 370px) {
       display: block;

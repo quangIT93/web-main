@@ -24,6 +24,7 @@ interface IEditPostAddress {
   setDataCompany: any;
   dataCompany: any;
   is_profile: boolean;
+  setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
@@ -33,7 +34,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { setDataCompany, dataCompany, is_profile } = props;
+  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges } = props;
 
   const [dataSizes, setDataSizes] = useState<any>(null);
   const [selectedSize, setSelectedSize] = useState<any>(null);
@@ -122,19 +123,21 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   const handleEditCompanySize = (event: any, value: any) => {
     setSelectedSize(value);
+    setUnsavedChanges(true);
     setDataCompany((preValue: any) => ({
       ...preValue,
       companySizeInfomation: {
-        id: value ? value?.id:"",
+        id: value ? value?.id : '',
       },
     }));
   };
   const handleEditCompanyCategory = (event: any, value: any) => {
     setSelectedCategory(value);
+    setUnsavedChanges(true);
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyCategory: {
-        id: value ? value?.parent_category_id:"",
+        id: value ? value?.parent_category_id : '',
       },
     }));
   };
@@ -173,17 +176,17 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           }}
           style={{ marginTop: '8px' }}
         />
-          <div className="wrap-noti_input">
-            {!selectedCategory ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Vui lòng chọn lĩnh vực hoạt động'
-                  : 'Please select your field of activity'}
-              </span>
-            ) : (
-              <></>
-            )}
-          </div>
+        <div className="wrap-noti_input">
+          {!selectedCategory ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Vui lòng chọn lĩnh vực hoạt động'
+                : 'Please select your field of activity'}
+            </span>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
 
       <div className="edit-scale-company">
@@ -215,16 +218,16 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           style={{ marginTop: '8px' }}
         />
         <div className="wrap-noti_input">
-            {!selectedCategory ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Vui lòng chọn quy mô công ty'
-                  : 'Please select company size'}
-              </span>
-            ) : (
-              <></>
-            )}
-          </div>
+          {!selectedCategory ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Vui lòng chọn quy mô công ty'
+                : 'Please select company size'}
+            </span>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
     </div>
   );

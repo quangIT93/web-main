@@ -125,26 +125,39 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
       </div>
       <Select
         // defaultValue="lucy"
+
+        getPopupContainer={(triggerNode) => triggerNode.parentElement}
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
         value={
           reset
             ? languageRedux === 1
-              ? 'Tất cả'
-              : 'All'
+              ? 'Trả lương theo'
+              : 'Payment by'
             : valueRender
             ? valueRender.value
-            : languageRedux === 1
-            ? 'Tất cả'
-            : 'All'
+            : undefined
         }
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder={language?.job_type}
+        placeholder={languageRedux === 1 ? 'Trả lương theo' : 'Payment by'}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="1" label={language?.job_type}>
+          <div
+            className="title-filter"
+            style={{
+              padding: '10px 0',
+              textAlign: 'center',
+              borderBottom: '1px solid #ccc',
+              marginBottom: '12px',
+              fontWeight: '600',
+              fontSize: '16px',
+            }}
+          >
+            {languageRedux === 1 ? 'Trả lương theo' : 'Payment by'}
+          </div>
           <CustomOption
             salaryType={SALARY_TYPE}
             data={data}

@@ -17,21 +17,8 @@
   .containerNewCandidate {
     // width: 80%;
     width: 100%;
-    margin-top: 141px;
-    margin-bottom: 100px;
     padding: 0px;
 
-    @include breakpoint(mobile) {
-      // width: 95%;
-      width: 100%;
-      padding: 0px 24px;
-    }
-
-    @include breakpoint(tablet) {
-      // width: 95%;
-      padding: 0px 24px;
-      width: 100%;
-    }
 
     .candidates-profile-avatar {
       width: 100%;
@@ -53,8 +40,18 @@
           display: flex;
           align-items: center;
 
+          .contentBtn{
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+          }
+
+
+
           .ant-btn {
-            padding: 12px 24px;
+            padding: 8px 24px;
             gap: 12px;
             display: flex;
             justify-content: center;
@@ -62,8 +59,8 @@
             height: 48px;
             flex-shrink: 0;
             border-radius: 37px;
-            background: rgba(37, 37, 37, 1);
-            color: #fff;
+            // background: rgba(37, 37, 37, 1);
+            // color: #fff;
             // transition: all 0.3 linear;
             margin-right: 10px;
 
@@ -79,6 +76,11 @@
           .bookmarkIconStart {
             cursor: pointer;
 
+          }
+
+          .contentBtnLock {
+            display: flex;
+            align-items: center;
           }
         }
       }

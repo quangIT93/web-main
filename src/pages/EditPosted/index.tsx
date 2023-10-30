@@ -3,13 +3,13 @@ import React, { useEffect, FormEvent, useState } from 'react';
 import queryString from 'query-string';
 
 // import { useSearchParams } from 'react-router-dom';
-import Footer from '../../components/Footer/Footer';
+
 import moment from 'moment';
 import { Skeleton } from 'antd';
 import { message } from 'antd';
 // import component
 // @ts-ignore
-import { Navbar } from '#components';
+
 import EditPostJobCompany from '#components/EditPosted/EditPostJobCompany';
 import EditPostAddress from '#components/EditPosted/EditPostAddress';
 import EditPostImage from '#components/EditPosted/EditPostImage';
@@ -26,8 +26,6 @@ import EditDescription from '#components/EditPosted/EditDescription';
 
 import EditPostTypeSalary from '#components/EditPosted/EditPostTypeSalary';
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
-
-import RollTop from '#components/RollTop';
 
 import NotFound from 'pages/NotFound';
 
@@ -47,7 +45,6 @@ import { RootState } from '../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 export interface FormValues {
   id: string;
@@ -489,8 +486,8 @@ const EditPosted = () => {
     return (
       <div className="edit-posted">
         {contextHolder}
-        <Navbar />
-        <CategoryDropdown />
+        {/* <Navbar />
+        <CategoryDropdown /> */}
         <div className="edit-posted_main">
           <div className="edit-title_post">
             <h1>{language?.post_page?.edit_post}</h1>
@@ -618,14 +615,14 @@ const EditPosted = () => {
           languageRedux={languageRedux}
           language={language}
         />
-        <RollTop />
-        <Footer />
+        {/* <RollTop /> */}
+        {/* <Footer /> */}
       </div>
     );
   } else {
     return (
       <div className="edit-posted">
-        <Navbar />
+        {/* <Navbar /> */}
         <Skeleton active loading={loading}></Skeleton>
         <Skeleton active loading={loading}></Skeleton>
         <Skeleton active loading={loading}></Skeleton>

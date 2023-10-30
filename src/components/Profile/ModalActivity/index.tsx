@@ -9,6 +9,7 @@ import {
   Snackbar,
   Stack,
 } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // data
 import { useDispatch } from 'react-redux';
@@ -67,6 +68,29 @@ const style = {
     width: 640,
   },
 };
+const theme = createTheme({
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        body1: {
+          fontSize: '14px',
+        },
+        h6: {
+          fontSize: '20px',
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        InputProps: {
+          style: {
+            fontSize: '14px',
+          },
+        },
+      },
+    },
+  },
+});
 
 // const styleChildBox = {
 //   marginBottom: '12px',
@@ -272,271 +296,285 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
   };
 
   return (
-    <Modal
-      open={openModalActivity}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      className="modal-activity-container"
-    >
-      <Box
-        sx={style}
-        className="Modal-personnal-info modal-person modal-actProfile"
+    <ThemeProvider theme={theme}>
+      <Modal
+        open={openModalActivity}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        className="modal-activity-container"
       >
-        <div
-          style={{
-            position: 'absolute',
-            right: '20px',
-            top: '20px',
-            cursor: 'pointer',
-            // border: '1px solid',
-            borderRadius: '50%',
-            padding: '1px',
-          }}
-          onClick={handleClose}
+        <Box
+          sx={style}
+          className="Modal-personnal-info modal-person modal-actProfile"
         >
-          <CloseOutlined style={{ fontSize: '30px' }} />
-        </div>
-        <Typography
-          id="modal-modal-title"
-          variant="h6"
-          component="h2"
-          align="center"
-          sx={{ marginBottom: '12px' }}
-        >
-          {languageRedux === 1 ? 'Thêm thông tin hoạt động' : 'Add Activity'}
-        </Typography>
-        <Box sx={{ marginBottom: '12px' }}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
+          <div
+            style={{
+              position: 'absolute',
+              right: '20px',
+              top: '20px',
+              cursor: 'pointer',
+              // border: '1px solid',
+              borderRadius: '50%',
+              padding: '1px',
+            }}
+            onClick={handleClose}
           >
-            {languageRedux === 1 ? 'Tiêu đề hoạt động' : 'Function Title'}{' '}
-            <span className="color-asterisk">*</span>
-          </Typography>
-          <TextField
-            type="text"
-            id="skill"
-            name="skill"
-            value={activity.title}
-            onChange={handleOnchangeTitle}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={
-              languageRedux === 1 ? 'Tiêu đề hoạt động' : 'Function Title'
-            }
-            // error={titleError} // Đánh dấu lỗi
-          />
-          <div className="wrap-noti_input">
-            {activity.title && activity.title.length > 255 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Tiêu đề hoạt động không được vượt quá 255 ký tự'
-                  : 'Function title cannot exceed 255 characters'}
-              </span>
-            ) : !activity.title ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Tiêu đề hoạt động không được bỏ trống'
-                  : 'Function title cannot be empty'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${
-              activity.title ? activity.title.length : '0'
-            }/255`}</span>
+            <CloseOutlined style={{ fontSize: '30px' }} />
           </div>
-        </Box>
-        <Box sx={{ marginBottom: '12px' }}>
           <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            align="center"
+            sx={{ marginBottom: '12px' }}
           >
-            {languageRedux === 1 ? 'Nhà tuyển dụng' : 'Employer'}{' '}
-            <span className="color-asterisk">*</span>
+            {languageRedux === 1 ? 'Thêm thông tin hoạt động' : 'Add Activity'}
           </Typography>
-          <TextField
-            type="text"
-            id="skill"
-            name="skill"
-            value={activity.employer}
-            onChange={handleOnchangeEmployer}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={languageRedux === 1 ? 'Nhà tuyển dụng' : 'Employer'}
-            // error={titleError} // Đánh dấu lỗi
-          />
-          <div className="wrap-noti_input">
-            {activity.employer && activity.employer.length > 255 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Nhà tuyển dụng không được vượt quá 255 ký tự'
-                  : 'Recruitment must not exceed 255 characters'}
-              </span>
-            ) : !activity.employer ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Nhà tuyển dụng không được bỏ trống'
-                  : 'Recruitment cannot be empty'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${
-              activity.employer ? activity.employer.length : '0'
-            }/255`}</span>
-          </div>
-        </Box>
-        <Box sx={{ marginBottom: '12px' }}>
-          <LocalizationProvider dateAdapter={AdapterMoment}>
-            <DemoContainer
-              components={['DatePicker']}
-              //   sx={{ display: 'flex' }}
+          <Box sx={{ marginBottom: '12px' }}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
             >
-              <div className="activity-time-wraper">
-                <Typography
-                  // sx={styleLabel}
-                  variant="body1"
-                  component="label"
-                  htmlFor="nameProfile"
-                >
-                  {languageRedux === 1 ? 'Ngày bắt đầu' : 'Start date'}{' '}
-                  <span className="color-asterisk">*</span>
-                </Typography>
-                <DatePicker
-                  value={moment(activity.startDate)}
-                  onChange={handleOnchangeStartDate}
-                  views={['year', 'month']}
-                  openTo="month"
-                  format="MM/YYYY"
-                />
-                <div className="wrap-noti_input">
-                  {activity.endDate &&
-                  new Date(activity.startDate).getFullYear() >
-                    new Date().getFullYear() ? (
-                    <span className="helper-text">
-                      Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
-                    </span>
-                  ) : !new Date(activity.startDate).getFullYear() ? (
-                    <span className="helper-text">
-                      Vui lòng nhập Thời gian bắt đầu
-                    </span>
-                  ) : new Date(activity.startDate).getFullYear() < 1900 ? (
-                    <span className="helper-text">
-                      Thời gian bắt đầu không thể nhỏ hơn 1900
-                    </span>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </DemoContainer>
-          </LocalizationProvider>
-        </Box>
-        <Box sx={{ marginBottom: '12px' }}>
-          <LocalizationProvider dateAdapter={AdapterMoment}>
-            <DemoContainer
-              components={['DatePicker']}
-              //   sx={{ display: 'flex' }}
+              {languageRedux === 1 ? 'Tiêu đề hoạt động' : 'Function Title'}{' '}
+              <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              type="text"
+              id="skill"
+              name="skill"
+              value={activity.title}
+              onChange={handleOnchangeTitle}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder={
+                languageRedux === 1 ? 'Tiêu đề hoạt động' : 'Function Title'
+              }
+              // error={titleError} // Đánh dấu lỗi
+            />
+            <div className="wrap-noti_input">
+              {activity.title && activity.title.length > 255 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Tiêu đề hoạt động không được vượt quá 255 ký tự'
+                    : 'Function title cannot exceed 255 characters'}
+                </span>
+              ) : !activity.title ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Tiêu đề hoạt động không được bỏ trống'
+                    : 'Function title cannot be empty'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${
+                activity.title ? activity.title.length : '0'
+              }/255`}</span>
+            </div>
+          </Box>
+          <Box sx={{ marginBottom: '12px' }}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
             >
-              <div className="activity-time-wraper">
-                <Typography
-                  // sx={styleLabel}
-                  variant="body1"
-                  component="label"
-                  htmlFor="nameProfile"
-                >
-                  {languageRedux === 1 ? 'Ngày kết thúc' : 'End date'}{' '}
-                  <span className="color-asterisk">*</span>
-                </Typography>
-                <DatePicker
-                  value={moment(activity.endDate)}
-                  onChange={handleOnchangeEndDate}
-                  views={['year', 'month']}
-                  openTo="month"
-                  format="MM/YYYY"
-                />
-                <div className="wrap-noti_input">
-                  {activity.endDate &&
-                  new Date(activity.endDate).getFullYear() >
-                    new Date().getFullYear() ? (
-                    <span className="helper-text">
-                      Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
-                    </span>
-                  ) : !new Date(activity.endDate).getFullYear() ? (
-                    <span className="helper-text">
-                      Vui lòng nhập Thời gian bắt đầu
-                    </span>
-                  ) : new Date(activity.endDate).getFullYear() < 1900 ? (
-                    <span className="helper-text">
-                      Thời gian bắt đầu không thể nhỏ hơn 1900
-                    </span>
-                  ) : (
-                    <></>
-                  )}
+              {languageRedux === 1 ? 'Nhà tuyển dụng' : 'Employer'}{' '}
+              <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              type="text"
+              id="skill"
+              name="skill"
+              value={activity.employer}
+              onChange={handleOnchangeEmployer}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder={languageRedux === 1 ? 'Nhà tuyển dụng' : 'Employer'}
+              // error={titleError} // Đánh dấu lỗi
+            />
+            <div className="wrap-noti_input">
+              {activity.employer && activity.employer.length > 255 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Nhà tuyển dụng không được vượt quá 255 ký tự'
+                    : 'Recruitment must not exceed 255 characters'}
+                </span>
+              ) : !activity.employer ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Nhà tuyển dụng không được bỏ trống'
+                    : 'Recruitment cannot be empty'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${
+                activity.employer ? activity.employer.length : '0'
+              }/255`}</span>
+            </div>
+          </Box>
+          <Box sx={{ marginBottom: '12px' }}>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DemoContainer
+                components={['DatePicker']}
+                //   sx={{ display: 'flex' }}
+              >
+                <div className="activity-time-wraper">
+                  <Typography
+                    // sx={styleLabel}
+                    variant="body1"
+                    component="label"
+                    htmlFor="nameProfile"
+                  >
+                    {languageRedux === 1 ? 'Ngày bắt đầu' : 'Start date'}{' '}
+                    <span className="color-asterisk">*</span>
+                  </Typography>
+                  <DatePicker
+                    value={moment(activity.startDate)}
+                    onChange={handleOnchangeStartDate}
+                    views={['year', 'month']}
+                    openTo="month"
+                    format="MM/YYYY"
+                    sx={{
+                      '& input': {
+                        fontSize: '14px',
+                        padding: '8.5px 14px',
+                      },
+                    }}
+                  />
+                  <div className="wrap-noti_input">
+                    {activity.endDate &&
+                    new Date(activity.startDate).getFullYear() >
+                      new Date().getFullYear() ? (
+                      <span className="helper-text">
+                        Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
+                      </span>
+                    ) : !new Date(activity.startDate).getFullYear() ? (
+                      <span className="helper-text">
+                        Vui lòng nhập Thời gian bắt đầu
+                      </span>
+                    ) : new Date(activity.startDate).getFullYear() < 1900 ? (
+                      <span className="helper-text">
+                        Thời gian bắt đầu không thể nhỏ hơn 1900
+                      </span>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </DemoContainer>
-          </LocalizationProvider>
+              </DemoContainer>
+            </LocalizationProvider>
+          </Box>
+          <Box sx={{ marginBottom: '12px' }}>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DemoContainer
+                components={['DatePicker']}
+                //   sx={{ display: 'flex' }}
+              >
+                <div className="activity-time-wraper">
+                  <Typography
+                    // sx={styleLabel}
+                    variant="body1"
+                    component="label"
+                    htmlFor="nameProfile"
+                  >
+                    {languageRedux === 1 ? 'Ngày kết thúc' : 'End date'}{' '}
+                    <span className="color-asterisk">*</span>
+                  </Typography>
+                  <DatePicker
+                    value={moment(activity.endDate)}
+                    onChange={handleOnchangeEndDate}
+                    views={['year', 'month']}
+                    openTo="month"
+                    format="MM/YYYY"
+                    sx={{
+                      '& input': {
+                        fontSize: '14px',
+                        padding: '8.5px 14px',
+                      },
+                    }}
+                  />
+                  <div className="wrap-noti_input">
+                    {activity.endDate &&
+                    new Date(activity.endDate).getFullYear() >
+                      new Date().getFullYear() ? (
+                      <span className="helper-text">
+                        Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
+                      </span>
+                    ) : !new Date(activity.endDate).getFullYear() ? (
+                      <span className="helper-text">
+                        Vui lòng nhập Thời gian bắt đầu
+                      </span>
+                    ) : new Date(activity.endDate).getFullYear() < 1900 ? (
+                      <span className="helper-text">
+                        Thời gian bắt đầu không thể nhỏ hơn 1900
+                      </span>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </div>
+              </DemoContainer>
+            </LocalizationProvider>
+          </Box>
+          <Box sx={{ marginBottom: '12px' }}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
+            >
+              {languageRedux === 1 ? 'Mô tả' : 'Description'}{' '}
+              <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              type="text"
+              id="skill"
+              name="skill"
+              value={activity.description}
+              onChange={handleOnchangeDescription}
+              // onKeyDown={(e: any) => handleKeyPress(e)}
+              // onPressEnter={(e: any) => handleKeyPress(e)}
+              multiline
+              rows={6}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder={
+                languageRedux === 1
+                  ? 'Mô tả quá trình thực tập của bạn'
+                  : 'Description your activity'
+              }
+              // error={titleError} // Đánh dấu lỗi
+            />
+            <div className="wrap-noti_input">
+              {activity.description.length === 0 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Thông tin thêm không được bỏ trống'
+                    : 'Additional information cannot be empty'}
+                </span>
+              ) : activity.description.length > 1000 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Thông tin thêm không được vượt quá 1000 ký tự'
+                    : 'Additional information cannot exceed 1000 characters'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${activity.description.length}/1000`}</span>
+            </div>
+          </Box>
+          <Button variant="contained" fullWidth onClick={handleSubmit}>
+            {language?.profile_page?.save_info}
+          </Button>
         </Box>
-        <Box sx={{ marginBottom: '12px' }}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
-          >
-            {languageRedux === 1 ? 'Mô tả' : 'Description'}{' '}
-            <span className="color-asterisk">*</span>
-          </Typography>
-          <TextField
-            type="text"
-            id="skill"
-            name="skill"
-            value={activity.description}
-            onChange={handleOnchangeDescription}
-            // onKeyDown={(e: any) => handleKeyPress(e)}
-            // onPressEnter={(e: any) => handleKeyPress(e)}
-            multiline
-            rows={6}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={
-              languageRedux === 1
-                ? 'Mô tả quá trình thực tập của bạn'
-                : 'Description your activity'
-            }
-            // error={titleError} // Đánh dấu lỗi
-          />
-          <div className="wrap-noti_input">
-            {activity.description.length === 0 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Thông tin thêm không được bỏ trống'
-                  : 'Additional information cannot be empty'}
-              </span>
-            ) : activity.description.length > 1000 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Thông tin thêm không được vượt quá 1000 ký tự'
-                  : 'Additional information cannot exceed 1000 characters'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${activity.description.length}/1000`}</span>
-          </div>
-        </Box>
-        <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {language?.profile_page?.save_info}
-        </Button>
-      </Box>
-    </Modal>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

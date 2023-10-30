@@ -253,13 +253,12 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     applicationId: number,
     postId: number,
   ) => {
-    // console.log('applicationId', applicationId)
     window.open(
       `/candidate-detail?post-id=${postId}&application_id=${applicationId}`,
     );
   };
 
-  // console.log("dataCandidates", dataCandidates);
+  console.log('dataCandidates', dataCandidates);
 
   return (
     <div className="history-post">

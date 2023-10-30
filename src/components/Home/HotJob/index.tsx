@@ -33,7 +33,12 @@ import { Navigation, Mousewheel, Grid, Pagination } from 'swiper';
 // import { actionCreators } from '../../../store/index';
 // import { RootState } from '../../../store/reducer';
 
-import { FireIcon, BagIcon, IconBriefCase, ArrowrightIcon } from '#components/Icons';
+import {
+  FireIcon,
+  BagIcon,
+  IconBriefCase,
+  ArrowrightIcon,
+} from '#components/Icons';
 
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
@@ -179,7 +184,6 @@ const HotJob: React.FC = () => {
       item.query,
     );
   };
-  // console.log('hotjob', hotjob);
   return (
     <Box
       sx={{
@@ -191,16 +195,10 @@ const HotJob: React.FC = () => {
       className="hot-job-container"
       id="hot-job-container"
     >
-      <div className="title-container" >
+      <div className="title-container">
         <div className="title">
           <FireIcon width={25} height={25} />
-          <h2>
-            {
-              languageRedux === 1 ?
-                "Công việc nổi bật" :
-                "Hot Jobs"
-            }
-          </h2>
+          <h2>{languageRedux === 1 ? 'Công việc nổi bật' : 'Hot Jobs'}</h2>
         </div>
         <div className="view-all" onClick={handleMoveToMoreJob}>
           <p>{language?.home_page?.view_all}</p>

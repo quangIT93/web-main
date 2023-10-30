@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 // @ts-ignore
-import { Navbar } from '#components';
 
 import { IconArrowLeft } from '#components/Icons';
 // @ts-ignore
 // import Carousel, { CarouselItem } from '#components/PageCv/Carousel';
 import PageCv2 from './../PageCv2';
 import './style.scss';
-import Footer from '#components/Footer/Footer';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import ModalLogin from '#components/Home/ModalLogin';
@@ -35,7 +33,7 @@ const PageCv = () => {
 
   return (
     <div className="wrap-page_Cv">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="wrap-item_pageCv">
         <div className="item-update_profile item-page_Cv">
           <h5>
@@ -200,7 +198,7 @@ const PageCv = () => {
         openModalLogin={openModalLogin}
         setOpenModalLogin={setOpenModalLogin}
       />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

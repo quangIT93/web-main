@@ -13,8 +13,6 @@
   //     display: none;
   //   }
   // }
-  // padding-top: 110px;
-  padding-top: 141px;
 
   .nav {
     &.css-1lmzauf {
@@ -75,13 +73,13 @@
     }
   }
 
-  @include breakpoint(tablet) {
-    padding-top: 80px;
-  }
+  // @include breakpoint(tablet) {
+  //   padding-top: 80px;
+  // }
 
-  @include breakpoint(mobile) {
-    padding-top: 80px;
-  }
+  // @include breakpoint(mobile) {
+  //   padding-top: 80px;
+  // }
 
   .div-include-breadcrumb {
     display: flex;
@@ -119,31 +117,31 @@
     // padding: 0 180px 70px;
     max-width: 1080px;
     margin: 0 auto;
-    padding: 0 0 70px 0;
+    // padding: 0 0 70px 0;
 
-    @include breakpoint(destop) {
-      padding: 0 24px 70px;
-    }
+    // @include breakpoint(destop) {
+    //   padding: 0 24px 70px;
+    // }
 
     //   padding: 0 20% 70px;
     // @media screen and (max-width: 1440px) and (min-width: 1280px) {
     // }
 
-    @media screen and (max-width: 1834px) and (min-width: 1280px) {
-      padding: 0 10% auto;
-    }
+    // @media screen and (max-width: 1834px) and (min-width: 1280px) {
+    //   padding: 0 10% auto;
+    // }
 
-    @include breakpoint(largeTablet) {
-      padding: 0 24px 70px;
-    }
+    // @include breakpoint(largeTablet) {
+    //   padding: 0 24px 70px;
+    // }
 
-    @include breakpoint(tablet) {
-      padding: 0 24px 70px;
-    }
+    // @include breakpoint(tablet) {
+    //   padding: 0 24px 70px;
+    // }
 
-    @include breakpoint(mobile) {
-      padding: 0 24px 70px;
-    }
+    // @include breakpoint(mobile) {
+    //   padding: 0 24px 70px;
+    // }
 
     .detail-content {
       display: flex;

@@ -9,15 +9,12 @@ import {
   setAlert,
 } from 'store/reducer/profileReducer/alertProfileReducer';
 // materi
-import { Box, Typography } from '@mui/material';
-import { Space, Tooltip } from 'antd';
-import { Button, Skeleton } from 'antd';
+import { Box } from '@mui/material';
+import { Space, Popover, Button } from 'antd';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 
 // @ts-ignore
-import { Navbar } from '#components';
-import Footer from '../../components/Footer/Footer';
 import profileApi from 'api/profileApi';
 import candidateSearch from 'api/apiCandidates';
 
@@ -30,7 +27,6 @@ import {
 
 import './style.scss';
 import ModalShowCv from '#components/Profile/ModalShowCv';
-import CategoryDropdown from '#components/CategoryDropdown';
 import MuiAlert from '@mui/material/Alert';
 import { Stack, AlertProps, Snackbar } from '@mui/material';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
@@ -123,7 +119,7 @@ const CandidateNewDetail = () => {
       }
     } catch (error: any) {
       // console.log(error.response);
-      error?.response?.data?.message === "Not enough points" &&
+      error?.response?.data?.message === 'Not enough points' &&
         setOpenModalMaxUnlock(true);
       return;
     }
@@ -140,7 +136,7 @@ const CandidateNewDetail = () => {
           dispatch<any>(setAlertSuccess(true));
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -160,7 +156,7 @@ const CandidateNewDetail = () => {
       if (resultBookmark) {
         setBookmarkCandidate(resultBookmark.data.total);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -202,12 +198,10 @@ const CandidateNewDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux, candidate]);
 
-  console.log('candidate', candidate);
-
   return (
     <div className="candidate-new-detail">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       <Box className="containerNewCandidate">
         <div className="candidates-profile-avatar">
           <div className="candidate-profile-avatar">
@@ -232,10 +226,15 @@ const CandidateNewDetail = () => {
                 <h2>
                   {candidate?.name ? candidate?.name : language?.unupdated}
                 </h2>
+                <p style={{ lineHeight: '30px' }}>
+                  {candidate?.jobTypeName !== null
+                    ? candidate?.jobTypeName
+                    : language?.unupdated}
+                </p>
               </div>
             </div>
             <div className="buttons-candidate">
-              {candidate?.isUnlocked === true ? (
+              {/* {candidate?.isUnlocked === true ? (
                 <Button
                   type="primary"
                   disabled={candidate && candidate?.isUnlocked}
@@ -256,26 +255,108 @@ const CandidateNewDetail = () => {
                     ? 'Mở khóa ứng viên'
                     : 'Unlock Candidates'}
                 </Button>
+              )} */}
+
+              {/* test */}
+              {candidate?.isUnlocked === false && (
+                <Popover
+                  placement="bottom"
+                  color="black"
+                  content={
+                    languageRedux === 1 ? (
+                      <p style={{ color: '#fff' }}>
+                        Dùng 1 lượt/Point để xem thông tin liên hệ của ứng viên
+                        này
+                      </p>
+                    ) : (
+                      <p style={{ color: '#fff' }}>
+                        Use 1 turn/Point to view candidate contact information
+                      </p>
+                    )
+                  }
+                >
+                  <Button
+                    type="primary"
+                    disabled={candidate && candidate?.isUnlocked}
+                    onClick={() => handleUnLockCandidate(candidate?.accountId)}
+                    style={{ backgroundColor: '#252525', color: '#fff' }}
+                  >
+                    <div className="contentBtn">
+                      <div>
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 25"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M19.5 8.28644H16.5V6.03644C16.5 4.84296 16.0259 3.69837 15.182 2.85446C14.3381 2.01054 13.1935 1.53644 12 1.53644C10.8065 1.53644 9.66193 2.01054 8.81802 2.85446C7.97411 3.69837 7.5 4.84296 7.5 6.03644V8.28644H4.5C4.10218 8.28644 3.72064 8.44447 3.43934 8.72578C3.15804 9.00708 3 9.38861 3 9.78644V20.2864C3 20.6843 3.15804 21.0658 3.43934 21.3471C3.72064 21.6284 4.10218 21.7864 4.5 21.7864H19.5C19.8978 21.7864 20.2794 21.6284 20.5607 21.3471C20.842 21.0658 21 20.6843 21 20.2864V9.78644C21 9.38861 20.842 9.00708 20.5607 8.72578C20.2794 8.44447 19.8978 8.28644 19.5 8.28644ZM9 6.03644C9 5.24079 9.31607 4.47773 9.87868 3.91512C10.4413 3.35251 11.2044 3.03644 12 3.03644C12.7956 3.03644 13.5587 3.35251 14.1213 3.91512C14.6839 4.47773 15 5.24079 15 6.03644V8.28644H9V6.03644ZM19.5 20.2864H4.5V9.78644H19.5V20.2864Z"
+                            fill="white"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        {languageRedux === 1
+                          ? 'Mở khóa ứng viên'
+                          : 'Unlock Candidates'}
+                      </div>
+                    </div>
+                  </Button>
+                </Popover>
+              )}
+
+              {candidate?.isUnlocked === true && (
+                <Button
+                  type="primary"
+                  disabled={candidate && candidate?.isUnlocked}
+                  // onClick={() => handleUnLockCandidate(candidate?.accountId)}
+                  style={{ background: '#AAAAAA', color: '#fff' }}
+                >
+                  <div className="contentBtn">
+                    <div>
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 25"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19.5 8.28644H16.5V6.03644C16.5 4.84296 16.0259 3.69837 15.182 2.85446C14.3381 2.01054 13.1935 1.53644 12 1.53644C10.8065 1.53644 9.66193 2.01054 8.81802 2.85446C7.97411 3.69837 7.5 4.84296 7.5 6.03644V8.28644H4.5C4.10218 8.28644 3.72064 8.44447 3.43934 8.72578C3.15804 9.00708 3 9.38861 3 9.78644V20.2864C3 20.6843 3.15804 21.0658 3.43934 21.3471C3.72064 21.6284 4.10218 21.7864 4.5 21.7864H19.5C19.8978 21.7864 20.2794 21.6284 20.5607 21.3471C20.842 21.0658 21 20.6843 21 20.2864V9.78644C21 9.38861 20.842 9.00708 20.5607 8.72578C20.2794 8.44447 19.8978 8.28644 19.5 8.28644ZM9 6.03644C9 5.24079 9.31607 4.47773 9.87868 3.91512C10.4413 3.35251 11.2044 3.03644 12 3.03644C12.7956 3.03644 13.5587 3.35251 14.1213 3.91512C14.6839 4.47773 15 5.24079 15 6.03644V8.28644H9V6.03644ZM19.5 20.2864H4.5V9.78644H19.5V20.2864Z"
+                          fill="white"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      {languageRedux === 1
+                        ? 'Mở khóa ứng viên'
+                        : 'Unlock Candidates'}
+                    </div>
+                  </div>
+                </Button>
               )}
 
               <Button
                 type="primary"
-                onClick={
-                  (event) => {
-                    handleClickItemCv(
-                      candidate?.profilesCvs[0]?.pdfURL,
-                      candidate?.accountId,
-                    );
-                  }
-                }
+                onClick={(event) => {
+                  handleClickItemCv(
+                    candidate?.profilesCvs[0]?.pdfURL,
+                    candidate?.accountId,
+                  );
+                }}
               >
-                {
-                  candidate?.isUnlocked === true ?
-                    candidate?.profilesCvs[0]?.pdfURL !== undefined ?
-                      languageRedux === 1 ? 'Xem hồ sơ' : 'Have a resume' :
-                      languageRedux === 1 ? 'Không có hồ sơ' : 'Not have a resume'
-                    : languageRedux === 1 ? 'Xem hồ sơ' : 'View resume'
-                }
+                {candidate?.isUnlocked === true
+                  ? candidate?.profilesCvs[0]?.pdfURL !== undefined
+                    ? languageRedux === 1
+                      ? 'Xem hồ sơ'
+                      : 'Have a resume'
+                    : languageRedux === 1
+                    ? 'Không có hồ sơ'
+                    : 'Not have a resume'
+                  : languageRedux === 1
+                  ? 'Xem hồ sơ'
+                  : 'View resume'}
               </Button>
 
               <div
@@ -316,7 +397,7 @@ const CandidateNewDetail = () => {
           >
             <h3>
               {languageRedux === 1
-                ? 'Thông tin ứng viên'
+                ? 'Thông tin cá nhân'
                 : 'Candidate information'}
             </h3>
           </div>
@@ -330,11 +411,11 @@ const CandidateNewDetail = () => {
               <p>
                 {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
-                    .format('DD/MM/YYYY')
-                    .replace(/\d{2}$/, 'xx')
+                      .format('DD/MM/YYYY')
+                      .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
-                    ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
-                    : language?.unupdated}
+                  ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
+                  : language?.unupdated}
               </p>
               <p>
                 {candidate?.genderText
@@ -434,12 +515,12 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
               ? candidate?.profileCategories?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item.fullName}
-                  </Button>
-                ),
-              )
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item.fullName}
+                    </Button>
+                  ),
+                )
               : language?.unupdated}
           </Space>
         </div>
@@ -456,10 +537,10 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
               ? candidate?.profileLocations?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  {item?.fullName}
-                </Button>
-              ))
+                  <Button key={index} className="btn" type="text">
+                    {item?.fullName}
+                  </Button>
+                ))
               : language?.unupdated}
           </Space>
         </div>
@@ -493,6 +574,7 @@ const CandidateNewDetail = () => {
           ></div>
         </div>
 
+        {/* Work experience */}
         <div className="candidate-profile-info">
           <div
             style={{
@@ -520,6 +602,55 @@ const CandidateNewDetail = () => {
           ></div>
         </div>
 
+        {/* Skills */}
+        <div className="candidate-profile-info">
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
+          </div>
+          <Space wrap className="item-info-work">
+            {candidate?.profilesSkills?.length !== 0
+              ? candidate?.profilesSkills?.map((item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    <span>{item.skillName}</span>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ))
+              : language?.unupdated}
+          </Space>
+        </div>
+
+        {/* Languages */}
+        <div className="candidate-profile-info">
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
+          </div>
+          <Space wrap className="item-info-work">
+            {candidate?.profilesLanguages?.length !== 0
+              ? candidate?.profilesLanguages?.map(
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      <span>{item.languageName}</span>
+                      <span>{item.dataLevel.data}</span>
+                    </Button>
+                  ),
+                )
+              : language?.unupdated}
+          </Space>
+        </div>
+
+        {/* Activities */}
         <div className="candidate-profile-info">
           <div
             style={{
@@ -547,6 +678,32 @@ const CandidateNewDetail = () => {
           ></div>
         </div>
 
+        {/* Reference */}
+        <div className="candidate-profile-info">
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <h3>{languageRedux === 1 ? 'Người giới thiệu' : 'References'}</h3>
+          </div>
+          <Space wrap className="item-info-work">
+            {candidate?.profilesReferences?.length !== 0
+              ? candidate?.profilesReferences?.map((item: any) => (
+                  <Button key={item.id} className="btn" type="text">
+                    <h3>{item.fullName}</h3>
+                    <span>{item.phone}</span>
+                    <span>{item.email}</span>
+                    <span>{item.description}</span>
+                  </Button>
+                ))
+              : language?.unupdated}
+          </Space>
+        </div>
+
+        {/* Award */}
         <div className="candidate-profile-info">
           <div
             style={{
@@ -582,45 +739,25 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
+            <h3>{languageRedux === 1 ? 'Sở thích' : 'Hobbies'}</h3>
           </div>
-          <Space wrap className="item-info-work">
-            {candidate?.profilesSkills?.length !== 0
-              ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  <span>{item.skillName}</span>
-                  <span>{item.dataLevel.data}</span>
-                </Button>
-              ))
-              : language?.unupdated}
-          </Space>
-        </div>
-
-        <div className="candidate-profile-info">
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
+          <Space
+            wrap
+            className="item-info-work"
+            style={{ width: '100%' }}
+            direction="vertical"
           >
-            <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
-          </div>
-          <Space wrap className="item-info-work">
-            {candidate?.profilesLanguages?.length !== 0
-              ? candidate?.profilesLanguages?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <span>{item.languageName}</span>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ),
-              )
-              : language?.unupdated}
+            {candidate?.profileHobbies ? (
+              <p className="textArea">
+                {candidate?.profileHobbies.description}
+              </p>
+            ) : (
+              language?.unupdated
+            )}
           </Space>
         </div>
       </Box>
-      <Footer />
+      {/* <Footer /> */}
       <ModalShowCv
         modalShowCvPDF={modalShowCvPDF}
         setModalShowCvPdf={setModalShowCvPdf}

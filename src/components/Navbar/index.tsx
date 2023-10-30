@@ -141,17 +141,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -178,8 +178,8 @@ const Navbar: React.FC = () => {
   const [salaryType, setSalaryType] = React.useState<any>();
   const [jobType, setJobType] = React.useState<any>();
   const [valueSearchInput, setValueSearchInput] = useState<
-    string | undefined
-  >();
+    string | null | undefined
+  >(null);
   const [listDis, setListDis] = useState<[]>([]);
   const [listCate, setListCate] = useState<[]>([]);
   const [typeMoney, setTypeMoney] = useState<number | null>(1);
@@ -229,7 +229,7 @@ const Navbar: React.FC = () => {
         setOpenModalTurnOffStatus(true);
         setSearchJob(false);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -422,7 +422,7 @@ const Navbar: React.FC = () => {
         dispatch(setProfileV3(result));
         setRole(result.data.typeRoleData);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -448,7 +448,7 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    getCountUnread();
+    localStorage.getItem('accessToken') && getCountUnread();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     receivedMessages,
@@ -472,7 +472,7 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    getCountAppliedNew();
+    localStorage.getItem('accessToken') && getCountAppliedNew();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -568,7 +568,7 @@ const Navbar: React.FC = () => {
 
   const handleSearch = async (
     event: any,
-    valueSearchInput: string | undefined,
+    valueSearchInput: string | null | undefined,
   ) => {
     event.preventDefault();
     var encode: any;
@@ -847,7 +847,7 @@ const Navbar: React.FC = () => {
             (key) => key !== exceptionKey,
           );
 
-          await dispatch<any>(setProfileV3([]))
+          await dispatch<any>(setProfileV3([]));
 
           for (const key of keysToRemove) {
             localStorage.removeItem(key);
@@ -893,7 +893,7 @@ const Navbar: React.FC = () => {
       if (result) {
         dispatch(setProfileV3(result));
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // useEffect(() => {
@@ -901,7 +901,7 @@ const Navbar: React.FC = () => {
   // }, []);
 
   React.useEffect(() => {
-    getAppliedPostedJobs();
+    if (localStorage.getItem('accessToken')) getAppliedPostedJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -972,14 +972,14 @@ const Navbar: React.FC = () => {
     setCookie('userFiltered', JSON.stringify(filter), 365);
 
     let typeJobReset = {
-      id: 5,
-      name: 'Tất cả',
+      id: 6,
+      name: languageRedux === 1 ? 'Loại công việc' : 'Job type',
     };
     setCookie('userTypejobFiltered', JSON.stringify(typeJobReset), 365);
 
     let typeSalaryReset = {
-      id: 0,
-      value: 'Tất cả',
+      id: -1,
+      value: languageRedux === 1 ? 'Trả lương theo' : 'Payment by',
     };
     setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };
@@ -1154,8 +1154,8 @@ const Navbar: React.FC = () => {
       className="actions-login"
       ref={refLogin}
       key="3"
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -1185,8 +1185,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-              openLogin &&
-              location?.pathname === '/'
+            openLogin &&
+            location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1219,11 +1219,11 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             localStorage.getItem('accessToken') &&
-              profileV3?.name === "Your name" &&
-              profileV3?.phone === "" &&
-              profileV3?.typeRoleData !== null &&
-              openLogin &&
-              location?.pathname === '/'
+            profileV3?.name === 'Your name' &&
+            profileV3?.phone === '' &&
+            profileV3?.typeRoleData !== null &&
+            openLogin &&
+            location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1232,11 +1232,9 @@ const Navbar: React.FC = () => {
           <h3>{languageRedux === 1 ? 'Cập nhật hồ sơ' : 'Update profile'}</h3>
           <div className="login__hover__p">
             <p>
-              {
-                languageRedux === 1 ?
-                  "Hoàn thành hồ sơ và bạn sẽ có cơ hội được nhà tuyển dụng tìm kiếm liên hệ." :
-                  "Complete your profile and you'll have a chance to be contacted by the recruiter you're looking for."
-              }
+              {languageRedux === 1
+                ? 'Hoàn thành hồ sơ và bạn sẽ có cơ hội được nhà tuyển dụng tìm kiếm liên hệ.'
+                : "Complete your profile and you'll have a chance to be contacted by the recruiter you're looking for."}
             </p>
           </div>
         </div>
@@ -1282,11 +1280,9 @@ const Navbar: React.FC = () => {
                         <p>
                           {companyName
                             ? companyName
-                            :
-                            languageRedux === 1 ?
-                              "Hãy cập nhật thông tin công ty" :
-                              "Please update company information"
-                          }
+                            : languageRedux === 1
+                            ? 'Hãy cập nhật thông tin công ty'
+                            : 'Please update company information'}
                         </p>
                       </>
                     ) : (
@@ -1300,12 +1296,12 @@ const Navbar: React.FC = () => {
                       {profileV3?.typeRoleData === 1
                         ? profileV3?.companyInfomation?.email
                           ? profileV3?.companyInfomation?.email
-                          : languageRedux === 1 ?
-                            "Hãy cập nhật thông tin công ty" :
-                            "Please update company information"
+                          : languageRedux === 1
+                          ? 'Hãy cập nhật thông tin công ty'
+                          : 'Please update company information'
                         : profileV3?.email
-                          ? profileV3?.email
-                          : languageData?.home_page?.un_update_infor}
+                        ? profileV3?.email
+                        : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
                   {profileV3?.typeRoleData === 1 ? (
@@ -1314,9 +1310,9 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3?.companyInfomation !== null
                           ? profileV3?.companyInfomation?.phone
-                          : languageRedux === 1 ?
-                            "Hãy cập nhật thông tin công ty" :
-                            "Please update company information"}
+                          : languageRedux === 1
+                          ? 'Hãy cập nhật thông tin công ty'
+                          : 'Please update company information'}
                       </p>
                     </span>
                   ) : (
@@ -1346,10 +1342,10 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3?.profileLocations?.length > 0
                           ? profileV3?.profileLocations?.map(
-                            (location: any) => {
-                              return `${location.fullName} , `;
-                            },
-                          )
+                              (location: any) => {
+                                return `${location.fullName} , `;
+                              },
+                            )
                           : languageData?.home_page?.un_update_infor}
                       </p>
                     </span>
@@ -1362,8 +1358,8 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3 && profileV3?.profileCategories?.length > 0
                           ? profileV3?.profileCategories.map((profile: any) => {
-                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                          })
+                              return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                            })
                           : languageData?.home_page?.un_update_infor}
                       </p>
                     </span>
@@ -1389,9 +1385,9 @@ const Navbar: React.FC = () => {
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1461,9 +1457,9 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                // style={{
-                //   display: openRadioGroup ? 'flex' : 'none',
-                // }}
+                  // style={{
+                  //   display: openRadioGroup ? 'flex' : 'none',
+                  // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
@@ -1543,7 +1539,7 @@ const Navbar: React.FC = () => {
     </Badge>,
     //     <div
     //       key="4"
-    //       className="wrap-btn_notice btn-noti_icon 
+    //       className="wrap-btn_notice btn-noti_icon
     // border-aniation_download
     // "
     //     >
@@ -1744,8 +1740,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {profileV3?.profileLocations?.length > 0
                         ? profileV3?.profileLocations?.map((location: any) => {
-                          return `${location.fullName} , `;
-                        })
+                            return `${location.fullName} , `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1758,8 +1754,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {profileV3 && profileV3?.profileCategories?.length > 0
                         ? profileV3?.profileCategories.map((profile: any) => {
-                          return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                        })
+                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1782,9 +1778,9 @@ const Navbar: React.FC = () => {
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1896,8 +1892,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin

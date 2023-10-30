@@ -31,6 +31,8 @@ export const HomeValueContext = React.createContext<{
   search: boolean;
   setOpenCategoryDropdown: React.Dispatch<React.SetStateAction<boolean>>;
   openCategoryDropdown: boolean;
+  // setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;,
+  // unsavedChanges: boolean
 }>({
   childCateloriesArray: [],
   setChildCateloriesArray: () => {},
@@ -57,6 +59,8 @@ export const HomeValueContext = React.createContext<{
   search: false,
   setOpenCategoryDropdown: () => {},
   openCategoryDropdown: false,
+  // setUnsavedChanges: () => {},
+  // unsavedChanges: false
 });
 
 type ParentComponentProps = {
@@ -67,7 +71,7 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
   const [childCateloriesArray, setChildCateloriesArray] = useState<number[]>(
     [],
   );
-
+  // const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [openCollapseFilter, setOpenCollapseFilter] = useState<boolean>(false);
 
   const [openNotificate, setOpenNotificate] = useState(false);

@@ -94,10 +94,10 @@ import ModalLogin from '../../../components/Home/ModalLogin';
 // };
 
 interface SearchProps {
-  value: string | undefined;
-  setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
+  value: string | undefined | null;
+  setValue: React.Dispatch<React.SetStateAction<string | undefined | null>>;
   setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSearchIcon: (event: any, params: string | undefined) => any;
+  handleSearchIcon: (event: any, params: string | undefined | null) => any;
   openCollapseFilter: boolean;
   checkSearch: boolean;
 }
@@ -150,6 +150,7 @@ const SearchInput: React.FC<SearchProps> = ({
     //   // , setFet
     // );
     // console.log('search', newValue);
+
     setValue(newValue);
     // console.log('coloe', newValue);
   };
@@ -168,6 +169,8 @@ const SearchInput: React.FC<SearchProps> = ({
     accessToken && setIsLogin(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log('isLogin', isLogin);
 
   // const getSuggestKeyWord = async () => {
   //   try {
@@ -210,7 +213,7 @@ const SearchInput: React.FC<SearchProps> = ({
         languageRedux === 1 ? 'vi' : 'en',
       );
       let resultHistory;
-      if (isLogin) {
+      if (localStorage.getItem('accessToken')) {
         resultHistory = await searchApi.getHistoryKeyWord(
           10,
           languageRedux === 1 ? 'vi' : 'en',
@@ -402,17 +405,17 @@ const SearchInput: React.FC<SearchProps> = ({
       </div>
     </div>
   ));
-
   return (
     <div className="search-input-wrapper">
       <Select
+        getPopupContainer={(triggerNode) => triggerNode.parentElement}
         labelInValue
         showSearch
         autoClearSearchValue
         optionFilterProp="children"
         size="large"
         value={value !== '' ? value : undefined}
-        searchValue={value}
+        searchValue={(value as string) || null || undefined}
         defaultValue={QUERY ? QUERY : null}
         // defaultValue={null}
         placeholder={

@@ -1,8 +1,7 @@
 .company-container {
     // margin-top: 70px;
-
+    padding: 0 24px;
     .company-content {
-        padding: 0px 0px 50px 0px;
         max-width: 1080px;
         margin: 0 auto 36px auto;
         transition: all linear 0.3s;
@@ -32,10 +31,6 @@
 
                 }
             }
-        }
-
-        @media screen and (max-width: 1080px) {
-            padding-inline: 24px !important;
         }
 
         .edit-logo-company-container {
