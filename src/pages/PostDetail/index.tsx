@@ -1173,14 +1173,19 @@ const Detail = () => {
         <div className="detail">
           <Helmet>
             <title>Tuyển nhân viên</title>
+            <link
+              rel="canonical"
+              href="https://hijob.site/post-detail"
+              data-react-helmet="true"
+            ></link>
             <meta property="og:type" content="article" />
-            <meta property="og:url" content="https://hijob.site/post-detail/" />
-            <meta property="og:title" content="Tuyển nhân viên" />
+            <meta property="og:url" content="https://hijob.site/post-detail" />
+            <meta property="og:title" content={`${post?.data.title}`} />
             <meta property="og:description" content="Tuyển nhân viên" />
 
             <meta
               property="og:image"
-              content="https://files.fullstack.edu.vn/f8-prod/courses/1.png"
+              content="https://hijob.site/images/searchJob.png"
             />
           </Helmet>
           {/* <NavBar />
