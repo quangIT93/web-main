@@ -1,6 +1,7 @@
 import MainLayout from 'layouts/MainLayout';
-import HotJobPage from '.';
 import RouteProps from '../routes';
+import { lazy } from 'react';
+const HotJobPage = lazy(() => import('.'));
 const route: RouteProps = {
   path: '/hotjobs',
   component: (

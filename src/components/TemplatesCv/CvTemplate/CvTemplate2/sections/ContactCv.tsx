@@ -42,7 +42,7 @@ const ContactCv: React.FC<ISkills> = (props) => {
   const styles = StyleSheet.create({
     title: {
       fontFamily: 'Montserrat Medium',
-      fontSize: '13.67pt',
+      fontSize: fontSize - 10,
       letterSpacing: '1px',
       textTransform: 'uppercase',
       marginLeft: '0.4cm',
@@ -60,7 +60,7 @@ const ContactCv: React.FC<ISkills> = (props) => {
       // marginBottom: 10,
     },
     text: {
-      fontSize: '7.81pt',
+      fontSize: fontSize - 15,
       // marginBottom: '1.53cm',
       fontFamily: 'Montserrat Regular',
     },
@@ -75,7 +75,7 @@ const ContactCv: React.FC<ISkills> = (props) => {
           : color === 4
           ? '#5CB265'
           : '#D80000',
-      fontSize: '8.79pt',
+      fontSize: fontSize - 12,
       fontFamily: 'Montserrat Medium',
     },
 

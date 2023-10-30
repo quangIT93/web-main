@@ -83,7 +83,8 @@ const ProfileCv: React.FC = () => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    profileV3.typeRoleData === 1 && window.open(`/`, '_parent');
+    if (!localStorage.getItem('accessToken') || profileV3.typeRoleData === 1)
+      profileV3.typeRoleData === 1 && window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -100,12 +101,6 @@ const ProfileCv: React.FC = () => {
 
     // setSelectedId(id);
   };
-
-  React.useEffect(() => {
-    if (!localStorage.getItem('accessToken') || roleRedux === 1)
-      window.open(`/`, '_parent');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleEditCv = (id: any) => {
     localStorage.setItem('cv-id', id);

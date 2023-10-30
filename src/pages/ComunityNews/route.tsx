@@ -1,7 +1,7 @@
-// import React, { lazy } from 'react'
+import React, { lazy } from 'react';
 import MainLayout from 'layouts/MainLayout';
-import ComunityNews from '.';
 import RouteProps from '../routes';
+const ComunityNews = lazy(() => import('.'));
 const route: RouteProps = {
   path: '/news-comunity',
   component: (

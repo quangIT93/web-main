@@ -8,10 +8,11 @@ import null_avatar from '../../images/null_avatar.png';
 interface ICvHeader {
   color: any;
   profile: any;
+  fontSize: any;
 }
 
 const Header: React.FC<ICvHeader> = (props) => {
-  const { color, profile } = props;
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       width: '100%',
@@ -53,7 +54,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       gap: '8.447px',
     },
     lastName: {
-      fontSize: 33,
+      fontSize: fontSize + 9,
       fontFamily: 'Montserrat Regular',
       // width: '100%',
       letterSpacing: '2px',
@@ -62,7 +63,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       width: '100mm',
     },
     firstName: {
-      fontSize: 33,
+      fontSize: fontSize + 9,
       fontFamily: 'Montserrat Regular',
       // width: '100%',
       letterSpacing: '2px',
@@ -72,7 +73,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       width: '100mm',
     },
     subtitle: {
-      fontSize: 9,
+      fontSize: fontSize - 15,
       justifySelf: 'flex-end',
       fontFamily: 'Montserrat Regular',
       color: '#1B1212',
@@ -80,7 +81,7 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     bigTitle: {
       fontFamily: 'Montserrat Bold',
-      fontSize: 10,
+      fontSize: fontSize - 14,
       letterSpacing: '8px',
       color: '#1B1212',
       marginTop: '12.34px',
@@ -122,7 +123,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       flexDirection: 'row',
       alignItems: 'center',
       gap: '0.284cm',
-      fontSize: '7px',
+      fontSize: fontSize - 14,
       fontFamily: 'Montserrat Regular',
     },
     leftDiv: {
@@ -186,7 +187,7 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     languageTitle: {
       fontFamily: 'Montserrat Bold',
-      fontSize: 12,
+      fontSize: fontSize - 12,
       letterSpacing: '2px',
     },
     languageDetail: {
@@ -196,12 +197,12 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     languageDetailLeft: {
       fontFamily: 'Montserrat Regular',
-      fontSize: 9,
+      fontSize: fontSize - 15,
       textTransform: 'uppercase',
     },
     languageDetailRight: {
       fontFamily: 'Montserrat Regular',
-      fontSize: 9,
+      fontSize: fontSize - 15,
       marginLeft: '0.345cm',
     },
     borderBot: {

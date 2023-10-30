@@ -1,10 +1,7 @@
-// import React from 'react'
-// import Feed from '.';
-
 import MainLayout from 'layouts/MainLayout';
-import EditPosted from '.';
 import RouteProps from '../routes';
-
+import { lazy } from 'react';
+const EditPosted = lazy(() => import('.'));
 const route: RouteProps = {
   path: '/edit-posted',
   component: (

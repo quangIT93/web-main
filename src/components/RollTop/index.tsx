@@ -9,7 +9,7 @@ const RollTop: React.FC = () => {
   const [height, setHeight] = React.useState(0);
 
   const handleRollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0 });
   };
 
   const listenToScroll = () => {

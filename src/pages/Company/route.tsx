@@ -1,7 +1,7 @@
-// import React, { lazy } from 'react'
+import React, { lazy } from 'react';
 import MainLayout from 'layouts/MainLayout';
-import Company from '.';
 import RouteProps from '../routes';
+const Company = lazy(() => import('.'));
 const route: RouteProps = {
   path: '/company-infor',
   component: (

@@ -6,10 +6,11 @@ import moment from 'moment';
 interface ICvEducation {
   color: any;
   profile: any;
+  fontSize: any;
 }
 
 const Languages: React.FC<ICvEducation> = (props) => {
-  const { color, profile } = props;
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginBottom: '24.69pt',
@@ -69,13 +70,13 @@ const Languages: React.FC<ICvEducation> = (props) => {
     },
     name: {
       fontFamily: 'Montserrat Regular',
-      fontSize: 13,
+      fontSize: fontSize - 11,
       textAlign: 'justify',
       color: '#112D4E',
     },
     detail: {
       fontFamily: 'Montserrat Regular',
-      fontSize: 9,
+      fontSize: fontSize - 15,
       // wordBreak: "break-word",
       // width: '100%',
       textAlign: 'justify',
@@ -84,7 +85,7 @@ const Languages: React.FC<ICvEducation> = (props) => {
     },
     title: {
       fontFamily: 'Montserrat Regular',
-      fontSize: 13,
+      fontSize: fontSize - 11,
       width: '159.407pt',
       textAlign: 'center',
       letterSpacing: '2px',

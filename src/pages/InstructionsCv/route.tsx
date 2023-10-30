@@ -1,8 +1,7 @@
-// import React, { lazy } from 'react';
+import React, { lazy } from 'react';
 import MainLayout from 'layouts/MainLayout';
-import InstructionsCv from '.';
 import RouteProps from '../routes';
-
+const InstructionsCv = lazy(() => import('.'));
 // import HomeValueContextProvider from 'context/HomeValueContextProvider';
 
 const route: RouteProps = {
