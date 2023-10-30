@@ -611,7 +611,7 @@ const Detail = () => {
     setOpenModalApply(false);
     setIsApplied(false);
   };
-  const handleClickShareSource = (nameShare: string) => {
+  const handleClickShareSource = (nameShare: string, postId: number) => {
     // window.location.href = `mailto:${email}`;
     if (nameShare === 'Mail') {
       // window.location.href = `mailto:quangbk54@gmail.com`;
@@ -658,7 +658,7 @@ const Detail = () => {
 
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         // post?.data.shareLink,
-        'https://hijob.site/',
+        `https://hijob.site/post-đetail/post-id=${postId}`,
       )}&quote=${encodeURIComponent(titleShare)}}&display=iframe`;
       window.open(url);
     }
@@ -1627,7 +1627,12 @@ const Detail = () => {
                   <div
                     // to={`/post-detail?post-id=${post?.data.id}`}
                     className="item-share"
-                    onClick={() => handleClickShareSource(itemShare.nameShare)}
+                    onClick={() =>
+                      handleClickShareSource(
+                        itemShare.nameShare,
+                        Number(searchParams.get('post-id')),
+                      )
+                    }
                     key={index}
                   >
                     {itemShare.icon}
