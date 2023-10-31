@@ -108,7 +108,7 @@ const Footer: React.FC = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  console.log(language);
+
   // const mail = useRef('contact.hijob@gmail.com');
   // const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];
 

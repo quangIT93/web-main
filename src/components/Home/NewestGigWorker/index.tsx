@@ -33,7 +33,7 @@ const NewestGigWorker = () => {
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const getAllCandidates = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const logout = localStorage.getItem('accessToken');
       const result = await candidateSearch.getCandidates(
         addresses,
@@ -42,8 +42,11 @@ const NewestGigWorker = () => {
         gender,
         ageMin,
         ageMax,
-        !logout ? 6 :
-          profileV3.length !== 0 && profileV3?.typeRoleData === 0 ? 6 : 18,
+        !logout
+          ? 6
+          : profileV3.length !== 0 && profileV3?.typeRoleData === 0
+          ? 6
+          : 18,
         page,
         languageRedux === 1 ? 'vi' : 'en',
       );
@@ -54,7 +57,7 @@ const NewestGigWorker = () => {
         }, 2000);
         setListData(result.data.cvFilters);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -80,6 +83,7 @@ const NewestGigWorker = () => {
         paddingBottom: '28px',
       }}
       className="list-candidate-container"
+      id="list-candidate-container"
     >
       <div
         style={{
@@ -125,7 +129,7 @@ const NewestGigWorker = () => {
               <>
                 <ItemCadidate item={item} key={index} />
               </>
-            )
+            );
           })}
         </Skeleton>
       </div>

@@ -1968,10 +1968,7 @@ const Navbar: React.FC = () => {
                 <BlackSearchIcon width={20} height={20} />
               </Button>
 
-              <Badge
-                count={window.innerWidth < 426 ? '' : countChat}
-                className="btn-badge"
-              >
+              <Badge count={countChat} className="btn-badge">
                 <Button
                   className="btn-notice"
                   name="btn-chat"
@@ -1992,7 +1989,7 @@ const Navbar: React.FC = () => {
               <div className="wrap-btn_notice ">
                 <Badge
                   key="3"
-                  count={window.innerWidth < 426 ? '' : countNoti}
+                  count={countNoti}
                   className="box-right-responsive_badge"
                 >
                   <Button

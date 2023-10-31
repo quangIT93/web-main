@@ -150,8 +150,6 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   //   setOpenBackdrop(false);
   // };
 
-  console.log('value', value);
-
   return (
     <Box
       sx={{

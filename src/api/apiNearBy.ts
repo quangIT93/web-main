@@ -9,7 +9,7 @@ const nearByApi = {
     limit: Number,
     threshold: Number | null,
     lang: string
-  ) => {
+  ) => { 
     if (pvId && Array.isArray(pvId)) {
       pvId = [...new Set(pvId)] as string[];
     } else {

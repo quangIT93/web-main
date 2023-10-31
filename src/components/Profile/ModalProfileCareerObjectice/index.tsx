@@ -200,8 +200,6 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     });
   };
 
-  console.log('click');
-
   const tProps: any = {
     // treeData,
     // open: true,

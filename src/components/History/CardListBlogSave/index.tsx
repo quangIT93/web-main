@@ -22,6 +22,7 @@ import communityApi from 'api/apiCommunity';
 
 import './style.scss';
 import HijobNewsCard from '#components/Community/HijobNewsCard';
+import NoDataComponent from 'utils/NoDataPage';
 
 const CardListBlogSave = () => {
   const languageRedux = useSelector(
@@ -203,7 +204,7 @@ const CardListBlogSave = () => {
         {/* </div> */}
       </Box>
       <div className="list-blog-create-data">
-        {stories ? (
+        {stories && stories?.length === 0 ? (
           stories.map((item: any, index: any) =>
             item?.communicationData?.type === 1 ? (
               <WorkingStoryCard
@@ -224,30 +225,35 @@ const CardListBlogSave = () => {
         ) : (
           <></>
         )}
-        <Box
-          sx={{
-            margin: '12px auto',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Button
-            style={{
-              width: 130,
-              height: 40,
-              backgroundColor: `#0D99FF`,
-              marginBottom: '2rem',
-              color: '#FFFFFF',
-              fontWeight: 'bold',
-              display: isVisible ? 'block' : 'none',
+        {stories && stories.length === 0 ? (
+          <Box
+            sx={{
+              margin: '12px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
-            loading={uploading}
-            onClick={handleChange}
           >
-            {language?.more}
-          </Button>
-        </Box>
+            <Button
+              style={{
+                width: 130,
+                height: 40,
+                backgroundColor: `#0D99FF`,
+                marginBottom: '2rem',
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                display: isVisible ? 'block' : 'none',
+              }}
+              loading={uploading}
+              onClick={handleChange}
+            >
+              {language?.more}
+            </Button>
+          </Box>
+        ) : (
+          <></>
+        )}
+        {stories && stories.length === 0 ? <NoDataComponent /> : <></>}
       </div>
     </>
   );

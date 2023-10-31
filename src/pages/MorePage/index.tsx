@@ -24,7 +24,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 // @ts-ignore
 import { BackIcon } from '#components/Icons';
 
-import { Skeleton, Radio, Select, Space, message, Spin } from 'antd';
+import { Skeleton, message, Spin } from 'antd';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import type { SelectProps, RadioChangeEvent } from 'antd';
 
 // import antIcon
@@ -101,7 +102,7 @@ const MoreJobsPage: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
+
   const [moreJob, setMoreJob] = React.useState<any>([]);
   const {
     // setChildCateloriesArray,
@@ -144,7 +145,7 @@ const MoreJobsPage: React.FC = () => {
   const [placeId, setPlaceId] = React.useState<any>();
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const analytics: any = getAnalytics();
   const dispatch = useDispatch();
   const getTemplateId = () => {
@@ -176,7 +177,6 @@ const MoreJobsPage: React.FC = () => {
       const result = await themesApi.getThemesEnable(
         languageRedux === 1 ? 'vi' : 'en',
       );
-      console.log('getThemesEnable', result);
 
       if (result) {
         setListThem(result);
@@ -274,6 +274,7 @@ const MoreJobsPage: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  console.log('id', idFilterProvinces);
 
   const getMoreJob = async () => {
     // console.log('re');
@@ -296,9 +297,9 @@ const MoreJobsPage: React.FC = () => {
               // null,
               // null,
               // profile && profile?.profileLocations?.length > 0 &&
-              profile.length !== 0 ? profile?.profileLocations : null,
-              profile.length !== 0
-                ? profile?.profileLocations[0]?.province?.id
+              profileV3.length !== 0 ? profileV3?.profileLocations : null,
+              profileV3.length !== 0
+                ? profileV3?.profileLocations[0]?.province?.id
                 : null,
               // null,
               20,
@@ -307,11 +308,11 @@ const MoreJobsPage: React.FC = () => {
             )
           : typeJob === 'suggested'
           ? await nearByApi.getNearByJob(
-              profile &&
-                profile?.profileLocations?.length > 0 &&
-                profile?.profileLocations?.map((item: any) => {
-                  return item.province.id;
-                }),
+              !idFilterProvinces && profileV3.length !== 0
+                ? profileV3.addressText.id
+                : idFilterProvinces
+                ? [idFilterProvinces]
+                : ['79'],
               null,
               null,
               19,
@@ -404,15 +405,15 @@ const MoreJobsPage: React.FC = () => {
             )
           : typeJob === 'suggested'
           ? await nearByApi.getNearByJob(
-              profile &&
-                profile?.profileLocations?.length > 0 &&
-                profile?.profileLocations?.map((item: any) => {
-                  return item.province.id;
-                }),
+              !idFilterProvinces && profileV3.length !== 0
+                ? profileV3.addressText.id
+                : idFilterProvinces
+                ? [idFilterProvinces]
+                : ['79'],
               null,
               null,
               19,
-              thersholdId,
+              moreJob[moreJob.length - 1].id,
               languageRedux === 1 ? 'vi' : 'en',
             )
           : await postApi.getPostByThemeId(
@@ -429,6 +430,9 @@ const MoreJobsPage: React.FC = () => {
         typeJob === 'new' || typeJob === 'hot-job'
           ? setMoreJob((prev: any) => [...prev, ...result?.data])
           : setMoreJob((prev: any) => [...prev, ...result?.data.posts]);
+        if (result.data.posts.length < 20) {
+          setHasMore(false);
+        }
       } else {
         setHasMore(false);
         message.config({
@@ -464,7 +468,7 @@ const MoreJobsPage: React.FC = () => {
   }, [
     languageRedux,
     idFilterProvinces,
-    profile,
+    profileV3,
     typeJob,
     childCateloriesArray,
     placeIdRedux,
@@ -525,10 +529,10 @@ const MoreJobsPage: React.FC = () => {
     }
   }, [provincesData, languageRedux]);
 
-  const handleChangeFilterHotjob = (value: string) => {
+  const handleChangeFilterHotjob = (event: SelectChangeEvent) => {
     // localStorage.setItem('filterHotjobProvince', value);
     // setCookie('filterHotjobProvince', value, 365);
-    setIdFilterProvinces(value);
+    setIdFilterProvinces(event.target.value);
   };
   // console.log('moreJob', moreJob);
 
@@ -572,6 +576,7 @@ const MoreJobsPage: React.FC = () => {
               <div
                 className="more-job-title-container"
                 id="more-job-title-container"
+                style={typeJob === 'suggested' ? { flexDirection: 'row' } : {}}
               >
                 <h3>
                   {typeJob === 'new'
@@ -584,6 +589,42 @@ const MoreJobsPage: React.FC = () => {
                     ? language?.nearby_jobs
                     : language?.jobs_by_theme}
                 </h3>
+                {typeJob === 'suggested' ? (
+                  <div className="filter-hotjob">
+                    <div className="filter-provinces">
+                      {optionsProvinces?.length !== 0 ? (
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          // value={'01'}
+                          defaultValue={
+                            Object.keys(profileV3).length !== 0 &&
+                            profileV3.addressText !== null
+                              ? profileV3.addressText.id
+                              : '79'
+                          }
+                          onChange={handleChangeFilterHotjob}
+                          placeholder={
+                            languageRedux === 1
+                              ? 'Chọn địa chỉ'
+                              : 'Select Address'
+                          }
+                        >
+                          {optionsProvinces?.map((v: any) => {
+                            return (
+                              <MenuItem value={v.value}>{v.label}</MenuItem>
+                            );
+                          })}
+                        </Select>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <></>
+                )}
+
                 {typeJob === 'place' ? (
                   <ListCompanyCarousel listTheme={listTheme} />
                 ) : (

@@ -69,7 +69,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     (state: RootState) => state.dataLanguage.languages,
   );
 
-  const userProfile = useSelector((state: RootState) => state.profile.profile);
+  // const userProfile = useSelector((state: RootState) => state.profile.profile);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   const [message, setMessage] = useState('');
 
@@ -393,13 +394,13 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
   const handleApply = async () => {
     if (
-      !userProfile.name ||
-      !userProfile.address ||
-      !userProfile.birthday ||
-      userProfile.gender === null ||
-      userProfile.gender === undefined ||
-      !userProfile.phone ||
-      !userProfile.email
+      !profileV3.name ||
+      !profileV3.addressText ||
+      !profileV3.birthday ||
+      profileV3.gender === null ||
+      profileV3.gender === undefined ||
+      !profileV3.phone ||
+      !profileV3.email
     ) {
       api.info({
         message: language?.post_detail_page?.update_infor_mess,
@@ -420,6 +421,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         props.setApply(true);
         setOpenModalApply(false);
       }
+
+      console.log('appli');
     } catch (error) {
       api.info({
         message: languageRedux === 1 ? 'Đăng nhập thất bại' : 'Login Failded',

@@ -170,8 +170,6 @@ const SearchInput: React.FC<SearchProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log('isLogin', isLogin);
-
   // const getSuggestKeyWord = async () => {
   //   try {
   //     var response = null;
