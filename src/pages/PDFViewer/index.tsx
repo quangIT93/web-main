@@ -5,11 +5,12 @@ import { Avatar, Spin } from 'antd';
 import { LoadingOutlined, CloseOutlined } from '@ant-design/icons';
 import { useSearchParams } from 'react-router-dom';
 //@ts-ignore
+import { pdfjs } from 'react-pdf';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 
 import './style.scss';
-
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 function PDFViewer() {
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
@@ -35,10 +36,9 @@ function PDFViewer() {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  console.log('params', searchParams.get('idPdf'));
 
   const [pageNumber, setNumPages] = React.useState(1);
-  console.log('profileV3', profileV3);
+
   // console.log('profileV3', profileV3?.profilesCvs[0].pdfURL);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   function onDocumentLoadSuccess({ numPages }: any) {
