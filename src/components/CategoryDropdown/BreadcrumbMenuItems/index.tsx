@@ -84,7 +84,7 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
@@ -131,7 +131,7 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/profile',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
@@ -154,52 +154,84 @@ const BreadcrumbMenuItems: React.FC = () => {
             localStorage.getItem('job-type') === 'new'
               ? languageRedux === 1
                 ? 'Công việc mới nhất'
-                : ''
+                : 'Newest Job'
               : localStorage.getItem('job-type') === 'suggested'
               ? languageRedux === 1
                 ? 'Công việc gợi ý'
-                : ''
+                : 'Subjected Job'
               : localStorage.getItem('job-type') === 'place'
               ? languageRedux === 1
                 ? 'Công việc theo chủ đề'
-                : ''
+                : 'Job by hot places'
               : '',
           href: '/',
         },
         {
           title:
             searchParams.get('categories-id') === 'all'
-              ? 'Công việc gợi ý'
+              ? languageRedux === 1
+                ? 'Công việc gợi ý'
+                : 'Suggested'
               : searchParams.get('categories-id') === '2'
-              ? 'Văn phòng'
+              ? languageRedux === 1
+                ? 'Văn phòng'
+                : 'Office worker'
               : searchParams.get('categories-id') === '3'
-              ? 'Khách sạn/Nhà hàng'
+              ? languageRedux === 1
+                ? 'Khách sạn/Nhà hàng'
+                : 'Hotel/Restaurant'
               : searchParams.get('categories-id') === '4'
-              ? 'IT/Lập trình viên'
+              ? languageRedux === 1
+                ? 'IT/Lập trình viên'
+                : 'IT/Programming'
               : searchParams.get('categories-id') === '5'
-              ? 'Design'
+              ? languageRedux === 1
+                ? 'Design'
+                : 'Design'
               : searchParams.get('categories-id') === '6'
-              ? 'Marketing'
+              ? languageRedux === 1
+                ? 'Marketing'
+                : 'Marketing'
               : searchParams.get('categories-id') === '7'
-              ? 'Lao động phổ thông'
+              ? languageRedux === 1
+                ? 'Lao động phổ thông'
+                : 'Blue-collar worker'
               : searchParams.get('categories-id') === '8'
-              ? 'Ngân hàng'
+              ? languageRedux === 1
+                ? 'Ngân hàng'
+                : 'Bank'
               : searchParams.get('categories-id') === '9'
-              ? 'Beauty & Spa'
+              ? languageRedux === 1
+                ? 'Beauty & Spa'
+                : 'Beauty & Spa'
               : searchParams.get('categories-id') === '10'
-              ? 'Xuất nhập khẩu'
+              ? languageRedux === 1
+                ? 'Xuất nhập khẩu'
+                : 'Logistic'
               : searchParams.get('categories-id') === '11'
-              ? 'Dịch vụ'
+              ? languageRedux === 1
+                ? 'Dịch vụ'
+                : 'Service'
               : searchParams.get('categories-id') === '12'
-              ? 'Giáo dục - Đào tạo'
+              ? languageRedux === 1
+                ? 'Giáo dục - Đào tạo'
+                : 'Education'
               : searchParams.get('categories-id') === '13'
-              ? 'Dịch thuật'
+              ? languageRedux === 1
+                ? 'Dịch thuật'
+                : 'Translator'
               : searchParams.get('categories-id') === '14'
-              ? 'Khoa học - Kỹ thuật'
+              ? languageRedux === 1
+                ? 'Khoa học - Kỹ thuật'
+                : 'Science - Technology'
               : searchParams.get('categories-id') === '15'
-              ? 'Chuyển nhà/Vệ sinh'
+              ? languageRedux === 1
+                ? 'Chuyển nhà/Vệ sinh'
+                : 'House moving/Cleaning'
               : searchParams.get('categories-id') === '16'
-              ? 'Ngành khác'
+              ? languageRedux === 1
+                ? 'Ngành khác'
+                : 'Others'
               : 'Tất cả',
         },
       ],
@@ -208,7 +240,7 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/history',
       menu: [
         {
-          title: 'Lịch sử',
+          title: languageRedux === 1 ? 'Lịch sử' : 'History',
           href: '/history',
         },
       ],
@@ -217,11 +249,11 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/message',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
-          title: 'Tin nhắn',
+          title: languageRedux === 1 ? 'Tin nhắn' : 'Messenger',
         },
       ],
     },
@@ -229,11 +261,11 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/new-comunity',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
-          title: 'Câu chuyện công việc',
+          title: languageRedux === 1 ? 'Câu chuyện công việc' : 'Working story',
         },
       ],
     },
@@ -241,11 +273,11 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/news-comunity',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
-          title: 'Tin tức',
+          title: languageRedux === 1 ? 'Tin tức' : 'News',
         },
       ],
     },
@@ -253,11 +285,11 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/detail-comunity',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
-          title: 'Chi tiết bài viết',
+          title: languageRedux === 1 ? 'Chi tiết bài viết' : 'Article details',
         },
       ],
     },
@@ -265,11 +297,11 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/comunity_create_post',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
-          title: 'Tạo bài viết mới',
+          title: languageRedux === 1 ? 'Tạo bài viết mới' : 'Creat new post',
         },
       ],
     },
@@ -277,11 +309,14 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/page-cv',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
-          title: 'Hướng dẫn tạo mẫu CV',
+          title:
+            languageRedux === 1
+              ? 'Hướng dẫn tạo mẫu CV'
+              : 'Instructions for creating a sample CV',
         },
       ],
     },
@@ -289,11 +324,11 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/templates-cv',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
-          title: 'Tạo CV',
+          title: languageRedux === 1 ? 'Tạo CV' : 'Create CV',
         },
       ],
     },
@@ -301,11 +336,12 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/profile-cv',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
-          title: 'Danh sách CV đã tạo',
+          title:
+            languageRedux === 1 ? 'Danh sách CV đã tạo' : 'List of created CV',
         },
       ],
     },
@@ -313,7 +349,7 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/company-infor',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
@@ -321,7 +357,8 @@ const BreadcrumbMenuItems: React.FC = () => {
           href: '/profile',
         },
         {
-          title: 'Thông tin công ty',
+          title:
+            languageRedux === 1 ? 'Thông tin công ty' : 'Company information',
         },
       ],
     },
@@ -329,11 +366,12 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/candidatesAll',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
-          title: 'Tìm kiếm ứng viên',
+          title:
+            languageRedux === 1 ? 'Tìm kiếm ứng viên' : 'Search candidates',
         },
       ],
     },
@@ -341,11 +379,14 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/candidate-new-detail',
       menu: [
         {
-          title: 'Home',
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
         {
-          title: 'Chi tiết thông tin ứng viên',
+          title:
+            languageRedux === 1
+              ? 'Chi tiết thông tin ứng viên'
+              : 'Detailed candidate information',
         },
       ],
     },

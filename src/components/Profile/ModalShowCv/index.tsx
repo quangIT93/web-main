@@ -1,11 +1,15 @@
 import React from 'react';
 import { Box, Modal, Typography, Button, TextField } from '@mui/material';
 import { Document, Page } from 'react-pdf';
+
 import { Avatar, Spin } from 'antd';
 import { LoadingOutlined, CloseOutlined } from '@ant-design/icons';
+import { pdfjs } from 'react-pdf';
+
 // data
 
 import './style.scss';
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -46,7 +50,7 @@ const ModalShowCv: React.FC<IModalShowCv> = (props) => {
   // const [modalShowCvPDF, setModalShowCvPdf] = React.useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const handleClose = () => {
-    setModalShowCvPdf({ open: false, urlPdf: '' });
+    setModalShowCvPdf({ open: false, urlPdf: modalShowCvPDF.urlPdf });
   };
 
   function onDocumentLoadSuccess({ numPages }: any) {
@@ -78,7 +82,7 @@ const ModalShowCv: React.FC<IModalShowCv> = (props) => {
         <h3>Show CV</h3>
         {modalShowCvPDF.urlPdf ? (
           <Document
-            file={modalShowCvPDF.urlPdf} // Thay đổi đường dẫn tới file PDF của bạn
+            file={modalShowCvPDF?.urlPdf} // Thay đổi đường dẫn tới file PDF của bạn
             loading={<Spin indicator={antIcon} />}
             noData={<Spin indicator={antIcon} />}
             onLoadSuccess={onDocumentLoadSuccess}
