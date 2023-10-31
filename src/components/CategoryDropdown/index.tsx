@@ -21,6 +21,7 @@ import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
+import BreadcrumbMenuItems from './BreadcrumbMenuItems';
 const titleContainer: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
@@ -400,15 +401,19 @@ const CategoryDropdown: React.FC = () => {
             maxWidth: location?.pathname === '/' ? '1280px' : '1080px',
           }}
         >
-          <div
-            className="category-dropdown-left"
-            onMouseEnter={() => setOpenCategoryDropdown(true)}
-            onMouseLeave={() => setOpenCategoryDropdown(false)}
-            onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}
-          >
-            <IconMenu />
-            <h3>{languageRedux === 1 ? 'Danh mục' : 'Menu'}</h3>
+          <div className="category-dropdown-left">
+            <div
+              className="category-dropdown-leftItems"
+              onMouseEnter={() => setOpenCategoryDropdown(true)}
+              onMouseLeave={() => setOpenCategoryDropdown(false)}
+              onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}
+            >
+              <IconMenu />
+              <h3>{languageRedux === 1 ? 'Danh mục' : 'Menu'}</h3>
+            </div>
+            <BreadcrumbMenuItems />
           </div>
+
           <div className="category-dropdown-right">
             {localStorage.getItem('accessToken') ? (
               <div className="category-dropdown-switch-container">

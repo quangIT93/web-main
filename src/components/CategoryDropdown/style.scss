@@ -47,21 +47,27 @@
             display: flex;
             align-items: center;
             gap: 12px;
-
-            svg {
-                stroke: #000000;
-                cursor: pointer;
-            }
-
-            h3 {
-                font-family: Roboto;
-                font-size: 16px;
-                font-weight: 700;
-                letter-spacing: 0em;
-                text-align: left;
-                cursor: pointer;
+            .category-dropdown-leftItems {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                
+                svg {
+                    stroke: #000000;
+                    cursor: pointer;
+                }
+    
+                h3 {
+                    font-family: Roboto;
+                    font-size: 16px;
+                    font-weight: 700;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    cursor: pointer;
+                }
             }
         }
+
 
         .category-dropdown-line {
             height: 24px;

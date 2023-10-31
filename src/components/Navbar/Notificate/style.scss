@@ -83,6 +83,36 @@
         background-color: #e7e7ed;
         cursor: pointer;
         transition: 0.3s linear all;
+        .content-notificate {
+          .wrap-title_contentNotificate {
+            h3 {
+              color: #575757;
+            }
+          }
+
+          h5 {
+            color: #575757;
+
+          }
+          ul {
+            li {
+              p {
+                color: #575757;
+              }
+
+              svg {
+                stroke: #575757;
+                color: #575757;
+              }
+            }
+          }
+
+          .time-content_keyword {
+            p {
+              color: #575757;
+            }
+          }
+        }
       }
       .wrap-img_keyword {
         margin-left: 8px;
@@ -312,7 +342,7 @@
         // }
 
         &:hover {
-          background-color: #e7e7ed;
+          background-color: #cdcdd3;
           
           .content_keyword {
             ul {
@@ -390,7 +420,85 @@
     }
 
     .readed {
-      background-color: #0d99ff;
+      background-color: #2fa2f5;
+      .content-notificate {
+        margin-left: 8px;
+        align-items: center;
+
+        .wrap-title_contentNotificate {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          h3 {
+            white-space: nowrap;
+            width: 180px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-weight: 500;
+            line-height: 24px;
+            font-size: 16px;
+            text-align: start;
+            color: #fff;
+          }
+
+          img {
+            width: 20px;
+            height: 20px;
+            object-fit: cover;
+          }
+        }
+
+        h5 {
+          white-space: nowrap;
+          width: 180px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          color: #fff;
+          font-size: 12px;
+          font-weight: 400;
+          text-transform: uppercase;
+          margin: 4px 0;
+          display: flex;
+          justify-content: flex-start;
+        }
+
+        ul {
+          li {
+            display: flex;
+            align-items: center;
+            p {
+              white-space: nowrap;
+              width: 210px;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              color: #fff;
+              font-size: 12px;
+              font-weight: 400;
+              margin-left: 6px;
+              display: flex;
+            }
+
+            svg {
+              stroke: #fff;
+              color: #fff;
+            }
+          }
+        }
+
+        .time-content_keyword {
+          display: flex;
+          margin-top: 8px;
+          justify-content: space-between;
+          .wrap-time {
+            display: flex;
+          }
+          p {
+            margin-right: 4px;
+            color: #fff;
+            font-size: 12px;
+          }
+        }
+      }
     }
   }
 

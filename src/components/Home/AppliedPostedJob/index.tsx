@@ -221,6 +221,7 @@ const AppliedPostedJob: React.FC = () => {
                 : '1px 0 0 0',
           }}
           className="applied-posted-jobs-container"
+          id="applied-posted-jobs-container"
         >
           <div
             className="advertisement-job-not-loging"

@@ -58,8 +58,6 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   // }, [languageRedux])
 
   const validURL = (str: string) => {
-    console.log('string', str);
-
     if (str.length < 50) {
       // var pattern = new RegExp(
       //   '^(https?:\\/\\/)?' + // protocol

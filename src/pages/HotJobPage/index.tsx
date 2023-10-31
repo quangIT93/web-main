@@ -448,8 +448,8 @@ const HotJobpage: React.FC = () => {
         !idFilterProvinces && profileV3.length !== 0
           ? profileV3.addressText.id
           : idFilterProvinces
-          ? idFilterProvinces
-          : '79',
+          ? [idFilterProvinces]
+          : [idFilterProvinces],
       );
 
       if (result && result.data.length !== 0) {
@@ -530,7 +530,7 @@ const HotJobpage: React.FC = () => {
                   }
                 </span>
               </h3>
-              <div className="filter-hotjob" onClick={handleClickFilterHotjob}>
+              <div className="filter-hotjob">
                 <div className="filter-provinces">
                   {optionsProvinces.length !== 0 ? (
                     <Select
