@@ -66,7 +66,7 @@ const SearchLocationCompany: React.FC<ISearchLocation> = (props) => {
             <div
                 style={{
                     position: 'absolute',
-                    zIndex: '8',
+                    zIndex: '1',
                     top: '10px',
                     left: '10px',
                     display: 'grid',

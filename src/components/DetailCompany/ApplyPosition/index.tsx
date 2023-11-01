@@ -21,6 +21,9 @@ const ApplyPosition: React.FC<IApplyPosition> = (props) => {
     const [page, setPage] = React.useState<any>('0');
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+    console.log("application", 4);
+
+
     const getJobOfCompany = async () => {
         try {
             setLoading(true);

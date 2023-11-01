@@ -1,5 +1,3 @@
-
-
 .ant-cascader-menu-item-expand {
     .ant-cascader-checkbox {
         display: none;
@@ -17,21 +15,22 @@
 .filter-loca-cate {
 
     @media screen and (max-width: 419px) {
-        width: 320px;
-        
+        width: 220px;
+
     }
 
     @media screen and (min-width: 420px) and (max-width: 599px) {
-        width: 400px;
+        width: 300px;
     }
 
     @media screen and (min-width: 600px) and (max-width: 768px) {
-        width: 550px;
+        width: 450px;
     }
 
-    @media screen and (min-width: 768px){
-        width: 520px;
+    @media screen and (min-width: 768px) {
+        width: 420px;
     }
+
     .ant-cascader-menus {
         .ant-cascader-menu {
             height: 285px !important;
@@ -39,7 +38,7 @@
     }
 }
 
-.ant-select-dropdown:has(.filter-candidate){
+.ant-select-dropdown:has(.filter-candidate) {
     z-index: 8 !important;
 }
 

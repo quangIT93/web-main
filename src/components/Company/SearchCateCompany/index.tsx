@@ -12,7 +12,7 @@ import { ArrowFilterIcon } from '#components/Icons';
 import { CateIcon } from '#components/Icons/iconCandidate';
 // import ant
 import { Button, Cascader, Divider, Typography } from 'antd';
-
+import './style.scss'
 interface ISearchCate {
     setCategories: any;
     setReset: Function;
@@ -61,7 +61,7 @@ const SearchCateCompany: React.FC<ISearchCate> = (props) => {
     };
 
     const DropdownRender = (menus: React.ReactNode) => (
-        <div className="filter-loca-cate filter-company">
+        <div className="filter-cate-company filter-company">
             <Text className="title-filter_location">
                 {languageRedux === 1 ? 'Ngành nghề' : 'Career'}
             </Text>
@@ -75,7 +75,7 @@ const SearchCateCompany: React.FC<ISearchCate> = (props) => {
     return (
         <div className="wrap-search_company" style={{ width: '100%' }}>
             <div
-                style={{ position: 'absolute', zIndex: '8', top: '10px', left: '10px' }}
+                style={{ position: 'absolute', zIndex: '1', top: '10px', left: '10px' }}
             >
                 <CateIcon />
             </div>
@@ -96,16 +96,16 @@ const SearchCateCompany: React.FC<ISearchCate> = (props) => {
                         ? dataCategories.map((parentCategory: any) => ({
                             value: parentCategory.parent_category_id,
                             label: parentCategory.parent_category,
-                            children: parentCategory.childs.map((child: any) => {
-                                var dis = false;
-                                //check id child  when disable = true
+                            // children: parentCategory.childs.map((child: any) => {
+                            //     var dis = false;
+                            //     //check id child  when disable = true
 
-                                return {
-                                    value: child.id,
-                                    label: child.name,
-                                    disabled: dis,
-                                };
-                            }),
+                            //     return {
+                            //         value: child.id,
+                            //         label: child.name,
+                            //         disabled: dis,
+                            //     };
+                            // }),
                         }))
                         : []
                 }
