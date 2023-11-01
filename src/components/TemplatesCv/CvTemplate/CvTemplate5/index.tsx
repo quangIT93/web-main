@@ -167,8 +167,6 @@ const CvTemplate5: React.FC<CvTemplate> = (props) => {
     src: ArchivoExpandRegular,
   });
 
-  console.log(profile);
-
   const Resume = (props: any) => (
     <Page {...props} style={styles.page}>
       <View style={styles.bgLeft} fixed></View>

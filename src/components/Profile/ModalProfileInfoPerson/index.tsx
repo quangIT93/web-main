@@ -63,6 +63,7 @@ const style = {
 };
 
 const styleChildBox = {
+  component: 'form',
   marginBottom: '12px',
   display: 'flex',
   flexDirection: 'column',
@@ -435,13 +436,13 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 // sx={styleLabel}
                 variant="body1"
                 component="label"
-                htmlFor="sex"
+                htmlFor="outlined-select-currency"
               >
                 {language?.sex} <span className="color-asterisk">*</span>
               </Typography>
               <TextField
                 select
-                id="sex"
+                id="outlined-select-currency"
                 value={gender}
                 // defaultValue={gender}
                 onChange={handleChange}

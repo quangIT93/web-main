@@ -67,84 +67,83 @@ const BreadcrumbMenuItems: React.FC = () => {
   const location = useLocation();
   const [titleNameJobHome, setTitleNameJobHome] = useState('');
 
-  const handleScroll = () => {
-    var targetElement = document.getElementById('hot-job-container');
-    var targetElement2 = document.getElementById('job-by-hot-place');
-    var targetElement3 = document.getElementById('box-suggestedJob');
-    var targetElement4 = document.getElementById('list-candidate-container');
-    var targetElement5 = document.getElementById('new-job');
-    var targetElement6 = document.getElementById('community-container');
-    // công việc đã ứng tuyển
+  // const handleScroll = () => {
+  //   var targetElement = document.getElementById('hot-job-container');
+  //   var targetElement2 = document.getElementById('job-by-hot-place');
+  //   var targetElement3 = document.getElementById('box-suggestedJob');
+  //   var targetElement4 = document.getElementById('list-candidate-container');
+  //   var targetElement5 = document.getElementById('new-job');
+  //   var targetElement6 = document.getElementById('community-container');
+  //   // công việc đã ứng tuyển
 
-    if (
-      targetElement &&
-      targetElement2 &&
-      targetElement3 &&
-      targetElement4 &&
-      targetElement6 &&
-      targetElement5
-    ) {
-      // Lấy thông tin về vị trí của phần tử đó trong trang
-      var elementRect = targetElement.getBoundingClientRect();
-      var elementRect2 = targetElement2.getBoundingClientRect();
-      var elementRect3 = targetElement3.getBoundingClientRect();
-      var elementRect4 = targetElement4.getBoundingClientRect();
-      var elementRect5 = targetElement5.getBoundingClientRect();
-      var elementRect6 = targetElement6.getBoundingClientRect();
+  //   if (
+  //     targetElement &&
+  //     targetElement2 &&
+  //     targetElement3 &&
+  //     targetElement4 &&
+  //     targetElement6 &&
+  //     targetElement5
+  //   ) {
+  //     // Lấy thông tin về vị trí của phần tử đó trong trang
+  //     var elementRect = targetElement.getBoundingClientRect();
+  //     var elementRect2 = targetElement2.getBoundingClientRect();
+  //     var elementRect3 = targetElement3.getBoundingClientRect();
+  //     var elementRect4 = targetElement4.getBoundingClientRect();
+  //     var elementRect5 = targetElement5.getBoundingClientRect();
+  //     var elementRect6 = targetElement6.getBoundingClientRect();
 
-      // Kiểm tra xem phần tử đã hiển thị trong viewport hay chưa
+  //     // Kiểm tra xem phần tử đã hiển thị trong viewport hay chưa
 
-      if (elementRect.top - 140 <= 0 && elementRect.bottom - 130 >= 0) {
-        setTitleNameJobHome(
-          languageRedux === 1 ? 'Hot jobs' : 'Công việc nổi bật',
-        );
-      } else if (
-        elementRect2.top - 140 <= 0 &&
-        elementRect2.bottom - 130 >= 0
-      ) {
-        setTitleNameJobHome(
-          languageRedux === 1 ? 'Công việc theo chủ đề' : 'Job by hot places',
-        );
-      } else if (
-        elementRect3.top - 140 <= 0 &&
-        elementRect3.bottom - 130 >= 0
-      ) {
-        setTitleNameJobHome(
-          languageRedux === 1 ? 'Công việc gợi ý' : 'Suggested jobs',
-        );
-      } else if (
-        elementRect4.top - 140 <= 0 &&
-        elementRect4.bottom - 130 >= 0
-      ) {
-        // Phần tử đã hiển thị, bạn có thể thực hiện hành động ở đây
-        setTitleNameJobHome(
-          languageRedux === 1 ? 'Ứng viên mới nhất' : 'Newest workers',
-        );
-      } else if (
-        elementRect5.top - 140 <= 0 &&
-        elementRect5.bottom - 130 >= 0
-      ) {
-        // Phần tử đã hiển thị, bạn có thể thực hiện hành động ở đây
-        setTitleNameJobHome(
-          languageRedux === 1 ? 'Công việc mới nhất' : 'Newest Jobs',
-        );
-      } else if (
-        elementRect6.top - 140 <= 0 &&
-        elementRect6.bottom - 130 >= 0
-      ) {
-        // Phần tử đã hiển thị, bạn có thể thực hiện hành động ở đây
-        setTitleNameJobHome(
-          languageRedux === 1 ? 'Cộng đồng HiJob' : 'HiJob Community',
-        );
-      }
-    }
-  };
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+  //     if (elementRect.top - 140 <= 0 && elementRect.bottom - 130 >= 0) {
+  //       setTitleNameJobHome(
+  //         languageRedux === 1 ? 'Công việc nổi bật' : 'Hot jobs',
+  //       );
+  //     } else if (
+  //       elementRect2.top - 140 <= 0 &&
+  //       elementRect2.bottom - 130 >= 0
+  //     ) {
+  //       setTitleNameJobHome(
+  //         languageRedux === 1 ? 'Công việc theo chủ đề' : 'Job by hot places',
+  //       );
+  //     } else if (
+  //       elementRect3.top - 140 <= 0 &&
+  //       elementRect3.bottom - 130 >= 0
+  //     ) {
+  //       setTitleNameJobHome(
+  //         languageRedux === 1 ? 'Công việc gợi ý' : 'Suggested jobs',
+  //       );
+  //     } else if (
+  //       elementRect4.top - 140 <= 0 &&
+  //       elementRect4.bottom - 130 >= 0
+  //     ) {
+  //       // Phần tử đã hiển thị, bạn có thể thực hiện hành động ở đây
+  //       setTitleNameJobHome(
+  //         languageRedux === 1 ? 'Ứng viên mới nhất' : 'Newest workers',
+  //       );
+  //     } else if (
+  //       elementRect5.top - 140 <= 0 &&
+  //       elementRect5.bottom - 130 >= 0
+  //     ) {
+  //       // Phần tử đã hiển thị, bạn có thể thực hiện hành động ở đây
+  //       setTitleNameJobHome(
+  //         languageRedux === 1 ? 'Công việc mới nhất' : 'Newest Jobs',
+  //       );
+  //     } else if (
+  //       elementRect6.top - 140 <= 0 &&
+  //       elementRect6.bottom - 130 >= 0
+  //     ) {
+  //       // Phần tử đã hiển thị, bạn có thể thực hiện hành động ở đây
+  //       setTitleNameJobHome(
+  //         languageRedux === 1 ? 'Cộng đồng HiJob' : 'HiJob Community',
+  //       );
+  //     }
+  //   }
+  // };
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll);
 
-    // return window.removeEventListener('scroll', handleScroll);
-  }, [titleNameJobHome]);
-  // Lắng nghe sự kiện scroll trên cửa sổ
+  //   // return window.removeEventListener('scroll', handleScroll);
+  // }, [titleNameJobHome]);
 
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const locations = [
@@ -155,18 +154,22 @@ const BreadcrumbMenuItems: React.FC = () => {
           title: languageRedux === 1 ? 'Trang chủ' : 'Home',
           href: '/',
         },
-        {
-          title: titleNameJobHome
-            ? titleNameJobHome
-            : languageRedux === 1
-            ? 'Thông tin tuyển dụng'
-            : 'Recruitment information',
-        },
+        // {
+        //   title: titleNameJobHome
+        //     ? titleNameJobHome
+        //     : languageRedux === 1
+        //     ? 'Thông tin tuyển dụng'
+        //     : 'Recruitment information',
+        // },
       ],
     },
     {
       location: '/hotjobs',
       menu: [
+        {
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
+          href: '/',
+        },
         {
           title: languageRedux === 1 ? 'Công việc nổi bật' : 'Hot jobs',
           href: `/hotjobs?hotjob-id=${searchParams.get(
@@ -222,6 +225,10 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/more-jobs',
       menu: [
         {
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
+          href: '/',
+        },
+        {
           title:
             localStorage.getItem('job-type') === 'new'
               ? languageRedux === 1
@@ -235,8 +242,12 @@ const BreadcrumbMenuItems: React.FC = () => {
               ? languageRedux === 1
                 ? 'Công việc theo chủ đề'
                 : 'Job by hot places'
+              : localStorage.getItem('job-type') === 'hot-job'
+              ? languageRedux === 1
+                ? 'Công việc nổi bật'
+                : 'Hot jobs'
               : '',
-          href: '/',
+          href: '/more-jobs',
         },
         {
           title:
@@ -411,7 +422,13 @@ const BreadcrumbMenuItems: React.FC = () => {
           href: '/',
         },
         {
-          title: languageRedux === 1 ? 'Tạo bài viết mới' : 'Creat new post',
+          title: !searchParams.get('post-community')
+            ? languageRedux === 1
+              ? 'Tạo bài viết mới'
+              : 'Creat new post'
+            : languageRedux === 1
+            ? 'Chỉnh sửa bài đăng'
+            : 'Edit post',
         },
       ],
     },
@@ -497,6 +514,45 @@ const BreadcrumbMenuItems: React.FC = () => {
             languageRedux === 1
               ? 'Chi tiết thông tin ứng viên'
               : 'Detailed candidate information',
+        },
+      ],
+    },
+    {
+      location: '/post-detail',
+      menu: [
+        {
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
+          href: '/',
+        },
+        {
+          title: languageRedux === 1 ? 'Chi tiết bài đăng' : 'Post details',
+        },
+      ],
+    },
+    {
+      location: '/pdfView',
+      menu: [
+        {
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
+          href: '/',
+        },
+        {
+          title: languageRedux === 1 ? 'Chi tiết hồ sơ CV' : 'CV detail',
+        },
+      ],
+    },
+    {
+      location: '/post',
+      menu: [
+        {
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
+          href: '/',
+        },
+        {
+          title:
+            languageRedux === 1
+              ? 'Tạo bài đăng tuyển dụng'
+              : 'Create job posting',
         },
       ],
     },
