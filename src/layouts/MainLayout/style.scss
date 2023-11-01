@@ -5,6 +5,10 @@
     margin-bottom: 59px;
     padding: 0 24px;
 
+    @media screen and (max-width: 450px){
+        margin-top: 171px;
+    }
+
     @include breakpoint(tablet) {
         margin-bottom: 24px;
     }
