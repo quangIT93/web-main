@@ -5,12 +5,68 @@ import { RootState } from 'store';
 import { useSelector } from 'react-redux';
 
 const BreadcrumbMenuItems: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams('');
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+
+  const dataItem = [
+    {
+      id: 0,
+      // title: language?.history_page?.applied_jobs,
+      // childs: [language?.all],
+      title:
+        languageRedux === 1 ? 'Các công việc đã ứng tuyển' : 'Applied jobs',
+      childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
+    },
+    {
+      id: 1,
+      // title: language?.history_page?.saved_jobs,
+      // childs: [language?.all],
+      title: languageRedux === 1 ? 'Các công việc đã lưu' : 'Saved jobs',
+      childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
+    },
+    {
+      id: 2,
+      // title: language?.history_page?.posted_jobs,
+      title:
+        languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs',
+      childs: [
+        languageRedux === 1 ? 'Tất cả' : 'All',
+        languageRedux === 1 ? 'Các công việc chưa đóng' : 'Unclosed jobs',
+        languageRedux === 1 ? 'Các công việc đã đóng' : 'Closed jobs',
+
+        // language?.history_page?.unclosed_jobs,
+
+        // language?.history_page?.closed_jobs,
+      ],
+    },
+    {
+      id: 3,
+      // title: language?.history_page?.list_of_articles,
+      title: languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles',
+      childs: [
+        languageRedux === 1 ? 'Đã lưu' : 'Saved',
+        languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
+        // language?.history_page?.saved,
+        // language?.history_page?.posts_created,
+      ],
+    },
+    {
+      id: 4,
+      // title: language?.history_page?.list_of_articles,
+      title: languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates',
+      childs: [
+        languageRedux === 1 ? 'Tất cả' : 'All',
+        // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
+        // language?.history_page?.saved,
+        // language?.history_page?.posts_created,
+      ],
+    },
+  ];
   const location = useLocation();
   const [titleNameJobHome, setTitleNameJobHome] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
+
   const handleScroll = () => {
     var targetElement = document.getElementById('hot-job-container');
     var targetElement2 = document.getElementById('job-by-hot-place');
@@ -39,35 +95,47 @@ const BreadcrumbMenuItems: React.FC = () => {
       // Kiểm tra xem phần tử đã hiển thị trong viewport hay chưa
 
       if (elementRect.top - 140 <= 0 && elementRect.bottom - 130 >= 0) {
-        setTitleNameJobHome('Công việc nổi bật');
+        setTitleNameJobHome(
+          languageRedux === 1 ? 'Hot jobs' : 'Công việc nổi bật',
+        );
       } else if (
         elementRect2.top - 140 <= 0 &&
         elementRect2.bottom - 130 >= 0
       ) {
-        setTitleNameJobHome('Công việc theo chủ đề');
+        setTitleNameJobHome(
+          languageRedux === 1 ? 'Công việc theo chủ đề' : 'Job by hot places',
+        );
       } else if (
         elementRect3.top - 140 <= 0 &&
         elementRect3.bottom - 130 >= 0
       ) {
-        setTitleNameJobHome('Công việc gợi ý');
+        setTitleNameJobHome(
+          languageRedux === 1 ? 'Công việc gợi ý' : 'Suggested jobs',
+        );
       } else if (
         elementRect4.top - 140 <= 0 &&
         elementRect4.bottom - 130 >= 0
       ) {
         // Phần tử đã hiển thị, bạn có thể thực hiện hành động ở đây
-        setTitleNameJobHome('Ứng viên mới nhất');
+        setTitleNameJobHome(
+          languageRedux === 1 ? 'Ứng viên mới nhất' : 'Newest workers',
+        );
       } else if (
         elementRect5.top - 140 <= 0 &&
         elementRect5.bottom - 130 >= 0
       ) {
         // Phần tử đã hiển thị, bạn có thể thực hiện hành động ở đây
-        setTitleNameJobHome('Công việc mới nhất');
+        setTitleNameJobHome(
+          languageRedux === 1 ? 'Công việc mới nhất' : 'Newest Jobs',
+        );
       } else if (
         elementRect6.top - 140 <= 0 &&
         elementRect6.bottom - 130 >= 0
       ) {
         // Phần tử đã hiển thị, bạn có thể thực hiện hành động ở đây
-        setTitleNameJobHome('Câu chuyện việc làm');
+        setTitleNameJobHome(
+          languageRedux === 1 ? 'Cộng đồng HiJob' : 'HiJob Community',
+        );
       }
     }
   };
@@ -88,7 +156,11 @@ const BreadcrumbMenuItems: React.FC = () => {
           href: '/',
         },
         {
-          title: titleNameJobHome ? titleNameJobHome : 'Nội dung công việc',
+          title: titleNameJobHome
+            ? titleNameJobHome
+            : languageRedux === 1
+            ? 'Thông tin tuyển dụng'
+            : 'Recruitment information',
         },
       ],
     },
@@ -96,7 +168,7 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/hotjobs',
       menu: [
         {
-          title: 'Công việc nổi bật',
+          title: languageRedux === 1 ? 'Công việc nổi bật' : 'Hot jobs',
           href: `/hotjobs?hotjob-id=${searchParams.get(
             'hotjob-id',
           )}&hotjob-type=${searchParams.get('hotjob-id')}`,
@@ -240,7 +312,45 @@ const BreadcrumbMenuItems: React.FC = () => {
       location: '/history',
       menu: [
         {
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
+          href: '/',
+        },
+        {
           title: languageRedux === 1 ? 'Lịch sử' : 'History',
+          href: '/history',
+        },
+        {
+          title:
+            searchParams.get('p') === '1'
+              ? 'Các công việc đã lưu'
+              : searchParams.get('p') === '2'
+              ? 'Các công việc đã đăng tuyển'
+              : searchParams.get('p') === '3'
+              ? 'Danh sách bài viết'
+              : searchParams.get('p') === '4'
+              ? 'Danh sách ứng viên'
+              : searchParams.get('p') === '0'
+              ? 'Các công việc đã ứng tuyển'
+              : '',
+          href: '/history',
+        },
+        {
+          title:
+            searchParams.get('c') === '1-0' ||
+            searchParams.get('c') === '2-0' ||
+            searchParams.get('c') === '2-0' ||
+            searchParams.get('c') === '0-0' ||
+            searchParams.get('c') === '4-0'
+              ? 'Tất cả'
+              : searchParams.get('c') === '2-1'
+              ? 'Các công việc chưa đóng'
+              : searchParams.get('c') === '2-2'
+              ? 'Các công việc đã đóng'
+              : searchParams.get('c') === '3-0'
+              ? 'Đã lưu'
+              : searchParams.get('c') === '3-1'
+              ? 'Bài viết bạn đã tạo'
+              : '',
           href: '/history',
         },
       ],
