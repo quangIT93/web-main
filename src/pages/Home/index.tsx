@@ -49,6 +49,7 @@ import { setIsNew } from 'store/reducer/isNewReducer';
 
 import Advertise from '#components/Home/Advertise';
 import { Helmet } from 'react-helmet';
+import NewestCompany from '#components/Home/NewsetCompany';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
@@ -256,6 +257,7 @@ const Home: React.FC = () => {
         <AppliedPostedJob />
         <HotJob />
         <NewestGigWorker />
+        <NewestCompany />
         <NewJobs />
         <SuggestJob />
         <ThemesJob />
@@ -272,12 +274,12 @@ const Home: React.FC = () => {
         openModalSelectRole={openModalSelectRole}
         setOpenModalSelectRole={setOpenModalSelectRole}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        // setRole={setRole}
+      // setRole={setRole}
       />
       <ModalUpdateInfo
         openModalUpdateInfo={openModalUpdateInfo}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        // role={role}
+      // role={role}
       />
       {/* <RollTop />
       <Footer /> */}

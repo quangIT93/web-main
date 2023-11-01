@@ -41,7 +41,7 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
           setLoadingSwitch(false);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleCancel = () => {
@@ -89,7 +89,7 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
           ? 'Sau khi tắt tìm kiếm việc làm, Nhà tuyển dụng có thể không tìm thấy bạn và cơ hội tìm được công việc phù hợp với bạn sẽ giảm đi.'
           : 'After turning off job search, Recruiters may not be able to find you, and your chances of getting the right job for you are reduced.'}
       </p>
-      <div className="share-buttons-choose-cv-modal">
+      <div className="buttons-turn-off-status-modal">
         <Button type="primary" shape="round" onClick={handleTurnOff}>
           {languageRedux === 1 ? 'Tắt' : 'Turn off'}
         </Button>

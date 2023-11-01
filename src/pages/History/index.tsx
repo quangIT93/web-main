@@ -40,6 +40,7 @@ import { RootState } from '../../store/reducer/index';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
 import { setCookie } from 'cookies';
+import CardListCompany from '#components/History/CardListCompany';
 
 const { Panel } = Collapse;
 
@@ -194,6 +195,17 @@ const HistoryPost = () => {
         // language?.history_page?.posts_created,
       ],
     },
+    {
+      id: 5,
+      // title: language?.history_page?.list_of_articles,
+      title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
+      childs: [
+        languageRedux === 1 ? 'Tất cả' : 'All',
+        // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
+        // language?.history_page?.saved,
+        // language?.history_page?.posts_created,
+      ],
+    },
   ];
 
   React.useEffect(() => {
@@ -311,6 +323,13 @@ const HistoryPost = () => {
   const CardListCandidates = useMemo(() => {
     if (ItemLeft === 4) {
       return <CardListCandidate />;
+    }
+    return null;
+  }, [ItemLeft, activeChild]);
+
+  const CardListCompanies = useMemo(() => {
+    if (ItemLeft === 5) {
+      return <CardListCompany />;
     }
     return null;
   }, [ItemLeft, activeChild]);
@@ -483,6 +502,7 @@ const HistoryPost = () => {
             {CardsSave}
             {CardListBlog}
             {CardListCandidates}
+            {CardListCompanies}
           </Box>
         </Box>
       </div>

@@ -158,7 +158,7 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
           ? 'Xóa CV/Hồ sơ của bạn, bạn sẽ không thể ứng tuyển công việc bằng cách sử dụng nó nữa.\nBạn có muốn xóa CV/Hồ sơ này không?'
           : 'Delete your CV/Resume, you will no longer be able to apply for jobs using it.\nDo you want to delete this CV/Resume?'}
       </p>
-      <div className="share-buttons-choose-cv-modal">
+      <div className="buttons-delete-cv-modal">
         <Button type="primary" shape="round" onClick={handleSubmit}>
           {languageRedux === 1 ? 'Đồng ý' : 'Yes'}
         </Button>

@@ -20,7 +20,7 @@ import 'intl/locale-data/jsonp/en';
 
 import Nodata from 'utils/NoDataPage';
 import sortData from 'utils/SortDataHistory/sortData';
-
+import './style.scss';
 // api
 import historyRecruiter from 'api/historyRecruiter';
 
@@ -189,6 +189,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}
+        className="list_close_posted_job_history"
       >
         <div className="back-container">
           <Button

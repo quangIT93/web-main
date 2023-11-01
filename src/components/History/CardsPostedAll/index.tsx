@@ -195,6 +195,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}
+        className="list_posted_job_all_history"
       >
         <div className="back-container">
           <Button

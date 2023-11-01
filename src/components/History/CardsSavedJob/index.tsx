@@ -206,6 +206,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}
+        className="list_saved_job_title_history"
       >
         <Typography
           sx={{

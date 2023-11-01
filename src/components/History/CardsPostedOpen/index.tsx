@@ -18,7 +18,7 @@ import { Skeleton } from 'antd';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 import Nodata from 'utils/NoDataPage';
-
+import './style.scss';
 import sortData from 'utils/SortDataHistory/sortData';
 
 // api
@@ -203,6 +203,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}
+        className="list_open_posted_job_history"
       >
         <div className="back-container">
           <Button
