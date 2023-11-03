@@ -54,6 +54,14 @@ const profileApi = {
       },
     }) // Truyền email vào body của request
   },
+  getProfileInformationV3: (lang: string) => {
+    const URL = `v3/profiles/me/information?lang=${lang}`
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    }) // Truyền email vào body của request
+  },
   getProfileByAccountId: (lang: string, accountId: string) => {
     // unlock=${unclock}&
     const URL = `/v3/profiles/${accountId}?lang=${lang}`

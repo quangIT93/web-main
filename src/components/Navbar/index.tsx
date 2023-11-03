@@ -102,9 +102,10 @@ import {
   // collapseCssFilter,
 } from './Css';
 
-import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
+// import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
 
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 import { getLanguages } from 'store/reducer/dataLanguage';
 
 import { RootState } from '../../store/reducer';
@@ -119,12 +120,12 @@ import { useSearchParams } from 'react-router-dom';
 import { setLanguage } from 'store/reducer/changeLanguageReducer';
 // import { setLanguageApi } from 'store/reducer/dataLanguage';
 
-import { homeEn } from 'validations/lang/en/home';
-import { home } from 'validations/lang/vi/home';
-import languageApi from 'api/languageApi';
-import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
+// import { homeEn } from 'validations/lang/en/home';
+// import { home } from 'validations/lang/vi/home';
+// import languageApi from 'api/languageApi';
+// import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
 import { setRole } from 'store/reducer/roleReducer';
-import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
+// import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 import notificationApi from 'api/notification';
 // import { set } from 'immer/dist/internal';
 
@@ -201,36 +202,6 @@ const Navbar: React.FC = () => {
   const [openRadioGroup, setOpenRadioGroup] = useState<boolean>(false);
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
-  const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
-    React.useState<any>(false);
-  // const [isSearch, setIsSearch] = useState<boolean>(false);
-  // const [language, setLanguageState] = useState<any>();
-
-  const [searchJob, setSearchJob] = useState<boolean>(true);
-  const [openModalTurnOffStatus, setOpenModalTurnOffStatus] =
-    useState<boolean>(false);
-  const [loadingSwitch, setLoadingSwitch] = useState(false);
-  const handleOnchangeSearchJob = async (checked: any) => {
-    try {
-      if (checked === true) {
-        // e.preventDefault();
-        const result = await profileApi.putProfileJobV3(null, 1);
-        if (result) {
-          setSearchJob(true);
-          const resultProfileV3 = await profileApi.getProfileV3(
-            languageRedux === 1 ? 'vi' : 'en',
-          );
-          if (resultProfileV3) {
-            dispatch(setProfileV3(resultProfileV3));
-          }
-        }
-      } else {
-        setLoadingSwitch(true);
-        setOpenModalTurnOffStatus(true);
-        setSearchJob(false);
-      }
-    } catch (error) {}
-  };
 
   useEffect(() => {
     // if(localStorage.getItem('accessToken')){
@@ -323,8 +294,9 @@ const Navbar: React.FC = () => {
   // const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
   // const dataProfile = useSelector((state: RootState) => state.profileUser);
 
-  const dataProfile = useSelector((state: RootState) => state.profile.profile);
-  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileInformationV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   // console.log('profileV3', profileV3);
 
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
@@ -414,7 +386,11 @@ const Navbar: React.FC = () => {
 
   const getDataProfileV3 = async () => {
     try {
-      const result = await profileApi.getProfileV3(
+      // const result = await profileApi.getProfileV3(
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+
+      const result = await profileApi.getProfileInformationV3(
         languageRedux === 1 ? 'vi' : 'en',
       );
 
