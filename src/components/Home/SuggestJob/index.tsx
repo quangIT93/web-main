@@ -61,34 +61,74 @@ import JobCard from '../JobCard';
 import ModalLogin from '../../../components/Home/ModalLogin';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
+import JobCardV3 from '../JobCardV3';
 
-interface PostTheme {
-  id: number;
-  post_id: Number;
-  title: string;
-  company_name: string;
-  image: string;
-  ward: string;
-  district: string;
-  province: string;
-  end_time: number;
-  start_time: number;
-  salary_max: number;
-  salary_min: number;
-  salary_type: string;
-  resource: {
-    company_icon: string;
-  };
-  job_type: {
-    job_type_name: string;
-  };
-  created_at_text: string;
+// interface PostTheme {
+//   id: number;
+//   post_id: Number;
+//   title: string;
+//   company_name: string;
+//   image: string;
+//   ward: string;
+//   district: string;
+//   province: string;
+//   end_time: number;
+//   start_time: number;
+//   salary_max: number;
+//   salary_min: number;
+//   salary_type: string;
+//   resource: {
+//     company_icon: string;
+//   };
+//   job_type: {
+//     job_type_name: string;
+//   };
+//   created_at_text: string;
+//   bookmarked: boolean;
+//   money_type_text: string;
+// }
+
+// interface UserSelected {
+//   userSelectedId: any;
+// }
+export interface PostNewestV3 {
+  accountId: number;
+  address: string;
   bookmarked: boolean;
-  money_type_text: string;
-}
+  companyName: string;
+  companyResourceData: {
+    logo: string;
+  };
+  createdAtText: string;
+  id: number;
+  image: string;
+  jobType: {
+    id: number;
+    name: string;
+  };
+  location: {
+    district: {
+      id: string;
+      fullName: string;
+    };
 
-interface UserSelected {
-  userSelectedId: any;
+    province: {
+      fullName: string;
+      id: string;
+    };
+    ward: {
+      id: string;
+      fullName: string;
+    };
+  };
+  moneyType: string;
+  salaryMax: number;
+  salaryMin: number;
+  salaryType: {
+    id: number;
+    name: string;
+  };
+  title: string;
 }
 
 const ThemesJob: React.FC = () => {
@@ -119,45 +159,6 @@ const ThemesJob: React.FC = () => {
   //   dispatch,
   // );
 
-  const handleChange = async () => {
-    // setPage(value);
-    setOpenBackdrop(!openBackdrop);
-    // const test = [1, 2]
-    // const p = createSearchParams({ page: `${test}`})
-    // navigate(`/?${p}`);
-    // console.log(searchParams.get(`page`))
-    // const themeId = searchParams.get(`theme-id`)
-    //   ? searchParams.get(`theme-id`)
-    //   : listTheme?.data[0].id;
-
-    const categoryId = searchParams.get(`categories-id`)
-      ? searchParams.get(`categories-id`)
-      : null;
-
-    const threshold = nearJob[nearJob.length - 1]?.id;
-
-    const result = await nearByApi.getNearByJob(
-      null,
-      Number(searchParams.get('categories-id')),
-      null,
-      11,
-      threshold,
-      languageRedux === 1 ? 'vi' : 'en',
-    );
-    // const result = await postApi.getPostByThemeId(
-    //   Number(themeId),
-    //   9,
-    //   threshold,
-    // );
-
-    if (result) {
-      // setPostThemeMore(result);
-      setNearJob([...nearJob, ...result.data.posts]);
-
-      setOpenBackdrop(false);
-    }
-  };
-
   // handle click post details
   // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
   //   window.open(`/post-detail?post-id=${id}`, '_parent');
@@ -175,7 +176,8 @@ const ThemesJob: React.FC = () => {
   const getPostByThemeId = async () => {
     try {
       setLoading(true);
-      const result = await nearByApi.getNearByJob(
+
+      const result = await nearByApi.getNearByJobV3(
         // null,
         // Number(searchParams.get('categories-id')),
         profile &&
@@ -185,14 +187,12 @@ const ThemesJob: React.FC = () => {
           }),
         null,
         null,
-        11,
+        20,
         null,
         languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
-        // (result);
-
         // const list = await postApi.getPostByThemeId(
         //   result.data[0].id,
         //   19,
@@ -202,10 +202,8 @@ const ThemesJob: React.FC = () => {
         //   setPostByTheme(list);
         setAutomatic(true);
         // }
-        setNearJob(result.data.posts);
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
+        setNearJob(result.data);
+        setLoading(false);
       } else {
         setLoading(false);
       }
@@ -315,9 +313,9 @@ const ThemesJob: React.FC = () => {
                 columns={{ xs: 12, sm: 4, md: 12 }}
                 // sx={{ marginTop: '-8px' }}
               >
-                {nearJob.map((item: PostTheme, index: number) => (
+                {nearJob.map((item: PostNewestV3, index: number) => (
                   <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                    <JobCard item={item} />
+                    <JobCardV3 item={item} />
                   </Grid>
                 ))}
               </Grid>

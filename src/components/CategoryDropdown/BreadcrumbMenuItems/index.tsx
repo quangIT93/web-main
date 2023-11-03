@@ -315,7 +315,9 @@ const BreadcrumbMenuItems: React.FC = () => {
               ? languageRedux === 1
                 ? 'Ngành khác'
                 : 'Others'
-              : 'Tất cả',
+              : languageRedux === 1
+              ? 'Tất cả'
+              : 'All',
         },
       ],
     },
@@ -352,7 +354,9 @@ const BreadcrumbMenuItems: React.FC = () => {
             searchParams.get('c') === '2-0' ||
             searchParams.get('c') === '0-0' ||
             searchParams.get('c') === '4-0'
-              ? 'Tất cả'
+              ? languageRedux === 1
+                ? 'Tất cả'
+                : 'All'
               : searchParams.get('c') === '2-1'
               ? 'Các công việc chưa đóng'
               : searchParams.get('c') === '2-2'

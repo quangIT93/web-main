@@ -65,7 +65,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
-      // objectFit: 'contain',
+      borderRadius: '50%',
     },
   });
   return (
@@ -82,14 +82,14 @@ const Header: React.FC<ICvHeader> = (props) => {
       <Svg
         style={{
           position: 'absolute',
-          width: 400,
-          height: 400,
-          right: '-300',
+          width: '100',
+          height: '100%',
+          right: '0',
           top: '0',
         }}
       >
         <Polygon
-          points="0,0 0,70 30,110 120,110 180,30 160,0"
+          points="0,70 50,0 0,50"
           fill="#8dc5fe "
           stroke="#8dc5fe"
           strokeWidth={1}

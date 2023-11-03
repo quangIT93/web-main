@@ -1019,8 +1019,6 @@ const Navbar: React.FC = () => {
     }
   }, [languageId]);
 
-  console.log('languageId', languageId);
-
   React.useEffect(() => {
     const handleCloseFilter = (event: any) => {
       event.stopPropagation();

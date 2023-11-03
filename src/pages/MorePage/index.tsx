@@ -146,6 +146,7 @@ const MoreJobsPage: React.FC = () => {
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const [page, setPage] = React.useState(0);
   const analytics: any = getAnalytics();
   const dispatch = useDispatch();
   const getTemplateId = () => {
@@ -307,7 +308,7 @@ const MoreJobsPage: React.FC = () => {
               languageRedux === 1 ? 'vi' : 'en',
             )
           : typeJob === 'suggested'
-          ? await nearByApi.getNearByJob(
+          ? await nearByApi.getNearByJobV3(
               !idFilterProvinces && profileV3.length !== 0
                 ? profileV3.addressText.id
                 : idFilterProvinces
@@ -315,7 +316,7 @@ const MoreJobsPage: React.FC = () => {
                 : ['79'],
               null,
               null,
-              19,
+              20,
               null,
               languageRedux === 1 ? 'vi' : 'en',
             )
@@ -329,10 +330,16 @@ const MoreJobsPage: React.FC = () => {
       setHasMore(true);
       if (result) {
         setLoading(false);
-        if (typeJob !== 'new' && typeJob !== 'hot-job') {
+        if (
+          typeJob !== 'new' &&
+          typeJob !== 'hot-job' &&
+          typeJob !== 'suggested'
+        ) {
           if (result.data.posts.length < 20) {
             setMoreJob(
-              typeJob === 'new' || typeJob === 'hot-job'
+              typeJob === 'new' ||
+                typeJob === 'hot-job' ||
+                typeJob === 'suggested'
                 ? result.data
                 : result.data.posts,
             );
@@ -343,7 +350,9 @@ const MoreJobsPage: React.FC = () => {
         }
         if (result.data.length < 20) {
           setMoreJob(
-            typeJob === 'new' || typeJob === 'hot-job'
+            typeJob === 'new' ||
+              typeJob === 'hot-job' ||
+              typeJob === 'suggested'
               ? result.data
               : result.data.posts,
           );
@@ -355,7 +364,9 @@ const MoreJobsPage: React.FC = () => {
           (result.data.length !== 0 || result.data.posts.length !== 0)
         ) {
           setMoreJob(
-            typeJob === 'new' || typeJob === 'hot-job'
+            typeJob === 'new' ||
+              typeJob === 'hot-job' ||
+              typeJob === 'suggested'
               ? result.data
               : result.data.posts,
           );
@@ -379,6 +390,7 @@ const MoreJobsPage: React.FC = () => {
 
   const fetchMoreData = async () => {
     try {
+      const nextPage = page + 1;
       let userSelected = JSON.parse(
         getCookie('userSelected') || '{}',
       ) as UserSelected;
@@ -404,7 +416,7 @@ const MoreJobsPage: React.FC = () => {
               languageRedux === 1 ? 'vi' : 'en',
             )
           : typeJob === 'suggested'
-          ? await nearByApi.getNearByJob(
+          ? await nearByApi.getNearByJobV3(
               !idFilterProvinces && profileV3.length !== 0
                 ? profileV3.addressText.id
                 : idFilterProvinces
@@ -412,13 +424,13 @@ const MoreJobsPage: React.FC = () => {
                 : ['79'],
               null,
               null,
-              19,
-              moreJob[moreJob.length - 1].id,
+              20,
+              nextPage,
               languageRedux === 1 ? 'vi' : 'en',
             )
           : await postApi.getPostByThemeId(
               storedSettings?.placeId ? storedSettings?.placeId : placeIdRedux,
-              19,
+              20,
               thersholdId,
               languageRedux === 1 ? 'vi' : 'en',
             );
@@ -427,7 +439,7 @@ const MoreJobsPage: React.FC = () => {
         result &&
         (result.data.length !== 0 || result.data.posts.length !== 0)
       ) {
-        typeJob === 'new' || typeJob === 'hot-job'
+        typeJob === 'new' || typeJob === 'hot-job' || typeJob === 'suggested'
           ? setMoreJob((prev: any) => [...prev, ...result?.data])
           : setMoreJob((prev: any) => [...prev, ...result?.data.posts]);
         if (result.data.posts.length < 20) {
@@ -476,13 +488,6 @@ const MoreJobsPage: React.FC = () => {
     //   getCookie('userSelected') || '{}',
     // )?.userSelectedId
   ]);
-
-  console.log('languageRedux', languageRedux);
-  console.log('idFilterProvinces', idFilterProvinces);
-  console.log('profileV3', profileV3);
-  console.log('typeJob', typeJob);
-  console.log('childCateloriesArray', childCateloriesArray);
-  console.log('placeIdRedux', placeIdRedux);
 
   const [provincesData, setProvincesData] = React.useState<
     [
@@ -540,6 +545,7 @@ const MoreJobsPage: React.FC = () => {
     // localStorage.setItem('filterHotjobProvince', value);
     // setCookie('filterHotjobProvince', value, 365);
     setIdFilterProvinces(event.target.value);
+    setPage(0);
   };
   // console.log('moreJob', moreJob);
 
@@ -687,7 +693,9 @@ const MoreJobsPage: React.FC = () => {
                     {moreJob.map((item: any, index: number) => (
                       <Skeleton loading={loading} active>
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                          {typeJob === 'new' || typeJob === 'hot-job' ? (
+                          {typeJob === 'new' ||
+                          typeJob === 'hot-job' ||
+                          typeJob === 'suggested' ? (
                             <JobCardMoreNewJob item={item} />
                           ) : (
                             <JobCardMoreJob item={item} />
