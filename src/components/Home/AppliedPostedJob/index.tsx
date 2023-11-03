@@ -132,9 +132,7 @@ const AppliedPostedJob: React.FC = () => {
       // );
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        setLoading(false);
 
         setAppliedPostedJob(result.data);
         // roleRedux === 0

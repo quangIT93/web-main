@@ -276,9 +276,7 @@ const NewJobs: React.FC = () => {
       if (result2) {
         dispatch(setPostNewestApiV3(result2));
         setOpenBackdrop(false);
-        setTimeout(() => {
-          setLoading(false);
-        }, 2500);
+        setLoading(false);
       }
 
       // if (result2) {
@@ -316,7 +314,7 @@ const NewJobs: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
 
   return (
     <>
@@ -336,11 +334,7 @@ const NewJobs: React.FC = () => {
             <div className="title">
               <NewJobIcon width={25} height={25} />
               <h2>
-                {
-                  languageRedux === 1 ?
-                    "Công việc mới nhất" :
-                    "Newest Jobs"
-                }
+                {languageRedux === 1 ? 'Công việc mới nhất' : 'Newest Jobs'}
               </h2>
               <div className="help-search" onClick={handleClickHelpSearch}>
                 <QuestionMarkIcon />

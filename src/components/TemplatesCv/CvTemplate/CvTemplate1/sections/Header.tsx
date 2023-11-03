@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-
 import { Image, Text, View, StyleSheet, Link } from '@react-pdf/renderer';
-import profileApi from 'api/profileApi';
-import { useSelector } from 'react-redux';
-import { RootState } from 'store';
-import axios from 'axios';
+
+// import profileApi from 'api/profileApi';
+// import { useSelector } from 'react-redux';
+// import { RootState } from 'store';
+// import axios from 'axios';
 interface ICvHeader {
   color: any;
   profile: any;
@@ -181,6 +181,18 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
   });
 
+  // sharp('input.jpg')
+  //   .rotate()
+  //   .resize(200)
+  //   .jpeg({ mozjpeg: true })
+  //   .toBuffer()
+  //   .then((data: any) => {
+  //     console.log(data);
+  //   })
+  //   .catch((err: any) => {
+  //     console.log(err);
+  //   });
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -211,7 +223,7 @@ const Header: React.FC<ICvHeader> = (props) => {
               </Text>
               {profile?.linkedin ? (
                 <Link style={styles.subtitle} src={profile?.linkedin}>
-                  Linkedin sssssssssssssssssssssssssss
+                  Linkedin
                 </Link>
               ) : (
                 <></>

@@ -26,7 +26,7 @@ import apiCv from 'api/apiCv';
 
 import templatesCv from '../CvTemplate/ListTheme';
 import { template } from '@babel/core';
-
+// const sharp = require('sharp');
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/legacy/build/pdf.worker.min.js',
 //   import.meta.url,

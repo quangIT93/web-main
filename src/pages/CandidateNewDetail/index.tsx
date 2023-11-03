@@ -341,7 +341,11 @@ const CandidateNewDetail = () => {
                 type="primary"
                 onClick={(event) => {
                   handleClickItemCv(
-                    candidate?.profilesCvs[0]?.pdfURL,
+                    candidate?.profilesCvs.filter((value: any) => {
+                      if (value.status === 1) {
+                        return value.pdfURL;
+                      }
+                    })[0].pdfURL,
                     candidate?.accountId,
                   );
                 }}

@@ -6,7 +6,7 @@ interface ICvHeader {
   profile: any;
   fontSize: any;
 }
-const Education: React.FC<ICvHeader> = (props) => {
+const Experience: React.FC<ICvHeader> = (props) => {
   const styles = StyleSheet.create({
     container: {
       marginLeft: -25,
@@ -76,7 +76,7 @@ const Education: React.FC<ICvHeader> = (props) => {
     <View style={styles.container}>
       <View>
         <View style={styles.divTitle}>
-          <Text style={styles.title}>Education</Text>
+          <Text style={styles.title}>Experience</Text>
         </View>
         <View style={styles.divInfo}>
           <View style={styles.leftInfo}>
@@ -89,10 +89,10 @@ const Education: React.FC<ICvHeader> = (props) => {
             </View>
             <View style={styles.divTextRight}>
               <Text style={styles.textRight}>
-                Thái minh quang người một hai ba bốn t amet consectetur
-                adipisicing elit. Eligendi ipsa ab officia dolor incidunt esse
-                neque quam consequatur accusamus id. Molestiae itaque suscipit
-                tempora quasi minima atque nesciunt dicta reprehenderit!
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Eligendi ipsa ab officia dolor incidunt esse neque quam
+                consequatur accusamus id. Molestiae itaque suscipit tempora
+                quasi minima atque nesciunt dicta reprehenderit!
               </Text>
               <Text style={styles.textRight}>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
@@ -133,4 +133,4 @@ const Education: React.FC<ICvHeader> = (props) => {
   );
 };
 
-export default Education;
+export default Experience;

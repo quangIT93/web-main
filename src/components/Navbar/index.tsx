@@ -811,7 +811,9 @@ const Navbar: React.FC = () => {
   let socket = useRef<any>();
 
   React.useEffect(() => {
-    if (!socket.current && localStorage.getItem('accessToken')) {
+    console.log('socket', socket.current);
+
+    if (socket.current === undefined && localStorage.getItem('accessToken')) {
       socket.current = io('https://neoworks.vn', {
         extraHeaders: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -820,6 +822,7 @@ const Navbar: React.FC = () => {
 
       socket.current.on('connect', () => {
         // setIsConnected(true);
+        console.log('ket noi thanh cong');
       });
     }
   }, []);
@@ -855,11 +858,11 @@ const Navbar: React.FC = () => {
         }
       }
     } catch (error) {
-      if (socket.current) {
-        console.log('disconnect socket thành công');
-        socket.current.disconnect();
-        // socket.current.close();
-      }
+      // if (socket.current) {
+      //   console.log('disconnect socket thành công');
+      //   socket.current.disconnect();
+      //   // socket.current.close();
+      // }
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('accountId');
@@ -1015,6 +1018,8 @@ const Navbar: React.FC = () => {
       dispatch(getLanguages('1') as any);
     }
   }, [languageId]);
+
+  console.log('languageId', languageId);
 
   React.useEffect(() => {
     const handleCloseFilter = (event: any) => {

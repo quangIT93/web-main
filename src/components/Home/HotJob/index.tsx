@@ -117,9 +117,7 @@ const HotJob: React.FC = () => {
 
       if (result) {
         setHotJob(result.data);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1500);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);

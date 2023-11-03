@@ -38,40 +38,63 @@ const Header: React.FC<ICvHeader> = (props) => {
       marginLeft: '47.137pt',
     },
     textName: {
-      fontSize: '46pt',
-      color: '#34899d',
-      fontFamily: 'Petrona Bold',
+      fontSize: '42pt',
+      color: '#2b6aa7',
       fontWeight: 'extrabold',
+      fontFamily: 'Montserrat SemiBold',
     },
     textPosition: {
-      fontSize: '20pt',
+      fontSize: '18pt',
       letterSpacing: '4pt',
       marginTop: '20pt',
-      color: '#34899d',
-      fontFamily: 'Petrona Bold',
+      color: '#000',
+      fontFamily: 'Montserrat SemiBold',
     },
     divImage: {
-      minHeight: '163.104pt',
-      minWidth: '205.915pt',
       margin: '43.762pt 48.768pt 43pt 0',
       backgroundColor: '#fff',
+      borderRadius: '50%',
+      border: '1px solid #ccc',
+      height: '205pt',
+      minWidth: '205pt',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     image: {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
+      // objectFit: 'contain',
     },
   });
   return (
     <View style={styles.container}>
-      {/* <Svg style={{ position: 'absolute', width: 400, height: 400 }}>
+      <Svg style={{ position: 'absolute', width: 400, height: 400, left: '0' }}>
         <Polygon
-          points="0,0 0,70 40,120 125,120 160,50 120,0"
-          fill="#0d99ff"
-          stroke="blue"
+          points="0,0 0,70 30,110 120,110 180,30 160,0"
+          fill="#8dc5fe "
+          stroke="#8dc5fe"
           strokeWidth={1}
         />
-      </Svg> */}
+      </Svg>
+
+      <Svg
+        style={{
+          position: 'absolute',
+          width: 400,
+          height: 400,
+          right: '-300',
+          top: '0',
+        }}
+      >
+        <Polygon
+          points="0,0 0,70 30,110 120,110 180,30 160,0"
+          fill="#8dc5fe "
+          stroke="#8dc5fe"
+          strokeWidth={1}
+        />
+      </Svg>
 
       <View style={styles.divInfo}>
         <View style={{ display: 'flex', justifyContent: 'center' }}>
@@ -88,7 +111,15 @@ const Header: React.FC<ICvHeader> = (props) => {
       </View>
 
       <View style={styles.divImage}>
-        <View style={{ padding: '9.955pt' }}>
+        <View
+          style={{
+            // padding: '9.955pt',
+            borderRadius: '50%',
+            backgroundColor: '#ccc',
+            height: '180pt',
+            width: '180pt',
+          }}
+        >
           <Image
             src={{
               uri:

@@ -52,9 +52,8 @@ const NewestGigWorker = () => {
       );
 
       if (result) {
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
+        setLoading(false);
+
         setListData(result.data.cvFilters);
       }
     } catch (error) {}

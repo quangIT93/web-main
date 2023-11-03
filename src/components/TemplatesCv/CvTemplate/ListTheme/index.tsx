@@ -10,6 +10,7 @@ import CvTemplate7 from '../CvTemplate7';
 import CvTemplate8 from '../CvTemplate8';
 import CvTemplate9 from '../CvTemplate9';
 import CvTemplate10 from '../CvTemplate10';
+import CvTemplate11 from '../CvTemplate11';
 
 const templatesCv = [
   {
@@ -55,6 +56,10 @@ const templatesCv = [
   {
     id: 10,
     component: CvTemplate10,
+  },
+  {
+    id: 11,
+    component: CvTemplate11,
   },
 ];
 
