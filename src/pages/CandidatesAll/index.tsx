@@ -445,13 +445,13 @@ const CandidatesAll = () => {
         </div>
         <div className="list-candidates">
           <div className="list-candidates_title">
-            <h3>
+            {/* <h3>
               {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
               <span>
                 {` ${total}`}
                 {languageRedux === 1 ? ' ứng vử viên' : ' candidates'}
               </span>
-            </h3>
+            </h3> */}
           </div>
           <InfiniteScroll
             dataLength={listData && listData?.length}
