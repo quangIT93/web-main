@@ -26,6 +26,8 @@ import isNewReducer from './isNewReducer'
 
 import profileReducerV3 from './profileReducerV3'
 
+import profileMeInformationV3 from './profileMeInformationReducerV3'
+
 import locationReducer from './locationReducer'
 
 import placeIdReducer from './placeIdReducer'
@@ -52,6 +54,7 @@ const reducers = combineReducers({
   dataLanguage: dataLanguage,
   dataLocation: locationReducer,
   dataProfileV3: profileReducerV3,
+  dataProfileInformationV3: profileMeInformationV3,
   placeIdReducer: placeIdReducer,
 
   checkPost: checkPost,

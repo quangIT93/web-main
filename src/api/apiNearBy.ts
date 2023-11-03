@@ -29,6 +29,32 @@ const nearByApi = {
       },
     })
   },
+  getNearByJobV3: (
+    pvId: any[] | null,
+    // pvId: number | null,
+    pcid: number | null,
+    ccid: number | null,
+    limit: Number,
+    page: Number | null,
+    lang: string) => {
+    if (pvId && Array.isArray(pvId)) {
+      pvId = [...new Set(pvId)] as string[];
+    } else {
+      // Handle the case when pvId is null or not an array
+      pvId = ['79'];  // Default value when pvId is not usable
+    }
+    
+    const URL = `/v3/posts/nearby?${pvId.map((n: any, index) => `provinceId=${n}`).join('&')}&` +
+    `${pcid ? `parentCategoryId=${pcid}&` : ''}` +
+    `${ccid ? `childrenCategoryId=${ccid}&` : ''}` +
+    `limit=${limit}&page=${page ? page : ''}&lang=${lang}`;
+
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+  }
 }
 
 export default nearByApi
