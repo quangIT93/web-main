@@ -1517,11 +1517,17 @@ const Navbar: React.FC = () => {
   };
 
   React.useEffect(() => {
-    if (openCollapseFilter || location.pathname === '/candidatesAll') {
+    if (
+      openCollapseFilter ||
+      location.pathname === '/candidatesAll' ||
+      location.pathname === '/profile' ||
+      location.pathname === '/post' ||
+      location.pathname === '/company-infor' ||
+      location.pathname === '/search-results'
+    ) {
       getAllLocaitions();
     }
   }, [openCollapseFilter]);
-  console.log('openCollapseFilter', openCollapseFilter);
 
   const menu = [
     <Button
