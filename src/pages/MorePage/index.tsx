@@ -275,7 +275,6 @@ const MoreJobsPage: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  console.log('id', idFilterProvinces);
 
   const getMoreJob = async () => {
     // console.log('re');

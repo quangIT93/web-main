@@ -119,7 +119,6 @@ const BreadcrumbsCpn: React.FC = () => {
     getAllChildCategoriesById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueJobChild?.id, languageRedux]);
-  console.log('childCateloriesArray', childCateloriesArray);
 
   useEffect(() => {
     setCheckedItems(

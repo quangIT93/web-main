@@ -76,7 +76,6 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [infor, setInfor] = React.useState<any>();
-  console.log('item', props.item);
 
   React.useEffect(() => {
     setInfor(props.item);
