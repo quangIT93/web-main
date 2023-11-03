@@ -468,7 +468,7 @@ const MoreJobsPage: React.FC = () => {
   }, [
     languageRedux,
     idFilterProvinces,
-    profileV3,
+    // profileV3,
     typeJob,
     childCateloriesArray,
     placeIdRedux,
@@ -476,6 +476,13 @@ const MoreJobsPage: React.FC = () => {
     //   getCookie('userSelected') || '{}',
     // )?.userSelectedId
   ]);
+
+  console.log('languageRedux', languageRedux);
+  console.log('idFilterProvinces', idFilterProvinces);
+  console.log('profileV3', profileV3);
+  console.log('typeJob', typeJob);
+  console.log('childCateloriesArray', childCateloriesArray);
+  console.log('placeIdRedux', placeIdRedux);
 
   const [provincesData, setProvincesData] = React.useState<
     [

@@ -161,8 +161,6 @@ const CvTemplate4: React.FC<CvTemplate> = (props) => {
     src: ArchivoExpandRegular,
   });
 
-  console.log(profile);
-
   const Resume = (props: any) => (
     <Page {...props} style={styles.page}>
       <Header color={color} profile={profile} fontSize={fontSize} />

@@ -99,6 +99,12 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
     fontWeight: 'bold',
   });
 
+  Font.register({
+    family: 'Montserrat SemiBold',
+    src: MontserratSemiBold,
+    fontWeight: 'bold',
+  });
+
   const Resume = (props: any) => (
     <Page {...props} style={styles.page}>
       <Header profile={profile} fontSize={fontSize} color={color} />
