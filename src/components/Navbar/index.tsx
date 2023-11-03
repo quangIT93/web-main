@@ -126,6 +126,8 @@ import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
 import { setRole } from 'store/reducer/roleReducer';
 import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 import notificationApi from 'api/notification';
+import { setLocationApi } from 'store/reducer/locationReducer';
+import locationApi from 'api/locationApi';
 // import { set } from 'immer/dist/internal';
 
 // import redux
@@ -1499,6 +1501,33 @@ const Navbar: React.FC = () => {
       </Spin>
     </div>,
   ];
+
+  const getAllLocaitions = async () => {
+    try {
+      const result = await locationApi.getAllLocation(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        // setDataLocations(result.data);
+        dispatch(setLocationApi(result));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  React.useEffect(() => {
+    if (
+      openCollapseFilter ||
+      location.pathname === '/candidatesAll' ||
+      location.pathname === '/profile' ||
+      location.pathname === '/post' ||
+      location.pathname === '/company-infor' ||
+      location.pathname === '/search-results'
+    ) {
+      getAllLocaitions();
+    }
+  }, [openCollapseFilter]);
 
   const menu = [
     <Button
