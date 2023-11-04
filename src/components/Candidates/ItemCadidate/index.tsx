@@ -32,7 +32,9 @@ interface ICadidate {
 
 const ItemCadidate: React.FC<ICadidate> = (props) => {
   const { item } = props;
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );

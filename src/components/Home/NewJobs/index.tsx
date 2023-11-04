@@ -152,7 +152,7 @@ const NewJobs: React.FC = () => {
     return state.newWestReducerV3;
   });
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   const dispatch = useDispatch();
   const { setPostNewest, setPostNewestMore } = bindActionCreators(

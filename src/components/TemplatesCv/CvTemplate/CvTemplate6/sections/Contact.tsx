@@ -62,6 +62,7 @@ const Contact: React.FC<ICvHeader> = (props) => {
       // marginTop: '12.404px',
       // border: '1px solid red',
       width: '100%',
+      fontFamily: 'OpenSans-Regular',
     },
     lastName: {
       fontSize: 33,
@@ -92,6 +93,7 @@ const Contact: React.FC<ICvHeader> = (props) => {
       // wordWrap: 'wrap',
       flexWrap: 'wrap',
       alignItems: 'center',
+      fontFamily: 'OpenSans-Regular',
     },
     bigTitle: {
       fontFamily: 'OpenSans-Regular',

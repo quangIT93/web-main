@@ -16,6 +16,7 @@ import { profileEn } from 'validations/lang/en/profile';
 import apiCv from 'api/apiCv';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { message } from 'antd';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -103,11 +104,11 @@ const ModalDeleteActivities: React.FC<IModalProfileDelete> = (props) => {
         activitiesId,
       );
       if (result) {
-        const resultProfile = await profileApi.getProfileV3(
+        const resultProfile = await profileApi.getProfileInformationMoreV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
 
-        resultProfile && dispatch(setProfileV3(resultProfile));
+        resultProfile && dispatch(setProfileMeInformationMoreV3(resultProfile));
         // message.success(
         //   deleteAll
         //     ? languageRedux === 1

@@ -23,6 +23,7 @@ import { setAlertSuccess } from 'store/reducer/profileReducer/alertProfileReduce
 import { message } from 'antd';
 
 import './style.scss';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 interface IModalReference {
   openModalReference: boolean;
   setOpenModalReference: React.Dispatch<React.SetStateAction<boolean>>;
@@ -219,11 +220,11 @@ const ModalReference: React.FC<IModalReference> = (props) => {
           description,
         );
         if (result) {
-          const resultProfile = await profileApi.getProfileV3(
+          const resultProfile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (resultProfile) {
-            dispatch(setProfileV3(resultProfile));
+            dispatch(setProfileMeInformationMoreV3(resultProfile));
             setFullName('');
             setDescription('');
             setPhone('');

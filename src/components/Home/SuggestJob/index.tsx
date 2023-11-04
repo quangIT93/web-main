@@ -150,7 +150,9 @@ const ThemesJob: React.FC = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profile = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   // state redux
   // const { post } = useSelector((state: RootState) => state);
   // const dispatch = useDispatch();
@@ -169,7 +171,7 @@ const ThemesJob: React.FC = () => {
   //   setOpenBackdrop(false);
   // };
 
-  const userProfile = useSelector((state: RootState) => state.profile.profile);
+  // const userProfile = useSelector((state: RootState) => state.profile.profile);
 
   // get post by theme id
 
@@ -180,7 +182,7 @@ const ThemesJob: React.FC = () => {
       const result = await nearByApi.getNearByJobV3(
         // null,
         // Number(searchParams.get('categories-id')),
-        profile &&
+        profile.length !== 0 &&
           profile?.profileLocations?.length > 0 &&
           profile?.profileLocations?.map((item: any) => {
             return item.province.id;

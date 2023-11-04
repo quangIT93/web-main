@@ -29,6 +29,7 @@ import {
 import { message } from 'antd';
 
 import './style.scss';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 interface IModalSkills {
   openModallanguages: boolean;
   setOpenModallanguages: React.Dispatch<React.SetStateAction<boolean>>;
@@ -150,7 +151,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
       if (checkForm) {
         const result = await apiCv.postProfileLanguage(level, language);
         if (result) {
-          const resultProfile = await profileApi.getProfileV3(
+          const resultProfile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (resultProfile) {
@@ -161,7 +162,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
             //     },
             //     ...prev,
             //   ]);
-            dispatch(setProfileV3(resultProfile));
+            dispatch(setProfileMeInformationMoreV3(resultProfile));
             setLanguage('');
             setLevel(1);
             setOpenModallanguages(false);

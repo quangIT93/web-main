@@ -69,7 +69,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   // const [messageApi, contextHolder] = message.useMessage();
 
   const userProfile = useSelector(
-    (state: RootState) => state.dataProfileV3.data,
+    (state: RootState) => state.dataProfileInformationV3.data,
   );
 
   const dataLocations = useSelector(

@@ -145,7 +145,10 @@ const BreadcrumbMenuItems: React.FC = () => {
   //   // return window.removeEventListener('scroll', handleScroll);
   // }, [titleNameJobHome]);
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const locations = [
     {
       location: '/',

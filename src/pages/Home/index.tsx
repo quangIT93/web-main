@@ -56,7 +56,9 @@ const Home: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
 
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [openModalSelectRole, setOpenModalSelectRole] = React.useState(

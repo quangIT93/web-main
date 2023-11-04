@@ -34,6 +34,7 @@ import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 import { provinces } from 'pages/Post/data/data';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -327,12 +328,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         const result = await profileApi.putProfilePersonal(info);
         if (result) {
           await dispatch(getProfile() as any);
-          const profileV3Api = await profileApi.getProfileV3(
+          const profileV3Api = await profileApi.getProfileInformationV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
 
           if (profileV3Api) {
-            await dispatch(setProfileV3(profileV3Api) as any);
+            await dispatch(setProfileMeInformationV3(profileV3Api) as any);
           }
           setOpenModalPersonalInfo(false);
         }

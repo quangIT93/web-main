@@ -17,6 +17,7 @@ import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { message } from 'antd';
 import './style.scss';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 // import { Input } from 'antd';
 
 // import './style.scss';
@@ -164,11 +165,12 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
           award.description.trim(),
         );
         if (result) {
-          const resultProfile = await profileApi.getProfileV3(
+          const resultProfile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
 
-          resultProfile && dispatch(setProfileV3(resultProfile));
+          resultProfile &&
+            dispatch(setProfileMeInformationMoreV3(resultProfile));
           //   message.success(
           //     languageRedux === 1
           //       ? `Thêm mới giải thưởng "${award.title}" thành công`

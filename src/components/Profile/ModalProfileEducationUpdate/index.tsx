@@ -25,6 +25,7 @@ import { message } from 'antd';
 import './style.scss';
 import candidateSearch from 'api/apiCandidates';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -344,11 +345,11 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       if (checkForm) {
         const result = await profileApi.updateProfileEducation(education);
         if (result) {
-          const profile = await profileApi.getProfileV3(
+          const profile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (profile) {
-            dispatch(setProfileV3(profile));
+            dispatch(setProfileMeInformationMoreV3(profile));
           }
           setOpenModalEducationUpdate(false);
         }

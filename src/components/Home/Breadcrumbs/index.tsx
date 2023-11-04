@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 import Collapse from '@mui/material/Collapse';
 import Box from '@mui/material/Box';
 import { FormGroup, FormControlLabel, Checkbox } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -71,6 +71,7 @@ const BreadcrumbsCpn: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const MAX_CHECKED_ITEMS = 3;
 
@@ -353,6 +354,12 @@ const BreadcrumbsCpn: React.FC = () => {
         // marginTop: '192px',
         // marginTop: navTouchCatelory ? '170px' : '24px',
         // position: 'relative',
+        marginTop:
+          location.pathname === '/more-jobs' &&
+          localStorage.getItem('job-type') === 'new' &&
+          window.innerWidth <= 450
+            ? '20px'
+            : '0px',
         maxWidth: '1080px',
         position: 'fixed',
         // position: 'relative',

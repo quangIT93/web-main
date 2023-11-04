@@ -171,15 +171,14 @@ const Detail = () => {
   // const userProfile = useSelector((state: RootState) => state.profileUser);
   // const userProfile = useSelector((state: RootState) => state.profile.profile);
   const profileV3 = useSelector((state: RootState) => {
-    console.log('state', state);
-    return state.dataProfileV3.data;
+    return state.dataProfileInformationV3.data;
   });
   // const dispatch = useDispatch()
   // const { setPostByTheme, setProvince } = bindActionCreators(
   //   actionCreators,
   //   dispatch
   // )
-  console.log('profileV3', profileV3);
+  // console.log('profileV3', profileV3);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -467,7 +466,7 @@ const Detail = () => {
 
   // handle click button
   const onclick = async () => {
-    console.log('click', profileV3);
+    // console.log('click', profileV3);
     if (
       post?.data?.companyResourceData?.name === 'HIJOB' &&
       profileV3.typeRoleData === 1

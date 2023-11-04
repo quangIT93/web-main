@@ -67,7 +67,9 @@ const AppliedPostedJob: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
-  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profile = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
   const [loading, setLoading] = React.useState(false);

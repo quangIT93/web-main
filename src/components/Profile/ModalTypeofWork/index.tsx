@@ -15,6 +15,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import profileApi from 'api/profileApi';
 import { RootState } from '../../../store/reducer';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -63,12 +64,12 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setValueType(jobTypeId)
-  }, [jobTypeId])
+    setValueType(jobTypeId);
+  }, [jobTypeId]);
 
   const handleClose = () => {
     setOpenModalTypeofWork(false);
-    handleSubmit()
+    handleSubmit();
   };
 
   const handleChange = (e: any) => {
@@ -79,13 +80,13 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
     try {
       const result = await profileApi.putProfileJobV3(valueType, null);
       if (result) {
-        const resultProfileV3 = await profileApi.getProfileV3(
+        const resultProfileV3 = await profileApi.getProfileInformationMoreV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
-        dispatch(setProfileV3(resultProfileV3));
+        dispatch(setProfileMeInformationMoreV3(resultProfileV3));
         setOpenModalTypeofWork(false);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
@@ -157,7 +158,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
             placeholder={'Loại công việc'}
             size="small"
             sx={{ width: '100%' }}
-          // error={!gender} // Đánh dấu lỗi
+            // error={!gender} // Đánh dấu lỗi
           >
             <MenuItem value={1}>
               {languageRedux === 1 ? 'Toàn thời gian' : 'Fulltime'}

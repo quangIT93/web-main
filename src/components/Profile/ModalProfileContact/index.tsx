@@ -23,6 +23,7 @@ import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 import { message } from 'antd';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 interface InfoContact {
   phone: string;
   email: string;
@@ -274,12 +275,12 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
 
         const result = await profileApi.updateContact(info);
         if (result) {
-          const getProfileV3 = await profileApi.getProfileV3(
+          const getProfileV3 = await profileApi.getProfileInformationV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
 
           if (getProfileV3) {
-            dispatch(setProfileV3(getProfileV3));
+            dispatch(setProfileMeInformationV3(getProfileV3));
           }
           setOpenModalContact(false);
         }

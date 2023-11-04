@@ -70,7 +70,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   );
 
   // const userProfile = useSelector((state: RootState) => state.profile.profile);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
 
   const [message, setMessage] = useState('');
 
