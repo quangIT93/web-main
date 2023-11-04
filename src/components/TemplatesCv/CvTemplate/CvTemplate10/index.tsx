@@ -44,9 +44,10 @@ interface CvTemplate {
   color: any;
   fontSize: number;
   profile: any;
+  profileMore: any;
 }
 const CvTemplate9: React.FC<CvTemplate> = (props) => {
-  const { color, fontSize, profile } = props;
+  const { color, fontSize, profile, profileMore } = props;
   const styles = StyleSheet.create({
     page: {
       padding: 30,
@@ -104,35 +105,94 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       <Header profile={profile} fontSize={fontSize} color={color} />
       <View style={styles.container}>
         <View style={styles.leftColumn}>
-          <View>
-            <Education profile={profile} fontSize={fontSize} color={color} />
-          </View>
-          <View>
-            <Experience profile={profile} fontSize={fontSize} color={color} />
-          </View>
-          <View>
-            <Activities profile={profile} fontSize={fontSize} color={color} />
-          </View>
+          {profileMore?.profilesEducations &&
+          profileMore.profilesEducations?.length !== 0 ? (
+            <View>
+              <Education profile={profile} fontSize={fontSize} color={color} />
+            </View>
+          ) : (
+            <></>
+          )}
+
+          {profileMore?.profilesExperiences &&
+          profileMore.profilesExperiences?.length !== 0 ? (
+            <View>
+              <Experience
+                profile={profileMore}
+                fontSize={fontSize}
+                color={color}
+              />
+            </View>
+          ) : (
+            <></>
+          )}
+
+          {profileMore?.profileActivities &&
+          profileMore.profileActivities?.length !== 0 ? (
+            <View>
+              <Activities
+                profile={profileMore}
+                fontSize={fontSize}
+                color={color}
+              />
+            </View>
+          ) : (
+            <></>
+          )}
         </View>
         <View style={styles.rightColumn}>
           <View>
             <Profile profile={profile} fontSize={fontSize} color={color} />
           </View>
-          <View>
-            <Language profile={profile} fontSize={fontSize} color={color} />
-          </View>
-          <View>
-            <Hobies profile={profile} fontSize={fontSize} color={color} />
-          </View>
-          <View>
-            <Skill profile={profile} fontSize={fontSize} color={color} />
-          </View>
-          <View>
-            <Reference profile={profile} fontSize={fontSize} color={color} />
-          </View>
-          <View>
-            <Award profile={profile} fontSize={fontSize} color={color} />
-          </View>
+          {profileMore?.profilesLanguages &&
+          profileMore.profilesLanguages?.length !== 0 ? (
+            <View>
+              <Language
+                profile={profileMore}
+                fontSize={fontSize}
+                color={color}
+              />
+            </View>
+          ) : (
+            <></>
+          )}
+          {profileMore?.profileHobbies &&
+          profileMore.profileHobbies?.length !== 0 ? (
+            <View>
+              <Hobies profile={profileMore} fontSize={fontSize} color={color} />
+            </View>
+          ) : (
+            <></>
+          )}
+          {profileMore?.profilesSkills &&
+          profileMore.profilesSkills?.length !== 0 ? (
+            <View>
+              <Skill profile={profileMore} fontSize={fontSize} color={color} />
+            </View>
+          ) : (
+            <></>
+          )}
+          {profileMore?.profilesReferences &&
+          profileMore.profilesReferences?.length !== 0 ? (
+            <View>
+              <Reference
+                profile={profileMore}
+                fontSize={fontSize}
+                color={color}
+              />
+            </View>
+          ) : (
+            <></>
+          )}
+
+          {profileMore?.profileAwards &&
+          profileMore.profileAwards?.length !== 0 ? (
+            <View>
+              <Award profile={profileMore} fontSize={fontSize} color={color} />
+            </View>
+          ) : (
+            <></>
+          )}
         </View>
       </View>
       <Text

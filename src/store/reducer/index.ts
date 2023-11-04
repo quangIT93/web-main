@@ -27,6 +27,8 @@ import isNewReducer from './isNewReducer'
 import profileReducerV3 from './profileReducerV3'
 
 import profileMeInformationV3 from './profileMeInformationReducerV3'
+import profileMeInformationMoreReducerV3 from './profileMeInformationMoreReducerV3'
+import profileMeCompanyReducerV3 from './profileMeCompanyReducerV3'
 
 import locationReducer from './locationReducer'
 
@@ -53,8 +55,10 @@ const reducers = combineReducers({
 
   dataLanguage: dataLanguage,
   dataLocation: locationReducer,
-  dataProfileV3: profileReducerV3,
+  dataProfileV4: profileReducerV3,
   dataProfileInformationV3: profileMeInformationV3,
+  dataProfileInformationMoreV3: profileMeInformationMoreReducerV3,
+  dataProfileCompanyV3: profileMeCompanyReducerV3,
   placeIdReducer: placeIdReducer,
 
   checkPost: checkPost,

@@ -57,6 +57,7 @@ import 'intl/locale-data/jsonp/en';
 // import { useHomeState } from '../Home/HomeState'
 
 import {
+  useLocation,
   // useNavigate,
   // createSearchParams,
   useSearchParams,
@@ -145,9 +146,14 @@ const MoreJobsPage: React.FC = () => {
   const [placeId, setPlaceId] = React.useState<any>();
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const [page, setPage] = React.useState(0);
   const analytics: any = getAnalytics();
+
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const getTemplateId = () => {
     const templateId = localStorage.getItem('job_by_place');
@@ -252,20 +258,63 @@ const MoreJobsPage: React.FC = () => {
       tabs !== null &&
       breadCrumb !== null
     ) {
-      tabs.style.top = '-115px';
-      breadCrumb.style.marginTop = '-203px';
+      if (
+        location.pathname === '/more-jobs' &&
+        localStorage.getItem('job-type') === 'new' &&
+        window.innerWidth <= 450
+      ) {
+        tabs.style.top = '-155px';
+        breadCrumb.style.marginTop = '-203px';
+      } else {
+        tabs.style.top = '-115px';
+        breadCrumb.style.marginTop = '-203px';
+      }
       // setTimeout(() => {
       //   currentHeight = 0;
       //   tabs.style.top = '70px';
       //   breadCrumb.style.marginTop = '192px';
       // }, 500);
     } else if (currentHeight === 0) {
-      tabs.style.top = '115px';
-      breadCrumb.style.marginTop = '0';
+      if (
+        location.pathname === '/more-jobs' &&
+        localStorage.getItem('job-type') === 'new' &&
+        window.innerWidth <= 450
+      ) {
+        tabs.style.top = '155px';
+        breadCrumb.style.marginTop = '20px';
+      } else if (
+        location.pathname === '/more-jobs' &&
+        localStorage.getItem('job-type') === 'new' &&
+        450 < window.innerWidth &&
+        window.innerWidth <= 768
+      ) {
+        tabs.style.top = '115px';
+        breadCrumb.style.marginTop = '-10px';
+      } else {
+        tabs.style.top = '115px';
+        breadCrumb.style.marginTop = '0px';
+      }
     } else {
       if (tabs !== null && breadCrumb !== null) {
-        tabs.style.top = '115px';
-        breadCrumb.style.marginTop = '0';
+        if (
+          location.pathname === '/more-jobs' &&
+          localStorage.getItem('job-type') === 'new' &&
+          window.innerWidth <= 450
+        ) {
+          tabs.style.top = '155px';
+          breadCrumb.style.marginTop = '20px';
+        } else if (
+          location.pathname === '/more-jobs' &&
+          localStorage.getItem('job-type') === 'new' &&
+          450 < window.innerWidth &&
+          window.innerWidth <= 768
+        ) {
+          tabs.style.top = '115px';
+          breadCrumb.style.marginTop = '-10px';
+        } else {
+          tabs.style.top = '115px';
+          breadCrumb.style.marginTop = '0px';
+        }
       }
     }
     prevHeight = currentHeight;
@@ -274,6 +323,11 @@ const MoreJobsPage: React.FC = () => {
   React.useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  React.useEffect(() => {
+    window.addEventListener('resize', handleScroll);
+    return () => window.removeEventListener('resize', handleScroll);
   }, []);
 
   const getMoreJob = async () => {

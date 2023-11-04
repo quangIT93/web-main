@@ -71,7 +71,9 @@ const HistoryPost = () => {
   );
 
   const checkPost = useSelector((state: RootState) => state.checkPost.data);
-  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profile = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const queryParams = queryString.parse(window.location.search);
   // const hotjobtype = Number(searchParams.get('post'));
   const hotjobtype = Number(queryParams['post']);

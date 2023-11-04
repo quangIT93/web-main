@@ -23,9 +23,10 @@ import {
   setAlertEditInfo,
 } from 'store/reducer/profileReducer/alertProfileReducer';
 
-import { setProfileV3 } from 'store/reducer/profileReducerV3';
+// import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
 import { message } from 'antd';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 interface IModalSkills {
   openModalEditlanguages: {
     open: boolean;
@@ -118,7 +119,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
     (state: RootState) => state.dataLanguage.languages,
   );
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const [language, setLanguage] = React.useState<any>();
   const [level, setLevel] = React.useState<any>(openModalEditlanguages.idLevel);
 
@@ -174,7 +175,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
           openModalEditlanguages.id,
         );
         if (result) {
-          const resultProfile = await profileApi.getProfileV3(
+          const resultProfile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
 
@@ -185,7 +186,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
               idLevel: null,
               name: '',
             });
-            dispatch(setProfileV3(resultProfile));
+            dispatch(setProfileMeInformationMoreV3(resultProfile));
             setLanguage('');
             setLevel(1);
             dispatch(setAlertEditInfo(true));

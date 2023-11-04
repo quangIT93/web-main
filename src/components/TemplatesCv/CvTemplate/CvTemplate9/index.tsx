@@ -44,10 +44,11 @@ interface CvTemplate {
   color: any;
   fontSize: number;
   profile: any;
+  profileMore: any;
 }
 
 const CvTemplate9: React.FC<CvTemplate> = (props) => {
-  const { color, fontSize, profile } = props;
+  const { color, fontSize, profile, profileMore } = props;
   const styles = StyleSheet.create({
     page: {
       padding: 30,
@@ -181,19 +182,31 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       <View style={styles.container}>
         <View style={styles.leftColumn}>
           <View style={styles.leftColumnContent}>
-            <Education color={color} profile={profile} />
-            <Experience color={color} profile={profile} />
-            {profile?.profileActivities &&
-            profile?.profileActivities?.length > 0 ? (
+            {profileMore?.profilesEducations &&
+            profileMore?.profilesEducations?.length !== 0 ? (
+              <Education color={color} profile={profileMore} />
+            ) : (
+              <></>
+            )}
+
+            {profileMore?.profilesExperiences &&
+            profileMore?.profilesExperiences?.length !== 0 ? (
+              <Experience color={color} profile={profileMore} />
+            ) : (
+              <></>
+            )}
+            {profileMore?.profileActivities &&
+            profileMore?.profileActivities?.length > 0 ? (
               <>
-                <Activities color={color} profile={profile} />
+                <Activities color={color} profile={profileMore} />
               </>
             ) : (
               <></>
             )}
-            {profile?.profileAwards && profile?.profileAwards?.length > 0 ? (
+            {profileMore?.profileAwards &&
+            profileMore?.profileAwards?.length > 0 ? (
               <>
-                <Awards color={color} profile={profile} />
+                <Awards color={color} profile={profileMore} />
               </>
             ) : (
               <></>
@@ -204,33 +217,35 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
         <View style={styles.rightColumn}>
           <View style={styles.rightColumnContent}>
             <Profile color={color} profile={profile} />
-            {profile?.profilesLanguages &&
-            profile?.profilesLanguages?.length > 0 ? (
+            {profileMore?.profilesLanguages &&
+            profileMore?.profilesLanguages?.length > 0 ? (
               <>
-                <Languages color={color} profile={profile} />
+                <Languages color={color} profile={profileMore} />
               </>
             ) : (
               <></>
             )}
-            <Contact color={color} profile={profile} />
-            {profile?.profilesSkills && profile?.profilesSkills?.length > 0 ? (
+            <Contact color={color} profile={profileMore} />
+            {profileMore?.profilesSkills &&
+            profileMore?.profilesSkills?.length > 0 ? (
               <>
-                <Skills color={color} profile={profile} />
+                <Skills color={color} profile={profileMore} />
               </>
             ) : (
               <></>
             )}
-            {profile?.profileHobbies ? (
+            {profileMore?.profileHobbies &&
+            profileMore?.profileHobbies?.length !== 0 ? (
               <>
-                <Hobbies color={color} profile={profile} />
+                <Hobbies color={color} profile={profileMore} />
               </>
             ) : (
               <></>
             )}
-            {profile?.profilesReferences &&
-            profile?.profilesReferences?.length > 0 ? (
+            {profileMore?.profilesReferences &&
+            profileMore?.profilesReferences?.length > 0 ? (
               <>
-                <References color={color} profile={profile} />
+                <References color={color} profile={profileMore} />
               </>
             ) : (
               <></>

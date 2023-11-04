@@ -158,7 +158,9 @@ const HotJobpage: React.FC = () => {
   const [totalPage, setTotalPage] = React.useState<number>(
     Math.round(Number(searchParams.get('hotjob-total')) / 20) + 1,
   );
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -463,7 +465,7 @@ const HotJobpage: React.FC = () => {
       console.log('error', error);
     }
   };
-  console.log(profileV3);
+  // console.log(profileV3);
   return (
     <>
       {contextHolder}

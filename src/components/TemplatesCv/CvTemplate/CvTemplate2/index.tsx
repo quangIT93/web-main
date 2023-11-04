@@ -32,10 +32,11 @@ interface CvTemplate {
   color: any;
   fontSize: number;
   profile: any;
+  profileMore: any;
 }
 
 const index: React.FC<CvTemplate> = (props) => {
-  const { color, fontSize, profile } = props;
+  const { color, fontSize, profile, profileMore } = props;
 
   const styles = StyleSheet.create({
     page: {
@@ -118,38 +119,90 @@ const index: React.FC<CvTemplate> = (props) => {
                   fontSize={fontSize}
                   profile={profile}
                 />
-                <ContactCv
-                  color={color}
-                  fontSize={fontSize}
-                  profile={profile}
-                />
-                <SkillsCv color={color} fontSize={fontSize} profile={profile} />
-                <LanguageCv
-                  color={color}
-                  fontSize={fontSize}
-                  profile={profile}
-                />
-                <HobbieCv color={color} fontSize={fontSize} profile={profile} />
+                {profileMore ? (
+                  <ContactCv
+                    color={color}
+                    fontSize={fontSize}
+                    profile={profile}
+                  />
+                ) : (
+                  <></>
+                )}
+
+                {profileMore?.profilesSkills &&
+                profileMore?.profilesSkills?.length !== 0 ? (
+                  <SkillsCv
+                    color={color}
+                    fontSize={fontSize}
+                    profile={profileMore}
+                  />
+                ) : (
+                  <></>
+                )}
+                {profileMore?.profilesLanguages &&
+                profileMore?.profilesLanguages?.length !== 0 ? (
+                  <LanguageCv
+                    color={color}
+                    fontSize={fontSize}
+                    profile={profileMore}
+                  />
+                ) : (
+                  <></>
+                )}
+                {profileMore?.profileHobbies &&
+                profileMore?.profileHobbies?.length !== 0 ? (
+                  <HobbieCv
+                    color={color}
+                    fontSize={fontSize}
+                    profile={profileMore}
+                  />
+                ) : (
+                  <></>
+                )}
                 {/* <SocialCv color={color} fontSize={fontSize} /> */}
                 {/* </> */}
               </View>
               <View style={{ width: '70%' }}>
-                <Experiences
-                  color={color}
-                  fontSize={fontSize}
-                  profile={profile}
-                />
-                <Education
-                  color={color}
-                  fontSize={fontSize}
-                  profile={profile}
-                />
-                <Activity color={color} fontSize={fontSize} profile={profile} />
-                <ReferenceCv
-                  color={color}
-                  fontSize={fontSize}
-                  profile={profile}
-                />
+                {profileMore?.profilesExperiences &&
+                profileMore?.profilesExperiences?.length !== 0 ? (
+                  <Experiences
+                    color={color}
+                    fontSize={fontSize}
+                    profile={profileMore}
+                  />
+                ) : (
+                  <></>
+                )}
+                {profileMore?.profilesEducations &&
+                profileMore?.profilesEducations?.length !== 0 ? (
+                  <Education
+                    color={color}
+                    fontSize={fontSize}
+                    profile={profileMore}
+                  />
+                ) : (
+                  <></>
+                )}
+                {profileMore?.profileActivities &&
+                profileMore?.profileActivities.length !== 0 ? (
+                  <Activity
+                    color={color}
+                    fontSize={fontSize}
+                    profile={profileMore}
+                  />
+                ) : (
+                  <></>
+                )}
+                {profileMore?.profilesReferences &&
+                profileMore?.profilesReferences.length !== 0 ? (
+                  <ReferenceCv
+                    color={color}
+                    fontSize={fontSize}
+                    profile={profileMore}
+                  />
+                ) : (
+                  <></>
+                )}
               </View>
             </View>
           </View>

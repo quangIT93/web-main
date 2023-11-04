@@ -34,7 +34,9 @@ const PageCv2 = () => {
     autoplay: true, // Bật chế độ tự động chạy
     autoplaySpeed: 2000, // Thời gian giữa các lần chuyển slide (milliseconds)
   };
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileMoreV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationMoreV3.data,
+  );
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
   const [slickAct, setSlickAct] = React.useState<any>(
     document.querySelectorAll('.slick-active'),
@@ -71,11 +73,11 @@ const PageCv2 = () => {
       activeSlides[1].classList.add('slick-slider-center');
     }
     setSlickAct(activeSlides);
-  }, [profileV3]); // Chạy chỉ một lần khi component được tạo
-
+  }, [profileMoreV3]); // Chạy chỉ một lần khi component được tạo
+  // checklai
   return (
     <Slider className="your-class" {...settings}>
-      {profileV3 ? (
+      {profileMoreV3.length !== 0 ? (
         getThemeCv?.map((item: any) => (
           <img src={item.image} alt={item.name} />
           //   <div className=''>

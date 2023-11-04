@@ -18,7 +18,7 @@ const CreateCv: React.FC<ICreateCv> = (props) => {
     (state: RootState) => state.changeLaguage.language,
   );
   const [height, setHeight] = React.useState(0);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data);
   const handleMoveToCreateCv = () => {
     window.open('/templates-cv', '_parent');
   };
@@ -49,10 +49,7 @@ const CreateCv: React.FC<ICreateCv> = (props) => {
         className="iconDiv"
         sx={{
           '&:after': {
-            content:
-              languageRedux === 1
-                ? '"Tạo mới CV"'
-                : '"Create a new CV"',
+            content: languageRedux === 1 ? '"Tạo mới CV"' : '"Create a new CV"',
           },
           '&:hover': {
             width: languageRedux === 1 ? '194px' : '230px',

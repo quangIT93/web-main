@@ -26,6 +26,7 @@ import languageApi from 'api/languageApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 import './style.scss';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -343,11 +344,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       if (checkForm) {
         const result = await profileApi.updateProfileExperience(experience);
         if (result) {
-          const profile = await profileApi.getProfileV3(
+          const profile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (profile) {
-            dispatch(setProfileV3(profile));
+            dispatch(setProfileMeInformationMoreV3(profile));
           }
           setOpenModalExperienceUpdate(false);
         }

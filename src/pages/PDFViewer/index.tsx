@@ -6,13 +6,22 @@ import { LoadingOutlined, CloseOutlined } from '@ant-design/icons';
 import { useSearchParams } from 'react-router-dom';
 //@ts-ignore
 import { pdfjs } from 'react-pdf';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 
 import './style.scss';
+import profileApi from 'api/profileApi';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 function PDFViewer() {
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const dispatch = useDispatch();
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
+
+  const profileMoreV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationMoreV3.data,
+  );
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -45,6 +54,22 @@ function PDFViewer() {
     setNumPages(numPages);
   }
 
+  const getProfileModerV3 = async () => {
+    try {
+      const result = await profileApi.getProfileInformationMoreV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      if (result) {
+        dispatch(setProfileMeInformationMoreV3(result));
+      }
+    } catch (error) {}
+  };
+
+  React.useEffect(() => {
+    getProfileModerV3();
+  }, []);
+
   const handleDownload = async (pdfUrl: string, namePdf: string) => {
     // Tạo một thẻ a ẩn
     if (pdfUrl && namePdf) {
@@ -60,8 +85,12 @@ function PDFViewer() {
   };
 
   React.useEffect(() => {
-    if (searchParams.get('idPdf') && profileV3.length !== 0) {
-      profileV3?.profilesCvs.map(
+    if (
+      searchParams.get('idPdf') &&
+      profileMoreV3.length !== 0 &&
+      profileV3?.length !== 0
+    ) {
+      profileMoreV3?.profilesCvs.map(
         (value: {
           id: number | null;
           name: string;
@@ -77,7 +106,7 @@ function PDFViewer() {
         },
       );
     }
-  }, [profileV3]);
+  }, [profileMoreV3, profileV3]);
 
   return (
     <div className="viewPdf-container">

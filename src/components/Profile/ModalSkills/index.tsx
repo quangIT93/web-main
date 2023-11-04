@@ -24,6 +24,7 @@ import {
 } from 'store/reducer/profileReducer/alertProfileReducer';
 import { message } from 'antd';
 import './style.scss';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 interface IModalSkills {
   openModalSkills: boolean;
   setOpenModalSkills: React.Dispatch<React.SetStateAction<boolean>>;
@@ -140,14 +141,14 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
       if (checkForm) {
         const result = await apiCv.postProfileSkill(level, skill);
         if (result) {
-          const resultProfile = await profileApi.getProfileV3(
+          const resultProfile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (resultProfile) {
             setOpenModalSkills(false);
             setSkill('');
             setLevel(1);
-            dispatch(setProfileV3(resultProfile));
+            dispatch(setProfileMeInformationMoreV3(resultProfile));
             dispatch(setAlertSuccess(true));
           }
         }

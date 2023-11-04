@@ -245,9 +245,6 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
   });
 
   const handleDeleteImage = async (index: number, deleteId: any) => {
-    console.log('index', index);
-    console.log('deleteId', deleteId);
-
     setSelectedImages((prevImages) => {
       const updatedImages = [...prevImages];
       updatedImages.splice(index, 1);

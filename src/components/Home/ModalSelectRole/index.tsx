@@ -10,6 +10,7 @@ import { setRole } from 'store/reducer/roleReducer';
 import typeUser from 'api/apiTypeUser';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 interface IModalSelectRole {
   openModalSelectRole: boolean;
   setOpenModalSelectRole: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +30,9 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
   const [role, setRoleId] = React.useState(0);
   const dispatch = useDispatch();
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3);
+  // const profileV3 = useSelector(
+  //   (state: RootState) => state.dataProfileInformationV3.data,
+  // );
 
   const onChangeRole = (e: any) => {
     setRoleId(e.target.value);
@@ -44,11 +47,11 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
       const result = await typeUser.putTypeUser(role);
       if (result) {
         dispatch<any>(setRole(role));
-        const getProfileV3Data = await profileApi.getProfileV3(
+        const getProfileV3Data = await profileApi.getProfileInformationV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
         if (getProfileV3Data) {
-          dispatch<any>(setProfileV3(getProfileV3Data));
+          dispatch<any>(setProfileMeInformationV3(getProfileV3Data));
         }
         setOpenModalUpdateInfo(true);
         setOpenModalSelectRole(false);
