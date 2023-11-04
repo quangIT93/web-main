@@ -12,7 +12,9 @@ import { RootState } from 'store';
 import './style.scss';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 function PDFViewer() {
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
 
   const [searchParams, setSearchParams] = useSearchParams();
 

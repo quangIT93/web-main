@@ -8,6 +8,7 @@ import './style.scss';
 import { getCookie } from 'cookies';
 import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 interface IModalShare {
   openModalTurnOffStatus: boolean;
   setOpenModalTurnOffStatus: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,7 +17,7 @@ interface IModalShare {
 }
 
 const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -31,11 +32,11 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
     try {
       const result = await profileApi.putProfileJobV3(null, 0);
       if (result) {
-        const resultProfileV3 = await profileApi.getProfileV3(
+        const resultProfileV3 = await profileApi.getProfileInformationV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
         if (resultProfileV3) {
-          dispatch(setProfileV3(resultProfileV3));
+          dispatch(setProfileMeInformationV3(resultProfileV3));
           setSearchJob(false);
           setOpenModalTurnOffStatus(false);
           setLoadingSwitch(false);

@@ -31,7 +31,7 @@ const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
+
   // const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [fontSizeCV, setFontSizeCV] = React.useState(24);
   //1: black, 2: blue, 3: yellow, 4:green, 5:red
@@ -47,7 +47,12 @@ const TemplatesCv: React.FC = () => {
     id: null,
   });
   // const [searchParams, setSearchParams] = useSearchParams();
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
+  const profileMoreV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationMoreV3.data,
+  );
   const [unUp, setUnUp] = React.useState(true);
   const [unDown, setUnDown] = React.useState(false);
   const [openModalOver10Cv, setOpenModalOver10Cv] = React.useState(false);
@@ -116,7 +121,6 @@ const TemplatesCv: React.FC = () => {
       //   ? Number(localStorage.getItem('cv-id'))
     });
     try {
-      console.log(selectedTemplate);
       setLoading(true);
       if (selectedTemplate) {
         const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
@@ -128,6 +132,7 @@ const TemplatesCv: React.FC = () => {
             color={colorCV}
             fontSize={fontSizeCV}
             profile={profileV3}
+            profileMore={profileMoreV3}
           />,
         ).toBlob();
 
@@ -193,7 +198,7 @@ const TemplatesCv: React.FC = () => {
     return str;
   };
 
-  const fileNameCv = createFileName(profile?.name ? profile?.name : 'Your');
+  const fileNameCv = createFileName(profileV3?.name ? profileV3?.name : 'Your');
 
   React.useEffect(() => {
     if (!localStorage.getItem('accessToken') || profileV3.typeRoleData === 1)

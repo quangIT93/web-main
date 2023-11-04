@@ -6,6 +6,7 @@ import { setRole } from 'store/reducer/roleReducer';
 import typeUser from 'api/apiTypeUser';
 import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 interface IChangeRole {
   // role: any;
   // setRole: React.Dispatch<React.SetStateAction<any>>;
@@ -19,20 +20,22 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
   // const profileV3 = useSelector((state: RootState) => state.dataProfileV3);
   //0: candidate, 1: employer
   // const { role, setRole } = props;
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const handleOnchange = async (e: any) => {
     try {
       if (e.target.checked) {
         const result = await typeUser.putTypeUser(1);
         if (result) {
           dispatch<any>(setRole(1));
-          const getProfileV3Data = await profileApi.getProfileV3(
+          const getProfileV3Data = await profileApi.getProfileInformationV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (getProfileV3Data) {
             console.log('profile updated', getProfileV3Data);
 
-            dispatch<any>(setProfileV3(getProfileV3Data));
+            dispatch<any>(setProfileMeInformationV3(getProfileV3Data));
           }
         }
         // setRole(1)
@@ -41,11 +44,11 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
         const result = await typeUser.putTypeUser(0);
         if (result) {
           dispatch<any>(setRole(0));
-          const getProfileV3Data = await profileApi.getProfileV3(
+          const getProfileV3Data = await profileApi.getProfileInformationV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (getProfileV3Data) {
-            dispatch<any>(setProfileV3(getProfileV3Data));
+            dispatch<any>(setProfileMeInformationV3(getProfileV3Data));
           }
         }
       }

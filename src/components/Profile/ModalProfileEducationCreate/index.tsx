@@ -22,6 +22,7 @@ import { message } from 'antd';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import candidateSearch from 'api/apiCandidates';
 import './style.scss';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 // import { useDispatch } from 'react-redux';
 // import {
 //   getProfile,
@@ -324,10 +325,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
       if (checkForm) {
         const result = await profileApi.createProfileEducation(education);
         if (result) {
-          const getProfileV3 = await profileApi.getProfileV3(
+          const getProfileV3 = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
-          await dispatch(setProfileV3(getProfileV3) as any);
+          await dispatch(setProfileMeInformationMoreV3(getProfileV3) as any);
           setOpenModalEducationCreate(false);
         }
       } else {

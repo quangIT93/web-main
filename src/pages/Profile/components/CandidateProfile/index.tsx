@@ -44,6 +44,7 @@ import axios from 'axios';
 import apiCv from 'api/apiCv';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import ModalShowCv from '#components/Profile/ModalShowCv';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 interface ItemAppy {
   id?: number | null;
   company_name?: string;
@@ -63,7 +64,8 @@ interface ICategories {
 
 interface ICandidateProfile {
   display: string;
-  profile: any;
+  profileMore: any;
+  profileCompany: any;
   loading: boolean;
   language: any;
   languageRedux: any;
@@ -82,7 +84,8 @@ interface ICandidateProfile {
 const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
   const {
     display,
-    profile,
+    profileMore,
+    profileCompany,
     loading,
     language,
     languageRedux,
@@ -136,7 +139,9 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
     urlPdf: '',
   });
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const swiperRef = useRef<any>(null);
   const handleChooseCv = async (item: any, e: any) => {
     e.stopPropagation();
@@ -163,10 +168,10 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
       });
       const result = await apiCv.putThemeCv(item?.id, 1);
       if (result) {
-        const resultProfileV3 = await profileApi.getProfileV3(
+        const resultProfileV3 = await profileApi.getProfileInformationMoreV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
-        dispatch(setProfileV3(resultProfileV3));
+        dispatch(setProfileMeInformationMoreV3(resultProfileV3));
         if (resultProfileV3 && resultProfileV3?.data?.profilesCvs?.length > 0) {
           messageApi.open({
             key,
@@ -178,7 +183,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           });
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // confirm delete cv
@@ -196,7 +201,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // cancel delete cv
@@ -272,6 +277,9 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
   //   });
   // };
 
+  console.log('profileMore', profileMore);
+  console.log('profileCompany', profileCompany);
+
   return (
     <div style={{ display: display, width: '100%' }}>
       {contextHolder}
@@ -299,12 +307,14 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
             </Space>
           </div>
           <Space wrap className="item-info-work">
-            {profile?.profileCategories?.length !== 0
-              ? profile?.profileCategories?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  {item.fullName}
-                </Button>
-              ))
+            {profileV3?.profileCategories?.length !== 0
+              ? profileV3?.profileCategories?.map(
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item.fullName}
+                    </Button>
+                  ),
+                )
               : language?.unupdated}
           </Space>
         </div>
@@ -333,12 +343,14 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
             </Space>
           </div>
           <Space wrap className="item-info-work">
-            {profile?.profileLocations?.length !== 0
-              ? profile?.profileLocations?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  {item?.fullName}{', '}{item?.province?.fullName}
-                </Button>
-              ))
+            {profileV3?.profileLocations?.length !== 0
+              ? profileV3?.profileLocations?.map((item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    {item?.fullName}
+                    {', '}
+                    {item?.province?.fullName}
+                  </Button>
+                ))
               : language?.unupdated}
           </Space>
         </div>
@@ -378,18 +390,18 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                   ? 'Toàn thời gian'
                   : 'Fulltime'
                 : profileV3.jobTypeId === 2
-                  ? languageRedux === 1
-                    ? 'Bán thời gian'
-                    : 'Parttime'
-                  : profileV3.jobTypeId === 4
-                    ? languageRedux === 1
-                      ? 'Làm việc tự do'
-                      : 'Freelancer'
-                    : profileV3.jobTypeId === 7
-                      ? languageRedux === 1
-                        ? 'Thực tập'
-                        : 'Intern'
-                      : language?.unupdated}
+                ? languageRedux === 1
+                  ? 'Bán thời gian'
+                  : 'Parttime'
+                : profileV3.jobTypeId === 4
+                ? languageRedux === 1
+                  ? 'Làm việc tự do'
+                  : 'Freelancer'
+                : profileV3.jobTypeId === 7
+                ? languageRedux === 1
+                  ? 'Thực tập'
+                  : 'Intern'
+                : language?.unupdated}
             </Button>
           </Space>
         </div>
@@ -417,13 +429,15 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 gap: '8px',
                 // display: profileV3?.profilesCvs?.length === 0 ? 'none' : 'flex',
               }}
-            // onClick={() => setOpenModalLocation(true)}
+              // onClick={() => setOpenModalLocation(true)}
             >
               {/* <div className="edit-icon">
                 <PencilIcon width={15} height={15} />
               </div> */}
 
-              <Button type="primary" shape="round"
+              <Button
+                type="primary"
+                shape="round"
                 style={{ background: '#0D99FF', fontSize: '14px' }}
                 onClick={() => window.open('/templates-cv', '_parent')}
               >
@@ -434,7 +448,8 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 style={{
                   color: '#0D99FF',
                   fontSize: '14px',
-                  display: profileV3?.profilesCvs?.length === 0 ? 'none' : 'flex',
+                  display:
+                    profileMore?.profilesCvs?.length === 0 ? 'none' : 'flex',
                 }}
                 onClick={() => window.open('/profile-cv', '_parent')}
               >
@@ -444,7 +459,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
             </div>
           </div>
           <div className="list-cv-container">
-            {profileV3.profilesCvs?.length !== 0 ? (
+            {profileMore.profilesCvs?.length !== 0 ? (
               <div className="list-cv-conttent">
                 <p>
                   {languageRedux === 1
@@ -463,7 +478,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                     prevEl: '.swiper-button-prev',
                   }}
                 >
-                  {profileV3?.profilesCvs
+                  {profileMore?.profilesCvs
                     ?.slice() // Tạo một bản sao của mảng để không ảnh hưởng đến mảng gốc
                     .sort((a: any, b: any) => {
                       // Sắp xếp mục có status === 1 lên đầu
@@ -578,7 +593,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                 onClick={() =>
                                   handleDownloadCV(item?.pdfURL, item?.name)
                                 }
-                              // onClick={handleClickDownloadCv}
+                                // onClick={handleClickDownloadCv}
                               >
                                 <DownloadCVIcon width={14} height={14} />
                               </div>
@@ -617,8 +632,8 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           >
             <h3>{language?.education}</h3>
           </div>
-          {profile?.profilesEducations?.length !== 0 ? (
-            profile?.profilesEducations?.map(
+          {profileMore?.profilesEducations?.length !== 0 ? (
+            profileMore?.profilesEducations?.map(
               (education: ItemAppy, index: number) => (
                 <ItemApply item={education} key={index} />
               ),
@@ -658,10 +673,12 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           >
             <h3>{language?.working_experience}</h3>
           </div>
-          {profile?.profilesExperiences?.length !== 0 ? (
-            profile?.profilesExperiences?.map((item: any, index: number) => (
-              <ItemApply typeItem="experiences" key={index} item={item} />
-            ))
+          {profileMore?.profilesExperiences?.length !== 0 ? (
+            profileMore?.profilesExperiences?.map(
+              (item: any, index: number) => (
+                <ItemApply typeItem="experiences" key={index} item={item} />
+              ),
+            )
           ) : (
             <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
           )}
@@ -689,19 +706,19 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         <ModalProfileCareerObjectice
           openModalCareerObjective={openModalCareerObjective}
           setOpenModalCareerObjective={setOpenModalCareerObjective}
-          categories={profile?.profileCategories}
+          categories={profileV3?.profileCategories}
         />
 
         <ModalProfileEducationCreate
           openModalEducationCreate={openModalEducationCreate}
           setOpenModalEducationCreate={setOpenModalEducationCreate}
           typeItem="createEducation"
-          educations={profile?.educations}
+          educations={profileMore?.profilesEducations}
         />
         <ModalProfileLocation
           openModalLocation={openModalLocation}
           setOpenModalLocation={setOpenModalLocation}
-          locations={profile?.profileLocations}
+          locations={profileV3?.profileLocations}
         />
 
         <ModalProifileTypeofWork
@@ -714,7 +731,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           openModalExperienceCreate={openModalExperienceCreate}
           setOpenModalExperienceCreate={setOpenModalExperienceCreate}
           typeItem="createExperience"
-          educations={profile?.educations}
+          educations={profileMore?.profilesExperiences}
         />
 
         <ModalShowCv
@@ -727,7 +744,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         languageRedux={languageRedux}
         language={language}
       />
-      {profile.cv_url ? (
+      {profileMore.cv_url ? (
         <Skeleton className="skeleton-item" loading={loading} active>
           <div className="div-profile-info">
             <div
@@ -762,7 +779,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-              // direction="vertical"
+                // direction="vertical"
               >
                 <Popconfirm
                   title={language?.profile_page?.delete_cv}
@@ -774,7 +791,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                   cancelText={language?.no}
                 >
                   <CVItem
-                    url={profile.cv_url}
+                    url={profileMore.cv_url}
                     open={open}
                     setOpen={setOpen}
                     isProfile={true}

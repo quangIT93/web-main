@@ -32,6 +32,7 @@ import languageApi from 'api/languageApi';
 
 import './style.scss';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -257,10 +258,10 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
         // locationId,
       );
       if (result) {
-        const getProfileV3 = await profileApi.getProfileV3(
+        const getProfileV3 = await profileApi.getProfileInformationV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
-        await dispatch(setProfileV3(getProfileV3) as any);
+        await dispatch(setProfileMeInformationV3(getProfileV3) as any);
         setOpenModalLocation(false);
       }
     } catch (error) {

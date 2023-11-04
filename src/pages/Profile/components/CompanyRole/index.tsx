@@ -59,6 +59,8 @@ const CompanyRole: React.FC<ICompany> = (props) => {
     onDrop: () => {},
   });
 
+  console.log('Company', companyData);
+
   return (
     <Skeleton loading={loading} active>
       <div
@@ -414,9 +416,9 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 className="company-role-images"
                 style={{
                   height:
-                    companyData?.images.length > 0 ? 'fit-content' : '310px',
+                    companyData?.images?.length > 0 ? 'fit-content' : '310px',
                   border:
-                    companyData?.images.length > 0 ? 'none' : '1px solid #ccc',
+                    companyData?.images?.length > 0 ? 'none' : '1px solid #ccc',
                 }}
               >
                 <Box p="0rem 0">
@@ -431,7 +433,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                         className="drag-img-camera"
                         style={{
                           display:
-                            companyData?.images.length === 0 ? 'flex' : 'none',
+                            companyData?.images?.length === 0 ? 'flex' : 'none',
                         }}
                       >
                         <CameraComunityIcon />
@@ -444,7 +446,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                     </div>
                   </section>
                   <Box className="list_iamges">
-                    {companyData?.images.map((item: any, index: number) => (
+                    {companyData?.images?.map((item: any, index: number) => (
                       <div className="item-image" key={index}>
                         <img
                           key={index}

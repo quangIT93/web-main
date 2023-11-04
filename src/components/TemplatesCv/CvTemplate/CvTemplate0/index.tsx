@@ -36,10 +36,11 @@ interface CvTemplate {
   color: any;
   fontSize: number;
   profile: any;
+  profileMore: any;
 }
 
 const CvTemplate1: React.FC<CvTemplate> = (props) => {
-  const { color, fontSize, profile } = props;
+  const { color, fontSize, profile, profileMore } = props;
   const styles = StyleSheet.create({
     page: {
       padding: 30,
@@ -147,42 +148,42 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
                         style={styles.image}
                     /> */}
 
-          <Education color={color} profile={profile} />
+          <Education color={color} profile={profileMore} />
           <Profile color={color} profile={profile} />
-          {profile?.profilesLanguages &&
-          profile?.profilesLanguages?.length > 0 ? (
-            <Languages color={color} profile={profile} />
+          {profileMore?.profileMoresLanguages &&
+          profileMore?.profilesLanguages?.length > 0 ? (
+            <Languages color={color} profile={profileMore} />
           ) : (
             <></>
           )}
           {profile?.profilesSkills && profile?.profilesSkills?.length > 0 ? (
-            <Skills color={color} profile={profile} />
+            <Skills color={color} profile={profileMore} />
           ) : (
             <></>
           )}
           {profile?.profileAwards && profile?.profileAwards?.length > 0 ? (
-            <Awards color={color} profile={profile} />
+            <Awards color={color} profile={profileMore} />
           ) : (
             <></>
           )}
           {/* <Social color={color} profile={profile} /> */}
         </View>
         <View style={styles.rightColumn}>
-          <Experience color={color} profile={profile} />
-          {profile?.profileActivities &&
-          profile?.profileActivities?.length > 0 ? (
-            <Activities color={color} profile={profile} />
+          <Experience color={color} profile={profileMore} />
+          {profileMore?.profileActivities &&
+          profileMore?.profileActivities?.length > 0 ? (
+            <Activities color={color} profile={profileMore} />
           ) : (
             <></>
           )}
-          {profile?.profileHobbies ? (
-            <Hobbies color={color} profile={profile} />
+          {profileMore?.profileHobbies ? (
+            <Hobbies color={color} profile={profileMore} />
           ) : (
             <></>
           )}
           {profile?.profilesReferences &&
-          profile?.profilesReferences?.length > 0 ? (
-            <References color={color} profile={profile} />
+          profileMore?.profilesReferences?.length > 0 ? (
+            <References color={color} profile={profileMore} />
           ) : (
             <></>
           )}

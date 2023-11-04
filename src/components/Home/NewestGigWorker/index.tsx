@@ -29,12 +29,15 @@ const NewestGigWorker = () => {
   const [loading, setLoading] = React.useState<any>(false);
   const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const getAllCandidates = async () => {
     try {
       setLoading(true);
       const logout = localStorage.getItem('accessToken');
+
       const result = await candidateSearch.getCandidates(
         addresses,
         categories,
@@ -45,6 +48,8 @@ const NewestGigWorker = () => {
         !logout
           ? 6
           : profileV3.length !== 0 && profileV3?.typeRoleData === 0
+          ? 6
+          : profileV3.length === 0
           ? 6
           : 18,
         page,
@@ -67,7 +72,6 @@ const NewestGigWorker = () => {
     if (profileV3?.typeRoleData === 1) {
       window.open('/candidatesAll', '_parent');
     } else {
-      console.log(profileV3);
       setOpenModalNoteWorker(true);
       window.open('/page-cv', '_parent');
     }

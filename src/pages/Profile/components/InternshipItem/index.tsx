@@ -160,13 +160,13 @@ const InternshipItem: React.FC<IInternshipProps> = (props) => {
           </p>
         </Space>
       </div>
-      <ModalEditInternship
+      {/* <ModalEditInternship
         openModalEditInternship={openModalEditInternship}
         setOpenModalEditInternship={setOpenModalEditInternship}
         setInternshipValues={setInternshipValues}
         internshipId={internshipId}
         internshipValues={internshipValues}
-      />
+      /> */}
       <ModalEditActivity
         openModalEditActivity={openModalEditActiviy}
         setOpenModalEditActiviy={setOpenModalEditActiviy}

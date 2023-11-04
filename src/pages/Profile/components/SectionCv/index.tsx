@@ -55,6 +55,7 @@ import ModalDeleteSkill from '#components/Profile/ModalDeleteSkill';
 import ModalDeleteLanguage from '#components/Profile/ModalDeleteLanguage';
 import ModalDeleteHobbies from '#components/Profile/ModalDeleteHobbies';
 import ModalDeleteReferences from '#components/Profile/ModalDeleteReferences';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 
 const { TextArea } = Input;
 
@@ -108,12 +109,15 @@ interface IAward {
 }
 
 const SectionCv: React.FC<ISectionCv> = (props) => {
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileMoreV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileMoreV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationMoreV3.data,
+  );
   const { loading, languageRedux, language } = props;
   const [skillValues, setSkillValues] = useState<any[]>([]);
   const [languageValues, setLanguageValues] = useState<any[]>([]);
   const [hobbieValues, setHobbieValues] = useState<any>(
-    profileV3?.profileHobbies?.description,
+    profileMoreV3?.profileHobbies?.description,
   );
   const [referenceValues, setReferenceValues] = useState<any[]>([]);
   const [internshipValues, setInternshipValues] = useState<any[]>([]);
@@ -201,8 +205,8 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
   };
 
   React.useEffect(() => {
-    setHobbieValues(profileV3?.profileHobbies?.description);
-  }, [profileV3]);
+    setHobbieValues(profileMoreV3?.profileHobbies?.description);
+  }, [profileMoreV3]);
 
   const handleCloseSection = async (section: number) => {
     if (sections.includes(section)) {
@@ -215,7 +219,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
 
     switch (section) {
       case 0:
-        if (profileV3 && profileV3?.profilesSkills?.length > 0) {
+        if (profileMoreV3 && profileMoreV3?.profilesSkills?.length > 0) {
           setOpenModalDeleteSkill(true);
         } else {
           setOpenModalDeleteSkill(false);
@@ -223,7 +227,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
 
         break;
       case 1:
-        if (profileV3 && profileV3?.profilesLanguages?.length > 0) {
+        if (profileMoreV3 && profileMoreV3?.profilesLanguages?.length > 0) {
           setOpenModalDeleteLanguage(true);
         } else {
           setOpenModalDeleteLanguage(false);
@@ -231,7 +235,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         break;
 
       case 2:
-        if (profileV3 && profileV3?.profileHobbies !== null) {
+        if (profileMoreV3 && profileMoreV3?.profileHobbies !== null) {
           setOpenModalDeleteHobbies(true);
         } else {
           setOpenModalDeleteHobbies(false);
@@ -239,14 +243,14 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         break;
 
       case 3:
-        if (profileV3 && profileV3?.profilesReferences?.length > 0) {
+        if (profileMoreV3 && profileMoreV3?.profilesReferences?.length > 0) {
           setOpenModalDeleteReferences(true);
         } else {
           setOpenModalDeleteReferences(false);
         }
         // const item3 =
-        //   profileV3 &&
-        //   profileV3?.profilesReferences?.map((item: any) => item.id);
+        //   profileMoreV3 &&
+        //   profileMoreV3?.profilesReferences?.map((item: any) => item.id);
 
         // const result3 = await apiCv.deleteProfileReference(item3);
         // if (result3) {
@@ -261,7 +265,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         break;
 
       case 5:
-        if (profileV3 && profileV3?.profileActivities?.length > 0) {
+        if (profileMoreV3 && profileMoreV3?.profileActivities?.length > 0) {
           setOpenModalDeleteActivities(true);
         } else {
           setOpenModalDeleteActivities(false);
@@ -269,7 +273,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
 
         break;
       case 7:
-        if (profileV3 && profileV3?.profileAwards?.length > 0) {
+        if (profileMoreV3 && profileMoreV3?.profileAwards?.length > 0) {
           setOpenModalDeleteAwards(true);
         } else {
           setOpenModalDeleteAwards(false);
@@ -317,11 +321,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
       }
       const result = await apiCv.postProfileHobbies(hobbieValues);
       if (result) {
-        const resultProfileV3 = await profileApi.getProfileV3(
+        const resultProfileV3 = await profileApi.getProfileInformationMoreV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
         if (resultProfileV3) {
-          dispatch(setProfileV3(resultProfileV3));
+          dispatch(setProfileMeInformationMoreV3(resultProfileV3));
           dispatch(setAlertSuccess(true));
         }
       }
@@ -352,7 +356,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             <div className="profile-info-title">
               <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
               <div className="profile-info-title_actions">
-                {profileV3?.profilesSkills?.length !== 0 ? (
+                {profileMoreV3?.profilesSkills?.length !== 0 ? (
                   <div
                     className="delete-icon"
                     onClick={() => handleCloseSection(0)}
@@ -366,19 +370,21 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             </div>
           </div>
           <div className="skill-list">
-            {profileV3 && profileV3?.profilesSkills?.length !== 0 ? (
-              profileV3?.profilesSkills?.map((item: ISkills, index: number) => (
-                <div className="skill-item" key={index}>
-                  <SkillItem
-                    item={item}
-                    index={index}
-                    setSkillValues={setSkillValues}
-                    skillValues={skillValues}
-                    openModalEditSkills={openModalEditSkills}
-                    setOpenModalEditSkills={setOpenModalEditSkills}
-                  />
-                </div>
-              ))
+            {profileMoreV3 && profileMoreV3?.profilesSkills?.length !== 0 ? (
+              profileMoreV3?.profilesSkills?.map(
+                (item: ISkills, index: number) => (
+                  <div className="skill-item" key={index}>
+                    <SkillItem
+                      item={item}
+                      index={index}
+                      setSkillValues={setSkillValues}
+                      skillValues={skillValues}
+                      openModalEditSkills={openModalEditSkills}
+                      setOpenModalEditSkills={setOpenModalEditSkills}
+                    />
+                  </div>
+                ),
+              )
             ) : (
               <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
             )}
@@ -417,7 +423,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         <ModalDeleteSkill
           openModalDeleteSkill={openModalDeleteSkill}
           setOpenModalDeleteSkill={setOpenModalDeleteSkill}
-          skillId={profileV3?.profilesSkills?.map(
+          skillId={profileMoreV3?.profilesSkills?.map(
             (item: any, index: number) => {
               return item?.id;
             },
@@ -435,7 +441,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             className="div-profile-info"
             style={{
               display:
-                profileV3?.profilesLanguages?.length !== 0 ||
+                profileMoreV3?.profilesLanguages?.length !== 0 ||
                 sections.includes(1)
                   ? 'block'
                   : 'none',
@@ -471,8 +477,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               </div>
             </div>
             <div className="language-list">
-              {profileV3 && profileV3?.profilesLanguages?.length !== 0 ? (
-                profileV3?.profilesLanguages?.map(
+              {profileMoreV3 &&
+              profileMoreV3?.profilesLanguages?.length !== 0 ? (
+                profileMoreV3?.profilesLanguages?.map(
                   (item: Ilanguages, index: number) => (
                     <div className="skill-item" key={index}>
                       <LanguageItem
@@ -530,7 +537,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
           <ModalDeleteLanguage
             openModalDeleteLanguage={openModalDeleteLanguage}
             setOpenModalDeleteLanguage={setOpenModalDeleteLanguage}
-            languageId={profileV3?.profilesLanguages?.map(
+            languageId={profileMoreV3?.profilesLanguages?.map(
               (item: any, index: number) => {
                 return item?.id;
               },
@@ -550,7 +557,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             // }}
             style={{
               display:
-                profileV3?.profileHobbies !== null || sections.includes(2)
+                profileMoreV3?.profileHobbies !== null || sections.includes(2)
                   ? 'block'
                   : 'none',
             }}
@@ -602,8 +609,8 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 value={hobbieValues}
                 onKeyDown={(e: any) => handleKeyPress(e)}
                 // defaultValue={
-                //   profileV3?.profileHobbies &&
-                //   profileV3?.profileHobbies?.description
+                //   profileMoreV3?.profileHobbies &&
+                //   profileMoreV3?.profileHobbies?.description
                 // }
                 // onPressEnter={(e: any) => handleKeyPress(e)}
                 onChange={handleOnChangeHobbie}
@@ -652,7 +659,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             className="div-profile-info"
             style={{
               display:
-                profileV3?.profilesReferences?.length !== 0 ||
+                profileMoreV3?.profilesReferences?.length !== 0 ||
                 sections.includes(3)
                   ? 'block'
                   : 'none',
@@ -685,8 +692,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               </div>
             </div>
             <div className="skill-list">
-              {profileV3 && profileV3?.profilesReferences?.length !== 0 ? (
-                profileV3?.profilesReferences?.map(
+              {profileMoreV3 &&
+              profileMoreV3?.profilesReferences?.length !== 0 ? (
+                profileMoreV3?.profilesReferences?.map(
                   (item: IReferences, index: number) => (
                     <div className="skill-item" key={index}>
                       <ReferenceItem
@@ -740,7 +748,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
           <ModalDeleteReferences
             openModalDeleteReferences={openModalDeleteReferences}
             setOpenModalDeleteReferences={setOpenModalDeleteReferences}
-            referenceId={profileV3?.profilesReferences?.map(
+            referenceId={profileMoreV3?.profilesReferences?.map(
               (item: any, index: number) => {
                 return item?.id;
               },
@@ -833,7 +841,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             className="div-profile-info"
             style={{
               display:
-                profileV3?.profileActivities?.length !== 0 ||
+                profileMoreV3?.profileActivities?.length !== 0 ||
                 sections.includes(5)
                   ? 'block'
                   : 'none',
@@ -863,8 +871,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               </div>
             </div>
             <div className="internship-list">
-              {profileV3 && profileV3?.profileActivities?.length !== 0 ? (
-                profileV3?.profileActivities?.map(
+              {profileMoreV3 &&
+              profileMoreV3?.profileActivities?.length !== 0 ? (
+                profileMoreV3?.profileActivities?.map(
                   (item: IInternship, index: number) => (
                     <InternshipItem
                       typeItem={0}
@@ -910,7 +919,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
           <ModalDeleteActivities
             openModalDeleteActivities={openModalDeleteActivities}
             setOpenModalDeleteActivities={setOpenModalDeleteActivities}
-            activitiesId={profileV3?.profileActivities?.map(
+            activitiesId={profileMoreV3?.profileActivities?.map(
               (item: any, index: number) => {
                 return item?.id;
               },
@@ -1001,7 +1010,8 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             className="div-profile-info"
             style={{
               display:
-                profileV3?.profileAwards?.length !== 0 || sections.includes(7)
+                profileMoreV3?.profileAwards?.length !== 0 ||
+                sections.includes(7)
                   ? 'block'
                   : 'none',
             }}
@@ -1030,17 +1040,19 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               </div>
             </div>
             <div className="internship-list">
-              {profileV3 && profileV3?.profileAwards?.length !== 0 ? (
-                profileV3?.profileAwards?.map((item: IAward, index: number) => (
-                  <div className="skill-item" key={index}>
-                    <AwardItem
-                      item={item}
-                      index={index}
-                      setAwardValues={setAwardValues}
-                      awardValue={item}
-                    />
-                  </div>
-                ))
+              {profileMoreV3 && profileMoreV3?.profileAwards?.length !== 0 ? (
+                profileMoreV3?.profileAwards?.map(
+                  (item: IAward, index: number) => (
+                    <div className="skill-item" key={index}>
+                      <AwardItem
+                        item={item}
+                        index={index}
+                        setAwardValues={setAwardValues}
+                        awardValue={item}
+                      />
+                    </div>
+                  ),
+                )
               ) : (
                 <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
               )}
@@ -1072,7 +1084,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
           <ModalDeleteAwards
             openModalDeleteAwards={openModalDeleteAwards}
             setOpenModalDeleteAwards={setOpenModalDeleteAwards}
-            awardsId={profileV3?.profileAwards?.map(
+            awardsId={profileMoreV3?.profileAwards?.map(
               (item: any, index: number) => {
                 return item?.id;
               },
@@ -1109,7 +1121,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <Grid item xs={2} sm={3} md={3}>
                 <div
                   className={
-                    profileV3?.profilesLanguages?.length !== 0 ||
+                    profileMoreV3?.profilesLanguages?.length !== 0 ||
                     sections.includes(1)
                       ? 'section-item disable'
                       : 'section-item'
@@ -1123,7 +1135,8 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <Grid item xs={2} sm={3} md={3}>
                 <div
                   className={
-                    profileV3?.profileHobbies !== null || sections.includes(2)
+                    profileMoreV3?.profileHobbies !== null ||
+                    sections.includes(2)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1136,7 +1149,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <Grid item xs={2} sm={3} md={3}>
                 <div
                   className={
-                    profileV3?.profilesReferences?.length !== 0 ||
+                    profileMoreV3?.profilesReferences?.length !== 0 ||
                     sections.includes(3)
                       ? 'section-item disable'
                       : 'section-item'
@@ -1165,7 +1178,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <Grid item xs={2} sm={3} md={3}>
                 <div
                   className={
-                    profileV3?.profileActivities?.length !== 0 ||
+                    profileMoreV3?.profileActivities?.length !== 0 ||
                     sections.includes(5)
                       ? 'section-item disable'
                       : 'section-item'
@@ -1194,7 +1207,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <Grid item xs={2} sm={3} md={3}>
                 <div
                   className={
-                    profileV3?.profileAwards?.length !== 0 ||
+                    profileMoreV3?.profileAwards?.length !== 0 ||
                     sections.includes(7)
                       ? 'section-item disable'
                       : 'section-item'

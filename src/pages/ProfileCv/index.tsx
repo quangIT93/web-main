@@ -39,13 +39,19 @@ import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { Document, Page } from 'react-pdf';
 
 import ModalShowCv from '#components/Profile/ModalShowCv';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 
 const ProfileCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
+  const profileMoreV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationMoreV3.data,
+  );
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [selectedId, setSelectedId] = React.useState<any>(0);
 
@@ -92,10 +98,10 @@ const ProfileCv: React.FC = () => {
     try {
       const result = await apiCv.putThemeCv(item?.id, 1);
       if (result) {
-        const resultProfileV3 = await profileApi.getProfileV3(
+        const resultProfileV3 = await profileApi.getProfileInformationMoreV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
-        dispatch(setProfileV3(resultProfileV3));
+        dispatch(setProfileMeInformationMoreV3(resultProfileV3));
       }
     } catch (error) {}
 
@@ -136,17 +142,17 @@ const ProfileCv: React.FC = () => {
 
   React.useEffect(() => {
     setOpenBackdrop(true);
-    if (profileV3?.profilesCvs?.length > 0) {
+    if (profileMoreV3?.profilesCvs?.length > 0) {
       setOpenBackdrop(false);
     }
-    if (profileV3?.profilesCvs?.length === 0) {
+    if (profileMoreV3?.profilesCvs?.length === 0) {
       setTimeout(() => {
         setOpenBackdrop(false);
       }, 1000);
     }
   }, [profileV3]);
 
-  console.log(profileV3);
+  // console.log(profileV3);
 
   return (
     <div className="profile-cv-container">
@@ -160,8 +166,8 @@ const ProfileCv: React.FC = () => {
                 ? 'Số CV của bạn:'
                 : 'Number of your resume:'}
             </p>
-            {profileV3.profilesCvs ? (
-              <h3>{profileV3.profilesCvs.length}</h3>
+            {profileMoreV3.profilesCvs ? (
+              <h3>{profileMoreV3.profilesCvs.length}</h3>
             ) : (
               <></>
             )}
@@ -189,14 +195,14 @@ const ProfileCv: React.FC = () => {
             </Button>
           </div>
         </div>
-        {profileV3?.profilesCvs?.length !== 0 ? (
+        {profileMoreV3?.profilesCvs?.length !== 0 ? (
           <Box
             sx={{ flexGrow: 1 }}
             className="profile-cv-list"
             id="profile-cv-list"
           >
             <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
-              {profileV3?.profilesCvs
+              {profileMoreV3?.profilesCvs
                 ?.slice() // Tạo một bản sao của mảng để không ảnh hưởng đến mảng gốc
                 .sort((a: any, b: any) => {
                   return -1;

@@ -20,6 +20,7 @@ import { message } from 'antd';
 // import { Input } from 'antd';
 
 import './style.scss';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 
 // const { TextArea } = Input;
 
@@ -174,11 +175,12 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
           award.id,
         );
         if (result) {
-          const resultProfile = await profileApi.getProfileV3(
+          const resultProfile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
 
-          resultProfile && dispatch(setProfileV3(resultProfile));
+          resultProfile &&
+            dispatch(setProfileMeInformationMoreV3(resultProfile));
           // message.success(
           //   languageRedux === 1
           //     ? 'Cập nhật thông tin thành công !'

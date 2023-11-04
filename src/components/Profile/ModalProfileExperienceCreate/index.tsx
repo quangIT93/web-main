@@ -22,6 +22,7 @@ import profileApi from 'api/profileApi';
 import { message } from 'antd';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import './style.scss';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 // import { useDispatch } from 'react-redux';
 // import {
 //   getProfile,
@@ -331,12 +332,12 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
       if (checkForm) {
         const result = await profileApi.createProfileExperience(experience);
         if (result) {
-          const getProfileV3 = await profileApi.getProfileV3(
+          const getProfileV3 = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (getProfileV3) {
             setOpenModalExperienceCreate(false);
-            await dispatch(setProfileV3(getProfileV3) as any);
+            await dispatch(setProfileMeInformationMoreV3(getProfileV3) as any);
           }
         }
       } else {

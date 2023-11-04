@@ -20,6 +20,7 @@ import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { setAlertEditInfo } from 'store/reducer/profileReducer/alertProfileReducer';
 import { message } from 'antd';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 
 interface IModalReference {
   openModalEditReference: {
@@ -107,7 +108,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
     (state: RootState) => state.dataLanguage.languages,
   );
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data);
 
   const [fullName, setFullName] = React.useState<any>('');
   const [description, setDescription] = React.useState<any>('');
@@ -230,11 +231,11 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
           openModalEditReference.id,
         );
         if (result) {
-          const resultProfile = await profileApi.getProfileV3(
+          const resultProfile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (resultProfile) {
-            dispatch(setProfileV3(resultProfile));
+            dispatch(setProfileMeInformationMoreV3(resultProfile));
             dispatch(setAlertEditInfo(true));
           }
 
