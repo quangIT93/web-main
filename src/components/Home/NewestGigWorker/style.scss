@@ -23,6 +23,24 @@
         }
     }
 
+    .view-all-down {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        gap: 16px;
+        width: 100%;
+        margin-top: 24px;
+
+        p {
+            color: #0D99FF;
+        }
+
+        svg {
+            color: #0D99FF;
+        }
+    }
+
     @include breakpoint(mobile) {
         margin-bottom: 24px !important;
 

@@ -18,7 +18,7 @@ import 'intl/locale-data/jsonp/en';
 import historyRecruiter from 'api/historyRecruiter';
 
 // impport Icon
-import PersonIcon from '@mui/icons-material/Person';
+// import PersonIcon from '@mui/icons-material/Person';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
@@ -31,6 +31,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
+import { CateIcon, GenderIcon, PersonIcon } from '#components/Icons/iconCandidate';
+import { IconEmail, PhoneIcon } from '#components/Icons';
 
 interface IDetailPosted {
   detailPosted: any;
@@ -289,106 +291,158 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               boxShadow: 'none',
               borderRadius: '5px',
               margin: '8px 0',
-              background: `${
-                candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
-              }`,
+              background: `${candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
+                }`,
             }}
             onClick={(e) =>
               handleClickCandidate(e, candidate.id, detailPosted?.id)
             }
           >
-            <div className="image-cadidate_wrap">
-              <img
-                src={candidate.avatar ? candidate.avatar : female_null_avatar}
-                alt={candidate.name}
-                className="image-cadidate"
-              />
-            </div>
-            <Box
-              sx={{
-                marginLeft: '12px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-              }}
-            >
-              <div
-                style={{
+            <div className="item-candidate-posted-content">
+              <div className="image-cadidate_wrap">
+                <img
+                  src={candidate.avatar ? candidate.avatar : female_null_avatar}
+                  alt={candidate.name}
+                  className="image-cadidate"
+                />
+                <div className="wrap-name-age">
+                  <div className="wrap-name-age_item">
+                    <span className="icon-age_item-candidate">
+                      <PersonIcon />
+                    </span>
+                    <span>
+                      {moment(new Date(candidate?.birthday))
+                        .format('yyyy')
+                        .replace(/\d{2}$/, 'xx')}
+                    </span>
+                  </div>
+                  <div className="wrap-name-age_item">
+                    <span className="icon-age_item-candidate">
+                      <GenderIcon />
+                    </span>
+                    <span>
+                      {
+                        candidate.gender === 1 ?
+                          languageRedux === 1 ? "Nam" : "Male" :
+                          languageRedux === 1 ? "Nữ" : "Female"
+                      }
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <Box
+                sx={{
                   display: 'flex',
-                  alignItems: 'center',
-                  position: 'relative',
+                  flexDirection: 'column',
+                  // gap: '4px',
+                  justifyContent: 'space-between'
                 }}
               >
-                <Typography
-                  variant="h6"
-                  color="text.secondary"
-                  sx={{
-                    marginLeft: '12px',
-                    fontSize: '16px',
-                    fontWeight: 'bold',
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    position: 'relative',
                   }}
                 >
-                  {candidate.name}
-                </Typography>
+                  <Typography
+                    variant="h6"
+                    color="text.secondary"
+                    sx={{
+                      // marginLeft: '12px',
+                      fontSize: '16px',
+                      wordBreak: 'break-all',
+                      whiteSpace: 'nowrap',
+                      width: '200px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      color: '#000000',
+                      fontWeight: '700',
+                    }}
+                  >
+                    {candidate.name}
+                  </Typography>
 
-                {statusCandidates.map((statusCandidate, index) => {
-                  if (
-                    candidate?.application_status === statusCandidate.statusId
-                  ) {
-                    return (
-                      <p
-                        key={index}
-                        style={{
-                          background: `${statusCandidate.background}`,
-                          padding: `${statusCandidate.padding}`,
-                          borderRadius: `${statusCandidate.borderRadius}`,
-                          color: '#ffffff',
-                          //  position: 'absolute',
-                          right: `${statusCandidate.position}`,
-                          width: `${statusCandidate.width}`,
-                          height: `${statusCandidate.height}`,
-                          marginLeft: '60px',
-                          fontStyle: 'italic  ',
-                          fontSize: '12px',
-                        }}
-                      >
-                        {statusCandidate.statusName}
-                      </p>
-                    );
-                  }
-                  return null;
-                })}
-              </div>
-              <div className="item-detail-candidate">
-                <PersonIcon
-                  fontSize="small"
-                  className="icon-detail-candidate"
-                />
-                <p>
-                  {candidate.gender === 0 ? language?.female : language?.male} -{' '}
-                  {moment(candidate.birthday).format('DD/MM/YYYY')}
-                </p>
-              </div>
-              <div className="item-detail-candidate">
-                <LocationOnIcon
-                  fontSize="small"
-                  className="icon-detail-candidate"
-                />
-                <p>{candidate.province_name}</p>
-              </div>
-              <div className="item-detail-candidate">
-                <BusinessCenterIcon
-                  fontSize="small"
-                  className="icon-detail-candidate"
-                />
-                <p>
-                  {language?.career_objective}{' '}
-                  {candidate.categories.map((candid: any, index: number) => (
-                    <span key={index}> {candid.child_category}, </span>
-                  ))}
-                </p>
-              </div>
-            </Box>
+                  {statusCandidates.map((statusCandidate, index) => {
+                    if (
+                      candidate?.application_status === statusCandidate.statusId
+                    ) {
+                      return (
+                        <p
+                          key={index}
+                          style={{
+                            background: `${statusCandidate.background}`,
+                            padding: `${statusCandidate.padding}`,
+                            borderRadius: `${statusCandidate.borderRadius}`,
+                            color: '#ffffff',
+                            //  position: 'absolute',
+                            right: `${statusCandidate.position}`,
+                            width: `${statusCandidate.width}`,
+                            height: `${statusCandidate.height}`,
+                            marginLeft: '60px',
+                            fontStyle: 'italic  ',
+                            fontSize: '12px',
+                          }}
+                        >
+                          {statusCandidate.statusName}
+                        </p>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+                <div className="detail-candidate-info">
+                  <div className="item-detail-candidate">
+                    <span className="icon-info-candidate">
+                      <IconEmail width={16} height={16} />
+                    </span>
+                    <p>
+                      {
+                        candidate?.email
+                          ? candidate.email
+                          : languageRedux === 1
+                            ? 'Thông tin chưa cập nhật'
+                            : 'Not updated information'
+                      }
+                    </p>
+                  </div>
+                  <div className="item-detail-candidate">
+                    <span className="icon-info-candidate">
+                      <PhoneIcon width={16} height={16} />
+                    </span>
+                    <p>{candidate?.phone
+                      ? candidate.phone
+                      : languageRedux === 1
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'}
+                    </p>
+                  </div>
+                  <div className="item-detail-candidate">
+                    <span className="icon-info-candidate">
+                      <CateIcon />
+                    </span>
+                    <p>
+                      {
+                        candidate?.categories?.length !== 0
+                          ? candidate.categories?.map((value: any) => {
+                            return `${value.fullName}, `;
+                          })
+                          : languageRedux === 1
+                            ? 'Thông tin chưa cập nhật'
+                            : 'Not updated information'
+                      }
+                    </p>
+                  </div>
+                </div>
+                <h2>
+                  {candidate?.introduction
+                    ? candidate.introduction
+                    : languageRedux === 1
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'}
+                </h2>
+              </Box>
+            </div>
           </Card>
         ))}
         <Box

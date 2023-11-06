@@ -47,7 +47,7 @@ const BreadcrumbMenuItems: React.FC = () => {
       title: languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles',
       childs: [
         languageRedux === 1 ? 'Đã lưu' : 'Saved',
-        languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
+        languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posted',
         // language?.history_page?.saved,
         // language?.history_page?.posts_created,
       ],
@@ -184,24 +184,24 @@ const BreadcrumbMenuItems: React.FC = () => {
             searchParams.get('hotjob-id') === '6'
               ? 'Driver'
               : searchParams.get('hotjob-id') === '2'
-              ? 'Remote'
-              : searchParams.get('hotjob-id') === '5'
-              ? 'Freelancer'
-              : searchParams.get('hotjob-id') === '1'
-              ? 'Influencer'
-              : searchParams.get('hotjob-id') === '3'
-              ? 'Short time'
-              : searchParams.get('hotjob-id') === '4'
-              ? 'Job today'
-              : searchParams.get('hotjob-id') === '8'
-              ? 'Restaurant Service'
-              : searchParams.get('hotjob-id') === '9'
-              ? 'Parttime'
-              : searchParams.get('hotjob-id') === '10'
-              ? 'Marketing'
-              : searchParams.get('hotjob-id') === '11'
-              ? 'Beauty'
-              : '',
+                ? 'Remote'
+                : searchParams.get('hotjob-id') === '5'
+                  ? 'Freelancer'
+                  : searchParams.get('hotjob-id') === '1'
+                    ? 'Influencer'
+                    : searchParams.get('hotjob-id') === '3'
+                      ? 'Short time'
+                      : searchParams.get('hotjob-id') === '4'
+                        ? 'Job today'
+                        : searchParams.get('hotjob-id') === '8'
+                          ? 'Restaurant Service'
+                          : searchParams.get('hotjob-id') === '9'
+                            ? 'Parttime'
+                            : searchParams.get('hotjob-id') === '10'
+                              ? 'Marketing'
+                              : searchParams.get('hotjob-id') === '11'
+                                ? 'Beauty'
+                                : '',
         },
       ],
     },
@@ -219,8 +219,8 @@ const BreadcrumbMenuItems: React.FC = () => {
                 ? 'Thông tin người dùng'
                 : 'User information'
               : languageRedux === 1
-              ? 'Thông tin nhà tuyển dụng'
-              : 'Employer information',
+                ? 'Thông tin nhà tuyển dụng'
+                : 'Employer information',
         },
       ],
     },
@@ -238,18 +238,18 @@ const BreadcrumbMenuItems: React.FC = () => {
                 ? 'Công việc mới nhất'
                 : 'Newest Job'
               : localStorage.getItem('job-type') === 'suggested'
-              ? languageRedux === 1
-                ? 'Công việc gợi ý'
-                : 'Subjected Job'
-              : localStorage.getItem('job-type') === 'place'
-              ? languageRedux === 1
-                ? 'Công việc theo chủ đề'
-                : 'Job by hot places'
-              : localStorage.getItem('job-type') === 'hot-job'
-              ? languageRedux === 1
-                ? 'Công việc nổi bật'
-                : 'Hot jobs'
-              : '',
+                ? languageRedux === 1
+                  ? 'Công việc gợi ý'
+                  : 'Subjected Job'
+                : localStorage.getItem('job-type') === 'place'
+                  ? languageRedux === 1
+                    ? 'Công việc theo chủ đề'
+                    : 'Job by hot places'
+                  : localStorage.getItem('job-type') === 'hot-job'
+                    ? languageRedux === 1
+                      ? 'Công việc nổi bật'
+                      : 'Hot jobs'
+                    : '',
           href: '/more-jobs',
         },
         {
@@ -259,68 +259,68 @@ const BreadcrumbMenuItems: React.FC = () => {
                 ? 'Công việc gợi ý'
                 : 'Suggested'
               : searchParams.get('categories-id') === '2'
-              ? languageRedux === 1
-                ? 'Văn phòng'
-                : 'Office worker'
-              : searchParams.get('categories-id') === '3'
-              ? languageRedux === 1
-                ? 'Khách sạn/Nhà hàng'
-                : 'Hotel/Restaurant'
-              : searchParams.get('categories-id') === '4'
-              ? languageRedux === 1
-                ? 'IT/Lập trình viên'
-                : 'IT/Programming'
-              : searchParams.get('categories-id') === '5'
-              ? languageRedux === 1
-                ? 'Design'
-                : 'Design'
-              : searchParams.get('categories-id') === '6'
-              ? languageRedux === 1
-                ? 'Marketing'
-                : 'Marketing'
-              : searchParams.get('categories-id') === '7'
-              ? languageRedux === 1
-                ? 'Lao động phổ thông'
-                : 'Blue-collar worker'
-              : searchParams.get('categories-id') === '8'
-              ? languageRedux === 1
-                ? 'Ngân hàng'
-                : 'Bank'
-              : searchParams.get('categories-id') === '9'
-              ? languageRedux === 1
-                ? 'Beauty & Spa'
-                : 'Beauty & Spa'
-              : searchParams.get('categories-id') === '10'
-              ? languageRedux === 1
-                ? 'Xuất nhập khẩu'
-                : 'Logistic'
-              : searchParams.get('categories-id') === '11'
-              ? languageRedux === 1
-                ? 'Dịch vụ'
-                : 'Service'
-              : searchParams.get('categories-id') === '12'
-              ? languageRedux === 1
-                ? 'Giáo dục - Đào tạo'
-                : 'Education'
-              : searchParams.get('categories-id') === '13'
-              ? languageRedux === 1
-                ? 'Dịch thuật'
-                : 'Translator'
-              : searchParams.get('categories-id') === '14'
-              ? languageRedux === 1
-                ? 'Khoa học - Kỹ thuật'
-                : 'Science - Technology'
-              : searchParams.get('categories-id') === '15'
-              ? languageRedux === 1
-                ? 'Chuyển nhà/Vệ sinh'
-                : 'House moving/Cleaning'
-              : searchParams.get('categories-id') === '16'
-              ? languageRedux === 1
-                ? 'Ngành khác'
-                : 'Others'
-              : languageRedux === 1
-              ? 'Tất cả'
-              : 'All',
+                ? languageRedux === 1
+                  ? 'Văn phòng'
+                  : 'Office worker'
+                : searchParams.get('categories-id') === '3'
+                  ? languageRedux === 1
+                    ? 'Khách sạn/Nhà hàng'
+                    : 'Hotel/Restaurant'
+                  : searchParams.get('categories-id') === '4'
+                    ? languageRedux === 1
+                      ? 'IT/Lập trình viên'
+                      : 'IT/Programming'
+                    : searchParams.get('categories-id') === '5'
+                      ? languageRedux === 1
+                        ? 'Design'
+                        : 'Design'
+                      : searchParams.get('categories-id') === '6'
+                        ? languageRedux === 1
+                          ? 'Marketing'
+                          : 'Marketing'
+                        : searchParams.get('categories-id') === '7'
+                          ? languageRedux === 1
+                            ? 'Lao động phổ thông'
+                            : 'Blue-collar worker'
+                          : searchParams.get('categories-id') === '8'
+                            ? languageRedux === 1
+                              ? 'Ngân hàng'
+                              : 'Bank'
+                            : searchParams.get('categories-id') === '9'
+                              ? languageRedux === 1
+                                ? 'Beauty & Spa'
+                                : 'Beauty & Spa'
+                              : searchParams.get('categories-id') === '10'
+                                ? languageRedux === 1
+                                  ? 'Xuất nhập khẩu'
+                                  : 'Logistic'
+                                : searchParams.get('categories-id') === '11'
+                                  ? languageRedux === 1
+                                    ? 'Dịch vụ'
+                                    : 'Service'
+                                  : searchParams.get('categories-id') === '12'
+                                    ? languageRedux === 1
+                                      ? 'Giáo dục - Đào tạo'
+                                      : 'Education'
+                                    : searchParams.get('categories-id') === '13'
+                                      ? languageRedux === 1
+                                        ? 'Dịch thuật'
+                                        : 'Translator'
+                                      : searchParams.get('categories-id') === '14'
+                                        ? languageRedux === 1
+                                          ? 'Khoa học - Kỹ thuật'
+                                          : 'Science - Technology'
+                                        : searchParams.get('categories-id') === '15'
+                                          ? languageRedux === 1
+                                            ? 'Chuyển nhà/Vệ sinh'
+                                            : 'House moving/Cleaning'
+                                          : searchParams.get('categories-id') === '16'
+                                            ? languageRedux === 1
+                                              ? 'Ngành khác'
+                                              : 'Others'
+                                            : languageRedux === 1
+                                              ? 'Tất cả'
+                                              : 'All',
         },
       ],
     },
@@ -338,37 +338,40 @@ const BreadcrumbMenuItems: React.FC = () => {
         {
           title:
             searchParams.get('p') === '1'
-              ? 'Các công việc đã lưu'
+              ? languageRedux === 1 ? 'Các công việc đã lưu' : 'Saved jobs'
               : searchParams.get('p') === '2'
-              ? 'Các công việc đã đăng tuyển'
-              : searchParams.get('p') === '3'
-              ? 'Danh sách bài viết'
-              : searchParams.get('p') === '4'
-              ? 'Danh sách ứng viên'
-              : searchParams.get('p') === '0'
-              ? 'Các công việc đã ứng tuyển'
-              : '',
+                ? languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs'
+                : searchParams.get('p') === '3'
+                  ? languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles'
+                  : searchParams.get('p') === '4'
+                    ? languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates'
+                    : searchParams.get('p') === '5'
+                      ? languageRedux === 1 ? 'Danh sách công ty' : 'List of companies'
+                      : searchParams.get('p') === '0'
+                        ? languageRedux === 1 ? 'Các công việc đã ứng tuyển' : 'Apllied jobs'
+                        : '',
           href: '/history',
         },
         {
           title:
             searchParams.get('c') === '1-0' ||
-            searchParams.get('c') === '2-0' ||
-            searchParams.get('c') === '2-0' ||
-            searchParams.get('c') === '0-0' ||
-            searchParams.get('c') === '4-0'
+              searchParams.get('c') === '2-0' ||
+              searchParams.get('c') === '2-0' ||
+              searchParams.get('c') === '0-0' ||
+              searchParams.get('c') === '4-0' ||
+              searchParams.get('c') === '5-0'
               ? languageRedux === 1
                 ? 'Tất cả'
                 : 'All'
               : searchParams.get('c') === '2-1'
-              ? 'Các công việc chưa đóng'
-              : searchParams.get('c') === '2-2'
-              ? 'Các công việc đã đóng'
-              : searchParams.get('c') === '3-0'
-              ? 'Đã lưu'
-              : searchParams.get('c') === '3-1'
-              ? 'Bài viết bạn đã tạo'
-              : '',
+                ? languageRedux === 1 ? 'Các công việc chưa đóng' : 'Unclosed jobs'
+                : searchParams.get('c') === '2-2'
+                  ? languageRedux === 1 ? 'Các công việc đã đóng' : 'Closed jobs'
+                  : searchParams.get('c') === '3-0'
+                    ? languageRedux === 1 ? 'Đã lưu' : 'Saved articles'
+                    : searchParams.get('c') === '3-1'
+                      ? languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posted articles'
+                      : '',
           href: '/history',
         },
       ],
@@ -434,8 +437,8 @@ const BreadcrumbMenuItems: React.FC = () => {
               ? 'Tạo bài viết mới'
               : 'Creat new post'
             : languageRedux === 1
-            ? 'Chỉnh sửa bài đăng'
-            : 'Edit post',
+              ? 'Chỉnh sửa bài đăng'
+              : 'Edit post',
         },
       ],
     },
@@ -560,6 +563,36 @@ const BreadcrumbMenuItems: React.FC = () => {
             languageRedux === 1
               ? 'Tạo bài đăng tuyển dụng'
               : 'Create job posting',
+        },
+      ],
+    },
+    {
+      location: '/detail-company',
+      menu: [
+        {
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
+          href: '/',
+        },
+        {
+          title:
+            languageRedux === 1
+              ? 'Chi tiết công ty'
+              : 'Detail Company',
+        },
+      ],
+    },
+    {
+      location: '/companyAll',
+      menu: [
+        {
+          title: languageRedux === 1 ? 'Trang chủ' : 'Home',
+          href: '/',
+        },
+        {
+          title:
+            languageRedux === 1
+              ? 'Tìm kiếm công ty'
+              : 'Looking company',
         },
       ],
     },

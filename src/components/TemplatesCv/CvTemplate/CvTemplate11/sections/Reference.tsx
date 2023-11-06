@@ -5,23 +5,35 @@ interface ICvReference {
   color: any;
   profile: any;
   fontSize: any;
+  profileMore: any;
 }
 const Reference: React.FC<ICvReference> = (props) => {
+  const { color, profile, fontSize, profileMore } = props;
+
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
     },
     divTitle: {
-      backgroundColor: '#e5f6fe',
+      backgroundColor:
+        color === 1
+          ? '#8dc5fe'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
     },
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
-      color: '#34899d',
-      fontFamily: 'Petrona Bold',
+      color: '#000',
       letterSpacing: '4pt',
+      fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',
     },
     divDes: {
@@ -44,7 +56,7 @@ const Reference: React.FC<ICvReference> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Petrona Bold',
+      fontFamily: 'Fahkwang Medium',
     },
     divWrapItem: {
       display: 'flex',
@@ -58,45 +70,37 @@ const Reference: React.FC<ICvReference> = (props) => {
         <Text style={styles.title}>Reference</Text>
       </View>
       <View style={styles.divWrapItem}>
-        <View>
-          <View style={styles.divName}>
-            <Text style={styles.textDes}>Mguyễn Văn An</Text>
+        {profileMore?.profilesReferences?.map((reference: any) => (
+          <View>
+            <View style={styles.divName}>
+              <Text style={styles.textDes}>{reference?.fullName}</Text>
+            </View>
+            <View style={styles.divPhone}>
+              <Text style={styles.textDes}>{reference?.phone}</Text>
+            </View>
+            <View style={styles.divDes}>
+              <Text style={styles.textDes}>{reference?.description}</Text>
+            </View>
           </View>
-          <View style={styles.divPhone}>
-            <Text style={styles.textDes}>0911985754</Text>
-          </View>
-          <View style={styles.divDes}>
-            <Text style={styles.textDes}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure
-              incidunt, deserunt consectetur nam tenetur aperiam facere qui
-              perferendis autem quos molestias. Dolorum provident itaque tempora
-            </Text>
-          </View>
-        </View>
+        ))}
         <View
           style={{
             height: '12pt',
             width: '60pt',
             display: 'flex',
             alignItems: 'center',
-            backgroundColor: '#34899d',
+            backgroundColor:
+              color === 1
+                ? '#8dc5fe'
+                : color === 2
+                ? '#0D99FF'
+                : color === 3
+                ? '#FBBC04'
+                : color === 4
+                ? '#5CB265'
+                : '#D80000',
           }}
         ></View>
-        <View>
-          <View style={styles.divName}>
-            <Text style={styles.textDes}>Mguyễn Văn An</Text>
-          </View>
-          <View style={styles.divPhone}>
-            <Text style={styles.textDes}>0911985754</Text>
-          </View>
-          <View style={styles.divDes}>
-            <Text style={styles.textDes}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure
-              incidunt, deserunt consectetur nam tenetur aperiam facere qui
-              perferendis autem quos molestias. Dolorum provident itaque tempora
-            </Text>
-          </View>
-        </View>
       </View>
     </View>
   );

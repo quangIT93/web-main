@@ -171,6 +171,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}
+        className="all_apply_job_history"
       >
         <Typography
           sx={{

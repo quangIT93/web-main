@@ -5,22 +5,42 @@ interface ICvProfile {
   color: any;
   profile: any;
   fontSize: any;
+  profileMore: any;
 }
 const Profile: React.FC<ICvProfile> = (props) => {
+  const { color, profile, fontSize, profileMore } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
     },
     divTitle: {
-      backgroundColor: '#e5f6fe',
+      backgroundColor:
+        color === 1
+          ? '#8dc5fe'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
     },
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
-      color: '#34899d',
-      fontFamily: 'Petrona Bold',
+      color:
+        color === 1
+          ? '#000000'
+          : color === 2
+          ? '#000000'
+          : color === 3
+          ? '#ffffff'
+          : color === 4
+          ? '#000000'
+          : '#ffffff',
+      fontFamily: 'Fahkwang Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
     },
@@ -34,7 +54,7 @@ const Profile: React.FC<ICvProfile> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Petrona Bold',
+      fontFamily: 'Fahkwang Medium',
     },
   });
   return (
@@ -43,19 +63,7 @@ const Profile: React.FC<ICvProfile> = (props) => {
         <Text style={styles.title}>Profile</Text>
       </View>
       <View style={styles.divDes}>
-        <Text style={styles.textDes}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure
-          incidunt, deserunt consectetur nam tenetur aperiam facere qui
-          perferendis autem quos molestias. Dolorum provident itaque tempora
-          nesciunt atque optio repudiandae molestiae. Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Quidem rerum minus vitae quia. Dolores,
-          quia doloribus fugit reiciendis dolor quaerat magnam dolorem
-          consectetur, quod sint iure quo commodi? Placeat, commodi. Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Id tempora exercitationem
-          nostrum quibusdam consequatur. Autem ipsa ab aspernatur molestiae! Aut
-          id tempora ipsum praesentium cupiditate delectus consectetur doloribus
-          perspiciatis eum.
-        </Text>
+        <Text style={styles.textDes}>{profile?.introduction}</Text>
       </View>
     </View>
   );

@@ -314,7 +314,7 @@ const NewJobs: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
 
   return (
     <>
@@ -360,10 +360,10 @@ const NewJobs: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="view-all" onClick={handleMoveToMoreJob}>
+            {/* <div className="view-all" onClick={handleMoveToMoreJob}>
               <p>{language?.home_page?.view_all}</p>
               <ArrowrightIcon width={20} height={20} />
-            </div>
+            </div> */}
           </div>
 
           <Skeleton loading={loading} active>
@@ -374,6 +374,15 @@ const NewJobs: React.FC = () => {
                 </Grid>
               ))}
             </Grid>
+            <div className="view-all-down"
+              onClick={handleMoveToMoreJob}
+              style={{
+                display: !postNewestV3.data || postNewestV3.data.length === 0 ? 'none' : 'flex'
+              }}
+            >
+              <p>{language?.home_page?.view_all}</p>
+              <ArrowrightIcon width={20} height={20} />
+            </div>
           </Skeleton>
           {/* <Stack
             spacing={2}

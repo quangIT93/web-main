@@ -26,6 +26,10 @@
             background: #0D99FF;
             display: grid;
             place-items: center;
+
+            svg {
+                color: white;
+            }
         }
 
         p {

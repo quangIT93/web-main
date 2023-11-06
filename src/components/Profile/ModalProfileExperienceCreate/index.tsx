@@ -23,6 +23,7 @@ import { message } from 'antd';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import './style.scss';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
+import { setAlertSuccess } from 'store/reducer/profileReducer/alertProfileReducer';
 // import { useDispatch } from 'react-redux';
 // import {
 //   getProfile,
@@ -338,6 +339,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
           if (getProfileV3) {
             setOpenModalExperienceCreate(false);
             await dispatch(setProfileMeInformationMoreV3(getProfileV3) as any);
+            dispatch(setAlertSuccess(true));
           }
         }
       } else {
@@ -408,7 +410,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={language?.professional_titles}
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {experience.title.length > 50 ? (
@@ -440,7 +442,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={language?.company_organization}
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {experience.companyName.length > 50 ? (
@@ -487,7 +489,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                   />
                   <div className="wrap-noti_input">
                     {experience.startDate &&
-                    new Date(experience.startDate).getFullYear() >
+                      new Date(experience.startDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
@@ -531,7 +533,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                   />
                   <div className="wrap-noti_input">
                     {experience.endDate &&
-                    new Date(experience.endDate).getFullYear() >
+                      new Date(experience.endDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
@@ -573,7 +575,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             />
             <div className="wrap-noti_input">
               {experience.extraInformation &&
-              experience.extraInformation.length > 500 ? (
+                experience.extraInformation.length > 500 ? (
                 <span className="helper-text">Bạn đã nhập quá 500 ký tự</span>
               ) : experience.extraInformation.length === 0 ? (
                 <span className="helper-text">
@@ -582,11 +584,10 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                experience.extraInformation
+              <span className="number-text">{`${experience.extraInformation
                   ? experience.extraInformation.length
                   : '0'
-              }/500`}</span>
+                }/500`}</span>
             </div>
           </Box>
 

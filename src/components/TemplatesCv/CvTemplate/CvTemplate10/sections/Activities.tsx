@@ -12,18 +12,37 @@ interface ICvActivities {
   fontSize: any;
 }
 const Activities: React.FC<ICvActivities> = (props) => {
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginLeft: -25,
     },
     divTitle: {
-      backgroundColor: '#e5f6fe',
+      backgroundColor:
+        color === 1
+          ? '#e5f6fe'
+          : color === 2
+          ? '#D6EAF8'
+          : color === 3
+          ? '#FCF3CF'
+          : color === 4
+          ? '#D5F5E3'
+          : '#FADBD8',
     },
     title: {
       marginLeft: '45.839pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
-      color: '#34899d',
+      color:
+        color === 1
+          ? '#037385'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
@@ -48,14 +67,32 @@ const Activities: React.FC<ICvActivities> = (props) => {
     },
     textLeft: {
       fontSize: '11pt',
-      color: '#34899d',
+      color:
+        color === 1
+          ? '#037385'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       wordwrap: 'break-word',
       textAlign: 'justify',
       fontFamily: 'Petrona Bold',
     },
     textTitleRight: {
       fontSize: '11pt',
-      color: '#34899d',
+      color:
+        color === 1
+          ? '#037385'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       fontFamily: 'Petrona Bold',
     },
     divTextTitleRight: {
