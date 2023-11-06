@@ -183,10 +183,10 @@ const ThemesJob: React.FC = () => {
         // null,
         // Number(searchParams.get('categories-id')),
         profile.length !== 0 &&
-          profile?.profileLocations?.length > 0 &&
-          profile?.profileLocations?.map((item: any) => {
-            return item.province.id;
-          }),
+        profile?.profileLocations?.length > 0 &&
+        profile?.profileLocations?.map((item: any) => {
+          return item.province.id;
+        }),
         null,
         null,
         20,
@@ -263,7 +263,7 @@ const ThemesJob: React.FC = () => {
           <SuggestIcon width={25} height={25} />
           <h2>{language?.nearby_jobs}</h2>
         </div>
-        <div
+        {/* <div
           className="view-all"
           onClick={handleMoveToMoreJob}
           style={{
@@ -272,7 +272,7 @@ const ThemesJob: React.FC = () => {
         >
           <p>{language?.home_page?.view_all}</p>
           <ArrowrightIcon width={20} height={20} />
-        </div>
+        </div> */}
       </div>
 
       {!localStorage.getItem('accessToken') ? (
@@ -313,7 +313,7 @@ const ThemesJob: React.FC = () => {
                 container
                 spacing={3}
                 columns={{ xs: 12, sm: 4, md: 12 }}
-                // sx={{ marginTop: '-8px' }}
+              // sx={{ marginTop: '-8px' }}
               >
                 {nearJob.map((item: PostNewestV3, index: number) => (
                   <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
@@ -371,12 +371,25 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>
             </>
           )}
+          <div
+            className="view-all-down"
+            onClick={handleMoveToMoreJob}
+            style={{
+              display: !nearJob ||
+                nearJob.length === 0 ||
+                !localStorage.getItem('accessToken') ?
+                'none' : 'flex',
+            }}
+          >
+            <p>{language?.home_page?.view_all}</p>
+            <ArrowrightIcon width={20} height={20} />
+          </div>
         </Skeleton>
       </>
       <ModalLogin

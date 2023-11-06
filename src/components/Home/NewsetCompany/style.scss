@@ -1,0 +1,65 @@
+@import '../../../scss/mixins';
+
+.list-company-container {
+    // margin: 32px 0;
+
+    margin-bottom: 24px !important;
+    padding: 0 !important;
+    scroll-padding-top: 30px;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+
+    .list-company-home {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 24px;
+
+        @media screen and (max-width: 1280px) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media screen and (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .view-all-down {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        gap: 16px;
+        width: 100%;
+        margin-top: 24px;
+
+        p {
+            color: #0D99FF;
+        }
+
+        svg {
+            color: #0D99FF;
+        }
+    }
+
+    @include breakpoint(mobile) {
+        margin-bottom: 24px !important;
+
+    }
+
+    @include breakpoint(tablet) {
+        margin-bottom: 24px !important;
+
+    }
+
+    @include breakpoint(largeTablet) {
+        margin-bottom: 24px !important;
+
+    }
+
+    @include breakpoint(destop) {
+        margin-bottom: 24px !important;
+
+    }
+
+
+}

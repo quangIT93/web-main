@@ -1,11 +1,11 @@
-.share-buttons-choose-cv-modal {
+.buttons-delete-cv-modal {
     margin-top: 12px;
     display: flex;
     align-items: center;
     gap: 16px;
 
     button {
-        width: 153px;
+        width: 200px;
         height: 42px;
         font-family: Roboto;
         font-size: 16px;
@@ -16,10 +16,6 @@
 
         &:first-child {
             background: #0D99FF;
-        }
-
-        &:last-child {
-            color: #0D99FF;
         }
     }
 }

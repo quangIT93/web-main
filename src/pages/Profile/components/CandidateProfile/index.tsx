@@ -142,6 +142,9 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
   const profileV3 = useSelector(
     (state: RootState) => state.dataProfileInformationV3.data,
   );
+  const profileV3More = useSelector(
+    (state: RootState) => state.dataProfileInformationMoreV3.data,
+  );
   const swiperRef = useRef<any>(null);
   const handleChooseCv = async (item: any, e: any) => {
     e.stopPropagation();
@@ -183,7 +186,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           });
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // confirm delete cv
@@ -201,7 +204,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -309,12 +312,12 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           <Space wrap className="item-info-work">
             {profileV3?.profileCategories?.length !== 0
               ? profileV3?.profileCategories?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.fullName}
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    {item.fullName}
+                  </Button>
+                ),
+              )
               : language?.unupdated}
           </Space>
         </div>
@@ -345,12 +348,12 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           <Space wrap className="item-info-work">
             {profileV3?.profileLocations?.length !== 0
               ? profileV3?.profileLocations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.fullName}
-                    {', '}
-                    {item?.province?.fullName}
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  {item?.fullName}
+                  {', '}
+                  {item?.province?.fullName}
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -385,23 +388,23 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           </div>
           <Space wrap className="item-info-work">
             <Button className="btn" type="text">
-              {profileV3.jobTypeId === 1
+              {profileV3More.jobTypeId === 1
                 ? languageRedux === 1
                   ? 'Toàn thời gian'
                   : 'Fulltime'
-                : profileV3.jobTypeId === 2
-                ? languageRedux === 1
-                  ? 'Bán thời gian'
-                  : 'Parttime'
-                : profileV3.jobTypeId === 4
-                ? languageRedux === 1
-                  ? 'Làm việc tự do'
-                  : 'Freelancer'
-                : profileV3.jobTypeId === 7
-                ? languageRedux === 1
-                  ? 'Thực tập'
-                  : 'Intern'
-                : language?.unupdated}
+                : profileV3More.jobTypeId === 2
+                  ? languageRedux === 1
+                    ? 'Bán thời gian'
+                    : 'Parttime'
+                  : profileV3More.jobTypeId === 4
+                    ? languageRedux === 1
+                      ? 'Làm việc tự do'
+                      : 'Freelancer'
+                    : profileV3More.jobTypeId === 7
+                      ? languageRedux === 1
+                        ? 'Thực tập'
+                        : 'Intern'
+                      : language?.unupdated}
             </Button>
           </Space>
         </div>
@@ -429,7 +432,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 gap: '8px',
                 // display: profileV3?.profilesCvs?.length === 0 ? 'none' : 'flex',
               }}
-              // onClick={() => setOpenModalLocation(true)}
+            // onClick={() => setOpenModalLocation(true)}
             >
               {/* <div className="edit-icon">
                 <PencilIcon width={15} height={15} />
@@ -593,7 +596,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                 onClick={() =>
                                   handleDownloadCV(item?.pdfURL, item?.name)
                                 }
-                                // onClick={handleClickDownloadCv}
+                              // onClick={handleClickDownloadCv}
                               >
                                 <DownloadCVIcon width={14} height={14} />
                               </div>
@@ -779,7 +782,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-                // direction="vertical"
+              // direction="vertical"
               >
                 <Popconfirm
                   title={language?.profile_page?.delete_cv}

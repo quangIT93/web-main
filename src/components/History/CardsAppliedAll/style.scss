@@ -1,5 +1,17 @@
 @import '../../../scss//mixins';
 
+.all_apply_job_history {
+  .MuiFormControl-root {
+    width: 160px;
+
+    .MuiOutlinedInput-root {
+      width: 160px;
+      height: 48px;
+      border-radius: 24px;
+    }
+  }
+}
+
 .MuiPaginationItem-root.Mui-selected {
   background-color: #0d99ff !important;
   color: white;

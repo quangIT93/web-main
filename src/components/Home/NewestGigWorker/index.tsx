@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import ItemCadidate from '#components/Candidates/ItemCadidate';
 import ModalNoteWorker from './ModalNoteWorker';
 
-import { FireIcon, ArrowrightIcon } from '#components/Icons';
+import { FireIcon, ArrowrightIcon, IconNewestWorker } from '#components/Icons';
 import candidateSearch from 'api/apiCandidates';
 
 import { useSelector } from 'react-redux';
@@ -48,10 +48,10 @@ const NewestGigWorker = () => {
         !logout
           ? 6
           : profileV3.length !== 0 && profileV3?.typeRoleData === 0
-          ? 6
-          : profileV3.length === 0
-          ? 6
-          : 18,
+            ? 6
+            : profileV3.length === 0
+              ? 6
+              : 18,
         page,
         languageRedux === 1 ? 'vi' : 'en',
       );
@@ -61,7 +61,7 @@ const NewestGigWorker = () => {
 
         setListData(result.data.cvFilters);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -98,12 +98,12 @@ const NewestGigWorker = () => {
         }}
       >
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <FireIcon width={25} height={25} />
+          <IconNewestWorker width={25} height={25} />
           <h2>
             {languageRedux === 1 ? 'Ứng viên mới nhất' : 'Newest workers'}
           </h2>
         </div>
-        {profileV3?.typeRoleData === 1 ? (
+        {/* {profileV3?.typeRoleData === 1 ? (
           <div
             style={{
               display: 'flex',
@@ -122,11 +122,11 @@ const NewestGigWorker = () => {
           </div>
         ) : (
           <></>
-        )}
+        )} */}
       </div>
 
-      <div className="list-candidate-home">
-        <Skeleton loading={loading} active>
+      <Skeleton loading={loading} active>
+        <div className="list-candidate-home">
           {listData?.map((item: any, index: number) => {
             return (
               <>
@@ -134,8 +134,23 @@ const NewestGigWorker = () => {
               </>
             );
           })}
-        </Skeleton>
-      </div>
+        </div>
+        {profileV3?.typeRoleData === 1 ? (
+          <div className="view-all-down"
+            onClick={handleChangeRouteNewestWorker}
+            style={{
+              display: !listData || listData.length === 0 ? 'none' : 'flex'
+            }}
+          >
+            <p style={{ cursor: 'pointer' }}>
+              {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
+            </p>
+            <ArrowrightIcon width={20} height={20} />
+          </div>
+        ) : (
+          <></>
+        )}
+      </Skeleton>
       <ModalNoteWorker
         openModalNoteWorker={openModalNoteWorker}
         setOpenModalNoteWorker={setOpenModalNoteWorker}

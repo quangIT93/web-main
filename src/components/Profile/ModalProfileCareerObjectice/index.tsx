@@ -22,6 +22,7 @@ import languageApi from 'api/languageApi';
 
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
+import { setAlertEditInfo } from 'store/reducer/profileReducer/alertProfileReducer';
 const { SHOW_PARENT } = TreeSelect;
 
 const style = {
@@ -174,6 +175,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
 
         if (getProfileV3) {
           await dispatch(setProfileMeInformationV3(getProfileV3) as any);
+          dispatch(setAlertEditInfo(true));
           setOpenModalCareerObjective(false);
         }
       }

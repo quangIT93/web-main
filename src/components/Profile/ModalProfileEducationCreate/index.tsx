@@ -23,6 +23,7 @@ import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import candidateSearch from 'api/apiCandidates';
 import './style.scss';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
+import { setAlertSuccess } from 'store/reducer/profileReducer/alertProfileReducer';
 // import { useDispatch } from 'react-redux';
 // import {
 //   getProfile,
@@ -329,6 +330,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             languageRedux === 1 ? 'vi' : 'en',
           );
           await dispatch(setProfileMeInformationMoreV3(getProfileV3) as any);
+          dispatch(setAlertSuccess(true));
           setOpenModalEducationCreate(false);
         }
       } else {
@@ -416,7 +418,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={language?.profile_page?.place_school}
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {education.companyName && education.companyName.length > 50 ? (
@@ -428,9 +430,8 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                education.companyName ? education.companyName.length : '0'
-              }/50`}</span>
+              <span className="number-text">{`${education.companyName ? education.companyName.length : '0'
+                }/50`}</span>
             </div>
           </Box>
 
@@ -452,7 +453,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={language?.major}
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {education.major.length > 50 ? (
@@ -498,7 +499,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   />
                   <div className="wrap-noti_input">
                     {education.startDate &&
-                    new Date(education.startDate).getFullYear() >
+                      new Date(education.startDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
@@ -542,7 +543,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   />
                   <div className="wrap-noti_input">
                     {education.endDate &&
-                    new Date(education.endDate).getFullYear() >
+                      new Date(education.endDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         Thời gian kết thúc không thể lớn hơn thời gian hiện tại
@@ -583,7 +584,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               placeholder={'Loại công việc'}
               size="small"
               sx={{ width: '100%' }}
-              // error={!gender} // Đánh dấu lỗi
+            // error={!gender} // Đánh dấu lỗi
             >
               {typeAcademic?.map((value: any, index: number) => {
                 return <MenuItem value={index + 1}>{value.data}</MenuItem>;
@@ -623,7 +624,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             />
             <div className="wrap-noti_input">
               {education.extraInformation &&
-              education.extraInformation.length > 500 ? (
+                education.extraInformation.length > 500 ? (
                 <span className="helper-text">Bạn đã nhập quá 500 ký tự</span>
               ) : education.extraInformation.length === 0 ? (
                 <span className="helper-text">
@@ -632,11 +633,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                education.extraInformation
+              <span className="number-text">{`${education.extraInformation
                   ? education.extraInformation.length
                   : '0'
-              }/500`}</span>
+                }/500`}</span>
             </div>
           </Box>
 

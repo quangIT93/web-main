@@ -198,10 +198,10 @@ const HotJob: React.FC = () => {
           <FireIcon width={25} height={25} />
           <h2>{languageRedux === 1 ? 'Công việc nổi bật' : 'Hot Jobs'}</h2>
         </div>
-        <div className="view-all" onClick={handleMoveToMoreJob}>
+        {/* <div className="view-all" onClick={handleMoveToMoreJob}>
           <p>{language?.home_page?.view_all}</p>
           <ArrowrightIcon width={20} height={20} />
-        </div>
+        </div> */}
       </div>
       <Skeleton loading={loading} active>
         <div className="hotjob-content">
@@ -248,6 +248,14 @@ const HotJob: React.FC = () => {
                 </div>
               );
             })}
+        </div>
+        <div className="view-all-down" onClick={handleMoveToMoreJob}
+          style={{
+            display: !hotjob || hotjob.length === 0 ? 'none' : 'flex'
+          }}
+        >
+          <p>{language?.home_page?.view_all}</p>
+          <ArrowrightIcon width={20} height={20} />
         </div>
       </Skeleton>
 

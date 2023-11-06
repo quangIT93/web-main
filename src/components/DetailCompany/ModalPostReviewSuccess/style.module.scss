@@ -1,0 +1,21 @@
+.modal_post_review_success_buttons {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    button {
+        width: 200px;
+        height: 42px;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 18px;
+        letter-spacing: 0em;
+        text-align: center;
+
+        &:first-child {
+            background: #0D99FF;
+        }
+    }
+}

@@ -27,6 +27,7 @@ import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 import './style.scss';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
+import { setAlertEditInfo } from 'store/reducer/profileReducer/alertProfileReducer';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -349,6 +350,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
           );
           if (profile) {
             dispatch(setProfileMeInformationMoreV3(profile));
+            dispatch(setAlertEditInfo(true));
           }
           setOpenModalExperienceUpdate(false);
         }
@@ -429,7 +431,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={language?.professional_titles}
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {experience.title && experience.title.length > 50 ? (
@@ -439,9 +441,8 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                experience.title ? experience.title.length : '0'
-              }/50`}</span>
+              <span className="number-text">{`${experience.title ? experience.title.length : '0'
+                }/50`}</span>
             </div>
           </Box>
           <Box sx={styleChildBox}>
@@ -463,7 +464,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={language?.company_organization}
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {experience.companyName && experience.companyName.length > 50 ? (
@@ -475,9 +476,8 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                experience.companyName ? experience.companyName.length : '0'
-              }/50`}</span>
+              <span className="number-text">{`${experience.companyName ? experience.companyName.length : '0'
+                }/50`}</span>
             </div>
           </Box>
 
@@ -512,7 +512,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   />
                   <div className="wrap-noti_input">
                     {experience.startDate &&
-                    new Date(experience.startDate).getFullYear() >
+                      new Date(experience.startDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
@@ -556,7 +556,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   />
                   <div className="wrap-noti_input">
                     {experience.endDate &&
-                    new Date(experience.endDate).getFullYear() >
+                      new Date(experience.endDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
@@ -600,7 +600,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             />
             <div className="wrap-noti_input">
               {experience.extraInformation &&
-              experience.extraInformation.length > 500 ? (
+                experience.extraInformation.length > 500 ? (
                 <span className="helper-text">Bạn đã nhập quá 500 ký tự</span>
               ) : !experience.extraInformation ? (
                 <span className="helper-text">
@@ -609,11 +609,10 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                experience.extraInformation
+              <span className="number-text">{`${experience.extraInformation
                   ? experience.extraInformation.length
                   : '0'
-              }/500`}</span>
+                }/500`}</span>
             </div>
           </Box>
 
