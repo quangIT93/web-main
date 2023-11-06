@@ -1,0 +1,59 @@
+import { Text, View, StyleSheet } from '@react-pdf/renderer';
+import React from 'react';
+interface ICvContact {
+  color: any;
+  profile: any;
+  fontSize: any;
+  profileMore: any;
+}
+const Contact: React.FC<ICvContact> = (props) => {
+  const { color, profile, fontSize, profileMore } = props;
+  const styles = StyleSheet.create({
+    container: {
+      marginRight: -25,
+    },
+    divWrapInfo: {
+      border: `1px solid ${
+        color === 1
+          ? '#8dc5fe'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000'
+      }`,
+      marginLeft: '20pt',
+      width: '137pt',
+      padding: '13.021pt',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '6.762pt',
+    },
+    divInfo: {
+      fontSize: '11pt',
+      //   wordwrap: 'break-all',
+      lineHeight: '1.2',
+      fontFamily: 'Fahkwang Medium',
+      color: '',
+    },
+  });
+  return (
+    <View style={styles.container}>
+      <View style={styles.divWrapInfo}>
+        <View style={styles.divInfo}>
+          <Text>{profile?.phone}</Text>
+        </View>
+        <View style={styles.divInfo}>
+          <Text>{profile?.email}</Text>
+        </View>
+        <View style={styles.divInfo}>
+          <Text>{profile?.addressText?.fullName}</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default Contact;

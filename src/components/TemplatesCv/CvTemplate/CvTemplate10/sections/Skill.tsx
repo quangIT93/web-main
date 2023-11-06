@@ -7,19 +7,38 @@ interface ICvSkill {
   fontSize: any;
 }
 const Skill: React.FC<ICvSkill> = (props) => {
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
     },
     divTitle: {
-      backgroundColor: '#e5f6fe',
+      backgroundColor:
+        color === 1
+          ? '#e5f6fe'
+          : color === 2
+          ? '#D6EAF8'
+          : color === 3
+          ? '#FCF3CF'
+          : color === 4
+          ? '#D5F5E3'
+          : '#FADBD8',
     },
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
-      color: '#34899d',
+      color:
+        color === 1
+          ? '#037385'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       letterSpacing: '4pt',
       fontFamily: 'Petrona Bold',
       fontWeight: 'extrabold',
@@ -28,6 +47,23 @@ const Skill: React.FC<ICvSkill> = (props) => {
       marginLeft: '20pt',
       marginTop: '9.338pt',
       width: '137pt',
+    },
+    textTitleDes: {
+      fontSize: '11pt',
+      wordwrap: 'break-word',
+      textAlign: 'justify',
+      lineHeight: '1.2',
+      fontFamily: 'Petrona Bold',
+      color:
+        color === 1
+          ? '#037385'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
     },
     textDes: {
       fontSize: '9pt',
@@ -44,7 +80,7 @@ const Skill: React.FC<ICvSkill> = (props) => {
       </View>
       <View>
         <View style={styles.divDes}>
-          <Text style={styles.textDes}>Sinh viên ưu tú Thành Phố</Text>
+          <Text style={styles.textTitleDes}>Sinh viên ưu tú Thành Phố</Text>
         </View>
         <View style={styles.divDes}>
           <Text style={styles.textDes}>

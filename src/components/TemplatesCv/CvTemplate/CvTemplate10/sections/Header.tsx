@@ -26,7 +26,16 @@ const Header: React.FC<ICvHeader> = (props) => {
       display: 'flex',
       flexDirection: 'row',
       // backgroundColor: '#cee8ff',
-      // backgroundColor: '#cee8ff',
+      backgroundColor:
+        color === 1
+          ? '#cee8ff'
+          : color === 2
+          ? '#AED6F1'
+          : color === 3
+          ? '#F9E79F'
+          : color === 4
+          ? '#ABEBC6'
+          : '#F1948A',
       justifyContent: 'space-between',
       position: 'relative',
       zIndex: '0',
@@ -39,7 +48,16 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     textName: {
       fontSize: '46pt',
-      color: '#34899d',
+      color:
+        color === 1
+          ? '#037385'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       fontFamily: 'Petrona Bold',
       fontWeight: 'extrabold',
     },
@@ -47,7 +65,16 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontSize: '20pt',
       letterSpacing: '4pt',
       marginTop: '20pt',
-      color: '#34899d',
+      color:
+        color === 1
+          ? '#037385'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       fontFamily: 'Petrona Bold',
     },
     divImage: {

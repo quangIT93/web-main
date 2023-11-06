@@ -12,9 +12,10 @@ interface ICvHeader {
   color: any;
   profile: any;
   fontSize: any;
+  profileMore: any;
 }
 const Header: React.FC<ICvHeader> = (props) => {
-  const { profile, fontSize, color } = props;
+  const { profile, fontSize, color, profileMore } = props;
   const styles = StyleSheet.create({
     container: {
       // width: '100%',
@@ -39,7 +40,7 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     textName: {
       fontSize: '42pt',
-      color: '#2b6aa7',
+      color: color === 1 ? '#004080' : '#000000',
       fontWeight: 'extrabold',
       fontFamily: 'Montserrat SemiBold',
     },
@@ -54,7 +55,6 @@ const Header: React.FC<ICvHeader> = (props) => {
       margin: '43.762pt 48.768pt 43pt 0',
       backgroundColor: '#fff',
       borderRadius: '50%',
-      border: '1px solid #ccc',
       height: '205pt',
       minWidth: '205pt',
       display: 'flex',
@@ -73,8 +73,28 @@ const Header: React.FC<ICvHeader> = (props) => {
       <Svg style={{ position: 'absolute', width: 400, height: 400, left: '0' }}>
         <Polygon
           points="0,0 0,70 30,110 120,110 180,30 160,0"
-          fill="#8dc5fe "
-          stroke="#8dc5fe"
+          fill={
+            color === 1
+              ? '#8dc5fe'
+              : color === 2
+              ? '#0D99FF'
+              : color === 3
+              ? '#FBBC04'
+              : color === 4
+              ? '#5CB265'
+              : '#D80000'
+          }
+          stroke={
+            color === 1
+              ? '#8dc5fe'
+              : color === 2
+              ? '#0D99FF'
+              : color === 3
+              ? '#FBBC04'
+              : color === 4
+              ? '#5CB265'
+              : '#D80000'
+          }
           strokeWidth={1}
         />
       </Svg>
@@ -82,16 +102,73 @@ const Header: React.FC<ICvHeader> = (props) => {
       <Svg
         style={{
           position: 'absolute',
-          width: '100',
+          width: '200',
           height: '100%',
           right: '0',
           top: '0',
         }}
       >
         <Polygon
-          points="0,70 50,0 0,50"
-          fill="#8dc5fe "
-          stroke="#8dc5fe"
+          points="100,0 0,200 200,200 200,0"
+          fill={
+            color === 1
+              ? '#8dc5fe'
+              : color === 2
+              ? '#0D99FF'
+              : color === 3
+              ? '#FBBC04'
+              : color === 4
+              ? '#5CB265'
+              : '#D80000'
+          }
+          stroke={
+            color === 1
+              ? '#8dc5fe'
+              : color === 2
+              ? '#0D99FF'
+              : color === 3
+              ? '#FBBC04'
+              : color === 4
+              ? '#5CB265'
+              : '#D80000'
+          }
+          strokeWidth={1}
+        />
+      </Svg>
+
+      <Svg
+        style={{
+          position: 'absolute',
+          width: '300',
+          height: '100%',
+          right: '0',
+          top: '0',
+        }}
+      >
+        <Polygon
+          points="0,200 50,250 120,250 120,100 50,100 "
+          fill={
+            color === 1
+              ? '#e1f1ff'
+              : color === 2
+              ? '#85C1E9'
+              : color === 3
+              ? '#F7DC6F'
+              : color === 4
+              ? '#ABEBC6'
+              : '#EC7063'
+          }
+          stroke={
+            color === 1
+              ? '#e1f1ff'
+              : color === 2
+              ? '#85C1E9'
+              : color === 3
+              ? '#F7DC6F'
+              : color === 4
+              ? '#ABEBC6'
+              : '#EC7063'
+          }
           strokeWidth={1}
         />
       </Svg>
@@ -99,14 +176,24 @@ const Header: React.FC<ICvHeader> = (props) => {
       <View style={styles.divInfo}>
         <View style={{ display: 'flex', justifyContent: 'center' }}>
           <View>
-            <Text style={styles.textName}>Thái</Text>
+            <Text style={styles.textName}>
+              {' '}
+              {profile?.name?.split(' ').length > 2
+                ? profile?.name?.split(' ').slice(0, -2).join(' ')
+                : profile?.name?.split(' ').slice(0, -1).join(' ')}
+            </Text>
           </View>
           <View>
-            <Text style={styles.textName}>Minh Quang</Text>
+            <Text style={styles.textName}>
+              {' '}
+              {profile?.name?.split(' ').length > 2
+                ? profile?.name?.split(' ').slice(-2).join(' ')
+                : profile?.name?.split(' ').slice(-1).join(' ')}
+            </Text>
           </View>
         </View>
         <View>
-          <Text style={styles.textPosition}>Software engineer</Text>
+          <Text style={styles.textPosition}>{profile?.jobTypeName}</Text>
         </View>
       </View>
 
@@ -116,8 +203,8 @@ const Header: React.FC<ICvHeader> = (props) => {
             // padding: '9.955pt',
             borderRadius: '50%',
             backgroundColor: '#ccc',
-            height: '180pt',
-            width: '180pt',
+            height: '190pt',
+            width: '190pt',
           }}
         >
           <Image

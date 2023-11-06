@@ -1,33 +1,61 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
 import null_avatar from '../../images/null_avatar.png';
+import moment from 'moment';
 interface ICvHeader {
   color: any;
   profile: any;
   fontSize: any;
+  profileMore: any;
 }
 const Experience: React.FC<ICvHeader> = (props) => {
+  const { color, profile, fontSize, profileMore } = props;
+
   const styles = StyleSheet.create({
     container: {
       marginLeft: -25,
     },
     divTitle: {
-      backgroundColor: '#e5f6fe',
+      marginRight: '20pt',
+      width: '280pt',
     },
     title: {
       marginLeft: '45.839pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
-      color: '#34899d',
-      fontFamily: 'Petrona Bold',
+      color:
+        color === 1
+          ? '#000000'
+          : color === 2
+          ? '#000000'
+          : color === 3
+          ? '#ffffff'
+          : color === 4
+          ? '#000000'
+          : '#ffffff',
+      fontFamily: 'Fahkwang Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
+      // backgroundColor: '#8dc5ff',
+      backgroundColor:
+        color === 1
+          ? '#8dc5fe'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
+
+      width: '100%',
     },
     divInfo: {
       marginLeft: '45.839pt',
       marginTop: '10.17pt',
       display: 'flex',
       flexDirection: 'row',
+      gap: '10pt',
     },
     leftInfo: {
       width: '40%',
@@ -43,15 +71,33 @@ const Experience: React.FC<ICvHeader> = (props) => {
     },
     textLeft: {
       fontSize: '11pt',
-      color: '#34899d',
+      color:
+        color === 1
+          ? '#252525'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
+      fontFamily: 'Fahkwang Bold',
       wordwrap: 'break-word',
       textAlign: 'justify',
-      fontFamily: 'Petrona Bold',
     },
     textTitleRight: {
       fontSize: '11pt',
-      color: '#34899d',
-      fontFamily: 'Petrona Bold',
+      color:
+        color === 1
+          ? '#252525'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
+      fontFamily: 'Fahkwang Bold',
     },
     divTextTitleRight: {
       maxWidth: '180pt',
@@ -64,70 +110,42 @@ const Experience: React.FC<ICvHeader> = (props) => {
     },
     textRight: {
       fontSize: '9pt',
-      wordwrap: 'break-word',
+      // wordwrap: 'break-all',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Petrona Bold',
+      fontFamily: 'Fahkwang Medium',
     },
   });
-  const { color, profile, fontSize } = props;
 
   return (
     <View style={styles.container}>
       <View>
         <View style={styles.divTitle}>
-          <Text style={styles.title}>Experience</Text>
+          <Text style={styles.title}>Experiences</Text>
         </View>
-        <View style={styles.divInfo}>
-          <View style={styles.leftInfo}>
-            <Text style={styles.textLeft}>2017 - 2021</Text>
-            <Text style={styles.textLeft}>Thành Phố Hồ chí Minh</Text>
-          </View>
-          <View style={styles.rightInfo}>
-            <View style={styles.divTextTitleRight}>
-              <Text style={styles.textLeft}>Dai Hoc Sai Gon</Text>
+
+        {profileMore?.profilesExperiences?.map((Experience: any) => (
+          <View style={styles.divInfo}>
+            <View style={styles.leftInfo}>
+              <Text style={styles.textLeft}>
+                {moment(Experience?.startDate).format('YYYY')}
+                {'-'}
+                {moment(Experience?.endDate).format('YYYY')}
+              </Text>
+              <Text style={styles.textLeft}>{Experience?.title}</Text>
             </View>
-            <View style={styles.divTextRight}>
-              <Text style={styles.textRight}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi ipsa ab officia dolor incidunt esse neque quam
-                consequatur accusamus id. Molestiae itaque suscipit tempora
-                quasi minima atque nesciunt dicta reprehenderit!
-              </Text>
-              <Text style={styles.textRight}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi ipsa ab officia dolor incidunt esse neque quam
-                consequatur accusamus id. Molestiae itaque suscipit tempora
-                quasi minima atque nesciunt dicta reprehenderit!
-              </Text>
+            <View style={styles.rightInfo}>
+              <View style={styles.divTextTitleRight}>
+                <Text style={styles.textLeft}>{Experience?.companyName}</Text>
+              </View>
+              <View style={styles.divTextRight}>
+                <Text style={styles.textRight}>
+                  {Experience?.extraInformation}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={styles.divInfo}>
-          <View style={styles.leftInfo}>
-            <Text style={styles.textLeft}>2017 - 2021</Text>
-            <Text style={styles.textLeft}>Thành Phố Hồ chí Minh</Text>
-          </View>
-          <View style={styles.rightInfo}>
-            <View style={styles.divTextTitleRight}>
-              <Text style={styles.textLeft}>Dai Hoc Sai Gon</Text>
-            </View>
-            <View style={styles.divTextRight}>
-              <Text style={styles.textRight}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi ipsa ab officia dolor incidunt esse neque quam
-                consequatur accusamus id. Molestiae itaque suscipit tempora
-                quasi minima atque nesciunt dicta reprehenderit!
-              </Text>
-              <Text style={styles.textRight}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi ipsa ab officia dolor incidunt esse neque quam
-                consequatur accusamus id. Molestiae itaque suscipit tempora
-                quasi minima atque nesciunt dicta reprehenderit!
-              </Text>
-            </View>
-          </View>
-        </View>
+        ))}
       </View>
     </View>
   );

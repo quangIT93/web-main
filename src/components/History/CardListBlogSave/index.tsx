@@ -204,7 +204,7 @@ const CardListBlogSave = () => {
         {/* </div> */}
       </Box>
       <div className="list-blog-create-data">
-        {stories && stories?.length === 0 ? (
+        {stories && stories?.length !== 0 ? (
           stories.map((item: any, index: any) =>
             item?.communicationData?.type === 1 ? (
               <WorkingStoryCard
