@@ -39,7 +39,7 @@ interface ICardsApplied {
 }
 
 const CardListCompany: React.FC = () => {
-    const [companyData, setCompanyData] = useState<any>();
+    const [companyData, setCompanyData] = useState<any>([1, 2, 3, 4]);
     const [uploading, setUploading] = useState(false);
     const [pageNumber, setPageNumber] = React.useState(0);
     const [isVisible, setIsVisible] = useState(true);
@@ -53,18 +53,18 @@ const CardListCompany: React.FC = () => {
 
     const handleGetCompany = async () => {
         try {
-            const result = await candidateSearch.getBookmarkCandidate(
-                0,
-                10,
-                languageRedux === 1 ? 'vi' : 'en',
-            );
+            // const result = await candidateSearch.getBookmarkCandidate(
+            //     0,
+            //     10,
+            //     languageRedux === 1 ? 'vi' : 'en',
+            // );
 
-            if (result) {
-                setCompanyData(result.data);
-                if (result.data.candidateBookmarks.length < 10) {
-                    setIsVisible(false)
-                }
-            }
+            // if (result) {
+            //     setCompanyData(result.data);
+            //     if (result.data.candidateBookmarks.length < 10) {
+            //         setIsVisible(false)
+            //     }
+            // }
         } catch (error) {
             console.log('error', error);
         }
@@ -148,10 +148,10 @@ const CardListCompany: React.FC = () => {
                     <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
                 </TextField>
             </Box>
-            {companyData?.candidateBookmarks?.length > 0 ? (
+            {companyData.length > 0 ? (
                 <div className="history-post" style={{ marginTop: '16px' }}>
                     <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-                        {companyData?.candidateBookmarks?.map(
+                        {companyData.map(
                             (dataBookmark: any, index: number) => (
                                 <Grid
                                     item

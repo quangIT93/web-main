@@ -80,7 +80,7 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
         sx={{
           minWidth: '100%',
           display: 'flex',
-          padding: '12px',
+          padding: '12px 16px',
           cursor: 'pointer',
           margin: '10px 0',
           '&:hover': {

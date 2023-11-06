@@ -79,6 +79,12 @@
                 font-style: normal;
                 font-weight: 700;
                 line-height: 16px;
+                word-break: break-all;
+                white-space: nowrap;
+                width: 200px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: #000000;
             }
 
             ul {

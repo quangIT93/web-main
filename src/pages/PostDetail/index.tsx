@@ -711,6 +711,11 @@ const Detail = () => {
   //   window.location.href = `/search?q=${post?.data.company_name}`;
   // }
 
+  const handleSendMail = (email: any) => {
+    const emailLink = 'mailto:' + email;
+    window.location.href = emailLink;
+  }
+
   const handleClickSearch = () => {
     const companyName = post?.data.companyName;
     const searchUrl = `/search-results?q=${encodeURIComponent(companyName)}`;
@@ -1122,7 +1127,10 @@ const Detail = () => {
                     <MailDetailPostIcon />
                     <p>Email</p>
                   </div>
-                  <div className="div-detail-titleItem">
+                  <div className="div-detail-titleItem"
+                    onClick={() => handleSendMail(post?.data?.postCompanyInformation?.email)}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.email
@@ -1569,8 +1577,8 @@ const Detail = () => {
                       <AddressDetailPostIcon width={16} height={16} />
                       <span style={{ marginLeft: '8px' }}>
                         {`${post?.data.address}, ${post?.data?.location
-                            ? post?.data?.location?.fullName
-                            : ''
+                          ? post?.data?.location?.fullName
+                          : ''
                           }, ${post?.data?.location?.district
                             ? post?.data?.location?.district?.fullName
                             : ''
