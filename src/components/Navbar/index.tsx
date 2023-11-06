@@ -102,9 +102,10 @@ import {
   // collapseCssFilter,
 } from './Css';
 
-import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
+// import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
 
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 import { getLanguages } from 'store/reducer/dataLanguage';
 
 import { RootState } from '../../store/reducer';
@@ -119,13 +120,17 @@ import { useSearchParams } from 'react-router-dom';
 import { setLanguage } from 'store/reducer/changeLanguageReducer';
 // import { setLanguageApi } from 'store/reducer/dataLanguage';
 
-import { homeEn } from 'validations/lang/en/home';
-import { home } from 'validations/lang/vi/home';
-import languageApi from 'api/languageApi';
-import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
+// import { homeEn } from 'validations/lang/en/home';
+// import { home } from 'validations/lang/vi/home';
+// import languageApi from 'api/languageApi';
+// import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
 import { setRole } from 'store/reducer/roleReducer';
-import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
+// import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 import notificationApi from 'api/notification';
+import { setLocationApi } from 'store/reducer/locationReducer';
+import locationApi from 'api/locationApi';
+import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 // import { set } from 'immer/dist/internal';
 
 // import redux
@@ -192,7 +197,15 @@ const Navbar: React.FC = () => {
   const [isRemotely, setIsRemotely] = useState<number>(0);
   const [isWorkingWeekend, setIsWorkingWeekend] = useState<number>(0);
   const [userFiltered, setUserFiltered] = useState<any>();
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
+  const profileMoreV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationMoreV3.data,
+  );
+  const profileCompanyV3 = useSelector(
+    (state: RootState) => state.dataProfileCompanyV3.data,
+  );
   const [countChat, setCountChat] = useState<number>(0);
   const [countNoti, setCountNoti] = useState<number>(0);
   const [languageId, setLanguageId] = useState<number>(languageRedux);
@@ -201,36 +214,6 @@ const Navbar: React.FC = () => {
   const [openRadioGroup, setOpenRadioGroup] = useState<boolean>(false);
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
-  const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
-    React.useState<any>(false);
-  // const [isSearch, setIsSearch] = useState<boolean>(false);
-  // const [language, setLanguageState] = useState<any>();
-
-  const [searchJob, setSearchJob] = useState<boolean>(true);
-  const [openModalTurnOffStatus, setOpenModalTurnOffStatus] =
-    useState<boolean>(false);
-  const [loadingSwitch, setLoadingSwitch] = useState(false);
-  const handleOnchangeSearchJob = async (checked: any) => {
-    try {
-      if (checked === true) {
-        // e.preventDefault();
-        const result = await profileApi.putProfileJobV3(null, 1);
-        if (result) {
-          setSearchJob(true);
-          const resultProfileV3 = await profileApi.getProfileV3(
-            languageRedux === 1 ? 'vi' : 'en',
-          );
-          if (resultProfileV3) {
-            dispatch(setProfileV3(resultProfileV3));
-          }
-        }
-      } else {
-        setLoadingSwitch(true);
-        setOpenModalTurnOffStatus(true);
-        setSearchJob(false);
-      }
-    } catch (error) {}
-  };
 
   useEffect(() => {
     // if(localStorage.getItem('accessToken')){
@@ -323,8 +306,6 @@ const Navbar: React.FC = () => {
   // const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
   // const dataProfile = useSelector((state: RootState) => state.profileUser);
 
-  const dataProfile = useSelector((state: RootState) => state.profile.profile);
-  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   // console.log('profileV3', profileV3);
 
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
@@ -356,8 +337,8 @@ const Navbar: React.FC = () => {
       // const result = await apiCompany.getCampanyByAccountApi(
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
-      if (profileV3?.companyInfomation?.id != null) {
-        setCompanyName(profileV3?.companyInfomation?.name);
+      if (profileCompanyV3?.companyInfomation?.id != null) {
+        setCompanyName(profileCompanyV3?.companyInfomation?.name);
       }
     } catch (error) {
       console.log(error);
@@ -367,7 +348,7 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     getCompanyInforByAccount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux, profileV3]);
+  }, [languageRedux, profileCompanyV3]);
 
   // handle close backdrop
   // const handleClose = () => {
@@ -414,12 +395,16 @@ const Navbar: React.FC = () => {
 
   const getDataProfileV3 = async () => {
     try {
-      const result = await profileApi.getProfileV3(
+      // const result = await profileApi.getProfileV3(
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+
+      const result = await profileApi.getProfileInformationV3(
         languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
-        dispatch(setProfileV3(result));
+        dispatch(setProfileMeInformationV3(result));
         setRole(result.data.typeRoleData);
       }
     } catch (error) {}
@@ -756,7 +741,7 @@ const Navbar: React.FC = () => {
       var ResuiltGetProfileV3 = null;
       if (localStorage.getItem('refreshToken')) {
         // result = await profileApi.getProfile(languageRedux === 1 ? 'vi' : 'en');
-        ResuiltGetProfileV3 = await profileApi.getProfileV3;
+        ResuiltGetProfileV3 = await profileApi.getProfileInformationV3;
       } else {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
@@ -811,7 +796,9 @@ const Navbar: React.FC = () => {
   let socket = useRef<any>();
 
   React.useEffect(() => {
-    if (!socket.current && localStorage.getItem('accessToken')) {
+    // console.log('socket', socket.current);
+
+    if (socket.current === undefined && localStorage.getItem('accessToken')) {
       socket.current = io('https://neoworks.vn', {
         extraHeaders: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -820,6 +807,7 @@ const Navbar: React.FC = () => {
 
       socket.current.on('connect', () => {
         // setIsConnected(true);
+        // console.log('ket noi thanh cong');
       });
     }
   }, []);
@@ -855,11 +843,11 @@ const Navbar: React.FC = () => {
         }
       }
     } catch (error) {
-      if (socket.current) {
-        console.log('disconnect socket thành công');
-        socket.current.disconnect();
-        // socket.current.close();
-      }
+      // if (socket.current) {
+      //   console.log('disconnect socket thành công');
+      //   socket.current.disconnect();
+      //   // socket.current.close();
+      // }
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('accountId');
@@ -885,16 +873,16 @@ const Navbar: React.FC = () => {
     }
   };
 
-  const getPropfileV3New = async () => {
-    try {
-      const result = await profileApi.getProfileV3(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        dispatch(setProfileV3(result));
-      }
-    } catch (error) {}
-  };
+  // const getPropfileV3New = async () => {
+  //   try {
+  //     const result = await profileApi.getProfileV3(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       dispatch(setProfileV3(result));
+  //     }
+  //   } catch (error) {}
+  // };
 
   // useEffect(() => {
   //   getPropfileV3New();
@@ -1167,7 +1155,7 @@ const Navbar: React.FC = () => {
             />
           </div>
           <div className="login__center">
-            {localStorage.getItem('accessToken') && profileV3 ? (
+            {localStorage.getItem('accessToken') && profileV3.length !== 0 ? (
               <span>{profileV3?.name}</span>
             ) : (
               // <span>{languageData?.login}</span>
@@ -1268,7 +1256,7 @@ const Navbar: React.FC = () => {
                 <div className="sub-login_detail">
                   <h2>
                     {profileV3?.name
-                      ? profileV3.name
+                      ? profileV3?.name
                       : languageData?.home_page?.un_update_infor}
                   </h2>
                   <span className="sub-login_text">
@@ -1278,8 +1266,8 @@ const Navbar: React.FC = () => {
                       <>
                         <HomeOutlined />
                         <p>
-                          {companyName
-                            ? companyName
+                          {profileV3.companyInfo
+                            ? profileV3.companyInfo.name
                             : languageRedux === 1
                             ? 'Hãy cập nhật thông tin công ty'
                             : 'Please update company information'}
@@ -1294,8 +1282,8 @@ const Navbar: React.FC = () => {
                     {/* <PhoneOutlined /> */}
                     <p>
                       {profileV3?.typeRoleData === 1
-                        ? profileV3?.companyInfomation?.email
-                          ? profileV3?.companyInfomation?.email
+                        ? profileV3.companyInfo
+                          ? profileV3.companyInfo?.email
                           : languageRedux === 1
                           ? 'Hãy cập nhật thông tin công ty'
                           : 'Please update company information'
@@ -1308,8 +1296,8 @@ const Navbar: React.FC = () => {
                     <span className="sub-login_text">
                       <PhoneOutlined />
                       <p>
-                        {profileV3?.companyInfomation !== null
-                          ? profileV3?.companyInfomation?.phone
+                        {profileV3?.companyInfo
+                          ? profileV3?.companyInfo?.phone
                           : languageRedux === 1
                           ? 'Hãy cập nhật thông tin công ty'
                           : 'Please update company information'}
@@ -1497,6 +1485,33 @@ const Navbar: React.FC = () => {
     </div>,
   ];
 
+  const getAllLocaitions = async () => {
+    try {
+      const result = await locationApi.getAllLocation(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        // setDataLocations(result.data);
+        dispatch(setLocationApi(result));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  React.useEffect(() => {
+    if (
+      openCollapseFilter ||
+      location.pathname === '/candidatesAll' ||
+      location.pathname === '/profile' ||
+      location.pathname === '/post' ||
+      location.pathname === '/company-infor' ||
+      location.pathname === '/search-results'
+    ) {
+      getAllLocaitions();
+    }
+  }, [openCollapseFilter]);
+
   const menu = [
     <Button
       key="1"
@@ -1509,7 +1524,7 @@ const Navbar: React.FC = () => {
     <Badge key="2" count={countChat} className="box-right-responsive_badge">
       <Button
         onClick={() => {
-          if (profileV3 && localStorage.getItem('refreshToken')) {
+          if (profileV3.length !== 0 && localStorage.getItem('refreshToken')) {
             window.open(`/message`, '_parent');
           } else {
             setOpenModalLogin(true);
@@ -1527,7 +1542,7 @@ const Navbar: React.FC = () => {
         className="btn-notice"
         name="btn-notice"
         onClick={() => {
-          if (profileV3 && localStorage.getItem('accessToken')) {
+          if (profileV3.length !== 0 && localStorage.getItem('accessToken')) {
             setOpenNotificate(!openNotificate);
           } else {
             setOpenModalLogin(true);
@@ -1968,10 +1983,7 @@ const Navbar: React.FC = () => {
                 <BlackSearchIcon width={20} height={20} />
               </Button>
 
-              <Badge
-                count={window.innerWidth < 426 ? '' : countChat}
-                className="btn-badge"
-              >
+              <Badge count={countChat} className="btn-badge">
                 <Button
                   className="btn-notice"
                   name="btn-chat"
@@ -1992,7 +2004,7 @@ const Navbar: React.FC = () => {
               <div className="wrap-btn_notice ">
                 <Badge
                   key="3"
-                  count={window.innerWidth < 426 ? '' : countNoti}
+                  count={countNoti}
                   className="box-right-responsive_badge"
                 >
                   <Button

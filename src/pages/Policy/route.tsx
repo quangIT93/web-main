@@ -1,10 +1,9 @@
-import React from 'react'
-import Policy from '.'
-import RouteProps from '../routes'
-
+import React, { lazy } from 'react';
+import RouteProps from '../routes';
+const Policy = lazy(() => import('.'));
 const route: RouteProps = {
   path: '/policy',
   component: <Policy />,
-}
+};
 
-export default route
+export default route;

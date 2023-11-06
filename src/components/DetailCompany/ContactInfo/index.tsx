@@ -219,9 +219,9 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                         className={styles.company_role_images}
                         style={{
                             height:
-                                company?.images.length > 0 ? 'fit-content' : '310px',
+                                company?.images?.length > 0 ? 'fit-content' : '310px',
                             border:
-                                company?.images.length > 0 ? 'none' : '1px solid #ccc',
+                                company?.images?.length > 0 ? 'none' : '1px solid #ccc',
                         }}
                     >
                         <Box p="0rem 0">
@@ -236,7 +236,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                                         className={styles.drag_img_camera}
                                         style={{
                                             display:
-                                                company === undefined || company?.images.length === 0 ? 'flex' : 'none',
+                                                company === undefined || company?.images?.length === 0 ? 'flex' : 'none',
                                         }}
                                     >
                                         <CameraComunityIcon />
@@ -249,7 +249,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                                 </div>
                             </section>
                             <Box className={styles.list_iamges}>
-                                {company?.images.map((item: any, index: number) => (
+                                {company?.images?.map((item: any, index: number) => (
                                     <div className={styles.item_image} key={index}>
                                         <img
                                             key={index}

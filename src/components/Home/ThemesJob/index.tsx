@@ -225,7 +225,7 @@ const ThemesJob: React.FC = () => {
     window.open('/more-jobs', '_parent');
   };
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
   return (
     <Box
       sx={{ flexGrow: 1, paddingBottom: '24px' }}
@@ -260,10 +260,10 @@ const ThemesJob: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="view-all" onClick={handleMoveToMoreJob}>
+        {/* <div className="view-all" onClick={handleMoveToMoreJob}>
           <p>{language?.home_page?.view_all}</p>
           <ArrowrightIcon width={20} height={20} />
-        </div>
+        </div> */}
       </div>
 
       {!localStorage.getItem('accessToken') ? (
@@ -324,13 +324,23 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>
             </>
           )}
         </>
+        <div
+          className="view-all-down"
+          onClick={handleMoveToMoreJob}
+          style={{
+            display: !post || post.length === 0 || post.length < 10 ? 'none' : 'flex'
+          }}
+        >
+          <p>{language?.home_page?.view_all}</p>
+          <ArrowrightIcon width={20} height={20} />
+        </div>
       </Skeleton>
       <Skeleton loading={loading} active>
         {loading ? <br /> : <></>}

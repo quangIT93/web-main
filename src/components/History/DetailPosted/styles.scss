@@ -1,30 +1,111 @@
-.image-cadidate_wrap {
-  width: 120px;
-  height: 120px;
-  border-radius: 5px;
-  background-color: #aaa;
-  border: 1px solid #ccc;
-  .image-cadidate {
-    min-width: 120px;
-    height: 120px;
-    border-radius: 5px;
-    object-fit: cover;
-
-  }
-}
-
-.item-detail-candidate {
+.item-candidate-posted-content {
   display: flex;
-  align-items: center;
+  gap: 12px;
+  width: 100%;
 
-  // margin: 4px;
-  .icon-detail-candidate {
-    margin: 0 8px;
-    font-size: 15px;
-    color: #575757;
+  .image-cadidate_wrap {
+    // width: 120px;
+    // height: 120px;
+    // border-radius: 5px;
+    // background-color: #aaa;
+    // border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    border-radius: 12px;
+    justify-content: space-between;
+
+    .image-cadidate {
+      width: 76px;
+      min-height: 76px;
+      height: 76px;
+      object-fit: cover;
+      border-radius: 4px;
+      background-color: #575757;
+
+      @media screen and (max-width: 350px) {
+        width: 118px;
+      }
+
+    }
+
+    .wrap-name-age {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      flex-direction: column;
+      width: 76px;
+
+      .wrap-name-age_item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        color: #575757;
+
+        .icon-age_item-candidate {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
   }
 
-  p {
+  .detail-candidate-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .item-detail-candidate {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: nowrap;
+      word-break: break-all;
+
+      .icon-info-candidate {
+        display: flex;
+        align-items: center;
+
+        svg {
+          color: #575757;
+        }
+      }
+
+      // margin: 4px;
+      .icon-detail-candidate {
+        margin: 0 8px;
+        font-size: 15px;
+        color: #575757;
+      }
+
+      p {
+        font-size: 12px;
+        white-space: nowrap;
+        width: 200px;
+        word-break: break-all;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #575757;
+        font-weight: 400;
+      }
+    }
+  }
+
+  h2 {
+    font-family: Roboto;
     font-size: 12px;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #575757;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
   }
 }

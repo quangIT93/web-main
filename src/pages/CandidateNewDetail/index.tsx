@@ -65,7 +65,9 @@ const CandidateNewDetail = () => {
   );
 
   const alert = useSelector((state: any) => state.alertProfile.alert);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -341,7 +343,11 @@ const CandidateNewDetail = () => {
                 type="primary"
                 onClick={(event) => {
                   handleClickItemCv(
-                    candidate?.profilesCvs[0]?.pdfURL,
+                    candidate?.profilesCvs.filter((value: any) => {
+                      if (value.status === 1) {
+                        return value.pdfURL;
+                      }
+                    })[0].pdfURL,
                     candidate?.accountId,
                   );
                 }}

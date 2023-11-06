@@ -53,7 +53,9 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector(
+  //   (state: RootState) => state.dataProfileInformationV3.data,
+  // );
   const {
     item,
     index,
@@ -63,7 +65,8 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
   } = props;
 
   const dispatch = useDispatch();
-  const [openModalDeleteReferences, setOpenModalDeleteReferences] = useState(false);
+  const [openModalDeleteReferences, setOpenModalDeleteReferences] =
+    useState(false);
   const handleDeleteReference = async (id: number) => {
     // setReferenceValues(
     //   referenceValues.filter((value: any, index: any) => {
@@ -86,7 +89,7 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
     // } catch (error) {
     //   console.log('error', error);
     // }
-    setOpenModalDeleteReferences(true)
+    setOpenModalDeleteReferences(true);
   };
 
   const handleEditReference = async (

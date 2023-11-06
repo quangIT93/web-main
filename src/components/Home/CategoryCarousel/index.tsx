@@ -15,7 +15,7 @@ import postApi from 'api/postApi';
 import categoriesApi from '../../../api/categoriesApi';
 
 // @ts-ignore
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 // import redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -102,7 +102,7 @@ const CategoryCarousel: React.FC = () => {
   // const {height} = height
 
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const location = useLocation();
   const dispatch = useDispatch();
   const { setPostNewest } = bindActionCreators(actionCreators, dispatch);
 
@@ -164,8 +164,25 @@ const CategoryCarousel: React.FC = () => {
       setTimeout(() => {
         // tabs.style.top = '70px';
         // breadCrumb.style.marginTop = '192px';
-        tabs.style.top = '115px';
-        breadCrumb.style.marginTop = '0';
+        if (
+          location.pathname === '/more-jobs' &&
+          searchParams.get('job-type') === 'new' &&
+          window.innerWidth <= 450
+        ) {
+          tabs.style.top = '155px';
+          breadCrumb.style.marginTop = '20px';
+        } else if (
+          location.pathname === '/more-jobs' &&
+          localStorage.getItem('job-type') === 'new' &&
+          450 < window.innerWidth &&
+          window.innerWidth <= 768
+        ) {
+          tabs.style.top = '115px';
+          breadCrumb.style.marginTop = '-10px';
+        } else {
+          tabs.style.top = '115px';
+          breadCrumb.style.marginTop = '0px';
+        }
       }, 0);
     }
 
@@ -560,7 +577,12 @@ const CategoryCarousel: React.FC = () => {
         //     ? '283px'
         //     : '',
 
-        top: '115px',
+        top:
+          location.pathname === '/more-jobs' &&
+          localStorage.getItem('job-type') === 'new' &&
+          window.innerWidth <= 450
+            ? '155px'
+            : '115px',
         zIndex: 2,
         // margin: '0 180px',
         // zIndex: navTouchCatelory ? ' 2' : '',

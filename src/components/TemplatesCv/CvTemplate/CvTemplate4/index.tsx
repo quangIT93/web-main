@@ -39,10 +39,11 @@ interface CvTemplate {
   color: any;
   fontSize: number;
   profile: any;
+  profileMore: any;
 }
 
 const CvTemplate4: React.FC<CvTemplate> = (props) => {
-  const { color, fontSize, profile } = props;
+  const { color, fontSize, profile, profileMore } = props;
   const styles = StyleSheet.create({
     page: {
       padding: 30,
@@ -115,7 +116,7 @@ const CvTemplate4: React.FC<CvTemplate> = (props) => {
     },
     pageNumber: {
       position: 'absolute',
-      fontSize: 12,
+      fontSize: fontSize - 12,
       bottom: 10,
       left: 0,
       right: 0,
@@ -125,7 +126,7 @@ const CvTemplate4: React.FC<CvTemplate> = (props) => {
     },
     hijob: {
       position: 'absolute',
-      fontSize: 12,
+      fontSize: fontSize - 12,
       bottom: 10,
       // left: 0,
       right: 25,
@@ -161,11 +162,9 @@ const CvTemplate4: React.FC<CvTemplate> = (props) => {
     src: ArchivoExpandRegular,
   });
 
-  console.log(profile);
-
   const Resume = (props: any) => (
     <Page {...props} style={styles.page}>
-      <Header color={color} profile={profile} />
+      <Header color={color} profile={profile} fontSize={fontSize} />
       <View style={styles.container}>
         <View style={styles.leftColumn}>
           {/* <Image
@@ -173,27 +172,50 @@ const CvTemplate4: React.FC<CvTemplate> = (props) => {
                         style={styles.image}
                     /> */}
           <View style={styles.leftColumnContent}>
-            <Profile color={color} profile={profile} />
-            {profile?.profilesLanguages &&
-            profile?.profilesLanguages?.length > 0 ? (
-              <Languages color={color} profile={profile} />
+            <Profile color={color} profile={profile} fontSize={fontSize} />
+            {profileMore?.profilesLanguages &&
+            profileMore?.profilesLanguages?.length > 0 ? (
+              <Languages
+                color={color}
+                profile={profileMore}
+                fontSize={fontSize}
+              />
             ) : (
               <></>
             )}
             <View style={styles.borderBot}></View>
-            <Education color={color} profile={profile} />
+            {profileMore?.profilesEducations &&
+            profileMore?.profilesEducation?.length ? (
+              <Education
+                color={color}
+                profile={profileMore}
+                fontSize={fontSize}
+              />
+            ) : (
+              <></>
+            )}
             <View style={styles.borderBot}></View>
-            {profile?.profilesSkills && profile?.profilesSkills?.length > 0 ? (
+            {profileMore?.profilesSkills &&
+            profileMore?.profilesSkills?.length > 0 ? (
               <>
-                <Skills color={color} profile={profile} />
+                <Skills
+                  color={color}
+                  profile={profileMore}
+                  fontSize={fontSize}
+                />
                 <View style={styles.borderBot}></View>
               </>
             ) : (
               <></>
             )}
-            {profile?.profileAwards && profile?.profileAwards?.length > 0 ? (
+            {profileMore?.profileAwards &&
+            profileMore?.profileAwards?.length > 0 ? (
               <>
-                <Awards color={color} profile={profile} />
+                <Awards
+                  color={color}
+                  profile={profileMore}
+                  fontSize={fontSize}
+                />
                 <View style={styles.borderBot}></View>
               </>
             ) : (
@@ -204,29 +226,51 @@ const CvTemplate4: React.FC<CvTemplate> = (props) => {
         </View>
         <View style={styles.rightColumn}>
           <View style={styles.rightColumnContent}>
-            <Experience color={color} profile={profile} />
+            {profileMore?.profilesExperiences &&
+            profileMore?.profilesExperiences?.length !== 0 ? (
+              <Experience
+                color={color}
+                profile={profileMore}
+                fontSize={fontSize}
+              />
+            ) : (
+              <></>
+            )}
             <View style={styles.borderBot}></View>
-            {profile?.profileActivities &&
-            profile?.profileActivities?.length > 0 ? (
+            {profileMore?.profileActivities &&
+            profileMore?.profileActivities?.length > 0 ? (
               <>
-                <Activities color={color} profile={profile} />
+                <Activities
+                  color={color}
+                  profile={profileMore}
+                  fontSize={fontSize}
+                />
                 <View style={styles.borderBot}></View>
               </>
             ) : (
               <></>
             )}
-            {profile?.profileHobbies ? (
+            {profileMore?.profileHobbies &&
+            profileMore?.profileHobbies?.length !== 0 ? (
               <>
-                <Hobbies color={color} profile={profile} />
+                <Hobbies
+                  color={color}
+                  profile={profileMore}
+                  fontSize={fontSize}
+                />
                 <View style={styles.borderBot}></View>
               </>
             ) : (
               <></>
             )}
-            {profile?.profilesReferences &&
-            profile?.profilesReferences?.length > 0 ? (
+            {profileMore?.profilesReferences &&
+            profileMore?.profilesReferences?.length > 0 ? (
               <>
-                <References color={color} profile={profile} />
+                <References
+                  color={color}
+                  profile={profileMore}
+                  fontSize={fontSize}
+                />
                 <View style={styles.borderBot}></View>
               </>
             ) : (

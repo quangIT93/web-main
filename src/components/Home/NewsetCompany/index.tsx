@@ -19,7 +19,7 @@ const NewestCompany = () => {
     );
     const [loading, setLoading] = React.useState<any>(false);
 
-    const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+    // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
     const roleRedux = useSelector((state: RootState) => state.changeRole.role);
     const getNewestCompany = async () => {
         // try {
@@ -81,7 +81,7 @@ const NewestCompany = () => {
                     </h2>
                 </div>
                 {/* {profileV3?.typeRoleData === 1 ? ( */}
-                <div
+                {/* <div
                     style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -96,7 +96,7 @@ const NewestCompany = () => {
                         {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
                     </p>
                     <ArrowrightIcon width={20} height={20} />
-                </div>
+                </div> */}
                 {/* ) : (
                     <></>
                 )} */}
@@ -110,6 +110,18 @@ const NewestCompany = () => {
                     )
                 })}
                 {/* </Skeleton> */}
+            </div>
+            <div
+                className="view-all-down"
+                onClick={handleChangeRouteNewestWorker}
+                style={{
+                    display: !listData || listData.length === 0 ? 'none' : 'flex'
+                }}
+            >
+                <p style={{ cursor: 'pointer' }}>
+                    {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
+                </p>
+                <ArrowrightIcon width={20} height={20} />
             </div>
         </Box>
     );

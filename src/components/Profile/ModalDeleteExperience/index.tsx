@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -99,11 +100,11 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
         // if (profile) {
         //   setProfileUser(profile.data);
         // }
-        const getProfileV3 = await profileApi.getProfileV3(
+        const getProfileV3 = await profileApi.getProfileInformationMoreV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
         if (getProfileV3) {
-          await dispatch(setProfileV3(getProfileV3) as any);
+          await dispatch(setProfileMeInformationMoreV3(getProfileV3) as any);
           await dispatch(setAlert(true));
           setOpenModalDeleteExperience(false);
         }

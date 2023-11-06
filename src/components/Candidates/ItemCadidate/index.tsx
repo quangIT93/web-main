@@ -26,22 +26,24 @@ import female_null_avatar from '../../../img/female_null_avatar.png';
 import ModalLogin from '#components/Home/ModalLogin';
 import ModalNoteWorker from '#components/Home/NewestGigWorker/ModalNoteWorker';
 import ModalNotRecruitment from '../ModalNotRecruitment';
+import { IconEmail, PhoneIcon } from '#components/Icons';
 interface ICadidate {
   item: any;
 }
 
 const ItemCadidate: React.FC<ICadidate> = (props) => {
   const { item } = props;
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const roleRedux = useSelector(
-    (state: RootState) => state.changeRole.role,
-  );
+  // const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
-  const [openModalNotRecruitment, setOpenModalNotRecruitment] = React.useState(false);
+  const [openModalNotRecruitment, setOpenModalNotRecruitment] =
+    React.useState(false);
   const handleClickItemCandidate = async (accountId: any) => {
     if (!localStorage.getItem('accessToken')) {
       setOpenModalLogin(true);
@@ -54,13 +56,13 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
 
       // if (result) {
       // }
-      if (roleRedux === 1) {
+      if (profileV3.typeRoleData === 1) {
         localStorage.setItem('candidateId', accountId);
         window.open('/candidate-new-detail');
       } else {
-        console.log(profileV3);
+        // console.log(profileV3);
         // setOpenModalNoteWorker(true);
-        setOpenModalNotRecruitment(true)
+        setOpenModalNotRecruitment(true);
         // window.open('/page-cv');
         return;
       }
@@ -79,47 +81,49 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
           handleClickItemCandidate(item.accountId);
         }}
       >
-        <div className="wrap-img_candidate">
-          <img
-            src={
-              item?.imageData?.avatar
-                ? item?.imageData?.avatar
-                : item.genderData === 'Nam' || item.genderData === 'Male'
-                  ? male_null_avatar
-                  : female_null_avatar
-            }
-            style={{
-              filter: item?.imageData?.avatar ? 'blur(3px)' : 'none',
-            }}
-            alt=""
-            className="img-candidate"
-          />
-          <div className="wrap-name-age">
-            <div className="wrap-name-age_item">
-              <span className="icon-age_item-candidate">
-                <PersonIcon />
-              </span>
-              <span>
-                {moment(new Date(item?.birthdayData))
-                  .format('yyyy')
-                  .replace(/\d{2}$/, 'xx')}
-              </span>
-            </div>
-            <div className="wrap-name-age_item">
-              <span className="icon-age_item-candidate">
-                <GenderIcon />
-              </span>
-              <span>{item.genderData}</span>
+        <div className="item-candidate-content">
+
+          <div className="wrap-img_candidate">
+            <img
+              src={
+                item?.imageData?.avatar
+                  ? item?.imageData?.avatar
+                  : item.genderData === 'Nam' || item.genderData === 'Male'
+                    ? male_null_avatar
+                    : female_null_avatar
+              }
+              style={{
+                filter: item?.imageData?.avatar ? 'blur(3px)' : 'none',
+              }}
+              alt=""
+              className="img-candidate"
+            />
+            <div className="wrap-name-age">
+              <div className="wrap-name-age_item">
+                <span className="icon-age_item-candidate">
+                  <PersonIcon />
+                </span>
+                <span>
+                  {moment(new Date(item?.birthdayData))
+                    .format('yyyy')
+                    .replace(/\d{2}$/, 'xx')}
+                </span>
+              </div>
+              <div className="wrap-name-age_item">
+                <span className="icon-age_item-candidate">
+                  <GenderIcon />
+                </span>
+                <span>{item.genderData}</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="info-candidate">
-          <div className="info-candidate_item">
-            <p>{item.name}</p>
-            {/* <CandidateHijob /> */}
-          </div>
-          <ul>
-            {/* <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div className="info-candidate">
+            <div className="info-candidate_item">
+              <p>{item.name}</p>
+              {/* <CandidateHijob /> */}
+            </div>
+            <ul>
+              {/* <li style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div className="item-birthday item-infoUser">
               <span>
                 <PersonIcon />
@@ -137,98 +141,88 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
               <span>{item.genderData}</span>
             </div>
           </li> */}
-            <li>
-              <span className="icon-info-candidate">
-                <SchoolIcon />
-              </span>
-              <Tooltip
-                placement="top"
-                title={
-                  item?.profilesEducationsData?.length !== 0
-                    ? item.profilesEducationsData?.map((value: any) => {
-                      return `${value.data}, `;
-                    })
-                    : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'
-                }
-              >
-                <span className="text-info-candidate">
-                  {item.profilesEducationsData.length !== 0
-                    ? item.profilesEducationsData.map(
-                      (value: any, index: number) => {
-                        return `${value.data}, `;
-                      },
-                    )
-                    : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'}
+              <li>
+                <span className="icon-info-candidate">
+                  <IconEmail width={16} height={16} />
                 </span>
-              </Tooltip>
-            </li>
-            <li>
-              <span className="icon-info-candidate">
-                <LocationIcon />
-              </span>
-              <Tooltip
-                placement="top"
-                title={
-                  item?.profilesLocationsData?.length !== 0
-                    ? item.profilesLocationsData?.map((value: any) => {
-                      return `${value.fullName}, `;
-                    })
-                    : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'
-                }
-              >
-                <span className="text-info-candidate">
-                  {item.profilesLocationsData.length !== 0
-                    ? item.profilesLocationsData.map((loc: any) => {
-                      return `${loc.fullName}, `;
-                    })
-                    : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'}
+                <Tooltip
+                  placement="top"
+                  title={
+                    item?.hideEmail
+                      ? item.hideEmail
+                      : languageRedux === 1
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'
+                  }
+                >
+                  <span className="text-info-candidate">
+                    {item?.hideEmail
+                      ? item.hideEmail
+                      : languageRedux === 1
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'}
+                  </span>
+                </Tooltip>
+              </li>
+              <li>
+                <span className="icon-info-candidate">
+                  <PhoneIcon width={16} height={16} />
                 </span>
-              </Tooltip>
-            </li>
-            <li>
-              <span className="icon-info-candidate">
-                <CateIcon />
-              </span>
-              <Tooltip
-                placement="top"
-                title={
-                  item?.categoriesData?.length !== 0
-                    ? item.categoriesData?.map((value: any) => {
-                      return `${value.fullName}, `;
-                    })
-                    : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'
-                }
-              >
-                <span className="text-info-candidate">
-                  {item.categoriesData.length !== 0
-                    ? item.categoriesData.map((value: any) => {
-                      return `${value.fullName}, `;
-                    })
-                    : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'}
+                <Tooltip
+                  placement="top"
+                  title={
+                    item?.hidePhone
+                      ? item.hidePhone
+                      : languageRedux === 1
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'
+                  }
+                >
+                  <span className="text-info-candidate">
+                    {item?.hidePhone
+                      ? item.hidePhone
+                      : languageRedux === 1
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'}
+                  </span>
+                </Tooltip>
+              </li>
+              <li>
+                <span className="icon-info-candidate">
+                  <CateIcon />
                 </span>
-              </Tooltip>
-            </li>
-            <li>
-              <span className="icon-info-candidate">
-                <CalendarIcon />
-              </span>
-              <span className="text-info-candidate">
-                {moment(new Date(item?.updatedAt)).format('DD/MM/yyyy')}
-              </span>
-            </li>
-          </ul>
+                <Tooltip
+                  placement="top"
+                  title={
+                    item?.categoriesData?.length !== 0
+                      ? item.categoriesData?.map((value: any) => {
+                        return `${value.fullName}, `;
+                      })
+                      : languageRedux === 1
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'
+                  }
+                >
+                  <span className="text-info-candidate">
+                    {item.categoriesData.length !== 0
+                      ? item.categoriesData.map((value: any) => {
+                        return `${value.fullName}, `;
+                      })
+                      : languageRedux === 1
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'}
+                  </span>
+                </Tooltip>
+              </li>
+            </ul>
+            <h2>
+              {item?.introduction
+                ? item.introduction
+                : languageRedux === 1
+                  ? 'Thông tin chưa cập nhật'
+                  : 'Not updated information'}
+            </h2>
+          </div>
         </div>
       </div>
       <ModalLogin

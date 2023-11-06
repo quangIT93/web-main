@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
 import './style.scss';
 import { Skeleton } from 'antd';
-import ItemCandidateHome from '#components/Candidates/ItemCandidateHome';
 
 const NewestGigWorker = () => {
   const [listData, setListData] = React.useState<any>([]);
@@ -30,12 +29,15 @@ const NewestGigWorker = () => {
   const [loading, setLoading] = React.useState<any>(false);
   const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const getAllCandidates = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const logout = localStorage.getItem('accessToken');
+
       const result = await candidateSearch.getCandidates(
         addresses,
         categories,
@@ -43,16 +45,20 @@ const NewestGigWorker = () => {
         gender,
         ageMin,
         ageMax,
-        !logout ? 6 :
-          profileV3.length !== 0 && profileV3?.typeRoleData === 0 ? 6 : 18,
+        !logout
+          ? 6
+          : profileV3.length !== 0 && profileV3?.typeRoleData === 0
+            ? 6
+            : profileV3.length === 0
+              ? 6
+              : 18,
         page,
         languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
+        setLoading(false);
+
         setListData(result.data.cvFilters);
       }
     } catch (error) { }
@@ -66,7 +72,6 @@ const NewestGigWorker = () => {
     if (profileV3?.typeRoleData === 1) {
       window.open('/candidatesAll', '_parent');
     } else {
-      console.log(profileV3);
       setOpenModalNoteWorker(true);
       window.open('/page-cv', '_parent');
     }
@@ -81,6 +86,7 @@ const NewestGigWorker = () => {
         paddingBottom: '28px',
       }}
       className="list-candidate-container"
+      id="list-candidate-container"
     >
       <div
         style={{
@@ -97,7 +103,7 @@ const NewestGigWorker = () => {
             {languageRedux === 1 ? 'Ứng viên mới nhất' : 'Newest workers'}
           </h2>
         </div>
-        {profileV3?.typeRoleData === 1 ? (
+        {/* {profileV3?.typeRoleData === 1 ? (
           <div
             style={{
               display: 'flex',
@@ -116,21 +122,35 @@ const NewestGigWorker = () => {
           </div>
         ) : (
           <></>
-        )}
+        )} */}
       </div>
 
-      <div className="list-candidate-home">
-        <Skeleton loading={loading} active>
+      <Skeleton loading={loading} active>
+        <div className="list-candidate-home">
           {listData?.map((item: any, index: number) => {
             return (
               <>
-                {/* <ItemCadidate item={item} key={index} /> */}
-                <ItemCandidateHome item={item} key={index} />
+                <ItemCadidate item={item} key={index} />
               </>
-            )
+            );
           })}
-        </Skeleton>
-      </div>
+        </div>
+        {profileV3?.typeRoleData === 1 ? (
+          <div className="view-all-down"
+            onClick={handleChangeRouteNewestWorker}
+            style={{
+              display: !listData || listData.length === 0 ? 'none' : 'flex'
+            }}
+          >
+            <p style={{ cursor: 'pointer' }}>
+              {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
+            </p>
+            <ArrowrightIcon width={20} height={20} />
+          </div>
+        ) : (
+          <></>
+        )}
+      </Skeleton>
       <ModalNoteWorker
         openModalNoteWorker={openModalNoteWorker}
         setOpenModalNoteWorker={setOpenModalNoteWorker}

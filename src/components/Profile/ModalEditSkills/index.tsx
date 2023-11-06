@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
 
-import { setProfileV3 } from 'store/reducer/profileReducerV3';
+// import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
 import apiCv from 'api/apiCv';
 
@@ -24,6 +24,7 @@ import {
   setAlertEditInfo,
 } from 'store/reducer/profileReducer/alertProfileReducer';
 import { message } from 'antd';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 
 interface IModalSkills {
   openModalEditSkills: {
@@ -163,7 +164,7 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
           openModalEditSkills.id,
         );
         if (result) {
-          const resultProfile = await profileApi.getProfileV3(
+          const resultProfile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (resultProfile) {
@@ -175,7 +176,7 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
             });
             setSkill('');
             setLevel(1);
-            dispatch(setProfileV3(resultProfile));
+            dispatch(setProfileMeInformationMoreV3(resultProfile));
             dispatch(setAlertEditInfo(true));
           }
         }

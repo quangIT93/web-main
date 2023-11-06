@@ -9,10 +9,11 @@ import List, { Item } from './List';
 interface ICvSkills {
   color: any;
   profile: any;
+  fontSize: any;
 }
 
 const Profile: React.FC<ICvSkills> = (props) => {
-  const { color, profile } = props;
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginBottom: '1.452cm',
@@ -21,7 +22,7 @@ const Profile: React.FC<ICvSkills> = (props) => {
     },
     title: {
       fontFamily: 'Montserrat Bold',
-      fontSize: 12,
+      fontSize: fontSize - 12,
       letterSpacing: '2px',
       marginBottom: '0.476cm',
       textTransform: 'uppercase',
@@ -29,27 +30,25 @@ const Profile: React.FC<ICvSkills> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000',
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
     },
     profile: {
       fontFamily: 'Montserrat Regular',
-      fontSize: 9,
+      fontSize: fontSize - 15,
       wordBreak: 'break-word',
       width: '100%',
-      textAlign: 'justify'
+      textAlign: 'justify',
     },
   });
   return (
     <View style={styles.container}>
       <Text style={styles.title}>PROFILE</Text>
-      <Text style={styles.profile}>
-        {profile?.introduction}
-      </Text>
+      <Text style={styles.profile}>{profile?.introduction}</Text>
     </View>
   );
 };

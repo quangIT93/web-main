@@ -39,7 +39,7 @@ const CompanyAll = () => {
 
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-    const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+    // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
     const getAllCompany = async () => {
         // try {

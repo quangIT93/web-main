@@ -158,7 +158,9 @@ const HotJobpage: React.FC = () => {
   const [totalPage, setTotalPage] = React.useState<number>(
     Math.round(Number(searchParams.get('hotjob-total')) / 20) + 1,
   );
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -271,10 +273,12 @@ const HotJobpage: React.FC = () => {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
+        setHasMore(false);
       } else if (hotjob && hotjob.data.length < 20 && hotjobtype === 2) {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
+        setHasMore(false);
       } else {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
@@ -428,6 +432,7 @@ const HotJobpage: React.FC = () => {
     // setCookie('filterHotjobProvince', value, 365);
 
     setIdFilterProvinces(event.target.value);
+    setPage('0');
   };
 
   const fetchMoreData = async () => {
@@ -445,8 +450,8 @@ const HotJobpage: React.FC = () => {
         !idFilterProvinces && profileV3.length !== 0
           ? profileV3.addressText.id
           : idFilterProvinces
-          ? idFilterProvinces
-          : '79',
+          ? [idFilterProvinces]
+          : [idFilterProvinces],
       );
 
       if (result && result.data.length !== 0) {
@@ -460,7 +465,7 @@ const HotJobpage: React.FC = () => {
       console.log('error', error);
     }
   };
-  console.log(profileV3);
+  // console.log(profileV3);
   return (
     <>
       {contextHolder}
@@ -527,7 +532,7 @@ const HotJobpage: React.FC = () => {
                   }
                 </span>
               </h3>
-              <div className="filter-hotjob" onClick={handleClickFilterHotjob}>
+              <div className="filter-hotjob">
                 <div className="filter-provinces">
                   {optionsProvinces.length !== 0 ? (
                     <Select

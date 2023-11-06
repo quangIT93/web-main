@@ -16,11 +16,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Button, message } from 'antd';
-import languageApi from 'api/languageApi';
+// import languageApi from 'api/languageApi';
 import './style.scss';
 import communityApi from 'api/apiCommunity';
 import moment from 'moment';
 import { setCookie } from 'cookies';
+import NoDataComponent from 'utils/NoDataPage';
 const CardListBlogCreate = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -272,8 +273,8 @@ const CardListBlogCreate = () => {
                   {item?.createdAtText
                     ? item?.createdAtText
                     : new Date(item?.createdAt).toLocaleDateString('en-GB') +
-                    ', ' +
-                    moment(new Date(item?.createdAt)).format('HH:mm')}
+                      ', ' +
+                      moment(new Date(item?.createdAt)).format('HH:mm')}
                 </p>
               </div>
               <div className="body-item-actions">
@@ -292,30 +293,35 @@ const CardListBlogCreate = () => {
               </div>
             </div>
           ))}
-        <Box
-          sx={{
-            margin: '12px auto',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Button
-            style={{
-              width: 130,
-              height: 40,
-              backgroundColor: `#0D99FF`,
-              marginBottom: '2rem',
-              color: '#FFFFFF',
-              fontWeight: 'bold',
-              display: isVisible ? 'block' : 'none',
+        {createdPost && createdPost.length === 0 ? (
+          <Box
+            sx={{
+              margin: '12px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
-            loading={uploading}
-            onClick={handleChange}
           >
-            {language?.more}
-          </Button>
-        </Box>
+            <Button
+              style={{
+                width: 130,
+                height: 40,
+                backgroundColor: `#0D99FF`,
+                marginBottom: '2rem',
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                display: isVisible ? 'block' : 'none',
+              }}
+              loading={uploading}
+              onClick={handleChange}
+            >
+              {language?.more}
+            </Button>
+          </Box>
+        ) : (
+          <></>
+        )}
+        {createdPost && createdPost.length === 0 ? <NoDataComponent /> : <></>}
       </div>
     </>
   );

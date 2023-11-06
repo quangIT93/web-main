@@ -45,9 +45,33 @@ const profileApi = {
     }) // Truyền email vào body của request
   },
 
-  getProfileV3: (lang: string) => {
-    const URL = `/v3/profiles/me?lang=${lang}`
+  // getProfileV3: (lang: string) => {
+  //   const URL = `/v3/profiles/me?lang=${lang}`
 
+  //   return axiosClient.get(URL, {
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  //     },
+  //   }) // Truyền email vào body của request
+  // },
+  getProfileInformationV3: (lang: string) => {
+    const URL = `v3/profiles/me/information?lang=${lang}`
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    }) // Truyền email vào body của request
+  },
+  getProfileInformationMoreV3: (lang: string) => {
+    const URL = `v3/profiles/me/information/more?lang=${lang}`
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    }) // Truyền email vào body của request
+  },
+  getProfileCompanyV3: (lang: string) => {
+    const URL = `v3/profiles/me/company?lang=${lang}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

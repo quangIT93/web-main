@@ -67,7 +67,9 @@ const AppliedPostedJob: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
-  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profile = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -132,9 +134,7 @@ const AppliedPostedJob: React.FC = () => {
       // );
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        setLoading(false);
 
         setAppliedPostedJob(result.data);
         // roleRedux === 0
@@ -221,6 +221,7 @@ const AppliedPostedJob: React.FC = () => {
                 : '1px 0 0 0',
           }}
           className="applied-posted-jobs-container"
+          id="applied-posted-jobs-container"
         >
           <div
             className="advertisement-job-not-loging"

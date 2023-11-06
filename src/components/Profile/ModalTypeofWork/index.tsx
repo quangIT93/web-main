@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-
+import './style.scss';
 import {
   MenuItem,
   TextField,
@@ -15,6 +15,8 @@ import { CloseOutlined } from '@ant-design/icons';
 import profileApi from 'api/profileApi';
 import { RootState } from '../../../store/reducer';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
+import { setAlertEditInfo } from 'store/reducer/profileReducer/alertProfileReducer';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -45,6 +47,7 @@ const style = {
 
 const styleChildBox = {
   marginBottom: '12px',
+  marginTop: '12px',
 };
 
 interface ITypeofWork {
@@ -63,12 +66,12 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setValueType(jobTypeId)
-  }, [jobTypeId])
+    setValueType(jobTypeId);
+  }, [jobTypeId]);
 
   const handleClose = () => {
     setOpenModalTypeofWork(false);
-    handleSubmit()
+    handleSubmit();
   };
 
   const handleChange = (e: any) => {
@@ -79,10 +82,11 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
     try {
       const result = await profileApi.putProfileJobV3(valueType, null);
       if (result) {
-        const resultProfileV3 = await profileApi.getProfileV3(
+        const resultProfileV3 = await profileApi.getProfileInformationMoreV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
-        dispatch(setProfileV3(resultProfileV3));
+        dispatch(setProfileMeInformationMoreV3(resultProfileV3));
+        dispatch(setAlertEditInfo(true));
         setOpenModalTypeofWork(false);
       }
     } catch (error) { }
@@ -146,7 +150,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
             <MenuItem value="Nữ">{language?.female}</MenuItem>
           </TextField>
         </Box> */}
-        <Box sx={styleChildBox}>
+        <Box sx={styleChildBox} className="type-of-work-select-input">
           <TextField
             select
             id="sex"
@@ -175,7 +179,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu
+          {languageRedux === 1 ? 'Lưu' : 'Save'}
         </Button>
       </Box>
     </Modal>

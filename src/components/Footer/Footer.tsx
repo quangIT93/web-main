@@ -82,23 +82,25 @@ const Footer: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-
+  // const languageData = useSelector((state: RootState) => {
+  //   return state.dataLanguage.languages;
+  // });
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
 
   // Language
-  const [languageId, setLanguageId] = useState<number>(languageRedux);
+  // const [languageId, setLanguageId] = useState<number>(languageRedux);
 
-  React.useEffect(() => {
-    let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
-    if (userLanguageSelected) {
-      setLanguageId(userLanguageSelected);
-      dispatch(getLanguages(userLanguageSelected) as any);
-    } else {
-      setLanguageId(1);
-      dispatch(getLanguages('1') as any);
-    }
-  }, [languageId]);
+  // React.useEffect(() => {
+  //   let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
+  //   if (userLanguageSelected) {
+  //     setLanguageId(userLanguageSelected);
+  //     dispatch(getLanguages(userLanguageSelected) as any);
+  //   } else {
+  //     setLanguageId(1);
+  //     dispatch(getLanguages('1') as any);
+  //   }
+  // }, [languageId]);
 
   const [windowWidth, setWindowWidth] = useState(false);
   // const [position, setPosition] = React.useState('0')
@@ -108,7 +110,7 @@ const Footer: React.FC = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  console.log(language);
+
   // const mail = useRef('contact.hijob@gmail.com');
   // const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];
 

@@ -37,7 +37,7 @@ const SearchLocationCompany: React.FC<ISearchLocation> = (props) => {
     const languageRedux = useSelector(
         (state: RootState) => state.changeLaguage.language,
     );
-    const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+    const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data);
     const onChange = (value: string[][]) => {
         setReset(false);
         setAddresses(value);

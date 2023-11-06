@@ -171,15 +171,14 @@ const Detail = () => {
   // const userProfile = useSelector((state: RootState) => state.profileUser);
   // const userProfile = useSelector((state: RootState) => state.profile.profile);
   const profileV3 = useSelector((state: RootState) => {
-    console.log('state', state);
-    return state.dataProfileV3.data;
+    return state.dataProfileInformationV3.data;
   });
   // const dispatch = useDispatch()
   // const { setPostByTheme, setProvince } = bindActionCreators(
   //   actionCreators,
   //   dispatch
   // )
-  console.log('profileV3', profileV3);
+  // console.log('profileV3', profileV3);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -438,9 +437,14 @@ const Detail = () => {
   React.useEffect(() => {
     getPostById();
     //get post prev
-    getAnotherPost(POST_ID - 1, 0);
+    setTimeout(() => {
+      getAnotherPost(POST_ID - 1, 0);
+    }, 1000);
+
+    setTimeout(() => {
+      getAnotherPost(POST_ID + 1, 1);
+    }, 1500);
     //get post next
-    getAnotherPost(POST_ID + 1, 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookmarked, POST_ID, languageRedux]);
 
@@ -462,7 +466,7 @@ const Detail = () => {
 
   // handle click button
   const onclick = async () => {
-    console.log('click', profileV3);
+    // console.log('click', profileV3);
     if (
       post?.data?.companyResourceData?.name === 'HIJOB' &&
       profileV3.typeRoleData === 1
@@ -611,7 +615,7 @@ const Detail = () => {
     setOpenModalApply(false);
     setIsApplied(false);
   };
-  const handleClickShareSource = (nameShare: string) => {
+  const handleClickShareSource = (nameShare: string, postId: number) => {
     // window.location.href = `mailto:${email}`;
     if (nameShare === 'Mail') {
       // window.location.href = `mailto:quangbk54@gmail.com`;
@@ -656,10 +660,9 @@ const Detail = () => {
 
       const titleShare = 'hijob chia sẻ công việc cho bạn';
 
-      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        // post?.data.shareLink,
-        'https://hijob.site/',
-      )}&quote=${encodeURIComponent(titleShare)}}&display=iframe`;
+      const url = `https://www.facebook.com/sharer/sharer.php?u=https://hijob.site/post-đetail/post-id=${postId}&quote=${encodeURIComponent(
+        titleShare,
+      )}}&display=iframe`;
       window.open(url);
     }
     if (nameShare === 'Zalo') {
@@ -1174,14 +1177,19 @@ const Detail = () => {
         <div className="detail">
           <Helmet>
             <title>Tuyển nhân viên</title>
+            <link
+              rel="canonical"
+              href="https://hijob.site/post-detail"
+              data-react-helmet="true"
+            ></link>
             <meta property="og:type" content="article" />
-            <meta property="og:url" content="https://hijob.site/post-detail/" />
-            <meta property="og:title" content="Tuyển nhân viên" />
+            <meta property="og:url" content="https://hijob.site/post-detail" />
+            <meta property="og:title" content={`${post?.data.title}`} />
             <meta property="og:description" content="Tuyển nhân viên" />
 
             <meta
               property="og:image"
-              content="https://files.fullstack.edu.vn/f8-prod/courses/1.png"
+              content="https://hijob.site/images/searchJob.png"
             />
           </Helmet>
           {/* <NavBar />
@@ -1617,7 +1625,12 @@ const Detail = () => {
                   <div
                     // to={`/post-detail?post-id=${post?.data.id}`}
                     className="item-share"
-                    onClick={() => handleClickShareSource(itemShare.nameShare)}
+                    onClick={() =>
+                      handleClickShareSource(
+                        itemShare.nameShare,
+                        Number(searchParams.get('post-id')),
+                      )
+                    }
                     key={index}
                   >
                     {itemShare.icon}

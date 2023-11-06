@@ -1,7 +1,7 @@
-// import React, { lazy } from 'react'
 import MainLayout from 'layouts/MainLayout';
-import History from '.';
 import RouteProps from '../routes';
+import { lazy } from 'react';
+const History = lazy(() => import('.'));
 const route: RouteProps = {
   path: 'history',
   component: (

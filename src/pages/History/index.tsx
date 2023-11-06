@@ -41,6 +41,7 @@ import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
 import { setCookie } from 'cookies';
 import CardListCompany from '#components/History/CardListCompany';
+import { useSearchParams } from 'react-router-dom';
 
 const { Panel } = Collapse;
 
@@ -65,13 +66,15 @@ const { Panel } = Collapse;
 //   },
 // ];
 const HistoryPost = () => {
+  const [searchParams, setSearchParams] = useSearchParams('');
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const checkPost = useSelector(
-    (state: RootState) => state.checkPost.data,
+
+  const checkPost = useSelector((state: RootState) => state.checkPost.data);
+  const profile = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
   );
-  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
   const queryParams = queryString.parse(window.location.search);
   // const hotjobtype = Number(searchParams.get('post'));
   const hotjobtype = Number(queryParams['post']);
@@ -179,7 +182,7 @@ const HistoryPost = () => {
       title: languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles',
       childs: [
         languageRedux === 1 ? 'Đã lưu' : 'Saved',
-        languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
+        languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posted',
         // language?.history_page?.saved,
         // language?.history_page?.posts_created,
       ],
@@ -327,6 +330,10 @@ const HistoryPost = () => {
     return null;
   }, [ItemLeft, activeChild]);
 
+  React.useEffect(() => {
+    setSearchParams({ p: `${ItemLeft}`, c: `${activeChild}` });
+  }, [ItemLeft, activeChild]);
+
   const CardListCompanies = useMemo(() => {
     if (ItemLeft === 5) {
       return <CardListCompany />;
@@ -412,14 +419,14 @@ const HistoryPost = () => {
       {/* <Navbar />
       <CategoryDropdown /> */}
       <div className="post-history_main">
-        <Box>
+        {/* <Box>
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
           >
             {breadcrumbs}
           </Breadcrumbs>
-        </Box>
+        </Box> */}
         <Box
           sx={{ display: 'flex', gap: '12px' }}
           className="history-post-content"

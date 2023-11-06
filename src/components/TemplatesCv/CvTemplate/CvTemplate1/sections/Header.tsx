@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
-
 import { Image, Text, View, StyleSheet, Link } from '@react-pdf/renderer';
-import profileApi from 'api/profileApi';
-import { useSelector } from 'react-redux';
-import { RootState } from 'store';
-import axios from 'axios';
+
+// import profileApi from 'api/profileApi';
+// import { useSelector } from 'react-redux';
+// import { RootState } from 'store';
+// import axios from 'axios';
 interface ICvHeader {
   color: any;
   profile: any;
+  fontSize: number;
 }
 
 const Header: React.FC<ICvHeader> = (props) => {
-  const { color, profile } = props;
+  const { color, profile, fontSize } = props;
 
   const styles = StyleSheet.create({
     container: {
@@ -45,14 +46,14 @@ const Header: React.FC<ICvHeader> = (props) => {
       // gap: '-0.5cm'
     },
     lastName: {
-      fontSize: 33,
+      fontSize: fontSize + 9,
       fontFamily: 'Archivo SemiExpanded Regular',
       width: '100%',
       background: 'red',
       // border: '1px solid black',
     },
     firstName: {
-      fontSize: 33,
+      fontSize: fontSize + 9,
       fontFamily: 'Archivo SemiExpanded Regular',
       width: '100%',
       // marginBottom: '0.5cm',
@@ -60,7 +61,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       // border: '1px solid black',
     },
     subtitle: {
-      fontSize: 9,
+      fontSize: fontSize - 15,
       justifySelf: 'flex-end',
       fontFamily: 'Montserrat Regular',
       color: '#1B1212',
@@ -68,7 +69,7 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     bigTitle: {
       fontFamily: 'Montserrat Regular',
-      fontSize: 13,
+      fontSize: fontSize - 11,
       letterSpacing: '2px',
       color: '#1B1212',
     },
@@ -100,7 +101,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       flexDirection: 'column',
       alignItems: 'flex-start',
       gap: '0.284cm',
-      fontSize: '7px',
+      fontSize: fontSize - 17,
       fontFamily: 'Montserrat Regular',
     },
     leftDiv: {
@@ -154,7 +155,7 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     languageTitle: {
       fontFamily: 'Montserrat Bold',
-      fontSize: 12,
+      fontSize: fontSize - 12,
       letterSpacing: '2px',
     },
     languageDetail: {
@@ -164,12 +165,12 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     languageDetailLeft: {
       fontFamily: 'Montserrat Regular',
-      fontSize: 9,
+      fontSize: fontSize - 15,
       textTransform: 'uppercase',
     },
     languageDetailRight: {
       fontFamily: 'Montserrat Regular',
-      fontSize: 9,
+      fontSize: fontSize - 15,
       marginLeft: '0.345cm',
     },
     borderBot: {
@@ -179,6 +180,18 @@ const Header: React.FC<ICvHeader> = (props) => {
       marginTop: '0.12cm',
     },
   });
+
+  // sharp('input.jpg')
+  //   .rotate()
+  //   .resize(200)
+  //   .jpeg({ mozjpeg: true })
+  //   .toBuffer()
+  //   .then((data: any) => {
+  //     console.log(data);
+  //   })
+  //   .catch((err: any) => {
+  //     console.log(err);
+  //   });
 
   return (
     <View style={styles.container}>
@@ -210,7 +223,7 @@ const Header: React.FC<ICvHeader> = (props) => {
               </Text>
               {profile?.linkedin ? (
                 <Link style={styles.subtitle} src={profile?.linkedin}>
-                  Linkedin sssssssssssssssssssssssssss
+                  Linkedin
                 </Link>
               ) : (
                 <></>

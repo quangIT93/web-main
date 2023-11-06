@@ -209,7 +209,9 @@ const CandidatesAll = () => {
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
 
   const getAllCandidates = async () => {
     try {
@@ -445,13 +447,13 @@ const CandidatesAll = () => {
         </div>
         <div className="list-candidates">
           <div className="list-candidates_title">
-            <h3>
+            {/* <h3>
               {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
               <span>
                 {` ${total}`}
                 {languageRedux === 1 ? ' ứng vử viên' : ' candidates'}
               </span>
-            </h3>
+            </h3> */}
           </div>
           <InfiniteScroll
             dataLength={listData && listData?.length}

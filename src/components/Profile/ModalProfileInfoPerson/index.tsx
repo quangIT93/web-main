@@ -34,6 +34,8 @@ import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 import { provinces } from 'pages/Post/data/data';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
+import { setAlertEditInfo } from 'store/reducer/profileReducer/alertProfileReducer';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -63,6 +65,7 @@ const style = {
 };
 
 const styleChildBox = {
+  component: 'form',
   marginBottom: '12px',
   display: 'flex',
   flexDirection: 'column',
@@ -135,9 +138,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [selectedProvince, setSelectedProvince] = useState<any>(
     profile?.addressText
       ? {
-          province_id: profile?.addressText?.id,
-          province_fullName: profile?.addressText.fullName,
-        }
+        province_id: profile?.addressText?.id,
+        province_fullName: profile?.addressText.fullName,
+      }
       : null,
   );
 
@@ -326,12 +329,13 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         const result = await profileApi.putProfilePersonal(info);
         if (result) {
           await dispatch(getProfile() as any);
-          const profileV3Api = await profileApi.getProfileV3(
+          const profileV3Api = await profileApi.getProfileInformationV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
 
           if (profileV3Api) {
-            await dispatch(setProfileV3(profileV3Api) as any);
+            await dispatch(setProfileMeInformationV3(profileV3Api) as any);
+            dispatch(setAlertEditInfo(true));
           }
           setOpenModalPersonalInfo(false);
         }
@@ -409,7 +413,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 size="small"
                 sx={{ width: '100%', marginTop: '4px' }}
                 placeholder="Họ và tên"
-                // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
               />
               <div className="wrap-noti_input">
                 {name?.length > 90 ? (
@@ -435,13 +439,13 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 // sx={styleLabel}
                 variant="body1"
                 component="label"
-                htmlFor="sex"
+                htmlFor="outlined-select-currency"
               >
                 {language?.sex} <span className="color-asterisk">*</span>
               </Typography>
               <TextField
                 select
-                id="sex"
+                id="outlined-select-currency"
                 value={gender}
                 // defaultValue={gender}
                 onChange={handleChange}
@@ -474,7 +478,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                         helperText: 'DD/MM/YYYY',
                       },
                     }}
-                    // format="DD/MM/YYYY"
+                  // format="DD/MM/YYYY"
                   />
                 </div>
                 <div className="wrap-noti_input">
@@ -519,9 +523,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 value={
                   selectedProvince && dataProvinces?.length > 0
                     ? dataProvinces?.find(
-                        (province: any) =>
-                          province.province_id === selectedProvince.province_id,
-                      )
+                      (province: any) =>
+                        province.province_id === selectedProvince.province_id,
+                    )
                     : null
                 }
                 defaultValue={selectedProvince}
@@ -531,7 +535,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                     {...params}
                     placeholder={language?.profile_page?.place_address}
                     size="small"
-                    // error={!selectedProvince}
+                  // error={!selectedProvince}
                   />
                 )}
               />
@@ -557,7 +561,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 placeholder={
                   languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'
                 }
-                // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
               />
               <div className="wrap-noti_input">
                 {jobTypeName?.length > 100 ? (
@@ -585,7 +589,11 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 component="label"
                 htmlFor="startTime"
               >
-                {language?.self_describtion}{' '}
+                {
+                  languageRedux === 1 ?
+                    "Mục tiêu nghề nghiệp" :
+                    "Career goals"
+                }{' '}
                 <span className="color-asterisk">*</span>
               </Typography>
               <TextField
@@ -599,25 +607,25 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 // label="Một số đặc điểm nhận diện công ty"
                 placeholder={language?.introduce_yourself_to_the_recruiter}
                 error={introduction?.length > 500} // Đánh dấu lỗi
-                // onKeyDown={(event) => {
-                //   // if (event.key === 'Enter') {
-                //   //   event.preventDefault();
-                //   // }
-                //   console.log(event.target);
-                // }}
+              // onKeyDown={(event) => {
+              //   // if (event.key === 'Enter') {
+              //   //   event.preventDefault();
+              //   // }
+              //   console.log(event.target);
+              // }}
               />
               <div className="wrap-noti_input">
                 {introduction?.length === 0 ? (
                   <span className="helper-text">
                     {languageRedux === 1
-                      ? 'Thông tin thêm không được bỏ trống'
-                      : 'Additional information cannot be empty'}
+                      ? 'Mục tiêu nghề nghiệp không được bỏ trống'
+                      : 'Career goals cannot be empty'}
                   </span>
                 ) : introduction?.length > 500 ? (
                   <span className="helper-text">
                     {languageRedux === 1
-                      ? 'Thông tin thêm không được vượt quá 500 ký tự'
-                      : 'Additional information cannot exceed 500 characters'}
+                      ? 'Mục tiêu nghề nghiệp không được vượt quá 500 ký tự'
+                      : 'Career goals cannot exceed 500 characters'}
                   </span>
                 ) : (
                   <></>

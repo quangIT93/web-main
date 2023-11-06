@@ -57,7 +57,9 @@ const Home: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
 
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [openModalSelectRole, setOpenModalSelectRole] = React.useState(
@@ -235,15 +237,15 @@ const Home: React.FC = () => {
         <title>HiJob - Tuyển dụng công việc</title>
         <meta property="og:type" content="article" />
         <meta property="og:url" content="https://hijob.site/" />
-        <meta property="og:title" content="HiJob - Tuyển dụng công việc" />
+        <meta property="og:title" content="HiJob - Tìm việc làm, tuyển dụng" />
         <meta
           property="og:description"
-          content="Trang tìm việc làm chất lượng nhất"
+          content="Trang tìm việc làm chất lượng nhất, 10,000 công việc tại Việt Nam được cập nhật mỗi ngày - Tìm việc làm nhanh chóng trên toàn quốc, tiện lợi – Đa dạng ngành nghề, mức lương hấp dẫn"
         />
 
         <meta
           property="og:image"
-          content="https://files.fullstack.edu.vn/f8-prod/courses/2.png"
+          content="https://hijob.site/images/searchJob.png"
         />
       </Helmet>
       <h1 style={{ visibility: 'hidden', display: 'none' }}>

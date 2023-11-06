@@ -19,7 +19,7 @@ import EditDescripeCompany from './components/EditDescripeCompany';
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
 import ModalEditCompanySuccess from './components/ModalEditCompanySuccess';
 import ModalUnsaveCompany from './components/ModalUnsaveCompany';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 // import languageApi from 'api/languageApi';
 
@@ -39,6 +39,8 @@ import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
 import EditImageCompany from './components/EditImageCompany';
 import { PencilIcon } from '#components/Icons';
+import profileApi from 'api/profileApi';
+import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
 
 export interface FormValues {
   id: string;
@@ -116,7 +118,12 @@ const Company: React.FC<ICompany> = (props) => {
   const [haveCompany, setHaveCompany] = useState(false);
 
   const [companyId, setCompanyId] = useState<any>();
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
+  const profileCompanyV3 = useSelector(
+    (state: RootState) => state.dataProfileCompanyV3.data,
+  );
   const [dataCompany, setDataCompany] = useState<any | null>({
     // id: '',
     name: '',
@@ -139,6 +146,7 @@ const Company: React.FC<ICompany> = (props) => {
   const [ShowModalUnsave, setShowModalUnsave] = useState(false);
   // const [language, setLanguageState] = React.useState<any>();
   const location = useLocation();
+  const dispatch = useDispatch();
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
@@ -164,6 +172,18 @@ const Company: React.FC<ICompany> = (props) => {
 
   const analytics: any = getAnalytics();
 
+  const getProfileComanyV3 = async () => {
+    try {
+      const result = await profileApi.getProfileCompanyV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      if (result) {
+        dispatch(setProfileMeCompanyV3(result));
+      }
+    } catch (error) { }
+  };
+
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
     // document.title =
@@ -185,13 +205,13 @@ const Company: React.FC<ICompany> = (props) => {
       // const result = await apiCompany.getCampanyByAccountApi(
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
-      if (profileV3?.companyInfomation !== null) {
+      if (profileCompanyV3.lenght !== 0) {
         setTimeout(() => {
           setLoading(false);
         }, 1000);
         setHaveCompany(true);
-        setCompanyId(profileV3?.companyInfomation?.id);
-        setDataCompany(profileV3?.companyInfomation);
+        setCompanyId(profileCompanyV3?.id);
+        setDataCompany(profileCompanyV3);
       } else {
         setTimeout(() => {
           setLoading(false);
@@ -204,11 +224,15 @@ const Company: React.FC<ICompany> = (props) => {
   };
 
   useEffect(() => {
-    if (profileV3.length !== 0) {
+    getProfileComanyV3();
+  }, []);
+
+  useEffect(() => {
+    if (profileCompanyV3.length !== 0) {
       getCompanyInforByAccount();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux, profileV3]);
+  }, [languageRedux, profileCompanyV3]);
 
   useEffect(() => {
     if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
@@ -334,6 +358,8 @@ const Company: React.FC<ICompany> = (props) => {
     };
   };
 
+  console.log('setHaveCompany', haveCompany);
+
   const handleCreateCompany = async (formData: any) => {
     // valid value form data
     const { message, checkForm } = validValue();
@@ -385,6 +411,8 @@ const Company: React.FC<ICompany> = (props) => {
               type: 'success',
               content: language?.company_page?.update_success,
             });
+
+            setDataCompany((pre: any) => ({ ...pre, images: [] }));
             // console.log("update company result", result);
           } else {
             messageApi.open({
@@ -430,11 +458,11 @@ const Company: React.FC<ICompany> = (props) => {
     formData.append('categoryId', String(dataCompany?.companyCategory?.id));
     formData.append('logo', dataCompany?.logoPath);
     // formData.append('images', dataCompany?.images);
-    if (!haveCompany) {
+
+    !haveCompany &&
       dataCompany?.images.forEach((image: any) => {
         formData.append('images', image);
       });
-    }
 
     const formDataImages = new FormData();
     // if (dataCompany?.deletedImages && dataCompany?.deletedImages.length !== 0) {
@@ -442,6 +470,7 @@ const Company: React.FC<ICompany> = (props) => {
     //     formDataImages.append('imagesId', id);
     //   });
     // }
+
     dataCompany?.images.forEach((image: any) => {
       formDataImages.append('images', image);
     });
@@ -450,6 +479,7 @@ const Company: React.FC<ICompany> = (props) => {
     //     images: [],
     //     deletedImages: [],
     // }));
+
     if (formData) {
       haveCompany
         ? handleUpdateCompany(formData, formDataImages)
@@ -464,14 +494,6 @@ const Company: React.FC<ICompany> = (props) => {
       const buttonPost = document.querySelector('.category-dropdown-btn__post');
 
       const logo = document.querySelector('.nav .logo');
-      console.log(
-        ' !container?.contains(e.target)',
-        !container?.contains(e.target),
-      );
-      console.log('ShowModalUnsave', ShowModalUnsave);
-      console.log('unsavedChanges', unsavedChanges);
-      console.log('logo', !logo?.contains(e.target));
-      console.log('showDropdown', !buttonPost?.contains(e.target));
 
       if (
         (unsavedChanges &&

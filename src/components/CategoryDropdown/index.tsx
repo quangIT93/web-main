@@ -21,6 +21,9 @@ import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
+import BreadcrumbMenuItems from './BreadcrumbMenuItems';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 const titleContainer: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
@@ -52,7 +55,12 @@ const CategoryDropdown: React.FC = () => {
     openCategoryDropdown: boolean;
     setOpenCategoryDropdown: React.Dispatch<React.SetStateAction<boolean>>;
   } = useContext(HomeValueContext);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
+  const profileCompanyV3 = useSelector(
+    (state: RootState) => state.dataProfileCompanyV3.data,
+  );
   // const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -90,7 +98,6 @@ const CategoryDropdown: React.FC = () => {
   React.useEffect(() => {
     const handleResize = () => {
       const currentWidth = window.innerWidth;
-      console.log('resize');
 
       if (currentWidth > 560) {
         setWindowWidth(true);
@@ -359,11 +366,11 @@ const CategoryDropdown: React.FC = () => {
         const result = await profileApi.putProfileJobV3(null, 1);
         if (result) {
           setSearchJob(true);
-          const resultProfileV3 = await profileApi.getProfileV3(
+          const resultProfileV3 = await profileApi.getProfileInformationV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (resultProfileV3) {
-            dispatch(setProfileV3(resultProfileV3));
+            dispatch(setProfileMeInformationV3(resultProfileV3));
           }
         }
       } else {
@@ -400,15 +407,19 @@ const CategoryDropdown: React.FC = () => {
             maxWidth: location?.pathname === '/' ? '1280px' : '1080px',
           }}
         >
-          <div
-            className="category-dropdown-left"
-            onMouseEnter={() => setOpenCategoryDropdown(true)}
-            onMouseLeave={() => setOpenCategoryDropdown(false)}
-            onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}
-          >
-            <IconMenu />
-            <h3>{languageRedux === 1 ? 'Danh mục' : 'Menu'}</h3>
+          <div className="category-dropdown-left">
+            <div
+              className="category-dropdown-leftItems"
+              onMouseEnter={() => setOpenCategoryDropdown(true)}
+              onMouseLeave={() => setOpenCategoryDropdown(false)}
+              onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}
+            >
+              <IconMenu />
+              <h3>{languageRedux === 1 ? 'Danh mục' : 'Menu'}</h3>
+            </div>
+            <BreadcrumbMenuItems />
           </div>
+
           <div className="category-dropdown-right">
             {localStorage.getItem('accessToken') ? (
               <div className="category-dropdown-switch-container">
@@ -443,7 +454,7 @@ const CategoryDropdown: React.FC = () => {
                     }
                   </p>
                   <Switch
-                    checked={profileV3.isSearch === 1}
+                    checked={profileV3.isSearch === 1 ? true : false}
                     loading={loadingSwitch}
                     onChange={handleOnchangeSearchJob}
                   />
@@ -471,8 +482,11 @@ const CategoryDropdown: React.FC = () => {
                   }}
                   className="category-dropdown-btn__post"
                   onClick={(event: any) => {
-                    if (profileV3 && localStorage.getItem('refreshToken')) {
-                      if (profileV3.companyInfomation === null) {
+                    if (
+                      profileCompanyV3.length !== 0 &&
+                      localStorage.getItem('refreshToken')
+                    ) {
+                      if (profileCompanyV3.companyInfomation === null) {
                         setOpenModalNoteCreateCompany(true);
                         event.preventDefault();
                       } else {

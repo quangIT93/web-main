@@ -1,7 +1,7 @@
-// import React, { lazy } from 'react'
+import React, { lazy } from 'react';
 import MainLayout from 'layouts/MainLayout';
-import CandidatesAll from '.';
 import RouteProps from '../routes';
+const CandidatesAll = lazy(() => import('.'));
 const route: RouteProps = {
   path: '/candidatesAll',
   component: (

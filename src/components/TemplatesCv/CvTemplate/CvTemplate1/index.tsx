@@ -36,10 +36,11 @@ interface CvTemplate {
   color: any;
   fontSize: number;
   profile: any;
+  profileMore: any;
 }
 
-const CvTemplate0: React.FC<CvTemplate> = (props) => {
-  const { color, fontSize, profile } = props;
+const CvTemplate1: React.FC<CvTemplate> = (props) => {
+  const { color, fontSize, profile, profileMore } = props;
   const styles = StyleSheet.create({
     page: {
       padding: 30,
@@ -79,7 +80,7 @@ const CvTemplate0: React.FC<CvTemplate> = (props) => {
     },
     pageNumber: {
       position: 'absolute',
-      fontSize: 12,
+      fontSize: fontSize - 8,
       bottom: 10,
       left: 0,
       right: 0,
@@ -88,7 +89,7 @@ const CvTemplate0: React.FC<CvTemplate> = (props) => {
     },
     hijob: {
       position: 'absolute',
-      fontSize: 12,
+      fontSize: fontSize - 8,
       bottom: 10,
       // left: 0,
       right: 25,
@@ -139,7 +140,7 @@ const CvTemplate0: React.FC<CvTemplate> = (props) => {
 
   const Resume = (props: any) => (
     <Page {...props} style={styles.page}>
-      <Header color={color} profile={profile} />
+      <Header color={color} profile={profile} fontSize={fontSize} />
       <View style={styles.container}>
         <View style={styles.leftColumn}>
           {/* <Image
@@ -147,42 +148,56 @@ const CvTemplate0: React.FC<CvTemplate> = (props) => {
                         style={styles.image}
                     /> */}
 
-          <Education color={color} profile={profile} />
-          <Profile color={color} profile={profile} />
+          <Education color={color} profile={profileMore} fontSize={fontSize} />
+          <Profile color={color} profile={profile} fontSize={fontSize} />
           {profile?.profilesLanguages &&
           profile?.profilesLanguages?.length > 0 ? (
-            <Languages color={color} profile={profile} />
+            <Languages
+              color={color}
+              profile={profileMore}
+              fontSize={fontSize}
+            />
           ) : (
             <></>
           )}
-          {profile?.profilesSkills && profile?.profilesSkills?.length > 0 ? (
-            <Skills color={color} profile={profile} />
+          {profileMore?.profilesSkills &&
+          profileMore?.profilesSkills?.length > 0 ? (
+            <Skills color={color} profile={profileMore} fontSize={fontSize} />
           ) : (
             <></>
           )}
-          {profile?.profileAwards && profile?.profileAwards?.length > 0 ? (
-            <Awards color={color} profile={profile} />
+          {profileMore?.profileAwards &&
+          profileMore?.profileAwards?.length > 0 ? (
+            <Awards color={color} profile={profileMore} fontSize={fontSize} />
           ) : (
             <></>
           )}
           {/* <Social color={color} profile={profile} /> */}
         </View>
         <View style={styles.rightColumn}>
-          <Experience color={color} profile={profile} />
-          {profile?.profileActivities &&
-          profile?.profileActivities?.length > 0 ? (
-            <Activities color={color} profile={profile} />
+          <Experience color={color} profile={profileMore} fontSize={fontSize} />
+          {profileMore?.profileActivities &&
+          profileMore?.profileActivities?.length > 0 ? (
+            <Activities
+              color={color}
+              profile={profileMore}
+              fontSize={fontSize}
+            />
           ) : (
             <></>
           )}
-          {profile?.profileHobbies ? (
-            <Hobbies color={color} profile={profile} />
+          {profileMore?.profileHobbies ? (
+            <Hobbies color={color} profile={profileMore} fontSize={fontSize} />
           ) : (
             <></>
           )}
-          {profile?.profilesReferences &&
-          profile?.profilesReferences?.length > 0 ? (
-            <References color={color} profile={profile} />
+          {profileMore?.profilesReferences &&
+          profileMore?.profilesReferences?.length > 0 ? (
+            <References
+              color={color}
+              profile={profileMore}
+              fontSize={fontSize}
+            />
           ) : (
             <></>
           )}
@@ -193,11 +208,7 @@ const CvTemplate0: React.FC<CvTemplate> = (props) => {
         render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
         fixed
       />
-      <Text
-        style={styles.hijob}
-        render={({ pageNumber, totalPages }) => `hijob.site`}
-        fixed
-      />
+      <Text style={styles.hijob} render={() => `hijob.site`} fixed />
     </Page>
   );
   return (
@@ -221,4 +232,4 @@ const CvTemplate0: React.FC<CvTemplate> = (props) => {
   );
 };
 
-export default memo(CvTemplate0);
+export default memo(CvTemplate1);

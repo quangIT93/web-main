@@ -15,7 +15,7 @@ import ApplyPosition from '#components/DetailCompany/ApplyPosition';
 import ReviewCompany from '#components/DetailCompany/ReviewCompany';
 const DetailCompany = () => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-    const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+    const profileV3 = useSelector((state: RootState) => state.dataProfileCompanyV3.data);
     const [applyPostitions, setApplyPositions] = useState(4)
     const [company, setCompany] = useState<any>();
 
@@ -27,7 +27,7 @@ const DetailCompany = () => {
                     languageRedux === 1 ? "Thông tin liên hệ" : "Contact Info"
                 }
             </p>,
-            children: <ContactInfo company={profileV3?.companyInfomation} />,
+            children: <ContactInfo company={profileV3} />,
         },
         {
             key: '2',

@@ -410,7 +410,7 @@ const Notificate = () => {
                     <div
                       key={index}
                       className={`wrap-system ${
-                        !notificate.data.isRead ? `` : ``
+                        notificate?.data?.isRead ? `` : `readed`
                       }`}
                       onClick={() =>
                         handleClickNotiKey(
@@ -499,8 +499,11 @@ const Notificate = () => {
                     <div
                       key={index}
                       className={`wrap-notificate_system ${
-                        notificate.data?.isRead !== undefined &&
-                        !notificate.data?.isRead
+                        notificate?.data?.isRead !== undefined &&
+                        !notificate?.data?.isRead
+                          ? 'readed'
+                          : notificate.data?.isRead !== undefined &&
+                            notificate.data?.isRead
                           ? ''
                           : ''
                       }`}

@@ -8,17 +8,17 @@ import { CommunityIcon } from '#components/Icons';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 const Community = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   return (
-    <div className="community-container">
+    <div className="community-container" id="community-container">
       <div className="community-title">
         <CommunityIcon />
         <h3>
-          {
-            languageRedux === 1 ?
-              "Câu chuyện việc làm HiJob" :
-              "HiJob Community"
-          }
+          {languageRedux === 1
+            ? 'Câu chuyện việc làm HiJob'
+            : 'HiJob Community'}
         </h3>
       </div>
       <div className="community-content">

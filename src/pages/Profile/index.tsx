@@ -101,6 +101,9 @@ import Company from 'pages/Company';
 import ModalIntroduceCv from '#components/Profile/ModalIntroduceCv';
 import { prototype } from 'module';
 import CompanyRole from './components/CompanyRole';
+import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -138,8 +141,16 @@ const Profile: React.FC = () => {
   // )
 
   // const profile = useSelector((state: RootState) => state.profileUser);
-  const profileUser = useSelector((state: RootState) => state.profile.profile);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileUser = useSelector((state: RootState) => state.profile.profile);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
+  const profileMorev3 = useSelector(
+    (state: RootState) => state.dataProfileInformationMoreV3.data,
+  );
+  const profileComanyV3 = useSelector(
+    (state: RootState) => state.dataProfileCompanyV3.data,
+  );
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -367,8 +378,8 @@ const Profile: React.FC = () => {
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
 
-      if (profileV3?.companyInfomation?.id !== null) {
-        setCompanyName(profileV3?.companyInfomation?.name);
+      if (profileComanyV3?.companyInfomation?.id !== null) {
+        setCompanyName(profileComanyV3?.companyInfomation?.name);
       }
     } catch (error) {
       console.log(error);
@@ -413,7 +424,7 @@ const Profile: React.FC = () => {
     var mess = '';
     var result;
     try {
-      if (profileV3.cvUrlPath !== null) {
+      if (profileMorev3.cvUrlPath !== null) {
         result = await profileApi.updateCV(formData);
         mess = language?.profile_page?.alert_update_cv_success;
       } else {
@@ -422,11 +433,11 @@ const Profile: React.FC = () => {
       }
 
       if (result) {
-        const result = await profileApi.getProfile(
+        const result = await profileApi.getProfileInformationV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
         if (result) {
-          setProfileUser(result.data);
+          setProfileMeInformationV3(result);
           setFileList([]);
           setUploading(false);
           message.success(`${mess}`);
@@ -443,10 +454,10 @@ const Profile: React.FC = () => {
     if (files) {
       const imageUrl = await uploadImage(e, files);
       if (imageUrl) {
-        const getProfileV3 = await profileApi.getProfileV3(
+        const getProfileV3 = await profileApi.getProfileInformationV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
-        dispatch(setProfileV3(getProfileV3) as any);
+        dispatch(setProfileMeInformationV3(getProfileV3) as any);
       }
       // window.location.reload();
       // if (imageUrl)
@@ -478,6 +489,26 @@ const Profile: React.FC = () => {
     }
   };
 
+  const getProfileMore = async () => {
+    if (profileV3.typeRoleData === 1) {
+      const result = await profileApi.getProfileCompanyV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      dispatch(setProfileMeCompanyV3(result));
+    } else if (profileV3.typeRoleData === 0) {
+      const result = await profileApi.getProfileInformationMoreV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      dispatch(setProfileMeInformationMoreV3(result));
+    }
+    try {
+    } catch (error) { }
+  };
+
+  useEffect(() => {
+    if (profileV3.length !== 0) getProfileMore();
+  }, [profileV3]);
+
   const alert = useSelector((state: any) => state.alertProfile.alert);
   const alertSuccess = useSelector(
     (state: any) => state.alertProfile.alertSuccess,
@@ -494,6 +525,8 @@ const Profile: React.FC = () => {
   const handleCloseAlertCv = () => dispatch<any>(setAlertSuccess(false));
   const handleCloseLackInfo = () => dispatch<any>(setAlertLackInfo(false));
   const handleCloseEditInfo = () => dispatch<any>(setAlertEditInfo(false));
+
+  console.log('more', profileMorev3);
 
   return (
     <div className="profile">
@@ -762,8 +795,13 @@ const Profile: React.FC = () => {
         </Skeleton>
 
         <CandidateProfile
-          display={profileV3?.typeRoleData === 0 ? 'block' : 'none'}
-          profile={profileV3}
+          display={
+            profileV3.length !== 0 && profileV3?.typeRoleData === 0
+              ? 'block'
+              : 'none'
+          }
+          profileMore={profileMorev3}
+          profileCompany={profileComanyV3}
           loading={loading}
           language={language}
           languageRedux={languageRedux}
@@ -785,8 +823,12 @@ const Profile: React.FC = () => {
         /> */}
 
         <CompanyRole
-          display={profileV3?.typeRoleData === 0 ? 'none' : 'block'}
-          companyData={profileV3.companyInfomation}
+          display={
+            profileV3.length !== 0 && profileV3?.typeRoleData === 1
+              ? 'block'
+              : 'none'
+          }
+          companyData={profileComanyV3}
         />
 
         <Stack spacing={2} sx={{ width: '100%' }}>
@@ -862,7 +904,8 @@ const Profile: React.FC = () => {
             </Alert>
           </Snackbar>
         </Stack>
-        {profileV3.typeRoleData === 0 && profileV3?.profilesCvs.length === 0 ? (
+        {profileV3.typeRoleData === 0 &&
+          profileMorev3?.profilesCvs?.length === 0 ? (
           <ModalIntroduceCv />
         ) : (
           <></>

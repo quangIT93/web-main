@@ -23,6 +23,8 @@ import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 import { message } from 'antd';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
+import { setAlertEditInfo } from 'store/reducer/profileReducer/alertProfileReducer';
 interface InfoContact {
   phone: string;
   email: string;
@@ -157,8 +159,6 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   };
 
   const validURL = (str: string) => {
-    console.log('string', str);
-
     if (str.length < 50) {
       // var pattern = new RegExp(
       //   '^(https?:\\/\\/)?' + // protocol
@@ -276,12 +276,13 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
 
         const result = await profileApi.updateContact(info);
         if (result) {
-          const getProfileV3 = await profileApi.getProfileV3(
+          const getProfileV3 = await profileApi.getProfileInformationV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
 
           if (getProfileV3) {
-            dispatch(setProfileV3(getProfileV3));
+            dispatch(setProfileMeInformationV3(getProfileV3));
+            dispatch(setAlertEditInfo(true));
           }
           setOpenModalContact(false);
         }
@@ -351,7 +352,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={language?.phone_number}
               inputMode="numeric"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {regexCheckPhone.test(phone) === false ? (
@@ -391,7 +392,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="example@.gamil.com"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {email.length === 0 ? (
@@ -437,7 +438,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Facebook"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {fb.trim() !== '' && fb.length > 100 ? (
@@ -477,7 +478,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Linkedin"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {linkIn.trim() !== '' && linkIn.length > 100 ? (

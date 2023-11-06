@@ -37,7 +37,7 @@ const PostButton: React.FC<Iprops> = (props) => {
   //   return () => window.removeEventListener('scroll', listenToScroll);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data);
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const style = {
     // Adding media query..

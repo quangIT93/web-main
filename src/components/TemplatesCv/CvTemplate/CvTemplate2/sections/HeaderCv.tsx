@@ -25,7 +25,7 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
       height: 'auto',
     },
     name: {
-      fontSize: '37pt',
+      fontSize: fontSize + 9,
       marginBottom: '0.6cm',
       fontFamily: 'Montserrat Regular',
       textTransform: 'uppercase',
@@ -42,7 +42,7 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
     },
     nameJob: {
       fontFamily: 'Montserrat Regular',
-      fontSize: '9pt',
+      fontSize: fontSize - 12,
       margin: '0.6cm 0',
     },
   });

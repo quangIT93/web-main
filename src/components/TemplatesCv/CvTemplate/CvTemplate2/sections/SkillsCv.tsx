@@ -25,7 +25,7 @@ const SkillsCv: React.FC<ISkill> = (props) => {
   const styles = StyleSheet.create({
     title: {
       fontFamily: 'Montserrat Medium',
-      fontSize: '13.67pt',
+      fontSize: fontSize - 10,
       letterSpacing: '1px',
       textTransform: 'uppercase',
       marginLeft: '0.4cm',
@@ -42,13 +42,13 @@ const SkillsCv: React.FC<ISkill> = (props) => {
     },
     text: {
       // fontFamily: 'Lato',
-      fontSize: '7.81pt',
+      fontSize: fontSize - 15,
       marginBottom: '1.53cm',
       fontFamily: 'Montserrat Regular',
     },
     textSkill: {
       // fontFamily: 'Lato',
-      fontSize: '7.81pt',
+      fontSize: fontSize - 15,
       fontFamily: 'Montserrat Regular',
       wordWrap: 'break-word',
     },

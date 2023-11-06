@@ -73,7 +73,9 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(

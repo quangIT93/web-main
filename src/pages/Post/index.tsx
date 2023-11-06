@@ -177,7 +177,13 @@ const Post: React.FC = () => {
   const [endTime, setEndTime] = React.useState<any>(
     new Date(1970, 0, 2, 17, 0).getTime(),
   );
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
+
+  const profileCompanyV3 = useSelector(
+    (state: RootState) => state.dataProfileCompanyV3.data,
+  );
   // const [startTime, setStartTime] = React.useState<string>('00:00');
   // const [endTime, setEndTime] = React.useState<string>('00:00');
   const [startDate, setStartDate] = React.useState<any>(new Date().getTime());
@@ -442,29 +448,32 @@ const Post: React.FC = () => {
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
 
-      if (profileV3.length !== 0) {
-        setCompanyName(profileV3.companyInfomation.name);
+      if (profileCompanyV3.length !== 0) {
+        setCompanyName(profileCompanyV3.companyInfomation.name);
         setFillDistrict({
-          id: profileV3.companyInfomation.companyLocation.district.id,
+          id: profileCompanyV3.companyInfomation.companyLocation.district.id,
           full_name:
-            profileV3.companyInfomation.companyLocation.district.fullName,
+            profileCompanyV3.companyInfomation.companyLocation.district
+              .fullName,
         });
         setFillProvince({
-          id: profileV3.companyInfomation.companyLocation.district.province.id,
+          id: profileCompanyV3.companyInfomation.companyLocation.district
+            .province.id,
           province_fullName:
-            profileV3.companyInfomation.companyLocation.district.province
+            profileCompanyV3.companyInfomation.companyLocation.district.province
               .fullName,
         });
 
         // setSelectedProvince(result.data.companyInfomation.company
 
         setFillWardId({
-          id: profileV3.companyInfomation.companyLocation.id,
-          full_name: profileV3.companyInfomation.companyLocation.fullName,
+          id: profileCompanyV3.companyInfomation.companyLocation.id,
+          full_name:
+            profileCompanyV3.companyInfomation.companyLocation.fullName,
         });
-        setWardId(profileV3.companyInfomation.companyLocation.id);
+        setWardId(profileCompanyV3.companyInfomation.companyLocation.id);
 
-        setAddress(profileV3.companyInfomation.address);
+        setAddress(profileCompanyV3.companyInfomation.address);
       } else {
         setOpenModalNoteCreateCompany(true);
       }
@@ -476,7 +485,6 @@ const Post: React.FC = () => {
       <div className="post">
         {/* <Navbar />
         <CategoryDropdown /> */}
-
         {contextHolder}
         <div className="post-main">
           <div

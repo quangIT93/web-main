@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState } from 'react';
 import categoriesApi from 'api/categoriesApi';
 
 import './style.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { Avatar, Spin } from 'antd';
 import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
@@ -26,7 +26,9 @@ import apiCv from 'api/apiCv';
 
 import templatesCv from '../CvTemplate/ListTheme';
 import { template } from '@babel/core';
-
+import profileApi from 'api/profileApi';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
+// const sharp = require('sharp');
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/legacy/build/pdf.worker.min.js',
 //   import.meta.url,
@@ -41,7 +43,9 @@ interface IContentListCv {
 const ContentListCv: React.FC<IContentListCv> = (props) => {
   const { colorCV, fontSizeCV } = props;
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileMoreV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationMoreV3.data,
+  );
 
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -49,7 +53,9 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [valueNameCv, setValueNameCv] = React.useState<any>(
     `Resume ${Number(localStorage.getItem('cv-id')) || 1}`,
@@ -59,12 +65,32 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
 
   const TemplateId = Number(localStorage.getItem('cv-id')) || 1;
-
+  const dispatch = useDispatch();
   useEffect(() => {
     setValueNameCv(
-      `${profile.name} - Resume ${Number(localStorage.getItem('cv-id')) || 1}`,
+      `${profileV3.name} - Resume ${
+        Number(localStorage.getItem('cv-id')) || 1
+      }`,
     );
-  }, [profile]);
+  }, [profileV3]);
+
+  const getProfileComanyV3 = async () => {
+    try {
+      const result = await profileApi.getProfileInformationMoreV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      if (result) {
+        dispatch(setProfileMeInformationMoreV3(result));
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  React.useEffect(() => {
+    getProfileComanyV3();
+  }, []);
 
   // const templatesCv = [
   //   {
@@ -109,6 +135,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
             color={colorCV}
             fontSize={fontSizeCV}
             profile={profileV3}
+            profileMore={profileMoreV3}
           />,
         );
       } else {
@@ -119,12 +146,13 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           <CvComponent
             color={colorCV}
             fontSize={fontSizeCV}
+            profileMore={profileMoreV3}
             profile={profileV3}
           />,
         );
       }
     }
-  }, [TemplateId, colorCV, fontSizeCV, profileV3]);
+  }, [TemplateId, colorCV, fontSizeCV, profileV3, profileMoreV3]);
 
   const [instance, updateInstance] = usePDF({
     document: selectedDocument, // Truyền mẫu CV được chọn vào document
@@ -191,7 +219,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       // setValueNameCv(localStorage.getItem('nameCv'));
       getThemeCv.map((value: any) => {
         if (Number(localStorage.getItem('cv-id')) === value.id) {
-          setValueNameCv(`${profile.name} - ${value.name}`);
+          setValueNameCv(`${profileV3.name} - ${value.name}`);
         }
       });
     }
@@ -201,9 +229,9 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   const handleSelectTemplate = (id: any, name: string) => {
     setSelectedThemeId(id);
-    setValueNameCv(`${profile.name} - ${name}`);
+    setValueNameCv(`${profileV3.name} - ${name}`);
     localStorage.setItem('cv-id', id);
-    localStorage.setItem('nameCv', `${profile.name} - ${name}`);
+    localStorage.setItem('nameCv', `${profileV3.name} - ${name}`);
   };
 
   const getTheme = async () => {
@@ -284,7 +312,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
               key={index}
               onClick={() => {
                 // localStorage.setItem('nameCv', item?.name);
-                setValueNameCv(`${profile.name} - ${item?.name}`);
+                setValueNameCv(`${profileV3.name} - ${item?.name}`);
                 handleSelectTemplate(item?.id, item?.name);
               }}
             >
@@ -398,7 +426,11 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
               <Document
                 loading={<Spin indicator={antIcon} />}
                 noData={<Spin indicator={antIcon} />}
-                file={profileV3.length !== 0 ? instance.url : null}
+                file={
+                  profileV3.length !== 0 && profileMoreV3.length !== 0
+                    ? instance.url
+                    : null
+                }
                 onLoadSuccess={onDocumentLoadSuccess}
                 // onLoadError={(error) =>
                 //   console.error('Error loading document:', error)

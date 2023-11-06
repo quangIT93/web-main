@@ -39,6 +39,7 @@ import {
 
 import profileApi from 'api/profileApi';
 import { message } from 'antd';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 
 // const { TextArea } = Input;
 
@@ -267,11 +268,12 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
 
         if (result) {
           // console.log(result);
-          const resultProfile = await profileApi.getProfileV3(
+          const resultProfile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
 
-          resultProfile && dispatch(setProfileV3(resultProfile));
+          resultProfile &&
+            dispatch(setProfileMeInformationMoreV3(resultProfile));
           //   message.success(
           //     languageRedux === 1
           //       ? `Thêm mới hoạt động "${activity.title}" thành công`

@@ -13,7 +13,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 
 //ANT
 
-import { LocationHomeIcon, DolaIcon, SaveIconFill } from '#components/Icons';
+import { LocationHomeIcon, DolaIcon, SaveIconFill, IconEmail, PhoneIcon } from '#components/Icons';
 
 import { CandidateHijob } from '#components/Icons/iconCandidate';
 
@@ -101,46 +101,47 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
             handleClickItem(e, props.item?.profileData?.accountId);
           }}
         >
-          <div className="wrap-img_candidate">
-            <img
-              src={
-                item?.profileData?.imageData
-                  ? item?.profileData?.imageData?.avatar
-                  : item?.profileData.genderData === 'Nam' || item.genderData === 'Male'
-                    ? male_null_avatar
-                    : female_null_avatar
-              }
-              style={{
-                filter: item?.profileData?.imageData?.avatar
-                  ? 'blur(3px)'
-                  : 'none',
-              }}
-              alt=""
-              className="img-candidate"
-            />
-            <div className="wrap-name-age">
-              <div className="wrap-name-age_item">
-                <span className="icon-age_item-candidate">
-                  <PersonIcon />
-                </span>
-                <span>
-                  {moment(new Date(item?.profileData?.birthdayData))
-                    .format('yyyy')
-                    .replace(/\d{2}$/, 'xx')}
-                </span>
-              </div>
-              <div className="wrap-name-age_item">
-                <span className="icon-age_item-candidate">
-                  <GenderIcon />
-                </span>
-                <span>{item?.profileData?.genderData}</span>
+          <div className="item-candidate-content-history">
+            <div className="wrap-img_candidate">
+              <img
+                src={
+                  item?.profileData?.imageData
+                    ? item?.profileData?.imageData?.avatar
+                    : item?.profileData.genderData === 'Nam' || item.genderData === 'Male'
+                      ? male_null_avatar
+                      : female_null_avatar
+                }
+                style={{
+                  filter: item?.profileData?.imageData?.avatar
+                    ? 'blur(3px)'
+                    : 'none',
+                }}
+                alt=""
+                className="img-candidate"
+              />
+              <div className="wrap-name-age">
+                <div className="wrap-name-age_item">
+                  <span className="icon-age_item-candidate">
+                    <PersonIcon />
+                  </span>
+                  <span>
+                    {moment(new Date(item?.profileData?.birthdayData))
+                      .format('yyyy')
+                      .replace(/\d{2}$/, 'xx')}
+                  </span>
+                </div>
+                <div className="wrap-name-age_item">
+                  <span className="icon-age_item-candidate">
+                    <GenderIcon />
+                  </span>
+                  <span>{item?.profileData?.genderData}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="info-candidate">
-            <h3>{item?.profileData?.name}</h3>
-            <ul>
-              {/* <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div className="info-candidate">
+              <h3>{item?.profileData?.name}</h3>
+              <ul>
+                {/* <li style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div className="item-birthday item-infoUser">
                   <span>
                     <PersonIcon />
@@ -158,110 +159,92 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   <span>{item?.profileData?.genderData}</span>
                 </div>
               </li> */}
-              <li>
-                <span className="icon-info-candidate">
-                  <SchoolIcon />
-                </span>
-                <Tooltip
-                  placement="top"
-                  title={
-                    item?.profileData?.profilesEducationsData?.length !== 0
-                      ? item?.profileData?.profilesEducationsData?.map(
-                        (value: any) => {
-                          return `${value.data}, `;
-                        },
-                      )
-                      : languageRedux === 1
-                        ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'
-                  }
-                >
-                  <span className="text-info-candidate">
-                    {item?.profileData?.profilesEducationsData?.length !== 0
-                      ? item?.profileData?.profilesEducationsData?.map(
-                        (value: any) => {
-                          return `${value.data}, `;
-                        },
-                      )
-                      : languageRedux === 1
-                        ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'}
+                <li>
+                  <span className="icon-info-candidate">
+                    <IconEmail width={16} height={16} />
                   </span>
-                </Tooltip>
-              </li>
-              <li>
-                <span className="icon-info-candidate">
-                  <LocationIcon />
-                </span>
-                <Tooltip
-                  placement="top"
-                  title={
-                    item?.profileData?.profilesLocationsData?.length !== 0
-                      ? item?.profileData?.profilesLocationsData?.map(
-                        (loc: any) => {
-                          return `${loc.full_name}, `;
-                        },
-                      )
-                      : languageRedux === 1
-                        ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'
-                  }
-                >
-                  <span className="text-info-candidate">
-                    {item?.profileData?.profilesLocationsData?.length !== 0
-                      ? item?.profileData?.profilesLocationsData?.map(
-                        (loc: any) => {
-                          return `${loc.full_name}, `;
-                        },
-                      )
-                      : languageRedux === 1
-                        ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'}
+                  <Tooltip
+                    placement="top"
+                    title={
+                      item?.hideEmail
+                        ? item.hideEmail
+                        : languageRedux === 1
+                          ? 'Thông tin chưa cập nhật'
+                          : 'Not updated information'
+                    }
+                  >
+                    <span className="text-info-candidate">
+                      {item?.hideEmail
+                        ? item.hideEmail
+                        : languageRedux === 1
+                          ? 'Thông tin chưa cập nhật'
+                          : 'Not updated information'}
+                    </span>
+                  </Tooltip>
+                </li>
+                <li>
+                  <span className="icon-info-candidate">
+                    <PhoneIcon width={16} height={16} />
                   </span>
-                </Tooltip>
-              </li>
-              <li>
-                <span className="icon-info-candidate">
-                  <CateIcon />
-                </span>
-                <Tooltip
-                  placement="top"
-                  title={
-                    item?.profileData?.childCategoriesData?.length !== 0
-                      ? item?.profileData?.childCategoriesData?.map(
-                        (value: any) => {
-                          return `${value.fullName}, `;
-                        },
-                      )
-                      : languageRedux === 1
-                        ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'
-                  }
-                >
-                  <span className="text-info-candidate">
-                    {item?.profileData?.childCategoriesData?.length !== 0
-                      ? item?.profileData?.childCategoriesData?.map(
-                        (value: any) => {
-                          return `${value.fullName}, `;
-                        },
-                      )
-                      : languageRedux === 1
-                        ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'}
+                  <Tooltip
+                    placement="top"
+                    title={
+                      item?.hidePhone
+                        ? item.hidePhone
+                        : languageRedux === 1
+                          ? 'Thông tin chưa cập nhật'
+                          : 'Not updated information'
+                    }
+                  >
+                    <span className="text-info-candidate">
+                      {item?.hidePhone
+                        ? item.hidePhone
+                        : languageRedux === 1
+                          ? 'Thông tin chưa cập nhật'
+                          : 'Not updated information'}
+                    </span>
+                  </Tooltip>
+                </li>
+                <li>
+                  <span className="icon-info-candidate">
+                    <CateIcon />
                   </span>
-                </Tooltip>
-              </li>
-              <li>
-                <span className="icon-info-candidate">
-                  <CalendarIcon />
-                </span>
-                <span className="text-info-candidate">
-                  {moment(new Date(item?.profileData?.updatedAt)).format(
-                    'DD/MM/yyyy',
-                  )}
-                </span>
-              </li>
-            </ul>
+                  <Tooltip
+                    placement="top"
+                    title={
+                      item?.profileData?.childCategoriesData?.length !== 0
+                        ? item?.profileData?.childCategoriesData?.map(
+                          (value: any) => {
+                            return `${value.fullName}, `;
+                          },
+                        )
+                        : languageRedux === 1
+                          ? 'Thông tin chưa cập nhật'
+                          : 'Not updated information'
+                    }
+                  >
+                    <span className="text-info-candidate">
+                      {item?.profileData?.childCategoriesData?.length !== 0
+                        ? item?.profileData?.childCategoriesData?.map(
+                          (value: any) => {
+                            return `${value.fullName}, `;
+                          },
+                        )
+                        : languageRedux === 1
+                          ? 'Thông tin chưa cập nhật'
+                          : 'Not updated information'}
+                    </span>
+                  </Tooltip>
+                </li>
+              </ul>
+              <h2>
+                {item?.introduction
+                  ? item.introduction
+                  : languageRedux === 1
+                    ? 'Thông tin chưa cập nhật'
+                    : 'Not updated information'}
+              </h2>
+            </div>
           </div>
         </div>
         <div
@@ -269,7 +252,7 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
             position: 'absolute',
             zIndex: 2,
             right: '32px',
-            top: '20px',
+            top: '12px',
           }}
           onClick={(e) =>
             hanhleClicKCandleSaveCandidate(

@@ -25,6 +25,8 @@ import { message } from 'antd';
 import './style.scss';
 import candidateSearch from 'api/apiCandidates';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
+import { setAlertEditInfo } from 'store/reducer/profileReducer/alertProfileReducer';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -344,11 +346,12 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       if (checkForm) {
         const result = await profileApi.updateProfileEducation(education);
         if (result) {
-          const profile = await profileApi.getProfileV3(
+          const profile = await profileApi.getProfileInformationMoreV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (profile) {
-            dispatch(setProfileV3(profile));
+            dispatch(setProfileMeInformationMoreV3(profile));
+            dispatch(setAlertEditInfo(true));
           }
           setOpenModalEducationUpdate(false);
         }
@@ -446,7 +449,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={language?.profile_page?.place_school}
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {education.companyName && education.companyName.length > 50 ? (
@@ -454,9 +457,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                education.companyName ? education.companyName.length : '0'
-              }/50`}</span>
+              <span className="number-text">{`${education.companyName ? education.companyName.length : '0'
+                }/50`}</span>
             </div>
           </Box>
 
@@ -478,7 +480,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={language?.major}
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {education.major && education.major.length > 50 ? (
@@ -488,9 +490,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                education.major ? education.major.length : '0'
-              }/50`}</span>
+              <span className="number-text">{`${education.major ? education.major.length : '0'
+                }/50`}</span>
             </div>
           </Box>
           <Box sx={styleChildBox}>
@@ -528,7 +529,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   />
                   <div className="wrap-noti_input">
                     {education.startDate &&
-                    new Date(education.startDate).getFullYear() >
+                      new Date(education.startDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
@@ -573,7 +574,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   />
                   <div className="wrap-noti_input">
                     {education.endDate &&
-                    new Date(education.endDate).getFullYear() >
+                      new Date(education.endDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         Thời gian kết thúc không thể lớn hơn thời gian hiện tại
@@ -614,7 +615,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               placeholder={'Loại công việc'}
               size="small"
               sx={{ width: '100%' }}
-              // error={!gender} // Đánh dấu lỗi
+            // error={!gender} // Đánh dấu lỗi
             >
               {typeAcademic?.map((value: any, index: number) => {
                 return <MenuItem value={index + 1}>{value.data}</MenuItem>;
@@ -656,16 +657,15 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             />
             <div className="wrap-noti_input">
               {education.extraInformation &&
-              education.extraInformation.length > 500 ? (
+                education.extraInformation.length > 500 ? (
                 <span className="helper-text">Bạn đã nhập quá 500 ký tự</span>
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                education.extraInformation
-                  ? education.extraInformation.length
-                  : '0'
-              }/500`}</span>
+              <span className="number-text">{`${education.extraInformation
+                ? education.extraInformation.length
+                : '0'
+                }/500`}</span>
             </div>
           </Box>
 

@@ -68,7 +68,9 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   const [proviId, setProviId] = useState<string[]>([]);
   // const [messageApi, contextHolder] = message.useMessage();
 
-  const userProfile = useSelector((state: RootState) => state.profile.profile);
+  const userProfile = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
 
   const dataLocations = useSelector(
     (state: RootState) => state.dataLocation.data,
@@ -110,9 +112,9 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   const listLocation: any = useRef<any>(
     JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
-      : userProfile?.locations?.map((profile: any) => [
-          profile?.province_id,
-          profile?.district_id,
+      : userProfile?.profileLocations?.map((profile: any) => [
+          profile?.province?.id,
+          profile?.id,
         ]),
   );
 
@@ -124,23 +126,23 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
 
   const getAllLocaitions = async () => {
     try {
-      const result = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        // setDataLocations(result.data);
-        dispatch(setLocationApi(result));
-      }
+      // const result = await locationApi.getAllLocation(
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+      // if (result) {
+      //   // setDataLocations(result.data);
+      //   dispatch(setLocationApi(result));
+      // }
 
       if (
         location?.pathname !== '/search-results' &&
-        userProfile &&
+        userProfile.length !== 0 &&
         listLocation.current?.length === 0
       ) {
         setListDis(
-          userProfile?.locations?.map((profile: any) => [
-            profile?.province_id,
-            profile?.district_id,
+          userProfile?.profileLocations?.map((profile: any) => [
+            profile?.province?.id,
+            profile?.id,
           ]),
         );
       } else {
@@ -189,7 +191,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
     }
   };
 
-  if (userProfile || dataLocations) {
+  if (userProfile.length !== 0 || dataLocations) {
     return (
       <>
         {/* {contextHolder} */}
@@ -206,17 +208,18 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             inputIcon={<EnvironmentOutlined />}
             suffixIcon={<ArrowFilterIcon width={14} height={10} />}
             dropdownRender={DropdownRender}
-            value={reset ? [] : listDis}
+            value={reset ? [] : dataLocations.length !== 0 ? listDis : []}
             defaultValue={
               listLocation.current?.length !== 0 &&
-              listLocation.current !== undefined
+              listLocation.current !== undefined &&
+              userProfile.length !== 0
                 ? listLocation.current
                 : listLocation.current?.length === 0 &&
                   location?.pathname === '/search-results'
                 ? []
-                : userProfile?.locations?.map((profile: any) => [
-                    profile?.province_id,
-                    profile?.district_id,
+                : userProfile?.profileLocations?.map((profile: any) => [
+                    profile?.province?.id,
+                    profile?.id,
                   ])
             }
             options={
