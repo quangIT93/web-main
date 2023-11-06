@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styles from './style.module.scss';
 import './style.scss'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 
 import unLogo from '../../img/male_null_avatar.png'
@@ -17,7 +17,14 @@ const DetailCompany = () => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const profileV3 = useSelector((state: RootState) => state.dataProfileCompanyV3.data);
     const [applyPostitions, setApplyPositions] = useState(4)
-    const [company, setCompany] = useState<any>();
+    const [company, setCompanyData] = useState<any>();
+    console.log("profileV3", profileV3);
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        // dispatch(setCompany);
+    }, [])
+
 
     const items: TabsProps['items'] = [
         {

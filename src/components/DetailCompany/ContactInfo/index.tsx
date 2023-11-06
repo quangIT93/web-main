@@ -28,6 +28,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
     });
 
     const location = useLocation()
+    console.log(company);
 
     return (
         <div className={styles.contact_info_container}>
@@ -219,9 +220,11 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                         className={styles.company_role_images}
                         style={{
                             height:
-                                company?.images?.length > 0 ? 'fit-content' : '310px',
+                                company?.images &&
+                                    company?.images?.length > 0 ? 'fit-content' : '310px',
                             border:
-                                company?.images?.length > 0 ? 'none' : '1px solid #ccc',
+                                company?.images &&
+                                    company?.images?.length > 0 ? 'none' : '1px solid #ccc',
                         }}
                     >
                         <Box p="0rem 0">
@@ -236,7 +239,9 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                                         className={styles.drag_img_camera}
                                         style={{
                                             display:
-                                                company === undefined || company?.images?.length === 0 ? 'flex' : 'none',
+                                                // company !== undefined ||
+                                                company?.images &&
+                                                    company?.images?.length !== 0 ? 'none' : 'flex',
                                         }}
                                     >
                                         <CameraComunityIcon />
