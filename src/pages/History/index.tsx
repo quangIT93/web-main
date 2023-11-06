@@ -86,31 +86,31 @@ const HistoryPost = () => {
     hotjobtype === 2
       ? '2-1'
       : candidate === 4
-        ? '4-0'
-        : community_post === 31
-          ? '3-1'
-          : community_post === 30
-            ? '3-0'
-            : saved_jobs === 1
-              ? '1-0'
-              : recruitment_post === 'opening'
-                ? '2-1'
-                : recruitment_post === 'closed'
-                  ? '2-2'
-                  : '0-0',
+      ? '4-0'
+      : community_post === 31
+      ? '3-1'
+      : community_post === 30
+      ? '3-0'
+      : saved_jobs === 1
+      ? '1-0'
+      : recruitment_post === 'opening'
+      ? '2-1'
+      : recruitment_post === 'closed'
+      ? '2-2'
+      : '0-0',
   );
   const [ItemLeft, setItemLeft] = React.useState<null | number>(
     hotjobtype === 2
       ? 2
       : community_post === 31
-        ? 3
-        : community_post === 30
-          ? 3
-          : candidate === 4
-            ? 4
-            : saved_jobs === 1
-              ? 1
-              : 0,
+      ? 3
+      : community_post === 30
+      ? 3
+      : candidate === 4
+      ? 4
+      : saved_jobs === 1
+      ? 1
+      : 0,
   );
   const [showDetailPosted, setShowDetailPosted] =
     React.useState<boolean>(false);
@@ -198,17 +198,17 @@ const HistoryPost = () => {
         // language?.history_page?.posts_created,
       ],
     },
-    {
-      id: 5,
-      // title: language?.history_page?.list_of_articles,
-      title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
-      childs: [
-        languageRedux === 1 ? 'Tất cả' : 'All',
-        // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
-        // language?.history_page?.saved,
-        // language?.history_page?.posts_created,
-      ],
-    },
+    // {
+    //   id: 5,
+    //   // title: language?.history_page?.list_of_articles,
+    //   title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
+    //   childs: [
+    //     languageRedux === 1 ? 'Tất cả' : 'All',
+    //     // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
+    //     // language?.history_page?.saved,
+    //     // language?.history_page?.posts_created,
+    //   ],
+    // },
   ];
 
   React.useEffect(() => {
@@ -252,36 +252,36 @@ const HistoryPost = () => {
       {ItemLeft === dataItem[0].id
         ? dataItem[0].title
         : ItemLeft === dataItem[1].id
-          ? dataItem[1].title
-          : ItemLeft === dataItem[2].id
-            ? dataItem[2].title
-            : ItemLeft === dataItem[3].id
-              ? dataItem[3].title
-              : dataItem[4].title}
+        ? dataItem[1].title
+        : ItemLeft === dataItem[2].id
+        ? dataItem[2].title
+        : ItemLeft === dataItem[3].id
+        ? dataItem[3].title
+        : dataItem[4].title}
     </Typography>,
     <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {activeChild === '0-0'
         ? language?.all
         : // : activeChild === '0-1'
-        // ? 'Đã được duyệt'
-        // : activeChild === '0-2'
-        // ? 'Đang chờ duyệt'
-        ''}
+          // ? 'Đã được duyệt'
+          // : activeChild === '0-2'
+          // ? 'Đang chờ duyệt'
+          ''}
 
       {activeChild === '1-0' ? language?.all : ''}
 
       {activeChild === '2-0'
         ? language?.all
         : activeChild === '2-1'
-          ? language?.history_page?.not_closed_yet
-          : activeChild === '2-2'
-            ? language?.closed
-            : ''}
+        ? language?.history_page?.not_closed_yet
+        : activeChild === '2-2'
+        ? language?.closed
+        : ''}
       {activeChild === '3-0'
         ? language?.history_page?.saved
         : activeChild === '3-1'
-          ? language?.history_page?.have_been_created
-          : ''}
+        ? language?.history_page?.have_been_created
+        : ''}
 
       {activeChild === '4-0' ? language?.all : ''}
     </Typography>,
@@ -440,16 +440,16 @@ const HistoryPost = () => {
                 hotjobtype && hotjobtype === 2
                   ? ['2', '1']
                   : community_post && community_post === 31
-                    ? ['3', '1']
-                    : community_post && community_post === 30
-                      ? ['3', '0']
-                      : saved_jobs === 1
-                        ? ['1', '0']
-                        : candidate === 4
-                          ? ['4', '0']
-                          : profile?.typeRoleData === 0
-                            ? ['0', '0']
-                            : ['2', '0']
+                  ? ['3', '1']
+                  : community_post && community_post === 30
+                  ? ['3', '0']
+                  : saved_jobs === 1
+                  ? ['1', '0']
+                  : candidate === 4
+                  ? ['4', '0']
+                  : profile?.typeRoleData === 0
+                  ? ['0', '0']
+                  : ['2', '0']
               }
               accordion
               bordered={false}
@@ -462,8 +462,9 @@ const HistoryPost = () => {
                     header={
                       <div
                         onClick={() => handleClickSubTitle(index)}
-                        className={`${ItemLeft === index ? 'activeItem' : ''
-                          } panel-title_text`}
+                        className={`${
+                          ItemLeft === index ? 'activeItem' : ''
+                        } panel-title_text`}
                       >
                         <RightOutlined style={{ fontSize: '12px' }} />
                         <span style={{ marginLeft: '8px' }}>{item.title}</span>
@@ -478,8 +479,8 @@ const HistoryPost = () => {
                             ? 'none'
                             : 'block'
                           : item?.id === 0
-                            ? 'none'
-                            : 'block',
+                          ? 'none'
+                          : 'block',
                     }}
                   >
                     {item.childs.map((child: string, idx: number) => (
