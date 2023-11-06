@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
 import './style.scss';
 import { Skeleton } from 'antd';
+import ItemCandidateHome from '#components/Candidates/ItemCandidateHome';
 
 const NewestGigWorker = () => {
   const [listData, setListData] = React.useState<any>([]);
@@ -123,7 +124,8 @@ const NewestGigWorker = () => {
           {listData?.map((item: any, index: number) => {
             return (
               <>
-                <ItemCadidate item={item} key={index} />
+                {/* <ItemCadidate item={item} key={index} /> */}
+                <ItemCandidateHome item={item} key={index} />
               </>
             )
           })}
