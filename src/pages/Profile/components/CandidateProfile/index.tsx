@@ -314,6 +314,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               ? profileV3?.profileCategories?.map(
                 (item: any, index: number) => (
                   <Button key={index} className="btn" type="text">
+                    {item.parentCategory.fullName}{'/ '}
                     {item.fullName}
                   </Button>
                 ),
