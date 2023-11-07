@@ -103,14 +103,22 @@ const Header: React.FC<ICvHeader> = (props) => {
       <View style={styles.divInfo}>
         <View style={{ display: 'flex', justifyContent: 'center' }}>
           <View>
-            <Text style={styles.textName}>Thái</Text>
+            <Text style={styles.textName}>
+              {profile?.name?.split(' ').length > 2
+                ? profile?.name?.split(' ').slice(0, -2).join(' ')
+                : profile?.name?.split(' ').slice(0, -1).join(' ')}
+            </Text>
           </View>
           <View>
-            <Text style={styles.textName}>Minh Quang</Text>
+            <Text style={styles.textName}>
+              {profile?.name?.split(' ').length > 2
+                ? profile?.name?.split(' ').slice(-2).join(' ')
+                : profile?.name?.split(' ').slice(-1).join(' ')}
+            </Text>
           </View>
         </View>
         <View>
-          <Text style={styles.textPosition}>Software engineer</Text>
+          <Text style={styles.textPosition}>{profile?.jobTypeName}</Text>
         </View>
       </View>
 

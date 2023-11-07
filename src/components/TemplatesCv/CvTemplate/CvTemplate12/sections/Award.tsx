@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
+import { View, StyleSheet, Text } from '@react-pdf/renderer';
 import null_avatar from '../../images/null_avatar.png';
-interface ICvSkill {
+interface ICvAward {
   color: any;
   profile: any;
   fontSize: any;
+  profileMore: any;
 }
-const Skill: React.FC<ICvSkill> = (props) => {
-  const { color, profile, fontSize } = props;
+const Award: React.FC<ICvAward> = (props) => {
+  const { color, profile, fontSize, profileMore } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
@@ -15,23 +16,7 @@ const Skill: React.FC<ICvSkill> = (props) => {
     divTitle: {
       backgroundColor:
         color === 1
-          ? '#e5f6fe'
-          : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-    },
-    title: {
-      marginLeft: '20pt',
-      padding: '9.209pt 0',
-      fontSize: '16pt',
-      width: '137pt',
-      color:
-        color === 1
-          ? '#037385'
+          ? '#8dc5fe'
           : color === 2
           ? '#0D99FF'
           : color === 3
@@ -39,8 +24,15 @@ const Skill: React.FC<ICvSkill> = (props) => {
           : color === 4
           ? '#5CB265'
           : '#D80000',
+    },
+    title: {
+      marginLeft: '20pt',
+      padding: '9.209pt 0',
+      fontSize: '16pt',
+      width: '137pt',
+      color: '#000',
       letterSpacing: '4pt',
-      fontFamily: 'Petrona Bold',
+      fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',
     },
     divDes: {
@@ -48,15 +40,15 @@ const Skill: React.FC<ICvSkill> = (props) => {
       marginTop: '9.338pt',
       width: '137pt',
     },
-    textTitleDes: {
+    TextTitleDes: {
       fontSize: '11pt',
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Petrona Bold',
+      fontFamily: 'Fahkwang Medium',
       color:
         color === 1
-          ? '#037385'
+          ? '#004080'
           : color === 2
           ? '#0D99FF'
           : color === 3
@@ -70,42 +62,26 @@ const Skill: React.FC<ICvSkill> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Petrona Bold',
-    },
-    BorderLine: {
-      width: '80px',
-      height: '4pt',
-      backgroundColor:
-        color === 1
-          ? '#e5f6fe'
-          : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-      margin: '7pt 0 4pt 20pt',
+      fontFamily: 'Fahkwang Medium',
     },
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
-        <Text style={styles.title}>Skill</Text>
+        <Text style={styles.title}>Award</Text>
       </View>
-      {profile?.profilesSkills?.map((skill: any) => (
+      {profileMore?.profileAwards?.map((ward: any) => (
         <View>
           <View style={styles.divDes}>
-            <Text style={styles.textTitleDes}>{skill?.skillName}</Text>
+            <Text style={styles.TextTitleDes}>{ward?.title}</Text>
           </View>
           <View style={styles.divDes}>
-            <Text style={styles.textDes}>{skill?.dataLevel?.data}</Text>
+            <Text style={styles.textDes}>{ward?.description}</Text>
           </View>
-          <View style={styles.BorderLine}></View>
         </View>
       ))}
     </View>
   );
 };
 
-export default Skill;
+export default Award;

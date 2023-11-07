@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
 import null_avatar from '../../images/null_avatar.png';
+import moment from 'moment';
 interface ICvHeader {
   color: any;
   profile: any;
@@ -75,6 +76,7 @@ const Education: React.FC<ICvHeader> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       fontFamily: 'Petrona Bold',
+      marginRight: '10pt',
     },
     textTitleRight: {
       fontSize: '11pt',
@@ -114,56 +116,28 @@ const Education: React.FC<ICvHeader> = (props) => {
         <View style={styles.divTitle}>
           <Text style={styles.title}>Education</Text>
         </View>
-        <View style={styles.divInfo}>
-          <View style={styles.leftInfo}>
-            <Text style={styles.textLeft}>2017 - 2021</Text>
-            <Text style={styles.textLeft}>Thành Phố Hồ chí Minh</Text>
-          </View>
-          <View style={styles.rightInfo}>
-            <View style={styles.divTextTitleRight}>
-              <Text style={styles.textLeft}>Dai Hoc Sai Gon</Text>
+        {profile?.profilesEducations?.map((education: any) => (
+          <View style={styles.divInfo}>
+            <View style={styles.leftInfo}>
+              <Text style={styles.textLeft}>
+                {moment(education?.startDate).format('YYYY')}
+                {'-'}
+                {moment(education?.endDate).format('YYYY')}
+              </Text>
+              <Text style={styles.textLeft}>{education?.major}</Text>
             </View>
-            <View style={styles.divTextRight}>
-              <Text style={styles.textRight}>
-                Thái minh quang người một hai ba bốn t amet consectetur
-                adipisicing elit. Eligendi ipsa ab officia dolor incidunt esse
-                neque quam consequatur accusamus id. Molestiae itaque suscipit
-                tempora quasi minima atque nesciunt dicta reprehenderit!
-              </Text>
-              <Text style={styles.textRight}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi ipsa ab officia dolor incidunt esse neque quam
-                consequatur accusamus id. Molestiae itaque suscipit tempora
-                quasi minima atque nesciunt dicta reprehenderit!
-              </Text>
+            <View style={styles.rightInfo}>
+              <View style={styles.divTextTitleRight}>
+                <Text style={styles.textLeft}>{education?.companyName}</Text>
+              </View>
+              <View style={styles.divTextRight}>
+                <Text style={styles.textRight}>
+                  {education?.extraInformation}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={styles.divInfo}>
-          <View style={styles.leftInfo}>
-            <Text style={styles.textLeft}>2017 - 2021</Text>
-            <Text style={styles.textLeft}>Thành Phố Hồ chí Minh</Text>
-          </View>
-          <View style={styles.rightInfo}>
-            <View style={styles.divTextTitleRight}>
-              <Text style={styles.textLeft}>Dai Hoc Sai Gon</Text>
-            </View>
-            <View style={styles.divTextRight}>
-              <Text style={styles.textRight}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi ipsa ab officia dolor incidunt esse neque quam
-                consequatur accusamus id. Molestiae itaque suscipit tempora
-                quasi minima atque nesciunt dicta reprehenderit!
-              </Text>
-              <Text style={styles.textRight}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi ipsa ab officia dolor incidunt esse neque quam
-                consequatur accusamus id. Molestiae itaque suscipit tempora
-                quasi minima atque nesciunt dicta reprehenderit!
-              </Text>
-            </View>
-          </View>
-        </View>
+        ))}
       </View>
     </View>
   );

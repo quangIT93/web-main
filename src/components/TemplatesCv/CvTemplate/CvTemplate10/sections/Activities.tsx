@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
+import moment from 'moment';
 
 interface ICvProfile {
   color: any;
@@ -80,6 +81,7 @@ const Activities: React.FC<ICvActivities> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       fontFamily: 'Petrona Bold',
+      marginRight: '10pt',
     },
     textTitleRight: {
       fontSize: '11pt',
@@ -117,56 +119,27 @@ const Activities: React.FC<ICvActivities> = (props) => {
       <View style={styles.divTitle}>
         <Text style={styles.title}>Activities</Text>
       </View>
-      <View style={styles.divInfo}>
-        <View style={styles.leftInfo}>
-          <Text style={styles.textLeft}>2017 - 2021</Text>
-          <Text style={styles.textLeft}>Thành Phố Hồ chí Minh</Text>
-        </View>
-        <View style={styles.rightInfo}>
-          <View style={styles.divTextTitleRight}>
-            <Text style={styles.textLeft}>Dai Hoc Sai Gon</Text>
+      {profile?.profileActivities?.map((activities: any) => (
+        <View style={styles.divInfo}>
+          <View style={styles.leftInfo}>
+            <Text style={styles.textLeft}>
+              {' '}
+              {moment(activities?.startDate).format('YYYY')}
+              {'-'}
+              {moment(activities?.endDate).format('YYYY')}
+            </Text>
+            <Text style={styles.textLeft}>{activities?.title}</Text>
           </View>
-          <View style={styles.divTextRight}>
-            <Text style={styles.textRight}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-              ipsa ab officia dolor incidunt esse neque quam consequatur
-              accusamus id. Molestiae itaque suscipit tempora quasi minima atque
-              nesciunt dicta reprehenderit!
-            </Text>
-            <Text style={styles.textRight}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-              ipsa ab officia dolor incidunt esse neque quam consequatur
-              accusamus id. Molestiae itaque suscipit tempora quasi minima atque
-              nesciunt dicta reprehenderit!
-            </Text>
+          <View style={styles.rightInfo}>
+            <View style={styles.divTextTitleRight}>
+              <Text style={styles.textLeft}>{activities?.organization}</Text>
+            </View>
+            <View style={styles.divTextRight}>
+              <Text style={styles.textRight}>{activities?.description}</Text>
+            </View>
           </View>
         </View>
-      </View>
-      <View style={styles.divInfo}>
-        <View style={styles.leftInfo}>
-          <Text style={styles.textLeft}>2017 - 2021</Text>
-          <Text style={styles.textLeft}>Thành Phố Hồ chí Minh</Text>
-        </View>
-        <View style={styles.rightInfo}>
-          <View style={styles.divTextTitleRight}>
-            <Text style={styles.textLeft}>Dai Hoc Sai Gon</Text>
-          </View>
-          <View style={styles.divTextRight}>
-            <Text style={styles.textRight}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-              ipsa ab officia dolor incidunt esse neque quam consequatur
-              accusamus id. Molestiae itaque suscipit tempora quasi minima atque
-              nesciunt dicta reprehenderit!
-            </Text>
-            <Text style={styles.textRight}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-              ipsa ab officia dolor incidunt esse neque quam consequatur
-              accusamus id. Molestiae itaque suscipit tempora quasi minima atque
-              nesciunt dicta reprehenderit!
-            </Text>
-          </View>
-        </View>
-      </View>
+      ))}
     </View>
   );
 };
