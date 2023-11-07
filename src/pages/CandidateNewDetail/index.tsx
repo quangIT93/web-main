@@ -546,6 +546,8 @@ const CandidateNewDetail = () => {
               ? candidate?.profileLocations?.map((item: any, index: number) => (
                 <Button key={index} className="btn" type="text">
                   {item?.fullName}
+                  {', '}
+                  {item.province.fullName}
                 </Button>
               ))
               : language?.unupdated}
@@ -569,7 +571,7 @@ const CandidateNewDetail = () => {
               ),
             )
           ) : (
-            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+            <div style={{ marginTop: '16px', fontSize: '14px' }}>{language?.unupdated}</div>
           )}
 
           <div
@@ -597,7 +599,7 @@ const CandidateNewDetail = () => {
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+            <div style={{ marginTop: '16px', fontSize: '14px' }}>{language?.unupdated}</div>
           )}
 
           <div
@@ -624,7 +626,7 @@ const CandidateNewDetail = () => {
             {candidate?.profilesSkills?.length !== 0
               ? candidate?.profilesSkills?.map((item: any, index: number) => (
                 <Button key={index} className="btn" type="text">
-                  <span>{item.skillName}</span>
+                  <h3>{item.skillName}</h3>
                   <span>{item.dataLevel.data}</span>
                 </Button>
               ))
@@ -648,7 +650,7 @@ const CandidateNewDetail = () => {
               ? candidate?.profilesLanguages?.map(
                 (item: any, index: number) => (
                   <Button key={index} className="btn" type="text">
-                    <span>{item.languageName}</span>
+                    <h3>{item.languageName}</h3>
                     <span>{item.dataLevel.data}</span>
                   </Button>
                 ),
@@ -673,7 +675,7 @@ const CandidateNewDetail = () => {
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+            <div style={{ marginTop: '16px', fontSize: '14px' }}>{language?.unupdated}</div>
           )}
 
           <div
@@ -706,7 +708,8 @@ const CandidateNewDetail = () => {
                   <span>{item.description}</span>
                 </Button>
               ))
-              : language?.unupdated}
+              : language?.unupdated
+            }
           </Space>
         </div>
 
@@ -726,7 +729,7 @@ const CandidateNewDetail = () => {
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+            <div style={{ marginTop: '16px', fontSize: '14px' }}>{language?.unupdated}</div>
           )}
 
           <div

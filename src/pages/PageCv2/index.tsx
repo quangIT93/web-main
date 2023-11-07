@@ -24,14 +24,14 @@ const PrevArrow = (props: any) => (
 
 const PageCv2 = () => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 300,
     slidesToShow: 3,
     afterChange: onSlideChange,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    autoplay: true, // Bật chế độ tự động chạy
+    autoplay: false, // Bật chế độ tự động chạy
     autoplaySpeed: 2000, // Thời gian giữa các lần chuyển slide (milliseconds)
   };
   const profileMoreV3 = useSelector(
@@ -48,20 +48,20 @@ const PageCv2 = () => {
       if (result) {
         setGetThemeCv(result.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // Hàm xử lý sau khi slider thay đổi slide
   function onSlideChange(currentSlide: number) {
     // Lấy danh sách các phần tử .slick-active trong Slider
-    const activeSlides = document.querySelectorAll('.slick-active');
-    if (activeSlides.length !== 0) {
-      activeSlides[1].classList.add('slick-slider-center');
-      activeSlides[0].classList.remove('slick-slider-center');
-      activeSlides[2].classList.remove('slick-slider-center');
-      activeSlides[3].classList.remove('slick-slider-center');
-      setSlickAct(activeSlides);
-    }
+    // const activeSlides = document.querySelectorAll('.slick-active');
+    // if (activeSlides.length !== 0) {
+    //   activeSlides[1].classList.add('slick-slider-center');
+    //   activeSlides[0].classList.remove('slick-slider-center');
+    //   activeSlides[2].classList.remove('slick-slider-center');
+    //   activeSlides[3].classList.remove('slick-slider-center');
+    //   setSlickAct(activeSlides);
+    // }
   }
 
   useEffect(() => {
