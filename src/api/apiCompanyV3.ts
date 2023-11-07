@@ -17,10 +17,10 @@ const apiCompanyV3 = {
                 : ``
             }` +
             `${categories.length !== 0
-                ? `&${categories?.map((n: any, index: number) => `categories=${n[1]}`).join('&')}`
+                ? `&${categories?.map((n: any, index: number) => `categories=${n[0]}`).join('&')}`
                 : ``
             }` +
-            `${companySizeId ? `&educations=${companySizeId}` : ``}` +
+            `${companySizeId ? `&companySizeId=${companySizeId}` : ``}` +
             `&${page ? `page=${page}` : ``}` +
             `&${limit ? `limit=${limit}` : ``}` +
             `&${lang ? `lang=${lang}` : ``}`;
