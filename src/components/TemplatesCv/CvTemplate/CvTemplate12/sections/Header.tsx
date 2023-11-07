@@ -6,6 +6,7 @@ import {
   Image,
   Polygon,
   Svg,
+  Rect,
 } from '@react-pdf/renderer';
 import null_avatar from '../../images/null_avatar.png';
 interface ICvHeader {
@@ -40,8 +41,7 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
 
     divTextName: {
-      maxWidth: '320pt',
-      backgroundColor: 'red',
+      maxWidth: '310pt',
     },
     textName: {
       fontSize: '42pt',
@@ -51,31 +51,31 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     divTextJobTypeName: {
       height: '35.786pt',
-      backgroundColor: 'red',
+      backgroundColor: '#c5dff8',
       display: 'flex',
       justifyContent: 'center',
       marginLeft: '-47.137pt',
+      marginTop: '12pt',
       paddingLeft: '61.137pt',
     },
     textPosition: {
       fontSize: '18pt',
       letterSpacing: '4pt',
       // marginTop: '20pt',
-      color: '#000000',
+      color: '#004080',
       fontFamily: 'Montserrat SemiBold',
     },
     divImage: {
       position: 'absolute',
-
-      backgroundColor: '#fff',
-      height: '175.489pt',
-      width: '148.594pt',
+      backgroundColor: 'transparent',
+      height: '195.489pt',
+      width: '168.594pt',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       right: '47.936pt',
       top: '47.936pt',
-      border: '1px solid #ccc',
+      border: '2px solid #004080',
       padding: '11.844pt',
     },
     image: {
@@ -188,6 +188,19 @@ const Header: React.FC<ICvHeader> = (props) => {
           strokeWidth={1}
         />
       </Svg> */}
+
+      <Svg
+        viewBox="0 0 220 100"
+        style={{
+          position: 'absolute',
+          width: '500',
+          height: '160',
+          right: '-188',
+          top: '-22',
+        }}
+      >
+        <Rect width="146" height="100" fill="#c5dff8" />
+      </Svg>
 
       <View style={styles.divInfo}>
         <View style={{ display: 'flex', justifyContent: 'center' }}>
