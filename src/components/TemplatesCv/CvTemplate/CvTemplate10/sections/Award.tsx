@@ -78,26 +78,16 @@ const Award: React.FC<ICvAward> = (props) => {
       <View style={styles.divTitle}>
         <Text style={styles.title}>Award</Text>
       </View>
-      <View>
-        <View style={styles.divDes}>
-          <Text style={styles.textTitleDes}>Sinh viên ưu tú Thành Phố</Text>
+      {profile?.profileAwards?.map((ward: any) => (
+        <View>
+          <View style={styles.divDes}>
+            <Text style={styles.textTitleDes}>{ward?.title}</Text>
+          </View>
+          <View style={styles.divDes}>
+            <Text style={styles.textDes}>{ward?.description}</Text>
+          </View>
         </View>
-        <View style={styles.divDes}>
-          <Text style={styles.textDes}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure
-            incidunt, deserunt consectetur nam tenetur aperiam facere qui
-            perferendis autem quos molestias. Dolorum provident itaque tempora
-            nesciunt atque optio repudiandae molestiae. Lorem ipsum dolor sit
-            amet consectetur adipisicing elit. Quidem rerum minus vitae quia.
-            Dolores, quia doloribus fugit reiciendis dolor quaerat magnam
-            dolorem consectetur, quod sint iure quo commodi? Placeat, commodi.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id tempora
-            exercitationem nostrum quibusdam consequatur. Autem ipsa ab
-            aspernatur molestiae! Aut id tempora ipsum praesentium cupiditate
-            delectus consectetur doloribus perspiciatis eum.
-          </Text>
-        </View>
-      </View>
+      ))}
     </View>
   );
 };

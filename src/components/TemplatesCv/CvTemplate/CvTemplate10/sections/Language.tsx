@@ -91,15 +91,17 @@ const Language: React.FC<ICvLanguage> = (props) => {
       <View style={styles.divTitle}>
         <Text style={styles.title}>Languages</Text>
       </View>
-      <View style={styles.divInfo}>
-        <View>
-          <Text style={styles.TextTitleInfo}>English</Text>
+      {profile?.profilesLanguages?.map((language: any) => (
+        <View style={styles.divInfo}>
+          <View>
+            <Text style={styles.TextTitleInfo}>{language?.languageName}</Text>
+          </View>
+          <View style={styles.BorderLine}></View>
+          <View>
+            <Text style={styles.TextInfo}>{language?.dataLevel?.data}</Text>
+          </View>
         </View>
-        <View style={styles.BorderLine}></View>
-        <View>
-          <Text style={styles.TextInfo}>Trình độ trung cấp</Text>
-        </View>
-      </View>
+      ))}
     </View>
   );
 };

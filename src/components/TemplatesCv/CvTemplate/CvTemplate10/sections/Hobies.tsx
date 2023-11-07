@@ -63,17 +63,7 @@ const Hobies: React.FC<ICvHobies> = (props) => {
       </View>
       <View style={styles.divDes}>
         <Text style={styles.textDes}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure
-          incidunt, deserunt consectetur nam tenetur aperiam facere qui
-          perferendis autem quos molestias. Dolorum provident itaque tempora
-          nesciunt atque optio repudiandae molestiae. Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Quidem rerum minus vitae quia. Dolores,
-          quia doloribus fugit reiciendis dolor quaerat magnam dolorem
-          consectetur, quod sint iure quo commodi? Placeat, commodi. Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Id tempora exercitationem
-          nostrum quibusdam consequatur. Autem ipsa ab aspernatur molestiae! Aut
-          id tempora ipsum praesentium cupiditate delectus consectetur doloribus
-          perspiciatis eum.
+          {profile?.profileHobbies?.description}
         </Text>
       </View>
     </View>

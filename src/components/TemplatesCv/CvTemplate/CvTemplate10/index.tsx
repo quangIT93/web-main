@@ -70,7 +70,17 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       width: '65%',
       // paddingRight: 10,
       backgroundColor: '#fff',
-      borderRight: '1px solid #34899d',
+      borderRight: `1px solid ${
+        color === 1
+          ? '#cee8ff'
+          : color === 2
+          ? '#AED6F1'
+          : color === 3
+          ? '#F9E79F'
+          : color === 4
+          ? '#ABEBC6'
+          : '#F1948A'
+      }`,
       gap: '20.495pt',
     },
     rightColumn: {
@@ -81,6 +91,15 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       // paddingLeft: '24.809pt',
       backgroundColor: '#fff',
       gap: '20.495pt',
+    },
+    pageNumber: {
+      position: 'absolute',
+      fontSize: fontSize - 8,
+      bottom: 10,
+      left: 0,
+      right: 0,
+      textAlign: 'center',
+      color: 'grey',
     },
   });
   Font.register({
@@ -203,6 +222,7 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
         </View>
       </View>
       <Text
+        style={styles.pageNumber}
         render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
         fixed
       />

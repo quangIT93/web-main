@@ -180,8 +180,8 @@ const CategoryCarousel: React.FC = () => {
           tabs.style.top = '115px';
           breadCrumb.style.marginTop = '-10px';
         } else {
-          tabs.style.top = '115px';
-          breadCrumb.style.marginTop = '0px';
+          tabs.style.top = '155px';
+          breadCrumb.style.marginTop = '20px';
         }
       }, 0);
     }

@@ -5,9 +5,11 @@ interface ICvReference {
   color: any;
   profile: any;
   fontSize: any;
+  profileMore: any;
 }
 const Reference: React.FC<ICvReference> = (props) => {
-  const { color, profile, fontSize } = props;
+  const { color, profile, fontSize, profileMore } = props;
+
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
@@ -15,23 +17,7 @@ const Reference: React.FC<ICvReference> = (props) => {
     divTitle: {
       backgroundColor:
         color === 1
-          ? '#e5f6fe'
-          : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-    },
-    title: {
-      marginLeft: '20pt',
-      padding: '9.209pt 0',
-      fontSize: '16pt',
-      width: '137pt',
-      color:
-        color === 1
-          ? '#037385'
+          ? '#8dc5fe'
           : color === 2
           ? '#0D99FF'
           : color === 3
@@ -39,8 +25,15 @@ const Reference: React.FC<ICvReference> = (props) => {
           : color === 4
           ? '#5CB265'
           : '#D80000',
-      fontFamily: 'Petrona Bold',
+    },
+    title: {
+      marginLeft: '20pt',
+      padding: '9.209pt 0',
+      fontSize: '16pt',
+      width: '137pt',
+      color: '#000',
       letterSpacing: '4pt',
+      fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',
     },
     divDes: {
@@ -63,7 +56,7 @@ const Reference: React.FC<ICvReference> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Petrona Bold',
+      fontFamily: 'Fahkwang Medium',
     },
     divWrapItem: {
       display: 'flex',
@@ -77,7 +70,7 @@ const Reference: React.FC<ICvReference> = (props) => {
         <Text style={styles.title}>Reference</Text>
       </View>
       <View style={styles.divWrapItem}>
-        {profile?.profilesReferences?.map((reference: any) => (
+        {profileMore?.profilesReferences?.map((reference: any) => (
           <View>
             <View style={styles.divName}>
               <Text style={styles.textDes}>{reference?.fullName}</Text>
@@ -98,14 +91,14 @@ const Reference: React.FC<ICvReference> = (props) => {
             alignItems: 'center',
             backgroundColor:
               color === 1
-                ? '#e5f6fe'
+                ? '#8dc5fe'
                 : color === 2
-                ? '#D6EAF8'
+                ? '#0D99FF'
                 : color === 3
-                ? '#FCF3CF'
+                ? '#FBBC04'
                 : color === 4
-                ? '#D5F5E3'
-                : '#FADBD8',
+                ? '#5CB265'
+                : '#D80000',
           }}
         ></View>
       </View>
