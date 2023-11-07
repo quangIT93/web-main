@@ -100,7 +100,7 @@ const profileApi = {
   },
 
   postAvatar: (images: any) => {
-    const URL = `/v1/profiles/avt`
+    const URL = `/v3/profiles/me/avatar`
     return axiosClient.put(URL, images, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

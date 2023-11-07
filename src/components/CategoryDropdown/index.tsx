@@ -378,7 +378,7 @@ const CategoryDropdown: React.FC = () => {
         setOpenModalTurnOffStatus(true);
         setSearchJob(false);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
@@ -435,6 +435,7 @@ const CategoryDropdown: React.FC = () => {
                   }}
                 >
                   <p
+                    className="status-search_job"
                     style={{
                       color: profileV3.isSearch === 1 ? '#000000' : '#575757',
                     }}
@@ -445,10 +446,12 @@ const CategoryDropdown: React.FC = () => {
                       //     "Trạng thái tìm việc đang bật:" :
                       //     "Job search status is on:" :
                       languageRedux === 1
-                        ? `Trạng thái tìm việc đang ${profileV3.isSearch === 1 ? 'bật' : 'tắt'
-                        }:`
-                        : `Job search status is ${profileV3.isSearch === 1 ? 'on' : 'off'
-                        }:`
+                        ? `Trạng thái tìm việc đang ${
+                            profileV3.isSearch === 1 ? 'bật' : 'tắt'
+                          }:`
+                        : `Job search status is ${
+                            profileV3.isSearch === 1 ? 'on' : 'off'
+                          }:`
                     }
                   </p>
                   <Switch
@@ -577,8 +580,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Thông tin việc làm'
                       : 'Job information'
                     : languageRedux === 1
-                      ? 'Thông tin tuyển dụng'
-                      : 'Employment information'}
+                    ? 'Thông tin tuyển dụng'
+                    : 'Employment information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -612,8 +615,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Việc làm đã lưu'
                       : 'Saved jobs'
                     : languageRedux === 1
-                      ? 'Việc làm tuyển dụng đã đăng'
-                      : 'Recruitment posted'}
+                    ? 'Việc làm tuyển dụng đã đăng'
+                    : 'Recruitment posted'}
                 </h3>
                 <h3
                   onClick={
@@ -627,8 +630,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc mới nhất'
                       : 'Newest jobs'
                     : languageRedux === 1
-                      ? 'Bài tuyển dụng đang mở'
-                      : 'Job posting is opening'}
+                    ? 'Bài tuyển dụng đang mở'
+                    : 'Job posting is opening'}
                 </h3>
                 <h3
                   onClick={
@@ -642,8 +645,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc nổi bật'
                       : 'Hot jobs'
                     : languageRedux === 1
-                      ? 'Bài tuyển dụng đã đóng'
-                      : 'Job posting is closed'}
+                    ? 'Bài tuyển dụng đã đóng'
+                    : 'Job posting is closed'}
                 </h3>
                 <h3
                   onClick={
@@ -657,8 +660,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc theo chủ đề'
                       : 'Job by hot places'
                     : languageRedux === 1
-                      ? 'Đăng bài tuyển dụng'
-                      : 'Post recruitment posts'}
+                    ? 'Đăng bài tuyển dụng'
+                    : 'Post recruitment posts'}
                 </h3>
                 <h3
                   onClick={
@@ -672,14 +675,14 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc gợi ý'
                       : 'Suggested jobs'
                     : languageRedux === 1
-                      ? 'Thông tin công ty'
-                      : "Company's information"}
+                    ? 'Thông tin công ty'
+                    : "Company's information"}
                 </h3>
               </div>
             </div>
             <div
               className="category-dropdown-item"
-            // style={{ display: profileV3.typeRoleData === 0 ? 'block' : 'none' }}
+              // style={{ display: profileV3.typeRoleData === 0 ? 'block' : 'none' }}
             >
               <div className="top-item" onClick={() => handleExpand(2)}>
                 <h3>
@@ -688,8 +691,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Hồ sơ & CV'
                       : 'Resume & CV'
                     : languageRedux === 1
-                      ? 'Thông tin nhân tài'
-                      : 'Candidates information'}
+                    ? 'Thông tin nhân tài'
+                    : 'Candidates information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -713,8 +716,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Tạo mới CV'
                       : 'Create a new CV'
                     : languageRedux === 1
-                      ? 'Danh sách nhân tài mới nhất'
-                      : 'Newest candidate list'}
+                    ? 'Danh sách nhân tài mới nhất'
+                    : 'Newest candidate list'}
                 </h3>
                 <h3
                   onClick={
@@ -728,8 +731,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Quản lý CV'
                       : 'CV management'
                     : languageRedux === 1
-                      ? 'Tìm kiếm ứng viên'
-                      : 'Search for candidate'}
+                    ? 'Tìm kiếm ứng viên'
+                    : 'Search for candidate'}
                 </h3>
                 <h3
                   onClick={
@@ -743,8 +746,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Hướng dẫn tạo CV'
                       : 'Instructions for creating a CV'
                     : languageRedux === 1
-                      ? 'Danh sách nhân tài đã lưu'
-                      : 'Saved candidate list'}
+                    ? 'Danh sách nhân tài đã lưu'
+                    : 'Saved candidate list'}
                 </h3>
               </div>
             </div>
