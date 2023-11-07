@@ -155,6 +155,9 @@ const CategoryCarousel: React.FC = () => {
     let breadCrumb = document.querySelector(
       '.bread-crumb-container',
     ) as HTMLElement;
+    console.log(' location.pathname', location.pathname);
+    console.log('  searchParams.get job-type', searchParams.get('job-type'));
+    console.log('  window.innerWidth', window.innerWidth);
 
     // tabs.style.top = '70px';
     // breadCrumb.style.marginTop = '192px';
@@ -166,7 +169,7 @@ const CategoryCarousel: React.FC = () => {
         // breadCrumb.style.marginTop = '192px';
         if (
           location.pathname === '/more-jobs' &&
-          searchParams.get('job-type') === 'new' &&
+          localStorage.getItem('job-type') === 'new' &&
           window.innerWidth <= 450
         ) {
           tabs.style.top = '155px';
@@ -180,8 +183,8 @@ const CategoryCarousel: React.FC = () => {
           tabs.style.top = '115px';
           breadCrumb.style.marginTop = '-10px';
         } else {
-          tabs.style.top = '155px';
-          breadCrumb.style.marginTop = '20px';
+          tabs.style.top = '115px';
+          breadCrumb.style.marginTop = '0px';
         }
       }, 0);
     }

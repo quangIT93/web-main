@@ -58,7 +58,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   // }, [languageRedux])
 
   const validURL = (str: string) => {
-    if (str.length < 50) {
+    if (str?.length < 50) {
       // var pattern = new RegExp(
       //   '^(https?:\\/\\/)?' + // protocol
       //     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
@@ -196,7 +196,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
-          {dataCompany?.website.length > 100 ? (
+          {dataCompany?.website?.length > 100 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Link web không được vượt quá 100 ký tự'
@@ -211,7 +211,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${dataCompany?.website.length}/100`}</span>
+          <span className="number-text">{`${dataCompany?.website?.length}/100`}</span>
         </div>
       </div>
     </div>

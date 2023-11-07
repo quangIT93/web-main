@@ -87,13 +87,13 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
-          {dataCompany?.description.length === 0 ? (
+          {dataCompany?.description?.length === 0 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Thông tin thêm không được bỏ trống'
                 : 'Additional information cannot be empty'}
             </span>
-          ) : dataCompany?.description.length > 1000 ? (
+          ) : dataCompany?.description?.length > 1000 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Thông tin thêm không được vượt quá 1000 ký tự'
@@ -102,7 +102,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${dataCompany?.description.length}/1000`}</span>
+          <span className="number-text">{`${dataCompany?.description?.length}/1000`}</span>
         </div>
       </div>
     </div>
