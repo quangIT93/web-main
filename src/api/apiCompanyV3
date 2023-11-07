@@ -1,0 +1,96 @@
+import axiosClient from './axiosClient'
+// api/productApi.js
+
+const apiCompanyV3 = {
+    filterCompany: (
+        addresses: any,
+        categories: any,
+        companySizeId: number | undefined,
+        limit: number | null,
+        page: number | null,
+        lang: string) => {
+
+
+        const URL = `/v3/companies?` +
+            `${addresses.length !== 0
+                ? `&${addresses?.map((n: any, index: number) => `addresses=${n[1]}`).join('&')}`
+                : ``
+            }` +
+            `${categories.length !== 0
+                ? `&${categories?.map((n: any, index: number) => `categories=${n[1]}`).join('&')}`
+                : ``
+            }` +
+            `${companySizeId ? `&educations=${companySizeId}` : ``}` +
+            `&${page ? `page=${page}` : ``}` +
+            `&${limit ? `limit=${limit}` : ``}` +
+            `&${lang ? `lang=${lang}` : ``}`;
+        return axiosClient.get(URL)
+    },
+
+    getCompanyById: (
+        id: any,
+        lang: string) => {
+
+
+        const URL = `/v3/companies${id}?lang=${lang}`
+        return axiosClient.get(URL)
+    },
+
+    postBookmarkCompany: (companyId: string) => {
+        const URL = `/v3/company-bookmarked`
+        return axiosClient.post(
+            URL,
+            { companyId },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            }
+        )
+    },
+
+    getBookmarkCompany: (page: number, limit: number, lang: string) => {
+        const URL = `/v3/company-bookmarked/account?lang=${lang}&page=${page}&limit=${limit}`
+        return axiosClient.get(URL, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            },
+        })
+    },
+
+    postCompanyRating: (companyId: any, star: any, comment: string) => {
+        const URL = `/v3/company-ratings`
+        return axiosClient.post(
+            URL,
+            { companyId, star, comment },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            }
+        )
+    },
+
+    getCompanyRating: (
+        id: any,
+        page: any,
+        limit: any,
+        lang: string
+    ) => {
+        const URL = `/v3/company-ratings/company/${id}?lang=${lang}&limit=${limit}&page=${page}`
+        return axiosClient.get(URL)
+    },
+
+    getPostOfCompany: (
+        id: any,
+        page: any,
+        limit: any,
+        lang: string
+    ) => {
+        const URL = `/v3/posts/company/${id}?lang=${lang}&limit=${limit}&page=${page}`
+        return axiosClient.get(URL)
+    },
+
+}
+
+export default apiCompanyV3
