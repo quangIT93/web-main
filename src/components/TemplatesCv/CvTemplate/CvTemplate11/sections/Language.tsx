@@ -5,22 +5,42 @@ interface ICvLanguage {
   color: any;
   profile: any;
   fontSize: any;
+  profileMore: any;
 }
 const Language: React.FC<ICvLanguage> = (props) => {
+  const { color, profile, fontSize, profileMore } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
     },
     divTitle: {
-      backgroundColor: '#e5f6fe',
+      backgroundColor:
+        color === 1
+          ? '#8dc5fe'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
     },
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
-      color: '#34899d',
-      fontFamily: 'Petrona Bold',
+      color:
+        color === 1
+          ? '#000000'
+          : color === 2
+          ? '#000000'
+          : color === 3
+          ? '#ffffff'
+          : color === 4
+          ? '#000000'
+          : '#ffffff',
+      fontFamily: 'Fahkwang Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
     },
@@ -31,8 +51,17 @@ const Language: React.FC<ICvLanguage> = (props) => {
     TextTitleInfo: {
       fontSize: '16pt',
       width: 'auto',
-      color: '#34899d',
-      fontFamily: 'Petrona Bold',
+      color:
+        color === 1
+          ? '#004080'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
+      fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',
     },
     TextInfo: {
@@ -40,12 +69,21 @@ const Language: React.FC<ICvLanguage> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Petrona Bold',
+      fontFamily: 'Fahkwang Medium',
     },
     BorderLine: {
       width: '80px',
       height: '4pt',
-      backgroundColor: '#34899d',
+      backgroundColor:
+        color === 1
+          ? '#8dc5fe'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       margin: '7pt 0',
     },
   });
@@ -54,15 +92,17 @@ const Language: React.FC<ICvLanguage> = (props) => {
       <View style={styles.divTitle}>
         <Text style={styles.title}>Languages</Text>
       </View>
-      <View style={styles.divInfo}>
-        <View>
-          <Text style={styles.TextTitleInfo}>English</Text>
+      {profileMore?.profilesLanguages?.map((language: any) => (
+        <View style={styles.divInfo}>
+          <View>
+            <Text style={styles.TextTitleInfo}>{language?.languageName}</Text>
+          </View>
+          <View style={styles.BorderLine}></View>
+          <View>
+            <Text style={styles.TextInfo}>{language?.dataLevel?.data}</Text>
+          </View>
         </View>
-        <View style={styles.BorderLine}></View>
-        <View>
-          <Text style={styles.TextInfo}>Trình độ trung cấp</Text>
-        </View>
-      </View>
+      ))}
     </View>
   );
 };

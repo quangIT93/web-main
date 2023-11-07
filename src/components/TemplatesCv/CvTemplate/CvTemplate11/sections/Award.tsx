@@ -1,27 +1,38 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
+import { View, StyleSheet, Text } from '@react-pdf/renderer';
 import null_avatar from '../../images/null_avatar.png';
 interface ICvAward {
   color: any;
   profile: any;
   fontSize: any;
+  profileMore: any;
 }
 const Award: React.FC<ICvAward> = (props) => {
+  const { color, profile, fontSize, profileMore } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
     },
     divTitle: {
-      backgroundColor: '#e5f6fe',
+      backgroundColor:
+        color === 1
+          ? '#8dc5fe'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
     },
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
-      color: '#34899d',
-      fontFamily: 'Petrona Bold',
+      color: '#000',
       letterSpacing: '4pt',
+      fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',
     },
     divDes: {
@@ -29,12 +40,29 @@ const Award: React.FC<ICvAward> = (props) => {
       marginTop: '9.338pt',
       width: '137pt',
     },
+    TextTitleDes: {
+      fontSize: '11pt',
+      wordwrap: 'break-word',
+      textAlign: 'justify',
+      lineHeight: '1.2',
+      fontFamily: 'Fahkwang Medium',
+      color:
+        color === 1
+          ? '#004080'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
+    },
     textDes: {
       fontSize: '9pt',
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Petrona Bold',
+      fontFamily: 'Fahkwang Medium',
     },
   });
   return (
@@ -42,26 +70,16 @@ const Award: React.FC<ICvAward> = (props) => {
       <View style={styles.divTitle}>
         <Text style={styles.title}>Award</Text>
       </View>
-      <View>
-        <View style={styles.divDes}>
-          <Text style={styles.textDes}>Sinh viên ưu tú Thành Phố</Text>
+      {profileMore?.profileAwards?.map((ward: any) => (
+        <View>
+          <View style={styles.divDes}>
+            <Text style={styles.TextTitleDes}>{ward?.title}</Text>
+          </View>
+          <View style={styles.divDes}>
+            <Text style={styles.textDes}>{ward?.description}</Text>
+          </View>
         </View>
-        <View style={styles.divDes}>
-          <Text style={styles.textDes}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure
-            incidunt, deserunt consectetur nam tenetur aperiam facere qui
-            perferendis autem quos molestias. Dolorum provident itaque tempora
-            nesciunt atque optio repudiandae molestiae. Lorem ipsum dolor sit
-            amet consectetur adipisicing elit. Quidem rerum minus vitae quia.
-            Dolores, quia doloribus fugit reiciendis dolor quaerat magnam
-            dolorem consectetur, quod sint iure quo commodi? Placeat, commodi.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id tempora
-            exercitationem nostrum quibusdam consequatur. Autem ipsa ab
-            aspernatur molestiae! Aut id tempora ipsum praesentium cupiditate
-            delectus consectetur doloribus perspiciatis eum.
-          </Text>
-        </View>
-      </View>
+      ))}
     </View>
   );
 };

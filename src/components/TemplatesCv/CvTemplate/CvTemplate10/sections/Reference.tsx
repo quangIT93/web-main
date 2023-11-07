@@ -7,19 +7,38 @@ interface ICvReference {
   fontSize: any;
 }
 const Reference: React.FC<ICvReference> = (props) => {
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
     },
     divTitle: {
-      backgroundColor: '#e5f6fe',
+      backgroundColor:
+        color === 1
+          ? '#e5f6fe'
+          : color === 2
+          ? '#D6EAF8'
+          : color === 3
+          ? '#FCF3CF'
+          : color === 4
+          ? '#D5F5E3'
+          : '#FADBD8',
     },
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
-      color: '#34899d',
+      color:
+        color === 1
+          ? '#037385'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
@@ -79,7 +98,16 @@ const Reference: React.FC<ICvReference> = (props) => {
             width: '60pt',
             display: 'flex',
             alignItems: 'center',
-            backgroundColor: '#34899d',
+            backgroundColor:
+              color === 1
+                ? '#e5f6fe'
+                : color === 2
+                ? '#D6EAF8'
+                : color === 3
+                ? '#FCF3CF'
+                : color === 4
+                ? '#D5F5E3'
+                : '#FADBD8',
           }}
         ></View>
         <View>

@@ -39,6 +39,7 @@ import Hobies from './sections/Hobies';
 import Skill from './sections/Skill';
 import Reference from './sections/Reference';
 import Award from './sections/Award';
+import Contact from './sections/Contact';
 
 interface CvTemplate {
   color: any;
@@ -108,7 +109,11 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
           {profileMore?.profilesEducations &&
           profileMore.profilesEducations?.length !== 0 ? (
             <View>
-              <Education profile={profile} fontSize={fontSize} color={color} />
+              <Education
+                profile={profileMore}
+                fontSize={fontSize}
+                color={color}
+              />
             </View>
           ) : (
             <></>
@@ -193,6 +198,8 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
           ) : (
             <></>
           )}
+
+          <Contact profile={profile} fontSize={fontSize} color={color} />
         </View>
       </View>
       <Text
