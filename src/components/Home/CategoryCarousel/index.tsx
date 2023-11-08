@@ -555,31 +555,7 @@ const CategoryCarousel: React.FC = () => {
       ref={listRef}
       sx={{
         maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
-
-        // position: navTouchCatelory ? 'fixed' : '',
-        // top:
-        //   navTouchCatelory && !openCollapseFilter
-        //     ? '71px'
-        //     : navTouchCatelory && openCollapseFilter
-        //     ? '283px'
-        //     : '',
-        // zIndex: navTouchCatelory ? ' 2' : '',
-        // margin: navTouchCatelory ? '0 180px' : '0',
-        // right: 0,
-        // left: 0,
-        // background: '#ffffff',
-
         position: 'fixed',
-
-        // position: navTouchCatelory ? 'fixed' : '',
-        // top: '71px',
-        // top:
-        //   navTouchCatelory && !openCollapseFilter
-        //     ? '71px'
-        //     : navTouchCatelory && openCollapseFilter
-        //     ? '283px'
-        //     : '',
-
         top:
           location.pathname === '/more-jobs' &&
           localStorage.getItem('job-type') === 'new' &&
@@ -593,43 +569,8 @@ const CategoryCarousel: React.FC = () => {
         right: 0,
         left: 0,
         background: '#ffffff',
+        // display: localStorage.getItem('job-type') === 'new' ? 'flex' : 'none',
       }}
-      // sx={{
-      //   maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
-      //   bgcolor: 'white',
-      //   // position:
-      //   //   height > 60 && !windowWidth ? `fixed` : hideSlider ? 'fixed' : '',
-      //   position: hideSlider ? 'fixed' : '',
-      //   top:
-      //     height > 60 && !windowWidth
-      //       ? `${height + 121}px`
-      //       : hideSlider
-      //       ? '71px'
-      //       : '',
-      //   margin:
-      //     height > 60 && !windowWidth
-      //       ? '0 180px'
-      //       : hideSlider
-      //       ? '0 180px'
-      //       : '0',
-
-      //   paddingTop:
-      //     height > 60 && !windowWidth
-      //       ? '0px'
-      //       : height > 60 && windowWidth && !hideSlider
-      //       ? '71px'
-      //       : hideSlider
-      //       ? '0'
-      //       : '',
-
-      //   right: 0,
-      //   left: 0,
-      //   zIndex: 2,
-      //   border: 'none',
-      //   // borderBottom: '1px solid #aaa',
-      //   // boxShadow: '0px 1px 2px #aaa',
-      //   // transition: 'top 0.5s',
-      // }}
       className="tabs"
     >
       <Skeleton loading={loading} active>
