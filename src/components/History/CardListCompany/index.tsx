@@ -24,46 +24,45 @@ import { useDispatch } from 'react-redux';
 import { setAlertCancleSave } from 'store/reducer/alertReducer';
 
 // import ListCardSaveCandidate from './ListCardSaveCandidate';
-import languageApi from 'api/languageApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
-import { historyVi } from 'validations/lang/vi/history';
-import { historyEn } from 'validations/lang/en/history';
-import candidateSearch from 'api/apiCandidates';
 import CompanyCardHistory from './CompanyCardHistory';
 import NoCompanyData from 'utils/NoCompanyData';
-import CompanyCard from '#components/Company/CompanyCard';
+import apiCompanyV3 from 'api/apiCompanyV3';
 
 interface ICardsApplied {
   activeChild: string;
 }
 
 const CardListCompany: React.FC = () => {
-  const [companyData, setCompanyData] = useState<any>([1, 2, 3, 4]);
+  const [companyData, setCompanyData] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
   const [pageNumber, setPageNumber] = React.useState(0);
   const [isVisible, setIsVisible] = useState(true);
-  const [newOld, setnewOld] = React.useState('Mới nhất');
+  const [newOld, setnewOld] = React.useState(1);
+  const [saveCompanyList, setSaveCompanyList] = React.useState(false);
+
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+
   const handleGetCompany = async () => {
     try {
-      // const result = await candidateSearch.getBookmarkCandidate(
-      //     0,
-      //     10,
-      //     languageRedux === 1 ? 'vi' : 'en',
-      // );
-      // if (result) {
-      //     setCompanyData(result.data);
-      //     if (result.data.candidateBookmarks.length < 10) {
-      //         setIsVisible(false)
-      //     }
-      // }
+      const result = await apiCompanyV3.getBookmarkCompany(
+        0,
+        20,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      if (result) {
+        setCompanyData(result.data.bookmarkedCompany);
+        if (result.data.bookmarkedCompany.length < 20) {
+          setIsVisible(false);
+        }
+      }
     } catch (error) {
       console.log('error', error);
     }
@@ -73,16 +72,16 @@ const CardListCompany: React.FC = () => {
     try {
       setUploading(true);
       const nextPage = pageNumber + 1;
-      const result = await candidateSearch.getBookmarkCandidate(
+      const result = await apiCompanyV3.getBookmarkCompany(
         nextPage,
-        10,
+        20,
         languageRedux === 1 ? 'vi' : 'en',
       );
 
-      if (result && result.data.candidateBookmarks.length !== 0) {
+      if (result && result.data.bookmarkedCompany.length !== 0) {
         setCompanyData((prev: any) => [
           ...prev,
-          ...result?.data?.candidateBookmarks,
+          ...result?.data?.bookmarkedCompany,
         ]);
         setPageNumber(nextPage);
         setUploading(false);
@@ -103,11 +102,27 @@ const CardListCompany: React.FC = () => {
 
   useEffect(() => {
     handleGetCompany();
-  }, []);
+  }, [saveCompanyList]);
+
+  const sortDataByDate = (value: any, arrayData: any) => {
+    if (value === 1) {
+      return arrayData.sort((a: any, b: any) => {
+        return (
+          Number(b.CompanyData.updatedAt) - Number(a.CompanyData.updatedAt)
+        );
+      });
+    } else {
+      return arrayData.sort((a: any, b: any) => {
+        return (
+          Number(a.CompanyData.updatedAt) - Number(b.CompanyData.updatedAt)
+        );
+      });
+    }
+  };
 
   const handleChange = (event: any) => {
     setnewOld(event.target.value);
-    setCompanyData(sortData.sortDataByDate(event.target.value, companyData));
+    setCompanyData(sortDataByDate(event.target.value, companyData));
   };
 
   return (
@@ -146,8 +161,8 @@ const CardListCompany: React.FC = () => {
             height: '48px',
           }}
         >
-          <MenuItem value="Mới nhất">{language?.history_page?.latest}</MenuItem>
-          <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
+          <MenuItem value={1}>{language?.history_page?.latest}</MenuItem>
+          <MenuItem value={0}>{language?.history_page?.oldest}</MenuItem>
         </TextField>
       </Box>
       {companyData.length > 0 ? (
@@ -155,11 +170,11 @@ const CardListCompany: React.FC = () => {
           <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
             {companyData.map((dataBookmark: any, index: number) => (
               <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
-                <CompanyCard
-                  item={dataBookmark}
-                  key={index}
-                  setCheckBookMark={setCheckBookMark}
-                  checkBookMark={checkBookMark}
+                <CompanyCardHistory
+                  item={dataBookmark.CompanyData}
+                  index={index}
+                  saveCompanyList={saveCompanyList}
+                  setSaveCompanyList={setSaveCompanyList}
                 />
               </Grid>
             ))}

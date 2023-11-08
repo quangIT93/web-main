@@ -41,7 +41,7 @@ const CompanyCard: React.FC<Iprops> = (props) => {
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/detail-company`, '_parent');
+    window.open(`/detail-company?companyId=${props.item.id}`, '_parent');
   };
 
   const handleImageError = () => {

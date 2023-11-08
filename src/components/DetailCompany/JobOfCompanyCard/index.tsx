@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 //import scss
 import styles from './style.module.scss';
 
@@ -24,12 +24,16 @@ import { Space, Tooltip } from 'antd';
 import bookMarkApi from 'api/bookMarkApi';
 
 import ModalLogin from '../../../components/Home/ModalLogin';
+import { RootState } from 'store';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
 interface Iprops {
     item: any;
+    accountId: any
 }
 
 const JobOfCompanyCard: React.FC<Iprops> = (props) => {
+    const profileInfoV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data)
+    const { accountId } = props;
     const dispatch = useDispatch();
     const [checkBookMark, setCheckBookMark] = React.useState(true);
     const [error, setError] = React.useState(false);
@@ -101,11 +105,16 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
                                             color: '#575757',
                                         }}
                                     >
-                                        {/* {props?.item?.title} */}
-                                        Phục vụ bàn nhà hàng
+                                        {props?.item?.title}
                                     </Typography>
                                 </Tooltip>
-                                {/* <div
+                                <div
+                                    style={{
+                                        display: accountId !== localStorage.getItem('accountId') &&
+                                            profileInfoV3.typeRoleData === 0
+                                            ?
+                                            'block' : 'none'
+                                    }}
                                     onClick={async (e) => {
                                         try {
                                             e.stopPropagation();
@@ -142,7 +151,7 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
                                     ) : (
                                         <SaveIconOutline width={24} height={24} />
                                     )}
-                                </div> */}
+                                </div>
                             </div>
                             <div className={styles.div_card_post_info__name}>
                                 <Tooltip placement="top" title={props.item?.companyName}>
@@ -161,8 +170,7 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
                                             color: '#575757',
                                         }}
                                     >
-                                        {/* {props?.item?.companyName} */}
-                                        CÔNG TY TNHH MTV Ô TÔ TRƯỜNG HẢI - PHÚ MỸ HƯNG
+                                        {props?.item?.companyName}
                                     </Typography>
                                 </Tooltip>
                                 <div>
@@ -170,8 +178,8 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
                                         <img
                                             className="img-resource-company"
                                             src={
-                                                props.item?.companyResourceData?.logo
-                                                    ? props.item?.companyResourceData?.logo
+                                                props.item?.companyResourceData?.logoPath
+                                                    ? props.item?.companyResourceData?.logoPath
                                                     : ''
                                             }
                                             alt="ảnh"
@@ -200,9 +208,8 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
                                         marginLeft: '4px',
                                     }}
                                 >
-                                    {/* {`${props.item?.location?.district?.fullName}, 
-                                    ${props.item?.location?.province?.fullName}`} */}
-                                    Quận 2, HCM
+                                    {`${props.item?.location?.district?.fullName}, 
+                                    ${props.item?.location?.district?.province?.fullName}`}
                                 </Typography>
                             </div>
                             <div
@@ -225,14 +232,13 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
                                         marginLeft: '4px',
                                     }}
                                 >
-                                    {/* {new Intl.NumberFormat('en-US').format(props.item?.salaryMin)}{' '}
+                                    {new Intl.NumberFormat('en-US').format(props.item?.salaryMin)}{' '}
                                     {props?.item?.moneyType} -{' '}
                                     {new Intl.NumberFormat('en-US').format(
                                         props.item?.salaryMax,
                                     ) +
                                         ` ${props?.item?.moneyType}` +
-                                        `/${props.item?.salaryType?.name}`} */}
-                                    500.000 VND/ngày
+                                        `/${props.item?.salaryTypeValue?.nameText}`}
                                 </Typography>
                             </div>
                             <div className={styles.div_card_post_info__jobtype}
@@ -248,12 +254,10 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
                                         fontWeight: '400',
                                     }}
                                 >
-                                    {/* {props.item?.createdAtText} */}
-                                    Mới
+                                    {props.item?.createdAtText}
                                 </p>
                                 <p style={{ fontSize: 13, color: '#0d99ff' }}>
-                                    {/* {props.item?.jobType?.name} */}
-                                    Full-time
+                                    {props.item?.JobTypeValue?.data}
                                 </p>
                             </div>
                         </div>
