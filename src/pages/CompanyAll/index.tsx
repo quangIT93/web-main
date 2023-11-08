@@ -23,6 +23,8 @@ import SearchCateCompany from '#components/Company/SearchCateCompany';
 import locationApi from 'api/locationApi';
 import { setLocationApi } from 'store/reducer/locationReducer';
 import apiCompanyV3 from 'api/apiCompanyV3';
+import ShowNotificativeSave from '#components/ShowNotificativeSave';
+import ShowCancleSave from '#components/ShowCancleSave';
 
 const CompanyAll = () => {
   const dispatch = useDispatch();
@@ -33,7 +35,7 @@ const CompanyAll = () => {
   const [page, setPage] = React.useState<any>('0');
   const [reset, setReset] = useState(false);
   const [total, setTotal] = useState(0);
-
+  const [checkBookMark, setCheckBookMark] = React.useState(true);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -104,9 +106,12 @@ const CompanyAll = () => {
     }
   };
   React.useEffect(() => {
-    getAllCompany();
     getAllLocaitions();
   }, [languageRedux]);
+
+  React.useEffect(() => {
+    getAllCompany();
+  }, [languageRedux, checkBookMark]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -139,9 +144,6 @@ const CompanyAll = () => {
     //     message.error('Lỗi server!');
     //     return;
     // }
-    console.log('cate', categories);
-    console.log('addresses', addresses);
-    console.log('size', size);
 
     try {
       const result = await apiCompanyV3.filterCompany(
@@ -158,9 +160,6 @@ const CompanyAll = () => {
         setTotal(result?.data?.total);
         setListData(result.data.companies);
         setHasMore(true);
-        console.log('result', result && result?.data?.companies?.length);
-
-        console.log('hasMore', hasMore);
       } else if (
         result &&
         result?.data.companies?.length < 20 &&
@@ -336,8 +335,15 @@ const CompanyAll = () => {
           >
             <div className="list-candidate">
               {listData?.length !== 0 ? (
-                listData?.map((item: any) => {
-                  return <CompanyCard item={item} />;
+                listData?.map((item: any, index: any) => {
+                  return (
+                    <CompanyCard
+                      item={item}
+                      key={index}
+                      setCheckBookMark={setCheckBookMark}
+                      checkBookMark={checkBookMark}
+                    />
+                  );
                 })
               ) : (
                 <></>
@@ -348,6 +354,8 @@ const CompanyAll = () => {
       </div>
 
       {/* <Footer /> */}
+      <ShowNotificativeSave />
+      <ShowCancleSave />
     </div>
   );
 };

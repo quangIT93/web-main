@@ -24,14 +24,19 @@ import bookMarkApi from 'api/bookMarkApi';
 import female_null_avatar from '../../../img/female_null_avatar.png';
 import ModalLogin from '../../../components/Home/ModalLogin';
 import { CateIcon } from '#components/Icons/iconCandidate';
+import apiCompanyV3 from 'api/apiCompanyV3';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
 interface Iprops {
   item: any;
+  key: any;
+  checkBookMark: boolean;
+  setCheckBookMark: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CompanyCard: React.FC<Iprops> = (props) => {
   const dispatch = useDispatch();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
+  const { checkBookMark, setCheckBookMark } = props;
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
@@ -43,36 +48,35 @@ const CompanyCard: React.FC<Iprops> = (props) => {
     setError(true);
   };
 
-  const handleSaveCompany = async (id: any) => {
-    // try {
-    //         e.stopPropagation();
-    //         if (!localStorage.getItem('accessToken')) {
-    //             setOpenModalLogin(true);
-    //             return;
-    //         }
-    //         if (props.item?.bookmarked) {
-    //             const result = await bookMarkApi.deleteBookMark(
-    //                 props.item?.id,
-    //             );
-    //             props.item.bookmarked = false;
-    //             if (result) {
-    //                 setCheckBookMark(!checkBookMark);
-    //                 dispatch<any>(setAlertCancleSave(true));
-    //             }
-    //         } else {
-    //             const result = await bookMarkApi.createBookMark(
-    //                 props.item?.id,
-    //             );
-    //             props.item.bookmarked = true;
-    //             if (result) {
-    //                 dispatch<any>(setAlertSave(true));
-    //                 setCheckBookMark(!checkBookMark);
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
+  const handleSaveCompany = async (e: any, id: any) => {
+    try {
+      e.stopPropagation();
+      if (!localStorage.getItem('accessToken')) {
+        setOpenModalLogin(true);
+        return;
+      }
+
+      if (props.item?.isBookmarked) {
+        const result = await apiCompanyV3.postBookmarkCompany(id);
+        props.item.isBookmarked = false;
+        if (result) {
+          setCheckBookMark(!checkBookMark);
+          dispatch<any>(setAlertCancleSave(true));
+        }
+      } else {
+        const result = await apiCompanyV3.postBookmarkCompany(id);
+        props.item.isBookmarked = true;
+        if (result) {
+          dispatch<any>(setAlertSave(true));
+          setCheckBookMark(!checkBookMark);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  console.log('item', props.item);
 
   return (
     <>
@@ -124,10 +128,7 @@ const CompanyCard: React.FC<Iprops> = (props) => {
             <div className="div-card-company_info">
               {/* {' '} */}
               <div className="div-card-company_info__title">
-                <Tooltip
-                  placement="top"
-                  title="CÔNG TY TNHH MTV Ô TÔ TRƯỜNG HẢI - PHÚ MỸ HƯNG"
-                >
+                <Tooltip placement="top" title={props.item?.name}>
                   <Typography
                     gutterBottom
                     variant="h6"
@@ -143,13 +144,14 @@ const CompanyCard: React.FC<Iprops> = (props) => {
                     {props.item?.name}
                   </Typography>
                 </Tooltip>
-                <div onClick={handleSaveCompany}>
-                  {/* {props.item?.bookmarked ? (
-                                        <IconBellNewestCompany width={24} height={24} />
-                                    ) : (
-                                        <IconBellSaveNewestCompany width={24} height={24} />
-                                    )} */}
-                  <IconBellNewestCompany width={24} height={24} />
+                <div
+                  onClick={(e: any) => handleSaveCompany(e, props?.item?.id)}
+                >
+                  {props.item?.isBookmarked ? (
+                    <IconBellSaveNewestCompany width={24} height={24} />
+                  ) : (
+                    <IconBellNewestCompany width={24} height={24} />
+                  )}
                 </div>
               </div>
               <div className="div-card-company_info__bot">

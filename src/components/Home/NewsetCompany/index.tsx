@@ -19,14 +19,12 @@ import CompanyCard from '#components/Company/CompanyCard';
 import apiCompanyV3 from 'api/apiCompanyV3';
 
 const NewestCompany = () => {
-  const [listData, setListData] = React.useState<any>([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-  ]);
+  const [listData, setListData] = React.useState<any>([]);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
   const [loading, setLoading] = React.useState<any>(false);
-
+  const [checkBookMark, setCheckBookMark] = React.useState(true);
   // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const getNewestCompany = async () => {
@@ -72,7 +70,7 @@ const NewestCompany = () => {
 
   React.useEffect(() => {
     getNewestCompany();
-  }, [languageRedux]);
+  }, [languageRedux, checkBookMark]);
 
   const handleChangeRouteNewestWorker = () => {
     window.open('/companyAll', '_parent');
@@ -126,7 +124,14 @@ const NewestCompany = () => {
       <div className="list-company-home">
         {/* <Skeleton loading={loading} active> */}
         {listData?.companies?.map((item: any, index: number) => {
-          return <CompanyCard item={item} key={index} />;
+          return (
+            <CompanyCard
+              item={item}
+              key={index}
+              checkBookMark={checkBookMark}
+              setCheckBookMark={setCheckBookMark}
+            />
+          );
         })}
         {/* </Skeleton> */}
       </div>
