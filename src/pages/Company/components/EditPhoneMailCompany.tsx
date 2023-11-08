@@ -45,7 +45,7 @@ const NumericInput = (props: NumericInputProps) => {
   // '.' at the end or only '-' in the input box.
   const handleBlur = () => {
     let valueTemp = value;
-    if (value.charAt(value.length - 1) === '.' || value === '-') {
+    if (value.charAt(value?.length - 1) === '.' || value === '-') {
       valueTemp = value.slice(0, -1);
     }
     onChange((preValue: any) => ({
@@ -143,7 +143,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
                 ? 'Số điện thoại không đúng định dạng'
                 : 'The phone number is not in the correct format'}
             </span>
-          ) : dataCompany && dataCompany?.phone.length === 0 ? (
+          ) : dataCompany && dataCompany?.phone?.length === 0 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Số điện thoại không được bỏ trống'
@@ -153,7 +153,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
             <></>
           )}
           <span className="number-text">{`${
-            dataCompany ? dataCompany?.phone.length : '0'
+            dataCompany?.phone?.length ? dataCompany?.phone?.length : '0'
           }/10`}</span>
         </div>
       </div>
@@ -179,13 +179,13 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
-          {dataCompany?.email.length === 0 ? (
+          {dataCompany?.email?.length === 0 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Email không được bỏ trống'
                 : 'Email cannot be empty'}
             </span>
-          ) : dataCompany?.email.length > 50 ? (
+          ) : dataCompany?.email?.length > 50 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Email không được bỏ trống'
@@ -200,7 +200,9 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${dataCompany?.email.length}/50`}</span>
+          <span className="number-text">{`${
+            dataCompany?.email?.length ? dataCompany?.email?.length : '0'
+          }/50`}</span>
         </div>
       </div>
     </div>

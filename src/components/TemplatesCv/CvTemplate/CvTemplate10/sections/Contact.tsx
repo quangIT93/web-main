@@ -38,18 +38,25 @@ const Contact: React.FC<ICvContact> = (props) => {
       fontFamily: 'Fahkwang Medium',
       color: '',
     },
+    textInfo: {
+      fontSize: '9pt',
+      wordwrap: 'break-word',
+      lineHeight: '1.2',
+      fontFamily: 'Fahkwang Medium',
+      width: '110pt',
+    },
   });
   return (
     <View style={styles.container}>
       <View style={styles.divWrapInfo}>
         <View style={styles.divInfo}>
-          <Text>0911878031</Text>
+          <Text style={styles.textInfo}>{profile?.phone}</Text>
         </View>
         <View style={styles.divInfo}>
-          <Text>quangbk54@gmail.com</Text>
+          <Text style={styles.textInfo}>{profile?.email}</Text>
         </View>
         <View style={styles.divInfo}>
-          <Text>Thành Phố Hồ Chí Minh</Text>
+          <Text style={styles.textInfo}>{profile?.addressText?.fullName}</Text>
         </View>
       </View>
     </View>

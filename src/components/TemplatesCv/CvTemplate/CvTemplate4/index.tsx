@@ -185,7 +185,7 @@ const CvTemplate4: React.FC<CvTemplate> = (props) => {
             )}
             <View style={styles.borderBot}></View>
             {profileMore?.profilesEducations &&
-            profileMore?.profilesEducation?.length ? (
+            profileMore?.profilesEducation?.length !== 0 ? (
               <Education
                 color={color}
                 profile={profileMore}

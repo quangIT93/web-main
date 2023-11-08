@@ -31,204 +31,196 @@ import NoCompanyData from 'utils/NoCompanyData';
 import apiCompanyV3 from 'api/apiCompanyV3';
 
 interface ICardsApplied {
-    activeChild: string;
+  activeChild: string;
 }
 
 const CardListCompany: React.FC = () => {
-    const [companyData, setCompanyData] = useState<any>([]);
-    const [uploading, setUploading] = useState(false);
-    const [pageNumber, setPageNumber] = React.useState(0);
-    const [isVisible, setIsVisible] = useState(true);
-    const [newOld, setnewOld] = React.useState(1);
-    const [saveCompanyList, setSaveCompanyList] = React.useState(false);
+  const [companyData, setCompanyData] = useState<any>([]);
+  const [uploading, setUploading] = useState(false);
+  const [pageNumber, setPageNumber] = React.useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+  const [newOld, setnewOld] = React.useState(1);
+  const [saveCompanyList, setSaveCompanyList] = React.useState(false);
 
-    const languageRedux = useSelector(
-        (state: RootState) => state.changeLaguage.language,
-    );
-    const language = useSelector(
-        (state: RootState) => state.dataLanguage.languages,
-    );
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
-    const handleGetCompany = async () => {
-        try {
-            const result = await apiCompanyV3.getBookmarkCompany(
-                0,
-                20,
-                languageRedux === 1 ? 'vi' : 'en',
-            );
+  const handleGetCompany = async () => {
+    try {
+      const result = await apiCompanyV3.getBookmarkCompany(
+        0,
+        20,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
-            if (result) {
-                setCompanyData(result.data.bookmarkedCompany);
-                if (result.data.bookmarkedCompany.length < 20) {
-                    setIsVisible(false)
-                }
-            }
-        } catch (error) {
-            console.log('error', error);
+      if (result) {
+        setCompanyData(result.data.bookmarkedCompany);
+        if (result.data.bookmarkedCompany.length < 20) {
+          setIsVisible(false);
         }
-    };
-
-    const handleGetmoreCompany = async () => {
-        try {
-            setUploading(true);
-            const nextPage = pageNumber + 1;
-            const result = await apiCompanyV3.getBookmarkCompany(
-                nextPage,
-                20,
-                languageRedux === 1 ? 'vi' : 'en',
-            );
-
-            if (result && result.data.bookmarkedCompany.length !== 0) {
-                setCompanyData((prev: any) => [...prev, ...result?.data?.bookmarkedCompany]);
-                setPageNumber(nextPage);
-                setUploading(false);
-            } else {
-                setIsVisible(false);
-                setPageNumber(0);
-                setUploading(false);
-                message.error(languageRedux === 1 ?
-                    'Không còn công ty để xem'
-                    : 'No more company to see');
-            }
-        } catch (error) {
-            console.log('error', error);
-        }
-    };
-
-    useEffect(() => {
-        handleGetCompany();
-    }, [saveCompanyList]);
-
-    const sortDataByDate = (value: any, arrayData: any) => {
-        if (value === 1) {
-            return arrayData.sort((a: any, b: any) => {
-                return (
-                    Number(b.CompanyData.updatedAt) -
-                    Number(a.CompanyData.updatedAt)
-                );
-            });
-        } else {
-            return arrayData.sort((a: any, b: any) => {
-                return (
-                    Number(a.CompanyData.updatedAt) -
-                    Number(b.CompanyData.updatedAt)
-                );
-            });
-        }
+      }
+    } catch (error) {
+      console.log('error', error);
     }
+  };
 
-    const handleChange = (event: any) => {
-        setnewOld(event.target.value);
-        setCompanyData(sortDataByDate(event.target.value, companyData));
-    };
+  const handleGetmoreCompany = async () => {
+    try {
+      setUploading(true);
+      const nextPage = pageNumber + 1;
+      const result = await apiCompanyV3.getBookmarkCompany(
+        nextPage,
+        20,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
-    return (
-        <>
-            {/* {contextHolder} */}
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                }}
-                className="company_list_title_history"
+      if (result && result.data.bookmarkedCompany.length !== 0) {
+        setCompanyData((prev: any) => [
+          ...prev,
+          ...result?.data?.bookmarkedCompany,
+        ]);
+        setPageNumber(nextPage);
+        setUploading(false);
+      } else {
+        setIsVisible(false);
+        setPageNumber(0);
+        setUploading(false);
+        message.error(
+          languageRedux === 1
+            ? 'Không còn công ty để xem'
+            : 'No more company to see',
+        );
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetCompany();
+  }, [saveCompanyList]);
+
+  const sortDataByDate = (value: any, arrayData: any) => {
+    if (value === 1) {
+      return arrayData.sort((a: any, b: any) => {
+        return (
+          Number(b.CompanyData.updatedAt) - Number(a.CompanyData.updatedAt)
+        );
+      });
+    } else {
+      return arrayData.sort((a: any, b: any) => {
+        return (
+          Number(a.CompanyData.updatedAt) - Number(b.CompanyData.updatedAt)
+        );
+      });
+    }
+  };
+
+  const handleChange = (event: any) => {
+    setnewOld(event.target.value);
+    setCompanyData(sortDataByDate(event.target.value, companyData));
+  };
+
+  return (
+    <>
+      {/* {contextHolder} */}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+        className="company_list_title_history"
+      >
+        <Typography
+          sx={{
+            fontWeight: '600',
+            fontSize: '16px',
+            lineHeight: '24px',
+          }}
+        >
+          {languageRedux === 1
+            ? 'Danh sách công ty đã lưu'
+            : 'Saved company list'}
+        </Typography>
+        <TextField
+          select
+          id="sex"
+          value={newOld}
+          onChange={handleChange}
+          variant="outlined"
+          placeholder="Giới tính"
+          size="small"
+          sx={{
+            width: '160px',
+            borderRadius: '24px',
+            height: '48px',
+          }}
+        >
+          <MenuItem value={1}>{language?.history_page?.latest}</MenuItem>
+          <MenuItem value={0}>{language?.history_page?.oldest}</MenuItem>
+        </TextField>
+      </Box>
+      {companyData.length > 0 ? (
+        <div className="history-post" style={{ marginTop: '16px' }}>
+          <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
+            {companyData.map((dataBookmark: any, index: number) => (
+              <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+                <CompanyCardHistory
+                  item={dataBookmark.CompanyData}
+                  index={index}
+                  saveCompanyList={saveCompanyList}
+                  setSaveCompanyList={setSaveCompanyList}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Box
+            sx={{
+              margin: '12px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Button
+              style={{
+                width: 130,
+                height: 40,
+                marginBottom: '2rem',
+                backgroundColor: `#0D99FF`,
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                display: isVisible ? 'block' : 'none',
+              }}
+              loading={uploading}
+              onClick={handleGetmoreCompany}
             >
-                <Typography
-                    sx={{
-                        fontWeight: '600',
-                        fontSize: '16px',
-                        lineHeight: '24px',
-                    }}
-                >
-                    {
-                        languageRedux === 1
-                            ? 'Danh sách công ty đã lưu'
-                            : 'Saved company list'
-                    }
-                </Typography>
-                <TextField
-                    select
-                    id="sex"
-                    value={newOld}
-                    onChange={handleChange}
-                    variant="outlined"
-                    placeholder="Giới tính"
-                    size="small"
-                    sx={{
-                        width: '160px',
-                        borderRadius: '24px',
-                        height: '48px',
-                    }}
-                >
-                    <MenuItem value={1}>{language?.history_page?.latest}</MenuItem>
-                    <MenuItem value={0}>{language?.history_page?.oldest}</MenuItem>
-                </TextField>
-            </Box>
-            {companyData.length > 0 ? (
-                <div className="history-post" style={{ marginTop: '16px' }}>
-                    <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-                        {companyData.map(
-                            (dataBookmark: any, index: number) => (
-                                <Grid
-                                    item
-                                    xs={12}
-                                    sm={6}
-                                    md={6}
-                                    lg={6}
-                                    key={index}
-                                >
-                                    <CompanyCardHistory
-                                        item={dataBookmark.CompanyData}
-                                        index={index}
-                                        saveCompanyList={saveCompanyList}
-                                        setSaveCompanyList={setSaveCompanyList}
-                                    />
-                                </Grid>
-                            ),
-                        )}
-                    </Grid>
-                    <Box
-                        sx={{
-                            margin: '12px auto',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <Button
-                            style={{
-                                width: 130,
-                                height: 40,
-                                marginBottom: '2rem',
-                                backgroundColor: `#0D99FF`,
-                                color: '#FFFFFF',
-                                fontWeight: 'bold',
-                                display: isVisible ? 'block' : 'none',
-                            }}
-                            loading={uploading}
-                            onClick={handleGetmoreCompany}
-                        >
-                            {language?.more}
-                            {/* Xem thêm */}
-                        </Button>
-                    </Box>
-                </div>
-            ) : (
-                <NoCompanyData />
-            )}
-            <Backdrop
-                sx={{
-                    color: '#0d99ff ',
-                    backgroundColor: 'transparent',
-                    zIndex: (theme: any) => theme.zIndex.drawer + 1,
-                }}
-                open={false}
-            // onClick={handleClose}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
-        </>
-    );
+              {language?.more}
+              {/* Xem thêm */}
+            </Button>
+          </Box>
+        </div>
+      ) : (
+        <NoCompanyData />
+      )}
+      <Backdrop
+        sx={{
+          color: '#0d99ff ',
+          backgroundColor: 'transparent',
+          zIndex: (theme: any) => theme.zIndex.drawer + 1,
+        }}
+        open={false}
+        // onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </>
+  );
 };
 
 export default CardListCompany;

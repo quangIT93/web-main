@@ -384,19 +384,19 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             disabled={is_profile ? true : false}
           />
           <div className="wrap-noti_input">
-            {dataCompany && dataCompany?.address.length === 0 ? (
+            {dataCompany && dataCompany?.address?.length === 0 ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập địa chỉ'
                   : 'Please enter address'}
               </span>
-            ) : dataCompany && dataCompany?.address.length < 10 ? (
+            ) : dataCompany && dataCompany?.address?.length < 10 ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Độ dài địa chỉ phải nhiều hơn 10 ký tự'
                   : 'Address length must be more than 10 characters'}
               </span>
-            ) : dataCompany && dataCompany?.address.length > 255 ? (
+            ) : dataCompany && dataCompany?.address?.length > 255 ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Độ dài địa chỉ không được vượt quá 255 ký tự'

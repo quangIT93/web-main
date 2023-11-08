@@ -97,13 +97,13 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
-          {dataCompany?.name.length > 255 ? (
+          {dataCompany?.name?.length > 255 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tên công ty không được vượt quá 255 ký tự'
                 : 'Company name cannot exceed 255 characters'}
             </span>
-          ) : dataCompany?.name.length === 0 ? (
+          ) : dataCompany?.name?.length === 0 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tên công ty được để trống'
@@ -112,7 +112,9 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${dataCompany?.name.length}/255`}</span>
+          <span className="number-text">{`${
+            dataCompany?.name?.length ? dataCompany?.name?.length : '0'
+          }/255`}</span>
         </div>
       </div>
       <div className="edit-tax-company">
@@ -137,7 +139,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
-          {dataCompany?.taxCode.length > 255 ? (
+          {dataCompany?.taxCode?.length > 255 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Mã số thuế không được vượt quá 255 ký tự'
@@ -146,7 +148,9 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${dataCompany?.taxCode.length}/255`}</span>
+          <span className="number-text">{`${
+            dataCompany?.taxCode?.length ? dataCompany?.taxCode?.length : '0'
+          }/255`}</span>
         </div>
       </div>
     </div>

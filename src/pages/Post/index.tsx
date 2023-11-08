@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 
 import { Switch } from 'antd';
 import { Helmet } from 'react-helmet';
@@ -48,9 +48,11 @@ import apiCompany from 'api/apiCompany';
 import { message } from 'antd';
 
 import { RootState } from '../../store/reducer/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
+import profileApi from 'api/profileApi';
+import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
 
 // redux
 // import { RootState } from 'store';
@@ -131,7 +133,7 @@ const Post: React.FC = () => {
   // const { openCollapseFilter } = useContext(HomeValueContext);
 
   // const userProfile = useSelector((state: RootState) => state.profile.profile);
-
+  const dispatch = useDispatch();
   const formValues = {
     title: '',
     companyName: '',
@@ -257,6 +259,18 @@ const Post: React.FC = () => {
   // React.useEffect(() => {
   //   getlanguageApi();
   // }, [languageRedux]);
+
+  const getProfileComanyV3 = async () => {
+    try {
+      const result = await profileApi.getProfileCompanyV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      if (result) {
+        dispatch(setProfileMeCompanyV3(result));
+      }
+    } catch (error) {}
+  };
 
   // submit
   const handleSubmit = (
@@ -449,36 +463,35 @@ const Post: React.FC = () => {
       // );
 
       if (profileCompanyV3.length !== 0) {
-        setCompanyName(profileCompanyV3.companyInfomation.name);
+        setCompanyName(profileCompanyV3.name);
         setFillDistrict({
-          id: profileCompanyV3.companyInfomation.companyLocation.district.id,
-          full_name:
-            profileCompanyV3.companyInfomation.companyLocation.district
-              .fullName,
+          id: profileCompanyV3.companyLocation.district.id,
+          full_name: profileCompanyV3.companyLocation.district.fullName,
         });
         setFillProvince({
-          id: profileCompanyV3.companyInfomation.companyLocation.district
-            .province.id,
+          id: profileCompanyV3.companyLocation.district.province.id,
           province_fullName:
-            profileCompanyV3.companyInfomation.companyLocation.district.province
-              .fullName,
+            profileCompanyV3.companyLocation.district.province.fullName,
         });
 
         // setSelectedProvince(result.data.companyInfomation.company
 
         setFillWardId({
-          id: profileCompanyV3.companyInfomation.companyLocation.id,
-          full_name:
-            profileCompanyV3.companyInfomation.companyLocation.fullName,
+          id: profileCompanyV3.companyLocation.id,
+          full_name: profileCompanyV3.companyLocation.fullName,
         });
-        setWardId(profileCompanyV3.companyInfomation.companyLocation.id);
+        setWardId(profileCompanyV3.companyLocation.id);
 
-        setAddress(profileCompanyV3.companyInfomation.address);
+        setAddress(profileCompanyV3.address);
       } else {
         setOpenModalNoteCreateCompany(true);
       }
     } catch (error) {}
   };
+
+  useEffect(() => {
+    getProfileComanyV3();
+  }, [languageRedux]);
 
   if (localStorage.getItem('accessToken')) {
     return (

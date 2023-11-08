@@ -835,7 +835,9 @@ const Navbar: React.FC = () => {
             (key) => key !== exceptionKey,
           );
 
-          await dispatch<any>(setProfileV3([]));
+          await dispatch<any>(setProfileMeInformationV3([]));
+          await dispatch<any>(setProfileMeCompanyV3([]));
+          await dispatch<any>(setProfileMeInformationMoreV3([]));
 
           for (const key of keysToRemove) {
             localStorage.removeItem(key);

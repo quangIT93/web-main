@@ -40,12 +40,12 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
   };
 
   useEffect(() => {
-    setSelectedImages(dataCompany.images);
+    setSelectedImages(dataCompany?.images);
     //have to set array of existed iamge ids .
     // Because when adding new images,
     // the images array of dataCompany have only file image to upload server
     // it doesn't have containing existing images.
-    setExistedIamgeId(dataCompany.images.map((image: any) => image.id));
+    setExistedIamgeId(dataCompany?.images?.map((image: any) => image.id));
   }, []);
   // console.log(dataCompany);
 
@@ -63,8 +63,8 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
     selectedFiles.forEach((file: any) => URL.revokeObjectURL(file.preview));
 
     const imagesToCheck =
-      selectedFiles.length + imagesUpload.length > 5
-        ? imagesUpload.slice(0, 5 - selectedImages.length)
+      selectedFiles?.length + imagesUpload?.length > 5
+        ? imagesUpload.slice(0, 5 - selectedImages?.length)
         : imagesUpload;
 
     // console.log(
@@ -268,8 +268,8 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       deletedImages.push(deleteId);
       return deletedImages;
     });
-    if (dataCompany.deletedImages) {
-      if (deleteId && !dataCompany.deletedImages.includes(deleteId)) {
+    if (dataCompany?.deletedImages) {
+      if (deleteId && !dataCompany?.deletedImages?.includes(deleteId)) {
         setDataCompany((preValue: any) => ({
           ...preValue,
           deletedImages: [...preValue.deletedImages, deleteId],
@@ -306,7 +306,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
           <p
             style={{
               display:
-                selectedImages.length > 0 || selectedFiles.length > 0
+                selectedImages?.length > 0 || selectedFiles?.length > 0
                   ? 'block'
                   : 'none',
               cursor: 'pointer',
@@ -330,11 +330,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
           className="company-images"
           style={{
             height:
-              selectedImages.length > 0 || selectedFiles.length > 0
+              selectedImages?.length > 0 || selectedFiles?.length > 0
                 ? 'fit-content'
                 : '310px',
             border:
-              selectedImages.length > 0 || selectedFiles.length > 0
+              selectedImages?.length > 0 || selectedFiles?.length > 0
                 ? 'none'
                 : '1px solid #ccc',
           }}
@@ -351,8 +351,8 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
                   className="drag-img-camera"
                   style={{
                     display:
-                      (selectedImages.length === 0 &&
-                        selectedFiles.length === 0) ||
+                      (selectedImages?.length === 0 &&
+                        selectedFiles?.length === 0) ||
                       isDragActive
                         ? 'flex'
                         : 'none',
@@ -368,7 +368,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
               </div>
             </section>
             <Box className="list_iamges">
-              {selectedImages.map((item: any, index: number) => (
+              {selectedImages?.map((item: any, index: number) => (
                 <div className="item-image" key={index}>
                   <img
                     key={index}
