@@ -32,11 +32,11 @@ const apiCompanyV3 = {
         lang: string) => {
 
 
-        const URL = `/v3/companies${id}?lang=${lang}`
+        const URL = `/v3/companies/${id}?lang=${lang}`
         return axiosClient.get(URL)
     },
 
-    postBookmarkCompany: (companyId: string) => {
+    postBookmarkCompany: (companyId: number) => {
         const URL = `/v3/company-bookmarked`
         return axiosClient.post(
             URL,
@@ -84,7 +84,7 @@ const apiCompanyV3 = {
     getPostOfCompany: (
         id: any,
         page: any,
-        limit: any,
+        limit: any | null,
         lang: string
     ) => {
         const URL = `/v3/posts/company/${id}?lang=${lang}&limit=${limit}&page=${page}`

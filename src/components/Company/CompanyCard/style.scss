@@ -21,6 +21,8 @@
         .MuiImageListItem-img {
             width: 72px !important;
             height: 72px !important;
+            min-width: 72px;
+            border-radius: 8px;
         }
 
         .div-card-company_info {
