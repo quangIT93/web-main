@@ -55,9 +55,11 @@ const CategoryDropdown: React.FC = () => {
     openCategoryDropdown: boolean;
     setOpenCategoryDropdown: React.Dispatch<React.SetStateAction<boolean>>;
   } = useContext(HomeValueContext);
+
   const profileV3 = useSelector(
     (state: RootState) => state.dataProfileInformationV3.data,
   );
+
   const profileCompanyV3 = useSelector(
     (state: RootState) => state.dataProfileCompanyV3.data,
   );

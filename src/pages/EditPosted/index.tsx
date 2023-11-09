@@ -226,6 +226,7 @@ const EditPosted = () => {
         // dataPostAccount.includes(value.post_id === postId)
 
         setDataPostById(result.data);
+
         setChangePage(false);
 
         // return [];
@@ -234,7 +235,7 @@ const EditPosted = () => {
       }
     } catch (error) {
       console.error(error);
-      window.open('/', 'self');
+      // window.open('/', 'self');
     }
   };
 
