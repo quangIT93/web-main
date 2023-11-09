@@ -181,7 +181,7 @@ const Company: React.FC<ICompany> = (props) => {
       if (result) {
         dispatch(setProfileMeCompanyV3(result));
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -205,7 +205,7 @@ const Company: React.FC<ICompany> = (props) => {
       // const result = await apiCompany.getCampanyByAccountApi(
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
-      if (profileCompanyV3.lenght !== 0) {
+      if (profileCompanyV3.id) {
         setTimeout(() => {
           setLoading(false);
         }, 1000);
@@ -246,11 +246,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -261,6 +261,7 @@ const Company: React.FC<ICompany> = (props) => {
   // valid values form data
   const validValue = () => {
     if (
+      dataCompany?.logoPath === null ||
       dataCompany?.logoPath === '' ||
       dataCompany?.logoPath?.status === 'removed'
     ) {
@@ -357,8 +358,6 @@ const Company: React.FC<ICompany> = (props) => {
       checkForm: true,
     };
   };
-
-  console.log('setHaveCompany', haveCompany);
 
   const handleCreateCompany = async (formData: any) => {
     // valid value form data
@@ -460,6 +459,7 @@ const Company: React.FC<ICompany> = (props) => {
     // formData.append('images', dataCompany?.images);
 
     !haveCompany &&
+      dataCompany.images !== null &&
       dataCompany?.images.forEach((image: any) => {
         formData.append('images', image);
       });
@@ -471,9 +471,10 @@ const Company: React.FC<ICompany> = (props) => {
     //   });
     // }
 
-    dataCompany?.images.forEach((image: any) => {
-      formDataImages.append('images', image);
-    });
+    dataCompany.images !== null &&
+      dataCompany?.images.forEach((image: any) => {
+        formDataImages.append('images', image);
+      });
     // setDataCompany((preValue: any) => ({
     //     ...preValue,
     //     images: [],
@@ -481,6 +482,8 @@ const Company: React.FC<ICompany> = (props) => {
     // }));
 
     if (formData) {
+      // console.log('formData', formData);
+
       haveCompany
         ? handleUpdateCompany(formData, formDataImages)
         : handleCreateCompany(formData);
