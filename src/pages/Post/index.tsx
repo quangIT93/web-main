@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 
 import { Switch } from 'antd';
 import { Helmet } from 'react-helmet';
@@ -48,9 +48,11 @@ import apiCompany from 'api/apiCompany';
 import { message } from 'antd';
 
 import { RootState } from '../../store/reducer/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
+import { setLocationApi } from 'store/reducer/locationReducer';
+import locationApi from 'api/locationApi';
 
 // redux
 // import { RootState } from 'store';
@@ -234,6 +236,8 @@ const Post: React.FC = () => {
   const [selectedFillImages, setSelectedFillImages] = React.useState<string[]>(
     [],
   );
+
+  const dispatch = useDispatch();
   // const [language, setLanguage] = useState<any>();
 
   // const getlanguageApi = async () => {
@@ -313,6 +317,24 @@ const Post: React.FC = () => {
       createNewPost(formData);
     }
   };
+
+  const getAllLocaitions = async () => {
+    try {
+      const result = await locationApi.getAllLocation(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        // setDataLocations(result.data);
+        dispatch(setLocationApi(result));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllLocaitions();
+  }, []);
 
   // valid values form data
   const validValue = () => {
@@ -448,32 +470,27 @@ const Post: React.FC = () => {
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
 
-      if (profileCompanyV3.length !== 0) {
-        setCompanyName(profileCompanyV3.companyInfomation.name);
+      if (profileCompanyV3 && profileCompanyV3.id) {
+        setCompanyName(profileCompanyV3.name);
         setFillDistrict({
-          id: profileCompanyV3.companyInfomation.companyLocation.district.id,
-          full_name:
-            profileCompanyV3.companyInfomation.companyLocation.district
-              .fullName,
+          id: profileCompanyV3.companyLocation.district.id,
+          full_name: profileCompanyV3.companyLocation.district.fullName,
         });
         setFillProvince({
-          id: profileCompanyV3.companyInfomation.companyLocation.district
-            .province.id,
+          id: profileCompanyV3.companyLocation.district.province.id,
           province_fullName:
-            profileCompanyV3.companyInfomation.companyLocation.district.province
-              .fullName,
+            profileCompanyV3.companyLocation.district.province.fullName,
         });
 
         // setSelectedProvince(result.data.companyInfomation.company
 
         setFillWardId({
-          id: profileCompanyV3.companyInfomation.companyLocation.id,
-          full_name:
-            profileCompanyV3.companyInfomation.companyLocation.fullName,
+          id: profileCompanyV3.companyLocation.id,
+          full_name: profileCompanyV3.companyLocation.fullName,
         });
-        setWardId(profileCompanyV3.companyInfomation.companyLocation.id);
+        setWardId(profileCompanyV3.companyLocation.id);
 
-        setAddress(profileCompanyV3.companyInfomation.address);
+        setAddress(profileCompanyV3.address);
       } else {
         setOpenModalNoteCreateCompany(true);
       }
