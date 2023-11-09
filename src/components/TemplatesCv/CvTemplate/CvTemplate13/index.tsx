@@ -59,39 +59,30 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
     container: {
       flex: 1,
       flexDirection: 'row',
-      backgroundColor: 'transparent',
-      zIndex: 0,
+
+      // zIndex: 0,
       //   paddingLeft: '14.279pt',
       //   paddingRight: '14.279pt',
       //   paddingTop: '68.34pt',
-      //   gap: '48.781pt',
+      gap: '9.261pt',
     },
     leftColumn: {
       flexDirection: 'column',
       width: '65%',
       // paddingRight: 10,
-      backgroundColor: 'transparent',
-      borderRight: `1px solid ${
-        color === 1
-          ? '#8dc5fe'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000'
-      }`,
+      backgroundColor: '#f4f4f4',
       gap: '20.495pt',
+      marginLeft: '-30',
     },
     rightColumn: {
       flexDirection: 'column',
-      width: '35%',
+      width: '45%',
+      backgroundColor: '#f4f4f4',
       // paddingTop: '1.094cm',
       // marginTop: '1cm',
       // paddingLeft: '24.809pt',
-      backgroundColor: 'transparent',
       gap: '20.495pt',
+      marginRight: '-25',
     },
     pageNumber: {
       position: 'absolute',

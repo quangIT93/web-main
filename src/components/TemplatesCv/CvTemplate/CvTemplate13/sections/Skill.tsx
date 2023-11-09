@@ -47,7 +47,7 @@ const Skill: React.FC<ICvSkill> = (props) => {
     divDes: {
       marginLeft: '20pt',
       marginTop: '9.338pt',
-      width: '137pt',
+      width: '180pt',
     },
     TextTitleDes: {
       fontSize: '11pt',

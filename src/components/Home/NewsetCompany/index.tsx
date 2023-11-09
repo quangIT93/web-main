@@ -70,7 +70,7 @@ const NewestCompany = () => {
 
   React.useEffect(() => {
     getNewestCompany();
-  }, [languageRedux, checkBookMark]);
+  }, [languageRedux]);
 
   const handleChangeRouteNewestWorker = () => {
     window.open('/companyAll', '_parent');

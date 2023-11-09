@@ -6,7 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 
 import unLogo from '../../img/male_null_avatar.png';
-import { IconBellNewestCompany, IconBellSaveNewestCompany, LocationHomeIcon } from '#components/Icons';
+import {
+  IconBellNewestCompany,
+  IconBellSaveNewestCompany,
+  LocationHomeIcon,
+} from '#components/Icons';
 import { CateIcon } from '#components/Icons/iconCandidate';
 import { Skeleton, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
@@ -33,7 +37,8 @@ const DetailCompany = () => {
   const [hasMore, setHasMore] = React.useState(true);
   const [page, setPage] = React.useState<any>('0');
   const [loading, setLoading] = React.useState(true);
-  const [openModalFollowSuccess, setOpenModalFollowSuccess] = useState<boolean>(false);
+  const [openModalFollowSuccess, setOpenModalFollowSuccess] =
+    useState<boolean>(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [bookmarked, setBookmarked] = React.useState(false);
   console.log('profileV3', profileV3);
@@ -46,17 +51,15 @@ const DetailCompany = () => {
       setLoading(true);
       const result = await apiCompanyV3.getCompanyById(
         companyId,
-        languageRedux === 1 ? 'vi' : 'en'
-      )
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result.status === 200) {
         setLoading(false);
         setCompanyData(result.data);
         setBookmarked(result.data.isBookmarked);
       }
-    } catch (error) {
-
-    }
-  }
+    } catch (error) {}
+  };
 
   const getApplicationPositionCount = async () => {
     try {
@@ -65,49 +68,53 @@ const DetailCompany = () => {
         companyId,
         0,
         20,
-        languageRedux === 1 ? 'vi' : 'en'
-      )
-      if (result.status === 200) {
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result.status === 200 && result.data.posts.length === 20) {
         setLoading(false);
         setApplyPositions(result.data.total);
         setPostOfCompany(result.data.posts);
-        if (result.data.posts.length < 20) {
-          setHasMore(false);
-          setPage('0');
-        } else if (result.data.posts.length === 0) {
-          setHasMore(false);
-          setPage('0');
-        } else {
-          setHasMore(true);
-        }
+        setHasMore(true);
+      } else if (
+        result.data.posts.length < 20 &&
+        result.data.posts.length > 0
+      ) {
+        setHasMore(false);
+        setApplyPositions(result.data.total);
+        setPostOfCompany(result.data.posts);
+        setPage('0');
+      } else {
+        setHasMore(true);
+        setApplyPositions(result.data.total);
+        setPostOfCompany(result.data.posts);
+        setPage('0');
       }
-    } catch (error) {
-
-    }
-  }
+    } catch (error) {}
+  };
 
   const handleFollowCompany = async () => {
     try {
       if (!localStorage.getItem('accessToken')) {
         setOpenModalLogin(true);
       }
-      if (company?.isBookmarked && bookmarked) {
+
+      if (bookmarked === true) {
         const result = await apiCompanyV3.postBookmarkCompany(companyId);
         if (result) {
-          setBookmarked(!bookmarked);
+          setBookmarked(false);
           dispatch<any>(setAlertCancleSave(true));
         }
-      } else if (!company?.isBookmarked && !bookmarked) {
+      } else if (bookmarked === false) {
         const result = await apiCompanyV3.postBookmarkCompany(companyId);
         if (result) {
           dispatch<any>(setAlertSave(true));
-          setBookmarked(!bookmarked);
+          setBookmarked(true);
         }
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     getCompanyInfo();
@@ -139,16 +146,18 @@ const DetailCompany = () => {
           </span>
         </p>
       ),
-      children: <ApplyPosition
-        postOfCompany={postOfCompany}
-        setPostOfCompany={setPostOfCompany}
-        hasMore={hasMore}
-        setHasMore={setHasMore}
-        page={page}
-        setPage={setPage}
-        companyId={companyId}
-        accountId={company?.accountId}
-      />,
+      children: (
+        <ApplyPosition
+          postOfCompany={postOfCompany}
+          setPostOfCompany={setPostOfCompany}
+          hasMore={hasMore}
+          setHasMore={setHasMore}
+          page={page}
+          setPage={setPage}
+          companyId={companyId}
+          accountId={company?.accountId}
+        />
+      ),
     },
     {
       key: '3',
@@ -168,24 +177,30 @@ const DetailCompany = () => {
         <Skeleton loading={loading} active>
           <div className={styles.detail_company_intro}>
             <div className={styles.logo_company}>
-              <img src={company?.logoPath ? company.logoPath : unLogo} alt="" loading="lazy" />
+              <img
+                src={company?.logoPath ? company.logoPath : unLogo}
+                alt=""
+                loading="lazy"
+              />
             </div>
             <div className={styles.info_company}>
               <div className={styles.company_name}>
                 <h3>
-                  {
-                    company?.name ? company.name :
-                      languageRedux === 1 ?
-                        'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'
-                  }
+                  {company?.name
+                    ? company.name
+                    : languageRedux === 1
+                    ? 'Thông tin công ty chưa cập nhật'
+                    : 'Company information not updated yet'}
                 </h3>
-                <div className={styles.company_bell} onClick={handleFollowCompany}>
-                  {
-                    bookmarked ?
-                      <IconBellSaveNewestCompany width={24} height={24} /> :
-                      <IconBellNewestCompany width={24} height={24} />
-                  }
+                <div
+                  className={styles.company_bell}
+                  onClick={handleFollowCompany}
+                >
+                  {bookmarked ? (
+                    <IconBellSaveNewestCompany width={24} height={24} />
+                  ) : (
+                    <IconBellNewestCompany width={24} height={24} />
+                  )}
                   <p>{languageRedux === 1 ? 'Theo dõi' : 'Follow'}</p>
                 </div>
               </div>
@@ -193,13 +208,11 @@ const DetailCompany = () => {
                 <div className={styles.address_item}>
                   <LocationHomeIcon />
                   <p>
-                    {
-                      company?.companyLocation?.district?.province?.fullName ?
-                        company.companyLocation.district.province.fullName :
-                        languageRedux === 1 ?
-                          'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'
-                    }
+                    {company?.companyLocation?.district?.province?.fullName
+                      ? company.companyLocation.district.province.fullName
+                      : languageRedux === 1
+                      ? 'Thông tin công ty chưa cập nhật'
+                      : 'Company information not updated yet'}
                   </p>
                 </div>
                 <div className={styles.address_item}>

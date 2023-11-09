@@ -1,19 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
+import null_avatar from '../../images/null_avatar.png';
 import moment from 'moment';
-
-interface ICvProfile {
-  color: any;
-  profile: any;
-  fontSize: any;
-}
-interface ICvActivities {
+interface ICvHeader {
   color: any;
   profile: any;
   fontSize: any;
   profileMore: any;
 }
-const Activities: React.FC<ICvActivities> = (props) => {
+const Education: React.FC<ICvHeader> = (props) => {
   const { color, profile, fontSize, profileMore } = props;
   const styles = StyleSheet.create({
     container: {
@@ -22,6 +17,7 @@ const Activities: React.FC<ICvActivities> = (props) => {
     divTitle: {
       marginRight: '20pt',
       width: '280pt',
+      position: 'relative',
     },
     title: {
       marginLeft: '45.839pt',
@@ -41,6 +37,22 @@ const Activities: React.FC<ICvActivities> = (props) => {
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
       // backgroundColor: '#8dc5ff',
+      // backgroundColor:
+      //   color === 1
+      //     ? '#c5dff8'
+      //     : color === 2
+      //     ? '#5DADE2'
+      //     : color === 3
+      //     ? '#FCF3CF'
+      //     : color === 4
+      //     ? '#D5F5E3'
+      //     : '#FADBD8',
+
+      width: '100%',
+      zIndex: '0',
+    },
+    lineTitle: {
+      position: 'absolute',
       backgroundColor:
         color === 1
           ? '#c5dff8'
@@ -51,8 +63,11 @@ const Activities: React.FC<ICvActivities> = (props) => {
           : color === 4
           ? '#D5F5E3'
           : '#FADBD8',
-
-      width: '100%',
+      height: '10.977pt',
+      width: '160.595pt',
+      left: '40',
+      top: '18',
+      zIndex: '1',
     },
     divInfo: {
       marginLeft: '45.839pt',
@@ -114,39 +129,48 @@ const Activities: React.FC<ICvActivities> = (props) => {
     },
     textRight: {
       fontSize: '9pt',
-      wordwrap: 'break-all',
+      // wordwrap: 'break-all',
       textAlign: 'justify',
       lineHeight: '1.2',
       fontFamily: 'Fahkwang Medium',
     },
   });
+
   return (
     <View style={styles.container}>
-      <View style={styles.divTitle}>
-        <Text style={styles.title}>Activities</Text>
-      </View>
-      {profileMore?.profileActivities?.map((activities: any) => (
-        <View style={styles.divInfo}>
-          <View style={styles.leftInfo}>
-            <Text style={styles.textLeft}>
-              {moment(activities?.startDate).format('YYYY')}
-              {'-'}
-              {moment(activities?.endDate).format('YYYY')}
-            </Text>
-            <Text style={styles.textLeft}>{activities?.title}</Text>
-          </View>
-          <View style={styles.rightInfo}>
-            <View style={styles.divTextTitleRight}>
-              <Text style={styles.textLeft}>{activities?.organization}</Text>
-            </View>
-            <View style={styles.divTextRight}>
-              <Text style={styles.textRight}>{activities?.description}</Text>
-            </View>
-          </View>
+      <View>
+        <View style={styles.divTitle}>
+          <Text style={styles.title}>Educations</Text>
+          <View style={styles.lineTitle}></View>
         </View>
-      ))}
+
+        {profileMore?.profilesEducations?.map((education: any) => {
+          return (
+            <View style={styles.divInfo}>
+              <View style={styles.leftInfo}>
+                <Text style={styles.textLeft}>
+                  {moment(education?.startDate).format('YYYY')}
+                  {'-'}
+                  {moment(education?.endDate).format('YYYY')}
+                </Text>
+                <Text style={styles.textLeft}>{education?.major}</Text>
+              </View>
+              <View style={styles.rightInfo}>
+                <View style={styles.divTextTitleRight}>
+                  <Text style={styles.textLeft}>{education?.companyName}</Text>
+                </View>
+                <View style={styles.divTextRight}>
+                  <Text style={styles.textRight}>
+                    {education?.extraInformation}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          );
+        })}
+      </View>
     </View>
   );
 };
 
-export default Activities;
+export default Education;

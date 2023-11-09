@@ -41,7 +41,7 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
 
     divTextName: {
-      maxWidth: '310pt',
+      maxWidth: '300pt',
     },
     textName: {
       fontSize: '42pt',
@@ -59,27 +59,17 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontFamily: 'Montserrat SemiBold',
     },
     divTextJobTypeName: {
-      height: '35.786pt',
-      backgroundColor:
-        color === 1
-          ? '#c5dff8'
-          : color === 2
-          ? '#5DADE2'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
       display: 'flex',
       justifyContent: 'center',
-      marginLeft: '-47.137pt',
       marginTop: '12pt',
-      paddingLeft: '61.137pt',
+      flexWrap: 'wrap',
     },
     textPosition: {
-      fontSize: '18pt',
+      fontSize: '16pt',
       letterSpacing: '4pt',
       // marginTop: '20pt',
+      whiteSpace: 'wrap',
+      width: '300pt',
       color:
         color === 1
           ? '#004080'
@@ -95,25 +85,14 @@ const Header: React.FC<ICvHeader> = (props) => {
     divImage: {
       position: 'absolute',
       backgroundColor: 'transparent',
-      height: '195.489pt',
-      width: '168.594pt',
+      height: '100%',
+      width: '212pt',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      right: '47.936pt',
-      top: '47.936pt',
-      border: `2px solid ${
-        color === 1
-          ? '#8dc5fe'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000'
-      }`,
-      padding: '11.844pt',
+      right: '5.5pt',
+      top: '0',
+      paddingBottom: '10pt',
     },
     image: {
       width: '100%',
@@ -226,50 +205,22 @@ const Header: React.FC<ICvHeader> = (props) => {
         />
       </Svg> */}
 
-      <Svg
-        viewBox="0 0 220 100"
-        style={{
-          position: 'absolute',
-          width: '500',
-          height: '160',
-          right: '-188',
-          top: '-22',
-        }}
-      >
-        <Rect
-          width="146"
-          height="100"
-          fill={
-            color === 1
-              ? '#c5dff8'
-              : color === 2
-              ? '#5DADE2'
-              : color === 3
-              ? '#FCF3CF'
-              : color === 4
-              ? '#D5F5E3'
-              : '#FADBD8'
-          }
-        />
-      </Svg>
-
       <View style={styles.divInfo}>
         <View style={{ display: 'flex', justifyContent: 'center' }}>
-          <View style={styles.divTextName}>
+          {/* <View style={styles.divTextName}>
             <Text style={styles.textName}>
-              {' '}
               {profile?.name?.split(' ').length > 2
                 ? profile?.name?.split(' ').slice(0, -2).join(' ')
                 : profile?.name?.split(' ').slice(0, -1).join(' ')}
             </Text>
-          </View>
+          </View> */}
           <View style={styles.divTextName}>
-            <Text style={styles.textName}>
-              {' '}
+            {/* <Text style={styles.textName}>
               {profile?.name?.split(' ').length > 2
                 ? profile?.name?.split(' ').slice(-2).join(' ')
                 : profile?.name?.split(' ').slice(-1).join(' ')}
-            </Text>
+            </Text> */}
+            <Text style={styles.textName}>{profile?.name}</Text>
           </View>
         </View>
         <View style={styles.divTextJobTypeName}>
@@ -282,8 +233,8 @@ const Header: React.FC<ICvHeader> = (props) => {
           style={{
             // padding: '9.955pt',
             backgroundColor: '#ccc',
-            height: '175.489pt',
-            width: '148.594pt',
+            height: '100%',
+            width: '212pt',
           }}
         >
           <Image
