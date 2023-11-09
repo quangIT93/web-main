@@ -308,7 +308,7 @@ const Navbar: React.FC = () => {
 
   // console.log('profileV3', profileV3);
 
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
+  // const roleRedux = useSelector((state: RootState) => state.changeRole.role);
 
   const languageData = useSelector((state: RootState) => {
     return state.dataLanguage.languages;
@@ -1153,12 +1153,14 @@ const Navbar: React.FC = () => {
             <Avatar
               style={{ backgroundColor: '#0D99FF' }}
               icon={<UserOutlined />}
-              src={profileV3?.avatarPath ? profileV3.avatarPath : ''}
+              src={
+                profileV3 && profileV3?.avatarPath ? profileV3?.avatarPath : ''
+              }
             />
           </div>
           <div className="login__center">
             {localStorage.getItem('accessToken') && profileV3.length !== 0 ? (
-              <span>{profileV3?.name}</span>
+              <span>{profileV3 && profileV3?.name ? profileV3?.name : ''}</span>
             ) : (
               // <span>{languageData?.login}</span>
               <span>{languageRedux === 1 ? `Đăng nhập` : `Sign in`}</span>
@@ -1371,7 +1373,7 @@ const Navbar: React.FC = () => {
                   className="sub-login_item"
                   style={{
                     borderBottom:
-                      roleRedux === 0 || profileV3?.typeRoleData === 0
+                      profileV3?.typeRoleData === 0
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
@@ -1386,10 +1388,7 @@ const Navbar: React.FC = () => {
               <div
                 className="sub-history_status"
                 style={{
-                  display:
-                    roleRedux === 0 || profileV3?.typeRoleData === 0
-                      ? 'flex'
-                      : 'none',
+                  display: profileV3?.typeRoleData === 0 ? 'flex' : 'none',
                 }}
               >
                 <span>
@@ -1791,7 +1790,7 @@ const Navbar: React.FC = () => {
                   className="sub-login_item"
                   style={{
                     borderBottom:
-                      roleRedux === 0 || profileV3?.typeRoleData === 0
+                      profileV3?.typeRoleData === 0
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
@@ -1806,10 +1805,7 @@ const Navbar: React.FC = () => {
               <div
                 className="sub-history_status"
                 style={{
-                  display:
-                    roleRedux === 0 || profileV3?.typeRoleData === 0
-                      ? 'flex'
-                      : 'none',
+                  display: profileV3?.typeRoleData === 0 ? 'flex' : 'none',
                 }}
               >
                 <span>
