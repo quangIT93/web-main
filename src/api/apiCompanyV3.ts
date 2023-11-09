@@ -49,8 +49,8 @@ const apiCompanyV3 = {
         )
     },
 
-    getBookmarkCompany: (page: number, limit: number, lang: string) => {
-        const URL = `/v3/company-bookmarked/account?lang=${lang}&page=${page}&limit=${limit}`
+    getBookmarkCompany: (page: number, limit: number, lang: string, sort: string) => {
+        const URL = `/v3/company-bookmarked/account?lang=${lang}&page=${page}&limit=${limit}&sort=${sort}`
         return axiosClient.get(URL, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

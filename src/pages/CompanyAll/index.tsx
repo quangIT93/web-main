@@ -111,7 +111,7 @@ const CompanyAll = () => {
 
   React.useEffect(() => {
     getAllCompany();
-  }, [languageRedux, checkBookMark]);
+  }, [languageRedux]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -171,6 +171,7 @@ const CompanyAll = () => {
       } else {
         setTotal(result?.data?.total);
         setHasMore(false);
+        setListData([])
       }
     } catch (error) {
       console.log('error', error);
@@ -333,7 +334,7 @@ const CompanyAll = () => {
             loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
             style={{ overflow: 'unset' }}
           >
-            <div className="list-candidate">
+            <div className="list-company">
               {listData?.length !== 0 ? (
                 listData?.map((item: any, index: any) => {
                   return (
