@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 
 import { Switch } from 'antd';
 import { Helmet } from 'react-helmet';
@@ -48,9 +48,11 @@ import apiCompany from 'api/apiCompany';
 import { message } from 'antd';
 
 import { RootState } from '../../store/reducer/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
+import { setLocationApi } from 'store/reducer/locationReducer';
+import locationApi from 'api/locationApi';
 
 // redux
 // import { RootState } from 'store';
@@ -234,6 +236,8 @@ const Post: React.FC = () => {
   const [selectedFillImages, setSelectedFillImages] = React.useState<string[]>(
     [],
   );
+
+  const dispatch = useDispatch();
   // const [language, setLanguage] = useState<any>();
 
   // const getlanguageApi = async () => {
@@ -313,6 +317,24 @@ const Post: React.FC = () => {
       createNewPost(formData);
     }
   };
+
+  const getAllLocaitions = async () => {
+    try {
+      const result = await locationApi.getAllLocation(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        // setDataLocations(result.data);
+        dispatch(setLocationApi(result));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllLocaitions();
+  }, []);
 
   // valid values form data
   const validValue = () => {
