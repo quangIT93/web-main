@@ -448,32 +448,27 @@ const Post: React.FC = () => {
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
 
-      if (profileCompanyV3.length !== 0) {
-        setCompanyName(profileCompanyV3.companyInfomation.name);
+      if (profileCompanyV3 && profileCompanyV3.id) {
+        setCompanyName(profileCompanyV3.name);
         setFillDistrict({
-          id: profileCompanyV3.companyInfomation.companyLocation.district.id,
-          full_name:
-            profileCompanyV3.companyInfomation.companyLocation.district
-              .fullName,
+          id: profileCompanyV3.companyLocation.district.id,
+          full_name: profileCompanyV3.companyLocation.district.fullName,
         });
         setFillProvince({
-          id: profileCompanyV3.companyInfomation.companyLocation.district
-            .province.id,
+          id: profileCompanyV3.companyLocation.district.province.id,
           province_fullName:
-            profileCompanyV3.companyInfomation.companyLocation.district.province
-              .fullName,
+            profileCompanyV3.companyLocation.district.province.fullName,
         });
 
         // setSelectedProvince(result.data.companyInfomation.company
 
         setFillWardId({
-          id: profileCompanyV3.companyInfomation.companyLocation.id,
-          full_name:
-            profileCompanyV3.companyInfomation.companyLocation.fullName,
+          id: profileCompanyV3.companyLocation.id,
+          full_name: profileCompanyV3.companyLocation.fullName,
         });
-        setWardId(profileCompanyV3.companyInfomation.companyLocation.id);
+        setWardId(profileCompanyV3.companyLocation.id);
 
-        setAddress(profileCompanyV3.companyInfomation.address);
+        setAddress(profileCompanyV3.address);
       } else {
         setOpenModalNoteCreateCompany(true);
       }
