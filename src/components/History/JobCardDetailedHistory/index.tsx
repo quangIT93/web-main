@@ -14,7 +14,7 @@ import SubIcon from '../CardsPosted/SubIcon';
 
 // import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
-import { LocationHomeIcon, DolaIcon } from '#components/Icons';
+import { LocationHomeIcon, DolaIcon, WorkPostIcon } from '#components/Icons';
 
 import { Space, Tooltip } from 'antd';
 
@@ -64,7 +64,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
   // const [error, setError] = React.useState(false);
   const { language, languageRedux } = props;
 
-  // console.log('props', props);
+  console.log('props', props);
 
   return (
     <>
@@ -94,8 +94,8 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
               sx={{ flex: 1, display: 'flex' }}
             >
               <img
-                src={`${props.item?.postCompanyInformation?.logoPath}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${props.item?.postCompanyInformation?.logoPath}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 alt={props.item?.title}
                 //loading="lazy"
                 style={{
@@ -207,6 +207,40 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                     {new Intl.NumberFormat('en-US').format(
                       props.item?.salaryMax,
                     ) + `/${props.item?.postSalaryType?.fullName}`}
+                  </Typography>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                  }}
+                >
+                  <WorkPostIcon width={16} height={16} />
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      whiteSpace: 'nowrap',
+                      width: '180px',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      marginLeft: '4px',
+                      fontSize: '12px',
+                      fontWeight: '400',
+                    }}
+                  >
+                    {props.item?.postCategories.map(
+                      (cate: any, index: any) =>
+                        `${cate.parentCategory.fullName}${
+                          index < props.item.postCategories.length - 1
+                            ? ', '
+                            : ''
+                        }`,
+                    )}
+
+                    {/* {`${props.item?.location?.district?.fullName}, 
+                    ${props.item?.location?.district?.province?.fullName}`} */}
                   </Typography>
                 </div>
                 <div
