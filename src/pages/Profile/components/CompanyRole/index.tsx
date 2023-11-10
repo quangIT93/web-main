@@ -63,8 +63,6 @@ const CompanyRole: React.FC<ICompany> = (props) => {
     onDrop: () => {},
   });
 
-  console.log('companyData', companyData);
-
   const items: TabsProps['items'] = [
     {
       key: '1',

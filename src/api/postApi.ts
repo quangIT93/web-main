@@ -148,6 +148,15 @@ const postApi = {
   getPostV3: (id: number, lang: string) => {
     const URL = `v3/posts/${id}?lang=${lang}`
     return axiosClient.get(URL)
+  },
+
+  checkPostedToday: () => {
+    const URL = `v3/posts/account/checkPostedToday`
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
   }
 }
 

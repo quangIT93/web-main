@@ -114,8 +114,6 @@ const TemplatesCv: React.FC = () => {
       page_title: `/web_click_create_cv` as string,
     });
 
-    console.log('profileV3', profileV3);
-    console.log('profileV3More', profileMoreV3);
     const selectedTemplate = templatesCv.find((template) => {
       // console.log(template.id);
       // console.log(Number(localStorage.getItem('cv-id')));

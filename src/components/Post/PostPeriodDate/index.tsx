@@ -7,6 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 //@ts-ignore
 import { styleLabel } from '#components/Post/CssPost';
 
+import './style.scss';
 interface IPostPeriodDate {
   setIsPeriodDate: React.Dispatch<React.SetStateAction<number>>;
   isPeriodDate: number;
@@ -23,16 +24,13 @@ const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
   };
 
   return (
-    <FormControl sx={{ marginTop: '24px' }}>
+    <FormControl sx={{ marginTop: '24px' }} className="post-periodDate">
       <FormLabel
         id="demo-row-radio-buttons-group-label"
         component="legend"
         sx={styleLabel}
       >
-        {
-          language?.working_time
-        }{' '}
-        <span style={{ color: 'red' }}>*</span>
+        {language?.working_time} <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row
@@ -44,17 +42,13 @@ const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
         <FormControlLabel
           value={0}
           control={<Radio id="limited-time-radio1" />}
-          label={
-            language?.indefinite_term
-          }
+          label={language?.indefinite_term}
           htmlFor="limited-time-radio1"
         />
         <FormControlLabel
           value={1}
           control={<Radio id="limited-time-radio" />}
-          label={
-            language?.fixed_term
-          }
+          label={language?.fixed_term}
           htmlFor="limited-time-radio"
         />
       </RadioGroup>

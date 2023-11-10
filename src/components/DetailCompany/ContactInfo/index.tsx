@@ -154,7 +154,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       : 'Company size: '}
                     <span>
                       {company?.companySizeInfomation?.nameText
-                        ? company.companySizeInfomation.nameText
+                        ? company?.companySizeInfomation?.nameText
                         : languageRedux === 1
                         ? 'Thông tin công ty chưa cập nhật'
                         : 'Company information not updated yet'}
@@ -193,7 +193,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
             {languageRedux === 1 ? 'Hình ảnh công ty' : "Company's images"}
           </h3>
 
-          {company && company.id && company.images.length !== 0 ? (
+          {company && company?.id && company.images?.length !== 0 ? (
             <div
               className={styles.company_role_images}
               style={{
@@ -220,7 +220,9 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       style={{
                         display:
                           // company !== undefined ||
-                          company?.images && company?.images?.length !== 0
+                          company &&
+                          company?.images &&
+                          company?.images?.length !== 0
                             ? 'none'
                             : 'flex',
                       }}
@@ -239,21 +241,22 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   </div>
                 </section>
                 <Box className={styles.list_iamges}>
-                  {company?.images?.map((item: any, index: number) => (
-                    <div className={styles.item_image} key={index}>
-                      <img
-                        key={index}
-                        src={item?.imagePath}
-                        alt={language?.err_none_img}
-                      />
-                    </div>
-                  ))}
+                  {company &&
+                    company?.images?.map((item: any, index: number) => (
+                      <div className={styles.item_image} key={index}>
+                        <img
+                          key={index}
+                          src={item?.imagePath}
+                          alt={language?.err_none_img}
+                        />
+                      </div>
+                    ))}
                 </Box>
               </Box>
             </div>
           ) : company &&
-            company.images !== null &&
-            company.images.length === 0 ? (
+            company?.images !== null &&
+            company?.images?.length === 0 ? (
             <p>
               {languageRedux === 1
                 ? 'Chưa có hình ảnh về công ty'

@@ -526,8 +526,6 @@ const Profile: React.FC = () => {
   const handleCloseLackInfo = () => dispatch<any>(setAlertLackInfo(false));
   const handleCloseEditInfo = () => dispatch<any>(setAlertEditInfo(false));
 
-  console.log('more', profileMorev3);
-
   return (
     <div className="profile">
       {/* <Navbar />s
