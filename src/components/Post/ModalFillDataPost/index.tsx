@@ -192,6 +192,9 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
       if (result) {
         setTypeJob(result.data.job_type.job_type_id);
         setIsPeriodDate(result.data.is_date_period);
+        console.log('result.data.start_date: ', result.data.start_date);
+        console.log('result.data.end_date: ', result.data.end_date);
+
         setStartDate(result.data.start_date);
         setEndDate(result.data.end_date);
         setIsWorkingWeekend(result.data.is_working_weekend);

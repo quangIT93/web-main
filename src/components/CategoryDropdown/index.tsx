@@ -490,10 +490,11 @@ const CategoryDropdown: React.FC = () => {
                       return;
                     }
                     if (
-                      profileCompanyV3.length !== 0 &&
+                      profileV3 &&
+                      profileV3.companyInfo === null &&
                       localStorage.getItem('refreshToken')
                     ) {
-                      if (profileCompanyV3.companyInfomation === null) {
+                      if (profileV3.companyInfo === null) {
                         setOpenModalNoteCreateCompany(true);
                         event.preventDefault();
                       } else {

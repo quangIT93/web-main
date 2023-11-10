@@ -41,6 +41,7 @@ import EditImageCompany from './components/EditImageCompany';
 import { PencilIcon } from '#components/Icons';
 import profileApi from 'api/profileApi';
 import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 
 export interface FormValues {
   id: string;
@@ -373,6 +374,14 @@ const Company: React.FC<ICompany> = (props) => {
               type: 'success',
               content: language?.company_page?.create_success,
             });
+
+            const resultProfileV3 = await profileApi.getProfileInformationV3(
+              languageRedux === 1 ? 'vi' : 'en',
+            );
+            if (resultProfileV3) {
+              dispatch(setProfileMeInformationV3(resultProfileV3));
+            }
+
             // console.log("create company result", result);
           } else {
             messageApi.open({

@@ -403,6 +403,46 @@ const Post: React.FC = () => {
       };
     }
 
+    // if (startDate === endDate) {
+    //   return {
+    //     message:
+    //       languageRedux === 1
+    //         ? 'Ngày bắt đầu không thể bằng ngày kết thúc'
+    //         : 'The start date cannot be the same as the end date',
+    //     checkForm: false,
+    //   };
+    // }
+
+    if (startDate < Date.now() && isPeriodDate === 1) {
+      return {
+        message:
+          languageRedux === 1
+            ? 'Ngày bắt đầu không được nhỏ hơn thời gian hiện tại'
+            : 'The start date cannot be less than the current time',
+        checkForm: false,
+      };
+    }
+
+    if (!startDate && isPeriodDate === 1) {
+      return {
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập ngày bắt đầu'
+            : 'Please enter a start date',
+        checkForm: false,
+      };
+    }
+
+    if (!endDate && isPeriodDate === 1) {
+      return {
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập ngày kết thúc'
+            : 'Please enter an end date',
+        checkForm: false,
+      };
+    }
+
     return {
       message: '',
       checkForm: true,
@@ -415,12 +455,16 @@ const Post: React.FC = () => {
     const { message, checkForm } = validValue();
     try {
       if (checkForm) {
-        if (Array.from(formData.values()).some((value) => value !== '')) {
-          const result = await postApi.createPost(formData);
-          // const result = await postApi.createPostV3(formData);
-          if (result) {
-            setOpenModalPost(true);
+        if (profileV3 && profileV3.companyInfo) {
+          if (Array.from(formData.values()).some((value) => value !== '')) {
+            const result = await postApi.createPost(formData);
+            // const result = await postApi.createPostV3(formData);
+            if (result) {
+              setOpenModalPost(true);
+            }
           }
+        } else {
+          setOpenModalNoteCreateCompany(true);
         }
       } else {
         messageApi.open({

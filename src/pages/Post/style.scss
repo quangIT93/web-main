@@ -6,7 +6,7 @@
     // padding: 52px 0px;
     margin: 0 auto;
     max-width: 1080px;
-
+   
     // transition: all l;
     .post-main_fillData {
       display: flex;
@@ -92,6 +92,7 @@
     }
 
     form {
+     
       .post-address {
         display: flex;
         padding: 24px 0;
@@ -138,7 +139,7 @@
       .post-jobCompany {
         display: flex;
         gap: 32px;
-
+     
         @include breakpoint(mobile) {
           display: block;
         }
@@ -177,6 +178,36 @@
       // .MuiStack-root {
       //   // padding-top: 24px !important;
       // }
+      
+      input {
+        font-size: 14px;
+      }
+
+      .MuiBox-root {
+        span {
+          font-size: 14px;
+        }
+        input {
+          font-size: 14px !important;
+        }
+
+        textarea {
+          font-size: 14px !important;
+        }
+
+
+      }
+
+      label {
+        font-size: 14px;
+      }
+
+      legend {
+        font-size: 14px;
+
+      }
+
+
     }
   }
 }

@@ -30,7 +30,7 @@ import { Box, TextField, Typography } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import ContactInfo from '#components/DetailCompany/ContactInfo';
 import ReviewCompany from '#components/DetailCompany/ReviewCompany';
-import unLogo from '../../../../img/male_null_avatar.png'
+import unLogo from '../../../../img/building.png';
 interface ICompany {
   companyData: any;
   display: string;
@@ -58,21 +58,21 @@ const CompanyRole: React.FC<ICompany> = (props) => {
       'image/*': [],
     },
     // maxFiles: 5,
-    onDragEnter: () => { },
-    onDragLeave: () => { },
-    onDrop: () => { },
+    onDragEnter: () => {},
+    onDragLeave: () => {},
+    onDrop: () => {},
   });
 
-  console.log("companyData", companyData)
+  console.log('companyData', companyData);
 
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: <p>
-        {
-          languageRedux === 1 ? "Thông tin liên hệ" : "Contact Info"
-        }
-      </p>,
+      label: (
+        <p>
+          {languageRedux === 1 ? 'Thông tin công ty' : "Company's information"}
+        </p>
+      ),
       children: <ContactInfo company={companyData} />,
     },
     // {
@@ -147,7 +147,11 @@ const CompanyRole: React.FC<ICompany> = (props) => {
             <div className="detail_company_profile_content">
               <div className="detail_company_profile_intro">
                 <div className="logo_company">
-                  <img src={companyData?.logoPath ? companyData?.logoPath : unLogo} alt="" loading='lazy' />
+                  <img
+                    src={companyData?.logoPath ? companyData?.logoPath : unLogo}
+                    alt=""
+                    loading="lazy"
+                  />
                 </div>
                 <div className="info_company">
                   <div className="company_name">
