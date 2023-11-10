@@ -1154,13 +1154,23 @@ const Navbar: React.FC = () => {
               style={{ backgroundColor: '#0D99FF' }}
               icon={<UserOutlined />}
               src={
-                profileV3 && profileV3?.avatarPath ? profileV3?.avatarPath : ''
+                profileV3 &&
+                profileV3?.avatarPath &&
+                localStorage.getItem('accessToken')
+                  ? profileV3?.avatarPath
+                  : ''
               }
             />
           </div>
           <div className="login__center">
             {localStorage.getItem('accessToken') && profileV3.length !== 0 ? (
-              <span>{profileV3 && profileV3?.name ? profileV3?.name : ''}</span>
+              <span>
+                {profileV3 &&
+                profileV3?.name &&
+                localStorage.getItem('accessToken')
+                  ? profileV3?.name
+                  : ''}
+              </span>
             ) : (
               // <span>{languageData?.login}</span>
               <span>{languageRedux === 1 ? `Đăng nhập` : `Sign in`}</span>

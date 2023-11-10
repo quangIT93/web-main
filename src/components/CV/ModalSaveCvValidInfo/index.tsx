@@ -7,16 +7,16 @@ import { CopyCVIcon, EmailCVIcon, FaceCVIcon } from '#components/Icons';
 import './style.scss';
 import { getCookie } from 'cookies';
 
-interface IModalShare {
-  openModalOver10Cv: boolean;
-  setOpenModalOver10Cv: React.Dispatch<React.SetStateAction<boolean>>;
+interface IModalSaveCvValidInfo {
+  openModalSaveValidInfo: boolean;
+  setOpenModalSaveValidInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalOver10Cv: React.FC<IModalShare> = (props) => {
+const ModalSaveCvValidInfo: React.FC<IModalSaveCvValidInfo> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const { openModalOver10Cv, setOpenModalOver10Cv } = props;
+  const { openModalSaveValidInfo, setOpenModalSaveValidInfo } = props;
   const [firstCv, setFirstCv] = useState<any>(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const ModalOver10Cv: React.FC<IModalShare> = (props) => {
   }, []);
 
   const handleCancel = () => {
-    setOpenModalOver10Cv(false);
+    setOpenModalSaveValidInfo(false);
   };
 
   return (
@@ -45,11 +45,13 @@ const ModalOver10Cv: React.FC<IModalShare> = (props) => {
             textAlign: 'left',
           }}
         >
-          {languageRedux === 1 ? 'Không thể lưu Cv' : 'Unable to save CV'}
+          {languageRedux === 1
+            ? 'Bạn chưa nhập đầy đủ thông tin'
+            : 'You have not entered complete information'}
         </h3>
       }
       footer={null}
-      open={openModalOver10Cv}
+      open={openModalSaveValidInfo}
       // onOk={handleOk}
       onCancel={handleCancel}
     >
@@ -64,18 +66,18 @@ const ModalOver10Cv: React.FC<IModalShare> = (props) => {
         }}
       >
         {languageRedux === 1
-          ? 'Bạn chỉ có thể lưu tối đa 10 CV. Vui lòng xóa CV không sử dụng tại trang Quản lý CV'
-          : 'You can only save a maximum of 10 CVs. Please delete unused CV at the CV Management page'}
+          ? 'Vui lòng nhập đầy đủ thông tin trước khi tạo CV'
+          : 'Please enter complete information before creating your CV'}
       </p>
       <div className="buttons-over-10-cv-modal">
         <Button
           type="primary"
           shape="round"
           onClick={async () => {
-            window.open('/profile-cv', '_parent');
+            window.open('/profile', '_parent');
           }}
         >
-          {languageRedux === 1 ? 'Trang quảng lý CV' : 'CV Management page'}
+          {languageRedux === 1 ? 'Trang thông tin người dùng' : 'Profile page'}
         </Button>
         <Button
           type="text"
@@ -92,4 +94,4 @@ const ModalOver10Cv: React.FC<IModalShare> = (props) => {
   );
 };
 
-export default ModalOver10Cv;
+export default ModalSaveCvValidInfo;

@@ -52,8 +52,6 @@ const PostImage: React.FC<PostImageProps> = (props) => {
 
   // const theme = useTheme();
   // const ixsobile = useMediaQuery(theme.breakpoints.down('xs'));
-  console.log('file', selectedFiles);
-  console.log('file', selectedImages);
 
   async function downloadAndConvertImagesToFiles(urls: any) {
     try {

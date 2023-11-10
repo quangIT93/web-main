@@ -71,4 +71,14 @@
             }
         }
     }
+
+    .wrap-button_haveCompany {
+        display: flex;
+        gap: 24px;
+        @media screen and (max-width: 375px) {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+    }
 }

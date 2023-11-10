@@ -27,6 +27,7 @@ import apiCv from 'api/apiCv';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalOver10Cv from '#components/CV/ModalOver10Cv';
+import ModalSaveCvValidInfo from '#components/CV/ModalSaveCvValidInfo';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -56,6 +57,8 @@ const TemplatesCv: React.FC = () => {
   const [unUp, setUnUp] = React.useState(true);
   const [unDown, setUnDown] = React.useState(false);
   const [openModalOver10Cv, setOpenModalOver10Cv] = React.useState(false);
+  const [openModalSaveValidInfo, setOpenModalSaveValidInfo] =
+    React.useState(false);
 
   React.useEffect(() => {
     profileV3.length !== 0 &&
@@ -100,6 +103,9 @@ const TemplatesCv: React.FC = () => {
 
   // React.useEffect(() => {}, []);
 
+  console.log('profileV3', profileV3);
+  console.log('profileV3More', profileMoreV3);
+
   const handleClickSaveCv = async () => {
     const analytics: any = getAnalytics();
 
@@ -108,6 +114,8 @@ const TemplatesCv: React.FC = () => {
       page_title: `/web_click_create_cv` as string,
     });
 
+    console.log('profileV3', profileV3);
+    console.log('profileV3More', profileMoreV3);
     const selectedTemplate = templatesCv.find((template) => {
       // console.log(template.id);
       // console.log(Number(localStorage.getItem('cv-id')));
@@ -122,6 +130,32 @@ const TemplatesCv: React.FC = () => {
     });
     try {
       setLoading(true);
+      if (
+        !profileV3.name &&
+        !profileV3.phone &&
+        !profileV3.email &&
+        !profileV3.jobTypeName &&
+        !profileV3.avatarPath
+      ) {
+        setOpenModalSaveValidInfo(true);
+        setLoading(false);
+        return;
+      }
+
+      if (
+        !profileMoreV3.profileActivities &&
+        !profileMoreV3.profileAwards &&
+        !profileMoreV3.profileHobbies &&
+        !profileMoreV3.profilesEducations &&
+        !profileMoreV3.profilesExperiences &&
+        !profileMoreV3.profilesLanguages &&
+        !profileMoreV3.profilesReferences
+      ) {
+        setOpenModalSaveValidInfo(true);
+        setLoading(false);
+
+        return;
+      }
       if (selectedTemplate) {
         const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
 
@@ -423,6 +457,11 @@ const TemplatesCv: React.FC = () => {
         <ModalOver10Cv
           openModalOver10Cv={openModalOver10Cv}
           setOpenModalOver10Cv={setOpenModalOver10Cv}
+        />
+
+        <ModalSaveCvValidInfo
+          openModalSaveValidInfo={openModalSaveValidInfo}
+          setOpenModalSaveValidInfo={setOpenModalSaveValidInfo}
         />
       </div>
       {/* <RollTop /> */}

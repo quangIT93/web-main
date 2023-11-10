@@ -141,16 +141,28 @@ const ModalNoteCreateCompany: React.FC<IPropModalNoteCreatePost> = (props) => {
               </li>
             </ul>
           </div> */}
-          <Button
-            block
-            style={{ marginTop: '12px' }}
-            type="primary"
-            onClick={handleCreateCompany}
-          >
-            {languageRedux === 1
-              ? 'Tạo thông tin công ty'
-              : 'Create company information'}
-          </Button>
+          <div className="wrap-button_haveCompany">
+            <Button
+              block
+              style={{ marginTop: '12px' }}
+              type="primary"
+              onClick={() => {
+                setOpenModalNoteCreateCompany(false);
+              }}
+            >
+              {languageRedux === 1 ? 'Chỉnh sửa sau' : 'Edit later'}
+            </Button>
+            <Button
+              block
+              style={{ marginTop: '12px' }}
+              type="primary"
+              onClick={handleCreateCompany}
+            >
+              {languageRedux === 1
+                ? 'Tạo thông tin công ty'
+                : 'Create company information'}
+            </Button>
+          </div>
         </Box>
       </Modal>
     </div>
