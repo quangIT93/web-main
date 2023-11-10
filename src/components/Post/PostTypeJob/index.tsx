@@ -25,9 +25,7 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
   const [jobTypes, setJobTypes] = React.useState<AxiosResponse | null>(null);
 
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType(
-      languageRedux === 1 ? "vi" : "en"
-    );
+    const result = await siteApi.getJobType(languageRedux === 1 ? 'vi' : 'en');
     if (result) {
       setJobTypes(result);
     }
@@ -45,12 +43,12 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
   // console.log('jobTypes', jobTypes);
 
   return (
-    <FormControl sx={{ width: '100%', marginTop: '24px' }}>
+    <FormControl
+      sx={{ width: '100%', marginTop: '24px' }}
+      className="post-jobType"
+    >
       <FormLabel id="demo-row-radio-buttons-group-label" sx={styleLabel}>
-        {
-          language?.job_type1
-        }{' '}
-        <span style={{ color: 'red' }}>*</span>
+        {language?.job_type1} <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row
