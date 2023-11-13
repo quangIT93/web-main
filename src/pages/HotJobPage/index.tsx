@@ -469,13 +469,13 @@ const HotJobpage: React.FC = () => {
         nextPage,
         searchParams.get('hotjob-type') === '1' ? 18 : 20,
         languageRedux === 1 ? 'vi' : 'en',
-        // idFilterProvinces && provinceId,
-        // idFilterProvinces,
-        !idFilterProvinces && profileV3.length !== 0
-          ? profileV3.addressText.id
-          : idFilterProvinces
-          ? [idFilterProvinces]
-          : [idFilterProvinces],
+
+        // !idFilterProvinces && profileV3.length !== 0
+        //   ? profileV3.addressText.id
+        //   : idFilterProvinces
+        //   ? [idFilterProvinces]
+        //     : [idFilterProvinces],
+        idFilterProvinces ? idFilterProvinces : '0',
       );
 
       if (result && result.data.length !== 0) {

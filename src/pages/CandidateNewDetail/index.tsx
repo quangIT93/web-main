@@ -51,6 +51,7 @@ const CandidateNewDetail = () => {
   const [total, setTotal] = useState<any>(0);
   const [openModalMaxUnlock, setOpenModalMaxUnlock] = useState<any>(false);
   const [openModalNoneCv, setOpenModalNoneCv] = useState<any>(false);
+  const [openModalShowAvatar, setOpenModalShowAvatar] = useState<any>(false);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -214,18 +215,27 @@ const CandidateNewDetail = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
               }}
-              onClick={() => {}}
             >
               <Badge
                 overlap="circular"
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               >
                 <Avatar
+                  onClick={() => {
+                    candidate?.isUnlocked === true &&
+                      candidate?.avatarPath &&
+                      setOpenModalShowAvatar(true);
+                  }}
                   style={{
                     height: '70px',
                     width: '70px',
                     filter: `${
                       candidate?.isUnlocked === false ? 'blur(3px)' : ''
+                    }`,
+                    cursor: `${
+                      candidate?.isUnlocked === true && candidate?.avatarPath
+                        ? 'pointer'
+                        : ''
                     }`,
                   }}
                   alt={candidate?.avatarPath}
@@ -832,8 +842,9 @@ const CandidateNewDetail = () => {
       />
 
       <ModalShowAvatar
-        openModalMaxUnlock={openModalMaxUnlock}
-        setOpenModalMaxUnlock={setOpenModalMaxUnlock}
+        openModalShowAvatar={openModalShowAvatar}
+        setOpenModalShowAvatar={setOpenModalShowAvatar}
+        image={candidate?.avatarPath ? candidate?.avatarPath : ''}
       />
       <ModalNoneCV
         openModalNoneCv={openModalNoneCv}
