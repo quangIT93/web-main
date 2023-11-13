@@ -182,7 +182,9 @@ const Company: React.FC<ICompany> = (props) => {
       if (result) {
         dispatch(setProfileMeCompanyV3(result));
       }
-    } catch (error) {}
+    } catch (error) {
+      dispatch(setProfileMeCompanyV3([]));
+    }
   };
 
   React.useEffect(() => {

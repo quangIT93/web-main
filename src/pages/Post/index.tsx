@@ -284,7 +284,9 @@ const Post: React.FC = () => {
       if (result) {
         dispatch(setProfileMeCompanyV3(result));
       }
-    } catch (error) {}
+    } catch (error) {
+      dispatch(setProfileMeCompanyV3([]));
+    }
   };
 
   // submit
@@ -610,6 +612,7 @@ const Post: React.FC = () => {
       }
     } catch (error) {
       console.log('error', error);
+      dispatch(setProfileMeCompanyV3([]));
     }
   };
 
