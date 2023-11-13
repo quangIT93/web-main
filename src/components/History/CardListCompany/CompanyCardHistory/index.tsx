@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 //import scss
 import './style.scss';
 
@@ -23,24 +23,51 @@ import { Space, Tooltip } from 'antd';
 // import moment from 'moment';
 import bookMarkApi from 'api/bookMarkApi';
 import female_null_avatar from '../../../../img/female_null_avatar.png';
+import { RootState } from 'store';
+import apiCompanyV3 from 'api/apiCompanyV3';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
 interface Iprops {
     item: any;
+    index: number;
+    saveCompanyList: boolean;
+    setSaveCompanyList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CompanyCardHistory: React.FC<Iprops> = (props) => {
+    const { item, index, saveCompanyList, setSaveCompanyList } = props;
+    const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
     const dispatch = useDispatch();
     const [checkBookMark, setCheckBookMark] = React.useState(true);
-    const [error, setError] = React.useState(false);
+    const [inforCompany, setInforCompany] = React.useState<any>(item);
     const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
     const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-        window.open(`/detail-company`, '_parent');
+        window.open(`/detail-company?companyId=${id}`, '_parent');
     };
 
-    const handleImageError = () => {
-        setError(true);
-    };
+    useEffect(() => {
+        setInforCompany(item)
+    }, [item])
+
+    const handleSaveCompany = async (e: any) => {
+        try {
+            e.stopPropagation();
+            if (!localStorage.getItem('accessToken')) {
+                setOpenModalLogin(true);
+                return;
+            }
+            const result = await apiCompanyV3.postBookmarkCompany(
+                inforCompany?.id,
+            );
+            if (result) {
+                setSaveCompanyList(!saveCompanyList);
+                dispatch<any>(setAlertCancleSave(true));
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <>
@@ -60,13 +87,14 @@ const CompanyCardHistory: React.FC<Iprops> = (props) => {
                     overflow: 'unset',
                 }}
                 onClick={(e) => {
-                    handleClickItem(e, props.item?.id);
+                    handleClickItem(e, inforCompany?.id);
                 }}
                 className="company-card-history-container"
+                key={index}
             >
                 <ul className="div-card-company-history_content">
                     <ImageListItem
-                        key={props.item?.image}
+                        key={inforCompany?.logoPath}
                         sx={{
                             flex: 1,
                             display: 'flex',
@@ -75,9 +103,9 @@ const CompanyCardHistory: React.FC<Iprops> = (props) => {
                         }}
                     >
                         <img
-                            src={female_null_avatar}
-                            srcSet={female_null_avatar}
-                            alt={props.item?.title}
+                            src={inforCompany?.logoPath}
+                            srcSet={inforCompany?.logoPath}
+                            alt={inforCompany?.name}
                             loading="lazy"
                             style={{
                                 width: '76px',
@@ -88,7 +116,7 @@ const CompanyCardHistory: React.FC<Iprops> = (props) => {
                         <div className="div-card-company-history_info">
                             {/* {' '} */}
                             <div className="div-card-company-history_info__title">
-                                <Tooltip placement="top" title="CÔNG TY TNHH MTV Ô TÔ TRƯỜNG HẢI - PHÚ MỸ HƯNG">
+                                <Tooltip placement="top" title={inforCompany?.name}>
                                     <Typography
                                         gutterBottom
                                         variant="h6"
@@ -102,47 +130,15 @@ const CompanyCardHistory: React.FC<Iprops> = (props) => {
                                             color: '#575757',
                                         }}
                                     >
-                                        CÔNG TY TNHH MTV Ô TÔ TRƯỜNG HẢI - PHÚ MỸ HƯNG
+                                        {inforCompany?.name}
                                     </Typography>
                                 </Tooltip>
-                                <div
-                                // onClick={async (e) => {
-                                //     try {
-                                //         e.stopPropagation();
-                                //         if (!localStorage.getItem('accessToken')) {
-                                //             setOpenModalLogin(true);
-                                //             return;
-                                //         }
-                                //         if (props.item?.bookmarked) {
-                                //             const result = await bookMarkApi.deleteBookMark(
-                                //                 props.item?.id,
-                                //             );
-                                //             props.item.bookmarked = false;
-                                //             if (result) {
-                                //                 setCheckBookMark(!checkBookMark);
-                                //                 dispatch<any>(setAlertCancleSave(true));
-                                //             }
-                                //         } else {
-                                //             const result = await bookMarkApi.createBookMark(
-                                //                 props.item?.id,
-                                //             );
-                                //             props.item.bookmarked = true;
-                                //             if (result) {
-                                //                 dispatch<any>(setAlertSave(true));
-                                //                 setCheckBookMark(!checkBookMark);
-                                //             }
-                                //         }
-                                //     } catch (error) {
-                                //         console.log(error);
-                                //     }
-                                // }}
-                                >
-                                    {/* {props.item?.bookmarked ? (
-                                        <IconBellNewestCompany width={24} height={24} />
-                                    ) : (
+                                <div onClick={(e: any) => handleSaveCompany(e)}>
+                                    {inforCompany?.isBookmarked ? (
                                         <IconBellSaveNewestCompany width={24} height={24} />
-                                    )} */}
-                                    <IconBellNewestCompany width={24} height={24} />
+                                    ) : (
+                                        <IconBellNewestCompany width={24} height={24} />
+                                    )}
                                 </div>
                             </div>
                             <div className="div-card-company-history_info__bot">
@@ -151,46 +147,64 @@ const CompanyCardHistory: React.FC<Iprops> = (props) => {
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'flex-start',
+                                        maxWidth: '100px'
                                     }}
                                 >
                                     <LocationHomeIcon />
-                                    <Typography
-                                        variant="body2"
-                                        color="text.secondary"
-                                        sx={{
-                                            fontSize: '12px',
-                                            whiteSpace: 'nowrap',
-                                            width: '100%',
-                                            textOverflow: 'ellipsis',
-                                            overflow: 'hidden',
-                                            marginLeft: '4px',
-                                        }}
-                                    >
-                                        Tp.HCM
-                                    </Typography>
+                                    <Tooltip placement="top" title={inforCompany?.companyLocation?.district?.province?.fullName}>
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            sx={{
+                                                fontSize: '12px',
+                                                whiteSpace: 'nowrap',
+                                                width: '100%',
+                                                maxWidth: '100px',
+                                                textOverflow: 'ellipsis',
+                                                overflow: 'hidden',
+                                                marginLeft: '4px',
+                                            }}
+                                        >
+                                            {inforCompany?.companyLocation?.district?.province?.fullName}
+                                        </Typography>
+                                    </Tooltip>
                                 </div>
                                 <div
                                     style={{
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'flex-start',
+                                        maxWidth: '100px'
                                     }}
                                 >
                                     <CateIcon />
-                                    <Typography
-                                        variant="body2"
-                                        color="text.secondary"
-                                        sx={{
-                                            fontSize: '12px',
-                                            whiteSpace: 'nowrap',
-                                            width: '100%',
-                                            textOverflow: 'ellipsis',
-                                            overflow: 'hidden',
-                                            marginLeft: '4px',
-                                        }}
+                                    <Tooltip placement="top"
+                                        title={
+                                            languageRedux === 1 ?
+                                                `${inforCompany?.amountPost} vị trí tuyển dụng` :
+                                                `${inforCompany?.amountPost} apllication position`
+                                        }
                                     >
-                                        4 vị trí tuyển dụng
-                                    </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            sx={{
+                                                fontSize: '12px',
+                                                whiteSpace: 'nowrap',
+                                                width: '100%',
+                                                maxWidth: '100px',
+                                                textOverflow: 'ellipsis',
+                                                overflow: 'hidden',
+                                                marginLeft: '4px',
+                                            }}
+                                        >
+                                            {
+                                                languageRedux === 1 ?
+                                                    `${inforCompany?.amountPost} vị trí tuyển dụng` :
+                                                    `${inforCompany?.amountPost} apllication position`
+                                            }
+                                        </Typography>
+                                    </Tooltip>
                                 </div>
                             </div>
                         </div>
