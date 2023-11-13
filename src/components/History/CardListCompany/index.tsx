@@ -55,6 +55,7 @@ const CardListCompany: React.FC = () => {
         0,
         20,
         languageRedux === 1 ? 'vi' : 'en',
+        newOld === 1 ? 'DESC' : 'ASC'
       );
 
       if (result) {
@@ -76,6 +77,7 @@ const CardListCompany: React.FC = () => {
         nextPage,
         20,
         languageRedux === 1 ? 'vi' : 'en',
+        newOld === 1 ? 'DESC' : 'ASC'
       );
 
       if (result && result.data.bookmarkedCompany.length !== 0) {
@@ -102,7 +104,7 @@ const CardListCompany: React.FC = () => {
 
   useEffect(() => {
     handleGetCompany();
-  }, [saveCompanyList]);
+  }, [saveCompanyList, newOld]);
 
   const sortDataByDate = (value: any, arrayData: any) => {
     if (value === 1) {
@@ -122,7 +124,9 @@ const CardListCompany: React.FC = () => {
 
   const handleChange = (event: any) => {
     setnewOld(event.target.value);
-    setCompanyData(sortDataByDate(event.target.value, companyData));
+    setIsVisible(true);
+    setPageNumber(0);
+    // setCompanyData(sortDataByDate(event.target.value, companyData));
   };
 
   return (
@@ -215,7 +219,7 @@ const CardListCompany: React.FC = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>

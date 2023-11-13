@@ -198,14 +198,14 @@ const HistoryPost = () => {
         // language?.history_page?.posts_created,
       ],
     },
-    {
-      id: 5,
-      // title: language?.history_page?.list_of_articles,
-      title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
-      childs: [
-        languageRedux === 1 ? 'Tất cả' : 'All',
-      ],
-    },
+    // {
+    //   id: 5,
+    //   // title: language?.history_page?.list_of_articles,
+    //   title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
+    //   childs: [
+    //     languageRedux === 1 ? 'Tất cả' : 'All',
+    //   ],
+    // },
   ];
 
   React.useEffect(() => {

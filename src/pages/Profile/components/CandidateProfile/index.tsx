@@ -45,6 +45,7 @@ import apiCv from 'api/apiCv';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import ModalShowCv from '#components/Profile/ModalShowCv';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
+import ModalCheckInfo from '#components/Profile/ModalCheckInfo';
 interface ItemAppy {
   id?: number | null;
   company_name?: string;
@@ -105,6 +106,8 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
   const key = 'updatable';
   const [open, setOpen] = useState(false);
+  const [openModalCheckInfo, setOpenModalCheckInfo] = useState(false);
+  const [typeOfModalCheckInfo, setTypeOfModalCheckInfo] = useState<any>('');
 
   const [cvHijob, setCvHijob] = useState<any[]>([1, 2]);
 
@@ -186,7 +189,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           });
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // confirm delete cv
@@ -204,7 +207,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -280,6 +283,44 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
   //   });
   // };
 
+  console.log('profileV3', profileV3);
+  console.log('profileV3more', profileV3More);
+
+
+  const moveToCreateCV = () => {
+    if (
+      profileV3.name === 'Your name' ||
+      profileV3.phone === '' ||
+      profileV3.birthday === null ||
+      profileV3.addressText === null ||
+      profileV3.jobTypeName === null ||
+      profileV3.jobTypeName === 'null' ||
+      profileV3.avatarPath === null ||
+      profileV3.email === null ||
+      profileV3.introduction === null
+    ) {
+      setOpenModalCheckInfo(true);
+      setTypeOfModalCheckInfo('upInfo');
+      return;
+    }
+    if (
+      profileV3More.profilesJobType === null ||
+      profileV3More.profilesEducations.length === 0 ||
+      profileV3More.profilesExperiences.length === 0 ||
+      profileV3More.profilesSkills.length === 0 ||
+      profileV3More.profilesLanguages.length === 0 ||
+      profileV3More.profileHobbies === null ||
+      profileV3More.profilesReferences.length === 0 ||
+      profileV3More.profileActivities.length === 0 ||
+      profileV3More.profileAwards.length === 0
+    ) {
+      setOpenModalCheckInfo(true);
+      setTypeOfModalCheckInfo('upInfoMore');
+      return;
+    }
+    window.open('/templates-cv', '_parent');
+  }
+
   return (
     <div style={{ display: display, width: '100%' }}>
       {contextHolder}
@@ -309,14 +350,14 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           <Space wrap className="item-info-work">
             {profileV3?.profileCategories?.length !== 0
               ? profileV3?.profileCategories?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.parentCategory.fullName}
-                      {'/ '}
-                      {item.fullName}
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    {item.parentCategory.fullName}
+                    {'/ '}
+                    {item.fullName}
+                  </Button>
+                ),
+              )
               : language?.unupdated}
           </Space>
         </div>
@@ -347,12 +388,12 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           <Space wrap className="item-info-work">
             {profileV3?.profileLocations?.length !== 0
               ? profileV3?.profileLocations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.fullName}
-                    {', '}
-                    {item?.province?.fullName}
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  {item?.fullName}
+                  {', '}
+                  {item?.province?.fullName}
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -392,18 +433,18 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                   ? 'Toàn thời gian'
                   : 'Fulltime'
                 : profileV3More.jobTypeId === 2
-                ? languageRedux === 1
-                  ? 'Bán thời gian'
-                  : 'Parttime'
-                : profileV3More.jobTypeId === 4
-                ? languageRedux === 1
-                  ? 'Làm việc tự do'
-                  : 'Freelancer'
-                : profileV3More.jobTypeId === 7
-                ? languageRedux === 1
-                  ? 'Thực tập'
-                  : 'Intern'
-                : language?.unupdated}
+                  ? languageRedux === 1
+                    ? 'Bán thời gian'
+                    : 'Parttime'
+                  : profileV3More.jobTypeId === 4
+                    ? languageRedux === 1
+                      ? 'Làm việc tự do'
+                      : 'Freelancer'
+                    : profileV3More.jobTypeId === 7
+                      ? languageRedux === 1
+                        ? 'Thực tập'
+                        : 'Intern'
+                      : language?.unupdated}
             </Button>
           </Space>
         </div>
@@ -431,7 +472,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 gap: '8px',
                 // display: profileV3?.profilesCvs?.length === 0 ? 'none' : 'flex',
               }}
-              // onClick={() => setOpenModalLocation(true)}
+            // onClick={() => setOpenModalLocation(true)}
             >
               {/* <div className="edit-icon">
                 <PencilIcon width={15} height={15} />
@@ -441,7 +482,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 type="primary"
                 shape="round"
                 style={{ background: '#0D99FF', fontSize: '14px' }}
-                onClick={() => window.open('/templates-cv', '_parent')}
+                onClick={moveToCreateCV}
               >
                 {/* {language?.edit} */}
                 {languageRedux === 1 ? 'Tạo mới CV' : 'Create a new CV'}
@@ -595,7 +636,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                 onClick={() =>
                                   handleDownloadCV(item?.pdfURL, item?.name)
                                 }
-                                // onClick={handleClickDownloadCv}
+                              // onClick={handleClickDownloadCv}
                               >
                                 <DownloadCVIcon width={14} height={14} />
                               </div>
@@ -740,6 +781,12 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           modalShowCvPDF={modalShowCvPDF}
           setModalShowCvPdf={setModalShowCvPdf}
         />
+
+        <ModalCheckInfo
+          openModalCheckInfo={openModalCheckInfo}
+          setOpenModalCheckInfo={setOpenModalCheckInfo}
+          type={typeOfModalCheckInfo}
+        />
       </Skeleton>
       <SectionCv
         loading={loading}
@@ -781,7 +828,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-                // direction="vertical"
+              // direction="vertical"
               >
                 <Popconfirm
                   title={language?.profile_page?.delete_cv}

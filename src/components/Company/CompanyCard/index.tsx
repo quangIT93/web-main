@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 //import scss
 import './style.scss';
 
@@ -25,6 +25,7 @@ import female_null_avatar from '../../../img/female_null_avatar.png';
 import ModalLogin from '../../../components/Home/ModalLogin';
 import { CateIcon } from '#components/Icons/iconCandidate';
 import apiCompanyV3 from 'api/apiCompanyV3';
+import { RootState } from 'store';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
 interface Iprops {
   item: any;
@@ -39,7 +40,7 @@ const CompanyCard: React.FC<Iprops> = (props) => {
   const { checkBookMark, setCheckBookMark } = props;
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/detail-company?companyId=${props.item.id}`, '_parent');
   };
@@ -160,50 +161,64 @@ const CompanyCard: React.FC<Iprops> = (props) => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'flex-start',
+                    maxWidth: '100px'
                   }}
                 >
                   <div className="info-bot-icon">
                     <LocationHomeIcon />
                   </div>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      fontSize: '12px',
-                      whiteSpace: 'nowrap',
-                      width: '100%',
-                      textOverflow: 'ellipsis',
-                      overflow: 'hidden',
-                      marginLeft: '4px',
-                    }}
-                  >
-                    {props.item?.companyLocation?.district?.province?.fullName}
-                  </Typography>
+                  <Tooltip placement="top" title={props.item?.companyLocation?.district?.province?.fullName}>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        fontSize: '12px',
+                        whiteSpace: 'nowrap',
+                        width: '100%',
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden',
+                        marginLeft: '4px',
+                      }}
+                    >
+                      {props.item?.companyLocation?.district?.province?.fullName}
+                    </Typography>
+                  </Tooltip>
                 </div>
                 <div
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'flex-start',
+                    maxWidth: '100px'
                   }}
                 >
                   <div className="info-bot-icon">
                     <CateIcon />
                   </div>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      fontSize: '12px',
-                      whiteSpace: 'nowrap',
-                      width: '100%',
-                      textOverflow: 'ellipsis',
-                      overflow: 'hidden',
-                      marginLeft: '4px',
-                    }}
-                  >
-                    {props.item.amountPost} vị trí tuyển dụng
-                  </Typography>
+                  <Tooltip placement="top" title={
+                    languageRedux === 1 ?
+                      `${props.item.amountPost} vị trí tuyển dụng` :
+                      `${props.item.amountPost} apllication position`
+                  }>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        fontSize: '12px',
+                        whiteSpace: 'nowrap',
+                        width: '100%',
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden',
+                        marginLeft: '4px',
+                      }}
+                    >
+                      {
+                        languageRedux === 1 ?
+                          `${props.item.amountPost} vị trí tuyển dụng` :
+                          `${props.item.amountPost} apllication position`
+                      }
+                    </Typography>
+                  </Tooltip>
                 </div>
               </div>
             </div>

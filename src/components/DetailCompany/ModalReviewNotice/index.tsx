@@ -59,8 +59,8 @@ const ModalReviewNotice: React.FC<IModalReviewNotice> = (props) => {
             >
                 {
                     languageRedux === 1
-                        ? 'Bạn chỉ có thể đăng đánh giá sau khi đánh giá số sao cho công ty.'
-                        : 'You can only post a review after giving the company a star rating.'
+                        ? 'Bạn chỉ có thể đăng đánh giá sau khi đánh giá số sao và viết đánh giá cho công ty.'
+                        : 'You can only post a review after giving the company a star rating and comment.'
                 }
             </p>
             <div className={styles.modal_review_notice_buttons}>

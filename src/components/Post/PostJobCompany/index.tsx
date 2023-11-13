@@ -42,6 +42,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
     fontWeight: 600,
     color: '#000000',
   };
+
   return (
     <div className="post-jobCompany modal-person">
       <div className="post-titleJob post-title">
@@ -55,7 +56,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
         </Typography>
         <TextField
           type="text"
-          id="jobTitle"
+          id="post_jobTitle_job_title"
           name="title"
           //   value={formValues.title}
           onChange={handleChangeTitleForm}
@@ -81,9 +82,8 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${
-            titleJob ? titleJob.length : '0'
-          }/255`}</span>
+          <span className="number-text">{`${titleJob ? titleJob.length : '0'
+            }/255`}</span>
         </div>
       </div>
       <div className="post-titleCompany post-title">
@@ -97,7 +97,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
         </Typography>
         <TextField
           type="text"
-          id="company"
+          id="post_job_company"
           name="company_name"
           // value={formValues.company_name}
           size="small"
@@ -123,9 +123,8 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${
-            companyName ? companyName.length : '0'
-          }/255`}</span>
+          <span className="number-text">{`${companyName ? companyName.length : '0'
+            }/255`}</span>
         </div>
       </div>
     </div>

@@ -1,8 +1,9 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 
 import styles from './style.module.scss';
+import './style.scss';
 import TextArea from "antd/es/input/TextArea";
-import { Button, Skeleton, Spin } from "antd";
+import { Button, InputRef, Skeleton, Spin, message } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { SaveIconFill, SaveIconOutline } from "#components/Icons";
@@ -17,7 +18,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Backdrop, CircularProgress } from "@mui/material";
 import moment from "moment";
-
+import ModalLogin from '#components/Home/ModalLogin';
 interface IReviewCompany {
     company: any
     companyId: any
@@ -39,6 +40,30 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
     const [companyRating, setCompanyRating] = useState<any>([]);
     const [averageRated, setAverageRated] = useState<any>([]);
     const [isSuccess, setIsSuccess] = useState<any>(false);
+    const [myReview, setMyReview] = useState<any>();
+    const [openModalLogin, setOpenModalLogin] = React.useState(false);
+    const [status, setStatus] = React.useState('');
+    const inputRef = useRef<InputRef>(null);
+
+    const handleGetReviewAccountOfCompany = async () => {
+        try {
+            const result = await apiCompanyV3.getReviewAccountOfCompany(
+                companyId,
+                languageRedux === 1 ? "vi" : "en"
+            )
+            if (result) {
+                console.log(result);
+                setMyReview(result.data)
+                setReview(result.data.comment)
+            }
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+
+    console.log(myReview);
+
 
     const handleRateComapy = async () => {
         try {
@@ -52,10 +77,37 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                 setOpenBackdrop(false);
                 setOpenModalPostReviewSuccess(true);
                 setIsSuccess(!isSuccess);
+                setStatus('create');
+                inputRef.current!.focus({
+                    cursor: 'end',
+                });
             }
         } catch (error) {
             console.log(error);
+            setOpenBackdrop(false)
+            message.error("Error")
+        }
+    }
 
+    const handleEditReviewCompany = async () => {
+        try {
+            const result = await apiCompanyV3.editCompanyReview(
+                companyId,
+                myReview.star,
+                review
+            )
+            if (result) {
+                setOpenBackdrop(false);
+                setOpenModalPostReviewSuccess(true);
+                setIsSuccess(!isSuccess);
+                setStatus('edit');
+                inputRef.current!.focus({
+                    cursor: 'end',
+                });
+            }
+        } catch (error) {
+            setOpenBackdrop(false);
+            message.error("Error")
         }
     }
 
@@ -109,6 +161,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
 
     useEffect(() => {
         getCompanyRating()
+        handleGetReviewAccountOfCompany()
     }, [languageRedux, isSuccess])
 
     const handleSetStar = (e: any) => {
@@ -116,13 +169,47 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
     }
 
     const handleSubmitReview = () => {
-        if (star === 0) {
+        if (!localStorage.getItem('accessToken')) {
+            setOpenModalLogin(true);
+            return;
+        }
+        if (myReview === undefined && (star === 0 || review.trim().length === 0)) {
             setOpenModalReviewNotice(true);
             return
         }
-        handleRateComapy()
-        console.log("review", review);
-        console.log("star", star);
+        if (review.trim().length > 3000) {
+            message.error(
+                languageRedux === 1
+                    ? 'Đánh giá không được vượt quá 3000 ký tự'
+                    : 'Review cannot exceed 3000 characters'
+            )
+            return;
+        }
+        myReview === undefined ?
+            handleRateComapy() :
+            handleEditReviewCompany()
+        // console.log("review", review);
+        // console.log("star", star);
+    }
+
+    const handleDeleteReview = async () => {
+        try {
+            const result = await apiCompanyV3.deleteCompanyReview(companyId);
+            if (result) {
+                setOpenBackdrop(false);
+                setStatus('delete')
+                setOpenModalPostReviewSuccess(true);
+                setStar(0);
+                setReview('');
+                setMyReview(undefined)
+                setIsSuccess(!isSuccess);
+                inputRef.current!.focus({
+                    cursor: 'end',
+                });
+            }
+        } catch (error) {
+
+        }
     }
 
     return (
@@ -230,46 +317,80 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                                     "Your review"
                             }
                         </h3>
-                        <div className={styles.rating}>
-                            <input onChange={handleSetStar} type="radio" name="rating" value="5" id="rating-1" />
-                            <label htmlFor="rating-1">
-                                <SaveIconOutline width={24} height={24} />
-                                <SaveIconFill width={24} height={24} />
-                            </label>
-                            <input onChange={handleSetStar} type="radio" name="rating" value="4" id="rating-2" />
-                            <label htmlFor="rating-2">
-                                <SaveIconOutline width={24} height={24} />
-                                <SaveIconFill width={24} height={24} />
-                            </label>
-                            <input onChange={handleSetStar} type="radio" name="rating" value="3" id="rating-3" />
-                            <label htmlFor="rating-3">
-                                <SaveIconOutline width={24} height={24} />
-                                <SaveIconFill width={24} height={24} />
-                            </label>
-                            <input onChange={handleSetStar} type="radio" name="rating" value="2" id="rating-4" />
-                            <label htmlFor="rating-4">
-                                <SaveIconOutline width={24} height={24} />
-                                <SaveIconFill width={24} height={24} />
-                            </label>
-                            <input onChange={handleSetStar} type="radio" name="rating" value="1" id="rating-5" />
-                            <label htmlFor="rating-5">
-                                <SaveIconOutline width={24} height={24} />
-                                <SaveIconFill width={24} height={24} />
-                            </label>
-                        </div>
+                        {
+                            myReview === undefined ?
+                                <div className={styles.rating}>
+                                    <input onChange={handleSetStar} type="radio" name="rating" value="5" id="rating-1" />
+                                    <label htmlFor="rating-1">
+                                        <SaveIconOutline width={24} height={24} />
+                                        <SaveIconFill width={24} height={24} />
+                                    </label>
+                                    <input onChange={handleSetStar} type="radio" name="rating" value="4" id="rating-2" />
+                                    <label htmlFor="rating-2">
+                                        <SaveIconOutline width={24} height={24} />
+                                        <SaveIconFill width={24} height={24} />
+                                    </label>
+                                    <input onChange={handleSetStar} type="radio" name="rating" value="3" id="rating-3" />
+                                    <label htmlFor="rating-3">
+                                        <SaveIconOutline width={24} height={24} />
+                                        <SaveIconFill width={24} height={24} />
+                                    </label>
+                                    <input onChange={handleSetStar} type="radio" name="rating" value="2" id="rating-4" />
+                                    <label htmlFor="rating-4">
+                                        <SaveIconOutline width={24} height={24} />
+                                        <SaveIconFill width={24} height={24} />
+                                    </label>
+                                    <input onChange={handleSetStar} type="radio" name="rating" value="1" id="rating-5" />
+                                    <label htmlFor="rating-5">
+                                        <SaveIconOutline width={24} height={24} />
+                                        <SaveIconFill width={24} height={24} />
+                                    </label>
+                                </div>
+                                :
+                                <div className={styles.delete_review}>
+                                    <CompanyRating rating={myReview.star} />
+                                    <Button type="text" danger onClick={handleDeleteReview}>
+                                        {
+                                            languageRedux === 1 ?
+                                                "Xóa đánh giá" : "Delete review"
+                                        }
+                                    </Button>
+                                </div>
+                        }
                     </div>
                     <div className={styles.review_company_box}>
-                        <TextArea
-                            value={review}
-                            onChange={(e) => setReview(e.target.value)}
-                            placeholder={
-                                languageRedux === 1 ?
-                                    "Nhập đánh giá của bạn..." :
-                                    "Enter your review..."
-                            }
-                            autoSize={{ minRows: 20, maxRows: 22 }}
-                        // rows={20}
-                        />
+                        <div className={styles.input_box}>
+                            <TextArea
+                                value={review}
+                                onChange={(e) => setReview(e.target.value)}
+                                placeholder={
+                                    languageRedux === 1 ?
+                                        "Nhập đánh giá của bạn..." :
+                                        "Enter your review..."
+                                }
+                                autoSize={{ minRows: 20, maxRows: 22 }}
+                                ref={inputRef}
+                            // rows={20}
+                            />
+                            <div className={styles.notice_input}>
+                                {review?.length > 3000 ? (
+                                    <span className={styles.helper_text}>
+                                        {languageRedux === 1
+                                            ? 'Đánh giá không được vượt quá 3000 ký tự'
+                                            : 'Review cannot exceed 3000 characters'}
+                                    </span>
+                                ) : review?.length === 0 ? (
+                                    <span className={styles.helper_text}>
+                                        {languageRedux === 1
+                                            ? 'Đánh giá không được để trống '
+                                            : 'Review cannot be blank '}
+                                    </span>
+                                ) : (
+                                    <></>
+                                )}
+                                <span className={styles.number_text}>{`${review?.length}/3000`}</span>
+                            </div>
+                        </div>
                         <Button
                             type="primary"
                             ghost
@@ -279,9 +400,14 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                         //         star === 0 ? true : false}
                         >
                             {
-                                languageRedux === 1 ?
-                                    "Đăng bài đánh giá" :
-                                    "Post a review"
+                                myReview === undefined ?
+                                    languageRedux === 1 ?
+                                        "Đăng bài đánh giá" :
+                                        "Post a review"
+                                    :
+                                    languageRedux === 1 ?
+                                        "Sửa bài đánh giá" :
+                                        "Edit a review"
                             }
                         </Button>
                     </div>
@@ -306,6 +432,11 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
             <ModalPostReviewSuccess
                 openModalPostReviewSuccess={openModalPostReviewSuccess}
                 setOpenModalPostReviewSuccess={setOpenModalPostReviewSuccess}
+                status={status}
+            />
+            <ModalLogin
+                openModalLogin={openModalLogin}
+                setOpenModalLogin={setOpenModalLogin}
             />
         </div>
     )

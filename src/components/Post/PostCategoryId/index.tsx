@@ -106,27 +106,27 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true;
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false;
-                        break;
-                      }
+              value: parentCategory.parent_category_id,
+              label: parentCategory.parent_category,
+              children: parentCategory.childs.map((child: any) => {
+                var dis = false;
+                //check id child  when disable = true
+                if (disable) {
+                  dis = true;
+                  for (const elem of categoriesId) {
+                    if (elem === child.id) {
+                      dis = false;
+                      break;
                     }
                   }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                }
+                return {
+                  value: child.id,
+                  label: child.name,
+                  disabled: dis,
+                };
+              }),
+            }))
             : []
         }
         dropdownRender={DropdownRender}
@@ -139,10 +139,11 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         className="input-category-post"
         showCheckedStrategy={SHOW_CHILD}
         style={{ borderRadius: '2px' }}
+        id="post_job_category"
       />
       <div
         className="wrap-noti_input"
-        // style={{ position: 'absolute', bottom: '-15px' }}
+      // style={{ position: 'absolute', bottom: '-15px' }}
       >
         {fillCate.length === 0 ? (
           <span className="helper-text">

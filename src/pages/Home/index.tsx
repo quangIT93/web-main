@@ -259,7 +259,7 @@ const Home: React.FC = () => {
         <AppliedPostedJob />
         <HotJob />
         <NewestGigWorker />
-        <NewestCompany />
+        {/* <NewestCompany /> */}
         <NewJobs />
         <SuggestJob />
         <ThemesJob />
@@ -276,12 +276,12 @@ const Home: React.FC = () => {
         openModalSelectRole={openModalSelectRole}
         setOpenModalSelectRole={setOpenModalSelectRole}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        // setRole={setRole}
+      // setRole={setRole}
       />
       <ModalUpdateInfo
         openModalUpdateInfo={openModalUpdateInfo}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        // role={role}
+      // role={role}
       />
       {/* <RollTop />
       <Footer /> */}

@@ -10,13 +10,14 @@ import { getCookie } from 'cookies';
 interface IModalPostReviewSuccess {
     openModalPostReviewSuccess: boolean;
     setOpenModalPostReviewSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+    status: string;
 }
 
 const ModalPostReviewSuccess: React.FC<IModalPostReviewSuccess> = (props) => {
     const languageRedux = useSelector(
         (state: RootState) => state.changeLaguage.language,
     );
-    const { openModalPostReviewSuccess, setOpenModalPostReviewSuccess } = props;
+    const { openModalPostReviewSuccess, setOpenModalPostReviewSuccess, status } = props;
 
     const handleCloseModal = () => {
         setOpenModalPostReviewSuccess(false);
@@ -37,9 +38,21 @@ const ModalPostReviewSuccess: React.FC<IModalPostReviewSuccess> = (props) => {
                         textAlign: 'left',
                     }}
                 >
-                    {languageRedux === 1
-                        ? 'Đăng đánh giá thành công'
-                        : 'Posted review successfully'}
+                    {
+                        status === 'create' ?
+                            languageRedux === 1
+                                ? 'Đăng đánh giá thành công'
+                                : 'Posted review successfully'
+                            :
+                            status === 'edit' ?
+                                languageRedux === 1
+                                    ? 'Sửa bài đánh giá thành công'
+                                    : 'Edited review successfully'
+                                :
+                                languageRedux === 1
+                                    ? 'Xóa bài đánh giá thành công'
+                                    : 'Deleted review successfully'
+                    }
                 </h3>
             }
             footer={null}
@@ -58,9 +71,17 @@ const ModalPostReviewSuccess: React.FC<IModalPostReviewSuccess> = (props) => {
                 }}
             >
                 {
-                    languageRedux === 1
-                        ? 'Bài đánh giá của bạn về công ty này đã được đăng thành công.'
-                        : 'Your review of this company has been published successfully.'
+                    status === 'create' ?
+                        languageRedux === 1
+                            ? 'Bài đánh giá của bạn về công ty này đã được đăng thành công.'
+                            : 'Your review of this company has been published successfully.'
+                        : status === 'edit' ?
+                            languageRedux === 1
+                                ? 'Bài đánh giá của bạn về công ty này đã được sửa thành công.'
+                                : 'Your review of this company has been edited successfully.'
+                            : languageRedux === 1
+                                ? 'Bài đánh giá của bạn về công ty này đã được xóa thành công.'
+                                : 'Your review of this company has been deleted successfully.'
                 }
             </p>
             <div className={styles.modal_post_review_success_buttons}>
