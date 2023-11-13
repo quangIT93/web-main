@@ -5,15 +5,20 @@ import { useLocation } from 'react-router-dom';
 // import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import breakpoints from '../../scss/breakpoints';
 
-import { FaceBookIcon } from '#components/Icons';
+import {
+  ENSubLoginIcon,
+  FaceBookIcon,
+  VNSubLoginIcon,
+} from '#components/Icons';
 
 import { Link } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 import './style.scss';
-import { getCookie } from 'cookies';
+import { getCookie, setCookie } from 'cookies';
 import { getLanguages } from 'store/reducer/dataLanguage';
+import { setLanguage } from 'store/reducer/changeLanguageReducer';
 
 const { mobile, tablet } = breakpoints;
 
@@ -174,6 +179,16 @@ const Footer: React.FC = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const totgleLanguage = async (e: any, value: any) => {
+    // setLanguageId(e.target.value);
+    // let value = 1;
+    // value === 1 ? value = 2 : 1;
+    e.stopPropagation();
+    setCookie('languageId', JSON.stringify(value), 365);
+    await dispatch<any>(setLanguage(value));
+    await dispatch(getLanguages(value.toString()) as any);
+  };
 
   return (
     <WrapFooter
@@ -356,16 +371,33 @@ const Footer: React.FC = () => {
             </p> */}
             </div>
           </div>
-          <Link
-            to="mailto:contact.hijob@gmail.com"
-            style={{
-              color: '#0d99ff',
-              textDecoration: 'underline',
-              fontSize: '12px',
-            }}
-          >
-            Email: contact.hijob@gmail.com
-          </Link>
+          <div className="left_footer">
+            <div
+              key="1"
+              className="language"
+              onClick={(e: any) => {
+                languageRedux === 1
+                  ? totgleLanguage(e, 2)
+                  : totgleLanguage(e, 1);
+              }}
+            >
+              {languageRedux === 1 ? (
+                <VNSubLoginIcon width={20} height={20} />
+              ) : (
+                <ENSubLoginIcon width={20} height={20} />
+              )}
+            </div>
+            <Link
+              to="mailto:contact.hijob@gmail.com"
+              style={{
+                color: '#0d99ff',
+                textDecoration: 'underline',
+                fontSize: '12px',
+              }}
+            >
+              Email: contact.hijob@gmail.com
+            </Link>
+          </div>
         </PolicyFooter>
       </div>
     </WrapFooter>

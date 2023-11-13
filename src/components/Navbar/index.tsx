@@ -1046,19 +1046,19 @@ const Navbar: React.FC = () => {
   };
 
   const buttons = [
-    <div
-      key="1"
-      className="language"
-      onClick={() => {
-        languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
-      }}
-    >
-      {languageRedux === 1 ? (
-        <VNSubLoginIcon width={24} height={24} />
-      ) : (
-        <ENSubLoginIcon width={24} height={24} />
-      )}
-    </div>,
+    // <div
+    //   key="1"
+    //   className="language"
+    //   onClick={() => {
+    //     languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
+    //   }}
+    // >
+    //   {languageRedux === 1 ? (
+    //     <VNSubLoginIcon width={24} height={24} />
+    //   ) : (
+    //     <ENSubLoginIcon width={24} height={24} />
+    //   )}
+    // </div>,
     // <React.Fragment key="2">
     //   {localStorage.getItem('accessToken') ? (
     //     <div className="switch-container">
@@ -1621,7 +1621,7 @@ const Navbar: React.FC = () => {
       }}
       key="5"
     >
-      <div
+      {/* <div
         className="language"
         onClick={() => {
           languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
@@ -1632,7 +1632,7 @@ const Navbar: React.FC = () => {
         ) : (
           <ENSubLoginIcon width={24} height={24} />
         )}
-      </div>
+      </div> */}
       {/* <div className="switch-container-responsive">
         <div
           className="search-job-switch-responsive "

@@ -7,6 +7,21 @@
       visibility: hidden
     }
   }
+
+  .left_footer {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    .language {
+      display: flex;
+      align-items: center;
+
+      svg {
+        cursor: pointer
+      }
+    }
+  }
   
   .container-footer {
     display: flex;
@@ -54,6 +69,8 @@
         //margin-top: 10px;
       }
     }
+
+    
   
     & p {
       font-style: normal;
