@@ -188,6 +188,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Số điện thoại không được bỏ trống'
             : 'Phone number cannot be empty',
         checkForm: false,
+        idError: 1,
       };
     }
     if (regexCheckPhone.test(phone) === false) {
@@ -197,6 +198,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Số điện thoại không đúng định dạng'
             : 'The phone number is not in the correct format',
         checkForm: false,
+        idError: 1,
       };
     }
     if (email?.trim() === '') {
@@ -206,6 +208,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Email không được bỏ trống'
             : 'Email cannot be empty',
         checkForm: false,
+        idError: 2,
       };
     }
     if (regexCheckEmail.test(email) === false) {
@@ -215,6 +218,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Email không đúng định dạng'
             : 'The Email is not in the correct format',
         checkForm: false,
+        idError: 2,
       };
     }
 
@@ -225,6 +229,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Link Facebook không đúng định dạng'
             : 'The Facebook link is not in the correct format',
         checkForm: false,
+        idError: 3,
       };
     }
     if (linkIn.trim() !== '' && validURL(linkIn) === false) {
@@ -234,6 +239,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Link Linkedin không đúng định dạng'
             : 'The Linkedin link is not in the correct format',
         checkForm: false,
+        idError: 4,
       };
     }
 
@@ -244,6 +250,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Link Facebook không được vượt quá 100 ký tự'
             : 'The Facebook link cannot exceed 100 characters',
         checkForm: false,
+        idError: 3,
       };
     }
     if (linkIn.trim() !== '' && linkIn.trim().length > 100) {
@@ -253,18 +260,20 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Link Linkedin không được vượt quá 100 ký tự'
             : 'The Linkedin link cannot exceed 100 characters',
         checkForm: false,
+        idError: 4,
       };
     }
 
     return {
       messageError: '',
       checkForm: true,
+      idError: 0,
     };
   };
 
   // handle update information contact
   const handleSubmit = async () => {
-    const { messageError, checkForm } = validValue();
+    const { messageError, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         const info: InfoContact = {
@@ -288,6 +297,28 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         }
       } else {
         message.error(messageError);
+        const peronal_info_name = document.getElementById('peronal_info_name') as HTMLElement;
+        const peronal_info_provinces = document.getElementById('peronal_info_provinces') as HTMLElement;
+        const peronal_info_position = document.getElementById('peronal_info_position') as HTMLElement;
+        const peronal_info_introduction = document.getElementById('peronal_info_introduction') as HTMLElement;
+
+        switch (idError) {
+          case 1:
+            peronal_info_name.focus();
+            break;
+          case 2:
+            peronal_info_provinces.focus();
+            break;
+          case 3:
+            peronal_info_position.focus();
+            break;
+          case 4:
+            peronal_info_introduction.focus();
+            break;
+
+          default:
+            break;
+        }
       }
     } catch (error) {
       console.log(error);
@@ -344,7 +375,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             </Typography>
             <TextField
               type="tel"
-              id="nameProfile"
+              id="contact_info_phone"
               name="title"
               value={phone}
               onChange={handleSetPhone}

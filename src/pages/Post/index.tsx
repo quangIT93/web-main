@@ -566,7 +566,7 @@ const Post: React.FC = () => {
         const post_job_salaryMax = document.getElementById('post_job_salaryMax') as HTMLElement;
         const post_job_phone = document.getElementById('post_job_phone') as HTMLElement;
         const post_job_description = document.getElementById('post_job_description') as HTMLElement;
-        console.log(idError, fillDistrict);
+        // console.log(idError, fillDistrict);
 
         switch (idError) {
           case 1:
