@@ -374,7 +374,9 @@ const Post: React.FC = () => {
     }
     if (titleJob.length > 255) {
       return {
-        message: language?.post_page?.err_job_title,
+        message: languageRedux === 1 ?
+          'Tên công việc không được quá 255 ký tự' :
+          'The job name must not exceed 255 characters',
         checkForm: false,
         idError: 1,
       };
@@ -382,6 +384,15 @@ const Post: React.FC = () => {
     if (companyName === '') {
       return {
         message: language?.post_page?.err_company_name,
+        checkForm: false,
+        idError: 2,
+      };
+    }
+    if (companyName.length > 255) {
+      return {
+        message: languageRedux === 1 ?
+          'Tên công ty không được quá 255 ký tự' :
+          'The company name must not exceed 255 characters',
         checkForm: false,
         idError: 2,
       };
