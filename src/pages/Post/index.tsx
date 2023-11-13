@@ -192,7 +192,15 @@ const Post: React.FC = () => {
   );
   // const [startTime, setStartTime] = React.useState<string>('00:00');
   // const [endTime, setEndTime] = React.useState<string>('00:00');
-  const [startDate, setStartDate] = React.useState<any>(new Date().getTime());
+  const currentDate = new Date();
+
+  // Đặt giờ, phút, giây và miligiây
+  currentDate.setHours(23, 59, 59, 999);
+
+  const [startDate, setStartDate] = React.useState<any>(
+    new Date(new Date().setHours(23, 59, 59, 999)).getTime(),
+  );
+
   const [endDate, setEndDate] = React.useState<any>(new Date().getTime());
   const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0);
   const [isRemotely, setIsRemotely] = React.useState<number>(0);
