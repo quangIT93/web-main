@@ -35,6 +35,7 @@ import ModalUnlockCandidate from './ModalUnlockCandidate';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalMaxUnlock from './ModalMaxUnlock';
+import ModalShowAvatar from './ModalShowAvatar';
 import ModalNoneCV from './ModalNoneCv';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -213,6 +214,7 @@ const CandidateNewDetail = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
               }}
+              onClick={() => {}}
             >
               <Badge
                 overlap="circular"
@@ -815,6 +817,11 @@ const CandidateNewDetail = () => {
       </Stack>
 
       <ModalMaxUnlock
+        openModalMaxUnlock={openModalMaxUnlock}
+        setOpenModalMaxUnlock={setOpenModalMaxUnlock}
+      />
+
+      <ModalShowAvatar
         openModalMaxUnlock={openModalMaxUnlock}
         setOpenModalMaxUnlock={setOpenModalMaxUnlock}
       />

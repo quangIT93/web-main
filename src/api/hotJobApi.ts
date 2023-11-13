@@ -6,7 +6,7 @@ const hotJobApi = {
     return axiosClient.get(URL)
   },
   getHotJobById: (url: any, page: number, limit: number, lang: string, provinceId: string | null)=> {
-    const URL = url + `&page=${page}&limit=${limit}&lang=${lang}&provinceId=${provinceId}`
+    const URL = url + `&page=${page}&limit=${limit}&lang=${lang}${provinceId !== "0" ? `&provinceId=${provinceId}` : ``}`
     return axiosClient.get(URL)
   }
 }

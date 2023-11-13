@@ -241,13 +241,13 @@ const HotJobpage: React.FC = () => {
         pageNumber,
         searchParams.get('hotjob-type') === '1' ? 18 : 20,
         languageRedux === 1 ? 'vi' : 'en',
-        // idFilterProvinces && provinceId,
-        // idFilterProvinces,
-        !idFilterProvinces && profileV3.length !== 0
-          ? profileV3.addressText.id
-          : idFilterProvinces
-          ? idFilterProvinces
-          : '79',
+
+        // !idFilterProvinces && profileV3.length !== 0
+        //   ? profileV3.addressText.id
+        //   : idFilterProvinces
+        //   ? idFilterProvinces
+        //   : '0',
+        idFilterProvinces ? idFilterProvinces : '0',
       );
 
       // console.log('hotjob.data.total', hotjob['total'] as any);
@@ -371,9 +371,33 @@ const HotJobpage: React.FC = () => {
       const result = await locationApi.getAllProvinces(
         languageRedux === 1 ? 'vi' : 'en',
       );
+      console.log('result', result.data);
 
       if (result) {
-        setProvincesData(result.data);
+        const itemsAll = {
+          administrative_region_id: 0,
+          administrative_unit_id: 0,
+          code_name: 'All',
+          full_name: 'All',
+          full_name_en: 'All',
+          id: '0',
+          name: 'All',
+          name_en: 'All',
+        };
+
+        const LocationAll = [itemsAll, ...result.data] as [
+          {
+            id: string;
+            name: string;
+            name_en: string;
+            full_name: string;
+            full_name_en: string;
+            code_name: string;
+            administrative_unit_id: number;
+            administrative_region_id: number;
+          },
+        ];
+        setProvincesData(LocationAll);
       }
     } catch (error) {
       console.log('error', error);
@@ -539,12 +563,7 @@ const HotJobpage: React.FC = () => {
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       // value={'01'}
-                      defaultValue={
-                        Object.keys(profileV3).length !== 0 &&
-                        profileV3.addressText !== null
-                          ? profileV3.addressText.id
-                          : '79'
-                      }
+                      defaultValue={'0'}
                       onChange={handleChangeFilterHotjob}
                       placeholder={
                         languageRedux === 1 ? 'Chọn địa chỉ' : 'Select Address'
