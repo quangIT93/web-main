@@ -57,11 +57,11 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   company?.description
                     ? company.description
                     : languageRedux === 1
-                    ? 'Thông tin công ty chưa cập nhật'
-                    : 'Company information not updated yet'
+                      ? 'Thông tin công ty chưa cập nhật'
+                      : 'Company information not updated yet'
                 }
                 autoSize
-                // showCount
+              // showCount
               />
             </div>
             <div className={styles.company_information_basic}>
@@ -77,8 +77,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.taxCode
                         ? company.taxCode
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -90,8 +90,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.address
                         ? company.address
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -103,8 +103,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.email
                         ? company.email
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -116,8 +116,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.phone
                         ? company.phone
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -129,8 +129,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.website
                         ? company.website
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -142,8 +142,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.companyCategory?.fullName
                         ? company.companyCategory.fullName
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -157,8 +157,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.companySizeInfomation?.nameText
                         ? company?.companySizeInfomation?.nameText
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -213,7 +213,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   <div
                     // {...getRootProps({
                     className={styles.dropzone}
-                    // })}
+                  // })}
                   >
                     {/* <input {...getInputProps()} /> */}
                     <div
@@ -222,8 +222,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                         display:
                           // company !== undefined ||
                           company &&
-                          company?.images &&
-                          company?.images?.length !== 0
+                            company?.images &&
+                            company?.images?.length !== 0
                             ? 'none'
                             : 'flex',
                       }}

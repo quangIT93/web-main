@@ -145,10 +145,13 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setFillWardId(null);
     setFillDistrict(null);
     setFillProvince(null);
+    console.log(value);
+
   };
 
   const handleDistrictChange = (event: any, value: any) => {
     setSelectedDistrict(value);
+    setFillDistrict(value);
   };
 
   const handleChangeWardId = (e: any, value: any) => {
@@ -165,7 +168,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       <div className="post-address_top">
         <div
           className="post-title"
-          // style={{ position: 'relative' }}
+        // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -181,18 +184,20 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             value={fillProvince || selectedProvince || null}
             onChange={handleProvinceChange}
             disableClearable
+            id="post_job_city"
             renderInput={(params) => (
               <TextField
                 {...params}
                 placeholder={language?.post_page?.place_city}
                 size="small"
+              // id="post_job_city"
               />
             )}
             style={{ marginTop: '0.5rem' }}
           />
           <div
             className="wrap-noti_input"
-            // style={{ position: 'absolute', bottom: '-15px' }}
+          // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {!fillProvince && selectedProvince === null ? (
               <span className="helper-text">
@@ -207,7 +212,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
         </div>
         <div
           className="post-title"
-          // style={{ position: 'relative' }}
+        // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -224,6 +229,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             value={fillDistrict || selectedDistrict || null}
             onChange={handleDistrictChange}
             disableClearable
+            id="post_job_district"
             renderInput={(params: any) => (
               <TextField
                 {...params}
@@ -235,7 +241,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           />
           <div
             className="wrap-noti_input"
-            // style={{ position: 'absolute', bottom: '-15px' }}
+          // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {selectedDistrict === null && !fillDistrict ? (
               <span className="helper-text">
@@ -252,7 +258,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       <div className="post-address_bottom">
         <div
           className="post-title"
-          // style={{ position: 'relative' }}
+        // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -268,6 +274,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             value={fillWardId || selectedWard || null}
             onChange={handleChangeWardId}
             disableClearable
+            id="post_job_ward"
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -279,7 +286,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           />
           <div
             className="wrap-noti_input"
-            // style={{ position: 'absolute', bottom: '-15px' }}
+          // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {selectedWard === null && fillWardId?.id === '' ? (
               <span className="helper-text">
@@ -304,7 +311,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           </Typography>
           <TextField
             type="text"
-            id="jobTitle"
+            id="post_job_address"
             name="title"
             value={address}
             onChange={handleChangeAddress}
@@ -328,9 +335,8 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             ) : (
               <></>
             )}
-            <span className="number-text">{`${
-              address ? address.length : '0'
-            }/255`}</span>
+            <span className="number-text">{`${address ? address.length : '0'
+              }/255`}</span>
           </div>
         </div>
       </div>

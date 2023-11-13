@@ -21,6 +21,7 @@ import 'swiper/css/thumbs';
 // import required modules
 import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper';
 import apiCv from 'api/apiCv';
+import { Button } from 'antd';
 // const Slide = ({ number }: any) => (
 //   <div>
 //     <img src="./images/pageCv/CV 1.png" alt={number} />
@@ -39,6 +40,9 @@ const PageCv = () => {
   );
   const profileMoreV3 = useSelector(
     (state: RootState) => state.dataProfileInformationMoreV3.data,
+  );
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
   );
   const [thumbsSwiper, setThumbsSwiper] = React.useState<any>(null);
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
@@ -62,6 +66,15 @@ const PageCv = () => {
     getTheme();
     // Lấy danh sách các phần tử .slick-active trong Slider
   }, [profileMoreV3]);
+
+  console.log("thumbsSwiper", thumbsSwiper);
+
+
+  const handleMoveToCreateCv = (id: any, name: any) => {
+    window.open('/templates-cv', '_parent')
+    localStorage.setItem('cv-id', id);
+    localStorage.setItem('nameCv', `${profileV3.name} - ${name}`);
+  }
 
   return (
     <div className="wrap-page_Cv">
@@ -162,6 +175,16 @@ const PageCv = () => {
                       key={index}
                     >
                       <img src={item.image} alt={item.name} />
+                      <Button
+                        type="primary"
+                        shape="round"
+                        onClick={() => handleMoveToCreateCv(item.id, item.name)}
+                      >
+                        {
+                          languageRedux === 1 ?
+                            "Xem trước" : "Preview"
+                        }
+                      </Button>
                     </SwiperSlide>
                   );
                 })

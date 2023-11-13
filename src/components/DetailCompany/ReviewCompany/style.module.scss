@@ -266,6 +266,13 @@
                         }
                     }
                 }
+
+                .delete_review {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+                }
             }
 
             .review_company_box {
@@ -275,18 +282,44 @@
                 justify-content: space-between;
                 height: 100%;
 
-                textarea {
-                    border: none;
-                    background: rgba(241, 240, 240, 1);
-                    padding: 16px;
+                .input_box {
+                    width: 100%;
+                    height: fit-content;
+                    display: flex;
+                    flex-direction: column;
                     margin-bottom: 24px;
 
-                    &::placeholder {
-                        color: rgba(87, 87, 87, 1);
-                        opacity: 1;
-                        /* Firefox */
+                    textarea {
+                        border: none;
+                        background: rgba(241, 240, 240, 1);
+                        padding: 16px;
+                        margin-bottom: 8px;
+
+                        &::placeholder {
+                            color: rgba(87, 87, 87, 1);
+                            opacity: 1;
+                            /* Firefox */
+                        }
+                    }
+
+                    .notice_input {
+                        margin-left: 16px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 2px;
+
+                        .helper_text {
+                            color: #BD3131;
+                            font-size: 12px;
+                        }
+
+                        .number_text {
+                            font-size: 14px;
+                            color: #aaa;
+                        }
                     }
                 }
+
 
                 button {
                     width: 158px;

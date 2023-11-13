@@ -12,8 +12,9 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 import './style.scss';
-import { getCookie } from 'cookies';
+import { getCookie, setCookie } from 'cookies';
 import { getLanguages } from 'store/reducer/dataLanguage';
+import { setLanguage } from 'store/reducer/changeLanguageReducer';
 
 const { mobile, tablet } = breakpoints;
 

@@ -49,8 +49,8 @@ const apiCompanyV3 = {
         )
     },
 
-    getBookmarkCompany: (page: number, limit: number, lang: string) => {
-        const URL = `/v3/company-bookmarked/account?lang=${lang}&page=${page}&limit=${limit}`
+    getBookmarkCompany: (page: number, limit: number, lang: string, sort: string) => {
+        const URL = `/v3/company-bookmarked/account?lang=${lang}&page=${page}&limit=${limit}&sort=${sort}`
         return axiosClient.get(URL, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -89,6 +89,44 @@ const apiCompanyV3 = {
     ) => {
         const URL = `/v3/posts/company/${id}?lang=${lang}&limit=${limit}&page=${page}`
         return axiosClient.get(URL)
+    },
+
+    getReviewAccountOfCompany: (
+        id: any,
+        lang: string
+    ) => {
+        const URL = `/v3/company-ratings/account/company/${id}?lang=${lang}`
+        return axiosClient.get(URL, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            },
+        })
+    },
+
+    editCompanyReview: (
+        id: any,
+        star: any,
+        comment: string
+    ) => {
+        const URL = `/v3/company-ratings/account/company/${id}`
+        return axiosClient.put(
+            URL,
+            { star, comment },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            }
+        )
+    },
+
+    deleteCompanyReview: (id: any) => {
+        const URL = `/v3/company-ratings/account/company/${id}`
+        return axiosClient.delete(URL, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            },
+        })
     },
 
 }
