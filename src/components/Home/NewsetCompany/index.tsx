@@ -28,30 +28,8 @@ const NewestCompany = () => {
   // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const getNewestCompany = async () => {
-    // try {
-    //   setLoading(true)
-    //   const logout = localStorage.getItem('accessToken');
-    //   const result = await candidateSearch.getCandidates(
-    //     addresses,
-    //     categories,
-    //     educations,
-    //     gender,
-    //     ageMin,
-    //     ageMax,
-    //     !logout ? 6 :
-    //       profileV3.length !== 0 && profileV3?.typeRoleData === 0 ? 6 : 18,
-    //     page,
-    //     languageRedux === 1 ? 'vi' : 'en',
-    //   );
-    //   if (result) {
-    //     setTimeout(() => {
-    //       setLoading(false);
-    //     }, 2000);
-    //     setListData(result.data.cvFilters);
-    //   }
-    // } catch (error) { }
-
     try {
+      setLoading(true);
       const result = await apiCompanyV3.filterCompany(
         [],
         [],
@@ -61,6 +39,7 @@ const NewestCompany = () => {
         languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
+        setLoading(false);
         setListData(result.data);
       }
     } catch (error) {
@@ -122,18 +101,18 @@ const NewestCompany = () => {
       </div>
 
       <div className="list-company-home">
-        {/* <Skeleton loading={loading} active> */}
-        {listData?.companies?.map((item: any, index: number) => {
-          return (
-            <CompanyCard
-              item={item}
-              key={index}
-              checkBookMark={checkBookMark}
-              setCheckBookMark={setCheckBookMark}
-            />
-          );
-        })}
-        {/* </Skeleton> */}
+        <Skeleton loading={loading} active>
+          {listData?.companies?.map((item: any, index: number) => {
+            return (
+              <CompanyCard
+                item={item}
+                key={index}
+                checkBookMark={checkBookMark}
+                setCheckBookMark={setCheckBookMark}
+              />
+            );
+          })}
+        </Skeleton>
       </div>
       <div
         className="view-all-down"
