@@ -41,6 +41,7 @@ const Description: React.FC<IDescription> = (props) => {
         // label="Một số đặc điểm nhận diện công ty"
         placeholder={language?.post_page?.place_des}
         value={description}
+        id="post_job_description"
       />
       <div className="wrap-noti_input ">
         {description.length > 4000 ? (

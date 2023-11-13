@@ -33,7 +33,7 @@ const NumericInput = (props: NumericInputProps) => {
       onChange(inputValue);
     }
   };
-  
+
   // '.' at the end or only '-' in the input box.
   const handleBlur = () => {
     let valueTemp = value;
@@ -50,6 +50,7 @@ const NumericInput = (props: NumericInputProps) => {
       onBlur={handleBlur}
       placeholder={language?.post_page?.place_phone}
       maxLength={11}
+      id="post_job_phone"
     />
   );
 };
@@ -96,24 +97,24 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         languageRedux={languageRedux}
         language={language}
       />
-          <div className="wrap-noti_input">
-            {regexCheckPhone.test(phone) === false ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Số điện thoại không đúng định dạng'
-                  : 'The phone number is not in the correct format'}
-              </span>
-            ) : phone && phone.length === 0 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Số điện thoại không được bỏ trống'
-                  : 'Phone cannot be empty'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${phone ? phone.length: "0"}/11`}</span>
-          </div>
+      <div className="wrap-noti_input">
+        {regexCheckPhone.test(phone) === false ? (
+          <span className="helper-text">
+            {languageRedux === 1
+              ? 'Số điện thoại không đúng định dạng'
+              : 'The phone number is not in the correct format'}
+          </span>
+        ) : phone && phone.length === 0 ? (
+          <span className="helper-text">
+            {languageRedux === 1
+              ? 'Số điện thoại không được bỏ trống'
+              : 'Phone cannot be empty'}
+          </span>
+        ) : (
+          <></>
+        )}
+        <span className="number-text">{`${phone ? phone.length : "0"}/11`}</span>
+      </div>
       {/* <Input
         value={`${phone}d`}
         onChange={handleChangeNumber}

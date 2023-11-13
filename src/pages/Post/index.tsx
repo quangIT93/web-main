@@ -397,56 +397,78 @@ const Post: React.FC = () => {
         idError: 2,
       };
     }
-    if (address === '') {
+    if (fillProvince === '') {
       return {
-        message: language?.post_page?.err_address,
+        message: language?.post_page?.err_location,
         checkForm: false,
         idError: 3,
       };
     }
-    if (wardId === '') {
+    if (fillDistrict === null) {
       return {
         message: language?.post_page?.err_location,
         checkForm: false,
         idError: 4,
       };
     }
-    if (categoriesId.length <= 0) {
+    if (wardId === '') {
       return {
-        message: language?.post_page?.err_cate,
+        message: language?.post_page?.err_location,
         checkForm: false,
         idError: 5,
       };
     }
+    if (address === '') {
+      return {
+        message: language?.post_page?.err_address,
+        checkForm: false,
+        idError: 6,
+      };
+    }
+    if (categoriesId.length <= 0) {
+      return {
+        message: language?.post_page?.err_cate,
+        checkForm: false,
+        idError: 7,
+      };
+    }
     if (
-      (Number(salaryMax) === 0 && salaryType !== 6) ||
       (Number(salaryMin) === 0 && salaryType !== 6)
     ) {
       return {
         message: language?.post_page?.err_salary,
         checkForm: false,
-        idError: 6,
+        idError: 8,
+      };
+    }
+    if (
+      (Number(salaryMax) === 0 && salaryType !== 6)
+    ) {
+      return {
+        message: language?.post_page?.err_salary,
+        checkForm: false,
+        idError: 9,
       };
     }
     if (Number(salaryMax) < Number(salaryMin)) {
       return {
         message: language?.post_page?.err_verify_salary,
         checkForm: false,
-        idError: 6,
+        idError: 10,
       };
     }
     if (phoneNumber === '' || phoneNumber.length < 10) {
       return {
         message: language?.company_page?.err_phone_mess,
         checkForm: false,
-        idError: 7,
+        idError: 11,
       };
     }
     if (description === '') {
       return {
         message: language?.company_page?.err_des_mess,
         checkForm: false,
-        idError: 8,
+        idError: 12,
       };
     }
 
@@ -454,7 +476,7 @@ const Post: React.FC = () => {
       return {
         message: language?.post_page?.err_date,
         checkForm: false,
-        idError: 9,
+        idError: 13,
       };
     }
 
@@ -475,7 +497,7 @@ const Post: React.FC = () => {
             ? 'Ngày bắt đầu không được nhỏ hơn thời gian hiện tại'
             : 'The start date cannot be less than the current time',
         checkForm: false,
-        idError: 9,
+        idError: 14,
       };
     }
 
@@ -486,7 +508,7 @@ const Post: React.FC = () => {
             ? 'Vui lòng nhập ngày bắt đầu'
             : 'Please enter a start date',
         checkForm: false,
-        idError: 9,
+        idError: 14,
       };
     }
 
@@ -497,7 +519,7 @@ const Post: React.FC = () => {
             ? 'Vui lòng nhập ngày kết thúc'
             : 'Please enter an end date',
         checkForm: false,
-        idError: 9,
+        idError: 14,
       };
     }
 
@@ -535,12 +557,53 @@ const Post: React.FC = () => {
         });
         const job_title = document.getElementById('post_jobTitle_job_title') as HTMLElement;
         const post_job_company = document.getElementById('post_job_company') as HTMLElement;
+        const post_job_city = document.getElementById('post_job_city') as HTMLElement;
+        const post_job_district = document.getElementById('post_job_district') as HTMLElement;
+        const post_job_ward = document.getElementById('post_job_ward') as HTMLElement;
+        const post_job_address = document.getElementById('post_job_address') as HTMLElement;
+        const post_job_category = document.getElementById('post_job_category') as HTMLElement;
+        const post_job_salaryMin = document.getElementById('post_job_salaryMin') as HTMLElement;
+        const post_job_salaryMax = document.getElementById('post_job_salaryMax') as HTMLElement;
+        const post_job_phone = document.getElementById('post_job_phone') as HTMLElement;
+        const post_job_description = document.getElementById('post_job_description') as HTMLElement;
+        console.log(idError, fillDistrict);
+
         switch (idError) {
           case 1:
             job_title.focus();
             break;
           case 2:
             post_job_company.focus();
+            break;
+          case 3:
+            post_job_city.focus();
+            break;
+          case 4:
+            post_job_district.focus();
+            break;
+          case 5:
+            post_job_ward.focus();
+            break;
+          case 6:
+            post_job_address.focus();
+            break;
+          case 7:
+            post_job_category.focus();
+            break;
+          case 8:
+            post_job_salaryMin.focus();
+            break;
+          case 9:
+            post_job_salaryMax.focus();
+            break;
+          case 10:
+            post_job_salaryMax.focus();
+            break;
+          case 11:
+            post_job_phone.focus();
+            break;
+          case 12:
+            post_job_description.focus();
             break;
 
           default:
