@@ -16,14 +16,14 @@ const Hobies: React.FC<ICvHobies> = (props) => {
     divTitle: {
       backgroundColor:
         color === 1
-          ? '#8dc5fe'
+          ? '#c5dff8'
           : color === 2
-          ? '#0D99FF'
+          ? '#5DADE2'
           : color === 3
-          ? '#FBBC04'
+          ? '#FCF3CF'
           : color === 4
-          ? '#5CB265'
-          : '#D80000',
+          ? '#D5F5E3'
+          : '#FADBD8',
     },
     title: {
       marginLeft: '20pt',
@@ -36,10 +36,10 @@ const Hobies: React.FC<ICvHobies> = (props) => {
           : color === 2
           ? '#000000'
           : color === 3
-          ? '#ffffff'
+          ? '#000000'
           : color === 4
           ? '#000000'
-          : '#ffffff',
+          : '#D80000',
       fontFamily: 'Fahkwang Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',

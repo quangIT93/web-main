@@ -40,9 +40,9 @@
           display: flex;
           align-items: center;
 
-          .contentBtn{
+          .contentBtn {
             display: flex;
-            justify-content:space-between;
+            justify-content: space-between;
             align-items: center;
             gap: 8px;
             font-weight: 600;
@@ -93,6 +93,11 @@
       border-radius: 10px;
       margin-top: 30px;
       padding: 15px 20px;
+      font-size: 14px;
+
+      h3 {
+        font-size: 14px;
+      }
 
       .info-detail {
         display: flex;
@@ -125,6 +130,11 @@
 
       .item-info-work {
         margin-top: 20px;
+        font-size: 14px;
+
+        .textArea {
+          font-size: 14px;
+        }
 
         .btn {
           border: 0.5px solid #001424;
@@ -135,10 +145,16 @@
           align-items: flex-start;
           padding: 12px;
 
+          h3 {
+            font-size: 14px;
+            color: #000000;
+          }
+
           span {
             word-break: break-all;
             text-align: left;
             white-space: wrap;
+            font-size: 14px;
           }
         }
       }

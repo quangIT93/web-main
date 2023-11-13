@@ -35,6 +35,7 @@ import ModalUnlockCandidate from './ModalUnlockCandidate';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalMaxUnlock from './ModalMaxUnlock';
+import ModalShowAvatar from './ModalShowAvatar';
 import ModalNoneCV from './ModalNoneCv';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -50,6 +51,7 @@ const CandidateNewDetail = () => {
   const [total, setTotal] = useState<any>(0);
   const [openModalMaxUnlock, setOpenModalMaxUnlock] = useState<any>(false);
   const [openModalNoneCv, setOpenModalNoneCv] = useState<any>(false);
+  const [openModalShowAvatar, setOpenModalShowAvatar] = useState<any>(false);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -219,11 +221,21 @@ const CandidateNewDetail = () => {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               >
                 <Avatar
+                  onClick={() => {
+                    candidate?.isUnlocked === true &&
+                      candidate?.avatarPath &&
+                      setOpenModalShowAvatar(true);
+                  }}
                   style={{
                     height: '70px',
                     width: '70px',
                     filter: `${
                       candidate?.isUnlocked === false ? 'blur(3px)' : ''
+                    }`,
+                    cursor: `${
+                      candidate?.isUnlocked === true && candidate?.avatarPath
+                        ? 'pointer'
+                        : ''
                     }`,
                   }}
                   alt={candidate?.avatarPath}
@@ -553,6 +565,8 @@ const CandidateNewDetail = () => {
               ? candidate?.profileLocations?.map((item: any, index: number) => (
                   <Button key={index} className="btn" type="text">
                     {item?.fullName}
+                    {', '}
+                    {item.province.fullName}
                   </Button>
                 ))
               : language?.unupdated}
@@ -576,7 +590,9 @@ const CandidateNewDetail = () => {
               ),
             )
           ) : (
-            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+            <div style={{ marginTop: '16px', fontSize: '14px' }}>
+              {language?.unupdated}
+            </div>
           )}
 
           <div
@@ -604,7 +620,9 @@ const CandidateNewDetail = () => {
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+            <div style={{ marginTop: '16px', fontSize: '14px' }}>
+              {language?.unupdated}
+            </div>
           )}
 
           <div
@@ -655,7 +673,7 @@ const CandidateNewDetail = () => {
               ? candidate?.profilesLanguages?.map(
                   (item: any, index: number) => (
                     <Button key={index} className="btn" type="text">
-                      <span>{item.languageName}</span>
+                      <h3>{item.languageName}</h3>
                       <span>{item.dataLevel.data}</span>
                     </Button>
                   ),
@@ -680,7 +698,9 @@ const CandidateNewDetail = () => {
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+            <div style={{ marginTop: '16px', fontSize: '14px' }}>
+              {language?.unupdated}
+            </div>
           )}
 
           <div
@@ -733,7 +753,9 @@ const CandidateNewDetail = () => {
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+            <div style={{ marginTop: '16px', fontSize: '14px' }}>
+              {language?.unupdated}
+            </div>
           )}
 
           <div
@@ -817,6 +839,12 @@ const CandidateNewDetail = () => {
       <ModalMaxUnlock
         openModalMaxUnlock={openModalMaxUnlock}
         setOpenModalMaxUnlock={setOpenModalMaxUnlock}
+      />
+
+      <ModalShowAvatar
+        openModalShowAvatar={openModalShowAvatar}
+        setOpenModalShowAvatar={setOpenModalShowAvatar}
+        image={candidate?.avatarPath ? candidate?.avatarPath : ''}
       />
       <ModalNoneCV
         openModalNoneCv={openModalNoneCv}

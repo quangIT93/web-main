@@ -204,9 +204,6 @@ const HistoryPost = () => {
     //   title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
     //   childs: [
     //     languageRedux === 1 ? 'Tất cả' : 'All',
-    //     // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
-    //     // language?.history_page?.saved,
-    //     // language?.history_page?.posts_created,
     //   ],
     // },
   ];

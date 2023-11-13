@@ -2031,6 +2031,48 @@ const Navbar: React.FC = () => {
                   </Button>
                 </Badge>
                 {openNotificate ? <Notificate /> : <></>}
+                <div
+                  className="login__hover__container"
+                  style={{
+                    // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
+                    display:
+                      localStorage.getItem('accessToken') &&
+                      location?.pathname === '/' &&
+                      openLogin
+                        ? 'block'
+                        : 'none',
+                    position: 'absolute',
+                  }}
+                >
+                  <div className="login__hover">
+                    <h3>
+                      {languageRedux === 1
+                        ? 'Thông báo mới'
+                        : 'New notification'}
+                    </h3>
+                    <div className="login__hover__p">
+                      <p>
+                        {languageRedux === 1
+                          ? `Bạn có ${countNoti} thông báo mới!`
+                          : `You have ${countNoti} new notifications`}
+                      </p>
+                      <p>
+                        {languageRedux === 1
+                          ? `Vui lòng xác nhận ngay!`
+                          : 'Please confirm now!'}
+                      </p>
+                    </div>
+                    {/* <Button
+            type="primary"
+            onClick={() => {
+              setOpenModalLogin(true);
+            }}
+          >
+            <LoginArrowBlackIcon />
+            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+          </Button> */}
+                  </div>
+                </div>
               </div>
 
               {/* <div

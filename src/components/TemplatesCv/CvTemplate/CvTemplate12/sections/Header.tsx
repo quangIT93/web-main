@@ -45,13 +45,31 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     textName: {
       fontSize: '42pt',
-      color: color === 1 ? '#004080' : '#000000',
+      color:
+        color === 1
+          ? '#004080'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       fontWeight: 'extrabold',
       fontFamily: 'Montserrat SemiBold',
     },
     divTextJobTypeName: {
       height: '35.786pt',
-      backgroundColor: '#c5dff8',
+      backgroundColor:
+        color === 1
+          ? '#c5dff8'
+          : color === 2
+          ? '#5DADE2'
+          : color === 3
+          ? '#FCF3CF'
+          : color === 4
+          ? '#D5F5E3'
+          : '#FADBD8',
       display: 'flex',
       justifyContent: 'center',
       marginLeft: '-47.137pt',
@@ -62,7 +80,16 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontSize: '18pt',
       letterSpacing: '4pt',
       // marginTop: '20pt',
-      color: '#004080',
+      color:
+        color === 1
+          ? '#004080'
+          : color === 2
+          ? '#000000'
+          : color === 3
+          ? '#000000'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       fontFamily: 'Montserrat SemiBold',
     },
     divImage: {
@@ -75,7 +102,17 @@ const Header: React.FC<ICvHeader> = (props) => {
       justifyContent: 'center',
       right: '47.936pt',
       top: '47.936pt',
-      border: '2px solid #004080',
+      border: `2px solid ${
+        color === 1
+          ? '#8dc5fe'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000'
+      }`,
       padding: '11.844pt',
     },
     image: {
@@ -199,7 +236,21 @@ const Header: React.FC<ICvHeader> = (props) => {
           top: '-22',
         }}
       >
-        <Rect width="146" height="100" fill="#c5dff8" />
+        <Rect
+          width="146"
+          height="100"
+          fill={
+            color === 1
+              ? '#c5dff8'
+              : color === 2
+              ? '#5DADE2'
+              : color === 3
+              ? '#FCF3CF'
+              : color === 4
+              ? '#D5F5E3'
+              : '#FADBD8'
+          }
+        />
       </Svg>
 
       <View style={styles.divInfo}>

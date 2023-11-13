@@ -17,21 +17,30 @@ const Reference: React.FC<ICvReference> = (props) => {
     divTitle: {
       backgroundColor:
         color === 1
-          ? '#8dc5fe'
+          ? '#c5dff8'
           : color === 2
-          ? '#0D99FF'
+          ? '#5DADE2'
           : color === 3
-          ? '#FBBC04'
+          ? '#FCF3CF'
           : color === 4
-          ? '#5CB265'
-          : '#D80000',
+          ? '#D5F5E3'
+          : '#FADBD8',
     },
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
-      color: '#000',
+      color:
+        color === 1
+          ? '#000000'
+          : color === 2
+          ? '#000000'
+          : color === 3
+          ? '#000000'
+          : color === 4
+          ? '#000000'
+          : '#D80000',
       letterSpacing: '4pt',
       fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',

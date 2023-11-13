@@ -72,7 +72,7 @@ const ModalNotePostedToday: React.FC<IModalNotePostedToday> = (props) => {
               position: 'relative',
             }}
           >
-            {languageRedux === 1 ? 'Thông báo!' : 'Creating a job post failed!'}
+            {languageRedux === 1 ? 'Thông báo!' : 'Notification!'}
             <IconButton
               aria-label="close"
               onClick={handleClose}

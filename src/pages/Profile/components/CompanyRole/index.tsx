@@ -80,7 +80,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
     //       languageRedux === 1 ? "Đánh giá" : "Review"
     //     }
     //   </p>,
-    //   children: <ReviewCompany company={companyData} />,
+    //   children: <ReviewCompany company={companyData} companyId={companyData.id} />,
     // },
   ];
 
@@ -153,7 +153,13 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 </div>
                 <div className="info_company">
                   <div className="company_name">
-                    <h3>{companyData?.name}</h3>
+                    <h3>
+                      {companyData?.name
+                        ? companyData.name
+                        : languageRedux === 1
+                        ? 'Thông tin công ty chưa cập nhật'
+                        : 'Company information not updated yet'}
+                    </h3>
                   </div>
                 </div>
               </div>

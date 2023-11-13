@@ -5,6 +5,7 @@ import {
   LocationDetailPostIcon,
   LocationHomeIcon,
   MailDetailPostIcon,
+  NoImageCompany,
   PhoneDetailPostIcon,
   TaxCodeDetailPostIcon,
   WebDetailPostIcon,
@@ -232,11 +233,14 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       ) : (
                         <CameraComunityIcon />
                       )}
-                      <p>
-                        {languageRedux === 1
-                          ? 'Chưa có hình ảnh về công ty'
-                          : 'No image of the company yet'}
-                      </p>
+                      <div className={styles.noImage_company}>
+                        <NoImageCompany />
+                        <p>
+                          {languageRedux === 1
+                            ? 'Chưa có hình ảnh về công ty'
+                            : 'No image of the company yet'}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </section>
@@ -257,11 +261,14 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
           ) : company &&
             company?.images !== null &&
             company?.images?.length === 0 ? (
-            <p>
-              {languageRedux === 1
-                ? 'Chưa có hình ảnh về công ty'
-                : 'No image of the company yet'}
-            </p>
+            <div className={styles.noImage_company}>
+              <NoImageCompany />
+              <p>
+                {languageRedux === 1
+                  ? 'Chưa có hình ảnh về công ty'
+                  : 'No image of the company yet'}
+              </p>
+            </div>
           ) : (
             <p>
               {languageRedux === 1

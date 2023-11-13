@@ -21,6 +21,8 @@
         .MuiImageListItem-img {
             width: 72px !important;
             height: 72px !important;
+            min-width: 72px;
+            border-radius: 8px;
         }
 
         .div-card-company-history_info {
@@ -30,6 +32,7 @@
             flex-direction: column;
             height: 72px;
             justify-content: space-between;
+            width: 100%;
             // width: 80%;
             // width: calc(100% - 132px);
 

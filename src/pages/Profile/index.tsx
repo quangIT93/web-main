@@ -490,19 +490,21 @@ const Profile: React.FC = () => {
   };
 
   const getProfileMore = async () => {
-    if (profileV3.typeRoleData === 1) {
-      const result = await profileApi.getProfileCompanyV3(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      dispatch(setProfileMeCompanyV3(result));
-    } else if (profileV3.typeRoleData === 0) {
-      const result = await profileApi.getProfileInformationMoreV3(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      dispatch(setProfileMeInformationMoreV3(result));
-    }
     try {
-    } catch (error) {}
+      if (profileV3.typeRoleData === 1) {
+        const result = await profileApi.getProfileCompanyV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        dispatch(setProfileMeCompanyV3(result));
+      } else if (profileV3.typeRoleData === 0) {
+        const result = await profileApi.getProfileInformationMoreV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        dispatch(setProfileMeInformationMoreV3(result));
+      }
+    } catch (error) {
+      dispatch(setProfileMeCompanyV3([]));
+    }
   };
 
   useEffect(() => {

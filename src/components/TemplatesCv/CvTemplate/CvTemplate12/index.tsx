@@ -291,7 +291,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
         render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
         fixed
       />
-      <View fixed style={styles.fixedBackroundLeft}>
+      {/* <View fixed style={styles.fixedBackroundLeft}>
         <Svg
           style={{
             width: 100,
@@ -364,7 +364,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
             strokeWidth={1}
           />
         </Svg>
-      </View>
+      </View> */}
     </Page>
   );
 

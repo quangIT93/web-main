@@ -71,7 +71,7 @@ const Header: React.FC<ICvHeader> = (props) => {
           : color === 2
           ? '#0D99FF'
           : color === 3
-          ? '#FBBC04'
+          ? '#D4AC0D'
           : color === 4
           ? '#5CB265'
           : '#D80000',

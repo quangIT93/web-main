@@ -365,6 +365,11 @@ const CandidatesAll = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
+  console.log(addresses);
+  console.log(gender);
+  console.log(categories);
+  console.log(educations);
+
   return (
     <div className="container-candidate">
       {/* <Navbar />
@@ -447,13 +452,20 @@ const CandidatesAll = () => {
         </div>
         <div className="list-candidates">
           <div className="list-candidates_title">
-            {/* <h3>
-              {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
-              <span>
-                {` ${total}`}
-                {languageRedux === 1 ? ' ứng vử viên' : ' candidates'}
-              </span>
-            </h3> */}
+            {addresses?.length !== 0 ||
+            categories?.length !== 0 ||
+            educations ||
+            gender !== -1 ? (
+              <h3>
+                {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
+                <span>
+                  {` ${total}`}
+                  {languageRedux === 1 ? ' ứng vử viên' : ' candidates'}
+                </span>
+              </h3>
+            ) : (
+              <></>
+            )}
           </div>
           <InfiniteScroll
             dataLength={listData && listData?.length}
