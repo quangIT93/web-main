@@ -599,6 +599,7 @@ const Post: React.FC = () => {
       }
     } catch (error) {
       console.log('error', error);
+      dispatch(setProfileMeCompanyV3([]));
     }
   };
 

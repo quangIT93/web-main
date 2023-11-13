@@ -502,7 +502,9 @@ const Profile: React.FC = () => {
       dispatch(setProfileMeInformationMoreV3(result));
     }
     try {
-    } catch (error) {}
+    } catch (error) {
+      dispatch(setProfileMeCompanyV3([]));
+    }
   };
 
   useEffect(() => {
