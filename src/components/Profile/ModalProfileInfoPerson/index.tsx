@@ -622,11 +622,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 component="label"
                 htmlFor="startTime"
               >
-                {
-                  languageRedux === 1 ?
-                    "Mục tiêu nghề nghiệp" :
-                    "Career goals"
-                }{' '}
+                {languageRedux === 1 ? 'Mục tiêu nghề nghiệp' : 'Career goals'}{' '}
                 <span className="color-asterisk">*</span>
               </Typography>
               <TextField
@@ -640,11 +636,6 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 // label="Một số đặc điểm nhận diện công ty"
                 placeholder={language?.introduce_yourself_to_the_recruiter}
                 error={introduction?.length > 500} // Đánh dấu lỗi
-                inputRef={(input) => {
-                  if (input?.length > 500) {
-                    input.focus();
-                  }
-                }}
               // onKeyDown={(event) => {
               //   // if (event.key === 'Enter') {
               //   //   event.preventDefault();

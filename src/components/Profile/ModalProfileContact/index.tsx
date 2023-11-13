@@ -297,23 +297,23 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         }
       } else {
         message.error(messageError);
-        const peronal_info_name = document.getElementById('peronal_info_name') as HTMLElement;
-        const peronal_info_provinces = document.getElementById('peronal_info_provinces') as HTMLElement;
-        const peronal_info_position = document.getElementById('peronal_info_position') as HTMLElement;
-        const peronal_info_introduction = document.getElementById('peronal_info_introduction') as HTMLElement;
+        const contact_info_phone = document.getElementById('contact_info_phone') as HTMLElement;
+        const contact_info_email = document.getElementById('contact_info_email') as HTMLElement;
+        const contact_info_fb = document.getElementById('contact_info_fb') as HTMLElement;
+        const contact_info_linkedin = document.getElementById('contact_info_linkedin') as HTMLElement;
 
         switch (idError) {
           case 1:
-            peronal_info_name.focus();
+            contact_info_phone.focus();
             break;
           case 2:
-            peronal_info_provinces.focus();
+            contact_info_email.focus();
             break;
           case 3:
-            peronal_info_position.focus();
+            contact_info_fb.focus();
             break;
           case 4:
-            peronal_info_introduction.focus();
+            contact_info_linkedin.focus();
             break;
 
           default:
@@ -416,7 +416,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="nameProfile"
+              id="contact_info_email"
               name="title"
               value={email}
               onChange={handleSetEmail}
@@ -462,7 +462,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="nameProfile"
+              id="contact_info_fb"
               name="title"
               value={fb}
               onChange={handleSetFB}
@@ -502,7 +502,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="nameProfile"
+              id="contact_info_linkedin"
               name="title"
               value={linkIn}
               onChange={handleLinkIn}

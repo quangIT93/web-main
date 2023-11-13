@@ -365,6 +365,7 @@ const Post: React.FC = () => {
 
   // valid values form data
   const validValue = () => {
+    console.log(startDate < Date.now());
     if (titleJob === '') {
       return {
         message: language?.post_page?.err_job_title,
