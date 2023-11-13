@@ -9,6 +9,8 @@ import ModalNoteCreatePost from '#components/Post/ModalNoteCreatePost';
 
 import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 
+import ModalNotePostedToday from '#components/Post/ModalNotePostedToday';
+
 // import component
 import PostFilterSalary from '../../components/Post/PostFilterSalary';
 import PostJobCompany from '../../components/Post/PostJobCompany';
@@ -42,15 +44,17 @@ import './style.scss';
 
 // import data
 import postApi from 'api/postApi';
-import languageApi from 'api/languageApi';
-import apiCompany from 'api/apiCompany';
+// import languageApi from 'api/languageApi';
+// import apiCompany from 'api/apiCompany';
 
 import { message } from 'antd';
 
 import { RootState } from '../../store/reducer/index';
 import { useDispatch, useSelector } from 'react-redux';
-import { post } from 'validations/lang/vi/post';
-import { postEn } from 'validations/lang/en/post';
+// import { post } from 'validations/lang/vi/post';
+// import { postEn } from 'validations/lang/en/post';
+import { setLocationApi } from 'store/reducer/locationReducer';
+import locationApi from 'api/locationApi';
 import profileApi from 'api/profileApi';
 import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
 
@@ -215,8 +219,15 @@ const Post: React.FC = () => {
   // const [companyError, setCompanyError] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const [openModalNoteCreatePost, setOpenModalNoteCreatePost] =
-    React.useState(true);
+  const [openModalNoteCreatePost, setOpenModalNoteCreatePost] = React.useState(
+    () => {
+      setTimeout(() => {
+        return true;
+      }, 2000);
+
+      return false;
+    },
+  );
 
   const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
     React.useState(false);
@@ -236,6 +247,10 @@ const Post: React.FC = () => {
   const [selectedFillImages, setSelectedFillImages] = React.useState<string[]>(
     [],
   );
+
+  const [checkPost, setCheckPost] = React.useState<boolean>(false);
+  const [openCheckposted, setOpenCheckposted] = React.useState<boolean>(false);
+
   // const [language, setLanguage] = useState<any>();
 
   // const getlanguageApi = async () => {
@@ -269,7 +284,9 @@ const Post: React.FC = () => {
       if (result) {
         dispatch(setProfileMeCompanyV3(result));
       }
-    } catch (error) {}
+    } catch (error) {
+      dispatch(setProfileMeCompanyV3([]));
+    }
   };
 
   // submit
@@ -327,6 +344,24 @@ const Post: React.FC = () => {
       createNewPost(formData);
     }
   };
+
+  const getAllLocaitions = async () => {
+    try {
+      const result = await locationApi.getAllLocation(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        // setDataLocations(result.data);
+        dispatch(setLocationApi(result));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllLocaitions();
+  }, []);
 
   // valid values form data
   const validValue = () => {
@@ -395,6 +430,46 @@ const Post: React.FC = () => {
       };
     }
 
+    // if (startDate === endDate) {
+    //   return {
+    //     message:
+    //       languageRedux === 1
+    //         ? 'Ngày bắt đầu không thể bằng ngày kết thúc'
+    //         : 'The start date cannot be the same as the end date',
+    //     checkForm: false,
+    //   };
+    // }
+
+    if (startDate < Date.now() && isPeriodDate === 1) {
+      return {
+        message:
+          languageRedux === 1
+            ? 'Ngày bắt đầu không được nhỏ hơn thời gian hiện tại'
+            : 'The start date cannot be less than the current time',
+        checkForm: false,
+      };
+    }
+
+    if (!startDate && isPeriodDate === 1) {
+      return {
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập ngày bắt đầu'
+            : 'Please enter a start date',
+        checkForm: false,
+      };
+    }
+
+    if (!endDate && isPeriodDate === 1) {
+      return {
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập ngày kết thúc'
+            : 'Please enter an end date',
+        checkForm: false,
+      };
+    }
+
     return {
       message: '',
       checkForm: true,
@@ -407,12 +482,19 @@ const Post: React.FC = () => {
     const { message, checkForm } = validValue();
     try {
       if (checkForm) {
-        if (Array.from(formData.values()).some((value) => value !== '')) {
-          const result = await postApi.createPost(formData);
-          // const result = await postApi.createPostV3(formData);
-          if (result) {
-            setOpenModalPost(true);
+        if (profileV3 && profileV3.companyInfo && !checkPost) {
+          if (Array.from(formData.values()).some((value) => value !== '')) {
+            const result = await postApi.createPost(formData);
+            // const result = await postApi.createPostV3(formData);
+            if (result) {
+              setOpenModalPost(true);
+              setCheckPost(true);
+            }
           }
+        } else if (profileV3 && !profileV3.companyInfo && !checkPost) {
+          setOpenModalNoteCreateCompany(true);
+        } else {
+          setOpenCheckposted(true);
         }
       } else {
         messageApi.open({
@@ -461,8 +543,10 @@ const Post: React.FC = () => {
       // const result = await apiCompany.getCampanyByAccountApi(
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
+      console.log('profileV3?.companyInfo', profileV3?.companyInfo);
+      console.log('profileCompanyV3', profileCompanyV3);
 
-      if (profileCompanyV3.length !== 0) {
+      if (profileV3?.companyInfo) {
         setCompanyName(profileCompanyV3.name);
         setFillDistrict({
           id: profileCompanyV3.companyLocation.district.id,
@@ -489,6 +573,54 @@ const Post: React.FC = () => {
     } catch (error) {}
   };
 
+  const checkPostedToday = async () => {
+    try {
+      const result = await postApi.checkPostedToday();
+      if (result) {
+        if (result.data) {
+          setCheckPost(true);
+          setOpenCheckposted(true);
+          setOpenModalNoteCreatePost(false);
+        } else {
+          setCheckPost(false);
+          setOpenCheckposted(false);
+        }
+      }
+    } catch (error) {
+      console.log('Error: ' + error);
+    }
+  };
+
+  useEffect(() => {
+    checkPostedToday();
+  }, []);
+
+  const handleClickForm = () => {
+    if (checkPost) {
+      setOpenCheckposted(true);
+    }
+  };
+
+  const setProfleCompany = async () => {
+    try {
+      const result = await profileApi.getProfileCompanyV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      if (result) {
+        dispatch(setProfileMeCompanyV3(result));
+      }
+    } catch (error) {
+      console.log('error', error);
+      dispatch(setProfileMeCompanyV3([]));
+    }
+  };
+
+  useEffect(() => {
+    if (profileV3?.companyInfo) {
+      setProfleCompany();
+    }
+  }, []);
   useEffect(() => {
     getProfileComanyV3();
   }, [languageRedux]);
@@ -518,7 +650,7 @@ const Post: React.FC = () => {
           <div className="fill-company" onClick={handleFillCompany}>
             <h3>{language?.post_page?.fill_company}</h3>
           </div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} onClick={handleClickForm}>
             <PostJobCompany
               setTitleJob={setTitleJob}
               setCompanyName={setCompanyName}
@@ -650,6 +782,11 @@ const Post: React.FC = () => {
         <ModalPost
           openModalPost={openModalPost}
           setOpenModalPost={setOpenModalPost}
+        />
+
+        <ModalNotePostedToday
+          setOpenCheckposted={setOpenCheckposted}
+          openCheckposted={openCheckposted}
         />
         <ModalNoteCreatePost
           setOpenModalNoteCreatePost={setOpenModalNoteCreatePost}

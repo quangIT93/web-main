@@ -41,6 +41,7 @@ import EditImageCompany from './components/EditImageCompany';
 import { PencilIcon } from '#components/Icons';
 import profileApi from 'api/profileApi';
 import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 
 export interface FormValues {
   id: string;
@@ -181,7 +182,9 @@ const Company: React.FC<ICompany> = (props) => {
       if (result) {
         dispatch(setProfileMeCompanyV3(result));
       }
-    } catch (error) {}
+    } catch (error) {
+      dispatch(setProfileMeCompanyV3([]));
+    }
   };
 
   React.useEffect(() => {
@@ -205,7 +208,7 @@ const Company: React.FC<ICompany> = (props) => {
       // const result = await apiCompany.getCampanyByAccountApi(
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
-      if (profileCompanyV3.lenght !== 0) {
+      if (profileCompanyV3.id) {
         setTimeout(() => {
           setLoading(false);
         }, 1000);
@@ -261,6 +264,7 @@ const Company: React.FC<ICompany> = (props) => {
   // valid values form data
   const validValue = () => {
     if (
+      dataCompany?.logoPath === null ||
       dataCompany?.logoPath === '' ||
       dataCompany?.logoPath?.status === 'removed'
     ) {
@@ -358,8 +362,6 @@ const Company: React.FC<ICompany> = (props) => {
     };
   };
 
-  console.log('setHaveCompany', haveCompany);
-
   const handleCreateCompany = async (formData: any) => {
     // valid value form data
     const { message, checkForm } = validValue();
@@ -374,6 +376,14 @@ const Company: React.FC<ICompany> = (props) => {
               type: 'success',
               content: language?.company_page?.create_success,
             });
+
+            const resultProfileV3 = await profileApi.getProfileInformationV3(
+              languageRedux === 1 ? 'vi' : 'en',
+            );
+            if (resultProfileV3) {
+              dispatch(setProfileMeInformationV3(resultProfileV3));
+            }
+
             // console.log("create company result", result);
           } else {
             messageApi.open({
@@ -460,6 +470,7 @@ const Company: React.FC<ICompany> = (props) => {
     // formData.append('images', dataCompany?.images);
 
     !haveCompany &&
+      dataCompany.images !== null &&
       dataCompany?.images.forEach((image: any) => {
         formData.append('images', image);
       });
@@ -471,9 +482,10 @@ const Company: React.FC<ICompany> = (props) => {
     //   });
     // }
 
-    dataCompany?.images.forEach((image: any) => {
-      formDataImages.append('images', image);
-    });
+    dataCompany.images !== null &&
+      dataCompany?.images.forEach((image: any) => {
+        formDataImages.append('images', image);
+      });
     // setDataCompany((preValue: any) => ({
     //     ...preValue,
     //     images: [],
@@ -481,6 +493,8 @@ const Company: React.FC<ICompany> = (props) => {
     // }));
 
     if (formData) {
+      // console.log('formData', formData);
+
       haveCompany
         ? handleUpdateCompany(formData, formDataImages)
         : handleCreateCompany(formData);

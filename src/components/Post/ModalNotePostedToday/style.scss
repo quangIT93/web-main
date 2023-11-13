@@ -1,0 +1,59 @@
+@import "../../../scss/mixins";
+
+.modal-success_post {
+    .MuiBox-root {
+        .modal-title_successPost {
+            .MuiButtonBase-root {
+                top: 0px;
+                right: -20px;
+
+
+                @include breakpoint(mobile){
+                    top: -0px;
+                    right: -20px;
+                }
+
+                @include breakpoint(tablet){
+                    top: 0px;
+                    right: -20px;
+                }
+            }
+
+        }
+        .modal-text_modalPost {
+            text-align: center;
+        }
+
+        .div-img-modalPost {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .div-link-postModal {
+            display: flex;
+            justify-content: space-between;
+        }
+    
+        .div-link-postModal>a>img {
+            height: 35px;
+            width: auto;
+            width: 114px;
+          
+            @include breakpoint(mobile) {
+              //height: 35px;
+              //width: 70px;
+              height: 35px;
+              width: 120px;
+            }
+          
+            @include breakpoint(tablet) {
+              height: 35px;
+              width: 120px;
+            }
+        }
+    } 
+
+ 
+
+
+}

@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
+import './style.scss';
 interface IStyleWork {
   isWorkingWeekend: number;
   isRemotely: number;
@@ -12,8 +13,13 @@ interface IStyleWork {
 }
 
 const StyleWork: React.FC<IStyleWork> = (props) => {
-  const { isWorkingWeekend, isRemotely, setIsWorkingWeekend, setIsRemotely, language } =
-    props;
+  const {
+    isWorkingWeekend,
+    isRemotely,
+    setIsWorkingWeekend,
+    setIsRemotely,
+    language,
+  } = props;
 
   const handleWeekendChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) return setIsWorkingWeekend(1);
@@ -25,11 +31,12 @@ const StyleWork: React.FC<IStyleWork> = (props) => {
     setIsRemotely(0);
   };
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column' }}
+      className="post-styleWork"
+    >
       <FormControlLabel
-        label={
-          language?.working_on_the_weekend
-        }
+        label={language?.working_on_the_weekend}
         control={
           <Checkbox
             checked={isWorkingWeekend === 0 ? false : true}
@@ -38,9 +45,7 @@ const StyleWork: React.FC<IStyleWork> = (props) => {
         }
       />
       <FormControlLabel
-        label={
-          language?.remote_work
-        }
+        label={language?.remote_work}
         control={
           <Checkbox
             checked={isRemotely === 0 ? false : true}

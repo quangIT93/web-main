@@ -207,6 +207,30 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                     `/${props.item.salary_type}`}
                 </Typography>
               </div>
+              {/* <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                }}
+              >
+                <LocationHomeIcon />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{
+                    whiteSpace: 'nowrap',
+                    width: '100%',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                    marginLeft: '4px',
+                    fontSize: '12px',
+                    fontWeight: '400',
+                  }}
+                >
+                  categories thiếu data
+                </Typography>
+              </div> */}
               <div
                 style={{
                   marginTop: 5,
@@ -243,8 +267,8 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
               {language?.posted_on}{' '}
               {props.item?.created_at != null
                 ? moment(props.item?.created_at).format('DD/MM/YYYY') +
-                ' ' +
-                moment(new Date(props.item?.created_at)).format('HH:mm')
+                  ' ' +
+                  moment(new Date(props.item?.created_at)).format('HH:mm')
                 : language?.unupdated}
             </p>
 

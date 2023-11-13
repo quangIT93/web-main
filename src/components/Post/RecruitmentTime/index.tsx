@@ -35,11 +35,17 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
   } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
-    setStartDate(new Date(newValue._d).getTime());
+    var newDate = new Date(newValue._d);
+    var newDateTime = newDate.setHours(23, 59, 59, 999);
+
+    setStartDate(newDateTime);
   };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
-    setEndDate(new Date(newValue._d).getTime());
+    var newDate = new Date(newValue._d);
+    var newDateTime = newDate.setHours(23, 59, 59, 999);
+
+    setEndDate(newDateTime);
   };
 
   return (

@@ -1,0 +1,25 @@
+.buttons-over-10-cv-modal {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    @media screen and (max-width: 375px) {
+        flex-direction: column;
+    }
+
+    button {
+        width: 240px;
+        height: 42px;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 18px;
+        letter-spacing: 0em;
+        text-align: center;
+
+        &:first-child {
+            background: #0D99FF;
+        }
+    }
+}

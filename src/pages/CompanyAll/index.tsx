@@ -170,6 +170,7 @@ const CompanyAll = () => {
         setHasMore(false);
       } else {
         setTotal(result?.data?.total);
+        setListData([]);
         setHasMore(false);
         setListData([])
       }

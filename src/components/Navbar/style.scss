@@ -1574,10 +1574,12 @@
       }
 
       .wrap-btn_notice {
-
+        position: relative;
         @media screen and (max-width: 375px) {
           display: none;
         }
+
+
 
         button {
           padding: 0 !important;
@@ -1597,6 +1599,10 @@
           right: 0;
           left: unset !important;
         }
+
+
+        
+    
 
 
       }
@@ -2007,6 +2013,134 @@
 
     75% {
       transform: translateY(5px);
+    }
+  }
+
+
+  .login__hover__container {
+    position: absolute;
+    top: 60px;
+    right: -50px;
+    // left: 0;
+    z-index: 10;
+    // display: none;
+    // visibility: hidden;
+    // animation-duration: 0.55s;
+    // animation-delay: 0.3s;
+    // animation-name: animate-pop-in;
+    // animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
+    // animation-fill-mode: backwards;
+    @media screen and (max-width: 1861px) {
+      right: -15px;   
+    }
+
+    @media screen and (max-width: 1024px) {
+      right: -50px;   
+    }
+
+    @media screen and (max-width: 768px) {
+      right: -15px;   
+    }
+
+    .login__hover {
+      padding: 18px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 311px;
+      // height: 172px;
+      gap: 8px;
+      // left: 949px;
+      border-radius: 50px;
+      background: rgba(37, 37, 37, 1);
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: -11px;
+        right: 70px;
+        width: 0;
+        height: 0;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-bottom: 13px solid rgb(37, 37, 37);
+      }
+
+      @media screen and (min-width: 427px) and (max-width: 768px) {
+        &:after {
+          right: 35px;
+        }
+      }
+
+      @include breakpoint(destop) {
+        &:after {
+          right: 35px;
+        }
+      }
+
+      @media screen and (min-width: 1441px) and (max-width: 1861px) {
+        &:after {
+          right: 35px;
+        }
+      }
+
+      h3 {
+        color: #FFF;
+        font-family: Roboto;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 30px;
+        /* 150% */
+      }
+
+      .login__hover__p {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        p {
+          // text-align: left;
+          color: #FFF;
+          font-family: Roboto;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 24px;
+          /* 150% */
+        }
+      }
+
+      .ant-btn {
+        padding: 12px 24px;
+        gap: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 48px;
+        flex-shrink: 0;
+        border-radius: 37px;
+        background-color: #FFF;
+        transition: all 0.3 linear;
+        color: #252525;
+        font-family: Roboto;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        /* 150% */
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        &:active {
+          transform: scale(0.9);
+        }
+      }
+
     }
   }
 }

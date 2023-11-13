@@ -56,11 +56,11 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   company?.description
                     ? company.description
                     : languageRedux === 1
-                      ? 'Thông tin công ty chưa cập nhật'
-                      : 'Company information not updated yet'
+                    ? 'Thông tin công ty chưa cập nhật'
+                    : 'Company information not updated yet'
                 }
                 autoSize
-              // showCount
+                // showCount
               />
             </div>
             <div className={styles.company_information_basic}>
@@ -76,8 +76,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.taxCode
                         ? company.taxCode
                         : languageRedux === 1
-                          ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                        ? 'Thông tin công ty chưa cập nhật'
+                        : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -89,8 +89,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.address
                         ? company.address
                         : languageRedux === 1
-                          ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                        ? 'Thông tin công ty chưa cập nhật'
+                        : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -102,8 +102,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.email
                         ? company.email
                         : languageRedux === 1
-                          ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                        ? 'Thông tin công ty chưa cập nhật'
+                        : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -115,8 +115,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.phone
                         ? company.phone
                         : languageRedux === 1
-                          ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                        ? 'Thông tin công ty chưa cập nhật'
+                        : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -128,8 +128,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.website
                         ? company.website
                         : languageRedux === 1
-                          ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                        ? 'Thông tin công ty chưa cập nhật'
+                        : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -141,8 +141,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.companyCategory?.fullName
                         ? company.companyCategory.fullName
                         : languageRedux === 1
-                          ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                        ? 'Thông tin công ty chưa cập nhật'
+                        : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -154,10 +154,10 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       : 'Company size: '}
                     <span>
                       {company?.companySizeInfomation?.nameText
-                        ? company.companySizeInfomation.nameText
+                        ? company?.companySizeInfomation?.nameText
                         : languageRedux === 1
-                          ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                        ? 'Thông tin công ty chưa cập nhật'
+                        : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -190,61 +190,85 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
         </div>
         <div className={styles.company_image}>
           <h3>
-            {languageRedux === 1 ? 'Hình ảnh công ty' : "Company's iamges"}
+            {languageRedux === 1 ? 'Hình ảnh công ty' : "Company's images"}
           </h3>
-          <div
-            className={styles.company_role_images}
-            style={{
-              height:
-                company?.images && company?.images?.length > 0
-                  ? 'fit-content'
-                  : '310px',
-              border:
-                company?.images && company?.images?.length > 0
-                  ? 'none'
-                  : '1px solid #ccc',
-            }}
-          >
-            <Box p="0rem 0">
-              <section className={styles.drag_img_container}>
-                <div
-                  // {...getRootProps({
-                  className={styles.dropzone}
-                // })}
-                >
-                  {/* <input {...getInputProps()} /> */}
+
+          {company && company?.id && company.images?.length !== 0 ? (
+            <div
+              className={styles.company_role_images}
+              style={{
+                height:
+                  company?.images && company?.images?.length > 0
+                    ? 'fit-content'
+                    : '310px',
+                border:
+                  company?.images && company?.images?.length > 0
+                    ? 'none'
+                    : '1px solid #ccc',
+              }}
+            >
+              <Box p="0rem 0">
+                <section className={styles.drag_img_container}>
                   <div
-                    className={styles.drag_img_camera}
-                    style={{
-                      display:
-                        // company !== undefined ||
-                        company?.images && company?.images?.length !== 0
-                          ? 'none'
-                          : 'flex',
-                    }}
+                    // {...getRootProps({
+                    className={styles.dropzone}
+                    // })}
                   >
-                    <CameraComunityIcon />
-                    <p>
-                      {languageRedux === 1
-                        ? 'Chưa có hình ảnh về công ty'
-                        : 'No image of the company yet'}
-                    </p>
+                    {/* <input {...getInputProps()} /> */}
+                    <div
+                      className={styles.drag_img_camera}
+                      style={{
+                        display:
+                          // company !== undefined ||
+                          company &&
+                          company?.images &&
+                          company?.images?.length !== 0
+                            ? 'none'
+                            : 'flex',
+                      }}
+                    >
+                      {location.pathname === '/profile' ? (
+                        <></>
+                      ) : (
+                        <CameraComunityIcon />
+                      )}
+                      <p>
+                        {languageRedux === 1
+                          ? 'Chưa có hình ảnh về công ty'
+                          : 'No image of the company yet'}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </section>
-              <Box className={styles.list_iamges}>
-                {company?.images?.map((item: any, index: number) => (
-                  <div className={styles.item_image} key={index}>
-                    <img
-                      key={index}
-                      src={item?.imagePath}
-                      alt={language?.err_none_img}
-                    />
-                  </div>
-                ))}
+                </section>
+                <Box className={styles.list_iamges}>
+                  {company &&
+                    company?.images?.map((item: any, index: number) => (
+                      <div className={styles.item_image} key={index}>
+                        <img
+                          key={index}
+                          src={item?.imagePath}
+                          alt={language?.err_none_img}
+                        />
+                      </div>
+                    ))}
+                </Box>
               </Box>
-            </Box>
-          </div>
+            </div>
+          ) : company &&
+            company?.images !== null &&
+            company?.images?.length === 0 ? (
+            <p>
+              {languageRedux === 1
+                ? 'Chưa có hình ảnh về công ty'
+                : 'No image of the company yet'}
+            </p>
+          ) : (
+            <p>
+              {languageRedux === 1
+                ? 'Thông tin công ty chưa cập nhật'
+                : 'Company information not updated yet'}
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -406,7 +406,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // cancel delete cv
@@ -490,19 +490,21 @@ const Profile: React.FC = () => {
   };
 
   const getProfileMore = async () => {
-    if (profileV3.typeRoleData === 1) {
-      const result = await profileApi.getProfileCompanyV3(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      dispatch(setProfileMeCompanyV3(result));
-    } else if (profileV3.typeRoleData === 0) {
-      const result = await profileApi.getProfileInformationMoreV3(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      dispatch(setProfileMeInformationMoreV3(result));
-    }
     try {
-    } catch (error) { }
+      if (profileV3.typeRoleData === 1) {
+        const result = await profileApi.getProfileCompanyV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        dispatch(setProfileMeCompanyV3(result));
+      } else if (profileV3.typeRoleData === 0) {
+        const result = await profileApi.getProfileInformationMoreV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        dispatch(setProfileMeInformationMoreV3(result));
+      }
+    } catch (error) {
+      dispatch(setProfileMeCompanyV3([]));
+    }
   };
 
   useEffect(() => {
@@ -525,8 +527,6 @@ const Profile: React.FC = () => {
   const handleCloseAlertCv = () => dispatch<any>(setAlertSuccess(false));
   const handleCloseLackInfo = () => dispatch<any>(setAlertLackInfo(false));
   const handleCloseEditInfo = () => dispatch<any>(setAlertEditInfo(false));
-
-  console.log('more', profileMorev3);
 
   return (
     <div className="profile">
@@ -905,7 +905,7 @@ const Profile: React.FC = () => {
           </Snackbar>
         </Stack>
         {profileV3.typeRoleData === 0 &&
-          profileMorev3?.profilesCvs?.length === 0 ? (
+        profileMorev3?.profilesCvs?.length === 0 ? (
           <ModalIntroduceCv />
         ) : (
           <></>

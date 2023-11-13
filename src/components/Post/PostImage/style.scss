@@ -45,7 +45,7 @@
       color: #bdbdbd;
       outline: none;
       transition: border .24s ease-in-out;
-
+      font-size: 14px;
       .thumbs-containter {
         display: flex;
         flex-direction: row;
@@ -107,6 +107,12 @@
 
     img {
       border: 1px solid #ccc;
+    }
+  }
+
+  .MuiBox-root {
+    p {
+      font-size: 14px;
     }
   }
 }

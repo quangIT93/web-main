@@ -25,7 +25,7 @@ const Contact: React.FC<ICvContact> = (props) => {
           : '#FADBD8'
       }`,
       marginLeft: '20pt',
-      width: '137pt',
+      maxWidth: '137pt',
       padding: '13.021pt',
       display: 'flex',
       flexDirection: 'column',
@@ -33,17 +33,17 @@ const Contact: React.FC<ICvContact> = (props) => {
     },
     divInfo: {
       fontSize: '11pt',
-      //   wordwrap: 'break-all',
+      wordwrap: 'break-word',
       lineHeight: '1.2',
       fontFamily: 'Fahkwang Medium',
-      color: '',
+      maxWidth: '110pt',
     },
     textInfo: {
       fontSize: '9pt',
       wordwrap: 'break-word',
       lineHeight: '1.2',
       fontFamily: 'Fahkwang Medium',
-      width: '110pt',
+      maxWidth: '110pt',
     },
   });
   return (
