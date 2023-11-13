@@ -30,7 +30,7 @@ const Reference: React.FC<ICvReference> = (props) => {
       marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
-      width: '137pt',
+      width: '180pt',
       color:
         color === 1
           ? '#000000'

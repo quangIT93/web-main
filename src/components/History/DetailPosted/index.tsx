@@ -31,7 +31,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
-import { CateIcon, GenderIcon, PersonIcon } from '#components/Icons/iconCandidate';
+import {
+  CateIcon,
+  GenderIcon,
+  PersonIcon,
+} from '#components/Icons/iconCandidate';
 import { IconEmail, PhoneIcon } from '#components/Icons';
 
 interface IDetailPosted {
@@ -291,8 +295,9 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               boxShadow: 'none',
               borderRadius: '5px',
               margin: '8px 0',
-              background: `${candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
-                }`,
+              background: `${
+                candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
+              }`,
             }}
             onClick={(e) =>
               handleClickCandidate(e, candidate.id, detailPosted?.id)
@@ -321,11 +326,13 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                       <GenderIcon />
                     </span>
                     <span>
-                      {
-                        candidate.gender === 1 ?
-                          languageRedux === 1 ? "Nam" : "Male" :
-                          languageRedux === 1 ? "Nữ" : "Female"
-                      }
+                      {candidate.gender === 1
+                        ? languageRedux === 1
+                          ? 'Nam'
+                          : 'Male'
+                        : languageRedux === 1
+                        ? 'Nữ'
+                        : 'Female'}
                     </span>
                   </div>
                 </div>
@@ -335,7 +342,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                   display: 'flex',
                   flexDirection: 'column',
                   // gap: '4px',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
                 }}
               >
                 <div
@@ -397,22 +404,21 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                       <IconEmail width={16} height={16} />
                     </span>
                     <p>
-                      {
-                        candidate?.email
-                          ? candidate.email
-                          : languageRedux === 1
-                            ? 'Thông tin chưa cập nhật'
-                            : 'Not updated information'
-                      }
+                      {candidate?.email
+                        ? candidate.email
+                        : languageRedux === 1
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'}
                     </p>
                   </div>
                   <div className="item-detail-candidate">
                     <span className="icon-info-candidate">
                       <PhoneIcon width={16} height={16} />
                     </span>
-                    <p>{candidate?.phone
-                      ? candidate.phone
-                      : languageRedux === 1
+                    <p>
+                      {candidate?.phone
+                        ? candidate.phone
+                        : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
                         : 'Not updated information'}
                     </p>
@@ -422,15 +428,13 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                       <CateIcon />
                     </span>
                     <p>
-                      {
-                        candidate?.categories?.length !== 0
-                          ? candidate.categories?.map((value: any) => {
-                            return `${value.fullName}, `;
+                      {candidate?.categories?.length !== 0
+                        ? candidate.categories?.map((value: any) => {
+                            return `${value.parent_category}, `;
                           })
-                          : languageRedux === 1
-                            ? 'Thông tin chưa cập nhật'
-                            : 'Not updated information'
-                      }
+                        : languageRedux === 1
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'}
                     </p>
                   </div>
                 </div>
@@ -438,8 +442,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                   {candidate?.introduction
                     ? candidate.introduction
                     : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'}
+                    ? 'Thông tin chưa cập nhật'
+                    : 'Not updated information'}
                 </h2>
               </Box>
             </div>

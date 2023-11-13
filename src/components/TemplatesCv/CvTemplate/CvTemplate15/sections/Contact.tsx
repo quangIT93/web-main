@@ -1,13 +1,13 @@
 import { Text, View, StyleSheet } from '@react-pdf/renderer';
 import React from 'react';
-
 interface ICvContact {
   color: any;
   profile: any;
   fontSize: any;
+  profileMore: any;
 }
 const Contact: React.FC<ICvContact> = (props) => {
-  const { color, profile, fontSize } = props;
+  const { color, profile, fontSize, profileMore } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
@@ -15,17 +15,17 @@ const Contact: React.FC<ICvContact> = (props) => {
     divWrapInfo: {
       border: `1px solid ${
         color === 1
-          ? '#e5f6fe'
+          ? '#8dc5fe'
           : color === 2
-          ? '#D6EAF8'
+          ? '#0D99FF'
           : color === 3
-          ? '#FCF3CF'
+          ? '#FBBC04'
           : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8'
+          ? '#5CB265'
+          : '#D80000'
       }`,
       marginLeft: '20pt',
-      maxWidth: '137pt',
+      width: '137pt',
       padding: '13.021pt',
       display: 'flex',
       flexDirection: 'column',
@@ -33,17 +33,17 @@ const Contact: React.FC<ICvContact> = (props) => {
     },
     divInfo: {
       fontSize: '11pt',
-      wordwrap: 'break-word',
+      //   wordwrap: 'break-all',
       lineHeight: '1.2',
       fontFamily: 'Fahkwang Medium',
-      maxWidth: '110pt',
+      color: '',
     },
     textInfo: {
       fontSize: '9pt',
       wordwrap: 'break-word',
       lineHeight: '1.2',
       fontFamily: 'Fahkwang Medium',
-      maxWidth: '110pt',
+      width: '110pt',
     },
   });
   return (

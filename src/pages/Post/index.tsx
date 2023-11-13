@@ -137,7 +137,7 @@ const Post: React.FC = () => {
   // const { openCollapseFilter } = useContext(HomeValueContext);
 
   // const userProfile = useSelector((state: RootState) => state.profile.profile);
-
+  const dispatch = useDispatch();
   const formValues = {
     title: '',
     companyName: '',
@@ -251,7 +251,6 @@ const Post: React.FC = () => {
   const [checkPost, setCheckPost] = React.useState<boolean>(false);
   const [openCheckposted, setOpenCheckposted] = React.useState<boolean>(false);
 
-  const dispatch = useDispatch();
   // const [language, setLanguage] = useState<any>();
 
   // const getlanguageApi = async () => {
@@ -275,6 +274,20 @@ const Post: React.FC = () => {
   // React.useEffect(() => {
   //   getlanguageApi();
   // }, [languageRedux]);
+
+  const getProfileComanyV3 = async () => {
+    try {
+      const result = await profileApi.getProfileCompanyV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      if (result) {
+        dispatch(setProfileMeCompanyV3(result));
+      }
+    } catch (error) {
+      dispatch(setProfileMeCompanyV3([]));
+    }
+  };
 
   // submit
   const handleSubmit = (
@@ -608,6 +621,9 @@ const Post: React.FC = () => {
       setProfleCompany();
     }
   }, []);
+  useEffect(() => {
+    getProfileComanyV3();
+  }, [languageRedux]);
 
   if (localStorage.getItem('accessToken')) {
     return (

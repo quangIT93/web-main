@@ -1,17 +1,18 @@
 import React from 'react';
-import { View, StyleSheet, Text } from '@react-pdf/renderer';
+import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
 import null_avatar from '../../images/null_avatar.png';
-interface ICvAward {
+interface ICvProfile {
   color: any;
   profile: any;
   fontSize: any;
   profileMore: any;
 }
-const Award: React.FC<ICvAward> = (props) => {
+const Profile: React.FC<ICvProfile> = (props) => {
   const { color, profile, fontSize, profileMore } = props;
   const styles = StyleSheet.create({
     container: {
-      marginRight: -25,
+      marginRight: -35,
+      // backgroundColor: '#f4f4f4',
     },
     divTitle: {
       backgroundColor:
@@ -29,7 +30,7 @@ const Award: React.FC<ICvAward> = (props) => {
       marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
-      width: '137pt',
+      // width: '137pt',
       color:
         color === 1
           ? '#000000'
@@ -40,31 +41,14 @@ const Award: React.FC<ICvAward> = (props) => {
           : color === 4
           ? '#000000'
           : '#D80000',
-      letterSpacing: '4pt',
       fontFamily: 'Fahkwang Bold',
+      letterSpacing: '4pt',
       fontWeight: 'extrabold',
     },
     divDes: {
       marginLeft: '20pt',
       marginTop: '9.338pt',
-      width: '137pt',
-    },
-    TextTitleDes: {
-      fontSize: '11pt',
-      wordwrap: 'break-word',
-      textAlign: 'justify',
-      lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
-      color:
-        color === 1
-          ? '#004080'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+      width: '180pt',
     },
     textDes: {
       fontSize: '9pt',
@@ -77,20 +61,13 @@ const Award: React.FC<ICvAward> = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
-        <Text style={styles.title}>Award</Text>
+        <Text style={styles.title}>Profile</Text>
       </View>
-      {profileMore?.profileAwards?.map((ward: any) => (
-        <View>
-          <View style={styles.divDes}>
-            <Text style={styles.TextTitleDes}>{ward?.title}</Text>
-          </View>
-          <View style={styles.divDes}>
-            <Text style={styles.textDes}>{ward?.description}</Text>
-          </View>
-        </View>
-      ))}
+      <View style={styles.divDes}>
+        <Text style={styles.textDes}>{profile?.introduction}</Text>
+      </View>
     </View>
   );
 };
 
-export default Award;
+export default Profile;

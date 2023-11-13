@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
-import null_avatar from '../../images/null_avatar.png';
-interface ICvSkill {
+
+interface ICvLanguage {
   color: any;
   profile: any;
   fontSize: any;
   profileMore: any;
 }
-const Skill: React.FC<ICvSkill> = (props) => {
+const Language: React.FC<ICvLanguage> = (props) => {
   const { color, profile, fontSize, profileMore } = props;
   const styles = StyleSheet.create({
     container: {
@@ -29,7 +29,7 @@ const Skill: React.FC<ICvSkill> = (props) => {
       marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
-      width: '137pt',
+      width: '180pt',
       color:
         color === 1
           ? '#000000'
@@ -40,21 +40,17 @@ const Skill: React.FC<ICvSkill> = (props) => {
           : color === 4
           ? '#000000'
           : '#D80000',
-      letterSpacing: '4pt',
       fontFamily: 'Fahkwang Bold',
+      letterSpacing: '4pt',
       fontWeight: 'extrabold',
     },
-    divDes: {
+    divInfo: {
+      marginTop: '10.408pt',
       marginLeft: '20pt',
-      marginTop: '9.338pt',
-      width: '137pt',
     },
-    TextTitleDes: {
-      fontSize: '11pt',
-      wordwrap: 'break-word',
-      textAlign: 'justify',
-      lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+    TextTitleInfo: {
+      fontSize: '16pt',
+      width: 'auto',
       color:
         color === 1
           ? '#004080'
@@ -65,8 +61,10 @@ const Skill: React.FC<ICvSkill> = (props) => {
           : color === 4
           ? '#5CB265'
           : '#D80000',
+      fontFamily: 'Fahkwang Bold',
+      fontWeight: 'extrabold',
     },
-    textDes: {
+    TextInfo: {
       fontSize: '9pt',
       wordwrap: 'break-word',
       textAlign: 'justify',
@@ -86,27 +84,27 @@ const Skill: React.FC<ICvSkill> = (props) => {
           : color === 4
           ? '#5CB265'
           : '#D80000',
-      margin: '7pt 0 4pt 20pt',
+      margin: '7pt 0',
     },
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
-        <Text style={styles.title}>Skill</Text>
+        <Text style={styles.title}>Languages</Text>
       </View>
-      {profileMore?.profilesSkills?.map((skill: any) => (
-        <View>
-          <View style={styles.divDes}>
-            <Text style={styles.TextTitleDes}>{skill?.skillName}</Text>
-          </View>
-          <View style={styles.divDes}>
-            <Text style={styles.textDes}>{skill?.dataLevel?.data}</Text>
+      {profileMore?.profilesLanguages?.map((language: any) => (
+        <View style={styles.divInfo}>
+          <View>
+            <Text style={styles.TextTitleInfo}>{language?.languageName}</Text>
           </View>
           <View style={styles.BorderLine}></View>
+          <View>
+            <Text style={styles.TextInfo}>{language?.dataLevel?.data}</Text>
+          </View>
         </View>
       ))}
     </View>
   );
 };
 
-export default Skill;
+export default Language;
