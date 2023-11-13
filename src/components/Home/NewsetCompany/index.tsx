@@ -100,8 +100,8 @@ const NewestCompany = () => {
                 )} */}
       </div>
 
-      <div className="list-company-home">
-        <Skeleton loading={loading} active>
+      <Skeleton loading={loading} active>
+        <div className="list-company-home">
           {listData?.companies?.map((item: any, index: number) => {
             return (
               <CompanyCard
@@ -112,8 +112,8 @@ const NewestCompany = () => {
               />
             );
           })}
-        </Skeleton>
-      </div>
+        </div>
+      </Skeleton>
       <div
         className="view-all-down"
         onClick={handleChangeRouteNewestWorker}

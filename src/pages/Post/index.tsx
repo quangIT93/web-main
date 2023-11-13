@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, FormEvent, useEffect, useRef } from 'react';
 
 import { Switch } from 'antd';
 import { Helmet } from 'react-helmet';
@@ -218,7 +218,7 @@ const Post: React.FC = () => {
   // const [titleError, setTitleError] = useState(false);
   // const [companyError, setCompanyError] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
-
+  const textFieldRef = useRef(null);
   const [openModalNoteCreatePost, setOpenModalNoteCreatePost] = React.useState(
     () => {
       setTimeout(() => {
@@ -369,30 +369,42 @@ const Post: React.FC = () => {
       return {
         message: language?.post_page?.err_job_title,
         checkForm: false,
+        idError: 1,
+      };
+    }
+    if (titleJob.length > 255) {
+      return {
+        message: language?.post_page?.err_job_title,
+        checkForm: false,
+        idError: 1,
       };
     }
     if (companyName === '') {
       return {
         message: language?.post_page?.err_company_name,
         checkForm: false,
+        idError: 2,
       };
     }
     if (address === '') {
       return {
         message: language?.post_page?.err_address,
         checkForm: false,
+        idError: 3,
       };
     }
     if (wardId === '') {
       return {
         message: language?.post_page?.err_location,
         checkForm: false,
+        idError: 4,
       };
     }
     if (categoriesId.length <= 0) {
       return {
         message: language?.post_page?.err_cate,
         checkForm: false,
+        idError: 5,
       };
     }
     if (
@@ -402,24 +414,28 @@ const Post: React.FC = () => {
       return {
         message: language?.post_page?.err_salary,
         checkForm: false,
+        idError: 6,
       };
     }
     if (Number(salaryMax) < Number(salaryMin)) {
       return {
         message: language?.post_page?.err_verify_salary,
         checkForm: false,
+        idError: 6,
       };
     }
     if (phoneNumber === '' || phoneNumber.length < 10) {
       return {
         message: language?.company_page?.err_phone_mess,
         checkForm: false,
+        idError: 7,
       };
     }
     if (description === '') {
       return {
         message: language?.company_page?.err_des_mess,
         checkForm: false,
+        idError: 8,
       };
     }
 
@@ -427,6 +443,7 @@ const Post: React.FC = () => {
       return {
         message: language?.post_page?.err_date,
         checkForm: false,
+        idError: 9,
       };
     }
 
@@ -447,6 +464,7 @@ const Post: React.FC = () => {
             ? 'Ngày bắt đầu không được nhỏ hơn thời gian hiện tại'
             : 'The start date cannot be less than the current time',
         checkForm: false,
+        idError: 9,
       };
     }
 
@@ -457,6 +475,7 @@ const Post: React.FC = () => {
             ? 'Vui lòng nhập ngày bắt đầu'
             : 'Please enter a start date',
         checkForm: false,
+        idError: 9,
       };
     }
 
@@ -467,19 +486,21 @@ const Post: React.FC = () => {
             ? 'Vui lòng nhập ngày kết thúc'
             : 'Please enter an end date',
         checkForm: false,
+        idError: 9,
       };
     }
 
     return {
       message: '',
       checkForm: true,
+      idError: 0,
     };
   };
 
   // post newPost
   const createNewPost = async (formData: any) => {
     // valid value form data
-    const { message, checkForm } = validValue();
+    const { message, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         if (profileV3 && profileV3.companyInfo && !checkPost) {
@@ -501,6 +522,20 @@ const Post: React.FC = () => {
           type: 'error',
           content: message,
         });
+        const job_title = document.getElementById('post_jobTitle_job_title') as HTMLElement;
+        const post_job_company = document.getElementById('post_job_company') as HTMLElement;
+        switch (idError) {
+          case 1:
+            job_title.focus();
+            break;
+          case 2:
+            post_job_company.focus();
+            break;
+
+          default:
+            break;
+        }
+
       }
     } catch (error: any) {
       console.error('error', error?.response?.data?.message);
@@ -570,7 +605,7 @@ const Post: React.FC = () => {
       } else {
         setOpenModalNoteCreateCompany(true);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const checkPostedToday = async () => {
@@ -634,7 +669,7 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-            // style={{ textAlign: 'center', display: 'block' }}
+          // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>{language?.profile_page?.create_post}</h1>
             <div className="post-main_switch">
