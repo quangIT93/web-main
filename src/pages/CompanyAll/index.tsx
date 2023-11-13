@@ -172,6 +172,7 @@ const CompanyAll = () => {
         setTotal(result?.data?.total);
         setListData([]);
         setHasMore(false);
+        setListData([])
       }
     } catch (error) {
       console.log('error', error);

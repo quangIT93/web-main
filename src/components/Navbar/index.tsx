@@ -1230,7 +1230,12 @@ const Navbar: React.FC = () => {
               : 'none',
         }}
       >
-        <div className="login__hover">
+        <div
+          className="login__hover"
+          style={{
+            display: profileV3.typeRoleData === 0 ? 'flex' : 'none',
+          }}
+        >
           <h3>{languageRedux === 1 ? 'Cập nhật hồ sơ' : 'Update profile'}</h3>
           <div className="login__hover__p">
             <p>
@@ -1611,68 +1616,68 @@ const Navbar: React.FC = () => {
     //         </div>
     //       </div>
     //     </div>,
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '4px',
-        alignItems: 'center',
-        marginLeft: '4px',
-      }}
-      key="5"
-    >
-      {/* <div
-        className="language"
-        onClick={() => {
-          languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
-        }}
-      >
-        {languageRedux === 1 ? (
-          <VNSubLoginIcon width={24} height={24} />
-        ) : (
-          <ENSubLoginIcon width={24} height={24} />
-        )}
-      </div> */}
-      {/* <div className="switch-container-responsive">
-        <div
-          className="search-job-switch-responsive "
-          style={{
-            display:
-              roleRedux === 0 || profileV3?.typeRoleData === 0
-                ? 'flex'
-                : 'none',
-          }}
-        >
-          <p>
-        {
-          searchJob ?
-            languageRedux === 1 ?
-              `Trạng thái tìm việc: bật` :
-              `Job search status is: on` :
-            languageRedux === 1 ?
-              `Trạng thái tìm việc: tắt` :
-              `Job search status is: off`
-        }
-      </p>
-          <Switch
-            checked={searchJob}
-            loading={loadingSwitch}
-            onChange={handleOnchangeSearchJob}
-          />
-          <div className="switch__hover__container">
-            <div className="switch__hover">
-              <div className="switch__hover__p">
-                <p>
-                  {languageRedux === 1
-                    ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
-                    : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-    </div>,
+    // <div
+    //   style={{
+    //     display: 'flex',
+    //     flexDirection: 'column',
+    //     gap: '4px',
+    //     alignItems: 'center',
+    //     marginLeft: '4px',
+    //   }}
+    //   key="5"
+    // >
+    //   <div
+    //     className="language"
+    //     onClick={() => {
+    //       languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
+    //     }}
+    //   >
+    //     {languageRedux === 1 ? (
+    //       <VNSubLoginIcon width={24} height={24} />
+    //     ) : (
+    //       <ENSubLoginIcon width={24} height={24} />
+    //     )}
+    //   </div>
+    //   {/* <div className="switch-container-responsive">
+    //     <div
+    //       className="search-job-switch-responsive "
+    //       style={{
+    //         display:
+    //           roleRedux === 0 || profileV3?.typeRoleData === 0
+    //             ? 'flex'
+    //             : 'none',
+    //       }}
+    //     >
+    //       <p>
+    //     {
+    //       searchJob ?
+    //         languageRedux === 1 ?
+    //           `Trạng thái tìm việc: bật` :
+    //           `Job search status is: on` :
+    //         languageRedux === 1 ?
+    //           `Trạng thái tìm việc: tắt` :
+    //           `Job search status is: off`
+    //     }
+    //   </p>
+    //       <Switch
+    //         checked={searchJob}
+    //         loading={loadingSwitch}
+    //         onChange={handleOnchangeSearchJob}
+    //       />
+    //       <div className="switch__hover__container">
+    //         <div className="switch__hover">
+    //           <div className="switch__hover__p">
+    //             <p>
+    //               {languageRedux === 1
+    //                 ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
+    //                 : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
+    //             </p>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div> */}
+    // </div>,
     // <div className="switch-container-responsive">
     //   <div className="search-job-switch-responsive " style={{ display: role === 0 ? 'flex' : 'none' }}>
     //     {/* <p>

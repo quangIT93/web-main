@@ -117,6 +117,11 @@ const DetailCompany = () => {
   };
 
   useEffect(() => {
+    !companyId &&
+      window.open(`/`, '_parent')
+  }, [])
+
+  useEffect(() => {
     getCompanyInfo();
   }, [languageRedux, openModalFollowSuccess]);
 

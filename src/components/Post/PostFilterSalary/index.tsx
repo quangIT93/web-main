@@ -141,10 +141,11 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
               Number(salaryMin.toString().replace(',', '')),
             )}
             disabled={salaryType === 6}
+            id="post_job_salaryMin"
           />
-            <div
+          <div
             className="wrap-noti_input"
-            // style={{ position: 'absolute', bottom: '-15px' }}
+          // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {salaryMin === 0 ? (
               <span className="helper-text">
@@ -182,10 +183,11 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
               Number(salaryMax.toString().replace(',', '')),
             )}
             disabled={salaryType === 6}
+            id="post_job_salaryMax"
           />
-            <div
+          <div
             className="wrap-noti_input"
-            // style={{ position: 'absolute', bottom: '-15px' }}
+          // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {salaryMin === 0 ? (
               <span className="helper-text">

@@ -138,9 +138,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [selectedProvince, setSelectedProvince] = useState<any>(
     profile?.addressText
       ? {
-          province_id: profile?.addressText?.id,
-          province_fullName: profile?.addressText.fullName,
-        }
+        province_id: profile?.addressText?.id,
+        province_fullName: profile?.addressText.fullName,
+      }
       : null,
   );
 
@@ -241,6 +241,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       return {
         message: language?.profile_page?.err_name,
         checkForm: false,
+        idError: 1,
       };
     }
     if (name.trim().length > 90) {
@@ -250,6 +251,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             ? 'Tên không được vượt quá 90 ký tự'
             : 'Full name cannot exceed 90 characters',
         checkForm: false,
+        idError: 1,
       };
     }
     if (selectedProvince === '') {
@@ -259,6 +261,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             ? 'Địa chỉ không được bỏ trống'
             : 'Location cannot be left blank',
         checkForm: false,
+        idError: 2,
       };
     }
     if (new Date(day).getFullYear() > new Date().getFullYear()) {
@@ -268,6 +271,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             ? 'Năm sinh không được vượt quá năm hiện tại'
             : 'Year of birth cannot exceed the current year',
         checkForm: false,
+        idError: 0,
       };
     }
     if (jobTypeName === '') {
@@ -277,6 +281,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             ? 'Vị trí không được để trống'
             : 'The position cannot be left blank',
         checkForm: false,
+        idError: 3,
       };
     }
     if (jobTypeName.trim().length > 100) {
@@ -286,6 +291,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             ? 'Vị trí không được vượt quá 100 ký tự'
             : 'Position cannot exceed 100 characters',
         checkForm: false,
+        idError: 3,
       };
     }
 
@@ -293,6 +299,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       return {
         message: language?.profile_page?.err_intro,
         checkForm: false,
+        idError: 4,
       };
     }
     if (introduction.trim().length > 500) {
@@ -302,19 +309,21 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             ? 'Giới thiệu bản thân không được vượt quá 500 ký tự'
             : 'Introduce yourself cannot exceed 500 characters',
         checkForm: false,
+        idError: 4,
       };
     }
 
     return {
       message: '',
       checkForm: true,
+      idError: 0,
     };
   };
   // handle update information user
   const handleSubmit = async () => {
     // const data = new Date(day.toString()).getTime()
     // console.log('ennter');
-    const { message, checkForm } = validValue();
+    const { message, checkForm, idError } = validValue();
 
     try {
       if (checkForm) {
@@ -344,6 +353,29 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
           type: 'error',
           content: message,
         });
+
+        const peronal_info_name = document.getElementById('peronal_info_name') as HTMLElement;
+        const peronal_info_provinces = document.getElementById('peronal_info_provinces') as HTMLElement;
+        const peronal_info_position = document.getElementById('peronal_info_position') as HTMLElement;
+        const peronal_info_introduction = document.getElementById('peronal_info_introduction') as HTMLElement;
+
+        switch (idError) {
+          case 1:
+            peronal_info_name.focus();
+            break;
+          case 2:
+            peronal_info_provinces.focus();
+            break;
+          case 3:
+            peronal_info_position.focus();
+            break;
+          case 4:
+            peronal_info_introduction.focus();
+            break;
+
+          default:
+            break;
+        }
       }
     } catch (error) {
       console.log(error);
@@ -406,14 +438,14 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               </Typography>
               <TextField
                 type="text"
-                id="nameProfile"
+                id="peronal_info_name"
                 name="title"
                 value={name}
                 onChange={handleSetFullName}
                 size="small"
                 sx={{ width: '100%', marginTop: '4px' }}
                 placeholder="Họ và tên"
-                // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
               />
               <div className="wrap-noti_input">
                 {name?.length > 90 ? (
@@ -478,7 +510,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                         helperText: 'DD/MM/YYYY',
                       },
                     }}
-                    // format="DD/MM/YYYY"
+                  // format="DD/MM/YYYY"
                   />
                 </div>
                 <div className="wrap-noti_input">
@@ -523,19 +555,20 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 value={
                   selectedProvince && dataProvinces?.length > 0
                     ? dataProvinces?.find(
-                        (province: any) =>
-                          province.province_id === selectedProvince.province_id,
-                      )
+                      (province: any) =>
+                        province.province_id === selectedProvince.province_id,
+                    )
                     : null
                 }
                 defaultValue={selectedProvince}
                 onChange={handleProvinceChange}
+                id="peronal_info_provinces"
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     placeholder={language?.profile_page?.place_address}
                     size="small"
-                    // error={!selectedProvince}
+                  // error={!selectedProvince}
                   />
                 )}
               />
@@ -552,7 +585,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               </Typography>
               <TextField
                 type="text"
-                id="nameProfile"
+                id="peronal_info_position"
                 name="title"
                 value={jobTypeName}
                 onChange={handleJobTypeName}
@@ -561,7 +594,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 placeholder={
                   languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'
                 }
-                // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
               />
               <div className="wrap-noti_input">
                 {jobTypeName?.length > 100 ? (
@@ -599,16 +632,16 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 multiline
                 rows={4}
                 value={introduction}
-                id="profile-introduction"
+                id="peronal_info_introduction"
                 // label="Một số đặc điểm nhận diện công ty"
                 placeholder={language?.introduce_yourself_to_the_recruiter}
                 error={introduction?.length > 500} // Đánh dấu lỗi
-                // onKeyDown={(event) => {
-                //   // if (event.key === 'Enter') {
-                //   //   event.preventDefault();
-                //   // }
-                //   console.log(event.target);
-                // }}
+              // onKeyDown={(event) => {
+              //   // if (event.key === 'Enter') {
+              //   //   event.preventDefault();
+              //   // }
+              //   console.log(event.target);
+              // }}
               />
               <div className="wrap-noti_input">
                 {introduction?.length === 0 ? (
