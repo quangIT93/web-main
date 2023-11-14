@@ -232,6 +232,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       return {
         message: language?.profile_page?.err_professional,
         checkForm: false,
+        idError: 1,
       };
     }
     if (experience.title?.trim().length > 50) {
@@ -241,6 +242,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             ? 'Tiêu đề không được vượt quá 50 ký tự'
             : 'Professional title cannot exceed 50 characters',
         checkForm: false,
+        idError: 1,
       };
     }
 
@@ -248,6 +250,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       return {
         message: language?.profile_page?.err_company,
         checkForm: false,
+        idError: 2,
       };
     }
     if (experience.companyName?.trim().length > 50) {
@@ -257,22 +260,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             ? 'Tên công ty không được vượt quá 50 ký tự'
             : 'Company names cannot exceed 50 characters',
         checkForm: false,
-      };
-    }
-
-    if (experience.extraInformation === '') {
-      return {
-        message: language?.profile_page?.err_additional_information,
-        checkForm: false,
-      };
-    }
-    if (experience.extraInformation?.trim().length > 500) {
-      return {
-        message:
-          languageRedux === 1
-            ? 'Thông tin thêm không được vượt quá 500 ký tự'
-            : 'Additional information cannot exceed 500 characters',
-        checkForm: false,
+        idError: 2,
       };
     }
     // console.log('NaN', experience.startDate);
@@ -281,6 +269,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       return {
         message: language?.profile_page?.err_start_time,
         checkForm: false,
+        idError: 3,
       };
     }
 
@@ -293,6 +282,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             ? 'Năm bắt đầu không được vượt quá năm hiện tại'
             : 'The starting year cannot exceed the current year',
         checkForm: false,
+        idError: 3,
       };
     }
 
@@ -300,6 +290,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       return {
         message: language?.profile_page?.err_finish_time,
         checkForm: false,
+        idError: 4,
       };
     }
 
@@ -310,6 +301,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             ? 'Năm kết thúc không được vượt quá năm hiện tại'
             : 'The final year cannot exceed the current year',
         checkForm: false,
+        idError: 4,
       };
     }
 
@@ -323,9 +315,28 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             ? 'Năm bắt đầu không được vượt quá năm kết thúc'
             : 'The starting year cannot exceed the final year',
         checkForm: false,
+        idError: 4,
       };
     }
 
+
+    if (experience.extraInformation === '') {
+      return {
+        message: language?.profile_page?.err_additional_information,
+        checkForm: false,
+        idError: 5,
+      };
+    }
+    if (experience.extraInformation?.trim().length > 500) {
+      return {
+        message:
+          languageRedux === 1
+            ? 'Thông tin thêm không được vượt quá 500 ký tự'
+            : 'Additional information cannot exceed 500 characters',
+        checkForm: false,
+        idError: 5,
+      };
+    }
     // if (experience.endDate > experience.startDate) {
     //   return {
     //     message: 'Ngày bắt đầu không thể lớn hơn ngày kết thúc',
@@ -336,11 +347,12 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
     return {
       message: '',
       checkForm: true,
+      idError: 0,
     };
   };
 
   const handleSubmit = async () => {
-    const { message, checkForm } = validValue();
+    const { message, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         const result = await profileApi.updateProfileExperience(experience);
@@ -359,6 +371,25 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
           type: 'error',
           content: message,
         });
+        const profile_experience_edit_professional_titles = document.getElementById('profile_experience_edit_professional_titles') as HTMLElement;
+        const profile_experience_edit_company_organization = document.getElementById('profile_experience_edit_company_organization') as HTMLElement;
+        const profile_experience_edit_additional_information = document.getElementById('profile_experience_edit_additional_information') as HTMLElement;
+        // console.log(idError);
+
+        switch (idError) {
+          case 1:
+            profile_experience_edit_professional_titles.focus();
+            break;
+          case 2:
+            profile_experience_edit_company_organization.focus();
+            break;
+          case 5:
+            profile_experience_edit_additional_information.focus();
+            break;
+
+          default:
+            break;
+        }
       }
     } catch (error) {
       console.log(error);
@@ -424,7 +455,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             </Typography>
             <TextField
               type="text"
-              id="nameProfile"
+              id="profile_experience_edit_professional_titles"
               name="title"
               value={experience.title}
               onChange={handleChangeTitle}
@@ -435,9 +466,21 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             />
             <div className="wrap-noti_input">
               {experience.title && experience.title.length > 50 ? (
-                <span className="helper-text">Bạn đã nhập quá 50 ký tự</span>
+                <span className="helper-text">
+                  {
+                    languageRedux === 1 ?
+                      "Bạn đã nhập quá 50 ký tự." :
+                      "You have entered more than 50 characters."
+                  }
+                </span>
               ) : !experience.title ? (
-                <span className="helper-text">Vui lòng nhập chức danh</span>
+                <span className="helper-text">
+                  {
+                    languageRedux === 1 ?
+                      "Vui lòng nhập chức danh." :
+                      "Please enter your title."
+                  }
+                </span>
               ) : (
                 <></>
               )}
@@ -457,7 +500,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             </Typography>
             <TextField
               type="text"
-              id="nameProfile"
+              id="profile_experience_edit_company_organization"
               name="title"
               value={experience.companyName}
               onChange={handleChangeSchool}
@@ -468,10 +511,20 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             />
             <div className="wrap-noti_input">
               {experience.companyName && experience.companyName.length > 50 ? (
-                <span className="helper-text">Bạn đã nhập quá 50 ký tự</span>
+                <span className="helper-text">
+                  {
+                    languageRedux === 1 ?
+                      "Bạn đã nhập quá 50 ký tự." :
+                      "You have entered more than 50 characters."
+                  }
+                </span>
               ) : !experience.companyName ? (
                 <span className="helper-text">
-                  Vui lòng nhập tên trường/tổ chức
+                  {
+                    languageRedux === 1 ?
+                      "Vui lòng nhập tên trường/tổ chức." :
+                      "Please enter school/organization name."
+                  }
                 </span>
               ) : (
                 <></>
@@ -515,15 +568,27 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                       new Date(experience.startDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
-                        Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
+                        {
+                          languageRedux === 1 ?
+                            "Thời gian bắt đầu không thể lớn hơn thời gian hiện tại." :
+                            "The start time cannot be greater than the current time."
+                        }
                       </span>
                     ) : !new Date(experience.startDate).getFullYear() ? (
                       <span className="helper-text">
-                        Vui lòng nhập Thời gian bắt đầu
+                        {
+                          languageRedux === 1 ?
+                            "Vui lòng nhập Thời gian bắt đầu." :
+                            "Please enter start date."
+                        }
                       </span>
                     ) : new Date(experience.startDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
-                        Thời gian bắt đầu không thể nhỏ hơn 1900
+                        {
+                          languageRedux === 1 ?
+                            "Thời gian bắt đầu không thể nhỏ hơn 1900." :
+                            "The start time cannot be less than 1900."
+                        }
                       </span>
                     ) : (
                       <></>
@@ -559,15 +624,27 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                       new Date(experience.endDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
-                        Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
+                        {
+                          languageRedux === 1 ?
+                            "Thời gian kết thúc không thể lớn hơn thời gian hiện tại." :
+                            "The end time cannot be greater than the current time."
+                        }
                       </span>
                     ) : !new Date(experience.endDate).getFullYear() ? (
                       <span className="helper-text">
-                        Vui lòng nhập Thời gian bắt đầu
+                        {
+                          languageRedux === 1 ?
+                            "Vui lòng nhập Thời gian kết thúc." :
+                            "Please enter End date."
+                        }
                       </span>
                     ) : new Date(experience.endDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
-                        Thời gian bắt đầu không thể nhỏ hơn 1900
+                        {
+                          languageRedux === 1 ?
+                            "Thời gian kết thúc không thể nhỏ hơn 1900." :
+                            "The end time cannot be less than 1900."
+                        }
                       </span>
                     ) : (
                       <></>
@@ -594,24 +671,34 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
               multiline
               rows={4}
-              id="extraExp_info"
+              id="profile_experience_edit_additional_information"
               // label="Một số đặc điểm nhận diện công ty"
               placeholder={language?.profile_page?.place_additional_information}
             />
             <div className="wrap-noti_input">
               {experience.extraInformation &&
                 experience.extraInformation.length > 500 ? (
-                <span className="helper-text">Bạn đã nhập quá 500 ký tự</span>
+                <span className="helper-text">
+                  {
+                    languageRedux === 1 ?
+                      "Bạn đã nhập quá 500 ký tự." :
+                      "You have entered more than 500 characters."
+                  }
+                </span>
               ) : !experience.extraInformation ? (
                 <span className="helper-text">
-                  Vui lòng nhập thông tin bổ sung
+                  {
+                    languageRedux === 1 ?
+                      "Vui lòng nhập thông tin bổ sung." :
+                      "Please enter additional information."
+                  }
                 </span>
               ) : (
                 <></>
               )}
               <span className="number-text">{`${experience.extraInformation
-                  ? experience.extraInformation.length
-                  : '0'
+                ? experience.extraInformation.length
+                : '0'
                 }/500`}</span>
             </div>
           </Box>

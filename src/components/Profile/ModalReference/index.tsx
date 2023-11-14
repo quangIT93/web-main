@@ -130,6 +130,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             ? 'Tên không được bỏ trống'
             : 'Full name cannot be empty',
         checkForm: false,
+        idError: 1,
       };
     }
     if (fullName?.trim().length > 255) {
@@ -139,6 +140,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             ? 'Tên không được vượt quá 255 ký tự'
             : 'Full name cannot exceed 255 characters',
         checkForm: false,
+        idError: 1,
       };
     }
     if (phone?.trim() === '') {
@@ -148,6 +150,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             ? 'Số điện thoại không được bỏ trống'
             : 'Phone cannot be empty',
         checkForm: false,
+        idError: 2,
       };
     }
     if (regexCheckPhone.test(phone) === false) {
@@ -157,6 +160,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             ? 'Số điện thoại không đúng định dạng'
             : 'The phone number is not in the correct format',
         checkForm: false,
+        idError: 2,
       };
     }
     if (mail?.trim() === '') {
@@ -166,6 +170,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             ? 'Email không được bỏ trống'
             : 'Email cannot be empty',
         checkForm: false,
+        idError: 3,
       };
     }
     if (regexCheckEmail.test(mail) === false) {
@@ -175,6 +180,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             ? 'Email không đúng định dạng'
             : 'The Email is not in the correct format',
         checkForm: false,
+        idError: 3,
       };
     }
     if (description?.trim() === '') {
@@ -184,6 +190,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             ? 'Thông tin thêm không được bỏ trống'
             : 'Additional information cannot be empty',
         checkForm: false,
+        idError: 4,
       };
     }
     if (description?.trim().length > 1000) {
@@ -193,12 +200,14 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             ? 'Thông tin thêm không được vượt quá 1000 ký tự'
             : 'Additional information cannot exceed 1000 characters',
         checkForm: false,
+        idError: 4,
       };
     }
 
     return {
       messageError: '',
       checkForm: true,
+      idError: 0,
     };
   };
 
@@ -210,7 +219,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
     //     },
     //     ...prev
     // ])
-    const { messageError, checkForm } = validValue();
+    const { messageError, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         const result = await apiCv.postProfileReference(
@@ -235,8 +244,31 @@ const ModalReference: React.FC<IModalReference> = (props) => {
         }
       } else {
         message.error(messageError);
+        const profile_reference_full_name = document.getElementById('profile_reference_full_name') as HTMLElement;
+        const profile_reference_phone = document.getElementById('profile_reference_phone') as HTMLElement;
+        const profile_reference_email = document.getElementById('profile_reference_email') as HTMLElement;
+        const profile_reference_additional_information = document.getElementById('profile_reference_additional_information') as HTMLElement;
+        // console.log(idError);
+
+        switch (idError) {
+          case 1:
+            profile_reference_full_name.focus();
+            break;
+          case 2:
+            profile_reference_phone.focus();
+            break;
+          case 3:
+            profile_reference_email.focus();
+            break;
+          case 4:
+            profile_reference_additional_information.focus();
+            break;
+
+          default:
+            break;
+        }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleClose = () => {
@@ -292,14 +324,14 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="skill"
+              id="profile_reference_full_name"
               name="skill"
               value={fullName}
               onChange={handleOnchangeFullName}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={languageRedux === 1 ? 'Họ và tên' : 'Full name'}
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {fullName && fullName.length > 255 ? (
@@ -317,9 +349,8 @@ const ModalReference: React.FC<IModalReference> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                fullName ? fullName.length : '0'
-              }/255`}</span>
+              <span className="number-text">{`${fullName ? fullName.length : '0'
+                }/255`}</span>
             </div>
           </Box>
           <Box sx={{ marginBottom: '12px' }}>
@@ -334,7 +365,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             </Typography>
             <TextField
               type="number"
-              id="skill"
+              id="profile_reference_phone"
               name="skill"
               value={phone}
               onChange={handleOnchangePhone}
@@ -343,7 +374,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
               placeholder={
                 languageRedux === 1 ? 'Số điện thoại' : 'Phone number'
               }
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {regexCheckPhone.test(phone) === false ? (
@@ -376,14 +407,14 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="skill"
+              id="profile_reference_email"
               name="skill"
               value={mail}
               onChange={handleOnchangeMail}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="example@gmail.com"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {regexCheckEmail.test(mail) === false ? (
@@ -421,7 +452,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
               sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
               multiline
               rows={4}
-              id="extraExp_info"
+              id="profile_reference_additional_information"
               // label="Một số đặc điểm nhận diện công ty"
               placeholder={language?.profile_page?.place_additional_information}
             />
