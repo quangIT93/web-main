@@ -40,9 +40,10 @@ import {
 } from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
-import banner from '../../../img/Banner/banner-for-candidates-2.png';
+// import banner from '../../../img/Banner/banner-for-candidates-2.png';
 import banner_recruit_1 from '../../../img/Banner/banner-for-rescruit-1.png';
 import banner_recruit_2 from '../../../img/Banner/banner-for-rescruit-2.png';
+import banner from '../../../img/Banner/Banner_homepage 1@2x.png';
 import './styles.scss';
 
 import ModalLogin from '../../../components/Home/ModalLogin';

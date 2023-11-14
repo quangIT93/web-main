@@ -45,7 +45,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
   const location = useLocation();
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [companyRating, setCompanyRating] = useState<any>([]);
-  const [averageRated, setAverageRated] = useState<any>([]);
+  const [averageRated, setAverageRated] = useState<any>(null);
   const [isSuccess, setIsSuccess] = useState<any>(false);
   const [myReview, setMyReview] = useState<any>();
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
@@ -54,14 +54,16 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
 
   const handleGetReviewAccountOfCompany = async () => {
     try {
-      const result = await apiCompanyV3.getReviewAccountOfCompany(
-        companyId,
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        console.log(result);
-        setMyReview(result.data);
-        setReview(result.data.comment);
+      if (companyId) {
+        const result = await apiCompanyV3.getReviewAccountOfCompany(
+          companyId,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        if (result) {
+          console.log(result);
+          setMyReview(result.data);
+          setReview(result.data.comment);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -94,19 +96,21 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
 
   const handleEditReviewCompany = async () => {
     try {
-      const result = await apiCompanyV3.editCompanyReview(
-        companyId,
-        myReview.star,
-        review,
-      );
-      if (result) {
-        setOpenBackdrop(false);
-        setOpenModalPostReviewSuccess(true);
-        setIsSuccess(!isSuccess);
-        setStatus('edit');
-        inputRef.current!.focus({
-          cursor: 'end',
-        });
+      if (companyId) {
+        const result = await apiCompanyV3.editCompanyReview(
+          companyId,
+          myReview.star,
+          review,
+        );
+        if (result) {
+          setOpenBackdrop(false);
+          setOpenModalPostReviewSuccess(true);
+          setIsSuccess(!isSuccess);
+          setStatus('edit');
+          inputRef.current!.focus({
+            cursor: 'end',
+          });
+        }
       }
     } catch (error) {
       setOpenBackdrop(false);
@@ -123,21 +127,30 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         20,
         languageRedux === 1 ? 'vi' : 'en',
       );
-      if (result.status === 200) {
+      console.log('result: ', result);
+
+      if (result.status === 200 && result.data.companyRatings.length === 20) {
         setLoading(false);
         setAverageRated(result.data.averageRated);
         setCompanyRating(result.data.companyRatings);
-        if (result.data.companyRatings.length < 20) {
-          setHasMore(false);
-          setPage('0');
-        } else if (result.data.companyRatings.length === 0) {
-          setHasMore(false);
-          setPage('0');
-        } else {
-          setHasMore(true);
-        }
+      } else if (
+        result.data.companyRatings.length > 0 &&
+        result.data.companyRatings.length < 20
+      ) {
+        setLoading(false);
+        setAverageRated(result.data.averageRated);
+        setCompanyRating(result.data.companyRatings);
+        setHasMore(false);
+        setPage('0');
+      } else {
+        setAverageRated(null);
+        setCompanyRating([]);
+        setHasMore(false);
+        setPage('0');
       }
-    } catch (error) { }
+    } catch (error) {
+      setHasMore(false);
+    }
   };
 
   const fetchMoreData = async () => {
@@ -160,7 +173,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) { }
+    } catch (error) {
+      setHasMore(false);
+    }
   };
 
   useEffect(() => {
@@ -182,25 +197,23 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
       inputRef.current!.focus({
         cursor: 'end',
       });
-      return
+      return;
     }
     if (review.trim().length > 3000) {
       message.error(
         languageRedux === 1
           ? 'Đánh giá không được vượt quá 3000 ký tự'
-          : 'Review cannot exceed 3000 characters'
-      )
+          : 'Review cannot exceed 3000 characters',
+      );
       inputRef.current!.focus({
         cursor: 'end',
       });
       return;
     }
-    myReview === undefined ?
-      handleRateComapy() :
-      handleEditReviewCompany()
+    myReview === undefined ? handleRateComapy() : handleEditReviewCompany();
     // console.log("review", review);
     // console.log("star", star);
-  }
+  };
 
   const handleDeleteReview = async () => {
     setOpenModalConfirmDelete(true);
@@ -211,33 +224,16 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
       <div className={styles.review_company_content}>
         <div className={styles.review_company_left}>
           <div className={styles.review_company_5_star}>
-            <h3>
-              {
-                languageRedux === 1 ?
-                  "Được đánh giá" :
-                  "Reviewed"
-              }
-            </h3>
+            <h3>{languageRedux === 1 ? 'Được đánh giá' : 'Reviewed'}</h3>
             <div className={styles.star_5_wrap}>
-              <p>
-                {
-                  averageRated !== null ?
-                    `(${averageRated}/5)`
-                    :
-                    `(0/5)`
-                }
-              </p>
-              <CompanyRating rating={averageRated !== null ? averageRated : 0} />
+              <p>{averageRated !== null ? `(${averageRated}/5)` : `(0/5)`}</p>
+              <CompanyRating
+                rating={averageRated !== null ? averageRated : 0}
+              />
             </div>
           </div>
           <div className={styles.review_company_list_review}>
-            <h3>
-              {
-                languageRedux === 1 ?
-                  "Đánh giá" :
-                  "Evaluate"
-              }
-            </h3>
+            <h3>{languageRedux === 1 ? 'Đánh giá' : 'Evaluate'}</h3>
             <InfiniteScroll
               dataLength={companyRating && companyRating?.length}
               next={fetchMoreData}
@@ -247,37 +243,36 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
               scrollableTarget="scrollableDiv"
             >
               <div className={styles.list_review}>
-                {
-                  companyRating && companyRating.map((item: any, idx: any) =>
+                {companyRating &&
+                  companyRating.map((item: any, idx: any) => (
                     <Skeleton loading={loading} active key={idx}>
                       <div className={styles.review_item} key={idx}>
                         <div className={styles.reviewer_avatar}>
                           <img
                             src={
-                              item.profileData.avatarPath ?
-                                item.profileData.avatarPath :
-                                nonAvatar
+                              item.profileData.avatarPath
+                                ? item.profileData.avatarPath
+                                : nonAvatar
                             }
-                            alt="" />
+                            alt=""
+                          />
                         </div>
                         <div className={styles.reviewer_mess_wrap}>
                           <div className={styles.name_star}>
                             <div className={styles.reviewer_name}>
                               <h2>
-                                {
-                                  item.profileData.nameHide ?
-                                    item.profileData.nameHide :
-                                    languageRedux === 1 ?
-                                      "Thông tin chưa cập nhật" :
-                                      "Information not updated yet"
-                                }
+                                {item.profileData.nameHide
+                                  ? item.profileData.nameHide
+                                  : languageRedux === 1
+                                  ? 'Thông tin chưa cập nhật'
+                                  : 'Information not updated yet'}
                               </h2>
                               <p>
-                                {
-                                  moment(item?.createdAt).format('HH:mm') +
+                                {moment(item?.createdAt).format('HH:mm') +
                                   ' ' +
-                                  moment(new Date(item?.createdAt)).format('DD/MM/YYYY')
-                                }
+                                  moment(new Date(item?.createdAt)).format(
+                                    'DD/MM/YYYY',
+                                  )}
                               </p>
                             </div>
                             <div className={styles.reviewer_star}>
@@ -290,67 +285,85 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                         </div>
                       </div>
                     </Skeleton>
-                  )
-                }
+                  ))}
               </div>
-
             </InfiniteScroll>
           </div>
         </div>
-        <div className={styles.review_company_right}
+        <div
+          className={styles.review_company_right}
           style={{
-            display: location?.pathname === '/detail-company' ?
-              "flex" : "none"
+            display: location?.pathname === '/detail-company' ? 'flex' : 'none',
           }}
         >
           <div className={styles.review_company_title}>
-            <h3>
-              {
-                languageRedux === 1 ?
-                  "Đánh giá của bạn" :
-                  "Your review"
-              }
-            </h3>
-            {
-              myReview === undefined ?
-                <div className={styles.rating}>
-                  <input onChange={handleSetStar} type="radio" name="rating" value="5" id="rating-1" />
-                  <label htmlFor="rating-1">
-                    <SaveIconOutline width={24} height={24} />
-                    <SaveIconFill width={24} height={24} />
-                  </label>
-                  <input onChange={handleSetStar} type="radio" name="rating" value="4" id="rating-2" />
-                  <label htmlFor="rating-2">
-                    <SaveIconOutline width={24} height={24} />
-                    <SaveIconFill width={24} height={24} />
-                  </label>
-                  <input onChange={handleSetStar} type="radio" name="rating" value="3" id="rating-3" />
-                  <label htmlFor="rating-3">
-                    <SaveIconOutline width={24} height={24} />
-                    <SaveIconFill width={24} height={24} />
-                  </label>
-                  <input onChange={handleSetStar} type="radio" name="rating" value="2" id="rating-4" />
-                  <label htmlFor="rating-4">
-                    <SaveIconOutline width={24} height={24} />
-                    <SaveIconFill width={24} height={24} />
-                  </label>
-                  <input onChange={handleSetStar} type="radio" name="rating" value="1" id="rating-5" />
-                  <label htmlFor="rating-5">
-                    <SaveIconOutline width={24} height={24} />
-                    <SaveIconFill width={24} height={24} />
-                  </label>
-                </div>
-                :
-                <div className={styles.delete_review}>
-                  <CompanyRating rating={myReview.star} />
-                  <Button type="text" danger onClick={handleDeleteReview}>
-                    {
-                      languageRedux === 1 ?
-                        "Xóa đánh giá" : "Delete review"
-                    }
-                  </Button>
-                </div>
-            }
+            <h3>{languageRedux === 1 ? 'Đánh giá của bạn' : 'Your review'}</h3>
+            {myReview === undefined ? (
+              <div className={styles.rating}>
+                <input
+                  onChange={handleSetStar}
+                  type="radio"
+                  name="rating"
+                  value="5"
+                  id="rating-1"
+                />
+                <label htmlFor="rating-1">
+                  <SaveIconOutline width={24} height={24} />
+                  <SaveIconFill width={24} height={24} />
+                </label>
+                <input
+                  onChange={handleSetStar}
+                  type="radio"
+                  name="rating"
+                  value="4"
+                  id="rating-2"
+                />
+                <label htmlFor="rating-2">
+                  <SaveIconOutline width={24} height={24} />
+                  <SaveIconFill width={24} height={24} />
+                </label>
+                <input
+                  onChange={handleSetStar}
+                  type="radio"
+                  name="rating"
+                  value="3"
+                  id="rating-3"
+                />
+                <label htmlFor="rating-3">
+                  <SaveIconOutline width={24} height={24} />
+                  <SaveIconFill width={24} height={24} />
+                </label>
+                <input
+                  onChange={handleSetStar}
+                  type="radio"
+                  name="rating"
+                  value="2"
+                  id="rating-4"
+                />
+                <label htmlFor="rating-4">
+                  <SaveIconOutline width={24} height={24} />
+                  <SaveIconFill width={24} height={24} />
+                </label>
+                <input
+                  onChange={handleSetStar}
+                  type="radio"
+                  name="rating"
+                  value="1"
+                  id="rating-5"
+                />
+                <label htmlFor="rating-5">
+                  <SaveIconOutline width={24} height={24} />
+                  <SaveIconFill width={24} height={24} />
+                </label>
+              </div>
+            ) : (
+              <div className={styles.delete_review}>
+                <CompanyRating rating={myReview.star} />
+                <Button type="text" danger onClick={handleDeleteReview}>
+                  {languageRedux === 1 ? 'Xóa đánh giá' : 'Delete review'}
+                </Button>
+              </div>
+            )}
           </div>
           <div className={styles.review_company_box}>
             <div className={styles.input_box}>
@@ -358,13 +371,13 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                 value={review}
                 onChange={(e) => setReview(e.target.value)}
                 placeholder={
-                  languageRedux === 1 ?
-                    "Nhập đánh giá của bạn..." :
-                    "Enter your review..."
+                  languageRedux === 1
+                    ? 'Nhập đánh giá của bạn...'
+                    : 'Enter your review...'
                 }
                 autoSize={{ minRows: 20, maxRows: 22 }}
                 ref={inputRef}
-              // rows={20}
+                // rows={20}
               />
               <div className={styles.notice_input}>
                 {review?.length > 3000 ? (
@@ -382,27 +395,26 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                 ) : (
                   <></>
                 )}
-                <span className={styles.number_text}>{`${review?.length}/3000`}</span>
+                <span
+                  className={styles.number_text}
+                >{`${review?.length}/3000`}</span>
               </div>
             </div>
             <Button
               type="primary"
               ghost
               onClick={handleSubmitReview}
-            // disabled={
-            //     star === 0 && review === '' ? true :
-            //         star === 0 ? true : false}
+              // disabled={
+              //     star === 0 && review === '' ? true :
+              //         star === 0 ? true : false}
             >
-              {
-                myReview === undefined ?
-                  languageRedux === 1 ?
-                    "Đăng bài đánh giá" :
-                    "Post a review"
-                  :
-                  languageRedux === 1 ?
-                    "Sửa bài đánh giá" :
-                    "Edit a review"
-              }
+              {myReview === undefined
+                ? languageRedux === 1
+                  ? 'Đăng bài đánh giá'
+                  : 'Post a review'
+                : languageRedux === 1
+                ? 'Sửa bài đánh giá'
+                : 'Edit a review'}
             </Button>
           </div>
         </div>
@@ -414,7 +426,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={openBackdrop}
-        //  onClick={handleClose}
+          //  onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>
@@ -447,7 +459,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         setOpenModalLogin={setOpenModalLogin}
       />
     </div>
-  )
-}
+  );
+};
 
 export default memo(ReviewCompany);
