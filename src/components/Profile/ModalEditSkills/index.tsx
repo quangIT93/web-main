@@ -136,6 +136,7 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
             ? 'Tên kỹ năng không được bỏ trống'
             : 'Skill names cannot be empty',
         checkForm: false,
+        idError: 1,
       };
     }
     if (skill?.trim().length > 255) {
@@ -145,17 +146,19 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
             ? 'Tên kỹ năng không được vượt quá 255 ký tự'
             : 'Skill names cannot exceed 255 characters',
         checkForm: false,
+        idError: 1,
       };
     }
 
     return {
       message: '',
       checkForm: true,
+      idError: 0,
     };
   };
 
   const handleSubmit = async () => {
-    const { message, checkForm } = validValue();
+    const { message, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         const result = await apiCv.putProfileSkill(
@@ -185,6 +188,17 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
           type: 'error',
           content: message,
         });
+        const profile_skill_edit_skill_name = document.getElementById('profile_skill_edit_skill_name') as HTMLElement;
+        // console.log(idError);
+
+        switch (idError) {
+          case 1:
+            profile_skill_edit_skill_name.focus();
+            break;
+
+          default:
+            break;
+        }
       }
     } catch (error: any) {
       console.log('error', error);
@@ -243,14 +257,14 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="skill"
+              id="profile_skill_edit_skill_name"
               name="skill"
               value={skill}
               onChange={handleOnchangeSkill}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={languageRedux === 1 ? 'Kỹ năng' : 'Skill'}
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {skill && skill.length > 255 ? (
@@ -268,9 +282,8 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                skill ? skill.length : '0'
-              }/255`}</span>
+              <span className="number-text">{`${skill ? skill.length : '0'
+                }/255`}</span>
             </div>
           </Box>
           <Box sx={{ marginBottom: '12px' }}>

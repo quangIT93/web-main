@@ -145,6 +145,7 @@ const Company: React.FC<ICompany> = (props) => {
 
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [ShowModalUnsave, setShowModalUnsave] = useState(false);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(true);
   // const [language, setLanguageState] = React.useState<any>();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -172,6 +173,31 @@ const Company: React.FC<ICompany> = (props) => {
   // const [loadingNotFound, setLoadingNotFound] = React.useState(false);
 
   const analytics: any = getAnalytics();
+
+  useEffect(() => {
+    console.log('dataCompany', dataCompany.name);
+
+    if (
+      dataCompany.name ||
+      dataCompany.address ||
+      dataCompany.companyLocation ||
+      dataCompany.companyRoleInfomation ||
+      dataCompany.companyCategory ||
+      dataCompany.companySizeInfomation ||
+      dataCompany.taxCode ||
+      dataCompany.phone ||
+      dataCompany.email ||
+      dataCompany.website ||
+      dataCompany.description ||
+      dataCompany.logoPath ||
+      dataCompany.images.length !== 0 ||
+      dataCompany.deletedImages.length !== 0
+    ) {
+      setIsFormSubmitted(false);
+    } else {
+      setIsFormSubmitted(true);
+    }
+  }, [dataCompany]);
 
   const getProfileComanyV3 = async () => {
     try {
@@ -243,6 +269,28 @@ const Company: React.FC<ICompany> = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: any) => {
+      if (!isFormSubmitted) {
+        const message =
+          languageRedux === 1
+            ? 'Dữ liệu của bạn chưa được gửi, bạn có chắc chắn muốn rời đi?'
+            : 'Your data has not been sent, you definitely want to leave?';
+        event.preventDefault();
+        event.returnValue = message || true;
+        return message;
+      } else {
+        return;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isFormSubmitted]);
 
   // console.log("dataCompany api: ", dataCompany);
 
@@ -372,6 +420,7 @@ const Company: React.FC<ICompany> = (props) => {
           if (result) {
             // setOpenModalEditPost(true);
             setOpenModalEditCompanySuccess(true);
+            setIsFormSubmitted(false);
             messageApi.open({
               type: 'success',
               content: language?.company_page?.create_success,
@@ -417,6 +466,7 @@ const Company: React.FC<ICompany> = (props) => {
 
           if (result || resultImages) {
             setOpenModalEditCompanySuccess(true);
+            setIsFormSubmitted(false);
             messageApi.open({
               type: 'success',
               content: language?.company_page?.update_success,

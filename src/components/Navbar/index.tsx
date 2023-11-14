@@ -2043,7 +2043,8 @@ const Navbar: React.FC = () => {
                     display:
                       localStorage.getItem('accessToken') &&
                       location?.pathname === '/' &&
-                      openLogin
+                      openLogin &&
+                      countNoti !== 0
                         ? 'block'
                         : 'none',
                     position: 'absolute',
@@ -2058,8 +2059,12 @@ const Navbar: React.FC = () => {
                     <div className="login__hover__p">
                       <p>
                         {languageRedux === 1
-                          ? `Bạn có ${countNoti} thông báo mới!`
-                          : `You have ${countNoti} new notifications`}
+                          ? `Bạn có ${
+                              countNoti ? countNoti : '0'
+                            } thông báo mới!`
+                          : `You have ${
+                              countNoti ? countNoti : '0'
+                            } new notifications`}
                       </p>
                       <p>
                         {languageRedux === 1

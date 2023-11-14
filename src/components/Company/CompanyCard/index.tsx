@@ -40,7 +40,9 @@ const CompanyCard: React.FC<Iprops> = (props) => {
   const { checkBookMark, setCheckBookMark } = props;
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/detail-company?companyId=${props.item.id}`, '_parent');
   };
@@ -156,50 +158,16 @@ const CompanyCard: React.FC<Iprops> = (props) => {
                 </div>
               </div>
               <div className="div-card-company_info__bot">
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-start',
-                    maxWidth: '100px'
-                  }}
-                >
+                <div className="div-card-company_info__bot__item">
                   <div className="info-bot-icon">
                     <LocationHomeIcon />
                   </div>
-                  <Tooltip placement="top" title={props.item?.companyLocation?.district?.province?.fullName}>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{
-                        fontSize: '12px',
-                        whiteSpace: 'nowrap',
-                        width: '100%',
-                        textOverflow: 'ellipsis',
-                        overflow: 'hidden',
-                        marginLeft: '4px',
-                      }}
-                    >
-                      {props.item?.companyLocation?.district?.province?.fullName}
-                    </Typography>
-                  </Tooltip>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-start',
-                    maxWidth: '100px'
-                  }}
-                >
-                  <div className="info-bot-icon">
-                    <CateIcon />
-                  </div>
-                  <Tooltip placement="top" title={
-                    languageRedux === 1 ?
-                      `${props.item.amountPost} vị trí tuyển dụng` :
-                      `${props.item.amountPost} apllication position`
-                  }>
+                  <Tooltip
+                    placement="top"
+                    title={
+                      props.item?.companyLocation?.district?.province?.fullName
+                    }
+                  >
                     <Typography
                       variant="body2"
                       color="text.secondary"
@@ -213,10 +181,39 @@ const CompanyCard: React.FC<Iprops> = (props) => {
                       }}
                     >
                       {
-                        languageRedux === 1 ?
-                          `${props.item.amountPost} vị trí tuyển dụng` :
-                          `${props.item.amountPost} apllication position`
+                        props.item?.companyLocation?.district?.province
+                          ?.fullName
                       }
+                    </Typography>
+                  </Tooltip>
+                </div>
+                <div className="div-card-company_info__bot__item">
+                  <div className="info-bot-icon">
+                    <CateIcon />
+                  </div>
+                  <Tooltip
+                    placement="top"
+                    title={
+                      languageRedux === 1
+                        ? `${props.item.amountPost} vị trí tuyển dụng`
+                        : `${props.item.amountPost} apllication position`
+                    }
+                  >
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        fontSize: '12px',
+                        whiteSpace: 'nowrap',
+                        width: '100%',
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden',
+                        marginLeft: '4px',
+                      }}
+                    >
+                      {languageRedux === 1
+                        ? `${props.item.amountPost} vị trí tuyển dụng`
+                        : `${props.item.amountPost} apllication position`}
                     </Typography>
                   </Tooltip>
                 </div>

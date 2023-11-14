@@ -7,6 +7,7 @@ import { RootState } from 'store';
 import JobOfCompanyCard from '../JobOfCompanyCard';
 import { LoadingOutlined } from '@ant-design/icons';
 import apiCompanyV3 from 'api/apiCompanyV3';
+import NoDataComponent from 'utils/NoDataPage';
 
 interface IApplyPosition {
   postOfCompany: any;
@@ -50,7 +51,6 @@ const ApplyPosition: React.FC<IApplyPosition> = (props) => {
         20,
         languageRedux === 1 ? 'vi' : 'en',
       );
-      console.log('result', result);
 
       if (result && result.data.posts.length === 20) {
         setPostOfCompany((prev: any) => [...prev, ...result?.data?.posts]);
@@ -84,9 +84,6 @@ const ApplyPosition: React.FC<IApplyPosition> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
-  console.log('postOfCompany', postOfCompany);
-  console.log('postOfCompany', postOfCompany?.length);
-
   return (
     <div className="apply-position-container">
       <div className="apply-position-content">
@@ -108,6 +105,7 @@ const ApplyPosition: React.FC<IApplyPosition> = (props) => {
             ))}
           </Grid>
         </InfiniteScroll>
+        {postOfCompany?.length === 0 ? <NoDataComponent /> : <></>}
       </div>
     </div>
   );

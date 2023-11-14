@@ -199,6 +199,7 @@ const CandidatesAll = () => {
   const [ageMax, setAgeMax] = useState<number | null>(35);
   const [page, setPage] = React.useState<any>('0');
   const [reset, setReset] = useState(false);
+  const [open, setOpen] = useState(false);
   const [total, setTotal] = useState(0);
 
   const languageRedux = useSelector(
@@ -288,6 +289,7 @@ const CandidatesAll = () => {
       );
       setPage('0');
       if (result) {
+        setOpen(true)
         setTotal(result.data.total);
         setListData(result.data.cvFilters);
         if (result.data.cvFilters.length < 18) {
@@ -315,6 +317,7 @@ const CandidatesAll = () => {
     setAgeMin(18);
     setAgeMax(35);
     setReset(true);
+    setOpen(false)
   };
 
   const fetchMoreData = async () => {
@@ -453,17 +456,17 @@ const CandidatesAll = () => {
         <div className="list-candidates">
           <div className="list-candidates_title">
             {
-              addresses?.length !== 0 ||
-                categories?.length !== 0 ||
-                educations ||
-                gender !== -1 &&
-                listData ?
+              // addresses?.length !== 0 ||
+              //   categories?.length !== 0 ||
+              //   educations ||
+              //   gender !== -1 &&
+              open ?
                 (
                   <h3>
                     {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
                     <span>
                       {` ${total}`}
-                      {languageRedux === 1 ? ' ứng vử viên' : ' candidates'}
+                      {languageRedux === 1 ? ' ứng cử viên' : ' candidates'}
                     </span>
                   </h3>
                 ) : (

@@ -73,15 +73,13 @@ const CompanyRole: React.FC<ICompany> = (props) => {
       ),
       children: <ContactInfo company={companyData} />,
     },
-    // {
-    //   key: '2',
-    //   label: <p>
-    //     {
-    //       languageRedux === 1 ? "Đánh giá" : "Review"
-    //     }
-    //   </p>,
-    //   children: <ReviewCompany company={companyData} companyId={companyData.id} />,
-    // },
+    {
+      key: '2',
+      label: <p>{languageRedux === 1 ? 'Đánh giá' : 'Review'}</p>,
+      children: (
+        <ReviewCompany company={companyData} companyId={companyData.id} />
+      ),
+    },
   ];
 
   return (
