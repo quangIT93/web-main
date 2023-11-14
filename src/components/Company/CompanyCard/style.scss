@@ -76,9 +76,23 @@
                 gap: 0px 24px;
                 flex-wrap: wrap;
 
+                @media screen and (min-width: 769px) and (max-width: 810px) {
+                    gap: 0px;
+                    justify-content: space-between;
+                }
+
                 .info-bot-icon {
                     display: grid;
                     place-items: center;
+                }
+
+                &__item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    max-width: 120px;
+
+
                 }
             }
 
