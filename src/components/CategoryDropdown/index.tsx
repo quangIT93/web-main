@@ -86,7 +86,7 @@ const CategoryDropdown: React.FC = () => {
   const updateWindowWidth = () => {
     if (window.innerWidth > 560) {
       setWindowWidth(true);
-      setExpand([1, 2, 3, 4]);
+      setExpand([1, 2, 3, 4, 5]);
     } else {
       setWindowWidth(false);
       setExpand([]);
@@ -103,7 +103,7 @@ const CategoryDropdown: React.FC = () => {
 
       if (currentWidth > 560) {
         setWindowWidth(true);
-        setExpand([1, 2, 3, 4]);
+        setExpand([1, 2, 3, 4, 5]);
       } else {
         setWindowWidth(false);
         // setOpen(true);
@@ -343,6 +343,11 @@ const CategoryDropdown: React.FC = () => {
 
   const moveToMemberGuide = () => {
     window.open('/policy#privacy-policy', '_parent');
+    setOpenCategoryDropdown(false);
+  };
+
+  const moveToSearchCompany = () => {
+    window.open('/companyAll', '_parent');
     setOpenCategoryDropdown(false);
   };
 
@@ -814,6 +819,25 @@ const CategoryDropdown: React.FC = () => {
                   {languageRedux === 1
                     ? 'Hướng dẫn thành viên'
                     : 'Member Guide'}
+                </h3>
+              </div>
+            </div>
+
+            <div className="category-dropdown-item">
+              <div className="top-item" onClick={() => handleExpand(5)}>
+                <h3>{languageRedux === 1 ? 'Công ty' : 'Company'}</h3>
+                <ArrowIcon fill="black" />
+              </div>
+              <div
+                className="bot-item"
+                style={{
+                  height: expand.includes(5) ? 'unset' : 0,
+                  overflow: expand.includes(5) ? 'unset' : 'hidden',
+                  marginTop: expand.includes(5) ? '16px' : '0px',
+                }}
+              >
+                <h3 onClick={moveToSearchCompany}>
+                  {languageRedux === 1 ? 'Tìm kiếm công ty' : 'Privacy Policy'}
                 </h3>
               </div>
             </div>

@@ -177,11 +177,11 @@ const Post: React.FC = () => {
   const [typeJob, setTypeJob] = useState(1);
   const [isPeriodDate, setIsPeriodDate] = useState<number>(1);
   const [startTime, setStartTime] = React.useState<any>(
-    new Date(1970, 0, 2, 7, 0).getTime(),
+    new Date(2000, 0, 2, 7, 0).getTime(),
   );
 
   const [endTime, setEndTime] = React.useState<any>(
-    new Date(1970, 0, 2, 17, 0).getTime(),
+    new Date(2000, 0, 2, 17, 0).getTime(),
   );
   const profileV3 = useSelector(
     (state: RootState) => state.dataProfileInformationV3.data,
@@ -192,8 +192,18 @@ const Post: React.FC = () => {
   );
   // const [startTime, setStartTime] = React.useState<string>('00:00');
   // const [endTime, setEndTime] = React.useState<string>('00:00');
-  const [startDate, setStartDate] = React.useState<any>(new Date().getTime());
-  const [endDate, setEndDate] = React.useState<any>(new Date().getTime());
+  const currentDate = new Date();
+
+  // Đặt giờ, phút, giây và miligiây
+  currentDate.setHours(23, 59, 59, 999);
+
+  const [startDate, setStartDate] = React.useState<any>(
+    new Date(new Date().setHours(23, 59, 0, 999)).getTime(),
+  );
+
+  const [endDate, setEndDate] = React.useState<any>(
+    new Date(new Date().setHours(23, 59, 59, 999)).getTime(),
+  );
   const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0);
   const [isRemotely, setIsRemotely] = React.useState<number>(0);
   // const [salary, setSalary] = React.useState<number[]>([500000, 100000000]);
@@ -250,7 +260,7 @@ const Post: React.FC = () => {
 
   const [checkPost, setCheckPost] = React.useState<boolean>(false);
   const [openCheckposted, setOpenCheckposted] = React.useState<boolean>(false);
-
+  const [isFormSubmitted, setIsFormSubmitted] = useState(true);
   // const [language, setLanguage] = useState<any>();
 
   // const getlanguageApi = async () => {
@@ -288,6 +298,69 @@ const Post: React.FC = () => {
       dispatch(setProfileMeCompanyV3([]));
     }
   };
+
+  useEffect(() => {
+    if (
+      titleJob ||
+      companyName ||
+      description ||
+      typeJob !== 1 ||
+      isPeriodDate !== 1 ||
+      address ||
+      wardId ||
+      phoneNumber ||
+      moneyType !== 1 ||
+      salaryType !== 1 ||
+      categoriesId.length !== 0 ||
+      isRemotely !== 0 ||
+      isWorkingWeekend !== 0 ||
+      salaryMin !== 0 ||
+      salaryMax !== 0 ||
+      selectedFiles.length !== 0
+    ) {
+      setIsFormSubmitted(false);
+    } else {
+      setIsFormSubmitted(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    titleJob,
+    companyName,
+    address,
+    description,
+    wardId,
+    phoneNumber,
+    moneyType,
+    salaryType,
+    categoriesId,
+    isRemotely,
+    isWorkingWeekend,
+    salaryMin,
+    salaryMax,
+    selectedFiles,
+  ]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: any) => {
+      if (!isFormSubmitted) {
+        const message =
+          languageRedux === 1
+            ? 'Dữ liệu của bạn chưa được gửi, bạn có chắc chắn muốn rời đi?'
+            : 'Your data has not been sent, you definitely want to leave?';
+        event.preventDefault();
+        event.returnValue = message || true;
+        return message;
+      } else {
+        return;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isFormSubmitted]);
 
   // submit
   const handleSubmit = (
@@ -375,9 +448,10 @@ const Post: React.FC = () => {
     }
     if (titleJob.length > 255) {
       return {
-        message: languageRedux === 1 ?
-          'Tên công việc không được quá 255 ký tự' :
-          'The job name must not exceed 255 characters',
+        message:
+          languageRedux === 1
+            ? 'Tên công việc không được quá 255 ký tự'
+            : 'The job name must not exceed 255 characters',
         checkForm: false,
         idError: 1,
       };
@@ -391,9 +465,10 @@ const Post: React.FC = () => {
     }
     if (companyName.length > 255) {
       return {
-        message: languageRedux === 1 ?
-          'Tên công ty không được quá 255 ký tự' :
-          'The company name must not exceed 255 characters',
+        message:
+          languageRedux === 1
+            ? 'Tên công ty không được quá 255 ký tự'
+            : 'The company name must not exceed 255 characters',
         checkForm: false,
         idError: 2,
       };
@@ -433,18 +508,14 @@ const Post: React.FC = () => {
         idError: 7,
       };
     }
-    if (
-      (Number(salaryMin) === 0 && salaryType !== 6)
-    ) {
+    if (Number(salaryMin) === 0 && salaryType !== 6) {
       return {
         message: language?.post_page?.err_salary,
         checkForm: false,
         idError: 8,
       };
     }
-    if (
-      (Number(salaryMax) === 0 && salaryType !== 6)
-    ) {
+    if (Number(salaryMax) === 0 && salaryType !== 6) {
       return {
         message: language?.post_page?.err_salary,
         checkForm: false,
@@ -544,6 +615,7 @@ const Post: React.FC = () => {
             const result = await postApi.createPost(formData);
             // const result = await postApi.createPostV3(formData);
             if (result) {
+              setIsFormSubmitted(false);
               setOpenModalPost(true);
               setCheckPost(true);
             }
@@ -558,17 +630,39 @@ const Post: React.FC = () => {
           type: 'error',
           content: message,
         });
-        const job_title = document.getElementById('post_jobTitle_job_title') as HTMLElement;
-        const post_job_company = document.getElementById('post_job_company') as HTMLElement;
-        const post_job_city = document.getElementById('post_job_city') as HTMLElement;
-        const post_job_district = document.getElementById('post_job_district') as HTMLElement;
-        const post_job_ward = document.getElementById('post_job_ward') as HTMLElement;
-        const post_job_address = document.getElementById('post_job_address') as HTMLElement;
-        const post_job_category = document.getElementById('post_job_category') as HTMLElement;
-        const post_job_salaryMin = document.getElementById('post_job_salaryMin') as HTMLElement;
-        const post_job_salaryMax = document.getElementById('post_job_salaryMax') as HTMLElement;
-        const post_job_phone = document.getElementById('post_job_phone') as HTMLElement;
-        const post_job_description = document.getElementById('post_job_description') as HTMLElement;
+        const job_title = document.getElementById(
+          'post_jobTitle_job_title',
+        ) as HTMLElement;
+        const post_job_company = document.getElementById(
+          'post_job_company',
+        ) as HTMLElement;
+        const post_job_city = document.getElementById(
+          'post_job_city',
+        ) as HTMLElement;
+        const post_job_district = document.getElementById(
+          'post_job_district',
+        ) as HTMLElement;
+        const post_job_ward = document.getElementById(
+          'post_job_ward',
+        ) as HTMLElement;
+        const post_job_address = document.getElementById(
+          'post_job_address',
+        ) as HTMLElement;
+        const post_job_category = document.getElementById(
+          'post_job_category',
+        ) as HTMLElement;
+        const post_job_salaryMin = document.getElementById(
+          'post_job_salaryMin',
+        ) as HTMLElement;
+        const post_job_salaryMax = document.getElementById(
+          'post_job_salaryMax',
+        ) as HTMLElement;
+        const post_job_phone = document.getElementById(
+          'post_job_phone',
+        ) as HTMLElement;
+        const post_job_description = document.getElementById(
+          'post_job_description',
+        ) as HTMLElement;
         // console.log(idError, fillDistrict);
 
         switch (idError) {
@@ -612,7 +706,6 @@ const Post: React.FC = () => {
           default:
             break;
         }
-
       }
     } catch (error: any) {
       console.error('error', error?.response?.data?.message);
@@ -655,8 +748,6 @@ const Post: React.FC = () => {
       // const result = await apiCompany.getCampanyByAccountApi(
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
-      console.log('profileV3?.companyInfo', profileV3?.companyInfo);
-      console.log('profileCompanyV3', profileCompanyV3);
 
       if (profileV3?.companyInfo) {
         setCompanyName(profileCompanyV3.name);
@@ -682,7 +773,7 @@ const Post: React.FC = () => {
       } else {
         setOpenModalNoteCreateCompany(true);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const checkPostedToday = async () => {
@@ -746,7 +837,7 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-          // style={{ textAlign: 'center', display: 'block' }}
+            // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>{language?.profile_page?.create_post}</h1>
             <div className="post-main_switch">

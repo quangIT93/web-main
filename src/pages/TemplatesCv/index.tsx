@@ -103,9 +103,6 @@ const TemplatesCv: React.FC = () => {
 
   // React.useEffect(() => {}, []);
 
-  console.log('profileV3', profileV3);
-  console.log('profileV3More', profileMoreV3);
-
   const handleClickSaveCv = async () => {
     const analytics: any = getAnalytics();
 

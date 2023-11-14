@@ -41,7 +41,7 @@ const DetailCompany = () => {
     useState<boolean>(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [bookmarked, setBookmarked] = React.useState(false);
-  console.log('profileV3', profileV3);
+
   const dispatch = useDispatch();
   const queryParams = queryString.parse(window.location.search);
   const companyId = Number(queryParams['companyId']);
@@ -70,6 +70,7 @@ const DetailCompany = () => {
         20,
         languageRedux === 1 ? 'vi' : 'en',
       );
+
       if (result.status === 200 && result.data.posts.length === 20) {
         setLoading(false);
         setApplyPositions(result.data.total);
@@ -117,9 +118,8 @@ const DetailCompany = () => {
   };
 
   useEffect(() => {
-    !companyId &&
-      window.open(`/`, '_parent')
-  }, [])
+    !companyId && window.open(`/`, '_parent');
+  }, []);
 
   useEffect(() => {
     getCompanyInfo();
