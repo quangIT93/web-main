@@ -84,7 +84,9 @@ const EditPosted = () => {
   // const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = queryString.parse(window.location.search);
   const [dataPostById, setDataPostById] = useState<any>(null);
-
+  const [fillDistrict, setFillDistrict] = React.useState<any>('');
+  const [fillProvince, setFillProvince] = React.useState<any>('');
+  const [fillWard, setFillWard] = React.useState<any>('');
   const [editDataPosted, setEditDataPosted] = useState<FormValues | null>({
     id: '',
     title: '',
@@ -365,24 +367,55 @@ const EditPosted = () => {
       return {
         message: language?.post_page?.err_job_title,
         checkForm: false,
+        idError: 1,
       };
     }
     if (editDataPosted?.company_name === '') {
       return {
         message: language?.post_page?.err_company_name,
         checkForm: false,
+        idError: 2,
       };
     }
-    if (editDataPosted?.title === '') {
+    if (fillProvince === null) {
       return {
-        message: language?.post_page?.err_address,
+        message: language?.post_page?.err_location,
         checkForm: false,
+        idError: 3,
       };
     }
+    if (fillDistrict === null) {
+      return {
+        message: language?.post_page?.err_location,
+        checkForm: false,
+        idError: 4,
+      };
+    }
+    if (fillWard === null) {
+      return {
+        message: language?.post_page?.err_location,
+        checkForm: false,
+        idError: 5,
+      };
+    }
+    // if (editDataPosted?.title === '') {
+    //   return {
+    //     message: language?.post_page?.err_address,
+    //     checkForm: false,
+    //   };
+    // }
     if (editDataPosted?.ward_id === '') {
       return {
         message: language?.post_page?.err_location,
         checkForm: false,
+        idError: 5,
+      };
+    }
+    if (editDataPosted?.address === '') {
+      return {
+        message: language?.post_page?.err_address,
+        checkForm: false,
+        idError: 6,
       };
     }
 
@@ -400,23 +433,44 @@ const EditPosted = () => {
       return {
         message: language?.post_page?.err_cate,
         checkForm: false,
+        idError: 7,
       };
     }
+    // if (
+    //   (Number(editDataPosted?.salaryMax) === 0 &&
+    //     editDataPosted?.salaryType !== 6) ||
+    //   (Number(editDataPosted?.salaryMin) === 0 &&
+    //     editDataPosted?.salaryType !== 6)
+    // ) {
+    //   return {
+    //     message: language?.post_page?.err_salary,
+    //     checkForm: false,
+    //     idError: 8,
+    //   };
+    // }
     if (
-      (Number(editDataPosted?.salaryMax) === 0 &&
-        editDataPosted?.salaryType !== 6) ||
-      (Number(editDataPosted?.salaryMin) === 0 &&
-        editDataPosted?.salaryType !== 6)
+      (Number(editDataPosted?.salaryMin) === 0 && editDataPosted?.salaryType !== 6)
     ) {
       return {
         message: language?.post_page?.err_salary,
         checkForm: false,
+        idError: 8,
+      };
+    }
+    if (
+      (Number(editDataPosted?.salaryMax) === 0 && editDataPosted?.salaryType !== 6)
+    ) {
+      return {
+        message: language?.post_page?.err_salary,
+        checkForm: false,
+        idError: 9,
       };
     }
     if (Number(editDataPosted?.salaryMax) < Number(editDataPosted?.salaryMin)) {
       return {
         message: language?.post_page?.err_verify_salary,
         checkForm: false,
+        idError: 9,
       };
     }
     if (
@@ -426,14 +480,20 @@ const EditPosted = () => {
       (editDataPosted?.phoneNumber && editDataPosted?.phoneNumber?.length > 11)
     ) {
       return {
-        message: language?.post_page?.err_phone_mess,
+        message: languageRedux === 1 ?
+          "Số điện thoại không được bỏ trống và phải ít hơn 10 ký tự." :
+          "Phone number cannot be blank and must be less than 10 characters.",
         checkForm: false,
+        idError: 10,
       };
     }
     if (editDataPosted?.description === '') {
       return {
-        message: language?.post_page?.err_des_mess,
+        message: languageRedux === 1 ?
+          "Hãy nhập mô tả công việc." :
+          "Please enter a job description.",
         checkForm: false,
+        idError: 11,
       };
     }
     if (
@@ -444,18 +504,20 @@ const EditPosted = () => {
       return {
         message: language?.post_page?.err_date,
         checkForm: false,
+        idError: 12,
       };
     }
 
     return {
       message: '',
       checkForm: true,
+      idError: 0,
     };
   };
 
   const createNewPost = async (formData: any) => {
     // valid value form data
-    const { message, checkForm } = validValue();
+    const { message, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         if (Array.from(formData.values()).some((value) => value !== '')) {
@@ -469,6 +531,57 @@ const EditPosted = () => {
           type: 'error',
           content: message,
         });
+        const edit_post_title_job = document.getElementById('edit_post_title_job') as HTMLElement;
+        const edit_post_company_name = document.getElementById('edit_post_company_name') as HTMLElement;
+        const edit_post_place_city = document.getElementById('edit_post_place_city') as HTMLElement;
+        const edit_post_place_district = document.getElementById('edit_post_place_district') as HTMLElement;
+        const edit_post_place_ward = document.getElementById('edit_post_place_ward') as HTMLElement;
+        const edit_post_place_address = document.getElementById('edit_post_place_address') as HTMLElement;
+        const edit_post_category = document.getElementById('edit_post_category') as HTMLElement;
+        const edit_post_salaryMin = document.getElementById('edit_post_salaryMin') as HTMLElement;
+        const edit_post_salaryMax = document.getElementById('edit_post_salaryMax') as HTMLElement;
+        const edit_post_phone = document.getElementById('edit_post_phone') as HTMLElement;
+        const edit_post_description = document.getElementById('edit_post_description') as HTMLElement;
+        console.log(idError);
+
+        switch (idError) {
+          case 1:
+            edit_post_title_job.focus();
+            break;
+          case 2:
+            edit_post_company_name.focus();
+            break;
+          case 3:
+            edit_post_place_city.focus();
+            break;
+          case 4:
+            edit_post_place_district.focus();
+            break;
+          case 5:
+            edit_post_place_ward.focus();
+            break;
+          case 6:
+            edit_post_place_address.focus();
+            break;
+          case 7:
+            edit_post_category.focus();
+            break;
+          case 8:
+            edit_post_salaryMin.focus();
+            break;
+          case 9:
+            edit_post_salaryMax.focus();
+            break;
+          case 10:
+            edit_post_phone.focus();
+            break;
+          case 11:
+            edit_post_description.focus();
+            break;
+
+          default:
+            break;
+        }
       }
     } catch (error: any) {
       console.error('error', error);
@@ -505,6 +618,11 @@ const EditPosted = () => {
                 dataPostById={dataPostById}
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                fillProvince={fillProvince}
+                fillDistrict={fillDistrict}
+                setFillDistrict={setFillDistrict}
+                setFillProvince={setFillProvince}
+                setFillWard={setFillWard}
                 language={language}
                 languageRedux={languageRedux}
               />

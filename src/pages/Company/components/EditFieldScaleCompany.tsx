@@ -25,6 +25,8 @@ interface IEditPostAddress {
   dataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
+  setFillActivity: React.Dispatch<React.SetStateAction<any>>;
+  setFillSize: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
@@ -34,7 +36,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges } = props;
+  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges, setFillActivity, setFillSize } = props;
 
   const [dataSizes, setDataSizes] = useState<any>(null);
   const [selectedSize, setSelectedSize] = useState<any>(null);
@@ -124,6 +126,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const handleEditCompanySize = (event: any, value: any) => {
     setSelectedSize(value);
     setUnsavedChanges(true);
+    setFillSize(value);
     setDataCompany((preValue: any) => ({
       ...preValue,
       companySizeInfomation: {
@@ -134,6 +137,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const handleEditCompanyCategory = (event: any, value: any) => {
     setSelectedCategory(value);
     setUnsavedChanges(true);
+    setFillActivity(value)
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyCategory: {
@@ -163,6 +167,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           getOptionLabel={(option: any) => option?.parent_category || ''}
           value={selectedCategory || null}
           onChange={handleEditCompanyCategory}
+          id="company_place_activity"
           renderInput={(params) => (
             <TextField
               {...params}
@@ -204,6 +209,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           getOptionLabel={(option: any) => option?.nameText || ''}
           value={selectedSize || null}
           onChange={handleEditCompanySize}
+          id="company_place_size"
           renderInput={(params) => (
             <TextField
               {...params}
@@ -218,7 +224,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           style={{ marginTop: '8px' }}
         />
         <div className="wrap-noti_input">
-          {!selectedCategory ? (
+          {!selectedSize ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Vui lòng chọn quy mô công ty'

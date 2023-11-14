@@ -25,13 +25,14 @@ interface IEditPostAddress {
   dataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
+  setFillRole: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges } = props;
+  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges, setFillRole } = props;
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -111,6 +112,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const handleEditCompanyRole = (event: any, value: any) => {
     setSelectedRole(value);
     setUnsavedChanges(true);
+    setFillRole(value)
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyRoleInfomation: {
@@ -148,12 +150,13 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           getOptionLabel={(option: any) => option?.nameText || ''}
           value={selectedRole || null}
           onChange={handleEditCompanyRole}
+          id="company_place_role"
           renderInput={(params) => (
             <TextField
               {...params}
               placeholder={language?.company_page?.place_role}
               size="small"
-              // value={dataCompany?.companyRole?.name}
+            // value={dataCompany?.companyRole?.name}
             />
           )}
           isOptionEqualToValue={(option, value) => {
@@ -185,7 +188,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
         </Typography>
         <TextField
           type="text"
-          id="editJob"
+          id="company_website"
           name="title"
           value={dataCompany?.website}
           onChange={handleEditCompanyWeb}
@@ -193,7 +196,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_web}
           disabled={is_profile ? true : false}
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.website?.length > 100 ? (

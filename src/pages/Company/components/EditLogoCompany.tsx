@@ -42,14 +42,14 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
   const [fileList, setFileList] = useState<UploadFile[]>(
     dataCompany?.logoPath && dataCompany?.logopath !== ''
       ? [
-          {
-            uid: '-1',
-            name: 'logo.png',
-            status: 'done',
-            url: dataCompany?.logoPath,
-            thumbUrl: dataCompany?.logoPath,
-          },
-        ]
+        {
+          uid: '-1',
+          name: 'logo.png',
+          status: 'done',
+          url: dataCompany?.logoPath,
+          thumbUrl: dataCompany?.logoPath,
+        },
+      ]
       : [],
   );
 
@@ -94,6 +94,7 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
     listType: 'picture-card',
     fileList,
     disabled: is_profile ? true : false,
+    id: 'company_upload_avatar'
   };
 
   const handleCancel = () => setPreviewOpen(false);

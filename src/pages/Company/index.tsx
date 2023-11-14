@@ -142,6 +142,12 @@ const Company: React.FC<ICompany> = (props) => {
     images: [],
     deletedImages: [],
   });
+  const [fillDistrict, setFillDistrict] = React.useState<any>('');
+  const [fillProvince, setFillProvince] = React.useState<any>('');
+  const [fillWard, setFillWard] = React.useState<any>('');
+  const [fillRole, setFillRole] = React.useState<any>('');
+  const [fillActivity, setFillActivity] = React.useState<any>('');
+  const [fillSize, setFillSize] = React.useState<any>('');
 
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [ShowModalUnsave, setShowModalUnsave] = useState(false);
@@ -249,11 +255,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$',
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -271,12 +277,14 @@ const Company: React.FC<ICompany> = (props) => {
       return {
         message: language?.company_page?.err_logo_mess,
         checkForm: false,
+        idError: 1,
       };
     }
     if (dataCompany?.name.trim() === '') {
       return {
         message: language?.company_page?.err_name_mess,
         checkForm: false,
+        idError: 2,
       };
     }
     // if (dataCompany?.taxCode === '') {
@@ -285,16 +293,39 @@ const Company: React.FC<ICompany> = (props) => {
     //     checkForm: false,
     //   };
     // }
+    if (fillProvince === null) {
+      return {
+        message: language?.post_page?.err_location,
+        checkForm: false,
+        idError: 3,
+      };
+    }
+    if (fillDistrict === null) {
+      return {
+        message: language?.post_page?.err_location,
+        checkForm: false,
+        idError: 4,
+      };
+    }
+    if (fillWard === null) {
+      return {
+        message: language?.post_page?.err_location,
+        checkForm: false,
+        idError: 5,
+      };
+    }
     if (dataCompany?.companyLocation === '') {
       return {
         message: language?.company_page?.err_location_mess,
         checkForm: false,
+        idError: 5,
       };
     }
     if (dataCompany?.address === '' || dataCompany?.address.length <= 10) {
       return {
         message: language?.company_page?.err_address_mess,
         checkForm: false,
+        idError: 6,
       };
     }
     if (
@@ -305,66 +336,124 @@ const Company: React.FC<ICompany> = (props) => {
       return {
         message: language?.company_page?.err_phone_mess,
         checkForm: false,
+        idError: 7,
       };
     }
     if (dataCompany?.email === '') {
       return {
         message: language?.company_page?.err_email_mess,
         checkForm: false,
+        idError: 8,
+      };
+    }
+    if (dataCompany?.email.length > 50) {
+      return {
+        message: languageRedux === 1 ?
+          "Email không được vượt quá 50 ký tự." :
+          "Email must not exceed 50 characters.",
+        checkForm: false,
+        idError: 8,
       };
     }
     if (regexCheckEmail.test(dataCompany?.email) === false) {
       return {
         message: language?.company_page?.err_verify_email_mess,
         checkForm: false,
+        idError: 8,
+      };
+    }
+    if (fillRole === null) {
+      return {
+        message: language?.company_page?.err_role_mess,
+        checkForm: false,
+        idError: 9,
       };
     }
     if (dataCompany?.companyRoleInfomation === '') {
       return {
         message: language?.company_page?.err_role_mess,
         checkForm: false,
+        idError: 9,
       };
     }
     if (dataCompany?.website === '') {
       return {
         message: language?.company_page?.err_web_mess,
         checkForm: false,
+        idError: 10,
+      };
+    }
+    if (dataCompany?.website.length > 100) {
+      return {
+        message: languageRedux === 1 ?
+          "Website không được vượt quá 100 ký tự." :
+          "Website must not exceed 100 characters.",
+        checkForm: false,
+        idError: 10,
       };
     }
     if (validURL(dataCompany?.website) === false) {
       return {
         message: language?.company_page?.err_verify_web_mess,
         checkForm: false,
+        idError: 10,
+      };
+    }
+    if (fillActivity === null) {
+      return {
+        message: language?.company_page?.err_cate_mess,
+        checkForm: false,
+        idError: 11,
       };
     }
     if (dataCompany?.companyCategory === '') {
       return {
         message: language?.company_page?.err_cate_mess,
         checkForm: false,
+        idError: 11,
+      };
+    }
+    if (fillSize === null) {
+      return {
+        message: language?.company_page?.err_size_mess,
+        checkForm: false,
+        idError: 12,
       };
     }
     if (dataCompany?.companySizeInfomation === '') {
       return {
         message: language?.company_page?.err_size_mess,
         checkForm: false,
+        idError: 12,
       };
     }
     if (dataCompany?.description === '') {
       return {
         message: language?.company_page?.err_des_mess,
         checkForm: false,
+        idError: 13,
+      };
+    }
+    if (dataCompany?.description.length > 1000) {
+      return {
+        message: languageRedux === 1 ?
+          "Mô tả không được quá 1000 ký tự." :
+          "Description must not exceed 1000 characters.",
+        checkForm: false,
+        idError: 13,
       };
     }
 
     return {
       message: '',
       checkForm: true,
+      idError: 0
     };
   };
 
   const handleCreateCompany = async (formData: any) => {
     // valid value form data
-    const { message, checkForm } = validValue();
+    const { message, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         if (Array.from(formData.values()).some((value) => value !== '')) {
@@ -397,6 +486,65 @@ const Company: React.FC<ICompany> = (props) => {
           type: 'error',
           content: message,
         });
+        const company_upload_avatar = document.getElementById('company_upload_avatar') as HTMLElement;
+        const company_name = document.getElementById('company_name') as HTMLElement;
+        const company_city = document.getElementById('company_city') as HTMLElement;
+        const company_district = document.getElementById('company_district') as HTMLElement;
+        const company_ward = document.getElementById('company_ward') as HTMLElement;
+        const company_address = document.getElementById('company_address') as HTMLElement;
+        const company_phone = document.getElementById('company_phone') as HTMLElement;
+        const company_email = document.getElementById('company_email') as HTMLElement;
+        const company_place_role = document.getElementById('company_place_role') as HTMLElement;
+        const company_website = document.getElementById('company_website') as HTMLElement;
+        const company_place_activity = document.getElementById('company_place_activity') as HTMLElement;
+        const company_place_size = document.getElementById('company_place_size') as HTMLElement;
+        const company_place_des = document.getElementById('company_place_des') as HTMLElement;
+        console.log(idError);
+
+        switch (idError) {
+          case 1:
+            // company_upload_avatar.focus();
+            window.scrollTo({ top: 0 });
+            break;
+          case 2:
+            company_name.focus();
+            break;
+          case 3:
+            company_city.focus();
+            break;
+          case 4:
+            company_district.focus();
+            break;
+          case 5:
+            company_ward.focus();
+            break;
+          case 6:
+            company_address.focus();
+            break;
+          case 7:
+            company_phone.focus();
+            break;
+          case 8:
+            company_email.focus();
+            break;
+          case 9:
+            company_place_role.focus();
+            break;
+          case 10:
+            company_website.focus();
+            break;
+          case 11:
+            company_place_activity.focus();
+            break;
+          case 12:
+            company_place_size.focus();
+            break;
+          case 13:
+            company_place_des.focus();
+            break;
+          default:
+            break;
+        }
       }
     } catch (error) {
       console.error('error', error);
@@ -404,7 +552,7 @@ const Company: React.FC<ICompany> = (props) => {
   };
   const handleUpdateCompany = async (formData: any, formDataImages: any) => {
     // valid value form data
-    const { message, checkForm } = validValue();
+    const { message, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         if (Array.from(formData.values()).some((value) => value !== '')) {
@@ -436,6 +584,65 @@ const Company: React.FC<ICompany> = (props) => {
           type: 'error',
           content: message,
         });
+        const company_upload_avatar = document.getElementById('company_upload_avatar') as HTMLElement;
+        const company_name = document.getElementById('company_name') as HTMLElement;
+        const company_city = document.getElementById('company_city') as HTMLElement;
+        const company_district = document.getElementById('company_district') as HTMLElement;
+        const company_ward = document.getElementById('company_ward') as HTMLElement;
+        const company_address = document.getElementById('company_address') as HTMLElement;
+        const company_phone = document.getElementById('company_phone') as HTMLElement;
+        const company_email = document.getElementById('company_email') as HTMLElement;
+        const company_place_role = document.getElementById('company_place_role') as HTMLElement;
+        const company_website = document.getElementById('company_website') as HTMLElement;
+        const company_place_activity = document.getElementById('company_place_activity') as HTMLElement;
+        const company_place_size = document.getElementById('company_place_size') as HTMLElement;
+        const company_place_des = document.getElementById('company_place_des') as HTMLElement;
+        console.log(idError);
+
+        switch (idError) {
+          case 1:
+            // company_upload_avatar.focus();
+            window.scrollTo({ top: 0 });
+            break;
+          case 2:
+            company_name.focus();
+            break;
+          case 3:
+            company_city.focus();
+            break;
+          case 4:
+            company_district.focus();
+            break;
+          case 5:
+            company_ward.focus();
+            break;
+          case 6:
+            company_address.focus();
+            break;
+          case 7:
+            company_phone.focus();
+            break;
+          case 8:
+            company_email.focus();
+            break;
+          case 9:
+            company_place_role.focus();
+            break;
+          case 10:
+            company_website.focus();
+            break;
+          case 11:
+            company_place_activity.focus();
+            break;
+          case 12:
+            company_place_size.focus();
+            break;
+          case 13:
+            company_place_des.focus();
+            break;
+          default:
+            break;
+        }
       }
     } catch (error) {
       console.error('error', error);
@@ -610,6 +817,12 @@ const Company: React.FC<ICompany> = (props) => {
               setDataCompany={setDataCompany}
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
+              fillProvince={fillProvince}
+              fillDistrict={fillDistrict}
+              fillWard={fillWard}
+              setFillDistrict={setFillDistrict}
+              setFillProvince={setFillProvince}
+              setFillWard={setFillWard}
             />
             <EditPhoneMailCompany
               dataCompany={dataCompany}
@@ -622,6 +835,7 @@ const Company: React.FC<ICompany> = (props) => {
               setDataCompany={setDataCompany}
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
+              setFillRole={setFillRole}
             />
 
             <EditFieldScaleCompany
@@ -629,6 +843,8 @@ const Company: React.FC<ICompany> = (props) => {
               setDataCompany={setDataCompany}
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
+              setFillActivity={setFillActivity}
+              setFillSize={setFillSize}
             />
             <EditImageCompany
               dataCompany={dataCompany}
