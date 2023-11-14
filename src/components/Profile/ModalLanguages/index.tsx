@@ -127,6 +127,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
             ? 'Tên ngôn ngữ không được bỏ trống'
             : 'Language names cannot be empty',
         checkForm: false,
+        idError: 1,
       };
     }
     if (language?.trim().length > 255) {
@@ -136,17 +137,19 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
             ? 'Tên ngôn ngữ không được vượt quá 255 ký tự'
             : 'Language names cannot exceed 255 characters',
         checkForm: false,
+        idError: 1,
       };
     }
 
     return {
       messageError: '',
       checkForm: true,
+      idError: 0,
     };
   };
 
   const handleSubmit = async () => {
-    const { messageError, checkForm } = validValue();
+    const { messageError, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         const result = await apiCv.postProfileLanguage(level, language);
@@ -171,6 +174,17 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
         }
       } else {
         message.error(messageError);
+        const profile_languages_language_name = document.getElementById('profile_languages_language_name') as HTMLElement;
+        // console.log(idError);
+
+        switch (idError) {
+          case 1:
+            profile_languages_language_name.focus();
+            break;
+
+          default:
+            break;
+        }
       }
     } catch (error: any) {
       console.log('error', error);
@@ -224,8 +238,8 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
             {languageRedux === 1
               ? 'Thêm ngoại ngữ'
               : languageRedux === 0 && searchParams.get('type') === 'create'
-              ? 'Add Languages'
-              : ''}
+                ? 'Add Languages'
+                : ''}
           </Typography>
           <Box sx={{ marginBottom: '12px' }}>
             <Typography
@@ -239,14 +253,14 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="skill"
+              id="profile_languages_language_name"
               name="skill"
               value={language}
               onChange={handleOnchangeSkill}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {language.length > 255 ? (
