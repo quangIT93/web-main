@@ -224,6 +224,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
       return {
         messageError: language?.profile_page?.err_school,
         checkForm: false,
+        idError: 1,
       };
     }
     if (education.companyName?.trim().length > 50) {
@@ -233,12 +234,14 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             ? 'Trường học/Tổ chức không được vượt quá 50 ký tự'
             : 'School/Organization cannot exceed 50 characters',
         checkForm: false,
+        idError: 1,
       };
     }
     if (education.major?.trim() === '') {
       return {
         messageError: language?.profile_page?.err_major,
         checkForm: false,
+        idError: 2,
       };
     }
     if (education.major?.trim().length > 50) {
@@ -248,21 +251,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             ? 'Tên ngành không được vượt quá 50 ký tự'
             : 'Major cannot exceed 50 characters',
         checkForm: false,
-      };
-    }
-    if (education.extraInformation?.trim() === '') {
-      return {
-        messageError: language?.profile_page?.err_additional_information,
-        checkForm: false,
-      };
-    }
-    if (education.extraInformation?.trim().length > 500) {
-      return {
-        messageError:
-          languageRedux === 1
-            ? 'Thông tin thêm không được vượt quá 500 ký tự'
-            : 'Additional information cannot exceed 500 characters',
-        checkForm: false,
+        idError: 2,
       };
     }
 
@@ -270,6 +259,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
       return {
         messageError: language?.profile_page?.err_start_time,
         checkForm: false,
+        idError: 3,
       };
     }
     if (
@@ -281,6 +271,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             ? 'Năm bắt đầu không được vượt quá năm hiện tại'
             : 'The starting year cannot exceed the current year',
         checkForm: false,
+        idError: 3,
       };
     }
 
@@ -288,6 +279,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
       return {
         messageError: language?.profile_page?.err_finish_time,
         checkForm: false,
+        idError: 4,
       };
     }
 
@@ -298,6 +290,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             ? 'Năm kết thúc không được vượt quá năm hiện tại'
             : 'The final year cannot exceed the current year',
         checkForm: false,
+        idError: 4,
       };
     }
 
@@ -311,6 +304,25 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             ? 'Năm bắt đầu không được vượt quá năm kết thúc'
             : 'The starting year cannot exceed the final year',
         checkForm: false,
+        idError: 4,
+      };
+    }
+
+    if (education.extraInformation?.trim() === '') {
+      return {
+        messageError: language?.profile_page?.err_additional_information,
+        checkForm: false,
+        idError: 3,
+      };
+    }
+    if (education.extraInformation?.trim().length > 500) {
+      return {
+        messageError:
+          languageRedux === 1
+            ? 'Thông tin thêm không được vượt quá 500 ký tự'
+            : 'Additional information cannot exceed 500 characters',
+        checkForm: false,
+        idError: 3,
       };
     }
 
@@ -634,8 +646,8 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                 <></>
               )}
               <span className="number-text">{`${education.extraInformation
-                  ? education.extraInformation.length
-                  : '0'
+                ? education.extraInformation.length
+                : '0'
                 }/500`}</span>
             </div>
           </Box>

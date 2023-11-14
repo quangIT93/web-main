@@ -188,6 +188,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Số điện thoại không được bỏ trống'
             : 'Phone number cannot be empty',
         checkForm: false,
+        idError: 1,
       };
     }
     if (regexCheckPhone.test(phone) === false) {
@@ -197,6 +198,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Số điện thoại không đúng định dạng'
             : 'The phone number is not in the correct format',
         checkForm: false,
+        idError: 1,
       };
     }
     if (email?.trim() === '') {
@@ -206,6 +208,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Email không được bỏ trống'
             : 'Email cannot be empty',
         checkForm: false,
+        idError: 2,
       };
     }
     if (regexCheckEmail.test(email) === false) {
@@ -215,6 +218,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Email không đúng định dạng'
             : 'The Email is not in the correct format',
         checkForm: false,
+        idError: 2,
       };
     }
 
@@ -225,6 +229,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Link Facebook không đúng định dạng'
             : 'The Facebook link is not in the correct format',
         checkForm: false,
+        idError: 3,
       };
     }
     if (linkIn.trim() !== '' && validURL(linkIn) === false) {
@@ -234,6 +239,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Link Linkedin không đúng định dạng'
             : 'The Linkedin link is not in the correct format',
         checkForm: false,
+        idError: 4,
       };
     }
 
@@ -244,6 +250,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Link Facebook không được vượt quá 100 ký tự'
             : 'The Facebook link cannot exceed 100 characters',
         checkForm: false,
+        idError: 3,
       };
     }
     if (linkIn.trim() !== '' && linkIn.trim().length > 100) {
@@ -253,18 +260,20 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             ? 'Link Linkedin không được vượt quá 100 ký tự'
             : 'The Linkedin link cannot exceed 100 characters',
         checkForm: false,
+        idError: 4,
       };
     }
 
     return {
       messageError: '',
       checkForm: true,
+      idError: 0,
     };
   };
 
   // handle update information contact
   const handleSubmit = async () => {
-    const { messageError, checkForm } = validValue();
+    const { messageError, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         const info: InfoContact = {
@@ -288,6 +297,28 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         }
       } else {
         message.error(messageError);
+        const contact_info_phone = document.getElementById('contact_info_phone') as HTMLElement;
+        const contact_info_email = document.getElementById('contact_info_email') as HTMLElement;
+        const contact_info_fb = document.getElementById('contact_info_fb') as HTMLElement;
+        const contact_info_linkedin = document.getElementById('contact_info_linkedin') as HTMLElement;
+
+        switch (idError) {
+          case 1:
+            contact_info_phone.focus();
+            break;
+          case 2:
+            contact_info_email.focus();
+            break;
+          case 3:
+            contact_info_fb.focus();
+            break;
+          case 4:
+            contact_info_linkedin.focus();
+            break;
+
+          default:
+            break;
+        }
       }
     } catch (error) {
       console.log(error);
@@ -344,7 +375,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             </Typography>
             <TextField
               type="tel"
-              id="nameProfile"
+              id="contact_info_phone"
               name="title"
               value={phone}
               onChange={handleSetPhone}
@@ -385,7 +416,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="nameProfile"
+              id="contact_info_email"
               name="title"
               value={email}
               onChange={handleSetEmail}
@@ -431,7 +462,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="nameProfile"
+              id="contact_info_fb"
               name="title"
               value={fb}
               onChange={handleSetFB}
@@ -471,7 +502,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="nameProfile"
+              id="contact_info_linkedin"
               name="title"
               value={linkIn}
               onChange={handleLinkIn}

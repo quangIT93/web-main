@@ -5,7 +5,11 @@ import { useLocation } from 'react-router-dom';
 // import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import breakpoints from '../../scss/breakpoints';
 
-import { ENSubLoginIcon, FaceBookIcon, VNSubLoginIcon } from '#components/Icons';
+import {
+  ENSubLoginIcon,
+  FaceBookIcon,
+  VNSubLoginIcon,
+} from '#components/Icons';
 
 import { Link } from 'react-router-dom';
 
@@ -152,7 +156,7 @@ const Footer: React.FC = () => {
     // console.log('Current window width:', currentWidth);
   });
 
-  useEffect(() => { }, [languageRedux]);
+  useEffect(() => {}, [languageRedux]);
 
   useEffect(() => {
     if (windowWidth) {
@@ -180,7 +184,7 @@ const Footer: React.FC = () => {
     // setLanguageId(e.target.value);
     // let value = 1;
     // value === 1 ? value = 2 : 1;
-    e.stopPropagation()
+    e.stopPropagation();
     setCookie('languageId', JSON.stringify(value), 365);
     await dispatch<any>(setLanguage(value));
     await dispatch(getLanguages(value.toString()) as any);
@@ -199,15 +203,15 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-              transform: 'translateY(calc(-100% - 36px))',
-              borderTop: '1px solid #ccc',
-            }
+                transform: 'translateY(calc(-100% - 36px))',
+                borderTop: '1px solid #ccc',
+              }
             : !open && !windowWidth
-              ? {
+            ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-              : { transform: 'none' }
+            : { transform: 'none' }
         }
       >
         <div
@@ -372,7 +376,9 @@ const Footer: React.FC = () => {
               key="1"
               className="language"
               onClick={(e: any) => {
-                languageRedux === 1 ? totgleLanguage(e, 2) : totgleLanguage(e, 1);
+                languageRedux === 1
+                  ? totgleLanguage(e, 2)
+                  : totgleLanguage(e, 1);
               }}
             >
               {languageRedux === 1 ? (
