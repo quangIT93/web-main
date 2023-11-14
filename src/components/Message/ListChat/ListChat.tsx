@@ -311,8 +311,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         message: message,
         createdAt: Date.now(),
         type: 'text',
-        // postId: searchParams.get('post_id'),
-        postId: null,
+        postId:
+          searchParams.get('post_id') !== 'null'
+            ? searchParams.get('post_id')
+            : null,
       });
 
     setMessage('');
@@ -345,7 +347,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         createdAt: Date.now(),
         type: 'image',
         // postId: searchParams.get('post_id'),
-        postId: null,
+        postId:
+          searchParams.get('post_id') !== 'null'
+            ? searchParams.get('post_id')
+            : null,
       });
     }
     // setImage(selectedImage);
