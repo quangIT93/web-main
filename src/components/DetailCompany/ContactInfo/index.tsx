@@ -164,7 +164,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
               </ul>
             </div>
           </div>
-          <div
+          {/* <div
             className={styles.company_information_right}
             style={{
               display:
@@ -186,7 +186,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                 <Popup>79 Quốc Hương, Thảo Điền, Q.2, TP.HCM</Popup>
               </Marker>
             </MapContainer>
-          </div>
+          </div> */}
         </div>
         <div className={styles.company_image}>
           <h3>
