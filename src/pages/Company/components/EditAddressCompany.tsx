@@ -22,6 +22,12 @@ interface IEditPostAddress {
   dataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
+  fillProvince: any;
+  fillDistrict: any;
+  fillWard: any;
+  setFillProvince: React.Dispatch<React.SetStateAction<any>>;
+  setFillDistrict: React.Dispatch<React.SetStateAction<any>>;
+  setFillWard: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
@@ -31,7 +37,13 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges } = props;
+  const { setDataCompany,
+    dataCompany,
+    is_profile,
+    setUnsavedChanges,
+    setFillProvince,
+    setFillDistrict,
+    setFillWard } = props;
 
   // const [dataProvinces, setDataProvinces] = useState<any>(null);
   const [dataDistricts, setDataDistrict] = useState<any>(null);
@@ -42,6 +54,9 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   const dataProvinces = useSelector(
     (state: RootState) => state.dataLocation.data,
   );
+  // console.log('fillProvince', props.fillProvince);
+  // console.log('fillDistrict', props.fillDistrict);
+
   // const [language, setLanguageState] = React.useState<any>();
 
   // const getlanguageApi = async () => {
@@ -204,7 +219,9 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     setSelectedDistrict(null);
     setSelectedWard(null);
     setSelectedProvince(value);
-
+    setFillDistrict(null);
+    setFillWard(null);
+    setFillProvince(value);
     setDataWard([]);
   };
 
@@ -212,12 +229,14 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     setUnsavedChanges(true);
     setSelectedDistrict(value);
     setSelectedWard(null);
+    setFillWard(null);
+    setFillDistrict(value);
   };
 
   const handleChangeWardId = (event: any, value: any) => {
     setUnsavedChanges(true);
     setSelectedWard(value);
-
+    setFillWard(value)
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyLocation: {
@@ -255,6 +274,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             onChange={(event: any, newValue: any | null) => {
               handleProvinceChange(event, newValue);
             }}
+            id="company_city"
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -297,6 +317,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             getOptionLabel={(option: any) => option?.full_name || ''}
             value={selectedDistrict || null}
             onChange={handleDistrictChange}
+            id="company_district"
             renderInput={(params: any) => (
               <TextField
                 {...params}
@@ -338,6 +359,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             getOptionLabel={(option: any) => option?.full_name || ''}
             value={selectedWard || null}
             onChange={handleChangeWardId}
+            id="company_ward"
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -374,7 +396,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
           </Typography>
           <TextField
             type="text"
-            id="jobTitle"
+            id="company_address"
             name="title"
             value={dataCompany?.address}
             onChange={handleChangeAddress}

@@ -86,7 +86,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
         </Typography>
         <TextField
           type="text"
-          id="editCompany"
+          id="company_name"
           name="title"
           value={dataCompany?.name}
           onChange={handleEditCompanyName}
@@ -94,7 +94,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_name}
           disabled={is_profile ? true : false}
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.name?.length > 255 ? (
@@ -112,9 +112,8 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${
-            dataCompany?.name?.length ? dataCompany?.name?.length : '0'
-          }/255`}</span>
+          <span className="number-text">{`${dataCompany?.name?.length ? dataCompany?.name?.length : '0'
+            }/255`}</span>
         </div>
       </div>
       <div className="edit-tax-company">
@@ -128,7 +127,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
         </Typography>
         <TextField
           type="text"
-          id="editJob"
+          id="company_tax"
           name="title"
           value={dataCompany?.taxCode}
           onChange={handleEditCompanyFax}
@@ -136,7 +135,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_tax}
           disabled={is_profile ? true : false}
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.taxCode?.length > 255 ? (
@@ -148,9 +147,8 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${
-            dataCompany?.taxCode?.length ? dataCompany?.taxCode?.length : '0'
-          }/255`}</span>
+          <span className="number-text">{`${dataCompany?.taxCode?.length ? dataCompany?.taxCode?.length : '0'
+            }/255`}</span>
         </div>
       </div>
     </div>

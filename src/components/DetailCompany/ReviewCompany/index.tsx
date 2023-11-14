@@ -19,6 +19,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Backdrop, CircularProgress } from '@mui/material';
 import moment from 'moment';
 import ModalLogin from '#components/Home/ModalLogin';
+import ModalConfirmDelete from '../ModalConfirmDelete';
 interface IReviewCompany {
   company: any;
   companyId: any;
@@ -35,6 +36,8 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
     useState<boolean>(false);
   const [openModalPostReviewSuccess, setOpenModalPostReviewSuccess] =
     useState<boolean>(false);
+  const [openModalConfirmDelete, setOpenModalConfirmDelete] =
+    useState<boolean>(false);
   const [hasMore, setHasMore] = React.useState(true);
   const [page, setPage] = React.useState<any>('0');
   const [loading, setLoading] = React.useState(true);
@@ -42,7 +45,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
   const location = useLocation();
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [companyRating, setCompanyRating] = useState<any>([]);
-  const [averageRated, setAverageRated] = useState<any>([]);
+  const [averageRated, setAverageRated] = useState<any>(null);
   const [isSuccess, setIsSuccess] = useState<any>(false);
   const [myReview, setMyReview] = useState<any>();
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
@@ -51,14 +54,16 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
 
   const handleGetReviewAccountOfCompany = async () => {
     try {
-      const result = await apiCompanyV3.getReviewAccountOfCompany(
-        companyId,
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        console.log(result);
-        setMyReview(result.data);
-        setReview(result.data.comment);
+      if (companyId) {
+        const result = await apiCompanyV3.getReviewAccountOfCompany(
+          companyId,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        if (result) {
+          console.log(result);
+          setMyReview(result.data);
+          setReview(result.data.comment);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -91,19 +96,21 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
 
   const handleEditReviewCompany = async () => {
     try {
-      const result = await apiCompanyV3.editCompanyReview(
-        companyId,
-        myReview.star,
-        review,
-      );
-      if (result) {
-        setOpenBackdrop(false);
-        setOpenModalPostReviewSuccess(true);
-        setIsSuccess(!isSuccess);
-        setStatus('edit');
-        inputRef.current!.focus({
-          cursor: 'end',
-        });
+      if (companyId) {
+        const result = await apiCompanyV3.editCompanyReview(
+          companyId,
+          myReview.star,
+          review,
+        );
+        if (result) {
+          setOpenBackdrop(false);
+          setOpenModalPostReviewSuccess(true);
+          setIsSuccess(!isSuccess);
+          setStatus('edit');
+          inputRef.current!.focus({
+            cursor: 'end',
+          });
+        }
       }
     } catch (error) {
       setOpenBackdrop(false);
@@ -120,21 +127,30 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         20,
         languageRedux === 1 ? 'vi' : 'en',
       );
-      if (result.status === 200) {
+      console.log('result: ', result);
+
+      if (result.status === 200 && result.data.companyRatings.length === 20) {
         setLoading(false);
         setAverageRated(result.data.averageRated);
         setCompanyRating(result.data.companyRatings);
-        if (result.data.companyRatings.length < 20) {
-          setHasMore(false);
-          setPage('0');
-        } else if (result.data.companyRatings.length === 0) {
-          setHasMore(false);
-          setPage('0');
-        } else {
-          setHasMore(true);
-        }
+      } else if (
+        result.data.companyRatings.length > 0 &&
+        result.data.companyRatings.length < 20
+      ) {
+        setLoading(false);
+        setAverageRated(result.data.averageRated);
+        setCompanyRating(result.data.companyRatings);
+        setHasMore(false);
+        setPage('0');
+      } else {
+        setAverageRated(null);
+        setCompanyRating([]);
+        setHasMore(false);
+        setPage('0');
       }
-    } catch (error) {}
+    } catch (error) {
+      setHasMore(false);
+    }
   };
 
   const fetchMoreData = async () => {
@@ -157,7 +173,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) {}
+    } catch (error) {
+      setHasMore(false);
+    }
   };
 
   useEffect(() => {
@@ -176,6 +194,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
     }
     if (myReview === undefined && (star === 0 || review.trim().length === 0)) {
       setOpenModalReviewNotice(true);
+      inputRef.current!.focus({
+        cursor: 'end',
+      });
       return;
     }
     if (review.trim().length > 3000) {
@@ -184,6 +205,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
           ? 'Đánh giá không được vượt quá 3000 ký tự'
           : 'Review cannot exceed 3000 characters',
       );
+      inputRef.current!.focus({
+        cursor: 'end',
+      });
       return;
     }
     myReview === undefined ? handleRateComapy() : handleEditReviewCompany();
@@ -192,21 +216,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
   };
 
   const handleDeleteReview = async () => {
-    try {
-      const result = await apiCompanyV3.deleteCompanyReview(companyId);
-      if (result) {
-        setOpenBackdrop(false);
-        setStatus('delete');
-        setOpenModalPostReviewSuccess(true);
-        setStar(0);
-        setReview('');
-        setMyReview(undefined);
-        setIsSuccess(!isSuccess);
-        inputRef.current!.focus({
-          cursor: 'end',
-        });
-      }
-    } catch (error) {}
+    setOpenModalConfirmDelete(true);
   };
 
   return (
@@ -224,66 +234,60 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
           </div>
           <div className={styles.review_company_list_review}>
             <h3>{languageRedux === 1 ? 'Đánh giá' : 'Evaluate'}</h3>
-            {companyRating && companyRating?.length ? (
-              <InfiniteScroll
-                dataLength={companyRating && companyRating?.length}
-                next={fetchMoreData}
-                hasMore={hasMore}
-                loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
-                style={{ overflow: 'unset' }}
-                scrollableTarget="scrollableDiv"
-              >
-                <div className={styles.list_review}>
-                  {companyRating &&
-                    companyRating.map((item: any, idx: any) => (
-                      <Skeleton loading={loading} active key={idx}>
-                        <div className={styles.review_item} key={idx}>
-                          <div className={styles.reviewer_avatar}>
-                            <img
-                              src={
-                                item.profileData.avatarPath
-                                  ? item.profileData.avatarPath
-                                  : nonAvatar
-                              }
-                              alt=""
-                            />
+            <InfiniteScroll
+              dataLength={companyRating && companyRating?.length}
+              next={fetchMoreData}
+              hasMore={hasMore}
+              loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
+              style={{ overflow: 'unset' }}
+              scrollableTarget="scrollableDiv"
+            >
+              <div className={styles.list_review}>
+                {companyRating &&
+                  companyRating.map((item: any, idx: any) => (
+                    <Skeleton loading={loading} active key={idx}>
+                      <div className={styles.review_item} key={idx}>
+                        <div className={styles.reviewer_avatar}>
+                          <img
+                            src={
+                              item.profileData.avatarPath
+                                ? item.profileData.avatarPath
+                                : nonAvatar
+                            }
+                            alt=""
+                          />
+                        </div>
+                        <div className={styles.reviewer_mess_wrap}>
+                          <div className={styles.name_star}>
+                            <div className={styles.reviewer_name}>
+                              <h2>
+                                {item.profileData.nameHide
+                                  ? item.profileData.nameHide
+                                  : languageRedux === 1
+                                  ? 'Thông tin chưa cập nhật'
+                                  : 'Information not updated yet'}
+                              </h2>
+                              <p>
+                                {moment(item?.createdAt).format('HH:mm') +
+                                  ' ' +
+                                  moment(new Date(item?.createdAt)).format(
+                                    'DD/MM/YYYY',
+                                  )}
+                              </p>
+                            </div>
+                            <div className={styles.reviewer_star}>
+                              <CompanyRating rating={Number(item?.star)} />
+                            </div>
                           </div>
-                          <div className={styles.reviewer_mess_wrap}>
-                            <div className={styles.name_star}>
-                              <div className={styles.reviewer_name}>
-                                <h2>
-                                  {item.profileData.name
-                                    ? item.profileData.name
-                                    : languageRedux === 1
-                                    ? 'Thông tin chưa cập nhật'
-                                    : 'Information not updated yet'}
-                                </h2>
-                                <p>
-                                  {moment(item?.createdAt).format('HH:mm') +
-                                    ' ' +
-                                    moment(new Date(item?.createdAt)).format(
-                                      'DD/MM/YYYY',
-                                    )}
-                                </p>
-                              </div>
-                              <div className={styles.reviewer_star}>
-                                <CompanyRating rating={Number(item?.star)} />
-                              </div>
-                            </div>
-                            <div className={styles.reviewer_message}>
-                              {item?.comment}
-                            </div>
+                          <div className={styles.reviewer_message}>
+                            {item?.comment}
                           </div>
                         </div>
-                      </Skeleton>
-                    ))}
-                </div>
-              </InfiniteScroll>
-            ) : (
-              <div>
-                <p>Bài viết chưa được đánh giá</p>
+                      </div>
+                    </Skeleton>
+                  ))}
               </div>
-            )}
+            </InfiniteScroll>
           </div>
         </div>
         <div
@@ -435,6 +439,20 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         openModalPostReviewSuccess={openModalPostReviewSuccess}
         setOpenModalPostReviewSuccess={setOpenModalPostReviewSuccess}
         status={status}
+      />
+      <ModalConfirmDelete
+        openModalConfirmDelete={openModalConfirmDelete}
+        setOpenModalConfirmDelete={setOpenModalConfirmDelete}
+        companyId={companyId}
+        setOpenBackdrop={setOpenBackdrop}
+        setStatus={setStatus}
+        setOpenModalPostReviewSuccess={setOpenModalPostReviewSuccess}
+        setStar={setStar}
+        setReview={setReview}
+        setMyReview={setMyReview}
+        setIsSuccess={setIsSuccess}
+        inputRef={inputRef}
+        isSuccess={isSuccess}
       />
       <ModalLogin
         openModalLogin={openModalLogin}

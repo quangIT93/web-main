@@ -98,7 +98,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
           >
             {
               language?.post_page.min_salary
-              
+
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -111,6 +111,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
               Number(editDataPosted?.salaryMin?.toString().replace(',', ''))
             )}
             disabled={salaryType === 6}
+            id="edit_post_salaryMin"
           />
         </Space>
 
@@ -138,6 +139,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
               Number(editDataPosted?.salaryMax?.toString().replace(',', ''))
             )}
             disabled={salaryType === 6}
+            id="edit_post_salaryMax"
           />
         </Space>
       </Space>

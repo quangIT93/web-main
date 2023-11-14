@@ -143,6 +143,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
             ? 'Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 250'
             : 'Title length must be greater than 0 and less than 250',
         checkForm: false,
+        idError: 1,
       };
     }
 
@@ -156,18 +157,20 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
             ? 'Độ dài mô tả phải lớn hơn 0 và nhỏ hơn 1000'
             : 'Description length must be greater than 0 and less than 1000',
         checkForm: false,
+        idError: 2,
       };
     }
 
     return {
       messageError: '',
       checkForm: true,
+      idError: 0,
     };
   };
 
   const handleSubmit = async () => {
     try {
-      const { messageError, checkForm } = validValue();
+      const { messageError, checkForm, idError } = validValue();
       if (checkForm) {
         const result = await apiCv.putProifileAwards(
           award.title.trim(),
@@ -191,6 +194,21 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
         }
       } else {
         message.error(messageError);
+        const profile_award_edit_title = document.getElementById('profile_award_edit_title') as HTMLElement;
+        const profile_award_edit_description = document.getElementById('profile_award_edit_description') as HTMLElement;
+        // console.log(idError);
+
+        switch (idError) {
+          case 1:
+            profile_award_edit_title.focus();
+            break;
+          case 2:
+            profile_award_edit_description.focus();
+            break;
+
+          default:
+            break;
+        }
       }
     } catch (error) {
       console.log(error);
@@ -244,7 +262,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="skill"
+              id="profile_award_edit_title"
               name="skill"
               value={award.title}
               onChange={handleOnchangeTitle}
@@ -253,7 +271,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
               placeholder={
                 languageRedux === 1 ? 'Tiêu đề giải thưởng' : 'Award Title'
               }
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {award.title && award.title.length > 255 ? (
@@ -271,9 +289,8 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                award.title ? award.title.length : '0'
-              }/255`}</span>
+              <span className="number-text">{`${award.title ? award.title.length : '0'
+                }/255`}</span>
             </div>
           </Box>
           {/* <Box sx={{ marginBottom: '12px' }}>
@@ -316,7 +333,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
             </Typography>
             <TextField
               type="text"
-              id="skill"
+              id="profile_award_edit_description"
               name="skill"
               value={award.description}
               onChange={handleOnchangeDescription}
@@ -331,7 +348,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
                   ? 'Mô tả giải thưởng của bạn'
                   : 'Description your award'
               }
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <div className="wrap-noti_input">

@@ -95,15 +95,15 @@ const ApplyPosition: React.FC<IApplyPosition> = (props) => {
           style={{ overflow: 'unset' }}
           scrollableTarget="scrollableDiv"
         >
-          <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-            {postOfCompany.map((item: any, index: number) => (
-              <Skeleton loading={loading} active key={index}>
+          <Skeleton loading={loading} active>
+            <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
+              {postOfCompany.map((item: any, index: number) => (
                 <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
                   <JobOfCompanyCard item={item} accountId={accountId} />
                 </Grid>
-              </Skeleton>
-            ))}
-          </Grid>
+              ))}
+            </Grid>
+          </Skeleton>
         </InfiniteScroll>
         {postOfCompany?.length === 0 ? <NoDataComponent /> : <></>}
       </div>

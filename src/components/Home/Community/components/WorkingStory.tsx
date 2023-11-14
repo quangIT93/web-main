@@ -113,7 +113,7 @@ const WorkingStory = () => {
                     variant="body2"
                     color="text.secondary"
                     sx={{
-                      fontSize: '12px',
+                      fontSize: '14px',
                       margin: 0,
                       whiteSpace: 'nowrap',
                       width: '75%',

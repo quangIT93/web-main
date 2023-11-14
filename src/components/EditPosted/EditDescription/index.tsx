@@ -47,6 +47,7 @@ const EditDescription: React.FC<IEditDescription> = (props) => {
         placeholder={
           language?.place_des
         }
+        id="edit_post_description"
       />
     </Box>
   );

@@ -538,7 +538,9 @@ const Post: React.FC = () => {
     }
     if (description === '') {
       return {
-        message: language?.company_page?.err_des_mess,
+        message: languageRedux === 1 ?
+          "Hãy nhập mô tả công việc." :
+          "Please enter a job description.",
         checkForm: false,
         idError: 12,
       };

@@ -55,7 +55,7 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
         </Typography>
         <TextField
           type="text"
-          id="editJob"
+          id="edit_post_title_job"
           name="title"
           value={editDataPosted?.title}
           onChange={handleEditJobName}
@@ -80,7 +80,7 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
         </Typography>
         <TextField
           type="text"
-          id="editCompany"
+          id="edit_post_company_name"
           name="title"
           value={editDataPosted?.company_name}
           onChange={handleEditCompanyName}

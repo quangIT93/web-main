@@ -76,7 +76,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
         <TextField
           disabled={is_profile ? true : false}
           type="text"
-          id="editCompany"
+          id="company_place_des"
           multiline
           rows={12}
           name="title"
@@ -84,7 +84,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           onChange={handleEditCompanyDes}
           sx={{ width: '100%', marginTop: '8px', fontSize: '14px' }}
           placeholder={language?.company_page?.place_des}
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.description?.length === 0 ? (

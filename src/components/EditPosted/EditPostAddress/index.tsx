@@ -21,6 +21,11 @@ interface IEditPostAddress {
   editDataPosted: any;
   language: any;
   languageRedux: any;
+  fillProvince: any;
+  fillDistrict: any;
+  setFillProvince: React.Dispatch<React.SetStateAction<any>>;
+  setFillDistrict: React.Dispatch<React.SetStateAction<any>>;
+  setFillWard: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
@@ -30,6 +35,9 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
     editDataPosted,
     language,
     languageRedux,
+    setFillProvince,
+    setFillDistrict,
+    setFillWard
   } = props;
 
   const [dataProvinces, setDataProvinces] = useState<any>(null);
@@ -168,16 +176,22 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
     setSelectedDistrict(null);
     setSelectedWard(null);
     setSelectedProvince(value);
+    setFillDistrict(null);
+    setFillWard(null);
+    setFillProvince(value);
     setDataWard([]);
   };
 
   const handleDistrictChange = (event: any, value: any) => {
     setSelectedDistrict(value);
     setSelectedWard(null);
+    setFillWard(null);
+    setFillDistrict(value);
   };
 
   const handleChangeWardId = (event: any, value: any) => {
     setSelectedWard(value);
+    setFillWard(value)
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       ward_id: value?.id,
@@ -209,6 +223,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             getOptionLabel={(option: any) => option?.province_fullName || ''}
             value={selectedProvince || null}
             onChange={handleProvinceChange}
+            id="edit_post_place_city"
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -239,6 +254,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             getOptionLabel={(option: any) => option?.full_name || ''}
             value={selectedDistrict || null}
             onChange={handleDistrictChange}
+            id="edit_post_place_district"
             renderInput={(params: any) => (
               <TextField
                 {...params}
@@ -268,6 +284,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             getOptionLabel={(option: any) => option?.full_name || ''}
             value={selectedWard || null}
             onChange={handleChangeWardId}
+            id="edit_post_place_ward"
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -294,7 +311,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
           </Typography>
           <TextField
             type="text"
-            id="jobTitle"
+            id="edit_post_place_address"
             name="title"
             value={editDataPosted?.address}
             onChange={handleChangeAddress}
