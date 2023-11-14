@@ -256,7 +256,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     if (isConnected === false && !socket.current) {
       socket.current = io(
-        'https://neoworks.vn',
+        'https://aiworks.vn',
         // 'https://aiworks.vn',
         {
           extraHeaders: {
@@ -311,8 +311,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         message: message,
         createdAt: Date.now(),
         type: 'text',
-        postId: searchParams.get('post_id'),
-        // postId: 66587,
+        // postId: searchParams.get('post_id'),
+        postId: null,
       });
 
     setMessage('');
@@ -344,7 +344,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         files: Array.from(selectedImage),
         createdAt: Date.now(),
         type: 'image',
-        postId: searchParams.get('post_id'),
+        // postId: searchParams.get('post_id'),
+        postId: null,
       });
     }
     // setImage(selectedImage);

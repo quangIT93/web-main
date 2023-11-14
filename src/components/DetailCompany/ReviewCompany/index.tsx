@@ -120,19 +120,28 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         20,
         languageRedux === 1 ? 'vi' : 'en',
       );
-      if (result.status === 200) {
+      if (result.status === 200 && result.data.companyRatings.length === 20) {
         setLoading(false);
         setAverageRated(result.data.averageRated);
         setCompanyRating(result.data.companyRatings);
-        if (result.data.companyRatings.length < 20) {
-          setHasMore(false);
-          setPage('0');
-        } else if (result.data.companyRatings.length === 0) {
-          setHasMore(false);
-          setPage('0');
-        } else {
-          setHasMore(true);
-        }
+      } else if (
+        result.data.companyRatings.length > 0 &&
+        result.data.companyRatings.length < 20
+      ) {
+        setLoading(true);
+        setAverageRated(result.data.averageRated);
+        setCompanyRating(result.data.companyRatings);
+        setPage('0');
+      } else if (result.data.companyRatings.length === 0) {
+        setHasMore(true);
+        setAverageRated([]);
+        setCompanyRating([]);
+        setPage('0');
+      } else {
+        setAverageRated([]);
+        setCompanyRating([]);
+        setPage('0');
+        setHasMore(true);
       }
     } catch (error) {}
   };
@@ -176,6 +185,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
     }
     if (myReview === undefined && (star === 0 || review.trim().length === 0)) {
       setOpenModalReviewNotice(true);
+      inputRef.current!.focus({
+        cursor: 'end',
+      });
       return;
     }
     if (review.trim().length > 3000) {
@@ -184,6 +196,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
           ? 'Đánh giá không được vượt quá 3000 ký tự'
           : 'Review cannot exceed 3000 characters',
       );
+      inputRef.current!.focus({
+        cursor: 'end',
+      });
       return;
     }
     myReview === undefined ? handleRateComapy() : handleEditReviewCompany();

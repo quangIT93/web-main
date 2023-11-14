@@ -11,6 +11,15 @@ const messageApi = {
   },
 
   getUserChated: (lang: string) => {
+    const URL = `/v2/chats/users?lang=${lang}`
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+  },
+
+  getUserChatedOld: (lang: string) => {
     const URL = `/v1/chats/users?lang=${lang}`
     return axiosClient.get(URL, {
       headers: {

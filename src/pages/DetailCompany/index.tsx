@@ -58,7 +58,7 @@ const DetailCompany = () => {
         setCompanyData(result.data);
         setBookmarked(result.data.isBookmarked);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const getApplicationPositionCount = async () => {
@@ -90,7 +90,7 @@ const DetailCompany = () => {
         setPostOfCompany(result.data.posts);
         setPage('0');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleFollowCompany = async () => {
@@ -194,8 +194,8 @@ const DetailCompany = () => {
                   {company?.name
                     ? company.name
                     : languageRedux === 1
-                    ? 'Thông tin công ty chưa cập nhật'
-                    : 'Company information not updated yet'}
+                      ? 'Thông tin công ty chưa cập nhật'
+                      : 'Company information not updated yet'}
                 </h3>
                 <div
                   className={styles.company_bell}
@@ -216,8 +216,8 @@ const DetailCompany = () => {
                     {company?.companyLocation?.district?.province?.fullName
                       ? company.companyLocation.district.province.fullName
                       : languageRedux === 1
-                      ? 'Thông tin công ty chưa cập nhật'
-                      : 'Company information not updated yet'}
+                        ? 'Thông tin công ty chưa cập nhật'
+                        : 'Company information not updated yet'}
                   </p>
                 </div>
                 <div className={styles.address_item}>
