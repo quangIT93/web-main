@@ -259,7 +259,7 @@ const Home: React.FC = () => {
         <AppliedPostedJob />
         <HotJob />
         <NewestGigWorker />
-        {/* <NewestCompany /> */}
+        <NewestCompany />
         <NewJobs />
         <SuggestJob />
         <ThemesJob />

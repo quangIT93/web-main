@@ -271,8 +271,8 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                                                         <div className={styles.reviewer_name}>
                                                             <h2>
                                                                 {
-                                                                    item.profileData.name ?
-                                                                        item.profileData.name :
+                                                                    item.profileData.nameHide ?
+                                                                        item.profileData.nameHide :
                                                                         languageRedux === 1 ?
                                                                             "Thông tin chưa cập nhật" :
                                                                             "Information not updated yet"
