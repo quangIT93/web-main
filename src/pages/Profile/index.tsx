@@ -452,13 +452,8 @@ const Profile: React.FC = () => {
     // const file = e.target.files[0]
     const files = Array.from(e.target.files); // Chuyển đổi FileList thành mảng các đối tượng file
     if (files) {
-      const imageUrl = await uploadImage(e, files);
-      if (imageUrl) {
-        const getProfileV3 = await profileApi.getProfileInformationV3(
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-        dispatch(setProfileMeInformationV3(getProfileV3) as any);
-      }
+      await uploadImage(e, files);
+
       // window.location.reload();
       // if (imageUrl)
       // Cập nhật URL của ảnh mới vào trạng thái của component
@@ -478,8 +473,11 @@ const Profile: React.FC = () => {
     try {
       const response = await profileApi.postAvatar(formData);
       if (response) {
-        dispatch(getProfile() as any);
-        return profileV3.avatarPath;
+        const getProfileV3 = await profileApi.getProfileInformationV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        dispatch(setProfileMeInformationV3(getProfileV3) as any);
+        return getProfileV3.data.avatarPath;
       } else {
         throw new Error('Failed to upload image');
       }
@@ -591,7 +589,7 @@ const Profile: React.FC = () => {
                   <h2>
                     {profileV3?.name ? profileV3?.name : language?.unupdated}
                   </h2>
-                  {/* <ChangeRoleButton /> */}
+                  <ChangeRoleButton />
                   {/* <div className="wrap-company">
                     <div className="wrap-company_info">
                       <h2
