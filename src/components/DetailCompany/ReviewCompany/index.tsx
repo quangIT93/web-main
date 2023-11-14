@@ -175,6 +175,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         }
         if (myReview === undefined && (star === 0 || review.trim().length === 0)) {
             setOpenModalReviewNotice(true);
+            inputRef.current!.focus({
+                cursor: 'end',
+            });
             return
         }
         if (review.trim().length > 3000) {
@@ -183,6 +186,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                     ? 'Đánh giá không được vượt quá 3000 ký tự'
                     : 'Review cannot exceed 3000 characters'
             )
+            inputRef.current!.focus({
+                cursor: 'end',
+            });
             return;
         }
         myReview === undefined ?
