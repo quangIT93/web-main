@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import Tabs from '@mui/material/Tabs'
 // import Tab from '@mui/material/Tab'
 // import { Radio, Tabs } from 'antd';
@@ -40,10 +40,10 @@ import {
 } from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
-import banner1 from '../../../img/Banner/banner-for-candidates-2.png';
+// import banner1 from '../../../img/Banner/banner-for-candidates-2.png';
 import banner_recruit_1 from '../../../img/Banner/banner-for-rescruit-1.png';
 import banner_recruit_2 from '../../../img/Banner/banner-for-rescruit-2.png';
-import banner from '../../../img/Banner/Banner_homepage 1@2x.png';
+// import banner from '../../../img/Banner/Banner_homepage 1@2x.png';
 import './styles.scss';
 
 import ModalLogin from '../../../components/Home/ModalLogin';
@@ -55,6 +55,7 @@ import { number } from 'yargs';
 import historyApplicator from 'api/historyApplicator';
 import historyRecruiter from 'api/historyRecruiter';
 import { Avatar } from '@mui/material';
+import bannersApi from 'api/apiBanner';
 
 // interface ItemTheme {
 //   id: number;
@@ -78,6 +79,7 @@ const AppliedPostedJob: React.FC = () => {
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [cvHijob, setCvHijob] = React.useState<any>([1]);
+  const [banner, setBanner] = React.useState<any>([]);
 
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
@@ -86,6 +88,25 @@ const AppliedPostedJob: React.FC = () => {
   // const [searchParams, setSearchParams] = useSearchParams();
   // const dispatch = useDispatch();
   // const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
+
+  const getBannerRoleUser = async () => {
+    try {
+      const result = await bannersApi.getBannersApi(
+        languageRedux === 1 ? 'vi' : 'en',
+        null,
+      );
+      if (result) {
+        console.log('banner', result);
+        setBanner(result.data);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  useEffect(() => {
+    getBannerRoleUser();
+  }, []);
 
   const handleClickItem = (
     event: any,
@@ -266,21 +287,36 @@ const AppliedPostedJob: React.FC = () => {
               </div> */}
               {profile.length !== 0 ? (
                 profile?.typeRoleData === 0 ? (
-                  <Avatar
-                    sx={{
-                      width: '100%',
-                      maxHeight: '301px',
-                      height: 'auto',
-                      cursor: 'pointer',
+                  <Swiper
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    autoplay={{
+                      delay: 3500,
+                      disableOnInteraction: false,
                     }}
-                    variant="square"
-                    src={banner1}
-                    onClick={() => {
-                      window.open('/page-cv', '_parent');
-                    }}
+                    // navigation={true}
+                    modules={[Autoplay, Navigation]}
+                    className="banner-rescruit-swiper"
+                    loop={true}
                   >
-                    Banner1
-                  </Avatar>
+                    {banner?.map((value: any) => {
+                      if (value?.order === 1) {
+                        return (
+                          <SwiperSlide>
+                            <img
+                              onClick={() => {
+                                window.open(value?.redirect_url, '_parent');
+                              }}
+                              src={value?.image}
+                              alt=""
+                            />
+                          </SwiperSlide>
+                        );
+                      } else {
+                        return <></>;
+                      }
+                    })}
+                  </Swiper>
                 ) : (
                   <Swiper
                     spaceBetween={30}
@@ -294,54 +330,24 @@ const AppliedPostedJob: React.FC = () => {
                     className="banner-rescruit-swiper"
                     loop={true}
                   >
-                    <SwiperSlide>
-                      <img
-                        onClick={() => {
-                          window.open('/post', '_parent');
-                        }}
-                        src={banner_recruit_1}
-                        alt=""
-                      />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <img
-                        onClick={() => {
-                          window.open('/candidatesAll', '_parent');
-                        }}
-                        src={banner_recruit_2}
-                        alt=""
-                      />
-                    </SwiperSlide>
+                    {banner?.map((value: any) => {
+                      if (value?.order === 2) {
+                        return (
+                          <SwiperSlide>
+                            <img
+                              onClick={() => {
+                                window.open(value?.redirect_url, '_parent');
+                              }}
+                              src={value?.image}
+                              alt=""
+                            />
+                          </SwiperSlide>
+                        );
+                      } else {
+                        return <></>;
+                      }
+                    })}
                   </Swiper>
-                )
-              ) : (
-                <Skeleton.Button
-                  style={{ height: '301px' }}
-                  active={true}
-                  block={true}
-                />
-              )}
-            </div>
-            <div className="advertisement-job-not-loging-content">
-              {profile.length !== 0 ? (
-                profile?.typeRoleData === 0 ? (
-                  <Avatar
-                    sx={{
-                      width: '100%',
-                      maxHeight: '301px',
-                      height: 'auto',
-                      // cursor: 'unset',
-                    }}
-                    variant="square"
-                    src={banner}
-                    onClick={() => {
-                      window.open('/page-cv', '_parent');
-                    }}
-                  >
-                    Banner
-                  </Avatar>
-                ) : (
-                  <></>
                 )
               ) : (
                 <Skeleton.Button
@@ -583,23 +589,36 @@ const AppliedPostedJob: React.FC = () => {
         >
           Banner1
         </Avatar> */}
-        <Avatar
-          sx={{
-            width: '100%',
-            maxHeight: '301px',
-            height: 'auto',
-            marginTop: '24px',
-            cursor: 'pointer',
+        <Swiper
+          spaceBetween={30}
+          centeredSlides={true}
+          autoplay={{
+            delay: 3500,
+            disableOnInteraction: false,
           }}
-          variant="square"
-          src={banner}
-          onClick={() => {
-            // window.open('/page-cv', '_parent');
-            setOpenModalLogin(true);
-          }}
+          // navigation={true}
+          modules={[Autoplay, Navigation]}
+          className="banner-rescruit-swiper"
+          loop={true}
         >
-          Banner
-        </Avatar>
+          {banner?.map((value: any) => {
+            if (value?.order === 1) {
+              return (
+                <SwiperSlide>
+                  <img
+                    onClick={() => {
+                      window.open(value?.redirect_url, '_parent');
+                    }}
+                    src={value?.image}
+                    alt=""
+                  />
+                </SwiperSlide>
+              );
+            } else {
+              return <></>;
+            }
+          })}
+        </Swiper>
         <ModalLogin
           openModalLogin={openModalLogin}
           setOpenModalLogin={setOpenModalLogin}

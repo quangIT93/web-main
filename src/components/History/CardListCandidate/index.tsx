@@ -30,6 +30,7 @@ import { RootState } from '../../../store/reducer/index';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
 import candidateSearch from 'api/apiCandidates';
+import { useSearchParams } from 'react-router-dom';
 
 interface ICardsApplied {
   activeChild: string;
@@ -46,7 +47,7 @@ const CardListCandidate: React.FC = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-
+  const [searchParams, setSearchParams] = useSearchParams('');
   const dataCandidates = async () => {
     try {
       const result = await candidateSearch.getBookmarkCandidate(
@@ -125,11 +126,13 @@ const CardListCandidate: React.FC = () => {
             lineHeight: '24px',
           }}
         >
-          {
-            languageRedux === 1
-              ? 'Danh sách ứng viên đã lưu'
-              : 'Saved candidate list'
-          }
+          {languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates'}
+          <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
+            {
+              searchParams.get('c') === '4-0' &&
+                languageRedux === 1 ? ' > Tất cả' : ' > All'
+            }
+          </span>
         </Typography>
       </Box>
       <Backdrop

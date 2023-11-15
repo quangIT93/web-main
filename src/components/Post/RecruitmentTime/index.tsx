@@ -72,25 +72,24 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             onChange={handleChangeStartTime}
             format="DD/MM/YYYY"
             disablePast={true}
+            slotProps={{
+              textField: {
+                id: 'post_job_start_date',
+              },
+            }}
           />
           <div className="wrap-noti_input">
-            {new Date(startDate).getFullYear() > new Date().getFullYear() ? (
+            {startDate > endDate ? (
               <span className="helper-text">
                 {languageRedux === 1
-                  ? 'Năm sinh không được vượt quá năm hiện tại'
-                  : 'Year of birth cannot exceed the current year'}
+                  ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
+                  : 'The start date cannot exceed the end date'}
               </span>
             ) : !new Date(startDate).getFullYear() ? (
               <span className="helper-text">
                 {languageRedux === 1
-                  ? 'Vui lòng nhập ngày sinh'
-                  : 'Please enter date of birth'}
-              </span>
-            ) : new Date(startDate).getFullYear() < 1900 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Năm sinh không được nhỏ hơn 1900'
-                  : 'Year of birth cannot be less than 1900'}
+                  ? 'Vui lòng nhập thời gian bắt đầu'
+                  : 'Please enter start date'}
               </span>
             ) : (
               ''
@@ -115,25 +114,24 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             format="DD/MM/YYYY"
             minDate={moment(startDate)}
             disablePast // Chặn việc chọn các ngày trong quá khứ
+            slotProps={{
+              textField: {
+                id: 'post_job_end_date',
+              },
+            }}
           />
           <div className="wrap-noti_input">
-            {new Date(endDate).getFullYear() > new Date().getFullYear() ? (
+            {startDate > endDate ? (
               <span className="helper-text">
                 {languageRedux === 1
-                  ? 'Năm sinh không được vượt quá năm hiện tại'
-                  : 'Year of birth cannot exceed the current year'}
+                  ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
+                  : 'The start date cannot exceed the end date'}
               </span>
             ) : !new Date(endDate).getFullYear() ? (
               <span className="helper-text">
                 {languageRedux === 1
-                  ? 'Vui lòng nhập ngày sinh'
-                  : 'Please enter date of birth'}
-              </span>
-            ) : new Date(endDate).getFullYear() < 1900 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Năm sinh không được nhỏ hơn 1900'
-                  : 'Year of birth cannot be less than 1900'}
+                  ? 'Vui lòng nhập ngày kết thúc'
+                  : 'Please enter end date'}
               </span>
             ) : (
               ''

@@ -401,7 +401,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${phone.length}/11`}</span>
+              <span className="number-text">{`${phone.length}/10`}</span>
             </div>
           </Box>
 

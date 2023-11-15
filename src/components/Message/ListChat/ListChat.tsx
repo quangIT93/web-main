@@ -256,8 +256,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     if (isConnected === false && !socket.current) {
       socket.current = io(
-        'https://aiworks.vn',
         // 'https://aiworks.vn',
+        'https://neoworks.vn',
         {
           extraHeaders: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -305,9 +305,15 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   // message function
   const handleSendMessage = () => {
     // const socket = io('https://aiworks.vn')
+
+    console.log('guin tin', searchParams.get('user_id'));
+    console.log('guin tin', message);
+    console.log('guin tin', searchParams.get('post_id'));
+    console.log('guin tin', socket.current);
+
     if (message !== '')
       socket.current.emit('client-send-message', {
-        receiverId: searchParams.get('user_id'),
+        receiverId: Number(searchParams.get('user_id')),
         message: message,
         createdAt: Date.now(),
         type: 'text',
@@ -342,7 +348,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       formData.append('files', selectedImage);
 
       socket.current.emit('client-send-message', {
-        receiverId: userInfoChat.user_id,
+        receiverId: Number(searchParams.get('user_id')),
         files: Array.from(selectedImage),
         createdAt: Date.now(),
         type: 'image',

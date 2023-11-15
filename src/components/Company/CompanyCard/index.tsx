@@ -149,6 +149,9 @@ const CompanyCard: React.FC<Iprops> = (props) => {
                 </Tooltip>
                 <div
                   onClick={(e: any) => handleSaveCompany(e, props?.item?.id)}
+                  style={{
+                    display: localStorage.getItem('accountId') === props?.item?.accountId ? 'none' : 'flex'
+                  }}
                 >
                   {props.item?.isBookmarked ? (
                     <IconBellSaveNewestCompany width={24} height={24} />

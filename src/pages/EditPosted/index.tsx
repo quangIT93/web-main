@@ -502,7 +502,9 @@ const EditPosted = () => {
       editDataPosted?.startDate > editDataPosted?.endDate
     ) {
       return {
-        message: language?.post_page?.err_date,
+        message: languageRedux === 1
+          ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
+          : 'The start date cannot exceed the end date',
         checkForm: false,
         idError: 12,
       };
@@ -542,6 +544,8 @@ const EditPosted = () => {
         const edit_post_salaryMax = document.getElementById('edit_post_salaryMax') as HTMLElement;
         const edit_post_phone = document.getElementById('edit_post_phone') as HTMLElement;
         const edit_post_description = document.getElementById('edit_post_description') as HTMLElement;
+        const edit_post_start_date = document.getElementById('edit_post_start_date') as HTMLElement;
+        const edit_post_end_date = document.getElementById('edit_post_end_date') as HTMLElement;
         console.log(idError);
 
         switch (idError) {
@@ -577,6 +581,9 @@ const EditPosted = () => {
             break;
           case 11:
             edit_post_description.focus();
+            break;
+          case 12:
+            edit_post_start_date.focus();
             break;
 
           default:

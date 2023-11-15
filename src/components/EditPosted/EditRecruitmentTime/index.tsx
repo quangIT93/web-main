@@ -72,6 +72,11 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             onChange={handleChangeStartTime}
             format="DD/MM/YYYY"
             disablePast
+            slotProps={{
+              textField: {
+                id: 'edit_post_start_date',
+              },
+            }}
           />
         </div>
         {/* <div className="connect">-</div> */}
@@ -98,6 +103,11 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             format="DD/MM/YYYY"
             minDate={moment(editDataPosted.startDate)}
             disablePast
+            slotProps={{
+              textField: {
+                id: 'edit_post_end_date',
+              },
+            }}
           />
         </div>
       </Space>
