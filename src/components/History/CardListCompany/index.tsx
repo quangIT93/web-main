@@ -29,6 +29,7 @@ import { RootState } from '../../../store/reducer/index';
 import CompanyCardHistory from './CompanyCardHistory';
 import NoCompanyData from 'utils/NoCompanyData';
 import apiCompanyV3 from 'api/apiCompanyV3';
+import { useSearchParams } from 'react-router-dom';
 
 interface ICardsApplied {
   activeChild: string;
@@ -41,7 +42,7 @@ const CardListCompany: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [newOld, setnewOld] = React.useState(1);
   const [saveCompanyList, setSaveCompanyList] = React.useState(false);
-
+  const [searchParams, setSearchParams] = useSearchParams('');
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -147,9 +148,13 @@ const CardListCompany: React.FC = () => {
             lineHeight: '24px',
           }}
         >
-          {languageRedux === 1
-            ? 'Danh sách công ty đã lưu'
-            : 'Saved company list'}
+          {languageRedux === 1 ? 'Danh sách công ty' : 'List of companies'}
+          <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
+            {
+              searchParams.get('c') === '5-0' &&
+                languageRedux === 1 ? ' > Tất cả' : ' > All'
+            }
+          </span>
         </Typography>
         <TextField
           select

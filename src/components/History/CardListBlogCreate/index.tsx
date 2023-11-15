@@ -22,6 +22,7 @@ import communityApi from 'api/apiCommunity';
 import moment from 'moment';
 import { setCookie } from 'cookies';
 import NoDataComponent from 'utils/NoDataPage';
+import { useSearchParams } from 'react-router-dom';
 const CardListBlogCreate = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -36,7 +37,7 @@ const CardListBlogCreate = () => {
   const [createdPost, setCreatedPost] = React.useState<any>();
   const [isVisible, setIsVisible] = React.useState(true);
   const [uploading, setUploading] = React.useState(false);
-
+  const [searchParams, setSearchParams] = useSearchParams('');
   const handleGetCreatedPost = async () => {
     try {
       const result = await communityApi.getCommunityByAccount(
@@ -179,7 +180,13 @@ const CardListBlogCreate = () => {
               lineHeight: '24px',
             }}
           >
-            {language?.history_page?.posts_created}
+            {languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles'}
+            <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
+              {
+                searchParams.get('c') === '3-1' &&
+                  languageRedux === 1 ? ' > Bài viết bạn đã tạo' : ' > Posted articles'
+              }
+            </span>
           </Typography>
         </div>
         <div className="title-comunity_icon">
@@ -273,8 +280,8 @@ const CardListBlogCreate = () => {
                   {item?.createdAtText
                     ? item?.createdAtText
                     : new Date(item?.createdAt).toLocaleDateString('en-GB') +
-                      ', ' +
-                      moment(new Date(item?.createdAt)).format('HH:mm')}
+                    ', ' +
+                    moment(new Date(item?.createdAt)).format('HH:mm')}
                 </p>
               </div>
               <div className="body-item-actions">
