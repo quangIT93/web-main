@@ -264,7 +264,7 @@ const CandidateDetail: React.FC = () => {
                 />
                 <div
                   style={{ padding: '0', marginLeft: '12px' }}
-                  className="div-cart-item-post"
+                  className="div-cart-item-post-candidate-detail"
                 >
                   <Tooltip placement="top" title="àhakj">
                     <Typography
@@ -363,6 +363,7 @@ const CandidateDetail: React.FC = () => {
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'space-between'
                 }}
               >
                 <p
@@ -498,8 +499,7 @@ const CandidateDetail: React.FC = () => {
                         window.open(
                           `/message?post_id=${searchParams.get(
                             'post-id',
-                          )}&user_id=${
-                            dataCandidate.applicationProfile.account_id
+                          )}&user_id=${dataCandidate.applicationProfile.account_id
                           }&application_id=${searchParams.get(
                             'application_id',
                           )} `,
@@ -548,8 +548,8 @@ const CandidateDetail: React.FC = () => {
                   <p>
                     {dataCandidate?.applicationProfile?.birthday
                       ? moment(
-                          new Date(dataCandidate?.applicationProfile?.birthday),
-                        ).format('DD/MM/yyyy')
+                        new Date(dataCandidate?.applicationProfile?.birthday),
+                      ).format('DD/MM/yyyy')
                       : language?.unupdated}
                   </p>
                   <p>
@@ -652,12 +652,12 @@ const CandidateDetail: React.FC = () => {
               <Space wrap className="item-info-work">
                 {dataCandidate?.categories?.length !== 0
                   ? dataCandidate?.categories?.map(
-                      (item: ICategories, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item.child_category}
-                        </Button>
-                      ),
-                    )
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    ),
+                  )
                   : language?.unupdated}
               </Space>
             </div>
@@ -674,12 +674,12 @@ const CandidateDetail: React.FC = () => {
               <Space wrap className="item-info-work">
                 {dataCandidate?.locations?.length !== 0
                   ? dataCandidate?.locations?.map(
-                      (item: any, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item?.district}
-                        </Button>
-                      ),
-                    )
+                    (item: any, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item?.district}
+                      </Button>
+                    ),
+                  )
                   : language?.unupdated}
               </Space>
             </div>
