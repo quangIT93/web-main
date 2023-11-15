@@ -289,10 +289,12 @@ const CandidateNewDetail = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
-
-                // onClick={() => {
-                //   console.log(post?.data);
-                // }}
+                onClick={() => {
+                  window.open(
+                    `/message?post_id=${null}&user_id=${candidate.accountId} `,
+                    '_parent',
+                  );
+                }}
               ></Button>
               {candidate?.isUnlocked === false && (
                 <Popover

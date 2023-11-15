@@ -78,7 +78,7 @@ const profileApi = {
       },
     }) // Truyền email vào body của request
   },
-  getProfileByAccountId: (lang: string, accountId: string) => {
+  getProfileByAccountId: (lang: string, accountId: string | null) => {
     // unlock=${unclock}&
     const URL = `/v3/profiles/${accountId}?lang=${lang}`
     return axiosClient.get(URL, {

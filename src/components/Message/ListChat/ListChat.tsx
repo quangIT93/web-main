@@ -429,8 +429,6 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         props.setApply(true);
         setOpenModalApply(false);
       }
-
-      console.log('appli');
     } catch (error) {
       api.info({
         message: languageRedux === 1 ? 'Đăng nhập thất bại' : 'Login Failded',
@@ -441,7 +439,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     }
   };
 
-  if (userInfoChat.length !== 0) {
+  if (searchParams.get('user_id')) {
     return (
       <div
         // className="list-chat"
@@ -700,7 +698,6 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             }
           })}
         </div>
-
         <div className="inputs-chat">
           <input
             placeholder={language?.write_a_message}
