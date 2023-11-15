@@ -837,7 +837,7 @@ const CategoryDropdown: React.FC = () => {
                 }}
               >
                 <h3 onClick={moveToSearchCompany}>
-                  {languageRedux === 1 ? 'Tìm kiếm công ty' : 'Privacy Policy'}
+                  {languageRedux === 1 ? 'Tìm kiếm công ty' : 'Search company'}
                 </h3>
               </div>
             </div>

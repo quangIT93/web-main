@@ -63,6 +63,7 @@ const NumericInput = (props: NumericInputProps) => {
       size="small"
       sx={{ width: '100%', marginTop: '8px' }}
       disabled={is_profile ? true : false}
+      id="company_phone"
     />
   );
 };
@@ -152,9 +153,8 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${
-            dataCompany?.phone?.length ? dataCompany?.phone?.length : '0'
-          }/10`}</span>
+          <span className="number-text">{`${dataCompany?.phone?.length ? dataCompany?.phone?.length : '0'
+            }/10`}</span>
         </div>
       </div>
       <div className="edit-mail-company">
@@ -168,7 +168,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
         </Typography>
         <TextField
           type="text"
-          id="editJob"
+          id="company_email"
           name="title"
           value={dataCompany?.email}
           onChange={handleEditCompanyMail}
@@ -176,7 +176,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_email}
           disabled={is_profile ? true : false}
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.email?.length === 0 ? (
@@ -200,9 +200,8 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${
-            dataCompany?.email?.length ? dataCompany?.email?.length : '0'
-          }/50`}</span>
+          <span className="number-text">{`${dataCompany?.email?.length ? dataCompany?.email?.length : '0'
+            }/50`}</span>
         </div>
       </div>
     </div>

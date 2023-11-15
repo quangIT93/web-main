@@ -51,6 +51,7 @@ const NumericInput = (props: NumericInputProps) => {
       onBlur={handleBlur}
       placeholder={language?.post_page.place_phone}
       maxLength={16}
+      id="edit_post_phone"
     />
   );
 };
