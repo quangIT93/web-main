@@ -139,7 +139,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       const result = await messageApi.getChatMessage(
         searchParams.get('user_id'),
         // 36353,
-        Number(searchParams.get('post_id')),
+        searchParams.get('post_id')
+          ? Number(searchParams.get('post_id'))
+          : null,
         languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
@@ -256,8 +258,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     if (isConnected === false && !socket.current) {
       socket.current = io(
-        // 'https://aiworks.vn',
-        'https://neoworks.vn',
+        'https://aiworks.vn',
+        // 'https://neoworks.vn',
         {
           extraHeaders: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -286,12 +288,14 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       socket.current.on('server-send-message-to-receiver', (data: any) => {
         // Xử lý tin nhắn từ máy chủ
         setReceivedMessages((prevReceive) => [...prevReceive, data]);
+        console.log('sender message 1111111111');
       });
 
       socket.current.on('server-send-message-was-sent', (data: any) => {
         // console.log('nhận tin nhan ve khi da gui xong', data);
         // nhận tin nhan ve khi da gui xong
         setSendMessages((prevSend: any[]) => [...prevSend, data]);
+        console.log('sender message 22222222222222');
       });
     }
   }, []); // Thêm một mảng phụ thuộc trống
@@ -306,14 +310,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   const handleSendMessage = () => {
     // const socket = io('https://aiworks.vn')
 
-    console.log('guin tin', searchParams.get('user_id'));
-    console.log('guin tin', message);
-    console.log('guin tin', searchParams.get('post_id'));
-    console.log('guin tin', socket.current);
-
     if (message !== '')
       socket.current.emit('client-send-message', {
-        receiverId: Number(searchParams.get('user_id')),
+        receiverId: searchParams.get('user_id'),
         message: message,
         createdAt: Date.now(),
         type: 'text',
@@ -348,7 +347,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       formData.append('files', selectedImage);
 
       socket.current.emit('client-send-message', {
-        receiverId: Number(searchParams.get('user_id')),
+        receiverId: searchParams.get('user_id'),
         files: Array.from(selectedImage),
         createdAt: Date.now(),
         type: 'image',

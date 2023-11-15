@@ -1,8 +1,8 @@
 import axiosClient from './axiosClient'
 
 const messageApi = {
-  getChatMessage: (uid: string | null, pid: number, lang: string) => {
-    const URL = `/v1/chats/messages?uid=${uid}&pid=${pid}&lang=${lang}`
+  getChatMessage: (uid: string | null, pid: number | null, lang: string) => {
+    const URL = `/v1/chats/messages?uid=${uid}${pid? `&pid=${pid}`: ""}&lang=${lang}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

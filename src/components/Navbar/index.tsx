@@ -169,6 +169,7 @@ const Navbar: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const location = useLocation();
   // const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -272,7 +273,6 @@ const Navbar: React.FC = () => {
     jobType,
   ]);
 
-  const location = useLocation();
   // use Redux manage state
 
   // value query
@@ -798,7 +798,11 @@ const Navbar: React.FC = () => {
   React.useEffect(() => {
     // console.log('socket', socket.current);
 
-    if (socket.current === undefined && localStorage.getItem('accessToken')) {
+    if (
+      socket.current === undefined &&
+      localStorage.getItem('accessToken') &&
+      location.pathname !== '/message'
+    ) {
       socket.current = io('https://neoworks.vn', {
         extraHeaders: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
