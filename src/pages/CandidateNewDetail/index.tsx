@@ -37,6 +37,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalMaxUnlock from './ModalMaxUnlock';
 import ModalShowAvatar from './ModalShowAvatar';
 import ModalNoneCV from './ModalNoneCv';
+import { MessageOutlined } from '@ant-design/icons';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -278,6 +279,21 @@ const CandidateNewDetail = () => {
               )} */}
 
               {/* test */}
+              <Button
+                type="primary"
+                ghost
+                className="btn-mess"
+                icon={<MessageOutlined />}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+
+                // onClick={() => {
+                //   console.log(post?.data);
+                // }}
+              ></Button>
               {candidate?.isUnlocked === false && (
                 <Popover
                   placement="bottom"
