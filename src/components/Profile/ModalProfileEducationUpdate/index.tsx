@@ -746,7 +746,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             </Typography>
             <TextField
               // className={classes.textarea}
-              value={education.extraInformation}
+              value={education?.extraInformation}
               onChange={handleChangeExtraInfo}
               sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
               multiline
@@ -756,8 +756,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               placeholder={language?.profile_page?.place_additional_information}
             />
             <div className="wrap-noti_input">
-              {education.extraInformation &&
-                education.extraInformation.length > 500 ? (
+              {education?.extraInformation &&
+                education?.extraInformation?.length > 500 ? (
                 <span className="helper-text">
                   {
                     languageRedux === 1 ?
@@ -765,7 +765,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                       "You have entered more than 500 characters."
                   }
                 </span>
-              ) : education.extraInformation.length === 0 ? (
+              ) : education?.extraInformation?.length === 0 ? (
                 <span className="helper-text">
                   {
                     languageRedux === 1 ?
@@ -776,8 +776,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${education.extraInformation
-                ? education.extraInformation.length
+              <span className="number-text">{`${education?.extraInformation
+                ? education?.extraInformation?.length
                 : '0'
                 }/500`}</span>
             </div>
