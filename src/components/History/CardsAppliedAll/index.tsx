@@ -29,6 +29,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
+import { useSearchParams } from 'react-router-dom';
 
 interface ICardsAppliedAll {
   activeChild: string;
@@ -51,7 +52,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
   // const [language, setLanguage] = React.useState<any>();
-
+  const [searchParams, setSearchParams] = useSearchParams('');
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
@@ -187,6 +188,12 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           }}
         >
           {language?.history_page?.applied_jobs}
+          <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
+            {
+              searchParams.get('c') === '0-0' &&
+                languageRedux === 1 ? ' > Tất cả' : ' > All'
+            }
+          </span>
         </Typography>
         <TextField
           select

@@ -41,7 +41,7 @@ const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
             // fontWeight: '700',
             lineHeight: '24px',
             letterSpacing: '0em',
-            textAlign: 'left',
+            textAlign: 'center',
           }}
         >
           {languageRedux === 1 ? 'Lưu thành Công' : 'Saved successfully'}
@@ -60,7 +60,7 @@ const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
           fontWeight: '400',
           lineHeight: '24px',
           letterSpacing: '0.5px',
-          textAlign: 'left',
+          textAlign: 'center',
         }}
       >
         {languageRedux === 1
@@ -73,6 +73,7 @@ const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
           gap: '12px',
           alignItems: 'center',
           marginTop: '12px',
+          justifyContent: 'center',
         }}
       >
         <input

@@ -280,6 +280,8 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
         const profile_activity_edit_title = document.getElementById('profile_activity_edit_title') as HTMLElement;
         const profile_activity_edit_employer = document.getElementById('profile_activity_edit_employer') as HTMLElement;
         const profile_activity_edit_description = document.getElementById('profile_activity_edit_description') as HTMLElement;
+        const profile_activity_edit_start_date = document.getElementById('profile_activity_edit_start_date') as HTMLElement;
+        const profile_activity_edit_end_date = document.getElementById('profile_activity_edit_end_date') as HTMLElement;
         // console.log(idError);
 
         switch (idError) {
@@ -288,6 +290,12 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
             break;
           case 2:
             profile_activity_edit_employer.focus();
+            break;
+          case 3:
+            profile_activity_edit_start_date.focus();
+            break;
+          case 4:
+            profile_activity_edit_end_date.focus();
             break;
           case 5:
             profile_activity_edit_description.focus();
@@ -450,6 +458,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                         padding: '8.5px 14px',
                       },
                     }}
+                    slotProps={{
+                      textField: {
+                        id: 'profile_activity_edit_start_date',
+                      },
+                    }}
                   />
                   <div className="wrap-noti_input">
                     {activity.endDate &&
@@ -515,6 +528,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                       '& input': {
                         fontSize: '14px',
                         padding: '8.5px 14px',
+                      },
+                    }}
+                    slotProps={{
+                      textField: {
+                        id: 'profile_activity_edit_end_date',
                       },
                     }}
                   />

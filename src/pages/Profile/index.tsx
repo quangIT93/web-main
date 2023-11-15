@@ -406,7 +406,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -903,7 +903,7 @@ const Profile: React.FC = () => {
           </Snackbar>
         </Stack>
         {profileV3.typeRoleData === 0 &&
-        profileMorev3?.profilesCvs?.length === 0 ? (
+          profileMorev3?.profilesCvs?.length === 0 ? (
           <ModalIntroduceCv />
         ) : (
           <></>

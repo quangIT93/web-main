@@ -228,7 +228,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   // console.log(education.extraInformation.length);
 
   const validValue = () => {
-    if (education.companyName === '') {
+    if (education?.companyName === '') {
       return {
         message: language?.profile_page?.err_school,
         checkForm: false,
@@ -236,7 +236,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       };
     }
 
-    if (education.companyName?.trim().length > 50) {
+    if (education?.companyName?.trim().length > 50) {
       return {
         message:
           languageRedux === 1
@@ -247,14 +247,14 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       };
     }
 
-    if (education.major === '') {
+    if (education?.major === '') {
       return {
         message: language?.profile_page?.err_major,
         checkForm: false,
         idError: 2,
       };
     }
-    if (education.major?.trim().length > 50) {
+    if (education?.major?.trim().length > 50) {
       return {
         message:
           languageRedux === 1
@@ -266,7 +266,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
     }
     // console.log('NaN', education.startDate);
 
-    if (!education.startDate) {
+    if (!education?.startDate) {
       return {
         message: language?.profile_page?.err_start_time,
         checkForm: false,
@@ -274,7 +274,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       };
     }
     if (
-      new Date(education.startDate).getFullYear() > new Date().getFullYear()
+      new Date(education?.startDate).getFullYear() > new Date().getFullYear()
     ) {
       return {
         message:
@@ -286,7 +286,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       };
     }
 
-    if (!education.endDate) {
+    if (!education?.endDate) {
       return {
         message: language?.profile_page?.err_finish_time,
         checkForm: false,
@@ -294,7 +294,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       };
     }
 
-    if (new Date(education.endDate).getFullYear() > new Date().getFullYear()) {
+    if (new Date(education?.endDate).getFullYear() > new Date().getFullYear()) {
       return {
         message:
           languageRedux === 1
@@ -306,8 +306,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
     }
 
     if (
-      new Date(education.startDate).getFullYear() >
-      new Date(education.endDate).getFullYear()
+      new Date(education?.startDate).getFullYear() >
+      new Date(education?.endDate).getFullYear()
     ) {
       return {
         message:
@@ -319,7 +319,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       };
     }
 
-    if (education.extraInformation === '') {
+    if (education?.extraInformation === '') {
       return {
         message: language?.profile_page?.err_additional_information,
         checkForm: false,
@@ -327,7 +327,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       };
     }
 
-    if (education.extraInformation.length > 500) {
+    if (education?.extraInformation.length > 500) {
       return {
         message:
           languageRedux === 1
@@ -382,7 +382,13 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           document.getElementById(
             'profile_education_edit_additional_information',
           ) as HTMLElement;
-        console.log(idError);
+        const profile_education_edit_start_date = document.getElementById(
+          'profile_education_edit_start_date',
+        ) as HTMLElement;
+        const profile_education_edit_end_date = document.getElementById(
+          'profile_education_edit_end_date',
+        ) as HTMLElement;
+        // console.log(idError);
 
         switch (idError) {
           case 1:
@@ -390,6 +396,12 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             break;
           case 2:
             profile_education_edit_major.focus();
+            break;
+          case 3:
+            profile_education_edit_start_date.focus();
+            break;
+          case 4:
+            profile_education_edit_end_date.focus();
             break;
           case 5:
             profile_education_edit_additional_information.focus();
@@ -482,7 +494,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               type="text"
               id="profile_education_edit_school_organization"
               name="title"
-              value={education.companyName}
+              value={education?.companyName}
               onChange={handleChangeSchool}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
@@ -490,13 +502,13 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
-              {education.companyName && education.companyName.length > 50 ? (
+              {education?.companyName && education?.companyName?.length > 50 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Bạn đã nhập quá 50 ký tự.'
                     : 'You have entered more than 50 characters.'}
                 </span>
-              ) : !education.companyName ? (
+              ) : !education?.companyName ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vui lòng nhập tên trường/tổ chức.'
@@ -506,7 +518,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                 <></>
               )}
               <span className="number-text">{`${
-                education.companyName ? education.companyName.length : '0'
+                education?.companyName ? education?.companyName?.length : '0'
               }/50`}</span>
             </div>
           </Box>
@@ -524,7 +536,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               type="text"
               id="profile_education_edit_major"
               name="title"
-              value={education.major}
+              value={education?.major}
               onChange={handleChangeMajor}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
@@ -532,13 +544,13 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
-              {education.major && education.major.length > 50 ? (
+              {education?.major && education?.major?.length > 50 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Bạn đã nhập quá 50 ký tự.'
                     : 'You have entered more than 50 characters.'}
                 </span>
-              ) : !education.major ? (
+              ) : !education?.major ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vui lòng nhập tên chuyên ngành.'
@@ -548,7 +560,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                 <></>
               )}
               <span className="number-text">{`${
-                education.major ? education.major.length : '0'
+                education?.major ? education?.major?.length : '0'
               }/50`}</span>
             </div>
           </Box>
@@ -570,7 +582,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   </Typography>
                   <DatePicker
                     value={
-                      moment(education.startDate)
+                      moment(education?.startDate)
                       // && new Date().getTime()
                     }
                     defaultValue={moment(new Date().getTime())}
@@ -584,23 +596,28 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                         padding: '8.5px 14px',
                       },
                     }}
+                    slotProps={{
+                      textField: {
+                        id: 'profile_education_edit_start_date',
+                      },
+                    }}
                   />
                   <div className="wrap-noti_input">
-                    {education.startDate &&
-                    new Date(education.startDate).getFullYear() >
+                    {education?.startDate &&
+                    new Date(education?.startDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Thời gian bắt đầu không thể lớn hơn thời gian hiện tại.'
                           : 'The start time cannot be greater than the current time.'}
                       </span>
-                    ) : !new Date(education.startDate).getFullYear() ? (
+                    ) : !new Date(education?.startDate).getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Vui lòng nhập Thời gian bắt đầu.'
                           : 'Please enter start date.'}
                       </span>
-                    ) : new Date(education.startDate).getFullYear() < 1900 ? (
+                    ) : new Date(education?.startDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Thời gian bắt đầu không thể nhỏ hơn 1900.'
@@ -622,12 +639,12 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                     <span className="color-asterisk">*</span>
                   </Typography>
                   <DatePicker
-                    value={moment(education.endDate)}
+                    value={moment(education?.endDate)}
                     defaultValue={moment(new Date().getTime())}
                     onChange={handleChangeEndTime}
                     views={['year', 'month']}
                     openTo="month"
-                    minDate={moment(education.startDate)}
+                    minDate={moment(education?.startDate)}
                     format="MM/YYYY"
                     sx={{
                       '& input': {
@@ -635,23 +652,28 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                         padding: '8.5px 14px',
                       },
                     }}
+                    slotProps={{
+                      textField: {
+                        id: 'profile_education_edit_end_date',
+                      },
+                    }}
                   />
                   <div className="wrap-noti_input">
-                    {education.endDate &&
-                    new Date(education.endDate).getFullYear() >
+                    {education?.endDate &&
+                    new Date(education?.endDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Thời gian kết thúc không thể lớn hơn thời gian hiện tại.'
                           : 'The end time cannot be greater than the current time.'}
                       </span>
-                    ) : !new Date(education.endDate).getFullYear() ? (
+                    ) : !new Date(education?.endDate).getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Vui lòng nhập Thời gian kết thúc.'
                           : 'Please enter End date.'}
                       </span>
-                    ) : new Date(education.endDate).getFullYear() < 1900 ? (
+                    ) : new Date(education?.endDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Thời gian kết thúc không thể nhỏ hơn 1900.'
@@ -678,8 +700,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             <TextField
               select
               id="sex"
-              value={education.academicTypeId}
-              defaultValue={education.academicTypeId && 8}
+              value={education?.academicTypeId}
+              defaultValue={education?.academicTypeId && 8}
               onChange={handleChangeAcademic}
               variant="outlined"
               placeholder={'Loại công việc'}
@@ -716,7 +738,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             </Typography>
             <TextField
               // className={classes.textarea}
-              value={education.extraInformation}
+              value={education?.extraInformation}
               onChange={handleChangeExtraInfo}
               sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
               multiline
@@ -726,14 +748,14 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               placeholder={language?.profile_page?.place_additional_information}
             />
             <div className="wrap-noti_input">
-              {education.extraInformation &&
-              education.extraInformation.length > 500 ? (
+              {education?.extraInformation &&
+              education?.extraInformation?.length > 500 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Bạn đã nhập quá 500 ký tự.'
                     : 'You have entered more than 500 characters.'}
                 </span>
-              ) : education.extraInformation.length === 0 ? (
+              ) : education?.extraInformation?.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vui lòng nhập thông tin bổ sung.'
@@ -743,8 +765,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                 <></>
               )}
               <span className="number-text">{`${
-                education.extraInformation
-                  ? education.extraInformation.length
+                education?.extraInformation
+                  ? education?.extraInformation?.length
                   : '0'
               }/500`}</span>
             </div>
