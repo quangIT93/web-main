@@ -23,6 +23,7 @@ import communityApi from 'api/apiCommunity';
 import './style.scss';
 import HijobNewsCard from '#components/Community/HijobNewsCard';
 import NoDataComponent from 'utils/NoDataPage';
+import { useSearchParams } from 'react-router-dom';
 
 const CardListBlogSave = () => {
   const languageRedux = useSelector(
@@ -46,7 +47,7 @@ const CardListBlogSave = () => {
   const [saveListPost, setSaveListPost] = React.useState(false);
 
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const [searchParams, setSearchParams] = useSearchParams('');
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
@@ -165,7 +166,13 @@ const CardListBlogSave = () => {
               lineHeight: '24px',
             }}
           >
-            {language?.history_page?.posts_saved}
+            {languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles'}
+            <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
+              {
+                searchParams.get('c') === '3-0' &&
+                  languageRedux === 1 ? ' > Đã lưu' : ' > Saved articles'
+              }
+            </span>
           </Typography>
         </div>
         {/* <div className="title-comunity-news_icon">

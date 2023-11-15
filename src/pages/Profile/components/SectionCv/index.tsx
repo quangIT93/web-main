@@ -300,7 +300,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
   };
 
   const handleSaveHobbies = async () => {
-    const profile_hobbies_hobbie_name = document.getElementById('profile_hobbies_hobbie_name') as HTMLElement;
+    const profile_hobbies_hobbie_name = document.getElementById(
+      'profile_hobbies_hobbie_name',
+    ) as HTMLElement;
     try {
       if (hobbieValues?.trim() === '' || hobbieValues?.trim() === undefined) {
         // dispatch(setAlertLackInfo(true));
@@ -311,7 +313,6 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         );
         profile_hobbies_hobbie_name.focus();
         return;
-
       }
       if (hobbieValues?.trim().length > 1000) {
         // dispatch(setAlertLackInfo(true));
@@ -446,7 +447,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileMoreV3?.profilesLanguages?.length !== 0 ||
-                  sections.includes(1)
+                sections.includes(1)
                   ? 'block'
                   : 'none',
             }}
@@ -482,7 +483,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             </div>
             <div className="language-list">
               {profileMoreV3 &&
-                profileMoreV3?.profilesLanguages?.length !== 0 ? (
+              profileMoreV3?.profilesLanguages?.length !== 0 ? (
                 profileMoreV3?.profilesLanguages?.map(
                   (item: Ilanguages, index: number) => (
                     <div className="skill-item" key={index}>
@@ -645,8 +646,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 ) : (
                   <></>
                 )}
-                <span className="number-text">{`${hobbieValues ? hobbieValues.length : '0'
-                  }/1000`}</span>
+                <span className="number-text">{`${
+                  hobbieValues ? hobbieValues.length : '0'
+                }/1000`}</span>
               </div>
             </div>
           </div>
@@ -664,7 +666,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileMoreV3?.profilesReferences?.length !== 0 ||
-                  sections.includes(3)
+                sections.includes(3)
                   ? 'block'
                   : 'none',
             }}
@@ -697,7 +699,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             </div>
             <div className="skill-list">
               {profileMoreV3 &&
-                profileMoreV3?.profilesReferences?.length !== 0 ? (
+              profileMoreV3?.profilesReferences?.length !== 0 ? (
                 profileMoreV3?.profilesReferences?.map(
                   (item: IReferences, index: number) => (
                     <div className="skill-item" key={index}>
@@ -846,7 +848,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileMoreV3?.profileActivities?.length !== 0 ||
-                  sections.includes(5)
+                sections.includes(5)
                   ? 'block'
                   : 'none',
             }}
@@ -876,7 +878,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             </div>
             <div className="internship-list">
               {profileMoreV3 &&
-                profileMoreV3?.profileActivities?.length !== 0 ? (
+              profileMoreV3?.profileActivities?.length !== 0 ? (
                 profileMoreV3?.profileActivities?.map(
                   (item: IInternship, index: number) => (
                     <InternshipItem
@@ -1015,7 +1017,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileMoreV3?.profileAwards?.length !== 0 ||
-                  sections.includes(7)
+                sections.includes(7)
                   ? 'block'
                   : 'none',
             }}
@@ -1126,7 +1128,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileMoreV3?.profilesLanguages?.length !== 0 ||
-                      sections.includes(1)
+                    sections.includes(1)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1140,7 +1142,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileMoreV3?.profileHobbies !== null ||
-                      sections.includes(2)
+                    sections.includes(2)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1154,7 +1156,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileMoreV3?.profilesReferences?.length !== 0 ||
-                      sections.includes(3)
+                    sections.includes(3)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1183,7 +1185,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileMoreV3?.profileActivities?.length !== 0 ||
-                      sections.includes(5)
+                    sections.includes(5)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1212,7 +1214,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileMoreV3?.profileAwards?.length !== 0 ||
-                      sections.includes(7)
+                    sections.includes(7)
                       ? 'section-item disable'
                       : 'section-item'
                   }

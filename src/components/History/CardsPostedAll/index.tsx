@@ -39,6 +39,7 @@ import { historyEn } from 'validations/lang/en/history';
 
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useSearchParams } from 'react-router-dom';
 
 interface ICardsPostedAll {
   setShowDetailPosted: React.Dispatch<React.SetStateAction<boolean>>;
@@ -63,7 +64,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
 
   const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
-
+  const [searchParams, setSearchParams] = useSearchParams('');
   // const [language, setLanguage] = React.useState<any>();
 
   // const getlanguageApi = async () => {
@@ -216,6 +217,12 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
             }}
           >
             {language?.history_page?.posted_jobs}
+            <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
+              {
+                searchParams.get('c') === '2-0' &&
+                  languageRedux === 1 ? ' > Tất cả' : ' > All'
+              }
+            </span>
           </Typography>
         </div>
         <TextField

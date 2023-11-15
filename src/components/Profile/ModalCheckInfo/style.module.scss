@@ -3,6 +3,11 @@
     display: flex;
     align-items: center;
     gap: 16px;
+    justify-content: center;
+
+    @media screen and (max-width: 320px) {
+        flex-direction: column;
+    }
 
     button {
         width: 200px;

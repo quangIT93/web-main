@@ -36,6 +36,7 @@ import { historyEn } from 'validations/lang/en/history';
 
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useSearchParams } from 'react-router-dom';
 
 interface ICardsPostedClose {
   setShowDetailPosted: React.Dispatch<React.SetStateAction<boolean>>;
@@ -59,7 +60,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
 
   const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
-
+  const [searchParams, setSearchParams] = useSearchParams('');
   // const [language, setLanguage] = React.useState<any>();
 
   // const getlanguageApi = async () => {
@@ -209,7 +210,13 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
               lineHeight: '24px',
             }}
           >
-            {language?.history_page?.closed_jobs}
+            {languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs'}
+            <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
+              {
+                searchParams.get('c') === '2-2' &&
+                  languageRedux === 1 ? ' > Các công việc đã đóng' : ' > Closed jobs'
+              }
+            </span>
           </Typography>
         </div>
         <TextField

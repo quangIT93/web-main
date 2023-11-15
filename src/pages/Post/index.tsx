@@ -548,7 +548,9 @@ const Post: React.FC = () => {
 
     if (startDate > endDate) {
       return {
-        message: language?.post_page?.err_date,
+        message: languageRedux === 1
+          ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
+          : 'The start date cannot exceed the end date',
         checkForm: false,
         idError: 13,
       };
@@ -571,7 +573,7 @@ const Post: React.FC = () => {
             ? 'Ngày bắt đầu không được nhỏ hơn thời gian hiện tại'
             : 'The start date cannot be less than the current time',
         checkForm: false,
-        idError: 14,
+        idError: 13,
       };
     }
 
@@ -582,7 +584,7 @@ const Post: React.FC = () => {
             ? 'Vui lòng nhập ngày bắt đầu'
             : 'Please enter a start date',
         checkForm: false,
-        idError: 14,
+        idError: 13,
       };
     }
 
@@ -663,7 +665,13 @@ const Post: React.FC = () => {
         const post_job_description = document.getElementById(
           'post_job_description',
         ) as HTMLElement;
-        // console.log(idError, fillDistrict);
+        const post_job_start_date = document.getElementById(
+          'post_job_start_date',
+        ) as HTMLElement;
+        const post_job_end_date = document.getElementById(
+          'post_job_end_date',
+        ) as HTMLElement;
+        console.log(idError);
 
         switch (idError) {
           case 1:
@@ -701,6 +709,12 @@ const Post: React.FC = () => {
             break;
           case 12:
             post_job_description.focus();
+            break;
+          case 13:
+            post_job_start_date.focus();
+            break;
+          case 14:
+            post_job_end_date.focus();
             break;
 
           default:
@@ -773,7 +787,7 @@ const Post: React.FC = () => {
       } else {
         setOpenModalNoteCreateCompany(true);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const checkPostedToday = async () => {
@@ -837,7 +851,7 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-            // style={{ textAlign: 'center', display: 'block' }}
+          // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>{language?.profile_page?.create_post}</h1>
             <div className="post-main_switch">

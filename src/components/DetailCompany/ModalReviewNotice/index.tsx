@@ -24,7 +24,7 @@ const ModalReviewNotice: React.FC<IModalReviewNotice> = (props) => {
 
     return (
         <Modal
-            width={614}
+            width={500}
             centered
             title={
                 <h3
@@ -34,7 +34,7 @@ const ModalReviewNotice: React.FC<IModalReviewNotice> = (props) => {
                         // fontWeight: '700',
                         lineHeight: '24px',
                         letterSpacing: '0em',
-                        textAlign: 'left',
+                        textAlign: 'center',
                     }}
                 >
                     {languageRedux === 1
@@ -54,7 +54,7 @@ const ModalReviewNotice: React.FC<IModalReviewNotice> = (props) => {
                     fontWeight: '400',
                     lineHeight: '24px',
                     letterSpacing: '0.5px',
-                    textAlign: 'left',
+                    textAlign: 'center',
                 }}
             >
                 {
