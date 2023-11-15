@@ -279,7 +279,7 @@ const CandidateNewDetail = () => {
               )} */}
 
               {/* test */}
-              <Button
+              {/* <Button
                 type="primary"
                 ghost
                 className="btn-mess"
@@ -293,7 +293,7 @@ const CandidateNewDetail = () => {
                 // onClick={() => {
                 //   console.log(post?.data);
                 // }}
-              ></Button>
+              ></Button> */}
               {candidate?.isUnlocked === false && (
                 <Popover
                   placement="bottom"

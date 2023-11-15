@@ -164,7 +164,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 </div>
               </div>
               <div className="detail_company_profile_tabs">
-                <Tabs defaultActiveKey="1" items={items} />
+                <Tabs defaultActiveKey="1" items={items} animated={false} />
               </div>
             </div>
           </div>

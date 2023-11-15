@@ -167,7 +167,7 @@ const CardListCompany: React.FC = () => {
           sx={{
             width: '120px',
             borderRadius: '24px',
-            height: '48px',
+            // height: '48px',
           }}
         >
           <MenuItem value={1}>{language?.history_page?.latest}</MenuItem>
