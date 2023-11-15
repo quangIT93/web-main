@@ -305,10 +305,7 @@ const AppliedPostedJob: React.FC = () => {
                           <SwiperSlide>
                             <img
                               onClick={() => {
-                                window.open(
-                                  `${value?.redirect_url}}`,
-                                  '_parent',
-                                );
+                                window.open(value?.redirect_url, '_parent');
                               }}
                               src={value?.image}
                               alt=""
@@ -339,10 +336,7 @@ const AppliedPostedJob: React.FC = () => {
                           <SwiperSlide>
                             <img
                               onClick={() => {
-                                window.open(
-                                  `${value?.redirect_url}}`,
-                                  '_parent',
-                                );
+                                window.open(value?.redirect_url, '_parent');
                               }}
                               src={value?.image}
                               alt=""
@@ -613,7 +607,7 @@ const AppliedPostedJob: React.FC = () => {
                 <SwiperSlide>
                   <img
                     onClick={() => {
-                      window.open(`${value?.redirect_url}`, '_parent');
+                      window.open(value?.redirect_url, '_parent');
                     }}
                     src={value?.image}
                     alt=""
