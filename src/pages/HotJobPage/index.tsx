@@ -571,7 +571,8 @@ const HotJobpage: React.FC = () => {
                       sx={{
                         fontSize: '14px',
                         height: '32px',
-                        width: '85px',
+                        minWidth: '85px',
+                        width: 'fit-content',
                         borderRadius: '16px !important',
                       }}
                     >

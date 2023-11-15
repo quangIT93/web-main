@@ -376,7 +376,9 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
         const profile_education_edit_school_organization = document.getElementById('profile_education_edit_school_organization') as HTMLElement;
         const profile_education_edit_major = document.getElementById('profile_education_edit_major') as HTMLElement;
         const profile_education_edit_additional_information = document.getElementById('profile_education_edit_additional_information') as HTMLElement;
-        console.log(idError);
+        const profile_education_edit_start_date = document.getElementById('profile_education_edit_start_date') as HTMLElement;
+        const profile_education_edit_end_date = document.getElementById('profile_education_edit_end_date') as HTMLElement;
+        // console.log(idError);
 
         switch (idError) {
           case 1:
@@ -384,6 +386,12 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             break;
           case 2:
             profile_education_edit_major.focus();
+            break;
+          case 3:
+            profile_education_edit_start_date.focus();
+            break;
+          case 4:
+            profile_education_edit_end_date.focus();
             break;
           case 5:
             profile_education_edit_additional_information.focus();
@@ -584,6 +592,11 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                         padding: '8.5px 14px',
                       },
                     }}
+                    slotProps={{
+                      textField: {
+                        id: 'profile_education_edit_start_date',
+                      },
+                    }}
                   />
                   <div className="wrap-noti_input">
                     {education.startDate &&
@@ -639,6 +652,11 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                       '& input': {
                         fontSize: '14px',
                         padding: '8.5px 14px',
+                      },
+                    }}
+                    slotProps={{
+                      textField: {
+                        id: 'profile_education_edit_end_date',
                       },
                     }}
                   />

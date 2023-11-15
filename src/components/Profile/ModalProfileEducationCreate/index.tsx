@@ -351,6 +351,8 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
         const profile_education_school_organization = document.getElementById('profile_education_school_organization') as HTMLElement;
         const profile_education_major = document.getElementById('profile_education_major') as HTMLElement;
         const profile_education_additional_information = document.getElementById('profile_education_additional_information') as HTMLElement;
+        const profile_education_start_date = document.getElementById('profile_education_start_date') as HTMLElement;
+        const profile_education_end_date = document.getElementById('profile_education_end_date') as HTMLElement;
 
         switch (idError) {
           case 1:
@@ -358,6 +360,12 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             break;
           case 2:
             profile_education_major.focus();
+            break;
+          case 3:
+            profile_education_start_date.focus();
+            break;
+          case 4:
+            profile_education_end_date.focus();
             break;
           case 5:
             profile_education_additional_information.focus();
@@ -547,6 +555,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                         padding: '8.5px 14px',
                       },
                     }}
+                    slotProps={{
+                      textField: {
+                        id: 'profile_education_start_date',
+                      },
+                    }}
                   />
                   <div className="wrap-noti_input">
                     {education.startDate &&
@@ -601,6 +614,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                       '& input': {
                         fontSize: '14px',
                         padding: '8.5px 14px',
+                      },
+                    }}
+                    slotProps={{
+                      textField: {
+                        id: 'profile_education_end_date',
                       },
                     }}
                   />

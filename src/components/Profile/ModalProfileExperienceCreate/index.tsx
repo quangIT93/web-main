@@ -359,6 +359,8 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
         const profile_experience_professional_titles = document.getElementById('profile_experience_professional_titles') as HTMLElement;
         const profile_experience_company_organization = document.getElementById('profile_experience_company_organization') as HTMLElement;
         const profile_experience_additional_information = document.getElementById('profile_experience_additional_information') as HTMLElement;
+        const profile_experience_start_date = document.getElementById('profile_experience_start_date') as HTMLElement;
+        const profile_experience_end_date = document.getElementById('profile_experience_end_date') as HTMLElement;
         // console.log(idError);
 
         switch (idError) {
@@ -367,6 +369,12 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             break;
           case 2:
             profile_experience_company_organization.focus();
+            break;
+          case 3:
+            profile_experience_start_date.focus();
+            break;
+          case 4:
+            profile_experience_end_date.focus();
             break;
           case 5:
             profile_experience_additional_information.focus();
@@ -539,6 +547,11 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                         padding: '8.5px 14px',
                       },
                     }}
+                    slotProps={{
+                      textField: {
+                        id: 'profile_experience_start_date',
+                      },
+                    }}
                   />
                   <div className="wrap-noti_input">
                     {experience.startDate &&
@@ -593,6 +606,11 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                       '& input': {
                         fontSize: '14px',
                         padding: '8.5px 14px',
+                      },
+                    }}
+                    slotProps={{
+                      textField: {
+                        id: 'profile_experience_end_date',
                       },
                     }}
                   />

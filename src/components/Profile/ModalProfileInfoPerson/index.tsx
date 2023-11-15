@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker'
@@ -140,9 +140,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [selectedProvince, setSelectedProvince] = useState<any>(
     profile?.addressText
       ? {
-          province_id: profile?.addressText?.id,
-          province_fullName: profile?.addressText.fullName,
-        }
+        province_id: profile?.addressText?.id,
+        province_fullName: profile?.addressText.fullName,
+      }
       : null,
   );
 
@@ -182,7 +182,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   // React.useEffect(() => {
   //   getlanguageApi();
   // }, [languageRedux]);
-
+  const [openDatePicker, setOpenDatePicker] = useState<boolean>(false);
   const dispatch = useDispatch();
   // const dataProfile = useSelector((state: RootState) => state.profile.profile);
 
@@ -232,7 +232,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     });
   };
 
-  console.log('new Date(day).getFullYear()', new Date(day).getFullYear());
+  // useEffect(() => {
+  //   setOpenDatePicker(true)
+  // }, [])
 
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIntroduction(e.target.value);
@@ -273,7 +275,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             ? 'Năm sinh không được vượt quá năm hiện tại'
             : 'Year of birth cannot exceed the current year',
         checkForm: false,
-        idError: 0,
+        idError: 5,
       };
     }
     if (jobTypeName === '') {
@@ -312,6 +314,16 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             : 'Introduce yourself cannot exceed 500 characters',
         checkForm: false,
         idError: 4,
+      };
+    }
+    if (new Date(day).getFullYear() < 1900) {
+      return {
+        message:
+          languageRedux === 1
+            ? 'Năm sinh không được nhỏ hơn 1900'
+            : 'Year of birth cannot be less than 1900',
+        checkForm: false,
+        idError: 5,
       };
     }
 
@@ -368,6 +380,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         const peronal_info_introduction = document.getElementById(
           'peronal_info_introduction',
         ) as HTMLElement;
+        const peronal_info_date = document.getElementById(
+          'peronal_info_date',
+        ) as HTMLElement;
 
         switch (idError) {
           case 1:
@@ -381,6 +396,10 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             break;
           case 4:
             peronal_info_introduction.focus();
+            break;
+          case 5:
+            peronal_info_date.focus();
+            // setOpenDatePicker(true);
             break;
 
           default:
@@ -455,7 +474,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 size="small"
                 sx={{ width: '100%', marginTop: '4px' }}
                 placeholder="Họ và tên"
-                // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
               />
               <div className="wrap-noti_input">
                 {name?.length > 90 ? (
@@ -518,9 +537,13 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                     slotProps={{
                       textField: {
                         helperText: 'DD/MM/YYYY',
+                        // onClick: () => setOpenDatePicker(true),
+                        id: 'peronal_info_date'
                       },
                     }}
-                    // format="DD/MM/YYYY"
+                  // open={openDatePicker}
+                  // onAccept={() => setOpenDatePicker(false)}
+                  // format="DD/MM/YYYY"
                   />
                 </div>
                 <div className="wrap-noti_input">
@@ -565,9 +588,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 value={
                   selectedProvince && dataProvinces?.length > 0
                     ? dataProvinces?.find(
-                        (province: any) =>
-                          province.province_id === selectedProvince.province_id,
-                      )
+                      (province: any) =>
+                        province.province_id === selectedProvince.province_id,
+                    )
                     : null
                 }
                 defaultValue={selectedProvince}
@@ -578,7 +601,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                     {...params}
                     placeholder={language?.profile_page?.place_address}
                     size="small"
-                    // error={!selectedProvince}
+                  // error={!selectedProvince}
                   />
                 )}
               />
@@ -604,7 +627,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 placeholder={
                   languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'
                 }
-                // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
               />
               <div className="wrap-noti_input">
                 {jobTypeName?.length > 100 ? (
@@ -651,12 +674,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                     input.focus();
                   }
                 }}
-                // onKeyDown={(event) => {
-                //   // if (event.key === 'Enter') {
-                //   //   event.preventDefault();
-                //   // }
-                //   console.log(event.target);
-                // }}
+              // onKeyDown={(event) => {
+              //   // if (event.key === 'Enter') {
+              //   //   event.preventDefault();
+              //   // }
+              //   console.log(event.target);
+              // }}
               />
               <div className="wrap-noti_input">
                 {introduction?.length === 0 ? (
