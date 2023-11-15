@@ -200,6 +200,9 @@ const DetailCompany = () => {
                 <div
                   className={styles.company_bell}
                   onClick={handleFollowCompany}
+                  style={{
+                    display: localStorage.getItem('accountId') === company?.accountId ? 'none' : 'flex'
+                  }}
                 >
                   {bookmarked ? (
                     <IconBellSaveNewestCompany width={24} height={24} />
