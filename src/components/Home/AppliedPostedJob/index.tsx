@@ -40,7 +40,7 @@ import {
 } from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
-// import banner from '../../../img/Banner/banner-for-candidates-2.png';
+import banner1 from '../../../img/Banner/banner-for-candidates-2.png';
 import banner_recruit_1 from '../../../img/Banner/banner-for-rescruit-1.png';
 import banner_recruit_2 from '../../../img/Banner/banner-for-rescruit-2.png';
 import banner from '../../../img/Banner/Banner_homepage 1@2x.png';
@@ -229,6 +229,8 @@ const AppliedPostedJob: React.FC = () => {
             style={{
               display: cvHijob.length !== 0 ? 'flex' : 'none',
               marginBottom: appliedPostedJob.length !== 0 ? '24px' : '0',
+              flexDirection: 'column',
+              gap: '24px',
             }}
           >
             {/* <AdsCVIcon /> */}
@@ -272,12 +274,12 @@ const AppliedPostedJob: React.FC = () => {
                       cursor: 'pointer',
                     }}
                     variant="square"
-                    src={banner}
+                    src={banner1}
                     onClick={() => {
                       window.open('/page-cv', '_parent');
                     }}
                   >
-                    Banner
+                    Banner1
                   </Avatar>
                 ) : (
                   <Swiper
@@ -320,12 +322,35 @@ const AppliedPostedJob: React.FC = () => {
                 />
               )}
             </div>
-            {/* <Button
-              type="primary"
-              onClick={() => window.open(`/profile/`, '_parent')}
-            >
-              {languageRedux === 1 ? 'Tạo cv của bạn' : 'Create Your Resume'}
-            </Button> */}
+            <div className="advertisement-job-not-loging-content">
+              {profile.length !== 0 ? (
+                profile?.typeRoleData === 0 ? (
+                  <Avatar
+                    sx={{
+                      width: '100%',
+                      maxHeight: '301px',
+                      height: 'auto',
+                      // cursor: 'unset',
+                    }}
+                    variant="square"
+                    src={banner}
+                    onClick={() => {
+                      window.open('/page-cv', '_parent');
+                    }}
+                  >
+                    Banner
+                  </Avatar>
+                ) : (
+                  <></>
+                )
+              ) : (
+                <Skeleton.Button
+                  style={{ height: '301px' }}
+                  active={true}
+                  block={true}
+                />
+              )}
+            </div>
           </div>
           <Skeleton loading={loading} active>
             {appliedPostedJob.length !== 0 &&
@@ -542,6 +567,22 @@ const AppliedPostedJob: React.FC = () => {
           </Button>
         </div>
 
+        {/* <Avatar
+          sx={{
+            width: '100%',
+            maxHeight: '301px',
+            height: 'auto',
+            marginTop: '24px',
+            cursor: 'pointer',
+          }}
+          variant="square"
+          src={banner1}
+          onClick={() => {
+            window.open('/page-cv', '_parent');
+          }}
+        >
+          Banner1
+        </Avatar> */}
         <Avatar
           sx={{
             width: '100%',
@@ -553,7 +594,8 @@ const AppliedPostedJob: React.FC = () => {
           variant="square"
           src={banner}
           onClick={() => {
-            window.open('/page-cv', '_parent');
+            // window.open('/page-cv', '_parent');
+            setOpenModalLogin(true);
           }}
         >
           Banner
