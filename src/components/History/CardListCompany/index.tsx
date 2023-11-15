@@ -160,7 +160,7 @@ const CardListCompany: React.FC = () => {
           placeholder="Giới tính"
           size="small"
           sx={{
-            width: '160px',
+            width: '120px',
             borderRadius: '24px',
             height: '48px',
           }}

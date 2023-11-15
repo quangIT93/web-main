@@ -42,7 +42,7 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
             // fontWeight: '700',
             lineHeight: '24px',
             letterSpacing: '0em',
-            textAlign: 'left',
+            textAlign: 'center',
           }}
         >
           {languageRedux === 1
@@ -62,7 +62,7 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
           fontWeight: '400',
           lineHeight: '24px',
           letterSpacing: '0.5px',
-          textAlign: 'left',
+          textAlign: 'center',
         }}
       >
         {firstCv
@@ -70,8 +70,8 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
             ? 'Bạn có muốn chọn CV / Resume đã hoàn thành của mình để xin việc, Tuyển dụng có thể tìm thấy bạn dễ dàng hơn?'
             : 'Do you want to choose your completed CV/Resume to apply for a job, Recruitments can find you more easily?'
           : languageRedux === 1
-          ? 'CV / Resume bạn vừa hoàn thành sẽ được chọn cho các đơn xin việc và Nhà tuyển dụng có thể tìm thấy bạn dễ dàng hơn!'
-          : 'The CV/Resume you just completed will be selected for job applications and Employers can find you more easily!'}
+            ? 'CV / Resume bạn vừa hoàn thành sẽ được chọn cho các đơn xin việc và Nhà tuyển dụng có thể tìm thấy bạn dễ dàng hơn!'
+            : 'The CV/Resume you just completed will be selected for job applications and Employers can find you more easily!'}
       </p>
       <div className="share-buttons-choose-cv-modal">
         <Button type="primary" shape="round">

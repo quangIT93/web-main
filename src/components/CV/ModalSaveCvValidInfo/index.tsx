@@ -42,7 +42,7 @@ const ModalSaveCvValidInfo: React.FC<IModalSaveCvValidInfo> = (props) => {
             // fontWeight: '700',
             lineHeight: '24px',
             letterSpacing: '0em',
-            textAlign: 'left',
+            textAlign: 'center',
           }}
         >
           {languageRedux === 1
@@ -62,7 +62,7 @@ const ModalSaveCvValidInfo: React.FC<IModalSaveCvValidInfo> = (props) => {
           fontWeight: '400',
           lineHeight: '24px',
           letterSpacing: '0.5px',
-          textAlign: 'left',
+          textAlign: 'center',
         }}
       >
         {languageRedux === 1
