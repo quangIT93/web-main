@@ -448,7 +448,7 @@ const Navbar: React.FC = () => {
         languageRedux === 1 ? 'vi' : 'en',
       );
 
-      if (result.data?.total) {
+      if (result.data) {
         setCountNoti(result.data.total);
       } else {
         setCountNoti(result.data);
@@ -800,7 +800,11 @@ const Navbar: React.FC = () => {
   React.useEffect(() => {
     // console.log('socket', socket.current);
 
-    if (socket.current === undefined && localStorage.getItem('accessToken')) {
+    if (
+      socket.current === undefined &&
+      localStorage.getItem('accessToken') &&
+      location.pathname !== '/message'
+    ) {
       socket.current = io('https://neoworks.vn', {
         extraHeaders: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
