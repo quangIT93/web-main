@@ -29,6 +29,7 @@ interface IContactInfo {
 
 const ContactInfo: React.FC<IContactInfo> = (props) => {
   const { company } = props;
+  const location = useLocation();
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -42,7 +43,23 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
   });
 
-  const location = useLocation();
+    const handleClickShowMap = () => {
+      if(company?.address){
+        window.open(
+          'https://www.google.com/maps/place/' +
+          `${company?.address}, ${company?.companyLocation ? company?.companyLocation.fullName : ''
+          }, ${company?.companyLocation?.district
+            ? company?.companyLocation?.district?.fullName
+            : ''
+          }, ${company?.companyLocation?.district?.province
+            ? company?.companyLocation?.district?.province?.fullName
+            : ''
+          }`,
+        );
+      }
+  };
+
+
 
   return (
     <div className={styles.contact_info_container}>
@@ -85,7 +102,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   <LocationDetailPostIcon />
                   <p>
                     {languageRedux === 1 ? 'Địa chỉ: ' : 'Address: '}
-                    <span>
+                    <span onClick={handleClickShowMap} style={company?.address ?{cursor: "pointer"}: {}}>
                       {company?.address
                         ? company.address
                         : languageRedux === 1

@@ -434,17 +434,10 @@ const AppliedPostedJob: React.FC = () => {
             </div>
           </div> */}
 
-            <div
+            {/* <div
               className="advertisement-job-not-loging"
               style={{ display: !isLogined ? 'flex' : 'none' }}
             >
-              {/* <Advertisement /> */}
-              {/* <img
-              src="../images/absHijob.png"
-              alt="Ảnh lỗi"
-              className="img-advertisement-job-not-loging"
-              // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
-            /> */}
               <Advertisement />
               <div className="advertisement-job-not-loging-content">
                 <h3 style={{ marginTop: '12px' }}>
@@ -473,7 +466,7 @@ const AppliedPostedJob: React.FC = () => {
                 <LoginArrowIcon />
                 {language?.sign_in}
               </Button>
-            </div>
+            </div> */}
 
             <Swiper
               navigation={true}
@@ -541,17 +534,10 @@ const AppliedPostedJob: React.FC = () => {
         }}
         className="applied-posted-jobs-container"
       >
-        <div
+        {/* <div
           className="advertisement-job-not-loging"
           style={{ display: !isLogined ? 'flex' : 'none' }}
         >
-          {/* <Advertisement /> */}
-          {/* <img
-              src="../images/absHijob.png"
-              alt="Ảnh lỗi"
-              className="img-advertisement-job-not-loging"
-              // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
-            /> */}
           <Advertisement />
           <div className="advertisement-job-not-loging-content">
             <h3 style={{ marginTop: '12px' }}>
@@ -573,7 +559,7 @@ const AppliedPostedJob: React.FC = () => {
             <LoginArrowIcon />
             {language?.sign_in}
           </Button>
-        </div>
+        </div> */}
 
         {/* <Avatar
           sx={{
