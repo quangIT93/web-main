@@ -295,7 +295,8 @@ const AppliedPostedJob: React.FC = () => {
                       disableOnInteraction: false,
                     }}
                     // navigation={true}
-                    modules={[Autoplay, Navigation]}
+                    pagination={true}
+                    modules={[Autoplay, Navigation, Pagination]}
                     className="banner-rescruit-swiper"
                     loop={true}
                   >
@@ -326,7 +327,8 @@ const AppliedPostedJob: React.FC = () => {
                       disableOnInteraction: false,
                     }}
                     // navigation={true}
-                    modules={[Autoplay, Navigation]}
+                    pagination={true}
+                    modules={[Autoplay, Navigation, Pagination]}
                     className="banner-rescruit-swiper"
                     loop={true}
                   >
@@ -597,7 +599,8 @@ const AppliedPostedJob: React.FC = () => {
             disableOnInteraction: false,
           }}
           // navigation={true}
-          modules={[Autoplay, Navigation]}
+          pagination={true}
+          modules={[Autoplay, Navigation, Pagination]}
           className="banner-rescruit-swiper"
           loop={true}
         >
