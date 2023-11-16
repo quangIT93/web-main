@@ -7,7 +7,6 @@ import { Button, InputRef, Skeleton, Spin, message } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { SaveIconFill, SaveIconOutline } from '#components/Icons';
-
 import nonAvatar from '../../../img/male_null_avatar.png';
 import CompanyRating from '../CompanyRating';
 import ModalReviewNotice from '../ModalReviewNotice';
@@ -211,8 +210,6 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
       return;
     }
     myReview === undefined ? handleRateComapy() : handleEditReviewCompany();
-    // console.log("review", review);
-    // console.log("star", star);
   };
 
   const handleDeleteReview = async () => {
@@ -267,6 +264,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                                   ? 'Thông tin chưa cập nhật'
                                   : 'Information not updated yet'}
                               </h2>
+
                               <p>
                                 {moment(item?.createdAt).format('HH:mm') +
                                   ' ' +
