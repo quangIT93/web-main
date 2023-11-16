@@ -37,6 +37,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalMaxUnlock from './ModalMaxUnlock';
 import ModalShowAvatar from './ModalShowAvatar';
 import ModalNoneCV from './ModalNoneCv';
+import ModalNotiUnClock from './ModalNotiUnClock';
 import { MessageOutlined } from '@ant-design/icons';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -52,6 +53,7 @@ const CandidateNewDetail = () => {
   const [total, setTotal] = useState<any>(0);
   const [openModalMaxUnlock, setOpenModalMaxUnlock] = useState<any>(false);
   const [openModalNoneCv, setOpenModalNoneCv] = useState<any>(false);
+  const [openModalNotiUnclock, setOpenModalNotiUnclock] = useState<any>(false);
   const [openModalShowAvatar, setOpenModalShowAvatar] = useState<any>(false);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
@@ -290,10 +292,14 @@ const CandidateNewDetail = () => {
                   justifyContent: 'center',
                 }}
                 onClick={() => {
-                  window.open(
-                    `/message?post_id=${null}&user_id=${candidate.accountId} `,
-                    '_parent',
-                  );
+                  if(candidate?.isUnlocked === false){
+                    setOpenModalNotiUnclock(true)
+                  } else {
+                    window.open(
+                      `/message?post_id=${null}&user_id=${candidate.accountId} `,
+                      '_parent',
+                    );
+                  }
                 }}
               ></Button>
               {candidate?.isUnlocked === false && (
@@ -869,6 +875,11 @@ const CandidateNewDetail = () => {
         setOpenModalNoneCv={setOpenModalNoneCv}
         unLock={candidate.isUnlocked}
         urlPdf={candidate?.profilesCvs?.at(0)?.pdfURL}
+      />
+
+      <ModalNotiUnClock 
+      openModalNotiUnclock={openModalNotiUnclock} 
+      setOpenModalNotiUnclock={setOpenModalNotiUnclock}
       />
       {/* <ModalUnlockCandidate /> */}
     </div>
