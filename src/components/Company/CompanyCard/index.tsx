@@ -79,7 +79,6 @@ const CompanyCard: React.FC<Iprops> = (props) => {
     }
   };
 
-  console.log('item', props.item);
 
   return (
     <>
