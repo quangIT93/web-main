@@ -14,9 +14,10 @@ interface IEditImageCompany {
   setDataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
 }
 const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
-  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges } = props;
+  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges, setIsValid } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -55,7 +56,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
     const files = event.target.files;
     setUnsavedChanges(true);
     // setImage(event.target.files && event.target.files[0]);
-
+    setIsValid(false)
     const imagesUpload: any = Array.from(
       event.target.files ? event.target.files : [],
     );

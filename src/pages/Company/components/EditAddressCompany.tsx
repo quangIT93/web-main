@@ -28,6 +28,7 @@ interface IEditPostAddress {
   setFillProvince: React.Dispatch<React.SetStateAction<any>>;
   setFillDistrict: React.Dispatch<React.SetStateAction<any>>;
   setFillWard: React.Dispatch<React.SetStateAction<any>>;
+  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
@@ -43,7 +44,8 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     setUnsavedChanges,
     setFillProvince,
     setFillDistrict,
-    setFillWard } = props;
+    setFillWard,
+    setIsValid } = props;
 
   // const [dataProvinces, setDataProvinces] = useState<any>(null);
   const [dataDistricts, setDataDistrict] = useState<any>(null);
@@ -223,6 +225,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     setFillWard(null);
     setFillProvince(value);
     setDataWard([]);
+    setIsValid(false)
   };
 
   const handleDistrictChange = (event: any, value: any) => {
@@ -231,6 +234,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     setSelectedWard(null);
     setFillWard(null);
     setFillDistrict(value);
+    setIsValid(false)
   };
 
   const handleChangeWardId = (event: any, value: any) => {
@@ -243,6 +247,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
         id: value ? value.id : '',
       },
     }));
+    setIsValid(false)
   };
 
   const handleChangeAddress = (e: any) => {
@@ -250,6 +255,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
       ...preValue,
       address: e.target?.value,
     }));
+    setIsValid(false)
   };
 
   return (

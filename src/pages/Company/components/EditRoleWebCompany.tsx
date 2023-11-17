@@ -26,13 +26,14 @@ interface IEditPostAddress {
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
   setFillRole: React.Dispatch<React.SetStateAction<any>>;
+  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges, setFillRole } = props;
+  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges, setFillRole, setIsValid } = props;
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -119,6 +120,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
         id: value ? value.id : '',
       },
     }));
+    setIsValid(false)
   };
 
   const handleEditCompanyWeb = (
@@ -130,6 +132,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
       ...preValue,
       website: value,
     }));
+    setIsValid(false)
   };
 
   return (

@@ -13,14 +13,16 @@ interface IPostPeriodDate {
   isPeriodDate: number;
   language: any;
   languageRedux: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
-  const { setIsPeriodDate, isPeriodDate, language } = props;
+  const { setIsPeriodDate, isPeriodDate, language , setIsValidSubmit} = props;
 
   const handleChangePeriodDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     // console.log('thoi gian lam viec', e.target.value);
     setIsPeriodDate(Number(e.target.value));
+    setIsValidSubmit(false);
   };
 
   return (

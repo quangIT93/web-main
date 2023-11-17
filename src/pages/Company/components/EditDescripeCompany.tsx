@@ -20,6 +20,7 @@ interface IEditDescripeCompany {
   dataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
@@ -29,7 +30,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges } = props;
+  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges, setIsValid} = props;
   // const [language, setLanguageState] = React.useState<any>();
 
   // const getlanguageApi = async () => {
@@ -59,6 +60,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
       ...preValue,
       description: value,
     }));
+    setIsValid(false)
   };
 
   return (

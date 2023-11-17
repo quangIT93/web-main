@@ -11,7 +11,7 @@ const PostProtect = ({children} : Props) => {
         (state: RootState) => state.dataProfileInformationV3.data,
       );
 
-                                                        if(profileV3?.companyInfo?.status === 1){
+      if(profileV3?.companyInfo?.status === 0){
         const url = `/`
         return <Navigate to={url} />;
       }

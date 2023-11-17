@@ -82,7 +82,7 @@ const CategoryDropdown: React.FC = () => {
     useState<boolean>(false);
   const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
     React.useState<any>(false);
-    const [openModalNoteValidateCompany, setOpenModalNoteValidateCompany] =
+  const [openModalNoteValidateCompany, setOpenModalNoteValidateCompany] =
     React.useState<any>(false);
   const dispatch = useDispatch();
 
@@ -512,7 +512,7 @@ const CategoryDropdown: React.FC = () => {
                     } else {
                       // setOpenModalLogin(true);
                       if (profileV3.companyInfo !== null &&
-                        profileV3.companyInfo.status === 1
+                        profileV3.companyInfo.status === 0
                         ) {
                         setOpenModalNoteValidateCompany(true);
                         event.preventDefault();

@@ -14,6 +14,7 @@ interface IPhoneNumber {
   phone: string;
   language: any;
   languageRedux: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface NumericInputProps {
@@ -22,6 +23,7 @@ interface NumericInputProps {
   onChange: (value: string) => void;
   languageRedux: any;
   language: any;
+  
 }
 
 const NumericInput = (props: NumericInputProps) => {
@@ -55,7 +57,7 @@ const NumericInput = (props: NumericInputProps) => {
   );
 };
 const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
-  const { setPhoneNumber, phone, language, languageRedux } = props;
+  const { setPhoneNumber, phone, language, languageRedux, setIsValidSubmit } = props;
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
@@ -93,7 +95,9 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
           fontFamily: `"Roboto","Helvetica","Arial",sans-serif`,
         }}
         value={phone}
-        onChange={setPhoneNumber}
+        onChange={(value) => {
+          setIsValidSubmit(false)
+          return setPhoneNumber(value)}}
         languageRedux={languageRedux}
         language={language}
       />

@@ -98,7 +98,7 @@ const ModalNotiValidateCompany:React.FC<IPropModalNotiValidateCompany> = (props)
             >
               <CloseIcon />
             </IconButton>
-            <h2 className="title-post_guide">{languageRedux? "Cong ty chua duoc duyet": "Company is not validate"}</h2>
+            <h2 className="title-post_guide">{languageRedux? "Công ty của bạn vẫn chưa được phê duyệt": "Your company has not been approved yet"}</h2>
             <div className="wrap-imagePost_guide">
               <img
                 src="./images/guide.png"
@@ -109,8 +109,8 @@ const ModalNotiValidateCompany:React.FC<IPropModalNotiValidateCompany> = (props)
             <div className="wrap-textPost_guide">
               <p>
                 {languageRedux === 1
-                  ? 'Ban co the tao bai dang khi duoc duyet! Vui long cho cho den khi chung toi xac nhan. Xin cam on!'
-                  : 'Your post will be more candidates when there is company information. Please update company information so that more candidates are interested!'}
+                  ? 'Bạn chỉ có thể đăng tin tuyển dụng việc làm sau khi đã phê duyệt hồ sơ công ty. Vui lòng đợi cho đến khi bạn nhận được thông báo! Cám ơn!'
+                  : "You can only post job ads after you've approved your company profile. Please wait until you receive the notification! Thank you!"}
               </p>
             </div>
             <div className="wrap-button_haveCompany">

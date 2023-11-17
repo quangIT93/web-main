@@ -41,17 +41,17 @@ import {
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
 // import banner1 from '../../../img/Banner/banner-for-candidates-2.png';
-import banner_recruit_1 from '../../../img/Banner/banner-for-rescruit-1.png';
-import banner_recruit_2 from '../../../img/Banner/banner-for-rescruit-2.png';
+// import banner_recruit_1 from '../../../img/Banner/banner-for-rescruit-1.png';
+// import banner_recruit_2 from '../../../img/Banner/banner-for-rescruit-2.png';
 // import banner from '../../../img/Banner/Banner_homepage 1@2x.png';
 import './styles.scss';
 
 import ModalLogin from '../../../components/Home/ModalLogin';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
-import { homeEn } from 'validations/lang/en/home';
-import { home } from 'validations/lang/vi/home';
-import { number } from 'yargs';
+// import { homeEn } from 'validations/lang/en/home';
+// import { home } from 'validations/lang/vi/home';
+// import { number } from 'yargs';
 import historyApplicator from 'api/historyApplicator';
 import historyRecruiter from 'api/historyRecruiter';
 import { Avatar } from '@mui/material';
@@ -96,7 +96,6 @@ const AppliedPostedJob: React.FC = () => {
         null,
       );
       if (result) {
-        console.log('banner', result);
         setBanner(result.data);
       }
     } catch (error) {
@@ -300,10 +299,10 @@ const AppliedPostedJob: React.FC = () => {
                     className="banner-rescruit-swiper"
                     loop={true}
                   >
-                    {banner?.map((value: any) => {
+                    {banner?.map((value: any, index: number) => {
                       if (value?.order === 1) {
                         return (
-                          <SwiperSlide>
+                          <SwiperSlide key={index}>
                             <img
                               onClick={() => {
                                 window.open(value?.redirect_url, '_parent');
@@ -314,7 +313,7 @@ const AppliedPostedJob: React.FC = () => {
                           </SwiperSlide>
                         );
                       } else {
-                        return <></>;
+                        return <React.Fragment key={index}></React.Fragment>;
                       }
                     })}
                   </Swiper>
@@ -332,10 +331,10 @@ const AppliedPostedJob: React.FC = () => {
                     className="banner-rescruit-swiper"
                     loop={true}
                   >
-                    {banner?.map((value: any) => {
+                    {banner?.map((value: any, index: number) => {
                       if (value?.order === 2) {
                         return (
-                          <SwiperSlide>
+                          <SwiperSlide key={index}>
                             <img
                               onClick={() => {
                                 window.open(value?.redirect_url, '_parent');
@@ -346,7 +345,7 @@ const AppliedPostedJob: React.FC = () => {
                           </SwiperSlide>
                         );
                       } else {
-                        return <></>;
+                        return <React.Fragment key={index}></React.Fragment>;
                       }
                     })}
                   </Swiper>
@@ -604,10 +603,10 @@ const AppliedPostedJob: React.FC = () => {
           className="banner-rescruit-swiper"
           loop={true}
         >
-          {banner?.map((value: any) => {
+          {banner?.map((value: any, index: number) => {
             if (value?.order === 1) {
               return (
-                <SwiperSlide>
+                <SwiperSlide key={index}>
                   <img
                     onClick={() => {
                       window.open(value?.redirect_url, '_parent');
@@ -618,7 +617,7 @@ const AppliedPostedJob: React.FC = () => {
                 </SwiperSlide>
               );
             } else {
-              return <></>;
+              return <React.Fragment key={index}></React.Fragment>;
             }
           })}
         </Swiper>
