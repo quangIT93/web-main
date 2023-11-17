@@ -122,7 +122,7 @@ const ModalNotiValidateCompany:React.FC<IPropModalNotiValidateCompany> = (props)
                   setOpenModalNoteValidateCompany(false);
                 }}
               >
-                {languageRedux === 1 ? 'Xac nhan' : 'Comfirm'}
+                {languageRedux === 1 ? 'Xác nhận' : 'Comfirm'}
               </Button>
             </div>
           </Box>
