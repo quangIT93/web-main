@@ -15,6 +15,7 @@ interface PropsPostCompanyJob {
   titleJob: string;
   companyName: string;
   language: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
@@ -26,16 +27,19 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
     titleJob,
     companyName,
     language,
+    setIsValidSubmit
   } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
   const handleChangeTitleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleJob(e.target.value);
+    setIsValidSubmit(false)
   };
 
   const handleChangeCompanyForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCompanyName(e.target.value);
+    setIsValidSubmit(false)
   };
 
   const styleLabel = {

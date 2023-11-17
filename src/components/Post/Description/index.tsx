@@ -13,12 +13,14 @@ interface IDescription {
   description: string;
   language: any;
   languageRedux: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Description: React.FC<IDescription> = (props) => {
-  const { setDescription, description, language, languageRedux } = props;
+  const { setDescription, description, language, languageRedux, setIsValidSubmit } = props;
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
+    setIsValidSubmit(false)
   };
 
   // const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

@@ -17,11 +17,13 @@ interface ISalaryType {
   setSalaryType: React.Dispatch<React.SetStateAction<number>>;
   language: any;
   languageRedux: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const SalaryType: React.FC<ISalaryType> = (props) => {
-  const { salaryType, setSalaryType, language, languageRedux } = props;
+  const { salaryType, setSalaryType, language, languageRedux, setIsValidSubmit} = props;
   const handleChangeSalaryType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSalaryType(Number(e.target.value));
+    setIsValidSubmit(false)
   };
 
   const [salary, setSalary] = React.useState<AxiosResponse | null>(null);

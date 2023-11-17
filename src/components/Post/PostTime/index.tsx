@@ -17,9 +17,10 @@ interface IPostTime {
   setStartTime: any;
   setEndTime: any;
   language: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const PostTime: React.FC<IPostTime> = (props) => {
-  const { startTime, endTime, setStartTime, setEndTime, language } = props;
+  const { startTime, endTime, setStartTime, setEndTime, language, setIsValidSubmit} = props;
 
   // const [startTime, setStartTime] = React.useState<any>(
   //   new Date(1970, 0, 2, 7, 0).getTime(),
@@ -30,10 +31,12 @@ const PostTime: React.FC<IPostTime> = (props) => {
   // );
   const handleChangeStartTime = (newValue: any, e: any) => {
     setStartTime(new Date(newValue._d).getTime());
+    setIsValidSubmit(false)
   };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
     setEndTime(new Date(newValue._d).getTime());
+    setIsValidSubmit(false)
   };
 
   return (

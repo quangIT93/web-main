@@ -16,6 +16,7 @@ interface ICategories {
   fillCate: string[];
   language: any;
   languageRedux: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CheckboxesTags: React.FC<ICategories> = (props) => {
@@ -26,6 +27,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     setFillCate,
     language,
     languageRedux,
+    setIsValidSubmit
   } = props;
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
@@ -54,6 +56,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     if (value.length > 1) {
       setDisable(true);
     }
+    setIsValidSubmit(false)
   };
 
   const getCategories = async () => {

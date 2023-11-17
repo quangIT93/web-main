@@ -21,6 +21,7 @@ interface IEditNameFaxCompany {
   dataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
@@ -30,7 +31,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges } = props;
+  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges,setIsValid } = props;
   // const [language, setLanguageState] = React.useState<any>();
 
   // const getlanguageApi = async () => {
@@ -60,6 +61,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
       ...preValue,
       taxCode: value,
     }));
+    setIsValid(false)
   };
 
   const handleEditCompanyName = (
@@ -71,6 +73,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
       ...preValue,
       name: value,
     }));
+    setIsValid(false)
   };
 
   return (
