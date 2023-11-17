@@ -19,6 +19,7 @@ import EditDescripeCompany from './components/EditDescripeCompany';
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
 import ModalEditCompanySuccess from './components/ModalEditCompanySuccess';
 import ModalUnsaveCompany from './components/ModalUnsaveCompany';
+import ModalIntroduceCreateCompany from './components/ModalIntroduceCreateCompany';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 // import languageApi from 'api/languageApi';
@@ -916,6 +917,10 @@ const Company: React.FC<ICompany> = (props) => {
         languageRedux={languageRedux}
         handleSubmit={handleSubmit}
       />
+
+      <ModalIntroduceCreateCompany
+      />
+
       <div style={{ display: is_profile ? 'none' : 'block' }}>
         {/* <RollTop /> */}
         {/* <Footer /> */}

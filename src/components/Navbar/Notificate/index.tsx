@@ -256,6 +256,13 @@ const Notificate = () => {
     } catch (error) {}
   };
 
+  const handleClickCompany = async ( 
+    companyId: number,
+    typeText: string,
+    notiId: number,) => {
+
+  }
+
   const handleChangeEmail = async (e: any) => {
     console.log(e.target.value);
     try {
@@ -494,6 +501,69 @@ const Notificate = () => {
                       </div>
                     </div>
                   );
+                } else if(notificate.data.typeText === 'viewProfile'){
+                  return <div
+                  key={index}
+                  className={`wrap-notificate_system ${
+                    notificate?.data?.isRead !== undefined &&
+                    !notificate?.data?.isRead
+                      ? 'readed'
+                      : notificate.data?.isRead !== undefined &&
+                        notificate.data?.isRead
+                      ? ''
+                      : ''
+                  }`}
+                  onClick={() =>
+                    handleClickCompany(
+                      notificate.data.companyId,
+                      notificate.data.typeText,
+                      notificate.data.notificationId,
+                    )
+                  }
+                  style={{display: "flex"}}
+                >
+                <div style={{
+                   marginLeft: "8px",
+                  maxWidth: "80px",
+                  maxHeight: "80px",
+                  borderRadius: "12px"
+                }}>
+                  {/* <img src={notificate.companyLogo} alt="" /> */}
+                  <img 
+                    style={{
+                      minWidth: "80px",
+                      minHeight: "80px",
+                      objectFit: "cover",
+                      borderRadius: "12px"
+                  }}
+                  src="https://www.elle.vn/wp-content/uploads/2017/07/25/hinh-anh-dep-1.jpg" alt="" />
+                </div>
+                <div style={{display: "flex", flexDirection: "column", marginLeft: "12px", justifyItems: "center"}}>
+                  <h3>{notificate.content_app.title}</h3>
+                  <h5
+                    dangerouslySetInnerHTML={{
+                      __html: notificate.content_app.body,
+                    }}
+                  />
+                  <div className="wrap-time">
+                    <p>
+                      {new Date(
+                        notificate.data.createdAt,
+                      ).toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </p>
+                    <p>
+                      {new Date(
+                        notificate.data.createdAt,
+                      ).toLocaleDateString('en-GB')}
+                    </p>
+                  </div>
+                </div>
+                </div>
+             
+               
                 } else {
                   return (
                     <div
