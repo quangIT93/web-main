@@ -21,6 +21,7 @@ interface NumericInputProps {
   languageRedux: any;
   language: any;
   is_profile: boolean;
+  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface IEditPhoneMailCompany {
@@ -28,15 +29,16 @@ interface IEditPhoneMailCompany {
   dataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const NumericInput = (props: NumericInputProps) => {
-  const { value, onChange, languageRedux, language, is_profile } = props;
+  const { value, onChange, languageRedux, language, is_profile, setIsValid } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
     const reg = /^-?\d*(\.\d*)?$/;
-
+    setIsValid(true)
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       onChange((preValue: any) => ({ ...preValue, phone: inputValue }));
     }
@@ -75,7 +77,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges } = props;
+  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges, setIsValid} = props;
   let regexCheckPhone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
   const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // const [language, setLanguageState] = React.useState<any>();
@@ -107,6 +109,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
       ...preValue,
       email: value,
     }));
+    setIsValid(false)
   };
 
   //   const handleEditCompanyPhone = (
@@ -136,6 +139,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           languageRedux={languageRedux}
           language={language}
           is_profile={is_profile}
+          setIsValid={setIsValid}
         />
         <div className="wrap-noti_input">
           {regexCheckPhone.test(dataCompany?.phone) === false ? (

@@ -27,6 +27,7 @@ interface IEditPostAddress {
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
   setFillActivity: React.Dispatch<React.SetStateAction<any>>;
   setFillSize: React.Dispatch<React.SetStateAction<any>>;
+  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
@@ -36,7 +37,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges, setFillActivity, setFillSize } = props;
+  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges, setFillActivity, setFillSize, setIsValid } = props;
 
   const [dataSizes, setDataSizes] = useState<any>(null);
   const [selectedSize, setSelectedSize] = useState<any>(null);
@@ -133,6 +134,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
         id: value ? value?.id : '',
       },
     }));
+    setIsValid(false)
   };
   const handleEditCompanyCategory = (event: any, value: any) => {
     setSelectedCategory(value);
@@ -144,6 +146,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
         id: value ? value?.parent_category_id : '',
       },
     }));
+    setIsValid(false)
   };
 
   // console.log('selectedCategory', selectedCategory);

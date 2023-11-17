@@ -10,6 +10,7 @@ interface IStyleWork {
   setIsWorkingWeekend: React.Dispatch<React.SetStateAction<number>>;
   setIsRemotely: React.Dispatch<React.SetStateAction<number>>;
   language: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const StyleWork: React.FC<IStyleWork> = (props) => {
@@ -19,16 +20,19 @@ const StyleWork: React.FC<IStyleWork> = (props) => {
     setIsWorkingWeekend,
     setIsRemotely,
     language,
+    setIsValidSubmit
   } = props;
 
   const handleWeekendChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) return setIsWorkingWeekend(1);
     setIsWorkingWeekend(0);
+    setIsValidSubmit(false)
   };
 
   const handleRemoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) return setIsRemotely(1);
     setIsRemotely(0);
+    setIsValidSubmit(false)
   };
   return (
     <Box

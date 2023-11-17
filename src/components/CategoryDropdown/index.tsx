@@ -20,6 +20,7 @@ import CustomerDropDown from './CustomerDropDown';
 import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
+import ModalNotiValidateCompany from '#components/Post/ModalNotiValidateCompany';
 import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
 import BreadcrumbMenuItems from './BreadcrumbMenuItems';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
@@ -80,6 +81,8 @@ const CategoryDropdown: React.FC = () => {
   const [openModalTurnOffStatus, setOpenModalTurnOffStatus] =
     useState<boolean>(false);
   const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
+    React.useState<any>(false);
+  const [openModalNoteValidateCompany, setOpenModalNoteValidateCompany] =
     React.useState<any>(false);
   const dispatch = useDispatch();
 
@@ -504,9 +507,19 @@ const CategoryDropdown: React.FC = () => {
                         event.preventDefault();
                       } else {
                         // window.location.href = '/post';
+        
                       }
                     } else {
                       // setOpenModalLogin(true);
+                      if (profileV3.companyInfo !== null &&
+                        profileV3.companyInfo.status === 0
+                        ) {
+                        setOpenModalNoteValidateCompany(true);
+                        event.preventDefault();
+                      } else {
+                        // window.location.href = '/post';
+        
+                      }
                     }
                   }}
                 >
@@ -847,6 +860,11 @@ const CategoryDropdown: React.FC = () => {
       <ModalNoteCreateCompany
         openModalNoteCreateCompany={openModalNoteCreateCompany}
         setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
+      />
+
+      <ModalNotiValidateCompany
+        openModalNoteValidateCompany={openModalNoteValidateCompany}
+        setOpenModalNoteValidateCompany={setOpenModalNoteValidateCompany}
       />
 
       <ModalTurnOffStatus

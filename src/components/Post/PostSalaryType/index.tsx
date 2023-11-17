@@ -14,13 +14,15 @@ interface IPostSalaryType {
   moneyType: number;
   salaryType?: number;
   language: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
-  const { moneyType, setMoneyType, salaryType, language } = props;
+  const { moneyType, setMoneyType, salaryType, language, setIsValidSubmit} = props;
 
   const handleChangeMoneyType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMoneyType(Number(e.target.value));
+    setIsValidSubmit(false)
   };
 
   return (

@@ -129,9 +129,9 @@ const NewestGigWorker = () => {
         <div className="list-candidate-home">
           {listData?.map((item: any, index: number) => {
             return (
-              <>
+
                 <ItemCadidate item={item} key={index} />
-              </>
+        
             );
           })}
         </div>

@@ -15,9 +15,10 @@ interface IPostTypeJob {
   setTypeJob: React.Dispatch<React.SetStateAction<number>>;
   language: any;
   languageRedux: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
-  const { typeJob, setTypeJob, language, languageRedux } = props;
+  const { typeJob, setTypeJob, language, languageRedux, setIsValidSubmit } = props;
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
@@ -38,6 +39,7 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
 
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTypeJob(Number(e.target.value));
+    setIsValidSubmit(false)
   };
   // console.log('typeJob', typeJob);
   // console.log('jobTypes', jobTypes);

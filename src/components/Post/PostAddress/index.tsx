@@ -23,6 +23,7 @@ interface IPostAddress {
   fillDistrict: any;
   language: any;
   languageRedux: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PostAddress: React.FC<IPostAddress> = (props) => {
@@ -39,6 +40,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setFillWardId,
     language,
     languageRedux,
+    setIsValidSubmit
   } = props;
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
@@ -145,22 +147,24 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setFillWardId(null);
     setFillDistrict(null);
     setFillProvince(null);
-    console.log(value);
-
+    setIsValidSubmit(false)
   };
 
   const handleDistrictChange = (event: any, value: any) => {
     setSelectedDistrict(value);
     setFillDistrict(value);
+    setIsValidSubmit(false)
   };
 
   const handleChangeWardId = (e: any, value: any) => {
     setSelectedWard(value);
     setWardId(value.id);
+    setIsValidSubmit(false)
   };
 
   const handleChangeAddress = (e: any) => {
     setAddress(e.target.value);
+    setIsValidSubmit(false)
   };
 
   return (

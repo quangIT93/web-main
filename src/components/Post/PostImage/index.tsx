@@ -29,6 +29,7 @@ interface PostImageProps {
   setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>;
   languageRedux: any;
   language: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PostImage: React.FC<PostImageProps> = (props) => {
@@ -40,6 +41,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     selectedFillImages,
     languageRedux,
     language,
+    setIsValidSubmit
   } = props;
 
   const [isDragActive, setIsDragActive] = React.useState(false);
@@ -259,7 +261,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const files = event.target.files;
-
+    setIsValidSubmit(false)
     // setImage(event.target.files && event.target.files[0]);
 
     const imagesUpload: any = Array.from(
