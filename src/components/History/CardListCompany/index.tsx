@@ -35,7 +35,8 @@ interface ICardsApplied {
   activeChild: string;
 }
 
-const CardListCompany: React.FC = () => {
+const CardListCompany: React.FC<ICardsApplied> = (props) => {
+  const { activeChild } = props;
   const [companyData, setCompanyData] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
   const [pageNumber, setPageNumber] = React.useState(0);
@@ -56,7 +57,7 @@ const CardListCompany: React.FC = () => {
         0,
         20,
         languageRedux === 1 ? 'vi' : 'en',
-        newOld === 1 ? 'DESC' : 'ASC'
+        newOld === 1 ? 'DESC' : 'ASC',
       );
 
       if (result) {
@@ -70,6 +71,8 @@ const CardListCompany: React.FC = () => {
     }
   };
 
+  // console.log("activeChild", activeChild);
+
   const handleGetmoreCompany = async () => {
     try {
       setUploading(true);
@@ -78,7 +81,7 @@ const CardListCompany: React.FC = () => {
         nextPage,
         20,
         languageRedux === 1 ? 'vi' : 'en',
-        newOld === 1 ? 'DESC' : 'ASC'
+        newOld === 1 ? 'DESC' : 'ASC',
       );
 
       if (result && result.data.bookmarkedCompany.length !== 0) {
@@ -150,10 +153,9 @@ const CardListCompany: React.FC = () => {
         >
           {languageRedux === 1 ? 'Danh sách công ty' : 'List of companies'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-            {
-              searchParams.get('c') === '5-0' &&
-                languageRedux === 1 ? ' > Tất cả' : ' > All'
-            }
+            {searchParams.get('c') === '5-0' && languageRedux === 1
+              ? ' > Tất cả'
+              : ' > All'}
           </span>
         </Typography>
         <TextField
@@ -224,7 +226,7 @@ const CardListCompany: React.FC = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-      // onClick={handleClose}
+        // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>

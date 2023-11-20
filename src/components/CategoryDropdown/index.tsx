@@ -354,6 +354,11 @@ const CategoryDropdown: React.FC = () => {
     setOpenCategoryDropdown(false);
   };
 
+  const moveToHistoryCompany = () => {
+    // window.open('/history?companyView=51', '_parent');
+    // setOpenCategoryDropdown(false);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -507,18 +512,17 @@ const CategoryDropdown: React.FC = () => {
                         event.preventDefault();
                       } else {
                         // window.location.href = '/post';
-        
                       }
                     } else {
                       // setOpenModalLogin(true);
-                      if (profileV3.companyInfo !== null &&
+                      if (
+                        profileV3.companyInfo !== null &&
                         profileV3.companyInfo.status === 0
-                        ) {
+                      ) {
                         setOpenModalNoteValidateCompany(true);
                         event.preventDefault();
                       } else {
                         // window.location.href = '/post';
-        
                       }
                     }
                   }}
@@ -601,8 +605,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Thông tin việc làm'
                       : 'Job information'
                     : languageRedux === 1
-                    ? 'Thông tin tuyển dụng'
-                    : 'Employment information'}
+                      ? 'Thông tin tuyển dụng'
+                      : 'Employment information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -636,8 +640,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Việc làm đã lưu'
                       : 'Saved jobs'
                     : languageRedux === 1
-                    ? 'Việc làm tuyển dụng đã đăng'
-                    : 'Recruitment posted'}
+                      ? 'Việc làm tuyển dụng đã đăng'
+                      : 'Recruitment posted'}
                 </h3>
                 <h3
                   onClick={
@@ -651,8 +655,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc mới nhất'
                       : 'Newest jobs'
                     : languageRedux === 1
-                    ? 'Bài tuyển dụng đang mở'
-                    : 'Job posting is opening'}
+                      ? 'Bài tuyển dụng đang mở'
+                      : 'Job posting is opening'}
                 </h3>
                 <h3
                   onClick={
@@ -666,8 +670,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc nổi bật'
                       : 'Hot jobs'
                     : languageRedux === 1
-                    ? 'Bài tuyển dụng đã đóng'
-                    : 'Job posting is closed'}
+                      ? 'Bài tuyển dụng đã đóng'
+                      : 'Job posting is closed'}
                 </h3>
                 <h3
                   onClick={
@@ -681,8 +685,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc theo chủ đề'
                       : 'Job by hot places'
                     : languageRedux === 1
-                    ? 'Đăng bài tuyển dụng'
-                    : 'Post recruitment posts'}
+                      ? 'Đăng bài tuyển dụng'
+                      : 'Post recruitment posts'}
                 </h3>
                 <h3
                   onClick={
@@ -696,8 +700,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc gợi ý'
                       : 'Suggested jobs'
                     : languageRedux === 1
-                    ? 'Thông tin công ty'
-                    : "Company's information"}
+                      ? 'Thông tin công ty'
+                      : "Company's information"}
                 </h3>
               </div>
             </div>
@@ -712,8 +716,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Hồ sơ & CV'
                       : 'Resume & CV'
                     : languageRedux === 1
-                    ? 'Thông tin nhân tài'
-                    : 'Candidates information'}
+                      ? 'Thông tin nhân tài'
+                      : 'Candidates information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -737,8 +741,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Tạo mới CV'
                       : 'Create a new CV'
                     : languageRedux === 1
-                    ? 'Danh sách nhân tài mới nhất'
-                    : 'Newest candidate list'}
+                      ? 'Danh sách nhân tài mới nhất'
+                      : 'Newest candidate list'}
                 </h3>
                 <h3
                   onClick={
@@ -752,8 +756,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Quản lý CV'
                       : 'CV management'
                     : languageRedux === 1
-                    ? 'Tìm kiếm ứng viên'
-                    : 'Search for candidate'}
+                      ? 'Tìm kiếm ứng viên'
+                      : 'Search for candidate'}
                 </h3>
                 <h3
                   onClick={
@@ -767,8 +771,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Hướng dẫn tạo CV'
                       : 'Instructions for creating a CV'
                     : languageRedux === 1
-                    ? 'Danh sách nhân tài đã lưu'
-                    : 'Saved candidate list'}
+                      ? 'Danh sách nhân tài đã lưu'
+                      : 'Saved candidate list'}
                 </h3>
               </div>
             </div>
@@ -852,6 +856,9 @@ const CategoryDropdown: React.FC = () => {
                 <h3 onClick={moveToSearchCompany}>
                   {languageRedux === 1 ? 'Tìm kiếm công ty' : 'Search company'}
                 </h3>
+                {/* <h3 onClick={moveToHistoryCompany}>
+                  {languageRedux === 1 ? 'Công ty đã lưu' : 'Saved company'}
+                </h3> */}
               </div>
             </div>
           </div>
