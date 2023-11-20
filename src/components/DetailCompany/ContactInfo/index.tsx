@@ -13,7 +13,7 @@ import {
 import { PersonIcon } from '#components/Icons/iconCandidate';
 import { Box } from '@mui/material';
 import TextArea from 'antd/es/input/TextArea';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import styles from './style.module.scss';
@@ -36,6 +36,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
+  const [position, setPosition] = useState({});
 
   L.Icon.Default.mergeOptions({
     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -43,23 +44,55 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
   });
 
-    const handleClickShowMap = () => {
-      if(company?.address){
-        window.open(
-          'https://www.google.com/maps/place/' +
-          `${company?.address}, ${company?.companyLocation ? company?.companyLocation.fullName : ''
-          }, ${company?.companyLocation?.district
-            ? company?.companyLocation?.district?.fullName
-            : ''
-          }, ${company?.companyLocation?.district?.province
-            ? company?.companyLocation?.district?.province?.fullName
-            : ''
+  const handleClickShowMap = () => {
+    if (company?.address) {
+      window.open(
+        'https://www.google.com/maps/place/' +
+          `${company?.address}, ${
+            company?.companyLocation ? company?.companyLocation.fullName : ''
+          }, ${
+            company?.companyLocation?.district
+              ? company?.companyLocation?.district?.fullName
+              : ''
+          }, ${
+            company?.companyLocation?.district?.province
+              ? company?.companyLocation?.district?.province?.fullName
+              : ''
           }`,
-        );
-      }
+      );
+    }
   };
 
+  // const apiKey = 'AIzaSyAroW1_MSLcU7aNvX9FjvNZy8eps9yDtr0';
+  const apiKey = 'AIzaSyDdDbr7ZTHQxUyo3p-A0G5rHYNU3J3QTbU';
 
+  const getLocation = async (address: string) => {
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+        address,
+      )}&key=${apiKey}`,
+    );
+    const data = await response.json();
+    console.log('Data', data);
+
+    if (data.results.length > 0) {
+      const location = data.results[0].geometry.location;
+      return location;
+    } else {
+      throw new Error('Không tìm thấy địa điểm.');
+    }
+  };
+
+  const address1 = 'QUAN 8,  THANH PHO HO CHI MINH, VN';
+
+  Promise.all([getLocation(address1)])
+    .then(([location1]) => {
+      console.log('Vị trí 1:', location1);
+      setPosition(location1);
+    })
+    .catch((error) => {
+      console.error('Lỗi:', error.message);
+    });
 
   return (
     <div className={styles.contact_info_container}>
@@ -73,8 +106,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   company?.description
                     ? company.description
                     : languageRedux === 1
-                    ? 'Thông tin công ty chưa cập nhật'
-                    : 'Company information not updated yet'
+                      ? 'Thông tin công ty chưa cập nhật'
+                      : 'Company information not updated yet'
                 }
                 autoSize
                 // showCount
@@ -93,8 +126,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.taxCode
                         ? company.taxCode
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -102,12 +135,15 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   <LocationDetailPostIcon />
                   <p>
                     {languageRedux === 1 ? 'Địa chỉ: ' : 'Address: '}
-                    <span onClick={handleClickShowMap} style={company?.address ?{cursor: "pointer"}: {}}>
+                    <span
+                      onClick={handleClickShowMap}
+                      style={company?.address ? { cursor: 'pointer' } : {}}
+                    >
                       {company?.address
                         ? company.address
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -119,8 +155,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.email
                         ? company.email
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -132,8 +168,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.phone
                         ? company.phone
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -145,8 +181,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.website
                         ? company.website
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -158,8 +194,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.companyCategory?.fullName
                         ? company.companyCategory.fullName
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>
@@ -173,8 +209,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       {company?.companySizeInfomation?.nameText
                         ? company?.companySizeInfomation?.nameText
                         : languageRedux === 1
-                        ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                          ? 'Thông tin công ty chưa cập nhật'
+                          : 'Company information not updated yet'}
                     </span>
                   </p>
                 </li>

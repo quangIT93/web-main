@@ -105,12 +105,11 @@ import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref,
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  },
+);
 
 interface ItemAppy {
   id?: number | null;
@@ -526,6 +525,11 @@ const Profile: React.FC = () => {
   const handleCloseLackInfo = () => dispatch<any>(setAlertLackInfo(false));
   const handleCloseEditInfo = () => dispatch<any>(setAlertEditInfo(false));
 
+  const handleSendMail = (email: any) => {
+    const emailLink = 'mailto:' + email;
+    window.location.href = emailLink;
+  };
+
   return (
     <div className="profile">
       {/* <Navbar />s
@@ -589,7 +593,7 @@ const Profile: React.FC = () => {
                   <h2>
                     {profileV3?.name ? profileV3?.name : language?.unupdated}
                   </h2>
-                  <ChangeRoleButton />
+                  {/* <ChangeRoleButton /> */}
                   {/* <div className="wrap-company">
                     <div className="wrap-company_info">
                       <h2
@@ -767,10 +771,12 @@ const Profile: React.FC = () => {
                 <p>
                   {profileV3?.phone ? profileV3?.phone : language?.unupdated}
                 </p>
-                <p>
+                <p
+                  onClick={() => handleSendMail(profileV3?.email)}
+                  style={{ cursor: 'pointer' }}
+                >
                   {profileV3?.email ? profileV3?.email : language?.unupdated}
                 </p>
-
                 <p>
                   {profileV3?.facebook
                     ? profileV3?.facebook
