@@ -225,6 +225,23 @@
       &:hover {
         background-color: #e7e7ed;
       }
+
+      .wrap-notificate_systemH3 {
+        text-align: start;
+        display: block;
+        display: -webkit-box;
+        max-width: 250px;
+        font-size: 14px;
+        line-height: 1;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+      }
+
+
+
       h3 {
         color: #001424;
         font-size: 16px;

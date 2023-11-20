@@ -98,7 +98,7 @@ const ModalNotiValidateCompany:React.FC<IPropModalNotiValidateCompany> = (props)
             >
               <CloseIcon />
             </IconButton>
-            <h2 className="title-post_guide">{languageRedux? "Công ty của bạn vẫn chưa được phê duyệt": "Your company has not been approved yet"}</h2>
+            <h2 className="title-post_guide">{languageRedux? "Đăng bài tuyển dụng không thành công": "Job posting failed"}</h2>
             <div className="wrap-imagePost_guide">
               <img
                 src="./images/guide.png"
@@ -109,8 +109,8 @@ const ModalNotiValidateCompany:React.FC<IPropModalNotiValidateCompany> = (props)
             <div className="wrap-textPost_guide">
               <p>
                 {languageRedux === 1
-                  ? 'Bạn chỉ có thể đăng tin tuyển dụng việc làm sau khi đã phê duyệt hồ sơ công ty. Vui lòng đợi cho đến khi bạn nhận được thông báo! Cám ơn!'
-                  : "You can only post job ads after you've approved your company profile. Please wait until you receive the notification! Thank you!"}
+                  ? 'Thông tin công ty đăng kí của bạn đang được kiểm tra, xác minh. Bạn vui lòng kiểm tra thông báo để nhận phản hồi nhé!'
+                  : "Your login information is being checked and authenticated. Please check your notification to receive feedback!"}
               </p>
             </div>
             <div className="wrap-button_haveCompany">
@@ -122,7 +122,18 @@ const ModalNotiValidateCompany:React.FC<IPropModalNotiValidateCompany> = (props)
                   setOpenModalNoteValidateCompany(false);
                 }}
               >
-                {languageRedux === 1 ? 'Xác nhận' : 'Comfirm'}
+                {languageRedux === 1 ? 'Xác nhận' : 'Confirm'}
+              </Button>
+
+              <Button
+                block
+                style={{ marginTop: '12px' }}
+                type="default"
+                onClick={() => {
+                  setOpenModalNoteValidateCompany(false);
+                }}
+              >
+                {languageRedux === 1 ? 'Đóng' : 'Close'}
               </Button>
             </div>
           </Box>
