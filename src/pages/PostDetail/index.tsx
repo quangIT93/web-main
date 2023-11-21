@@ -1496,7 +1496,7 @@ const Detail = () => {
                     onSwiper={setThumbsSwiper}
                     spaceBetween={10}
                     // mousewheel={true}
-                    slidesPerView={3}
+                    slidesPerView={2}
                     freeMode={true}
                     centeredSlides={
                       post?.data.images && post?.data.images.length === 1
