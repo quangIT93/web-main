@@ -24,6 +24,7 @@ import ModalLogin from '#components/Home/ModalLogin';
 import ModalNoteCreateCompany from "#components/Post/ModalNoteCreateCompany";
 import ModalNotiValidateCompany from "#components/Post/ModalNotiValidateCompany";
 import { Backdrop, CircularProgress } from "@mui/material";
+import ModalNoteWorker from "#components/Home/NewestGigWorker/ModalNoteWorker";
 const LandingHijob = () => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data);
@@ -39,7 +40,7 @@ const LandingHijob = () => {
         React.useState<any>(false);
     const [openBackdrop, setOpenBackdrop] = React.useState(false);
     const [openModalSendRequestSuccess, setOpenModalSendRequestSuccess] = React.useState(false);
-
+    const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
     const handleChange = (e: any) => {
         setInfo(values => ({
             ...values,
@@ -134,6 +135,8 @@ const LandingHijob = () => {
                     .then((result) => {
                         setOpenBackdrop(false)
                         console.log(result.text);
+                        setOpenModalSendRequestSuccess(true);
+
                         setInfo({
                             from_name: "",
                             user_email: "",
@@ -176,6 +179,10 @@ const LandingHijob = () => {
             setOpenModalLogin(true);
             return;
         }
+        if (profileV3 && profileV3.typeRoleData === 0) {
+            setOpenModalNoteWorker(true);
+            return;
+        }
         if (
             profileV3 &&
             profileV3.companyInfo === null &&
@@ -209,6 +216,9 @@ const LandingHijob = () => {
 
     const handleCancel = () => {
         setOpenModalSendRequestSuccess(false);
+    };
+    const handleCancelNoteWorker = () => {
+        setOpenModalNoteWorker(false);
     };
 
     return (
@@ -674,7 +684,6 @@ const LandingHijob = () => {
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
-
             <Modal
                 width={420}
                 centered
@@ -714,6 +723,50 @@ const LandingHijob = () => {
                 </p>
                 <div className={styles.button_send_request_success_modal}>
                     <Button type="primary" shape="round" onClick={handleCancel}>
+                        OK
+                    </Button>
+                </div>
+            </Modal>
+
+            <Modal
+                width={500}
+                centered
+                title={
+                    <h3
+                        style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '24px',
+                            lineHeight: '24px',
+                            letterSpacing: '0em',
+                            textAlign: 'center',
+                        }}
+                    >
+                        {languageRedux === 1
+                            ? 'Bạn không phải là nhà tuyển dụng!'
+                            : `You don't have to be a recruiter`}
+                    </h3>
+                }
+                footer={null}
+                open={openModalNoteWorker}
+                // onOk={handleOk}
+                onCancel={handleCancelNoteWorker}
+            >
+                <p
+                    style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '16px',
+                        fontWeight: '400',
+                        lineHeight: '24px',
+                        letterSpacing: '0.5px',
+                        textAlign: 'center',
+                    }}
+                >
+                    {languageRedux === 1
+                        ? 'Chỉ nhà tuyển dụng mới thực hiện được thao tác trên!'
+                        : `Only the recruiter can perform the above operation`}
+                </p>
+                <div className={styles.button_send_request_success_modal}>
+                    <Button type="primary" shape="round" onClick={handleCancelNoteWorker}>
                         OK
                     </Button>
                 </div>
