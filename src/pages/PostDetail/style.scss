@@ -652,7 +652,10 @@
           background-color: #f3f8fb;
           padding: 20px 20px;
           border-radius: 10px;
-          height: 630px;
+          
+          @media screen and (min-width: 1023px){
+            height: 630px;
+          }
 
           .MuiBox-root {
 
@@ -857,7 +860,17 @@
                           display: flex;
                           align-items: center;
                           gap: 8px;
+                          .leaf_let_map {
+                            height: 430px;
+                            z-index: 1;
+                        
+                            .leaflet-control-attribution {
+                                display: none;
+                            }
+                          }
                         }
+
+
                       }
 
                       p {
@@ -876,6 +889,12 @@
                         margin-left: 32px;
                       }
                     }
+                  }
+                }
+
+                .job-title-container__right {
+                  @media screen and (min-width: 1024px) {
+                    overflow-y: scroll;
                   }
                 }
 

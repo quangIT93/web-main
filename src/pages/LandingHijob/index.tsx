@@ -25,31 +25,26 @@ import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 import ModalNotiValidateCompany from '#components/Post/ModalNotiValidateCompany';
 import { Backdrop, CircularProgress } from '@mui/material';
 const LandingHijob = () => {
-  const languageRedux = useSelector(
-    (state: RootState) => state.changeLaguage.language,
-  );
-  const profileV3 = useSelector(
-    (state: RootState) => state.dataProfileInformationV3.data,
-  );
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data);
   const [info, setInfo] = useState({
-    from_name: '',
-    user_email: '',
-    message: '',
-  });
+    from_name: "",
+    user_email: "",
+    message: "",
+  })
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
     React.useState<any>(false);
   const [openModalNoteValidateCompany, setOpenModalNoteValidateCompany] =
     React.useState<any>(false);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const [openModalSendRequestSuccess, setOpenModalSendRequestSuccess] =
-    React.useState(false);
-
+  const [openModalSendRequestSuccess, setOpenModalSendRequestSuccess] = React.useState(false);
+  const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
   const handleChange = (e: any) => {
-    setInfo((values) => ({
+    setInfo(values => ({
       ...values,
-      [e.target.name]: e.target.value,
-    }));
+      [e.target.name]: e.target.value
+    }))
   };
 
   const form = React.useRef<any>(null);
@@ -180,13 +175,17 @@ const LandingHijob = () => {
             break;
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   // console.log(profileV3);
 
   const handleMoveToPost = () => {
     if (!localStorage.getItem('accessToken')) {
       setOpenModalLogin(true);
+      return;
+    }
+    if (profileV3 && profileV3.typeRoleData === 0) {
+      setOpenModalNoteWorker(true);
       return;
     }
     if (
@@ -199,17 +198,17 @@ const LandingHijob = () => {
         return;
       }
     } else {
-      if (
-        profileV3.companyInfo !== null &&
+      if (profileV3.companyInfo !== null &&
         profileV3.companyInfo.status === 0
       ) {
         setOpenModalNoteValidateCompany(true);
         return;
       } else {
-        window.open(`/post`, '_parent');
+        window.open(`/post`, '_parent')
       }
     }
-  };
+  }
+
 
   const handleMoveToRegister = () => {
     const register_form = document.getElementById(
@@ -227,6 +226,9 @@ const LandingHijob = () => {
 
   const handleCancel = () => {
     setOpenModalSendRequestSuccess(false);
+  };
+  const handleCancelNoteWorker = () => {
+    setOpenModalNoteWorker(false);
   };
 
   return (
@@ -607,11 +609,10 @@ const LandingHijob = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={openBackdrop}
-        //  onClick={handleClose}
+      //  onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-
       <Modal
         width={420}
         centered
@@ -651,6 +652,50 @@ const LandingHijob = () => {
         </p>
         <div className={styles.button_send_request_success_modal}>
           <Button type="primary" shape="round" onClick={handleCancel}>
+            OK
+          </Button>
+        </div>
+      </Modal>
+
+      <Modal
+        width={500}
+        centered
+        title={
+          <h3
+            style={{
+              fontFamily: 'Roboto',
+              fontSize: '24px',
+              lineHeight: '24px',
+              letterSpacing: '0em',
+              textAlign: 'center',
+            }}
+          >
+            {languageRedux === 1
+              ? 'Bạn không phải là nhà tuyển dụng!'
+              : `You don't have to be a recruiter`}
+          </h3>
+        }
+        footer={null}
+        open={openModalNoteWorker}
+        // onOk={handleOk}
+        onCancel={handleCancelNoteWorker}
+      >
+        <p
+          style={{
+            fontFamily: 'Roboto',
+            fontSize: '16px',
+            fontWeight: '400',
+            lineHeight: '24px',
+            letterSpacing: '0.5px',
+            textAlign: 'center',
+          }}
+        >
+          {languageRedux === 1
+            ? 'Chỉ nhà tuyển dụng mới thực hiện được thao tác trên!'
+            : `Only the recruiter can perform the above operation`}
+        </p>
+        <div className={styles.button_send_request_success_modal}>
+          <Button type="primary" shape="round" onClick={handleCancelNoteWorker}>
             OK
           </Button>
         </div>

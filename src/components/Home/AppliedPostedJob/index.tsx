@@ -290,13 +290,13 @@ const AppliedPostedJob: React.FC = () => {
                   <Swiper
                     spaceBetween={30}
                     centeredSlides={true}
-                    autoplay={{
-                      delay: 3500,
-                      disableOnInteraction: false,
-                      pauseOnMouseEnter: true,
-                      waitForTransition: true,
-                      stopOnLastSlide: false,
-                    }}
+                    // autoplay={{
+                    //   delay: 3500,
+                    //   disableOnInteraction: false,
+                    //   pauseOnMouseEnter: true,
+                    //   waitForTransition: true,
+                    //   stopOnLastSlide: false,
+                    // }}
                     // navigation={true}
                     pagination={{ clickable: true }}
                     modules={[Autoplay, Pagination]}
