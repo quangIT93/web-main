@@ -163,8 +163,6 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
   //   window.open(`/post-detail?post-id=${postId}`, '_parent');
   // };
 
-  console.log('DataApplied', dataApplied);
-
   return (
     <>
       {contextHolder}

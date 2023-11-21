@@ -104,6 +104,7 @@ import CompanyRole from './components/CompanyRole';
 import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
+import { color } from 'html2canvas/dist/types/css/types/color';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   function Alert(props, ref) {
@@ -593,7 +594,7 @@ const Profile: React.FC = () => {
                   <h2>
                     {profileV3?.name ? profileV3?.name : language?.unupdated}
                   </h2>
-                  <ChangeRoleButton />
+                  {/* <ChangeRoleButton /> */}
                   {/* <div className="wrap-company">
                     <div className="wrap-company_info">
                       <h2
@@ -773,7 +774,11 @@ const Profile: React.FC = () => {
                 </p>
                 <p
                   onClick={() => handleSendMail(profileV3?.email)}
-                  style={{ cursor: 'pointer' }}
+                  style={
+                    profileV3?.email
+                      ? { color: '#0d99ff', cursor: 'pointer' }
+                      : {}
+                  }
                 >
                   {profileV3?.email ? profileV3?.email : language?.unupdated}
                 </p>

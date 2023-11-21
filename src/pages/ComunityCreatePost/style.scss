@@ -12,7 +12,7 @@
         flex-direction: column;
         gap: 24px;
         max-width: 1080px;
-        padding-bottom: 24px ;
+        padding-bottom: 24px;
 
         .create-post-header {
             h3 {
@@ -282,6 +282,7 @@
                         height: 52px;
                         font-size: 16px;
                     }
+
                     .input-content {
                         padding: 12px;
                         font-size: 16px;
@@ -327,5 +328,20 @@
 .comunity-create-post-container.comunitypost {
     .wrap-noti_input {
         margin-top: 4px;
+        margin-left: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        // margin-top: 2px;
+        .helper-text {
+            color: red;
+            font-size: 12px;
+        }
+
+        .number-text {
+            font-size: 14px;
+            color: #aaa;
+        }
     }
 }

@@ -214,9 +214,9 @@ const HistoryPost = () => {
       title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
       childs: [
         languageRedux === 1 ? 'Công ty đã lưu' : 'Saved company',
-        languageRedux === 1
-          ? 'Nhà tuyển dụng xem hồ sơ'
-          : 'Employers view resumes',
+        // languageRedux === 1
+        //   ? 'Nhà tuyển dụng xem hồ sơ'
+        //   : 'Employers view resumes',
       ],
     },
   ];
@@ -338,8 +338,6 @@ const HistoryPost = () => {
     }
     return null;
   }, [ItemLeft, activeChild]);
-
-  console.log('ItemLEFT', ItemLeft);
 
   const CardListCandidates = useMemo(() => {
     if (ItemLeft === 4) {
