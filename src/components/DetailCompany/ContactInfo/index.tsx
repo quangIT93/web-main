@@ -63,28 +63,36 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
     }
   };
 
-  // const apiKey = 'AIzaSyAroW1_MSLcU7aNvX9FjvNZy8eps9yDtr0';
-  const apiKey = 'AIzaSyDdDbr7ZTHQxUyo3p-A0G5rHYNU3J3QTbU';
-  console.log('positon', position);
-
   const getLocation = async (address: string) => {
+    // const apiKey = 'AIzaSyAroW1_MSLcU7aNvX9FjvNZy8eps9yDtr0';
+    const apiKey = 'AIzaSyA8gjzoebEdb7Oy7x-StIr214ojMVq25qM';
+    // const apiKey = 'AIzaSyDdDbr7ZTHQxUyo3p-A0G5rHYNU3J3QTbU';
     try {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
           address,
         )}&key=${apiKey}`,
       );
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch: ${response.status} ${response.statusText}`,
+        );
+      }
+
       const data = await response.json();
       console.log('Data', data);
 
-      if (data.results.length > 0) {
+      if (data.status === 'OK' && data.results.length > 0) {
         const location = data.results[0].geometry.location;
-        setPosition(data.results[0].geometry.location);
+        setPosition(location);
         return location;
       } else {
         throw new Error('Không tìm thấy địa điểm.');
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error('Error fetching location:', error);
+    }
   };
 
   useEffect(() => {
@@ -222,7 +230,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
             //   display:
             //     location?.pathname === '/detail-company' ? 'block' : 'none',
             // }}
-            style={{ display: 'none' }}
+            // style={{ display: 'none' }}
           >
             <h3>{languageRedux === 1 ? 'Xem bản đồ' : 'View the map'}</h3>
             {Object.keys(position).length !== 0 ? (

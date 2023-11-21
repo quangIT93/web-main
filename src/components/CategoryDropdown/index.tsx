@@ -355,8 +355,8 @@ const CategoryDropdown: React.FC = () => {
   };
 
   const moveToHistoryCompany = () => {
-    // window.open('/history?companyView=51', '_parent');
-    // setOpenCategoryDropdown(false);
+    window.open('/history?companyView=51', '_parent');
+    setOpenCategoryDropdown(false);
   };
 
   useEffect(() => {
@@ -856,9 +856,15 @@ const CategoryDropdown: React.FC = () => {
                 <h3 onClick={moveToSearchCompany}>
                   {languageRedux === 1 ? 'Tìm kiếm công ty' : 'Search company'}
                 </h3>
-                {/* <h3 onClick={moveToHistoryCompany}>
+                <h3 onClick={moveToHistoryCompany}>
                   {languageRedux === 1 ? 'Công ty đã lưu' : 'Saved company'}
-                </h3> */}
+                </h3>
+
+                <h3 onClick={moveToHistoryCompany}>
+                  {languageRedux === 1
+                    ? 'Nhà tuyển dụng xem hồ sơ'
+                    : 'Employers view resumes'}
+                </h3>
               </div>
             </div>
           </div>

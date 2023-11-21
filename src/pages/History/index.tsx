@@ -214,9 +214,9 @@ const HistoryPost = () => {
       title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
       childs: [
         languageRedux === 1 ? 'Công ty đã lưu' : 'Saved company',
-        // languageRedux === 1
-        //   ? 'Nhà tuyển dụng xem hồ sơ'
-        //   : 'Employers view resumes',
+        languageRedux === 1
+          ? 'Nhà tuyển dụng xem hồ sơ'
+          : 'Employers view resumes',
       ],
     },
   ];
@@ -430,11 +430,11 @@ const HistoryPost = () => {
       return;
     }
 
-    // if (companyView === 51) {
-    //   setItemLeft(5);
-    //   setActiveChild('5-1');
-    //   return;
-    // }
+    if (companyView === 51) {
+      setItemLeft(5);
+      setActiveChild('5-1');
+      return;
+    }
 
     if (profile?.typeRoleData === 0) {
       setItemLeft(0);
@@ -482,17 +482,17 @@ const HistoryPost = () => {
                     ? ['3', '1']
                     : companyView && companyView === 50
                       ? ['5', '1']
-                      : // : companyView && companyView === 51
-                        //   ? ['5', '1']
-                        community_post && community_post === 30
-                        ? ['3', '0']
-                        : saved_jobs === 1
-                          ? ['1', '0']
-                          : candidate === 4
-                            ? ['4', '0']
-                            : profile?.typeRoleData === 0
-                              ? ['0', '0']
-                              : ['2', '0']
+                      : companyView && companyView === 51
+                        ? ['5', '1']
+                        : community_post && community_post === 30
+                          ? ['3', '0']
+                          : saved_jobs === 1
+                            ? ['1', '0']
+                            : candidate === 4
+                              ? ['4', '0']
+                              : profile?.typeRoleData === 0
+                                ? ['0', '0']
+                                : ['2', '0']
               }
               accordion
               bordered={false}
@@ -527,29 +527,29 @@ const HistoryPost = () => {
                     }}
                   >
                     {item.childs.map((child: string, idx: number) => {
-                      // if (
-                      //   index === 5 &&
-                      //   idx === 1 &&
-                      //   profile?.typeRoleData === 1
-                      // ) {
-                      //   return <></>;
-                      // } else {
-                      return (
-                        <div
-                          key={idx}
-                          className={
-                            activeChild === `${index}-${idx}`
-                              ? 'active-child child-item'
-                              : 'child-item'
-                          }
-                          onClick={() => {
-                            handleChildClick(`${index}-${idx}`);
-                          }}
-                        >
-                          {child}
-                        </div>
-                      );
-                      // }
+                      if (
+                        index === 5 &&
+                        idx === 1 &&
+                        profile?.typeRoleData === 1
+                      ) {
+                        return <></>;
+                      } else {
+                        return (
+                          <div
+                            key={idx}
+                            className={
+                              activeChild === `${index}-${idx}`
+                                ? 'active-child child-item'
+                                : 'child-item'
+                            }
+                            onClick={() => {
+                              handleChildClick(`${index}-${idx}`);
+                            }}
+                          >
+                            {child}
+                          </div>
+                        );
+                      }
                     })}
                   </Panel>
                 );
