@@ -36,6 +36,9 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+
 // import required modules
 import { FreeMode, Mousewheel, Navigation, Pagination, Thumbs } from 'swiper';
 
@@ -189,6 +192,8 @@ const Detail = () => {
   // const [title, setTitle] = React.useState('');
   // const [tabValue, setTabValue] = React.useState('1');
 
+  const [positionMap, setPositionMap] = React.useState<any>({});
+
   const [thumbsSwiper, setThumbsSwiper] = React.useState<any>(null);
 
   // const [width, setWidth] = React.useState<Number>(1050);
@@ -219,6 +224,12 @@ const Detail = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  });
 
   // const getlanguageApi = async () => {
   //   try {
@@ -308,7 +319,7 @@ const Detail = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -368,7 +379,7 @@ const Detail = () => {
             setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
           }
           result?.data?.companyResourceData?.name === 'HIJOB' &&
-            profileV3.typeRoleData === 1
+          profileV3.typeRoleData === 1
             ? setBackgroundButton('gray')
             : setBackgroundButton('#0D99FF');
           // setCheckPostUser(true);
@@ -714,7 +725,7 @@ const Detail = () => {
   const handleSendMail = (email: any) => {
     const emailLink = 'mailto:' + email;
     window.location.href = emailLink;
-  }
+  };
 
   const handleClickSearch = () => {
     const companyName = post?.data.companyName;
@@ -725,14 +736,17 @@ const Detail = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
-      }, ${post?.data?.location?.district
-        ? post?.data?.location?.district?.fullName
-        : ''
-      }, ${post?.data?.location?.district?.province
-        ? post?.data.district?.province?.fullName
-        : ''
-      }`,
+        `${post?.data.address}, ${
+          post?.data.location ? post?.data.location.fullName : ''
+        }, ${
+          post?.data?.location?.district
+            ? post?.data?.location?.district?.fullName
+            : ''
+        }, ${
+          post?.data?.location?.district?.province
+            ? post?.data.district?.province?.fullName
+            : ''
+        }`,
     );
   };
 
@@ -828,8 +842,56 @@ const Detail = () => {
     setKeyTab(key);
   };
 
-  console.log('postDate', post?.data);
+  const handleChangeGoogleMap = () => {
+    console.log('thay doi');
+  };
 
+  const getLocation = async (address: string) => {
+    // const apiKey = 'AIzaSyAroW1_MSLcU7aNvX9FjvNZy8eps9yDtr0';
+    const apiKey = 'AIzaSyA8gjzoebEdb7Oy7x-StIr214ojMVq25qM';
+    // const apiKey = 'AIzaSyDdDbr7ZTHQxUyo3p-A0G5rHYNU3J3QTbU';
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+          address,
+        )}&key=${apiKey}`,
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch: ${response.status} ${response.statusText}`,
+        );
+      }
+
+      const data = await response.json();
+      console.log('Data', data);
+      console.log('address', address);
+
+      if (data.status === 'OK' && data.results.length > 0) {
+        const location = data.results[0].geometry.location;
+        setPositionMap(location);
+        return location;
+      } else {
+        throw new Error('Không tìm thấy địa điểm.');
+      }
+    } catch (error) {
+      console.error('Error fetching location:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (post) {
+      const address1 = `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`;
+
+      getLocation(address1);
+    }
+  }, [post]);
+
+  console.log('post', post);
+  console.log(
+    '  Object.keys(position).length',
+    Object.keys(positionMap).length,
+  );
   const items: TabsProps['items'] = [
     {
       key: '1',
@@ -969,8 +1031,8 @@ const Detail = () => {
                   <h5>
                     {post?.data.expiredDate
                       ? `${new Date(post?.data.expiredDate).toLocaleDateString(
-                        'en-GB',
-                      )}`
+                          'en-GB',
+                        )}`
                       : language?.post_detail_page?.indefinite}
                   </h5>
                 </div>
@@ -999,14 +1061,15 @@ const Detail = () => {
                   return;
                 }
                 window.open(
-                  `/message?post_id=${searchParams.get('post-id')}&user_id=${post?.data?.accountId
-                  } `,
+                  `/message?post_id=${searchParams.get(
+                    'post-id',
+                  )}&user_id=${post?.data?.accountId} `,
                   '_parent',
                 );
               }}
-            // onClick={() => {
-            //   console.log(post?.data);
-            // }}
+              // onClick={() => {
+              //   console.log(post?.data);
+              // }}
             ></Button>
             <Button
               onClick={onclick}
@@ -1020,7 +1083,7 @@ const Detail = () => {
                 fontWeight: 'normal',
                 cursor:
                   post?.data?.companyResourceData?.name === 'HIJOB' &&
-                    profileV3.typeRoleData === 1
+                  profileV3.typeRoleData === 1
                     ? 'no-drop'
                     : 'pointer',
                 // position: 'absolute',
@@ -1044,7 +1107,7 @@ const Detail = () => {
       children: (
         <>
           <div
-            className={`job-title-container`}
+            className={`job-title-container job-title-container__right`}
             style={{ overflowY: 'scroll' }}
           >
             <div className="job-title-details">
@@ -1113,11 +1176,11 @@ const Detail = () => {
                     <p>{language?.post_detail_page?.address}</p>
                   </div>
                   <div className="div-detail-titleItem">
-                    <h5>
+                    <h5 onClick={handleChangeGoogleMap}>
                       {post?.data?.postCompanyInformation
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
-                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
-                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
                         : language?.post_detail_page?.not_update}
                     </h5>
                   </div>
@@ -1127,8 +1190,11 @@ const Detail = () => {
                     <MailDetailPostIcon />
                     <p>Email</p>
                   </div>
-                  <div className="div-detail-titleItem"
-                    onClick={() => handleSendMail(post?.data?.postCompanyInformation?.email)}
+                  <div
+                    className="div-detail-titleItem"
+                    onClick={() =>
+                      handleSendMail(post?.data?.postCompanyInformation?.email)
+                    }
                     style={{ cursor: 'pointer' }}
                   >
                     <h5>
@@ -1158,17 +1224,50 @@ const Detail = () => {
                   </div>
                   <div className="div-detail-titleItem">
                     {/* <h5> */}
-                    <a href={post?.data?.postCompanyInformation
-                      ? post?.data?.postCompanyInformation?.website
-                      : "#"}>
+                    <a
+                      href={
+                        post?.data?.postCompanyInformation
+                          ? post?.data?.postCompanyInformation?.website
+                          : '#'
+                      }
+                    >
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.website
                         : language?.post_detail_page?.not_update}
-
                     </a>
                     {/* </h5> */}
                   </div>
                 </div>
+                {Object.keys(positionMap).length !== 0 && (
+                  <div className="div-detail-items">
+                    <MapContainer
+                      className="leaf_let_map"
+                      center={[positionMap.lat, positionMap.lng]}
+                      zoom={15}
+                      scrollWheelZoom={true}
+                    >
+                      <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      />
+                      <Marker
+                        position={[positionMap.lat, positionMap.lng]}
+                        eventHandlers={{
+                          click: () => {
+                            window.open(
+                              'https://www.google.com/maps/place/' +
+                                `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`,
+                            );
+                          },
+                        }}
+                      >
+                        <Popup>
+                          {`${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`}
+                        </Popup>
+                      </Marker>
+                    </MapContainer>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -1248,14 +1347,17 @@ const Detail = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${post?.data?.location ? post?.data?.location?.fullName : ''
-                      }, ${post?.data?.location?.district
+                    <h3>{`${post?.data.address}, ${
+                      post?.data?.location ? post?.data?.location?.fullName : ''
+                    }, ${
+                      post?.data?.location?.district
                         ? post?.data?.location?.district?.fullName
                         : ''
-                      }, ${post?.data?.location?.district?.province
+                    }, ${
+                      post?.data?.location?.district?.province
                         ? post?.data?.location?.district?.province?.fullName
                         : ''
-                      }`}</h3>
+                    }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -1456,7 +1558,7 @@ const Detail = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                        // onClick={handlePreviousPost}
+                          // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -1576,16 +1678,19 @@ const Detail = () => {
                     <Typography sx={{ ml: 2 }}>
                       <AddressDetailPostIcon width={16} height={16} />
                       <span style={{ marginLeft: '8px' }}>
-                        {`${post?.data.address}, ${post?.data?.location
-                          ? post?.data?.location?.fullName
-                          : ''
-                          }, ${post?.data?.location?.district
+                        {`${post?.data.address}, ${
+                          post?.data?.location
+                            ? post?.data?.location?.fullName
+                            : ''
+                        }, ${
+                          post?.data?.location?.district
                             ? post?.data?.location?.district?.fullName
                             : ''
-                          }, ${post?.data?.location?.district?.province
+                        }, ${
+                          post?.data?.location?.district?.province
                             ? post?.data?.location?.district?.province?.fullName
                             : ''
-                          }`}
+                        }`}
                       </span>
                     </Typography>
                     {/* <div className="mid-title_companyName">

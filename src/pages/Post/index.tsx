@@ -178,11 +178,13 @@ const Post: React.FC = () => {
   const [typeJob, setTypeJob] = useState(1);
   const [isPeriodDate, setIsPeriodDate] = useState<number>(1);
   const [startTime, setStartTime] = React.useState<any>(
-    new Date(2000, 0, 2, 7, 0).getTime(),
+    // new Date(2000, 0, 2, 7, 0).getTime(),
+    new Date(new Date(1970, 0, 2, 7, 0).setHours(7, 0, 0, 0)).getTime(),
   );
 
   const [endTime, setEndTime] = React.useState<any>(
-    new Date(2000, 0, 2, 17, 0).getTime(),
+    // new Date(1970, 0, 2, 17, 0).getTime(),
+    new Date(new Date(1970, 0, 2, 7, 0).setHours(17, 0, 0, 0)).getTime(),
   );
   const profileV3 = useSelector(
     (state: RootState) => state.dataProfileInformationV3.data,
@@ -773,12 +775,12 @@ const Post: React.FC = () => {
   };
 
   useEffect(() => {
-    // checkPostedToday();
+    checkPostedToday();
   }, []);
 
   const handleClickForm = () => {
     if (checkPost) {
-      setOpenCheckposted(true);
+      // setOpenCheckposted(true);
     }
   };
 
