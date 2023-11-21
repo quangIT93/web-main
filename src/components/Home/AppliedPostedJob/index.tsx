@@ -17,8 +17,9 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 // import required modules
-import { Navigation, Mousewheel, Pagination, Autoplay } from 'swiper';
+import { Navigation, Mousewheel, Pagination, Autoplay, A11y } from 'swiper';
 // @ts-ignore
 // import { useSearchParams } from 'react-router-dom';
 
@@ -292,12 +293,16 @@ const AppliedPostedJob: React.FC = () => {
                     autoplay={{
                       delay: 3500,
                       disableOnInteraction: false,
+                      pauseOnMouseEnter: true,
+                      waitForTransition: true,
+                      stopOnLastSlide: false,
                     }}
                     // navigation={true}
-                    pagination={true}
-                    modules={[Autoplay, Navigation, Pagination]}
-                    className="banner-rescruit-swiper"
+                    pagination={{ clickable: true }}
+                    modules={[Autoplay, Pagination]}
+                    className="banner-rescruit-swiper mySwiper"
                     loop={true}
+                    style={{ height: '100%' }}
                   >
                     {banner?.map((value: any, index: number) => {
                       if (value?.order === 1) {
@@ -376,8 +381,8 @@ const AppliedPostedJob: React.FC = () => {
                       ? 'Công việc đã ứng tuyển'
                       : 'Applied Job'
                     : languageRedux === 1
-                    ? 'Công việc đã tuyển'
-                    : 'Posted Job'}
+                      ? 'Công việc đã tuyển'
+                      : 'Posted Job'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -585,7 +590,7 @@ const AppliedPostedJob: React.FC = () => {
           }}
           // navigation={true}
           pagination={true}
-          modules={[Autoplay, Navigation, Pagination]}
+          modules={[Autoplay, Pagination]}
           className="banner-rescruit-swiper"
           loop={true}
         >

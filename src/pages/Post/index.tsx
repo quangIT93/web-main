@@ -303,6 +303,7 @@ const Post: React.FC = () => {
     }
   };
 
+  // console.log(isValidSubmit);
 
   useEffect(() => {
     const handleBeforeUnload = (event: any) => {
@@ -319,6 +320,7 @@ const Post: React.FC = () => {
       }
     };
 
+    window.addEventListener('beforeunload', handleBeforeUnload);
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
@@ -372,7 +374,6 @@ const Post: React.FC = () => {
     // formData.append('url', Str1q 1q  1q  1q  1qing(formValues.url))
     formData.append('latitude', String(10.761955));
     formData.append('longitude', String(106.70183));
-
 
     if (formData) {
       createNewPost(formData);
@@ -499,9 +500,10 @@ const Post: React.FC = () => {
     }
     if (description === '') {
       return {
-        message: languageRedux === 1 ?
-          "Hãy nhập mô tả công việc." :
-          "Please enter a job description.",
+        message:
+          languageRedux === 1
+            ? 'Hãy nhập mô tả công việc.'
+            : 'Please enter a job description.',
         checkForm: false,
         idError: 12,
       };
@@ -509,9 +511,10 @@ const Post: React.FC = () => {
 
     if (startDate > endDate) {
       return {
-        message: languageRedux === 1
-          ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
-          : 'The start date cannot exceed the end date',
+        message:
+          languageRedux === 1
+            ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
+            : 'The start date cannot exceed the end date',
         checkForm: false,
         idError: 13,
       };
@@ -748,7 +751,7 @@ const Post: React.FC = () => {
       } else {
         setOpenModalNoteCreateCompany(true);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const checkPostedToday = async () => {
@@ -770,7 +773,7 @@ const Post: React.FC = () => {
   };
 
   useEffect(() => {
-    checkPostedToday();
+    // checkPostedToday();
   }, []);
 
   const handleClickForm = () => {
@@ -812,7 +815,7 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-          // style={{ textAlign: 'center', display: 'block' }}
+            // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>{language?.profile_page?.create_post}</h1>
             <div className="post-main_switch">
@@ -870,7 +873,6 @@ const Post: React.FC = () => {
               language={language}
               languageRedux={languageRedux}
               setIsValidSubmit={setIsValidSubmit}
-
             />
             <PostPeriodDate
               setIsPeriodDate={setIsPeriodDate}
@@ -982,7 +984,6 @@ const Post: React.FC = () => {
           openCheckposted={openCheckposted}
         />
 
-
         <ModalNoteCreatePost
           setOpenModalNoteCreatePost={setOpenModalNoteCreatePost}
           openModalNoteCreatePost={openModalNoteCreatePost}
@@ -993,10 +994,10 @@ const Post: React.FC = () => {
           setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
         />
 
-      <ModalNotiValidateCompany
-        openModalNoteValidateCompany={openModalNoteValidateCompany}
-        setOpenModalNoteValidateCompany={setOpenModalNoteValidateCompany}
-      />
+        <ModalNotiValidateCompany
+          openModalNoteValidateCompany={openModalNoteValidateCompany}
+          setOpenModalNoteValidateCompany={setOpenModalNoteValidateCompany}
+        />
 
         <ModalFillDataPost
           setOpenFillDataPost={setOpenFillDataPost}

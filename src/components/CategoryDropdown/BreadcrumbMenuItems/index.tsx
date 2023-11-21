@@ -10,60 +10,60 @@ const BreadcrumbMenuItems: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
-  const dataItem = [
-    {
-      id: 0,
-      // title: language?.history_page?.applied_jobs,
-      // childs: [language?.all],
-      title:
-        languageRedux === 1 ? 'Các công việc đã ứng tuyển' : 'Applied jobs',
-      childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
-    },
-    {
-      id: 1,
-      // title: language?.history_page?.saved_jobs,
-      // childs: [language?.all],
-      title: languageRedux === 1 ? 'Các công việc đã lưu' : 'Saved jobs',
-      childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
-    },
-    {
-      id: 2,
-      // title: language?.history_page?.posted_jobs,
-      title:
-        languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs',
-      childs: [
-        languageRedux === 1 ? 'Tất cả' : 'All',
-        languageRedux === 1 ? 'Các công việc chưa đóng' : 'Unclosed jobs',
-        languageRedux === 1 ? 'Các công việc đã đóng' : 'Closed jobs',
+  // const dataItem = [
+  //   {
+  //     id: 0,
+  //     // title: language?.history_page?.applied_jobs,
+  //     // childs: [language?.all],
+  //     title:
+  //       languageRedux === 1 ? 'Các công việc đã ứng tuyển' : 'Applied jobs',
+  //     childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
+  //   },
+  //   {
+  //     id: 1,
+  //     // title: language?.history_page?.saved_jobs,
+  //     // childs: [language?.all],
+  //     title: languageRedux === 1 ? 'Các công việc đã lưu' : 'Saved jobs',
+  //     childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
+  //   },
+  //   {
+  //     id: 2,
+  //     // title: language?.history_page?.posted_jobs,
+  //     title:
+  //       languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs',
+  //     childs: [
+  //       languageRedux === 1 ? 'Tất cả' : 'All',
+  //       languageRedux === 1 ? 'Các công việc chưa đóng' : 'Unclosed jobs',
+  //       languageRedux === 1 ? 'Các công việc đã đóng' : 'Closed jobs',
 
-        // language?.history_page?.unclosed_jobs,
+  //       // language?.history_page?.unclosed_jobs,
 
-        // language?.history_page?.closed_jobs,
-      ],
-    },
-    {
-      id: 3,
-      // title: language?.history_page?.list_of_articles,
-      title: languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles',
-      childs: [
-        languageRedux === 1 ? 'Đã lưu' : 'Saved',
-        languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posted',
-        // language?.history_page?.saved,
-        // language?.history_page?.posts_created,
-      ],
-    },
-    {
-      id: 4,
-      // title: language?.history_page?.list_of_articles,
-      title: languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates',
-      childs: [
-        languageRedux === 1 ? 'Tất cả' : 'All',
-        // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
-        // language?.history_page?.saved,
-        // language?.history_page?.posts_created,
-      ],
-    },
-  ];
+  //       // language?.history_page?.closed_jobs,
+  //     ],
+  //   },
+  //   {
+  //     id: 3,
+  //     // title: language?.history_page?.list_of_articles,
+  //     title: languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles',
+  //     childs: [
+  //       languageRedux === 1 ? 'Đã lưu' : 'Saved',
+  //       languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posted',
+  //       // language?.history_page?.saved,
+  //       // language?.history_page?.posts_created,
+  //     ],
+  //   },
+  //   {
+  //     id: 4,
+  //     // title: language?.history_page?.list_of_articles,
+  //     title: languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates',
+  //     childs: [
+  //       languageRedux === 1 ? 'Tất cả' : 'All',
+  //       // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
+  //       // language?.history_page?.saved,
+  //       // language?.history_page?.posts_created,
+  //     ],
+  //   },
+  // ];
   const location = useLocation();
   const [titleNameJobHome, setTitleNameJobHome] = useState('');
 
@@ -306,15 +306,19 @@ const BreadcrumbMenuItems: React.FC = () => {
                                       ? languageRedux === 1
                                         ? 'Dịch thuật'
                                         : 'Translator'
-                                      : searchParams.get('categories-id') === '14'
+                                      : searchParams.get('categories-id') ===
+                                          '14'
                                         ? languageRedux === 1
                                           ? 'Khoa học - Kỹ thuật'
                                           : 'Science - Technology'
-                                        : searchParams.get('categories-id') === '15'
+                                        : searchParams.get('categories-id') ===
+                                            '15'
                                           ? languageRedux === 1
                                             ? 'Chuyển nhà/Vệ sinh'
                                             : 'House moving/Cleaning'
-                                          : searchParams.get('categories-id') === '16'
+                                          : searchParams.get(
+                                                'categories-id',
+                                              ) === '16'
                                             ? languageRedux === 1
                                               ? 'Ngành khác'
                                               : 'Others'
@@ -338,40 +342,67 @@ const BreadcrumbMenuItems: React.FC = () => {
         {
           title:
             searchParams.get('p') === '1'
-              ? languageRedux === 1 ? 'Các công việc đã lưu' : 'Saved jobs'
+              ? languageRedux === 1
+                ? 'Các công việc đã lưu'
+                : 'Saved jobs'
               : searchParams.get('p') === '2'
-                ? languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs'
+                ? languageRedux === 1
+                  ? 'Các công việc đã đăng tuyển'
+                  : 'Posted jobs'
                 : searchParams.get('p') === '3'
-                  ? languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles'
+                  ? languageRedux === 1
+                    ? 'Danh sách bài viết'
+                    : 'List of articles'
                   : searchParams.get('p') === '4'
-                    ? languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates'
+                    ? languageRedux === 1
+                      ? 'Danh sách ứng viên'
+                      : 'List of candidates'
                     : searchParams.get('p') === '5'
-                      ? languageRedux === 1 ? 'Danh sách công ty' : 'List of companies'
+                      ? languageRedux === 1
+                        ? 'Danh sách công ty'
+                        : 'List of companies'
                       : searchParams.get('p') === '0'
-                        ? languageRedux === 1 ? 'Các công việc đã ứng tuyển' : 'Apllied jobs'
+                        ? languageRedux === 1
+                          ? 'Các công việc đã ứng tuyển'
+                          : 'Apllied jobs'
                         : '',
           href: '/history',
         },
         {
           title:
             searchParams.get('c') === '1-0' ||
-              searchParams.get('c') === '2-0' ||
-              searchParams.get('c') === '2-0' ||
-              searchParams.get('c') === '0-0' ||
-              searchParams.get('c') === '4-0' ||
-              searchParams.get('c') === '5-0'
+            searchParams.get('c') === '2-0' ||
+            searchParams.get('c') === '2-0' ||
+            searchParams.get('c') === '0-0' ||
+            searchParams.get('c') === '4-0'
               ? languageRedux === 1
                 ? 'Tất cả'
                 : 'All'
               : searchParams.get('c') === '2-1'
-                ? languageRedux === 1 ? 'Các công việc chưa đóng' : 'Unclosed jobs'
+                ? languageRedux === 1
+                  ? 'Các công việc chưa đóng'
+                  : 'Unclosed jobs'
                 : searchParams.get('c') === '2-2'
-                  ? languageRedux === 1 ? 'Các công việc đã đóng' : 'Closed jobs'
+                  ? languageRedux === 1
+                    ? 'Các công việc đã đóng'
+                    : 'Closed jobs'
                   : searchParams.get('c') === '3-0'
-                    ? languageRedux === 1 ? 'Đã lưu' : 'Saved articles'
+                    ? languageRedux === 1
+                      ? 'Đã lưu'
+                      : 'Saved articles'
                     : searchParams.get('c') === '3-1'
-                      ? languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posted articles'
-                      : '',
+                      ? languageRedux === 1
+                        ? 'Bài viết bạn đã tạo'
+                        : 'Posted articles'
+                      : searchParams.get('c') === '5-0'
+                        ? languageRedux === 1
+                          ? 'Công ty đã lưu'
+                          : 'Saved comopanies'
+                        : searchParams.get('c') === '5-1'
+                          ? languageRedux === 1
+                            ? 'Nhà tuyển dụng xem hồ sơ'
+                            : 'Employers view resumes'
+                          : '',
           href: '/history',
         },
       ],
@@ -574,10 +605,7 @@ const BreadcrumbMenuItems: React.FC = () => {
           href: '/',
         },
         {
-          title:
-            languageRedux === 1
-              ? 'Chi tiết công ty'
-              : 'Detail Company',
+          title: languageRedux === 1 ? 'Chi tiết công ty' : 'Detail Company',
         },
       ],
     },
@@ -589,10 +617,7 @@ const BreadcrumbMenuItems: React.FC = () => {
           href: '/',
         },
         {
-          title:
-            languageRedux === 1
-              ? 'Tìm kiếm công ty'
-              : 'Looking company',
+          title: languageRedux === 1 ? 'Tìm kiếm công ty' : 'Looking company',
         },
       ],
     },

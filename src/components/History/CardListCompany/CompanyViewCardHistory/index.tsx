@@ -33,7 +33,7 @@ interface Iprops {
   setSaveCompanyList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CompanyCardHistory: React.FC<Iprops> = (props) => {
+const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
   const { item, index, saveCompanyList, setSaveCompanyList } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -54,19 +54,32 @@ const CompanyCardHistory: React.FC<Iprops> = (props) => {
   const handleSaveCompany = async (e: any) => {
     try {
       e.stopPropagation();
+      // console.log('props.item ', props.item);
       if (!localStorage.getItem('accessToken')) {
         setOpenModalLogin(true);
         return;
       }
-      const result = await apiCompanyV3.postBookmarkCompany(inforCompany?.id);
-      if (result) {
-        setSaveCompanyList(!saveCompanyList);
-        dispatch<any>(setAlertCancleSave(true));
+      if (props.item.bookmarked) {
+        const result = await apiCompanyV3.postBookmarkCompany(inforCompany?.id);
+        props.item.bookmarked = false;
+        if (result) {
+          setCheckBookMark(!checkBookMark);
+          dispatch<any>(setAlertCancleSave(true));
+        }
+      } else {
+        const result = await apiCompanyV3.postBookmarkCompany(inforCompany?.id);
+        props.item.bookmarked = true;
+        if (result) {
+          dispatch<any>(setAlertSave(true));
+          setCheckBookMark(!checkBookMark);
+        }
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  console.log('item', item);
 
   return (
     <>
@@ -133,7 +146,7 @@ const CompanyCardHistory: React.FC<Iprops> = (props) => {
                   </Typography>
                 </Tooltip>
                 <div onClick={(e: any) => handleSaveCompany(e)}>
-                  {inforCompany?.isBookmarked ? (
+                  {props.item.bookmarked ? (
                     <IconBellSaveNewestCompany width={24} height={24} />
                   ) : (
                     <IconBellNewestCompany width={24} height={24} />
@@ -222,4 +235,4 @@ const CompanyCardHistory: React.FC<Iprops> = (props) => {
   );
 };
 
-export default CompanyCardHistory;
+export default CompanyViewCardHistory;

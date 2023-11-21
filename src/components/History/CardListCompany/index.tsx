@@ -27,6 +27,7 @@ import { setAlertCancleSave } from 'store/reducer/alertReducer';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
 import CompanyCardHistory from './CompanyCardHistory';
+import CompanyViewCardHistory from './CompanyViewCardHistory';
 import NoCompanyData from 'utils/NoCompanyData';
 import apiCompanyV3 from 'api/apiCompanyV3';
 import { useSearchParams } from 'react-router-dom';
@@ -35,13 +36,16 @@ interface ICardsApplied {
   activeChild: string;
 }
 
-const CardListCompany: React.FC = () => {
+const CardListCompany: React.FC<ICardsApplied> = (props) => {
+  const { activeChild } = props;
   const [companyData, setCompanyData] = useState<any>([]);
+  const [companyDataView, setCompanyDataView] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
   const [pageNumber, setPageNumber] = React.useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [newOld, setnewOld] = React.useState(1);
   const [saveCompanyList, setSaveCompanyList] = React.useState(false);
+  const [saveCompanyListView, setSaveCompanyListView] = React.useState(false);
   const [searchParams, setSearchParams] = useSearchParams('');
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -56,7 +60,7 @@ const CardListCompany: React.FC = () => {
         0,
         20,
         languageRedux === 1 ? 'vi' : 'en',
-        newOld === 1 ? 'DESC' : 'ASC'
+        newOld === 1 ? 'DESC' : 'ASC',
       );
 
       if (result) {
@@ -70,6 +74,28 @@ const CardListCompany: React.FC = () => {
     }
   };
 
+  const handleGetCompanyView = async () => {
+    try {
+      const result = await apiCompanyV3.getCompanyView(
+        0,
+        20,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      if (result) {
+        console.log('result', result);
+        setCompanyDataView(result.data.companies);
+        if (result.data.companies.length < 20) {
+          setIsVisible(false);
+        }
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  // console.log('activeChild', activeChild);
+
   const handleGetmoreCompany = async () => {
     try {
       setUploading(true);
@@ -78,7 +104,7 @@ const CardListCompany: React.FC = () => {
         nextPage,
         20,
         languageRedux === 1 ? 'vi' : 'en',
-        newOld === 1 ? 'DESC' : 'ASC'
+        newOld === 1 ? 'DESC' : 'ASC',
       );
 
       if (result && result.data.bookmarkedCompany.length !== 0) {
@@ -103,8 +129,42 @@ const CardListCompany: React.FC = () => {
     }
   };
 
+  const handleGetmoreCompanyView = async () => {
+    try {
+      setUploading(true);
+      const nextPage = pageNumber + 1;
+      const result = await apiCompanyV3.getBookmarkCompany(
+        nextPage,
+        20,
+        languageRedux === 1 ? 'vi' : 'en',
+        newOld === 1 ? 'DESC' : 'ASC',
+      );
+
+      if (result && result.data.bookmarkedCompany.length !== 0) {
+        setCompanyDataView((prev: any) => [
+          ...prev,
+          ...result?.data?.companies,
+        ]);
+        setPageNumber(nextPage);
+        setUploading(false);
+      } else {
+        setIsVisible(false);
+        setPageNumber(0);
+        setUploading(false);
+        message.error(
+          languageRedux === 1
+            ? 'Không còn công ty để xem'
+            : 'No more company to see',
+        );
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   useEffect(() => {
     handleGetCompany();
+    handleGetCompanyView();
   }, [saveCompanyList, newOld]);
 
   const sortDataByDate = (value: any, arrayData: any) => {
@@ -151,8 +211,15 @@ const CardListCompany: React.FC = () => {
           {languageRedux === 1 ? 'Danh sách công ty' : 'List of companies'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {
-              searchParams.get('c') === '5-0' &&
-                languageRedux === 1 ? ' > Tất cả' : ' > All'
+              searchParams.get('c') === '5-0'
+                ? languageRedux === 1
+                  ? ' > Công ty đã lưu'
+                  : ' > Saved company'
+                : ''
+
+              // : searchParams.get('c') === '5-1'
+              //   ? ' > Nhà tuyển dụng xem hồ sơ'
+              //   : '> Employers view resumes'
             }
           </span>
         </Typography>
@@ -174,7 +241,7 @@ const CardListCompany: React.FC = () => {
           <MenuItem value={0}>{language?.history_page?.oldest}</MenuItem>
         </TextField>
       </Box>
-      {companyData.length > 0 ? (
+      {activeChild === '5-0' ? (
         <div className="history-post" style={{ marginTop: '16px' }}>
           <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
             {companyData.map((dataBookmark: any, index: number) => (
@@ -215,8 +282,51 @@ const CardListCompany: React.FC = () => {
           </Box>
         </div>
       ) : (
+        //  :
+        // activeChild === '5-1' ? (
+        //   <div className="history-post" style={{ marginTop: '16px' }}>
+        //     <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
+        //       {companyDataView.map((dataView: any, index: number) => (
+        //         <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+        //           <CompanyViewCardHistory
+        //             item={dataView}
+        //             index={index}
+        //             saveCompanyList={saveCompanyListView}
+        //             setSaveCompanyList={setSaveCompanyListView}
+        //           />
+        //         </Grid>
+        //       ))}
+        //     </Grid>
+        //     <Box
+        //       sx={{
+        //         margin: '12px auto',
+        //         display: 'flex',
+        //         alignItems: 'center',
+        //         justifyContent: 'center',
+        //       }}
+        //     >
+        //       <Button
+        //         style={{
+        //           width: 130,
+        //           height: 40,
+        //           marginBottom: '2rem',
+        //           backgroundColor: `#0D99FF`,
+        //           color: '#FFFFFF',
+        //           fontWeight: 'bold',
+        //           display: isVisible ? 'block' : 'none',
+        //         }}
+        //         loading={uploading}
+        //         onClick={handleGetmoreCompanyView}
+        //       >
+        //         {language?.more}
+        //         {/* Xem thêm */}
+        //       </Button>
+        //     </Box>
+        //   </div>
+        // )
         <NoCompanyData />
       )}
+
       <Backdrop
         sx={{
           color: '#0d99ff ',
@@ -224,7 +334,7 @@ const CardListCompany: React.FC = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-      // onClick={handleClose}
+        // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>

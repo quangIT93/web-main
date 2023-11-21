@@ -101,7 +101,7 @@ const Comunity = () => {
       if (result.status === 200) {
         setDeleteCmt(!deleteCmt);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleGetDetailCommunityById = async () => {
@@ -146,8 +146,9 @@ const Comunity = () => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${size * rows
-        }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${
+        size * rows
+      }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
@@ -212,9 +213,8 @@ const Comunity = () => {
     }
 
     try {
-      const result = await communityApi.postCommunityBookmarked(
-        communicationId,
-      );
+      const result =
+        await communityApi.postCommunityBookmarked(communicationId);
       if (result) {
         // setBookmark(!bookmark);
         if (result.status === 201) {
@@ -303,9 +303,9 @@ const Comunity = () => {
       : fromHistory === '30'
         ? window.open('/history?community_post=30', '_parent')
         : window.open(
-          detail?.type === 1 ? '/new-comunity' : '/news-comunity',
-          '_parent',
-        );
+            detail?.type === 1 ? '/new-comunity' : '/news-comunity',
+            '_parent',
+          );
   };
 
   const hanleClickComment = () => {
@@ -324,6 +324,7 @@ const Comunity = () => {
             <div className="icon-back">
               <BackIcon width={15} height={15} fill="white" />
             </div>
+
             <h3>
               {fromHistory === '31' || fromHistory === '30'
                 ? language?.history
@@ -340,10 +341,13 @@ const Comunity = () => {
             {/* <Tooltip title={detail?.title}>
             </Tooltip> */}
             <h3>{detail?.title}</h3>
-            <div className="title-comunity_icon"
+            <div
+              className="title-comunity_icon"
               style={{
-                display: detail?.profileData?.id === localStorage.getItem('accountId') ?
-                  "none" : "flex"
+                display:
+                  detail?.profileData?.id === localStorage.getItem('accountId')
+                    ? 'none'
+                    : 'flex',
               }}
             >
               {/* <CommentIcon /> */}
@@ -393,7 +397,7 @@ const Comunity = () => {
               <TextArea
                 value={detail?.content}
                 autoSize
-              // showCount
+                // showCount
               />
             </div>
           </div>
@@ -493,7 +497,7 @@ const Comunity = () => {
                 // )}
                 src={item.image}
                 alt={item.image}
-              //loading="lazy"
+                //loading="lazy"
               />
             ))}
           </div>
@@ -566,7 +570,7 @@ const Comunity = () => {
                       : 'Enter your comment ...'
                   }
                   autoSize
-                // showCount
+                  // showCount
                 />
                 <div className="comment-interaction">
                   <div
@@ -618,7 +622,7 @@ const Comunity = () => {
                                 display:
                                   detail?.profileData?.id ===
                                     localStorage.getItem('accountId') ||
-                                    cmtData?.profile?.id ===
+                                  cmtData?.profile?.id ===
                                     localStorage.getItem('accountId')
                                     ? 'block'
                                     : 'none',
@@ -634,7 +638,7 @@ const Comunity = () => {
                             <TextArea
                               value={cmtData?.content}
                               autoSize
-                            // showCount
+                              // showCount
                             />
                             {/* <p>{cmtData?.content}</p> */}
                           </div>
