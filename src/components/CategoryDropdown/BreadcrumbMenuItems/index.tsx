@@ -398,9 +398,11 @@ const BreadcrumbMenuItems: React.FC = () => {
                         ? languageRedux === 1
                           ? 'Công ty đã lưu'
                           : 'Saved comopanies'
-                        : // : searchParams.get('c') === '5-1'
-                          // ? languageRedux === 1 ? 'Nhà tuyển dụng xem hồ sơ' : 'Employers view resumes'
-                          '',
+                        : searchParams.get('c') === '5-1'
+                          ? languageRedux === 1
+                            ? 'Nhà tuyển dụng xem hồ sơ'
+                            : 'Employers view resumes'
+                          : '',
           href: '/history',
         },
       ],

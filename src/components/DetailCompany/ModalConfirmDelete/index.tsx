@@ -56,7 +56,7 @@ const ModalConfirmDelete: React.FC<IModalReviewNotice> = (props) => {
                 setOpenModalPostReviewSuccess(true);
                 setStar(0);
                 setReview('');
-                setMyReview(undefined);
+                setMyReview({});
                 setIsSuccess(!isSuccess);
                 inputRef.current!.focus({
                     cursor: 'end',
