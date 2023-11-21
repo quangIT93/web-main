@@ -882,7 +882,6 @@ const Detail = () => {
   useEffect(() => {
     if (post) {
       const address1 = `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`;
-
       getLocation(address1);
     }
   }, [post]);
