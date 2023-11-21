@@ -17,6 +17,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 // import required modules
 import { Navigation, Mousewheel, Pagination, Autoplay, A11y } from 'swiper';
 // @ts-ignore
@@ -292,11 +293,14 @@ const AppliedPostedJob: React.FC = () => {
                     autoplay={{
                       delay: 3500,
                       disableOnInteraction: false,
+                      pauseOnMouseEnter: true,
+                      waitForTransition: true,
+                      stopOnLastSlide: false,
                     }}
                     // navigation={true}
                     pagination={{ clickable: true }}
-                    modules={[Autoplay, Navigation, Pagination, A11y]}
-                    className="banner-rescruit-swiper"
+                    modules={[Autoplay, Pagination]}
+                    className="banner-rescruit-swiper mySwiper"
                     loop={true}
                     style={{ height: '100%' }}
                   >
@@ -586,7 +590,7 @@ const AppliedPostedJob: React.FC = () => {
           }}
           // navigation={true}
           pagination={true}
-          modules={[Autoplay, Navigation, Pagination]}
+          modules={[Autoplay, Pagination]}
           className="banner-rescruit-swiper"
           loop={true}
         >
