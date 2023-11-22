@@ -284,6 +284,7 @@
             }
 
             .banner-rescruit-swiper {
+                border-radius: 12px;
                 .swiper-wrapper {
                     .swiper-slide {
                         display: grid;
@@ -292,6 +293,7 @@
                         img {
                             width: 100%;
                             cursor: pointer;
+                            border-radius: 12px;
                         }
                     }
                 }

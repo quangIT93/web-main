@@ -101,7 +101,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
   };
 
   useEffect(() => {
-    const address1 = `${company.address}, ${company.companyLocation.fullName}, ${company.companyLocation.district.fullName}, ${company.companyLocation.district.province.fullName}`;
+    const address1 = `${company?.address}, ${company?.companyLocation?.fullName}, ${company?.companyLocation?.district?.fullName}, ${company?.companyLocation?.district?.province?.fullName}`;
 
     getLocation(address1);
   }, []);
