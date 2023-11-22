@@ -360,6 +360,11 @@ const CategoryDropdown: React.FC = () => {
     setOpenCategoryDropdown(false);
   };
 
+  const moveToHistoryCompanyViewer = () => {
+    window.open('/history?companyView=51', '_parent');
+    setOpenCategoryDropdown(false);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -861,7 +866,7 @@ const CategoryDropdown: React.FC = () => {
                   {languageRedux === 1 ? 'Công ty đã lưu' : 'Saved company'}
                 </h3>
                 {profileV3.typeRoleData === 0 ? (
-                  <h3 onClick={moveToHistoryCompany}>
+                  <h3 onClick={moveToHistoryCompanyViewer}>
                     {languageRedux === 1
                       ? 'Nhà tuyển dụng xem hồ sơ'
                       : 'Employers view resumes'}

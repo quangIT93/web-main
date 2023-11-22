@@ -59,7 +59,7 @@ const CardListCandidate: React.FC = () => {
       if (result) {
         setCandidateData(result.data);
         if (result.data.candidateBookmarks.length < 10) {
-          setIsVisible(false)
+          setIsVisible(false);
         }
       }
     } catch (error) {
@@ -78,16 +78,21 @@ const CardListCandidate: React.FC = () => {
       );
 
       if (result && result.data.candidateBookmarks.length !== 0) {
-        setCandidateData((prev: any) => [...prev, ...result?.data?.candidateBookmarks]);
+        setCandidateData((prev: any) => [
+          ...prev,
+          ...result?.data?.candidateBookmarks,
+        ]);
         setPageNumber(nextPage);
         setUploading(false);
       } else {
         setIsVisible(false);
         setPageNumber(0);
         setUploading(false);
-        message.error(languageRedux === 1 ?
-          'Không còn ứng cử viên để xem'
-          : 'No more candidates to see');
+        message.error(
+          languageRedux === 1
+            ? 'Không còn ứng cử viên để xem'
+            : 'No more candidates to see',
+        );
       }
     } catch (error) {
       console.log('error', error);
@@ -128,10 +133,9 @@ const CardListCandidate: React.FC = () => {
         >
           {languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-            {
-              searchParams.get('c') === '4-0' &&
-                languageRedux === 1 ? ' > Tất cả' : ' > All'
-            }
+            {searchParams.get('c') === '4-0' && languageRedux === 1
+              ? ' > Tất cả'
+              : ' > All'}
           </span>
         </Typography>
       </Box>
@@ -142,7 +146,7 @@ const CardListCandidate: React.FC = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-      // onClick={handleClose}
+        // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -154,7 +158,7 @@ const CardListCandidate: React.FC = () => {
                 // <Skeleton loading={loading} active>
                 <ListCardSaveCandidate
                   item={dataBookmark}
-                  handleDeleteBookmark={() => { }}
+                  handleDeleteBookmark={() => {}}
                   index={i}
                   key={i}
                   language={[]}

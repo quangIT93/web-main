@@ -39,8 +39,8 @@ const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
     (state: RootState) => state.changeLaguage.language,
   );
   const dispatch = useDispatch();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [inforCompany, setInforCompany] = React.useState<any>(item);
+  const [checkBookMark, setCheckBookMark] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -49,6 +49,7 @@ const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
 
   useEffect(() => {
     setInforCompany(item);
+    setCheckBookMark(item?.isBookmarked);
   }, [item]);
 
   const handleSaveCompany = async (e: any) => {
@@ -78,8 +79,6 @@ const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
       console.log(error);
     }
   };
-
-  console.log('item', item);
 
   return (
     <>
