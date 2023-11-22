@@ -241,8 +241,11 @@ const CandidatesAll = () => {
           setHasMore(true);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
+
+  console.log('totle', total);
+
   React.useEffect(() => {
     getAllCandidates();
   }, [languageRedux]);
@@ -283,14 +286,16 @@ const CandidatesAll = () => {
         gender,
         ageMin,
         ageMax,
-        19,
+        18,
         page,
         'vi',
       );
       setPage('0');
       if (result) {
-        setOpen(true)
+        setOpen(true);
         setTotal(result.data.total);
+        console.log('totle', total);
+
         setListData(result.data.cvFilters);
         if (result.data.cvFilters.length < 18) {
           setHasMore(false);
@@ -317,7 +322,7 @@ const CandidatesAll = () => {
     setAgeMin(18);
     setAgeMax(35);
     setReset(true);
-    setOpen(false)
+    setOpen(false);
   };
 
   const fetchMoreData = async () => {
@@ -350,7 +355,7 @@ const CandidatesAll = () => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   const analytics: any = getAnalytics();
   React.useEffect(() => {
@@ -460,18 +465,18 @@ const CandidatesAll = () => {
               //   categories?.length !== 0 ||
               //   educations ||
               //   gender !== -1 &&
-              open ?
-                (
-                  <h3>
-                    {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
-                    <span>
-                      {` ${total}`}
-                      {languageRedux === 1 ? ' ứng cử viên' : ' candidates'}
-                    </span>
-                  </h3>
-                ) : (
-                  <></>
-                )}
+              open ? (
+                <h3>
+                  {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
+                  <span>
+                    {` ${total}`}
+                    {languageRedux === 1 ? ' ứng cử viên' : ' candidates'}
+                  </span>
+                </h3>
+              ) : (
+                <></>
+              )
+            }
           </div>
           <InfiniteScroll
             dataLength={listData && listData?.length}

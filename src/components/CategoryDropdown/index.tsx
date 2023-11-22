@@ -25,6 +25,7 @@ import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
 import BreadcrumbMenuItems from './BreadcrumbMenuItems';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
+import { profile } from 'console';
 const titleContainer: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
@@ -356,6 +357,11 @@ const CategoryDropdown: React.FC = () => {
 
   const moveToHistoryCompany = () => {
     window.open('/history?companyView=50', '_parent');
+    setOpenCategoryDropdown(false);
+  };
+
+  const moveToHistoryCompanyViewer = () => {
+    window.open('/history?companyView=51', '_parent');
     setOpenCategoryDropdown(false);
   };
 
@@ -859,12 +865,15 @@ const CategoryDropdown: React.FC = () => {
                 <h3 onClick={moveToHistoryCompany}>
                   {languageRedux === 1 ? 'Công ty đã lưu' : 'Saved company'}
                 </h3>
-
-                {/* <h3 onClick={moveToHistoryCompany}>
-                  {languageRedux === 1
-                    ? 'Nhà tuyển dụng xem hồ sơ'
-                    : 'Employers view resumes'}
-                </h3> */}
+                {profileV3.typeRoleData === 0 ? (
+                  <h3 onClick={moveToHistoryCompanyViewer}>
+                    {languageRedux === 1
+                      ? 'Nhà tuyển dụng xem hồ sơ'
+                      : 'Employers view resumes'}
+                  </h3>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>

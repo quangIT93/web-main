@@ -163,9 +163,20 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
   };
 
   useEffect(() => {
-    handleGetCompany();
-    handleGetCompanyView();
-  }, [saveCompanyList, newOld]);
+    console.log('activeChild', activeChild);
+    switch (activeChild) {
+      case '5-0':
+        handleGetCompany();
+        break;
+
+      case '5-1':
+        handleGetCompanyView();
+        break;
+
+      default:
+        break;
+    }
+  }, [saveCompanyList, newOld, activeChild]);
 
   const sortDataByDate = (value: any, arrayData: any) => {
     if (value === 1) {
@@ -210,17 +221,13 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
         >
           {languageRedux === 1 ? 'Danh sách công ty' : 'List of companies'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-            {
-              searchParams.get('c') === '5-0'
-                ? languageRedux === 1
-                  ? ' > Công ty đã lưu'
-                  : ' > Saved company'
-                : ''
-
-              // : searchParams.get('c') === '5-1'
-              //   ? ' > Nhà tuyển dụng xem hồ sơ'
-              //   : '> Employers view resumes'
-            }
+            {searchParams.get('c') === '5-0'
+              ? languageRedux === 1
+                ? ' > Công ty đã lưu'
+                : ' > Saved company'
+              : searchParams.get('c') === '5-1'
+                ? ' > Nhà tuyển dụng xem hồ sơ'
+                : '> Employers view resumes'}
           </span>
         </Typography>
         <TextField
@@ -241,10 +248,10 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
           <MenuItem value={0}>{language?.history_page?.oldest}</MenuItem>
         </TextField>
       </Box>
-      {activeChild === '5-0' ? (
+      {activeChild === '5-0' && companyData?.length !== 0 ? (
         <div className="history-post" style={{ marginTop: '16px' }}>
           <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-            {companyData.map((dataBookmark: any, index: number) => (
+            {companyData?.map((dataBookmark: any, index: number) => (
               <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
                 <CompanyCardHistory
                   item={dataBookmark.CompanyData}
@@ -281,63 +288,66 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
             </Button>
           </Box>
         </div>
+      ) : activeChild === '5-1' && companyDataView?.length !== 0 ? (
+        <div className="history-post" style={{ marginTop: '16px' }}>
+          <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
+            {companyDataView?.map((dataView: any, index: number) => (
+              <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+                <CompanyViewCardHistory
+                  item={dataView}
+                  index={index}
+                  saveCompanyList={saveCompanyListView}
+                  setSaveCompanyList={setSaveCompanyListView}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Box
+            sx={{
+              margin: '12px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Button
+              style={{
+                width: 130,
+                height: 40,
+                marginBottom: '2rem',
+                backgroundColor: `#0D99FF`,
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                display: isVisible ? 'block' : 'none',
+              }}
+              loading={uploading}
+              onClick={handleGetmoreCompanyView}
+            >
+              {language?.more}
+              {/* Xem thêm */}
+            </Button>
+          </Box>
+        </div>
       ) : (
-        //  :
-        // activeChild === '5-1' ? (
-        //   <div className="history-post" style={{ marginTop: '16px' }}>
-        //     <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-        //       {companyDataView.map((dataView: any, index: number) => (
-        //         <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
-        //           <CompanyViewCardHistory
-        //             item={dataView}
-        //             index={index}
-        //             saveCompanyList={saveCompanyListView}
-        //             setSaveCompanyList={setSaveCompanyListView}
-        //           />
-        //         </Grid>
-        //       ))}
-        //     </Grid>
-        //     <Box
-        //       sx={{
-        //         margin: '12px auto',
-        //         display: 'flex',
-        //         alignItems: 'center',
-        //         justifyContent: 'center',
-        //       }}
-        //     >
-        //       <Button
-        //         style={{
-        //           width: 130,
-        //           height: 40,
-        //           marginBottom: '2rem',
-        //           backgroundColor: `#0D99FF`,
-        //           color: '#FFFFFF',
-        //           fontWeight: 'bold',
-        //           display: isVisible ? 'block' : 'none',
-        //         }}
-        //         loading={uploading}
-        //         onClick={handleGetmoreCompanyView}
-        //       >
-        //         {language?.more}
-        //         {/* Xem thêm */}
-        //       </Button>
-        //     </Box>
-        //   </div>
-        // )
         <NoCompanyData />
       )}
 
-      <Backdrop
-        sx={{
-          color: '#0d99ff ',
-          backgroundColor: 'transparent',
-          zIndex: (theme: any) => theme.zIndex.drawer + 1,
-        }}
-        open={false}
-        // onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      {(activeChild === '5-1' && companyDataView?.length !== 0) ||
+      (activeChild === '5-1' && companyData?.length !== 0) ? (
+        <Backdrop
+          sx={{
+            color: '#0d99ff ',
+            backgroundColor: 'transparent',
+            zIndex: (theme: any) => theme.zIndex.drawer + 1,
+          }}
+          open={false}
+          // onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

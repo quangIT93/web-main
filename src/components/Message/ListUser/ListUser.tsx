@@ -18,6 +18,8 @@ import { SeenIcon } from '#components/Icons';
 import { messVi } from 'validations/lang/vi/mess';
 import { messEn } from 'validations/lang/en/mess';
 import moment from 'moment';
+import communityApi from 'api/apiCommunity';
+import profileApi from 'api/profileApi';
 
 // const { Search } = Input;
 
@@ -48,49 +50,67 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   const getPostById = async () => {
     try {
-      const result = await postApi.getPostV3(
-        Number(searchParams.get('post_id')),
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result.data !== null) {
-        // setUserChat({
-        //   user_id: result?.data?.accountId,
-        //   avatar: result?.data?.posterAvatar,
-        //   is_online: false,
-        //   name: result?.data?.companyResourceData?.name,
-        //   company_name: result?.data?.companyResourceData?.name,
-        //   post_title: result?.data?.title,
-        //   message: '',
-        //   status: 0,
-        //   post_id: result?.data?.id,
-        //   image: result?.data?.image,
-        //   salary_min: result?.data?.salaryMin,
-        //   salary_max: result?.data?.salaryMax,
-        //   money_type_text: result?.data?.moneyTypeText,
-        //   salary_type_id: result?.data?.postSalaryType?.id,
-        //   post_status: result?.data?.status,
-        //   is_owner: false,
-        //   applied: result?.data?.applied,
-        // })
-        setUserInfoChat({
-          avatar: result?.data?.image,
-          image: result?.data?.image,
-          company_name: result?.data?.companyResourceData?.name,
-          is_online: false,
-          name: result?.data?.companyResourceData?.name,
-          post_title: result?.data?.title,
-          salary_min: result?.data?.salaryMin,
-          salary_max: result?.data?.salaryMax,
-          money_type_text: result?.data?.moneyTypeText,
-          salary_type_id: result?.data?.postSalaryType?.id,
-          post_status: result?.data?.status,
-          is_owner: false,
-          post_id: result?.data?.id,
-          applied: result?.data?.applied,
-          user_id: result?.data?.accountId,
-          message: '',
-          status: 0,
-        });
+      if (
+        Number(searchParams.get('post_id')) &&
+        searchParams.get('post_id') !== 'null'
+      ) {
+        const result = await postApi.getPostV3(
+          Number(searchParams.get('post_id')),
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        if (result.data !== null) {
+          setUserInfoChat({
+            avatar: result?.data?.image,
+            image: result?.data?.image,
+            company_name: result?.data?.companyResourceData?.name,
+            is_online: false,
+            name: result?.data?.companyResourceData?.name,
+            post_title: result?.data?.title,
+            salary_min: result?.data?.salaryMin,
+            salary_max: result?.data?.salaryMax,
+            money_type_text: result?.data?.moneyTypeText,
+            salary_type_id: result?.data?.postSalaryType?.id,
+            post_status: result?.data?.status,
+            is_owner: false,
+            post_id: result?.data?.id,
+            applied: result?.data?.applied,
+            user_id: result?.data?.accountId,
+            message: '',
+            status: 0,
+          });
+        }
+      } else if (
+        searchParams.get('user_id') &&
+        searchParams.get('post_id') === 'null'
+      ) {
+        const result = await profileApi.getProfileByAccountId(
+          languageRedux === 1 ? 'vi' : 'en',
+          searchParams.get('user_id'),
+        );
+
+        console.log('result', result);
+
+        if (result) {
+          setUserInfoChat({
+            avatar: result?.data?.avatarPath,
+            image: result?.data?.avatarPath,
+            company_name: '',
+            is_online: false,
+            name: result?.data?.name,
+            post_title: '',
+            salary_min: '',
+            salary_max: '',
+            money_type_text: '',
+            salary_type_id: '',
+            post_status: 0,
+            is_owner: false,
+            post_id: null,
+            applied: null,
+            user_id: result?.data?.accountId,
+            message: '',
+            status: 0,
+          });
+        }
       }
     } catch (error) {
       console.log(error);
@@ -109,40 +129,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       const result = await messageApi.getUserChated(
         languageRedux === 1 ? 'vi' : 'en',
       );
-
-      // const post = await postApi.getPostV3(
-      //   Number(searchParams.get('post_id')),
-      //   languageRedux === 1 ? 'vi' : 'en',
-      // );
-
       if (result) {
-        // if (post.data !== null) {
-        //   setStateUserChat([
-        //     {
-        //       user_id: post?.data?.accountId,
-        //       avatar: post?.data?.posterAvatar,
-        //       is_online: false,
-        //       name: post?.data?.companyResourceData?.name,
-        //       company_name: post?.data?.companyResourceData?.name,
-        //       post_title: post?.data?.title,
-        //       message: '',
-        //       status: 0,
-        //       post_id: post?.data?.id,
-        //       image: post?.data?.image,
-        //       salary_min: post?.data?.salaryMin,
-        //       salary_max: post?.data?.salaryMax,
-        //       money_type_text: post?.data?.moneyTypeText,
-        //       salary_type_id: post?.data?.postSalaryType?.id,
-        //       post_status: post?.data?.status,
-        //       is_owner: false,
-        //       applied: post?.data?.applied,
-        //     },
-        //     ...result.data
-        //   ]);
-        //   setFirstTime(false)
-        // } else {
-        //   setStateUserChat(result.data);
-        // }
         setStateUserChat(result.data);
       }
     } catch (error) {

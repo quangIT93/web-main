@@ -39,8 +39,8 @@ const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
     (state: RootState) => state.changeLaguage.language,
   );
   const dispatch = useDispatch();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [inforCompany, setInforCompany] = React.useState<any>(item);
+  const [checkBookMark, setCheckBookMark] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -59,16 +59,16 @@ const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
         setOpenModalLogin(true);
         return;
       }
-      if (props.item.bookmarked) {
+      if (props.item.isBookmarked) {
         const result = await apiCompanyV3.postBookmarkCompany(inforCompany?.id);
-        props.item.bookmarked = false;
+        props.item.isBookmarked = false;
         if (result) {
           setCheckBookMark(!checkBookMark);
           dispatch<any>(setAlertCancleSave(true));
         }
       } else {
         const result = await apiCompanyV3.postBookmarkCompany(inforCompany?.id);
-        props.item.bookmarked = true;
+        props.item.isBookmarked = true;
         if (result) {
           dispatch<any>(setAlertSave(true));
           setCheckBookMark(!checkBookMark);
@@ -79,7 +79,7 @@ const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
     }
   };
 
-  console.log('item', item);
+  console.log('props.item.bookmarked = ', props.item);
 
   return (
     <>
@@ -146,7 +146,7 @@ const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
                   </Typography>
                 </Tooltip>
                 <div onClick={(e: any) => handleSaveCompany(e)}>
-                  {props.item.bookmarked ? (
+                  {props.item.isBookmarked ? (
                     <IconBellSaveNewestCompany width={24} height={24} />
                   ) : (
                     <IconBellNewestCompany width={24} height={24} />
