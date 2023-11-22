@@ -436,7 +436,7 @@ const LandingHijob = () => {
                 <div className={styles.register_input}>
                   <p>Email</p>
                   <Input
-                    placeholder="example@gmail.com"
+                    placeholder="Example@gmail.com"
                     ref={inputEmailRef}
                     allowClear
                     name="user_email"
@@ -672,7 +672,7 @@ const LandingHijob = () => {
           >
             {languageRedux === 1
               ? 'Bạn không phải là nhà tuyển dụng!'
-              : `You don't have to be a recruiter`}
+              : `You are not a recruiter`}
           </h3>
         }
         footer={null}
