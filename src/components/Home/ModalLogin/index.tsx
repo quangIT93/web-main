@@ -471,10 +471,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-                // cookiePolicy={'single_host_origin'}
-                // prompt="select_account"
-                // isSignedIn={true}
-                loginHint='loginHint'
+              // cookiePolicy={'single_host_origin'}
+              // prompt="select_account"
+              // isSignedIn={true}
+              // loginHint='loginHint' 
               />
 
               <div className="line-with-text">
