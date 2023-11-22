@@ -55,8 +55,7 @@ const NewPageCV = () => {
     // console.log(profileV3);
 
     const handleMoveToDoc = () => {
-        const url = 'https://docs.google.com/document/d/1TC8bZrS2g4WUF6qtZpg7jLSexyHDkcHv7LjKtpllq9k/edit';
-        window.open(url, '_parent')
+        window.open(`/policy`, '_parent')
     }
 
     const handleMoveToCreateCv = () => {
@@ -565,7 +564,7 @@ const NewPageCV = () => {
                         }}
                     >
                         {languageRedux === 1
-                            ? 'Bạn không phải là ứng vử viên!'
+                            ? 'Bạn không phải là ứng cử viên!'
                             : 'You are not a candidate!'}
                     </h3>
                 }

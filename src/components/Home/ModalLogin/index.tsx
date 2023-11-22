@@ -457,6 +457,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   <div
                     className="bnt-login_google bnt-login"
                     onClick={renderProps.onClick}
+                    data-auto_select="true"
                   >
                     <img
                       src="loginLogo/googleOriginal.png"
@@ -470,7 +471,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-                // cookiePolicy={'single_host_origin'}
+              // cookiePolicy={'single_host_origin'}
+              // prompt="select_account"
+              // isSignedIn={true}
+              // loginHint='loginHint' 
               />
 
               <div className="line-with-text">
