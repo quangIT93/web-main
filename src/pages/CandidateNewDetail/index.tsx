@@ -37,6 +37,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalMaxUnlock from './ModalMaxUnlock';
 import ModalShowAvatar from './ModalShowAvatar';
 import ModalNoneCV from './ModalNoneCv';
+import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 import { MessageOutlined } from '@ant-design/icons';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
@@ -52,6 +53,8 @@ const CandidateNewDetail = () => {
   const [openModalMaxUnlock, setOpenModalMaxUnlock] = useState<any>(false);
   const [openModalNoneCv, setOpenModalNoneCv] = useState<any>(false);
   const [openModalShowAvatar, setOpenModalShowAvatar] = useState<any>(false);
+  const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
+    React.useState<any>(false);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -106,19 +109,21 @@ const CandidateNewDetail = () => {
   const handleUnLockCandidate = async (accountId: string) => {
     const id = localStorage.getItem('candidateId');
     try {
-      if (id) {
+      if (accountId && profileV3.companyInfo !== null) {
         const viewProfile: any =
-          await candidateSearch.postCountShowCandidate(id);
+          await candidateSearch.postCountShowCandidate(accountId);
         if (viewProfile.status === 200) {
           setTotal(viewProfile.total);
           const result = await profileApi.getProfileByAccountId(
             languageRedux === 1 ? 'vi' : 'en',
-            id,
+            accountId,
           );
           if (result) {
             setCandidate(result.data);
           }
         }
+      } else {
+        setOpenModalNoteCreateCompany(true);
       }
     } catch (error: any) {
       // console.log(error.response);
@@ -864,6 +869,11 @@ const CandidateNewDetail = () => {
         setOpenModalNoneCv={setOpenModalNoneCv}
         unLock={candidate.isUnlocked}
         urlPdf={candidate?.profilesCvs?.at(0)?.pdfURL}
+      />
+
+      <ModalNoteCreateCompany
+        openModalNoteCreateCompany={openModalNoteCreateCompany}
+        setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
       />
       {/* <ModalUnlockCandidate /> */}
     </div>

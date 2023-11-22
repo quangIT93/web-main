@@ -118,9 +118,9 @@ const ModalIntroduceCv: React.FC<any> = () => {
         <Button type="primary" shape="round" onClick={handleCancel}>
           {languageRedux === 1 ? 'Cập nhật thông tin' : 'Update information'}
         </Button>
-        <Button type="primary" shape="round" onClick={handleSubmit}>
+        {/* <Button type="primary" shape="round" onClick={handleSubmit}>
           {languageRedux === 1 ? 'Tạo CV ngay' : 'Create your CV now'}
-        </Button>
+        </Button> */}
       </div>
     </Modal>
   );

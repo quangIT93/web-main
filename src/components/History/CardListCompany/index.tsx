@@ -237,10 +237,10 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
           <MenuItem value={0}>{language?.history_page?.oldest}</MenuItem>
         </TextField>
       </Box>
-      {activeChild === '5-0' ? (
+      {activeChild === '5-0' && companyData?.length !== 0 ? (
         <div className="history-post" style={{ marginTop: '16px' }}>
           <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-            {companyData.map((dataBookmark: any, index: number) => (
+            {companyData?.map((dataBookmark: any, index: number) => (
               <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
                 <CompanyCardHistory
                   item={dataBookmark.CompanyData}
@@ -277,10 +277,10 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
             </Button>
           </Box>
         </div>
-      ) : activeChild === '5-1' ? (
+      ) : activeChild === '5-1' && companyDataView?.length !== 0 ? (
         <div className="history-post" style={{ marginTop: '16px' }}>
           <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-            {companyDataView.map((dataView: any, index: number) => (
+            {companyDataView?.map((dataView: any, index: number) => (
               <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
                 <CompanyViewCardHistory
                   item={dataView}
@@ -321,17 +321,22 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
         <NoCompanyData />
       )}
 
-      <Backdrop
-        sx={{
-          color: '#0d99ff ',
-          backgroundColor: 'transparent',
-          zIndex: (theme: any) => theme.zIndex.drawer + 1,
-        }}
-        open={false}
-        // onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      {(activeChild === '5-1' && companyDataView?.length !== 0) ||
+      (activeChild === '5-1' && companyData?.length !== 0) ? (
+        <Backdrop
+          sx={{
+            color: '#0d99ff ',
+            backgroundColor: 'transparent',
+            zIndex: (theme: any) => theme.zIndex.drawer + 1,
+          }}
+          open={false}
+          // onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      ) : (
+        <></>
+      )}
     </>
   );
 };
