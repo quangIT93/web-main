@@ -163,9 +163,20 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
   };
 
   useEffect(() => {
-    handleGetCompany();
-    handleGetCompanyView();
-  }, [saveCompanyList, newOld]);
+    console.log('activeChild', activeChild);
+    switch (activeChild) {
+      case '5-0':
+        handleGetCompany();
+        break;
+
+      case '5-1':
+        handleGetCompanyView();
+        break;
+
+      default:
+        break;
+    }
+  }, [saveCompanyList, newOld, activeChild]);
 
   const sortDataByDate = (value: any, arrayData: any) => {
     if (value === 1) {

@@ -58,6 +58,8 @@ import locationApi from 'api/locationApi';
 import profileApi from 'api/profileApi';
 import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
 import ModalNotiValidateCompany from '#components/Post/ModalNotiValidateCompany';
+//@ts-ignore
+import { FillDataPost } from '#components/Icons';
 
 // redux
 // import { RootState } from 'store';
@@ -822,12 +824,12 @@ const Post: React.FC = () => {
             <h1>{language?.profile_page?.create_post}</h1>
             <div className="post-main_switch">
               <h4>{language?.post_page?.auto_fill}</h4>
-              <Switch
-                checked={openModalFillDataPost}
-                // checkedHelmetren=""
-                // unCheckedChildren=""
-                onChange={() => setOpenFillDataPost(!openModalFillDataPost)}
-              />
+              <div
+                onClick={() => setOpenFillDataPost(!openModalFillDataPost)}
+                style={{ cursor: 'pointer' }}
+              >
+                <FillDataPost />
+              </div>
             </div>
           </div>
           <div className="fill-company" onClick={handleFillCompany}>

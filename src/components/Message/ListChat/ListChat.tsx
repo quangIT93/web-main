@@ -258,8 +258,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     if (isConnected === false && !socket.current) {
       socket.current = io(
-        'https://aiworks.vn',
-        // 'https://neoworks.vn',
+        // 'https://aiworks.vn',
+        'https://neoworks.vn',
         {
           extraHeaders: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -471,7 +471,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             <div className="wrap_img">
               <img
                 src={
-                  userInfoChat.avatar ? userInfoChat.avatar : userInfoChat.image
+                  userInfoChat.avatar
+                    ? userInfoChat.avatar
+                    : userInfoChat.image
+                      ? userInfoChat.image
+                      : ''
                 }
                 alt={userInfoChat.company_name}
                 onError={(e: any) => {
@@ -491,7 +495,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
               {userInfoChat.isOnline ? (
                 <span>Đang hoạt động</span>
               ) : (
-                <span>offline</span>
+                <span>Offline</span>
               )}
             </div>
           </div>

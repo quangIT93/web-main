@@ -284,7 +284,7 @@ const CandidateNewDetail = () => {
               )} */}
 
               {/* test */}
-              {/* <Button
+              <Button
                 type="primary"
                 ghost
                 className="btn-mess"
@@ -295,9 +295,16 @@ const CandidateNewDetail = () => {
                   justifyContent: 'center',
                 }}
                 onClick={() => {
-                  console.log('click');
+                  if (candidate?.isUnlocked === false) {
+                    setOpenModalNotiUnclock(true);
+                  } else {
+                    window.open(
+                      `/message?post_id=${null}&user_id=${candidate.accountId} `,
+                      '_parent',
+                    );
+                  }
                 }}
-              ></Button> */}
+              ></Button>
               {candidate?.isUnlocked === false && (
                 <Popover
                   placement="bottom"
