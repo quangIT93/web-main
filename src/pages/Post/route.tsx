@@ -11,9 +11,9 @@ const route: RouteProps = {
   component: (
     <>
       <MainLayout>
-          <PostProtect>
-            <Post />
-          </PostProtect>
+        <PostProtect>
+          <Post />
+        </PostProtect>
       </MainLayout>
       <ToastContainer
         style={{

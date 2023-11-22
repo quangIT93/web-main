@@ -594,7 +594,7 @@ const Profile: React.FC = () => {
                   <h2>
                     {profileV3?.name ? profileV3?.name : language?.unupdated}
                   </h2>
-                  {/* <ChangeRoleButton /> */}
+                  <ChangeRoleButton />
                   {/* <div className="wrap-company">
                     <div className="wrap-company_info">
                       <h2

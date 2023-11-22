@@ -91,19 +91,19 @@ const HistoryPost = () => {
         ? '4-0'
         : companyView === 50
           ? '5-0'
-          : // companyView === 51
-            //   ? '5-1' :
-            community_post === 31
-            ? '3-1'
-            : community_post === 30
-              ? '3-0'
-              : saved_jobs === 1
-                ? '1-0'
-                : recruitment_post === 'opening'
-                  ? '2-1'
-                  : recruitment_post === 'closed'
-                    ? '2-2'
-                    : '0-0',
+          : companyView === 51
+            ? '5-1'
+            : community_post === 31
+              ? '3-1'
+              : community_post === 30
+                ? '3-0'
+                : saved_jobs === 1
+                  ? '1-0'
+                  : recruitment_post === 'opening'
+                    ? '2-1'
+                    : recruitment_post === 'closed'
+                      ? '2-2'
+                      : '0-0',
   );
   const [ItemLeft, setItemLeft] = React.useState<null | number>(
     hotjobtype === 2
@@ -214,9 +214,9 @@ const HistoryPost = () => {
       title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
       childs: [
         languageRedux === 1 ? 'Công ty đã lưu' : 'Saved company',
-        // languageRedux === 1
-        //   ? 'Nhà tuyển dụng xem hồ sơ'
-        //   : 'Employers view resumes',
+        languageRedux === 1
+          ? 'Nhà tuyển dụng xem hồ sơ'
+          : 'Employers view resumes',
       ],
     },
   ];
@@ -299,9 +299,9 @@ const HistoryPost = () => {
 
       {activeChild === '5-0'
         ? language?.all
-        : // : activeChild === '5-1'
-          //   ? language?.history_page?.have_been_created
-          ''}
+        : activeChild === '5-1'
+          ? language?.history_page?.have_been_created
+          : ''}
     </Typography>,
   ];
   const CardsPost = useMemo(() => {

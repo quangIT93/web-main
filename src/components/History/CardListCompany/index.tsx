@@ -210,17 +210,13 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
         >
           {languageRedux === 1 ? 'Danh sách công ty' : 'List of companies'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-            {
-              searchParams.get('c') === '5-0'
-                ? languageRedux === 1
-                  ? ' > Công ty đã lưu'
-                  : ' > Saved company'
-                : ''
-
-              // : searchParams.get('c') === '5-1'
-              //   ? ' > Nhà tuyển dụng xem hồ sơ'
-              //   : '> Employers view resumes'
-            }
+            {searchParams.get('c') === '5-0'
+              ? languageRedux === 1
+                ? ' > Công ty đã lưu'
+                : ' > Saved company'
+              : searchParams.get('c') === '5-1'
+                ? ' > Nhà tuyển dụng xem hồ sơ'
+                : '> Employers view resumes'}
           </span>
         </Typography>
         <TextField
