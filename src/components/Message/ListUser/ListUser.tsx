@@ -87,13 +87,16 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           languageRedux === 1 ? 'vi' : 'en',
           searchParams.get('user_id'),
         );
+
+        console.log('result', result);
+
         if (result) {
           setUserInfoChat({
             avatar: result?.data?.avatarPath,
             image: result?.data?.avatarPath,
             company_name: '',
             is_online: false,
-            name: '',
+            name: result?.data?.name,
             post_title: '',
             salary_min: '',
             salary_max: '',
