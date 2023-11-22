@@ -565,7 +565,7 @@ const NewPageCV = () => {
                         }}
                     >
                         {languageRedux === 1
-                            ? 'Bạn không phải là ứng vử viên!'
+                            ? 'Bạn không phải là ứng cử viên!'
                             : 'You are not a candidate!'}
                     </h3>
                 }
