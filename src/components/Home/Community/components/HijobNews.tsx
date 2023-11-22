@@ -83,7 +83,14 @@ const HijobNews = () => {
           <h3>{languageRedux === 1 ? 'Tin tức' : 'Recruitment News'}</h3>
         </div>
         <p onClick={() => window.open('/news-comunity', '_parent')}>
-          {language?.home_page?.view_all}
+          {
+            languageRedux === 1 ?
+              "Xem tất cả" :
+              languageRedux === 2 ?
+                "View all" :
+                languageRedux === 3 &&
+                "다 보기"
+          }
         </p>
       </div>
       <div className="community-content-body">

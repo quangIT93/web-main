@@ -361,7 +361,14 @@ const NewJobs: React.FC = () => {
               </div>
             </div>
             {/* <div className="view-all" onClick={handleMoveToMoreJob}>
-              <p>{language?.home_page?.view_all}</p>
+              <p> {
+              languageRedux === 1 ?
+                "Xem tất cả" :
+                languageRedux === 2 ?
+                  "View all" :
+                  languageRedux === 3 &&
+                  "다 보기"
+            }</p>
               <ArrowrightIcon width={20} height={20} />
             </div> */}
           </div>
@@ -380,7 +387,14 @@ const NewJobs: React.FC = () => {
                 display: !postNewestV3.data || postNewestV3.data.length === 0 ? 'none' : 'flex'
               }}
             >
-              <p>{language?.home_page?.view_all}</p>
+              <p> {
+                languageRedux === 1 ?
+                  "Xem tất cả" :
+                  languageRedux === 2 ?
+                    "View all" :
+                    languageRedux === 3 &&
+                    "다 보기"
+              }</p>
               <ArrowrightIcon width={20} height={20} />
             </div>
           </Skeleton>

@@ -68,8 +68,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     setValueNameCv(
-      `${profileV3.name} - Resume ${
-        Number(localStorage.getItem('cv-id')) || 1
+      `${profileV3.name} - Resume ${Number(localStorage.getItem('cv-id')) || 1
       }`,
     );
   }, [profileV3]);
@@ -225,7 +224,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     }
   }, [getThemeCv]);
 
-  const handleChangeCategory = async () => {};
+  const handleChangeCategory = async () => { };
 
   const handleSelectTemplate = (id: any, name: string) => {
     setSelectedThemeId(id);
@@ -240,7 +239,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       if (result) {
         setGetThemeCv(result.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // console.log('aaa');
@@ -303,9 +302,9 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
             <div
               className={
                 item?.id ===
-                (Number(localStorage.getItem('cv-id'))
-                  ? Number(localStorage.getItem('cv-id'))
-                  : 1)
+                  (Number(localStorage.getItem('cv-id'))
+                    ? Number(localStorage.getItem('cv-id'))
+                    : 1)
                   ? 'template-item active'
                   : 'template-item'
               }
@@ -410,14 +409,21 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                 window.open('/profile-cv', '_parent');
               }}
             >
-              {language?.home_page?.view_all}
+              {
+                languageRedux === 1 ?
+                  "Xem tất cả" :
+                  languageRedux === 2 ?
+                    "View all" :
+                    languageRedux === 3 &&
+                    "다 보기"
+              }
             </p>
           </div>
         </div>
         <div
           className="contentCv-bottom-right_cv"
           id="page"
-          // dangerouslySetInnerHTML={{ __html: htmlCv }}
+        // dangerouslySetInnerHTML={{ __html: htmlCv }}
         >
           <>
             {/* <PreviewTheme1 /> */}

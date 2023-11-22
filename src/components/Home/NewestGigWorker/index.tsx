@@ -53,7 +53,9 @@ const NewestGigWorker = () => {
               ? 6
               : 18,
         page,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi'
+          : languageRedux === 2 ? 'en'
+            : languageRedux === 3 ? 'ko' : 'vi',
       );
 
       if (result) {
@@ -100,7 +102,14 @@ const NewestGigWorker = () => {
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <IconNewestWorker width={25} height={25} />
           <h2>
-            {languageRedux === 1 ? 'Ứng viên mới nhất' : 'Newest workers'}
+            {
+              languageRedux === 1 ?
+                "Ứng viên mới nhất" :
+                languageRedux === 2 ?
+                  "Newest workers" :
+                  languageRedux === 3 &&
+                  "최신 후보"
+            }
           </h2>
         </div>
         {/* {profileV3?.typeRoleData === 1 ? (
@@ -130,8 +139,8 @@ const NewestGigWorker = () => {
           {listData?.map((item: any, index: number) => {
             return (
 
-                <ItemCadidate item={item} key={index} />
-        
+              <ItemCadidate item={item} key={index} />
+
             );
           })}
         </div>
@@ -143,7 +152,14 @@ const NewestGigWorker = () => {
             }}
           >
             <p style={{ cursor: 'pointer' }}>
-              {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
+              {
+                languageRedux === 1 ?
+                  "Xem tất cả" :
+                  languageRedux === 2 ?
+                    "View all" :
+                    languageRedux === 3 &&
+                    "다 보기"
+              }
             </p>
             <ArrowrightIcon width={20} height={20} />
           </div>

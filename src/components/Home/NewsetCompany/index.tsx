@@ -36,7 +36,9 @@ const NewestCompany = () => {
         undefined,
         12,
         0,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi'
+          : languageRedux === 2 ? 'en'
+            : languageRedux === 3 ? 'ko' : 'vi',
       );
       if (result) {
         setLoading(false);
@@ -122,7 +124,14 @@ const NewestCompany = () => {
         }}
       >
         <p style={{ cursor: 'pointer' }}>
-          {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
+          {
+            languageRedux === 1 ?
+              "Xem tất cả" :
+              languageRedux === 2 ?
+                "View all" :
+                languageRedux === 3 &&
+                "다 보기"
+          }
         </p>
         <ArrowrightIcon width={20} height={20} />
       </div>

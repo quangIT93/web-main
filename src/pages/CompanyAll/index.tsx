@@ -49,7 +49,9 @@ const CompanyAll = () => {
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi'
+          : languageRedux === 2 ? 'en'
+            : languageRedux === 3 ? 'ko' : 'vi',
       );
       if (result) {
         // setDataLocations(result.data);

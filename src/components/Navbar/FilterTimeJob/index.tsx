@@ -181,9 +181,8 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <CalendarFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterTimeJob input-filter_nav ${
-          isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
-        }`}
+        className={`inputFilterTimeJob input-filter_nav ${isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
+          }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -192,19 +191,31 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <Panel
           header={
             isRemotely || isWorkingWeekend
-              ? `${
-                  isWorkingWeekend
-                    ? languageRedux === 1
-                      ? 'Làm việc cuối tuần'
-                      : 'Working on the weekend'
-                    : ''
-                } 
+              ? `${isWorkingWeekend
+                ? languageRedux === 1 ?
+                  "Làm việc cuối tuần" :
+                  languageRedux === 2 ?
+                    "Working on the weekend" :
+                    languageRedux === 3 &&
+                    "주말에 일하기"
+                : ''
+              } 
             ${isWorkingWeekend && isRemotely ? '-' : ''}
             
-            ${isRemotely ? language?.remote_work : ''}`
-              : languageRedux === 1
-              ? 'Thời gian làm việc'
-              : 'Working period'
+            ${isRemotely ?
+                languageRedux === 1 ?
+                  "Làm việc từ xa" :
+                  languageRedux === 2 ?
+                    "Remote work" :
+                    languageRedux === 3 &&
+                    "원격작업"
+                : ''}`
+              : languageRedux === 1 ?
+                "Thời gian làm việc" :
+                languageRedux === 2 ?
+                  "Working period" :
+                  languageRedux === 3 &&
+                  "근무 시간"
           }
           key="1"
           style={{ fontSize: '12px' }}
@@ -228,22 +239,36 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
 
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <FormControlLabel
-              label={languageRedux === 1 ? 'Tất cả' : 'All'}
+              label={
+                languageRedux === 1 ?
+                  "Tất cả" :
+                  languageRedux === 2 ?
+                    "All" :
+                    languageRedux === 3 &&
+                    "모두"
+              }
               control={
                 <Checkbox
                   checked={
                     reset
                       ? false
                       : isWorkingWeekend === 0 || isRemotely === 0
-                      ? false
-                      : true
+                        ? false
+                        : true
                   }
                   onChange={handleChangAll}
                 />
               }
             />
             <FormControlLabel
-              label={language?.working_on_the_weekend}
+              label={
+                languageRedux === 1 ?
+                  "Làm việc cuối tuần" :
+                  languageRedux === 2 ?
+                    "Working on the weekend" :
+                    languageRedux === 3 &&
+                    "주말에 일하기"
+              }
               control={
                 <Checkbox
                   checked={
@@ -254,7 +279,14 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
               }
             />
             <FormControlLabel
-              label={language?.remote_work}
+              label={
+                languageRedux === 1 ?
+                  "Làm việc từ xa" :
+                  languageRedux === 2 ?
+                    "Remote work" :
+                    languageRedux === 3 &&
+                    "원격작업"
+              }
               control={
                 <Checkbox
                   checked={reset ? false : isRemotely === 0 ? false : true}

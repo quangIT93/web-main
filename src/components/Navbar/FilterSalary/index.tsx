@@ -333,9 +333,8 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
         <MoneyFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterSalary input-filter_nav ${
-          inputValueMin || salaryMax ? 'activeSalary' : ''
-        }`}
+        className={`inputFilterSalary input-filter_nav ${inputValueMin || salaryMax ? 'activeSalary' : ''
+          }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -345,20 +344,34 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           header={
             salaryMax || salaryMin
               ? `${new Intl.NumberFormat('en-US').format(
-                  Number(salaryMin?.toString().replace(',', '')),
-                )} - ${new Intl.NumberFormat('en-US').format(
-                  Number(salaryMax?.toString().replace(',', '')),
-                )}`
-              : language?.salary
+                Number(salaryMin?.toString().replace(',', '')),
+              )} - ${new Intl.NumberFormat('en-US').format(
+                Number(salaryMax?.toString().replace(',', '')),
+              )}`
+              : languageRedux === 1 ?
+                "Mức lương" :
+                languageRedux === 2 ?
+                  "Salary" :
+                  languageRedux === 3 &&
+                  "샐러리/급여"
           }
           key="1"
         >
-          <Text className="title-filterSalary">{language?.salary}</Text>
+          <Text className="title-filterSalary">
+            {
+              languageRedux === 1 ?
+                "Mức lương" :
+                languageRedux === 2 ?
+                  "Salary" :
+                  languageRedux === 3 &&
+                  "샐러리/급여"
+            }
+          </Text>
           <Radio.Group
             value={reset ? 1 : selectedValue}
             onChange={handleRadioChange}
             className="inputFilter-groupSalary_radio"
-            // defaultValue={Type_Money}
+          // defaultValue={Type_Money}
           >
             <Radio value={1}>VND</Radio>
             <Radio value={2}>USD</Radio>
@@ -375,11 +388,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
               //   :
               salaryMin
                 ? new Intl.NumberFormat('en-US').format(
-                    Number(salaryMin.toString().replace(',', '')),
-                  )
+                  Number(salaryMin.toString().replace(',', '')),
+                )
                 : new Intl.NumberFormat('en-US').format(
-                    Number(salaryMin?.toString().replace(',', '')),
-                  )
+                  Number(salaryMin?.toString().replace(',', '')),
+                )
             }
             onChange={handleInputChangeSalaryMin}
             className="input-text_salary"
@@ -397,11 +410,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
               //   :
               salaryMax
                 ? new Intl.NumberFormat('en-US').format(
-                    Number(salaryMax.toString().replace(',', '')),
-                  )
+                  Number(salaryMax.toString().replace(',', '')),
+                )
                 : new Intl.NumberFormat('en-US').format(
-                    Number(salaryMax?.toString().replace(',', '')),
-                  )
+                  Number(salaryMax?.toString().replace(',', '')),
+                )
             }
             onChange={handleInputChangeSalaryMax}
             className="input-text_salary"

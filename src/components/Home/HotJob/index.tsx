@@ -112,7 +112,9 @@ const HotJob: React.FC = () => {
     try {
       setLoading(true);
       const result = await hotJobApi.getHotJobTheme(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi'
+          : languageRedux === 2 ? 'en'
+            : languageRedux === 3 ? 'ko' : 'vi',
       );
 
       if (result) {
@@ -196,10 +198,26 @@ const HotJob: React.FC = () => {
       <div className="title-container">
         <div className="title">
           <FireIcon width={25} height={25} />
-          <h2>{languageRedux === 1 ? 'Công việc nổi bật' : 'Hot Jobs'}</h2>
+          <h2>
+            {
+              languageRedux === 1 ?
+                "Công việc nổi bật" :
+                languageRedux === 2 ?
+                  "Hot jobs" :
+                  languageRedux === 3 &&
+                  "핫잡스"
+            }
+          </h2>
         </div>
         {/* <div className="view-all" onClick={handleMoveToMoreJob}>
-          <p>{language?.home_page?.view_all}</p>
+          <p> {
+              languageRedux === 1 ?
+                "Xem tất cả" :
+                languageRedux === 2 ?
+                  "View all" :
+                  languageRedux === 3 &&
+                  "다 보기"
+            }</p>
           <ArrowrightIcon width={20} height={20} />
         </div> */}
       </div>
@@ -254,7 +272,16 @@ const HotJob: React.FC = () => {
             display: !hotjob || hotjob.length === 0 ? 'none' : 'flex'
           }}
         >
-          <p>{language?.home_page?.view_all}</p>
+          <p>
+            {
+              languageRedux === 1 ?
+                "Xem tất cả" :
+                languageRedux === 2 ?
+                  "View all" :
+                  languageRedux === 3 &&
+                  "다 보기"
+            }
+          </p>
           <ArrowrightIcon width={20} height={20} />
         </div>
       </Skeleton>

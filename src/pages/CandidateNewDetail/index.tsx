@@ -141,7 +141,7 @@ const CandidateNewDetail = () => {
           dispatch<any>(setAlertSuccess(true));
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -161,7 +161,7 @@ const CandidateNewDetail = () => {
       if (resultBookmark) {
         setBookmarkCandidate(resultBookmark.data.total);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -230,14 +230,12 @@ const CandidateNewDetail = () => {
                   style={{
                     height: '70px',
                     width: '70px',
-                    filter: `${
-                      candidate?.isUnlocked === false ? 'blur(3px)' : ''
-                    }`,
-                    cursor: `${
-                      candidate?.isUnlocked === true && candidate?.avatarPath
+                    filter: `${candidate?.isUnlocked === false ? 'blur(3px)' : ''
+                      }`,
+                    cursor: `${candidate?.isUnlocked === true && candidate?.avatarPath
                         ? 'pointer'
                         : ''
-                    }`,
+                      }`,
                   }}
                   alt={candidate?.avatarPath}
                   src={candidate?.avatarPath ? candidate?.avatarPath : ''}
@@ -392,11 +390,11 @@ const CandidateNewDetail = () => {
                       ? 'Xem hồ sơ'
                       : 'Have a resume'
                     : languageRedux === 1
-                    ? 'Không có hồ sơ'
-                    : 'Not have a resume'
+                      ? 'Không có hồ sơ'
+                      : 'Not have a resume'
                   : languageRedux === 1
-                  ? 'Xem hồ sơ'
-                  : 'View resume'}
+                    ? 'Xem hồ sơ'
+                    : 'View resume'}
               </Button>
 
               <div
@@ -451,11 +449,11 @@ const CandidateNewDetail = () => {
               <p>
                 {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
-                      .format('DD/MM/YYYY')
-                      .replace(/\d{2}$/, 'xx')
+                    .format('DD/MM/YYYY')
+                    .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
-                  ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
-                  : language?.unupdated}
+                    ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
+                    : language?.unupdated}
               </p>
               <p>
                 {candidate?.genderText
@@ -555,14 +553,14 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
               ? candidate?.profileCategories?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.parentCategory.fullName}
-                      {'/ '}
-                      {item.fullName}
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    {item.parentCategory.fullName}
+                    {'/ '}
+                    {item.fullName}
+                  </Button>
+                ),
+              )
               : language?.unupdated}
           </Space>
         </div>
@@ -579,12 +577,12 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
               ? candidate?.profileLocations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.fullName}
-                    {', '}
-                    {item.province.fullName}
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  {item?.fullName}
+                  {', '}
+                  {item.province.fullName}
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -664,11 +662,11 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
               ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <span>{item.skillName}</span>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  <span>{item.skillName}</span>
+                  <span>{item.dataLevel.data}</span>
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -687,13 +685,13 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0
               ? candidate?.profilesLanguages?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      <h3>{item.languageName}</h3>
-                      <span>{item.dataLevel.data}</span>
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    <h3>{item.languageName}</h3>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ),
+              )
               : language?.unupdated}
           </Space>
         </div>
@@ -742,13 +740,13 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesReferences?.length !== 0
               ? candidate?.profilesReferences?.map((item: any) => (
-                  <Button key={item.id} className="btn" type="text">
-                    <h3>{item.fullName}</h3>
-                    <span>{item.phone}</span>
-                    <span>{item.email}</span>
-                    <span>{item.description}</span>
-                  </Button>
-                ))
+                <Button key={item.id} className="btn" type="text">
+                  <h3>{item.fullName}</h3>
+                  <span>{item.phone}</span>
+                  <span>{item.email}</span>
+                  <span>{item.description}</span>
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>

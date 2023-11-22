@@ -8,6 +8,7 @@ import breakpoints from '../../scss/breakpoints';
 import {
   ENSubLoginIcon,
   FaceBookIcon,
+  KoreanSubLoginIcon,
   VNSubLoginIcon,
 } from '#components/Icons';
 
@@ -156,7 +157,7 @@ const Footer: React.FC = () => {
     // console.log('Current window width:', currentWidth);
   });
 
-  useEffect(() => {}, [languageRedux]);
+  useEffect(() => { }, [languageRedux]);
 
   useEffect(() => {
     if (windowWidth) {
@@ -203,15 +204,15 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-                transform: 'translateY(calc(-100% - 36px))',
-                borderTop: '1px solid #ccc',
-              }
+              transform: 'translateY(calc(-100% - 36px))',
+              borderTop: '1px solid #ccc',
+            }
             : !open && !windowWidth
-            ? {
+              ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-            : { transform: 'none' }
+              : { transform: 'none' }
         }
       >
         <div
@@ -239,29 +240,112 @@ const Footer: React.FC = () => {
               />
             </div>
 
-            <h3>{language?.connect_talent}</h3>
-            <p>{language?.footer?.company_name}</p>
-            <p>{language?.footer?.company_location}</p>
-            <p>{language?.footer?.legal_representative}</p>
-            <p>{language?.footer?.position_director}</p>
+            <h3>
+              {
+                languageRedux === 1 ?
+                  "Kết nối tài năng" :
+                  languageRedux === 2 ?
+                    "Connect talent" :
+                    languageRedux === 3 &&
+                    "인재 모임"
+              }
+            </h3>
+            <p>
+              {
+                languageRedux === 1 ?
+                  "Công ty TNHH NeoWorks., LTD" :
+                  languageRedux === 2 ?
+                    "NeoWorks Co., LTD" :
+                    languageRedux === 3 &&
+                    "NeoWorks 주식회사, LTD"
+              }
+            </p>
+            <p>
+              {
+                languageRedux === 1 ?
+                  "Địa chỉ: 79 Quốc Hương, P. Thảo Điền, Quận 2, TP HCM" :
+                  languageRedux === 2 ?
+                    "Address: 79 Quoc Huong, Thao Dien Ward, District 2, HCMC" :
+                    languageRedux === 3 &&
+                    "주소: 79 Quoc Huong, P. 호치민시 2군, HCM시"
+              }
+            </p>
+            <p>
+              {
+                languageRedux === 1 ?
+                  "Đại diện pháp luật: Kim Dongha" :
+                  languageRedux === 2 ?
+                    "Legal representative: Kim Dongha" :
+                    languageRedux === 3 &&
+                    "법인대표 : 김동하"
+              }
+            </p>
+            <p>
+              {
+                languageRedux === 1 ?
+                  "Chức vụ: Giám đốc" :
+                  languageRedux === 2 ?
+                    "Position: Director" :
+                    languageRedux === 3 &&
+                    "직무: 사장"
+              }
+            </p>
           </div>
           <div className="footer-center">
-            <h4>{language?.footer?.about_hijob}</h4>
+            <h4>
+              {
+                languageRedux === 1 ?
+                  "Về HiJob" :
+                  languageRedux === 2 ?
+                    "About HiJob" :
+                    languageRedux === 3 &&
+                    "Hi Job에 대해서"
+              }
+            </h4>
             <Link to="/policy#about-us" target="_seft">
-              {language?.footer?.about_hijob}
+              {
+                languageRedux === 1 ?
+                  "Về HiJob" :
+                  languageRedux === 2 ?
+                    "About HiJob" :
+                    languageRedux === 3 &&
+                    "Hi Job에 대해서"
+              }
             </Link>
 
             <Link to="/policy#privacy-policy" target="_seft">
               {' '}
-              {language?.footer?.privacy_policy}{' '}
+              {
+                languageRedux === 1 ?
+                  "Chính sách bảo mật" :
+                  languageRedux === 2 ?
+                    "Privacy Policy" :
+                    languageRedux === 3 &&
+                    "보안 정책"
+              }{' '}
             </Link>
 
             <Link to="/policy#terms-of-use" target="_seft">
               {' '}
-              {language?.footer?.terms_of_use}{' '}
+              {
+                languageRedux === 1 ?
+                  "Điều khoản sử dụng" :
+                  languageRedux === 2 ?
+                    "Terms of Use" :
+                    languageRedux === 3 &&
+                    "이용약관"
+              }{' '}
             </Link>
-
-            <h4>{language?.footer?.connect}</h4>
+            <h4>
+              {
+                languageRedux === 1 ?
+                  "Liên kết" :
+                  languageRedux === 2 ?
+                    "Link" :
+                    languageRedux === 3 &&
+                    "연결"
+              }
+            </h4>
             <div className="link-facebook">
               <FaceBookIcon />
               <Link to="https://www.facebook.com/hijobOfficial" target="_blank">
@@ -271,7 +355,16 @@ const Footer: React.FC = () => {
           </div>
           <div className="footer-right">
             <div className="right-top">
-              <h4>{language?.download_hijob_app}</h4>
+              <h4>
+                {
+                  languageRedux === 1 ?
+                    "Tải Ứng dụng HiJob!" :
+                    languageRedux === 2 ?
+                      "Download HiJob App!" :
+                      languageRedux === 3 &&
+                      "HiJob 앱 다운로드!"
+                }
+              </h4>
               <div className="div-img-footer">
                 <img
                   width={124}
@@ -350,7 +443,17 @@ const Footer: React.FC = () => {
           }
         >
           <Link to="/policy" target="_parent">
-            <p>{language?.footer?.usage_policy}</p>
+            <p>
+              {
+                // language?.footer?.usage_policy
+                languageRedux === 1 ?
+                  "Chính sách sử dụng" :
+                  languageRedux === 2 ?
+                    "Terms & Policies" :
+                    languageRedux === 3 &&
+                    "이용약관"
+              }
+            </p>
           </Link>
           <div id="div-policy-footer-right">
             <div
@@ -361,7 +464,15 @@ const Footer: React.FC = () => {
               }}
             >
               <p style={{ color: '#575757', fontSize: '12px' }}>
-                {language?.footer?.customer_service_center}
+                {
+                  // language?.footer?.customer_service_center
+                  languageRedux === 1 ?
+                    "Tổng đài CSKH" :
+                    languageRedux === 2 ?
+                      "Customer Call Center" :
+                      languageRedux === 3 &&
+                      "고객관리 교환국"
+                }
               </p>
               <p style={{ color: '#575757', marginLeft: '5px' }}>
                 (028) 35358983
@@ -376,16 +487,34 @@ const Footer: React.FC = () => {
               key="1"
               className="language"
               onClick={(e: any) => {
-                languageRedux === 1
-                  ? totgleLanguage(e, 2)
-                  : totgleLanguage(e, 1);
+                // languageRedux === 1
+                //   ? totgleLanguage(e, 2)
+                //   : totgleLanguage(e, 1);
+                switch (languageRedux) {
+                  case 1:
+                    totgleLanguage(e, 2)
+                    break;
+                  case 2:
+                    totgleLanguage(e, 3)
+                    break;
+                  case 3:
+                    totgleLanguage(e, 1)
+                    break;
+
+                  default:
+                    break;
+                }
               }}
             >
-              {languageRedux === 1 ? (
-                <VNSubLoginIcon width={20} height={20} />
-              ) : (
-                <ENSubLoginIcon width={20} height={20} />
-              )}
+              {
+                languageRedux === 1 ? (
+                  <VNSubLoginIcon width={20} height={20} />
+                ) : languageRedux === 2 ? (
+                  <ENSubLoginIcon width={20} height={20} />
+                ) : languageRedux === 3 && (
+                  <KoreanSubLoginIcon width={20} height={20} />
+                )
+              }
             </div>
             <Link
               to="mailto:contact.hijob@gmail.com"

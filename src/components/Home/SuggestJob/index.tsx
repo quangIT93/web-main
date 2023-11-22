@@ -270,7 +270,14 @@ const ThemesJob: React.FC = () => {
             display: !localStorage.getItem('accessToken') ? 'none' : 'flex',
           }}
         >
-          <p>{language?.home_page?.view_all}</p>
+          <p> {
+              languageRedux === 1 ?
+                "Xem tất cả" :
+                languageRedux === 2 ?
+                  "View all" :
+                  languageRedux === 3 &&
+                  "다 보기"
+            }</p>
           <ArrowrightIcon width={20} height={20} />
         </div> */}
       </div>
@@ -387,7 +394,14 @@ const ThemesJob: React.FC = () => {
                 'none' : 'flex',
             }}
           >
-            <p>{language?.home_page?.view_all}</p>
+            <p> {
+              languageRedux === 1 ?
+                "Xem tất cả" :
+                languageRedux === 2 ?
+                  "View all" :
+                  languageRedux === 3 &&
+                  "다 보기"
+            }</p>
             <ArrowrightIcon width={20} height={20} />
           </div>
         </Skeleton>

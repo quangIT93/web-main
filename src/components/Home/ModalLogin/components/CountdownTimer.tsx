@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 interface PropsCountDown {
   // resendCode: boolean
@@ -7,7 +9,9 @@ interface PropsCountDown {
 
 const CountdownTimer: React.FC<PropsCountDown> = (props) => {
   const { setResendCode } = props;
-
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [seconds, setSeconds] = useState(180);
 
   useEffect(() => {
@@ -43,7 +47,13 @@ const CountdownTimer: React.FC<PropsCountDown> = (props) => {
 
   return (
     <p className="resend-otp_countDown" style={{ color: '#5d5d5d ' }}>
-      {' sau ' + formatTime(seconds)}
+      {` ${languageRedux === 1 ?
+          "sau" :
+          languageRedux === 2 ?
+            "after" :
+            languageRedux === 3 &&
+            "후"
+        } ` + formatTime(seconds)}
     </p>
   );
 };

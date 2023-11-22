@@ -91,7 +91,14 @@ const WorkingStory = () => {
             localStorage.setItem('community', '.community-container');
           }}
         >
-          {language?.home_page?.view_all}
+          {
+            languageRedux === 1 ?
+              "Xem tất cả" :
+              languageRedux === 2 ?
+                "View all" :
+                languageRedux === 3 &&
+                "다 보기"
+          }
         </p>
       </div>
       <div className="community-content-body">

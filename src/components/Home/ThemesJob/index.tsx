@@ -261,7 +261,14 @@ const ThemesJob: React.FC = () => {
           </div>
         </div>
         {/* <div className="view-all" onClick={handleMoveToMoreJob}>
-          <p>{language?.home_page?.view_all}</p>
+          <p> {
+              languageRedux === 1 ?
+                "Xem tất cả" :
+                languageRedux === 2 ?
+                  "View all" :
+                  languageRedux === 3 &&
+                  "다 보기"
+            }</p>
           <ArrowrightIcon width={20} height={20} />
         </div> */}
       </div>
@@ -338,7 +345,14 @@ const ThemesJob: React.FC = () => {
             display: !post || post.length === 0 || post.length < 10 ? 'none' : 'flex'
           }}
         >
-          <p>{language?.home_page?.view_all}</p>
+          <p> {
+            languageRedux === 1 ?
+              "Xem tất cả" :
+              languageRedux === 2 ?
+                "View all" :
+                languageRedux === 3 &&
+                "다 보기"
+          }</p>
           <ArrowrightIcon width={20} height={20} />
         </div>
       </Skeleton>
