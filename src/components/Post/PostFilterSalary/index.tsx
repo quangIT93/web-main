@@ -17,10 +17,11 @@ interface PropsSalaryFilterSubnav {
   salaryType?: number;
   language: any;
   languageRedux: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
-  const { setSalaryMax, setSalaryMin, salaryMax, salaryMin, salaryType, languageRedux, language } =
+  const { setSalaryMax, setSalaryMin, salaryMax, salaryMin, salaryType, languageRedux, language, setIsValidSubmit } =
     props;
   // const VND_TO_USD = 0.000043; // Conversion rate: 1 VND = 0.000043 USD
   // const USD_TO_VND = 23155;
@@ -38,6 +39,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
 
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       setSalaryMin(inputValue.replace(',', ''));
+      setIsValidSubmit(false)
     }
   };
   const handleChangesalaryMax = (
@@ -49,6 +51,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
     const reg = /[0-9]+$/;
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       setSalaryMax(inputValue.replace(',', ''));
+      setIsValidSubmit(false)
     }
   };
 

@@ -7,7 +7,6 @@ import { Button, InputRef, Skeleton, Spin, message } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { SaveIconFill, SaveIconOutline } from '#components/Icons';
-
 import nonAvatar from '../../../img/male_null_avatar.png';
 import CompanyRating from '../CompanyRating';
 import ModalReviewNotice from '../ModalReviewNotice';
@@ -47,7 +46,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
   const [companyRating, setCompanyRating] = useState<any>([]);
   const [averageRated, setAverageRated] = useState<any>(null);
   const [isSuccess, setIsSuccess] = useState<any>(false);
-  const [myReview, setMyReview] = useState<any>();
+  const [myReview, setMyReview] = useState<any>({});
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [status, setStatus] = React.useState('');
   const inputRef = useRef<InputRef>(null);
@@ -191,7 +190,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
       setOpenModalLogin(true);
       return;
     }
-    if (myReview === undefined && (star === 0 || review.trim().length === 0)) {
+    if (Object.keys(myReview).length === 0 && (star === 0 || review.trim().length === 0)) {
       setOpenModalReviewNotice(true);
       inputRef.current!.focus({
         cursor: 'end',
@@ -209,14 +208,15 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
       });
       return;
     }
-    myReview === undefined ? handleRateComapy() : handleEditReviewCompany();
-    // console.log("review", review);
-    // console.log("star", star);
+    Object.keys(myReview).length === 0 ? handleRateComapy() : handleEditReviewCompany();
   };
 
   const handleDeleteReview = async () => {
     setOpenModalConfirmDelete(true);
   };
+
+  console.log(myReview);
+
 
   return (
     <div className={styles.review_company_container}>
@@ -263,9 +263,10 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                                 {item.profileData.nameHide
                                   ? item.profileData.nameHide
                                   : languageRedux === 1
-                                  ? 'Thông tin chưa cập nhật'
-                                  : 'Information not updated yet'}
+                                    ? 'Thông tin chưa cập nhật'
+                                    : 'Information not updated yet'}
                               </h2>
+
                               <p>
                                 {moment(item?.createdAt).format('HH:mm') +
                                   ' ' +
@@ -297,7 +298,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         >
           <div className={styles.review_company_title}>
             <h3>{languageRedux === 1 ? 'Đánh giá của bạn' : 'Your review'}</h3>
-            {myReview === undefined ? (
+            {Object.keys(myReview).length === 0 ? (
               <div className={styles.rating}>
                 <input
                   onChange={handleSetStar}
@@ -376,7 +377,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                 }
                 autoSize={{ minRows: 20, maxRows: 22 }}
                 ref={inputRef}
-                // rows={20}
+              // rows={20}
               />
               <div className={styles.notice_input}>
                 {review?.length > 3000 ? (
@@ -396,24 +397,24 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                 )}
                 <span
                   className={styles.number_text}
-                >{`${review?.length}/3000`}</span>
+                >{`${review?.length === undefined ? 0 : review.length}/3000`}</span>
               </div>
             </div>
             <Button
               type="primary"
               ghost
               onClick={handleSubmitReview}
-              // disabled={
-              //     star === 0 && review === '' ? true :
-              //         star === 0 ? true : false}
+            // disabled={
+            //     star === 0 && review === '' ? true :
+            //         star === 0 ? true : false}
             >
-              {myReview === undefined
+              {Object.keys(myReview).length === 0
                 ? languageRedux === 1
                   ? 'Đăng bài đánh giá'
                   : 'Post a review'
                 : languageRedux === 1
-                ? 'Sửa bài đánh giá'
-                : 'Edit a review'}
+                  ? 'Sửa bài đánh giá'
+                  : 'Edit a review'}
             </Button>
           </div>
         </div>
@@ -425,7 +426,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={openBackdrop}
-          //  onClick={handleClose}
+        //  onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>

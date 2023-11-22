@@ -2,7 +2,7 @@ import axiosClient from './axiosClient'
 
 const notificationApi = {
   getNotificationV2: (lang: string, limit: number, page: string) => {
-    const URL = `/v1/notification/all?lang=${lang}&limit=${limit}&page=${page}`
+    const URL = `/v2/notification/all?lang=${lang}&limit=${limit}&page=${page}`
 
     return axiosClient.get(URL, {
       headers: {
@@ -11,7 +11,7 @@ const notificationApi = {
     })
   },
   getNotificationCountNew: (lang: string) => {
-    const URL = `/v1/notification/new?lang=${lang}`
+    const URL = `/v2/notification/new?lang=${lang}`
 
     return axiosClient.get(URL, {
       headers: {

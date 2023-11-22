@@ -57,6 +57,7 @@ import { setLocationApi } from 'store/reducer/locationReducer';
 import locationApi from 'api/locationApi';
 import profileApi from 'api/profileApi';
 import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
+import ModalNotiValidateCompany from '#components/Post/ModalNotiValidateCompany';
 
 // redux
 // import { RootState } from 'store';
@@ -177,11 +178,13 @@ const Post: React.FC = () => {
   const [typeJob, setTypeJob] = useState(1);
   const [isPeriodDate, setIsPeriodDate] = useState<number>(1);
   const [startTime, setStartTime] = React.useState<any>(
-    new Date(2000, 0, 2, 7, 0).getTime(),
+    // new Date(2000, 0, 2, 7, 0).getTime(),
+    new Date(new Date(1970, 0, 2, 7, 0).setHours(7, 0, 0, 0)).getTime(),
   );
 
   const [endTime, setEndTime] = React.useState<any>(
-    new Date(2000, 0, 2, 17, 0).getTime(),
+    // new Date(1970, 0, 2, 17, 0).getTime(),
+    new Date(new Date(1970, 0, 2, 7, 0).setHours(17, 0, 0, 0)).getTime(),
   );
   const profileV3 = useSelector(
     (state: RootState) => state.dataProfileInformationV3.data,
@@ -239,6 +242,9 @@ const Post: React.FC = () => {
     },
   );
 
+  const [openModalNoteValidateCompany, setOpenModalNoteValidateCompany] =
+    React.useState<any>(false);
+
   const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
     React.useState(false);
   const language = useSelector(
@@ -260,7 +266,7 @@ const Post: React.FC = () => {
 
   const [checkPost, setCheckPost] = React.useState<boolean>(false);
   const [openCheckposted, setOpenCheckposted] = React.useState<boolean>(false);
-  const [isFormSubmitted, setIsFormSubmitted] = useState(true);
+  const [isValidSubmit, setIsValidSubmit] = useState(true);
   // const [language, setLanguage] = useState<any>();
 
   // const getlanguageApi = async () => {
@@ -299,50 +305,11 @@ const Post: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (
-      titleJob ||
-      companyName ||
-      description ||
-      typeJob !== 1 ||
-      isPeriodDate !== 1 ||
-      address ||
-      wardId ||
-      phoneNumber ||
-      moneyType !== 1 ||
-      salaryType !== 1 ||
-      categoriesId.length !== 0 ||
-      isRemotely !== 0 ||
-      isWorkingWeekend !== 0 ||
-      salaryMin !== 0 ||
-      salaryMax !== 0 ||
-      selectedFiles.length !== 0
-    ) {
-      setIsFormSubmitted(false);
-    } else {
-      setIsFormSubmitted(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    titleJob,
-    companyName,
-    address,
-    description,
-    wardId,
-    phoneNumber,
-    moneyType,
-    salaryType,
-    categoriesId,
-    isRemotely,
-    isWorkingWeekend,
-    salaryMin,
-    salaryMax,
-    selectedFiles,
-  ]);
+  // console.log(isValidSubmit);
 
   useEffect(() => {
     const handleBeforeUnload = (event: any) => {
-      if (!isFormSubmitted) {
+      if (isValidSubmit === false) {
         const message =
           languageRedux === 1
             ? 'Dữ liệu của bạn chưa được gửi, bạn có chắc chắn muốn rời đi?'
@@ -356,11 +323,12 @@ const Post: React.FC = () => {
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [isFormSubmitted]);
+  }, [isValidSubmit]);
 
   // submit
   const handleSubmit = (
@@ -408,10 +376,6 @@ const Post: React.FC = () => {
     // formData.append('url', Str1q 1q  1q  1q  1qing(formValues.url))
     formData.append('latitude', String(10.761955));
     formData.append('longitude', String(106.70183));
-
-    // for (const pair of formData.entries()) {
-    //   console.log(`${pair[0]}, ${pair[1]}`);
-    // }
 
     if (formData) {
       createNewPost(formData);
@@ -538,9 +502,10 @@ const Post: React.FC = () => {
     }
     if (description === '') {
       return {
-        message: languageRedux === 1 ?
-          "Hãy nhập mô tả công việc." :
-          "Please enter a job description.",
+        message:
+          languageRedux === 1
+            ? 'Hãy nhập mô tả công việc.'
+            : 'Please enter a job description.',
         checkForm: false,
         idError: 12,
       };
@@ -548,9 +513,10 @@ const Post: React.FC = () => {
 
     if (startDate > endDate) {
       return {
-        message: languageRedux === 1
-          ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
-          : 'The start date cannot exceed the end date',
+        message:
+          languageRedux === 1
+            ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
+            : 'The start date cannot exceed the end date',
         checkForm: false,
         idError: 13,
       };
@@ -617,7 +583,7 @@ const Post: React.FC = () => {
             const result = await postApi.createPost(formData);
             // const result = await postApi.createPostV3(formData);
             if (result) {
-              setIsFormSubmitted(false);
+              setIsValidSubmit(true);
               setOpenModalPost(true);
               setCheckPost(true);
             }
@@ -787,14 +753,14 @@ const Post: React.FC = () => {
       } else {
         setOpenModalNoteCreateCompany(true);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const checkPostedToday = async () => {
     try {
       const result = await postApi.checkPostedToday();
       if (result) {
-        if (result.data) {
+        if (result.data && profileV3?.companyInfo?.status === 1) {
           setCheckPost(true);
           setOpenCheckposted(true);
           setOpenModalNoteCreatePost(false);
@@ -814,7 +780,7 @@ const Post: React.FC = () => {
 
   const handleClickForm = () => {
     if (checkPost) {
-      setOpenCheckposted(true);
+      // setOpenCheckposted(true);
     }
   };
 
@@ -851,7 +817,7 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-          // style={{ textAlign: 'center', display: 'block' }}
+            // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>{language?.profile_page?.create_post}</h1>
             <div className="post-main_switch">
@@ -876,6 +842,7 @@ const Post: React.FC = () => {
               titleJob={titleJob}
               companyName={companyName}
               language={language}
+              setIsValidSubmit={setIsValidSubmit}
             />
             <PostAddress
               setWardId={setWardId}
@@ -890,6 +857,7 @@ const Post: React.FC = () => {
               setFillWardId={setFillWardId}
               language={language}
               languageRedux={languageRedux}
+              setIsValidSubmit={setIsValidSubmit}
             />
             <PostImage
               selectedFiles={selectedFiles}
@@ -899,18 +867,21 @@ const Post: React.FC = () => {
               selectedFillImages={selectedFillImages}
               languageRedux={languageRedux}
               language={language}
+              setIsValidSubmit={setIsValidSubmit}
             />
             <PostTypeJob
               typeJob={typeJob}
               setTypeJob={setTypeJob}
               language={language}
               languageRedux={languageRedux}
+              setIsValidSubmit={setIsValidSubmit}
             />
             <PostPeriodDate
               setIsPeriodDate={setIsPeriodDate}
               isPeriodDate={isPeriodDate}
               language={language}
               languageRedux={languageRedux}
+              setIsValidSubmit={setIsValidSubmit}
             />
             {isPeriodDate === 1 ? (
               <RecruitmentTime
@@ -920,6 +891,7 @@ const Post: React.FC = () => {
                 setEndDate={setEndDate}
                 language={language}
                 languageRedux={languageRedux}
+                setIsValidSubmit={setIsValidSubmit}
               />
             ) : (
               <></>
@@ -930,6 +902,7 @@ const Post: React.FC = () => {
               setIsWorkingWeekend={setIsWorkingWeekend}
               setIsRemotely={setIsRemotely}
               language={language}
+              setIsValidSubmit={setIsValidSubmit}
             />
             <PostTime
               startTime={startTime}
@@ -937,6 +910,7 @@ const Post: React.FC = () => {
               setStartTime={setStartTime}
               setEndTime={setEndTime}
               language={language}
+              setIsValidSubmit={setIsValidSubmit}
             />
 
             <PostCategoryId
@@ -946,6 +920,7 @@ const Post: React.FC = () => {
               setFillCate={setFillCate}
               language={language}
               languageRedux={languageRedux}
+              setIsValidSubmit={setIsValidSubmit}
             />
 
             <SalaryType
@@ -953,6 +928,7 @@ const Post: React.FC = () => {
               setSalaryType={setSalaryType}
               language={language}
               languageRedux={languageRedux}
+              setIsValidSubmit={setIsValidSubmit}
             />
 
             <PostSalaryType
@@ -960,6 +936,7 @@ const Post: React.FC = () => {
               moneyType={moneyType}
               salaryType={salaryType}
               language={language}
+              setIsValidSubmit={setIsValidSubmit}
             />
 
             <PostFilterSalary
@@ -970,6 +947,7 @@ const Post: React.FC = () => {
               salaryType={salaryType}
               language={language}
               languageRedux={languageRedux}
+              setIsValidSubmit={setIsValidSubmit}
             />
 
             <PostNumberPhone
@@ -977,12 +955,14 @@ const Post: React.FC = () => {
               setPhoneNumber={setPhoneNumber}
               language={language}
               languageRedux={languageRedux}
+              setIsValidSubmit={setIsValidSubmit}
             />
             <Description
               setDescription={setDescription}
               description={description}
               language={language}
               languageRedux={languageRedux}
+              setIsValidSubmit={setIsValidSubmit}
             />
             {/* <EditText /> */}
             <button
@@ -1005,6 +985,7 @@ const Post: React.FC = () => {
           setOpenCheckposted={setOpenCheckposted}
           openCheckposted={openCheckposted}
         />
+
         <ModalNoteCreatePost
           setOpenModalNoteCreatePost={setOpenModalNoteCreatePost}
           openModalNoteCreatePost={openModalNoteCreatePost}
@@ -1014,6 +995,12 @@ const Post: React.FC = () => {
           openModalNoteCreateCompany={openModalNoteCreateCompany}
           setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
         />
+
+        <ModalNotiValidateCompany
+          openModalNoteValidateCompany={openModalNoteValidateCompany}
+          setOpenModalNoteValidateCompany={setOpenModalNoteValidateCompany}
+        />
+
         <ModalFillDataPost
           setOpenFillDataPost={setOpenFillDataPost}
           openModalFillDataPost={openModalFillDataPost}

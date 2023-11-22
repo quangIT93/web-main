@@ -17,8 +17,9 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 // import required modules
-import { Navigation, Mousewheel, Pagination, Autoplay } from 'swiper';
+import { Navigation, Mousewheel, Pagination, Autoplay, A11y } from 'swiper';
 // @ts-ignore
 // import { useSearchParams } from 'react-router-dom';
 
@@ -41,17 +42,17 @@ import {
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
 // import banner1 from '../../../img/Banner/banner-for-candidates-2.png';
-import banner_recruit_1 from '../../../img/Banner/banner-for-rescruit-1.png';
-import banner_recruit_2 from '../../../img/Banner/banner-for-rescruit-2.png';
+// import banner_recruit_1 from '../../../img/Banner/banner-for-rescruit-1.png';
+// import banner_recruit_2 from '../../../img/Banner/banner-for-rescruit-2.png';
 // import banner from '../../../img/Banner/Banner_homepage 1@2x.png';
 import './styles.scss';
 
 import ModalLogin from '../../../components/Home/ModalLogin';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
-import { homeEn } from 'validations/lang/en/home';
-import { home } from 'validations/lang/vi/home';
-import { number } from 'yargs';
+// import { homeEn } from 'validations/lang/en/home';
+// import { home } from 'validations/lang/vi/home';
+// import { number } from 'yargs';
 import historyApplicator from 'api/historyApplicator';
 import historyRecruiter from 'api/historyRecruiter';
 import { Avatar } from '@mui/material';
@@ -96,7 +97,6 @@ const AppliedPostedJob: React.FC = () => {
         null,
       );
       if (result) {
-        console.log('banner', result);
         setBanner(result.data);
       }
     } catch (error) {
@@ -290,21 +290,24 @@ const AppliedPostedJob: React.FC = () => {
                   <Swiper
                     spaceBetween={30}
                     centeredSlides={true}
-                    autoplay={{
-                      delay: 3500,
-                      disableOnInteraction: false,
-                    }}
-               
-                    pagination={true}
-                    // navigation={true}
-                    modules={[Autoplay, Navigation,Pagination]}
-                    className="banner-rescruit-swiper"
+                    // autoplay={{
+                    //   delay: 3500,
+                    //   disableOnInteraction: false,
+                    //   pauseOnMouseEnter: true,
+                    //   waitForTransition: true,
+                    //   stopOnLastSlide: false,
+                    // }}
+                    navigation={true}
+                    pagination={{ clickable: true }}
+                    modules={[Autoplay, Pagination]}
+                    className="banner-rescruit-swiper mySwiper"
                     loop={true}
+                    style={{ height: '100%' }}
                   >
-                    {banner?.map((value: any) => {
+                    {banner?.map((value: any, index: number) => {
                       if (value?.order === 1) {
                         return (
-                          <SwiperSlide>
+                          <SwiperSlide key={index}>
                             <img
                               onClick={() => {
                                 window.open(value?.redirect_url, '_parent');
@@ -315,7 +318,7 @@ const AppliedPostedJob: React.FC = () => {
                           </SwiperSlide>
                         );
                       } else {
-                        return <></>;
+                        return <React.Fragment key={index}></React.Fragment>;
                       }
                     })}
                   </Swiper>
@@ -327,19 +330,16 @@ const AppliedPostedJob: React.FC = () => {
                       delay: 3500,
                       disableOnInteraction: false,
                     }}
-
-                 
                     pagination={true}
-
                     // navigation={true}
                     modules={[Autoplay, Navigation, Pagination]}
                     className="banner-rescruit-swiper"
                     loop={true}
                   >
-                    {banner?.map((value: any) => {
+                    {banner?.map((value: any, index: number) => {
                       if (value?.order === 2) {
                         return (
-                          <SwiperSlide>
+                          <SwiperSlide key={index}>
                             <img
                               onClick={() => {
                                 window.open(value?.redirect_url, '_parent');
@@ -350,7 +350,7 @@ const AppliedPostedJob: React.FC = () => {
                           </SwiperSlide>
                         );
                       } else {
-                        return <></>;
+                        return <React.Fragment key={index}></React.Fragment>;
                       }
                     })}
                   </Swiper>
@@ -381,8 +381,8 @@ const AppliedPostedJob: React.FC = () => {
                       ? 'Công việc đã ứng tuyển'
                       : 'Applied Job'
                     : languageRedux === 1
-                    ? 'Công việc đã tuyển'
-                    : 'Posted Job'}
+                      ? 'Công việc đã tuyển'
+                      : 'Posted Job'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -438,17 +438,10 @@ const AppliedPostedJob: React.FC = () => {
             </div>
           </div> */}
 
-            <div
+            {/* <div
               className="advertisement-job-not-loging"
               style={{ display: !isLogined ? 'flex' : 'none' }}
             >
-              {/* <Advertisement /> */}
-              {/* <img
-              src="../images/absHijob.png"
-              alt="Ảnh lỗi"
-              className="img-advertisement-job-not-loging"
-              // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
-            /> */}
               <Advertisement />
               <div className="advertisement-job-not-loging-content">
                 <h3 style={{ marginTop: '12px' }}>
@@ -477,7 +470,7 @@ const AppliedPostedJob: React.FC = () => {
                 <LoginArrowIcon />
                 {language?.sign_in}
               </Button>
-            </div>
+            </div> */}
 
             <Swiper
               navigation={true}
@@ -546,17 +539,10 @@ const AppliedPostedJob: React.FC = () => {
         }}
         className="applied-posted-jobs-container"
       >
-        <div
+        {/* <div
           className="advertisement-job-not-loging"
           style={{ display: !isLogined ? 'flex' : 'none' }}
         >
-          {/* <Advertisement /> */}
-          {/* <img
-              src="../images/absHijob.png"
-              alt="Ảnh lỗi"
-              className="img-advertisement-job-not-loging"
-              // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
-            /> */}
           <Advertisement />
           <div className="advertisement-job-not-loging-content">
             <h3 style={{ marginTop: '12px' }}>
@@ -578,7 +564,7 @@ const AppliedPostedJob: React.FC = () => {
             <LoginArrowIcon />
             {language?.sign_in}
           </Button>
-        </div>
+        </div> */}
 
         {/* <Avatar
           sx={{
@@ -604,14 +590,15 @@ const AppliedPostedJob: React.FC = () => {
             disableOnInteraction: false,
           }}
           // navigation={true}
-          modules={[Autoplay, Navigation]}
+          pagination={true}
+          modules={[Autoplay, Pagination]}
           className="banner-rescruit-swiper"
           loop={true}
         >
-          {banner?.map((value: any) => {
+          {banner?.map((value: any, index: number) => {
             if (value?.order === 1) {
               return (
-                <SwiperSlide>
+                <SwiperSlide key={index}>
                   <img
                     onClick={() => {
                       window.open(value?.redirect_url, '_parent');
@@ -622,7 +609,7 @@ const AppliedPostedJob: React.FC = () => {
                 </SwiperSlide>
               );
             } else {
-              return <></>;
+              return <React.Fragment key={index}></React.Fragment>;
             }
           })}
         </Swiper>

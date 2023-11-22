@@ -22,6 +22,7 @@ interface IRecruitmentTime {
   setEndDate: any;
   language: any;
   languageRedux: any;
+  setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
@@ -32,6 +33,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
     setEndDate,
     languageRedux,
     language,
+    setIsValidSubmit
   } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
@@ -39,6 +41,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
     var newDateTime = newDate.setHours(23, 59, 59, 999);
 
     setStartDate(newDateTime);
+    setIsValidSubmit(false)
   };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
@@ -46,6 +49,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
     var newDateTime = newDate.setHours(23, 59, 59, 999);
 
     setEndDate(newDateTime);
+    setIsValidSubmit(false)
   };
 
   return (

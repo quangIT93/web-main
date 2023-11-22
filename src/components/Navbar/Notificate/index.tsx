@@ -218,7 +218,18 @@ const Notificate = () => {
     try {
       const result = await notificationApi.putProfileSkill(notiId, typeText);
       if (result) {
-        window.open(`post-detail?post-id=${postId}`, '_parent');
+        switch (typeText) {
+          case 'keyword':
+            window.open(`post-detail?post-id=${postId}`, '_parent');
+            break;
+
+          case 'viewProfile':
+            window.open(`detail-company?companyId=${postId}`, '_parent');
+            break;
+
+          default:
+            break;
+        }
       }
     } catch (error) {}
   };
@@ -234,27 +245,56 @@ const Notificate = () => {
       if (notiId && typeText) {
         const result = await notificationApi.putProfileSkill(notiId, typeText);
         if (result) {
-          if (typeText === 'recruiter') {
-            window.open(
-              `candidate-detail?post-id=${postId}&application_id=${applicationId}`,
-              '_parent',
-            );
-          }
+          // if (typeText === 'recruiter') {
+          //   window.open(
+          //     `candidate-detail?post-id=${postId}&application_id=${applicationId}`,
+          //     '_parent',
+          //   );
+          // }
 
-          if (typeText === 'applicator') {
-            window.open(`post-detail?post-id=${postId}`, '_parent');
-          }
+          // if (typeText === 'applicator') {
+          //   window.open(`post-detail?post-id=${postId}`, '_parent');
+          // }
 
-          if (typeText === 'communicationComment') {
-            window.open(
-              `detail-comunity?post-community=${commentId}`,
-              '_parent',
-            );
+          // if (typeText === 'communicationComment') {
+          //   window.open(
+          //     `detail-comunity?post-community=${commentId}`,
+          //     '_parent',
+          //   );
+          // }
+
+          switch (typeText) {
+            case 'recruiter':
+              window.open(
+                `candidate-detail?post-id=${postId}&application_id=${applicationId}`,
+                '_parent',
+              );
+              break;
+
+            case 'applicator':
+              window.open(`post-detail?post-id=${postId}`, '_parent');
+              break;
+
+            case 'communicationComment':
+              window.open(
+                `detail-comunity?post-community=${commentId}`,
+                '_parent',
+              );
+              break;
+
+            default:
+              break;
           }
         }
       }
     } catch (error) {}
   };
+
+  const handleClickCompany = async (
+    companyId: number,
+    typeText: string,
+    notiId: number,
+  ) => {};
 
   const handleChangeEmail = async (e: any) => {
     console.log(e.target.value);
@@ -414,7 +454,7 @@ const Notificate = () => {
                       }`}
                       onClick={() =>
                         handleClickNotiKey(
-                          notificate.data.postId,
+                          notificate.data.companyId,
                           notificate.data.typeText,
                           notificate.data.notificationId,
                         )
@@ -494,6 +534,83 @@ const Notificate = () => {
                       </div>
                     </div>
                   );
+                } else if (notificate.data.typeText === 'viewProfile') {
+                  return (
+                    <div
+                      key={index}
+                      className={`wrap-notificate_system ${
+                        notificate?.data?.isRead !== undefined &&
+                        !notificate?.data?.isRead
+                          ? 'readed'
+                          : notificate.data?.isRead !== undefined &&
+                              notificate.data?.isRead
+                            ? ''
+                            : ''
+                      }`}
+                      onClick={() =>
+                        handleClickNotiKey(
+                          notificate.data.companyId,
+                          notificate.data.typeText,
+                          notificate.data.notificationId,
+                        )
+                      }
+                      style={{ display: 'flex' }}
+                    >
+                      <div
+                        style={{
+                          marginLeft: '8px',
+                          maxWidth: '80px',
+                          maxHeight: '80px',
+                          borderRadius: '12px',
+                        }}
+                      >
+                        {/* <img src={notificate.companyLogo} alt="" /> */}
+                        <img
+                          style={{
+                            minWidth: '80px',
+                            minHeight: '80px',
+                            objectFit: 'cover',
+                            borderRadius: '12px',
+                          }}
+                          src={notificate.data.companyLogo}
+                          alt=""
+                        />
+                      </div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          marginLeft: '12px',
+                          justifyItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <h3 className="wrap-notificate_systemH3">
+                          {notificate.content_app.title}
+                        </h3>
+                        <h5
+                          dangerouslySetInnerHTML={{
+                            __html: notificate.content_app.body,
+                          }}
+                        />
+                        <div className="wrap-time">
+                          <p>
+                            {new Date(
+                              notificate.data.createdAt,
+                            ).toLocaleTimeString([], {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}
+                          </p>
+                          <p>
+                            {new Date(
+                              notificate.data.createdAt,
+                            ).toLocaleDateString('en-GB')}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
                 } else {
                   return (
                     <div
@@ -503,9 +620,9 @@ const Notificate = () => {
                         !notificate?.data?.isRead
                           ? 'readed'
                           : notificate.data?.isRead !== undefined &&
-                            notificate.data?.isRead
-                          ? ''
-                          : ''
+                              notificate.data?.isRead
+                            ? ''
+                            : ''
                       }`}
                       onClick={() =>
                         handleClickNoty(

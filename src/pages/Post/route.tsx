@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify';
 
 import RouteProps from '../routes';
 import MainLayout from 'layouts/MainLayout';
+import PostProtect from './CheckPost';
 import { lazy } from 'react';
 const Post = lazy(() => import('.'));
 const route: RouteProps = {
@@ -10,7 +11,9 @@ const route: RouteProps = {
   component: (
     <>
       <MainLayout>
-        <Post />
+        <PostProtect>
+          <Post />
+        </PostProtect>
       </MainLayout>
       <ToastContainer
         style={{

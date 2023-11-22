@@ -38,14 +38,14 @@ import ModalMaxUnlock from './ModalMaxUnlock';
 import ModalShowAvatar from './ModalShowAvatar';
 import ModalNoneCV from './ModalNoneCv';
 import ModalNotiUnClock from './ModalNotiUnClock';
+import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 import { MessageOutlined } from '@ant-design/icons';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref,
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  },
+);
 
 const CandidateNewDetail = () => {
   const [candidate, setCandidate] = useState<any>([]);
@@ -55,6 +55,8 @@ const CandidateNewDetail = () => {
   const [openModalNoneCv, setOpenModalNoneCv] = useState<any>(false);
   const [openModalNotiUnclock, setOpenModalNotiUnclock] = useState<any>(false);
   const [openModalShowAvatar, setOpenModalShowAvatar] = useState<any>(false);
+  const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
+    React.useState<any>(false);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -109,20 +111,21 @@ const CandidateNewDetail = () => {
   const handleUnLockCandidate = async (accountId: string) => {
     const id = localStorage.getItem('candidateId');
     try {
-      if (id) {
-        const viewProfile: any = await candidateSearch.postCountShowCandidate(
-          id,
-        );
+      if (accountId && profileV3.companyInfo !== null) {
+        const viewProfile: any =
+          await candidateSearch.postCountShowCandidate(accountId);
         if (viewProfile.status === 200) {
           setTotal(viewProfile.total);
           const result = await profileApi.getProfileByAccountId(
             languageRedux === 1 ? 'vi' : 'en',
-            id,
+            accountId,
           );
           if (result) {
             setCandidate(result.data);
           }
         }
+      } else {
+        setOpenModalNoteCreateCompany(true);
       }
     } catch (error: any) {
       // console.log(error.response);
@@ -281,7 +284,7 @@ const CandidateNewDetail = () => {
               )} */}
 
               {/* test */}
-              <Button
+              {/* <Button
                 type="primary"
                 ghost
                 className="btn-mess"
@@ -292,16 +295,9 @@ const CandidateNewDetail = () => {
                   justifyContent: 'center',
                 }}
                 onClick={() => {
-                  if(candidate?.isUnlocked === false){
-                    setOpenModalNotiUnclock(true)
-                  } else {
-                    window.open(
-                      `/message?post_id=${null}&user_id=${candidate.accountId} `,
-                      '_parent',
-                    );
-                  }
+                  console.log('click');
                 }}
-              ></Button>
+              ></Button> */}
               {candidate?.isUnlocked === false && (
                 <Popover
                   placement="bottom"
@@ -400,11 +396,11 @@ const CandidateNewDetail = () => {
                       ? 'Xem hồ sơ'
                       : 'Have a resume'
                     : languageRedux === 1
-                    ? 'Không có hồ sơ'
-                    : 'Not have a resume'
+                      ? 'Không có hồ sơ'
+                      : 'Not have a resume'
                   : languageRedux === 1
-                  ? 'Xem hồ sơ'
-                  : 'View resume'}
+                    ? 'Xem hồ sơ'
+                    : 'View resume'}
               </Button>
 
               <div
@@ -462,8 +458,8 @@ const CandidateNewDetail = () => {
                       .format('DD/MM/YYYY')
                       .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
-                  ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
-                  : language?.unupdated}
+                    ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
+                    : language?.unupdated}
               </p>
               <p>
                 {candidate?.genderText
@@ -877,9 +873,14 @@ const CandidateNewDetail = () => {
         urlPdf={candidate?.profilesCvs?.at(0)?.pdfURL}
       />
 
-      <ModalNotiUnClock 
-      openModalNotiUnclock={openModalNotiUnclock} 
-      setOpenModalNotiUnclock={setOpenModalNotiUnclock}
+      <ModalNotiUnClock
+        openModalNotiUnclock={openModalNotiUnclock}
+        setOpenModalNotiUnclock={setOpenModalNotiUnclock}
+      />
+
+      <ModalNoteCreateCompany
+        openModalNoteCreateCompany={openModalNoteCreateCompany}
+        setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
       />
       {/* <ModalUnlockCandidate /> */}
     </div>

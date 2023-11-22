@@ -82,22 +82,28 @@ const HistoryPost = () => {
   const saved_jobs = Number(queryParams['saved_jobs']);
   const recruitment_post = queryParams['recruitment_post'];
   const candidate = Number(queryParams['candidate']);
+  const companyView = Number(queryParams['companyView']);
+
   const [activeChild, setActiveChild] = React.useState(
     hotjobtype === 2
       ? '2-1'
       : candidate === 4
         ? '4-0'
-        : community_post === 31
-          ? '3-1'
-          : community_post === 30
-            ? '3-0'
-            : saved_jobs === 1
-              ? '1-0'
-              : recruitment_post === 'opening'
-                ? '2-1'
-                : recruitment_post === 'closed'
-                  ? '2-2'
-                  : '0-0',
+        : companyView === 50
+          ? '5-0'
+          : companyView === 51
+            ? '5-1'
+            : community_post === 31
+              ? '3-1'
+              : community_post === 30
+                ? '3-0'
+                : saved_jobs === 1
+                  ? '1-0'
+                  : recruitment_post === 'opening'
+                    ? '2-1'
+                    : recruitment_post === 'closed'
+                      ? '2-2'
+                      : '0-0',
   );
   const [ItemLeft, setItemLeft] = React.useState<null | number>(
     hotjobtype === 2
@@ -108,9 +114,13 @@ const HistoryPost = () => {
           ? 3
           : candidate === 4
             ? 4
-            : saved_jobs === 1
-              ? 1
-              : 0,
+            : companyView === 50
+              ? 5
+              : companyView === 51
+                ? 5
+                : saved_jobs === 1
+                  ? 1
+                  : 0,
   );
   const [showDetailPosted, setShowDetailPosted] =
     React.useState<boolean>(false);
@@ -203,7 +213,10 @@ const HistoryPost = () => {
       // title: language?.history_page?.list_of_articles,
       title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
       childs: [
-        languageRedux === 1 ? 'Tất cả' : 'All',
+        languageRedux === 1 ? 'Công ty đã lưu' : 'Saved company',
+        languageRedux === 1
+          ? 'Nhà tuyển dụng xem hồ sơ'
+          : 'Employers view resumes',
       ],
     },
   ];
@@ -254,16 +267,18 @@ const HistoryPost = () => {
             ? dataItem[2].title
             : ItemLeft === dataItem[3].id
               ? dataItem[3].title
-              : dataItem[4].title}
+              : ItemLeft === dataItem[4].id
+                ? dataItem[4].title
+                : dataItem[5].title}
     </Typography>,
     <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {activeChild === '0-0'
         ? language?.all
         : // : activeChild === '0-1'
-        // ? 'Đã được duyệt'
-        // : activeChild === '0-2'
-        // ? 'Đang chờ duyệt'
-        ''}
+          // ? 'Đã được duyệt'
+          // : activeChild === '0-2'
+          // ? 'Đang chờ duyệt'
+          ''}
 
       {activeChild === '1-0' ? language?.all : ''}
 
@@ -281,6 +296,12 @@ const HistoryPost = () => {
           : ''}
 
       {activeChild === '4-0' ? language?.all : ''}
+
+      {activeChild === '5-0'
+        ? language?.all
+        : activeChild === '5-1'
+          ? language?.history_page?.have_been_created
+          : ''}
     </Typography>,
   ];
   const CardsPost = useMemo(() => {
@@ -318,8 +339,6 @@ const HistoryPost = () => {
     return null;
   }, [ItemLeft, activeChild]);
 
-  console.log('ItemLEFT', ItemLeft);
-
   const CardListCandidates = useMemo(() => {
     if (ItemLeft === 4) {
       return <CardListCandidate />;
@@ -328,12 +347,20 @@ const HistoryPost = () => {
   }, [ItemLeft, activeChild]);
 
   React.useEffect(() => {
-    setSearchParams({ p: `${ItemLeft}`, c: `${activeChild}` });
+    setSearchParams({
+      p: `${ItemLeft}`,
+      c: `${activeChild}`,
+      post: `0`,
+      // community_post: `${queryParams['community_post'] ? queryParams['community_post'] : "0"}`,
+      // saved_jobs: `${queryParams['saved_jobs'] ? queryParams['saved_jobs'] : "0"}`,
+      // recruitment_post: `${queryParams['recruitment_post'] ? queryParams['recruitment_post'] : "0"}`,
+      // candidate:`${queryParams['candidate'] ? queryParams['candidate'] : "0"}`,
+    });
   }, [ItemLeft, activeChild]);
 
   const CardListCompanies = useMemo(() => {
     if (ItemLeft === 5) {
-      return <CardListCompany />;
+      return <CardListCompany activeChild={activeChild} />;
     }
     return null;
   }, [ItemLeft, activeChild]);
@@ -394,6 +421,19 @@ const HistoryPost = () => {
       setActiveChild('4-0');
       return;
     }
+
+    if (companyView === 50) {
+      setItemLeft(5);
+      setActiveChild('5-0');
+      return;
+    }
+
+    if (companyView === 51) {
+      setItemLeft(5);
+      setActiveChild('5-1');
+      return;
+    }
+
     if (profile?.typeRoleData === 0) {
       setItemLeft(0);
       setActiveChild('0-0');
@@ -438,15 +478,19 @@ const HistoryPost = () => {
                   ? ['2', '1']
                   : community_post && community_post === 31
                     ? ['3', '1']
-                    : community_post && community_post === 30
-                      ? ['3', '0']
-                      : saved_jobs === 1
-                        ? ['1', '0']
-                        : candidate === 4
-                          ? ['4', '0']
-                          : profile?.typeRoleData === 0
-                            ? ['0', '0']
-                            : ['2', '0']
+                    : companyView && companyView === 50
+                      ? ['5', '1']
+                      : companyView && companyView === 51
+                        ? ['5', '1']
+                        : community_post && community_post === 30
+                          ? ['3', '0']
+                          : saved_jobs === 1
+                            ? ['1', '0']
+                            : candidate === 4
+                              ? ['4', '0']
+                              : profile?.typeRoleData === 0
+                                ? ['0', '0']
+                                : ['2', '0']
               }
               accordion
               bordered={false}
@@ -459,8 +503,9 @@ const HistoryPost = () => {
                     header={
                       <div
                         onClick={() => handleClickSubTitle(index)}
-                        className={`${ItemLeft === index ? 'activeItem' : ''
-                          } panel-title_text`}
+                        className={`${
+                          ItemLeft === index ? 'activeItem' : ''
+                        } panel-title_text`}
                       >
                         <RightOutlined style={{ fontSize: '12px' }} />
                         <span style={{ marginLeft: '8px' }}>{item.title}</span>
@@ -479,21 +524,31 @@ const HistoryPost = () => {
                             : 'block',
                     }}
                   >
-                    {item.childs.map((child: string, idx: number) => (
-                      <div
-                        key={idx}
-                        className={
-                          activeChild === `${index}-${idx}`
-                            ? 'active-child child-item'
-                            : 'child-item'
-                        }
-                        onClick={() => {
-                          handleChildClick(`${index}-${idx}`);
-                        }}
-                      >
-                        {child}
-                      </div>
-                    ))}
+                    {item.childs.map((child: string, idx: number) => {
+                      if (
+                        index === 5 &&
+                        idx === 1 &&
+                        profile?.typeRoleData === 1
+                      ) {
+                        return <></>;
+                      } else {
+                        return (
+                          <div
+                            key={idx}
+                            className={
+                              activeChild === `${index}-${idx}`
+                                ? 'active-child child-item'
+                                : 'child-item'
+                            }
+                            onClick={() => {
+                              handleChildClick(`${index}-${idx}`);
+                            }}
+                          >
+                            {child}
+                          </div>
+                        );
+                      }
+                    })}
                   </Panel>
                 );
               })}

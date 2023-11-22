@@ -448,8 +448,10 @@ const Navbar: React.FC = () => {
         languageRedux === 1 ? 'vi' : 'en',
       );
 
-      if (result) {
+      if (result.data) {
         setCountNoti(result.data.total);
+      } else {
+        setCountNoti(result.data);
       }
     } catch (error) {
       console.error('error', error);

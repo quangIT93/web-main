@@ -19,6 +19,7 @@ import EditDescripeCompany from './components/EditDescripeCompany';
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
 import ModalEditCompanySuccess from './components/ModalEditCompanySuccess';
 import ModalUnsaveCompany from './components/ModalUnsaveCompany';
+import ModalIntroduceCreateCompany from './components/ModalIntroduceCreateCompany';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 // import languageApi from 'api/languageApi';
@@ -42,6 +43,7 @@ import { PencilIcon } from '#components/Icons';
 import profileApi from 'api/profileApi';
 import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
+import ModalCreateCompanySuccess from './components/ModalCreateCompanySuccess';
 
 export interface FormValues {
   id: string;
@@ -151,59 +153,16 @@ const Company: React.FC<ICompany> = (props) => {
 
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [ShowModalUnsave, setShowModalUnsave] = useState(false);
-  const [isFormSubmitted, setIsFormSubmitted] = useState(true);
+  const [ShowModalFisnishCreateCompany, setShowModalFisnishCreateCompany] = useState(false);
+  const [isValid, setIsValid] = useState(true);
   // const [language, setLanguageState] = React.useState<any>();
-  const location = useLocation();
   const dispatch = useDispatch();
-  // const getlanguageApi = async () => {
-  //   try {
-  //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
-  //     );
-  //     if (result) {
-  //       setLanguageState(result.data);
-  //       // setUser(result);
-  //     }
-  //   } catch (error) {
-  //     // setLoading(false);
-  //   }
-  // };
-
-  // React.useEffect(() => {
-  //   getlanguageApi();
-  // }, [languageRedux]);
-  // console.log('dataCompany', dataCompany);
   const [openModalEditCompany, setOpenModalEditCompanySuccess] =
     React.useState(false);
 
-  // const [loadingNotFound, setLoadingNotFound] = React.useState(false);
 
   const analytics: any = getAnalytics();
 
-  useEffect(() => {
-    console.log('dataCompany', dataCompany.name);
-
-    if (
-      dataCompany.name ||
-      dataCompany.address ||
-      dataCompany.companyLocation ||
-      dataCompany.companyRoleInfomation ||
-      dataCompany.companyCategory ||
-      dataCompany.companySizeInfomation ||
-      dataCompany.taxCode ||
-      dataCompany.phone ||
-      dataCompany.email ||
-      dataCompany.website ||
-      dataCompany.description ||
-      dataCompany.logoPath ||
-      dataCompany.images.length !== 0 ||
-      dataCompany.deletedImages.length !== 0
-    ) {
-      setIsFormSubmitted(false);
-    } else {
-      setIsFormSubmitted(true);
-    }
-  }, [dataCompany]);
 
   const getProfileComanyV3 = async () => {
     try {
@@ -275,10 +234,11 @@ const Company: React.FC<ICompany> = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log("isvalid", isValid);
+  
   useEffect(() => {
-    const handleBeforeUnload = (event: any) => {
-      if (!isFormSubmitted) {
+    const handleBeforeUnload = (event: any) => {   
+      if (isValid === false) {
         const message =
           languageRedux === 1
             ? 'Dữ liệu của bạn chưa được gửi, bạn có chắc chắn muốn rời đi?'
@@ -296,9 +256,9 @@ const Company: React.FC<ICompany> = (props) => {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [isFormSubmitted]);
+  }, [isValid]);
 
-  // console.log("dataCompany api: ", dataCompany);
+
 
   const validURL = (str: string) => {
     var pattern = new RegExp(
@@ -509,7 +469,7 @@ const Company: React.FC<ICompany> = (props) => {
           if (result) {
             // setOpenModalEditPost(true);
             setOpenModalEditCompanySuccess(true);
-            setIsFormSubmitted(false);
+            setIsValid(true);
             messageApi.open({
               type: 'success',
               content: language?.company_page?.create_success,
@@ -520,6 +480,9 @@ const Company: React.FC<ICompany> = (props) => {
             );
             if (resultProfileV3) {
               dispatch(setProfileMeInformationV3(resultProfileV3));
+              // if(resultProfileV3.data.companyInfo !== null && resultProfileV3.data.companyInfo.status === 0){
+              //   setShowModalFisnishCreateCompany(true)
+              // }
             }
 
             // console.log("create company result", result);
@@ -614,7 +577,7 @@ const Company: React.FC<ICompany> = (props) => {
 
           if (result || resultImages) {
             setOpenModalEditCompanySuccess(true);
-            setIsFormSubmitted(false);
+            setIsValid(true);
             messageApi.open({
               type: 'success',
               content: language?.company_page?.update_success,
@@ -750,7 +713,6 @@ const Company: React.FC<ICompany> = (props) => {
     // }));
 
     if (formData) {
-      // console.log('formData', formData);
 
       haveCompany
         ? handleUpdateCompany(formData, formDataImages)
@@ -855,12 +817,15 @@ const Company: React.FC<ICompany> = (props) => {
               language={language}
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
+              setIsValid={setIsValid}
             />
             <EditNameTaxCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
+              setIsValid={setIsValid}
+
             />
             <EditAddressCompany
               dataCompany={dataCompany}
@@ -873,12 +838,16 @@ const Company: React.FC<ICompany> = (props) => {
               setFillDistrict={setFillDistrict}
               setFillProvince={setFillProvince}
               setFillWard={setFillWard}
+              setIsValid={setIsValid}
+
             />
             <EditPhoneMailCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
+              setIsValid={setIsValid}
+
             />
             <EditRoleWebCompany
               dataCompany={dataCompany}
@@ -886,6 +855,8 @@ const Company: React.FC<ICompany> = (props) => {
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
               setFillRole={setFillRole}
+              setIsValid={setIsValid}
+
             />
 
             <EditFieldScaleCompany
@@ -895,18 +866,24 @@ const Company: React.FC<ICompany> = (props) => {
               setUnsavedChanges={setUnsavedChanges}
               setFillActivity={setFillActivity}
               setFillSize={setFillSize}
+              setIsValid={setIsValid}
+
             />
             <EditImageCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
+              setIsValid={setIsValid}
+
             />
             <EditDescripeCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
+              setIsValid={setIsValid}
+
             />
 
             <button
@@ -926,12 +903,24 @@ const Company: React.FC<ICompany> = (props) => {
         languageRedux={languageRedux}
         language={language}
       />
+
+      <ModalCreateCompanySuccess
+        ShowModalFisnishCreateCompany={ShowModalFisnishCreateCompany}
+        setShowModalFisnishCreateCompany={setShowModalFisnishCreateCompany}
+        languageRedux={languageRedux}
+        language={language}
+      />
+
       <ModalUnsaveCompany
         setShowModalUnsave={setShowModalUnsave}
         ShowModalUnsave={ShowModalUnsave}
         languageRedux={languageRedux}
         handleSubmit={handleSubmit}
       />
+
+      <ModalIntroduceCreateCompany
+      />
+
       <div style={{ display: is_profile ? 'none' : 'block' }}>
         {/* <RollTop /> */}
         {/* <Footer /> */}

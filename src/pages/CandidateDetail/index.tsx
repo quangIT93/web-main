@@ -45,6 +45,7 @@ import CVItem from '#components/Profile/CV';
 import './style.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
+import { color } from 'html2canvas/dist/types/css/types/color';
 // import languageApi from 'api/languageApi';
 // import { candidateDetail } from 'validations/lang/vi/candidateDetail';
 // import { candidateDetailEn } from 'validations/lang/en/cnadidateDetail';
@@ -264,7 +265,7 @@ const CandidateDetail: React.FC = () => {
                 />
                 <div
                   style={{ padding: '0', marginLeft: '12px' }}
-                  className="div-cart-item-post"
+                  className="div-cart-item-post-candidate-detail"
                 >
                   <Tooltip placement="top" title="àhakj">
                     <Typography
@@ -363,6 +364,7 @@ const CandidateDetail: React.FC = () => {
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'space-between',
                 }}
               >
                 <p
@@ -581,7 +583,7 @@ const CandidateDetail: React.FC = () => {
               <div className="info-detail">
                 <div className="div-detail-row left">
                   <p>{language?.phone_number}</p>
-                  <p>Email</p>
+                  <>Email</>
 
                   <p>Facebook</p>
 
