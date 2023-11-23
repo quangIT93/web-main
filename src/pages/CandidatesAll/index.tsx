@@ -226,7 +226,7 @@ const CandidatesAll = () => {
         ageMax,
         18,
         page,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setTotal(result.data.total);
@@ -241,7 +241,7 @@ const CandidatesAll = () => {
           setHasMore(true);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   React.useEffect(() => {
     getAllCandidates();
@@ -289,7 +289,7 @@ const CandidatesAll = () => {
       );
       setPage('0');
       if (result) {
-        setOpen(true)
+        setOpen(true);
         setTotal(result.data.total);
         setListData(result.data.cvFilters);
         if (result.data.cvFilters.length < 18) {
@@ -317,7 +317,7 @@ const CandidatesAll = () => {
     setAgeMin(18);
     setAgeMax(35);
     setReset(true);
-    setOpen(false)
+    setOpen(false);
   };
 
   const fetchMoreData = async () => {
@@ -333,13 +333,13 @@ const CandidatesAll = () => {
         ageMax,
         19,
         nextPage,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       // const result = await hotJobApi.getHotJobById(
       //   url,
       //   nextPage,
       //   searchParams.get('hotjob-id') === '1' ? 18 : 20,
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       //   idFilterProvinces,
       // );
 
@@ -350,7 +350,7 @@ const CandidatesAll = () => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   const analytics: any = getAnalytics();
   React.useEffect(() => {
@@ -460,18 +460,18 @@ const CandidatesAll = () => {
               //   categories?.length !== 0 ||
               //   educations ||
               //   gender !== -1 &&
-              open ?
-                (
-                  <h3>
-                    {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
-                    <span>
-                      {` ${total}`}
-                      {languageRedux === 1 ? ' ứng cử viên' : ' candidates'}
-                    </span>
-                  </h3>
-                ) : (
-                  <></>
-                )}
+              open ? (
+                <h3>
+                  {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
+                  <span>
+                    {` ${total}`}
+                    {languageRedux === 1 ? ' ứng cử viên' : ' candidates'}
+                  </span>
+                </h3>
+              ) : (
+                <></>
+              )
+            }
           </div>
           <InfiniteScroll
             dataLength={listData && listData?.length}

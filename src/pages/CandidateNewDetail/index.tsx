@@ -39,12 +39,11 @@ import ModalShowAvatar from './ModalShowAvatar';
 import ModalNoneCV from './ModalNoneCv';
 import { MessageOutlined } from '@ant-design/icons';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref,
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  },
+);
 
 const CandidateNewDetail = () => {
   const [candidate, setCandidate] = useState<any>([]);
@@ -81,7 +80,7 @@ const CandidateNewDetail = () => {
     try {
       if (id) {
         const result = await profileApi.getProfileByAccountId(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           id,
         );
 
@@ -108,13 +107,12 @@ const CandidateNewDetail = () => {
     const id = localStorage.getItem('candidateId');
     try {
       if (id) {
-        const viewProfile: any = await candidateSearch.postCountShowCandidate(
-          id,
-        );
+        const viewProfile: any =
+          await candidateSearch.postCountShowCandidate(id);
         if (viewProfile.status === 200) {
           setTotal(viewProfile.total);
           const result = await profileApi.getProfileByAccountId(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             id,
           );
           if (result) {
@@ -141,7 +139,7 @@ const CandidateNewDetail = () => {
           dispatch<any>(setAlertSuccess(true));
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -155,13 +153,13 @@ const CandidateNewDetail = () => {
       const resultBookmark = await candidateSearch.getBookmarkCandidate(
         0,
         1,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (resultBookmark) {
         setBookmarkCandidate(resultBookmark.data.total);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -230,12 +228,14 @@ const CandidateNewDetail = () => {
                   style={{
                     height: '70px',
                     width: '70px',
-                    filter: `${candidate?.isUnlocked === false ? 'blur(3px)' : ''
-                      }`,
-                    cursor: `${candidate?.isUnlocked === true && candidate?.avatarPath
+                    filter: `${
+                      candidate?.isUnlocked === false ? 'blur(3px)' : ''
+                    }`,
+                    cursor: `${
+                      candidate?.isUnlocked === true && candidate?.avatarPath
                         ? 'pointer'
                         : ''
-                      }`,
+                    }`,
                   }}
                   alt={candidate?.avatarPath}
                   src={candidate?.avatarPath ? candidate?.avatarPath : ''}
@@ -449,8 +449,8 @@ const CandidateNewDetail = () => {
               <p>
                 {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
-                    .format('DD/MM/YYYY')
-                    .replace(/\d{2}$/, 'xx')
+                      .format('DD/MM/YYYY')
+                      .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
                     ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
                     : language?.unupdated}
@@ -553,14 +553,14 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
               ? candidate?.profileCategories?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item.parentCategory.fullName}
-                    {'/ '}
-                    {item.fullName}
-                  </Button>
-                ),
-              )
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item.parentCategory.fullName}
+                      {'/ '}
+                      {item.fullName}
+                    </Button>
+                  ),
+                )
               : language?.unupdated}
           </Space>
         </div>
@@ -577,12 +577,12 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
               ? candidate?.profileLocations?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  {item?.fullName}
-                  {', '}
-                  {item.province.fullName}
-                </Button>
-              ))
+                  <Button key={index} className="btn" type="text">
+                    {item?.fullName}
+                    {', '}
+                    {item.province.fullName}
+                  </Button>
+                ))
               : language?.unupdated}
           </Space>
         </div>
@@ -662,11 +662,11 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
               ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  <span>{item.skillName}</span>
-                  <span>{item.dataLevel.data}</span>
-                </Button>
-              ))
+                  <Button key={index} className="btn" type="text">
+                    <span>{item.skillName}</span>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ))
               : language?.unupdated}
           </Space>
         </div>
@@ -685,13 +685,13 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0
               ? candidate?.profilesLanguages?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <h3>{item.languageName}</h3>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ),
-              )
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      <h3>{item.languageName}</h3>
+                      <span>{item.dataLevel.data}</span>
+                    </Button>
+                  ),
+                )
               : language?.unupdated}
           </Space>
         </div>
@@ -740,13 +740,13 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesReferences?.length !== 0
               ? candidate?.profilesReferences?.map((item: any) => (
-                <Button key={item.id} className="btn" type="text">
-                  <h3>{item.fullName}</h3>
-                  <span>{item.phone}</span>
-                  <span>{item.email}</span>
-                  <span>{item.description}</span>
-                </Button>
-              ))
+                  <Button key={item.id} className="btn" type="text">
+                    <h3>{item.fullName}</h3>
+                    <span>{item.phone}</span>
+                    <span>{item.email}</span>
+                    <span>{item.description}</span>
+                  </Button>
+                ))
               : language?.unupdated}
           </Space>
         </div>

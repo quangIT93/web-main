@@ -27,7 +27,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     setFillCate,
     language,
     languageRedux,
-    setIsValidSubmit
+    setIsValidSubmit,
   } = props;
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
@@ -56,13 +56,13 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     if (value.length > 1) {
       setDisable(true);
     }
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setDataCategories(result.data);
@@ -109,27 +109,27 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-              value: parentCategory.parent_category_id,
-              label: parentCategory.parent_category,
-              children: parentCategory.childs.map((child: any) => {
-                var dis = false;
-                //check id child  when disable = true
-                if (disable) {
-                  dis = true;
-                  for (const elem of categoriesId) {
-                    if (elem === child.id) {
-                      dis = false;
-                      break;
+                value: parentCategory.parent_category_id,
+                label: parentCategory.parent_category,
+                children: parentCategory.childs.map((child: any) => {
+                  var dis = false;
+                  //check id child  when disable = true
+                  if (disable) {
+                    dis = true;
+                    for (const elem of categoriesId) {
+                      if (elem === child.id) {
+                        dis = false;
+                        break;
+                      }
                     }
                   }
-                }
-                return {
-                  value: child.id,
-                  label: child.name,
-                  disabled: dis,
-                };
-              }),
-            }))
+                  return {
+                    value: child.id,
+                    label: child.name,
+                    disabled: dis,
+                  };
+                }),
+              }))
             : []
         }
         dropdownRender={DropdownRender}
@@ -146,7 +146,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
       />
       <div
         className="wrap-noti_input"
-      // style={{ position: 'absolute', bottom: '-15px' }}
+        // style={{ position: 'absolute', bottom: '-15px' }}
       >
         {fillCate.length === 0 ? (
           <span className="helper-text">

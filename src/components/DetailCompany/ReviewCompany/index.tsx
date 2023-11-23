@@ -56,7 +56,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
       if (companyId) {
         const result = await apiCompanyV3.getReviewAccountOfCompany(
           companyId,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (result) {
           console.log(result);
@@ -124,7 +124,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         companyId,
         0,
         20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       console.log('result: ', result);
 
@@ -159,7 +159,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         companyId,
         nextPage,
         20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result && result.data.companyRatings.length !== 0) {
@@ -191,7 +191,10 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
       setOpenModalLogin(true);
       return;
     }
-    if (Object.keys(myReview).length === 0 && (star === 0 || review.trim().length === 0)) {
+    if (
+      Object.keys(myReview).length === 0 &&
+      (star === 0 || review.trim().length === 0)
+    ) {
       setOpenModalReviewNotice(true);
       inputRef.current!.focus({
         cursor: 'end',
@@ -209,7 +212,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
       });
       return;
     }
-    Object.keys(myReview).length === 0 ? handleRateComapy() : handleEditReviewCompany();
+    Object.keys(myReview).length === 0
+      ? handleRateComapy()
+      : handleEditReviewCompany();
   };
 
   const handleDeleteReview = async () => {
@@ -217,7 +222,6 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
   };
 
   console.log(myReview);
-
 
   return (
     <div className={styles.review_company_container}>
@@ -378,7 +382,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                 }
                 autoSize={{ minRows: 20, maxRows: 22 }}
                 ref={inputRef}
-              // rows={20}
+                // rows={20}
               />
               <div className={styles.notice_input}>
                 {review?.length > 3000 ? (
@@ -396,18 +400,18 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                 ) : (
                   <></>
                 )}
-                <span
-                  className={styles.number_text}
-                >{`${review?.length === undefined ? 0 : review.length}/3000`}</span>
+                <span className={styles.number_text}>{`${
+                  review?.length === undefined ? 0 : review.length
+                }/3000`}</span>
               </div>
             </div>
             <Button
               type="primary"
               ghost
               onClick={handleSubmitReview}
-            // disabled={
-            //     star === 0 && review === '' ? true :
-            //         star === 0 ? true : false}
+              // disabled={
+              //     star === 0 && review === '' ? true :
+              //         star === 0 ? true : false}
             >
               {Object.keys(myReview).length === 0
                 ? languageRedux === 1
@@ -427,7 +431,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={openBackdrop}
-        //  onClick={handleClose}
+          //  onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>

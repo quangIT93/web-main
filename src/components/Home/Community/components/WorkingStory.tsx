@@ -39,7 +39,7 @@ const WorkingStory = () => {
         '5',
         '',
         1,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setStories(result?.data?.communications);
@@ -82,7 +82,9 @@ const WorkingStory = () => {
           <h3>
             {languageRedux === 1
               ? 'Chia sẻ kinh nghiệm làm việc'
-              : 'Working Story'}
+              : languageRedux === 2
+                ? 'Working story'
+                : languageRedux === 3 && '워킹스토리'}
           </h3>
         </div>
         <p
@@ -91,14 +93,11 @@ const WorkingStory = () => {
             localStorage.setItem('community', '.community-container');
           }}
         >
-          {
-            languageRedux === 1 ?
-              "Xem tất cả" :
-              languageRedux === 2 ?
-                "View all" :
-                languageRedux === 3 &&
-                "다 보기"
-          }
+          {languageRedux === 1
+            ? 'Xem tất cả'
+            : languageRedux === 2
+              ? 'View all'
+              : languageRedux === 3 && '다 보기'}
         </p>
       </div>
       <div className="community-content-body">

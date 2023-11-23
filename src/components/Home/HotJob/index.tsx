@@ -91,13 +91,6 @@ const HotJob: React.FC = () => {
     let keyOfQuery = Object.keys(queyObj)[0];
     let url =
       api.replace('/api', '') + '?' + keyOfQuery + '=' + queyObj[keyOfQuery];
-
-    console.log('query', query);
-    console.log('keyOfQuery', keyOfQuery);
-    console.log('api', api);
-    console.log('total', total);
-    console.log('type', type);
-    console.log('id', id);
     setCookie('hotjobTotal', JSON.stringify(total), 365);
     localStorage.setItem('hotjobApi', url);
     window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}`, '_self');
@@ -112,9 +105,7 @@ const HotJob: React.FC = () => {
     try {
       setLoading(true);
       const result = await hotJobApi.getHotJobTheme(
-        languageRedux === 1 ? 'vi'
-          : languageRedux === 2 ? 'en'
-            : languageRedux === 3 ? 'ko' : 'vi',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -199,14 +190,11 @@ const HotJob: React.FC = () => {
         <div className="title">
           <FireIcon width={25} height={25} />
           <h2>
-            {
-              languageRedux === 1 ?
-                "Công việc nổi bật" :
-                languageRedux === 2 ?
-                  "Hot jobs" :
-                  languageRedux === 3 &&
-                  "핫잡스"
-            }
+            {languageRedux === 1
+              ? 'Công việc nổi bật'
+              : languageRedux === 2
+                ? 'Hot jobs'
+                : languageRedux === 3 && '핫잡스'}
           </h2>
         </div>
         {/* <div className="view-all" onClick={handleMoveToMoreJob}>
@@ -267,20 +255,19 @@ const HotJob: React.FC = () => {
               );
             })}
         </div>
-        <div className="view-all-down" onClick={handleMoveToMoreJob}
+        <div
+          className="view-all-down"
+          onClick={handleMoveToMoreJob}
           style={{
-            display: !hotjob || hotjob.length === 0 ? 'none' : 'flex'
+            display: !hotjob || hotjob.length === 0 ? 'none' : 'flex',
           }}
         >
           <p>
-            {
-              languageRedux === 1 ?
-                "Xem tất cả" :
-                languageRedux === 2 ?
-                  "View all" :
-                  languageRedux === 3 &&
-                  "다 보기"
-            }
+            {languageRedux === 1
+              ? 'Xem tất cả'
+              : languageRedux === 2
+                ? 'View all'
+                : languageRedux === 3 && '다 보기'}
           </p>
           <ArrowrightIcon width={20} height={20} />
         </div>

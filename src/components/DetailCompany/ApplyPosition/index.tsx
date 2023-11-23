@@ -49,7 +49,7 @@ const ApplyPosition: React.FC<IApplyPosition> = (props) => {
         companyId,
         nextPage,
         20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result && result.data.posts.length === 20) {

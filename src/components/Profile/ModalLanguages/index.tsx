@@ -155,7 +155,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
         const result = await apiCv.postProfileLanguage(level, language);
         if (result) {
           const resultProfile = await profileApi.getProfileInformationMoreV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (resultProfile) {
             //   setLanguageValues((prev: any) => [
@@ -174,7 +174,9 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
         }
       } else {
         message.error(messageError);
-        const profile_languages_language_name = document.getElementById('profile_languages_language_name') as HTMLElement;
+        const profile_languages_language_name = document.getElementById(
+          'profile_languages_language_name',
+        ) as HTMLElement;
         // console.log(idError);
 
         switch (idError) {
@@ -260,7 +262,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {language.length > 255 ? (

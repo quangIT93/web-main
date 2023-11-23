@@ -27,7 +27,7 @@ interface IEditPostAddress {
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
   setFillActivity: React.Dispatch<React.SetStateAction<any>>;
   setFillSize: React.Dispatch<React.SetStateAction<any>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
@@ -37,7 +37,15 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges, setFillActivity, setFillSize, setIsValid } = props;
+  const {
+    setDataCompany,
+    dataCompany,
+    is_profile,
+    setUnsavedChanges,
+    setFillActivity,
+    setFillSize,
+    setIsValid,
+  } = props;
 
   const [dataSizes, setDataSizes] = useState<any>(null);
   const [selectedSize, setSelectedSize] = useState<any>(null);
@@ -89,7 +97,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const getSizes = async () => {
     try {
       const sizes = await apiCompany.getAllSizesCompany(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (sizes) {
@@ -102,7 +110,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const getCateogrys = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setDataCategories(result.data);
@@ -134,19 +142,19 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
         id: value ? value?.id : '',
       },
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
   const handleEditCompanyCategory = (event: any, value: any) => {
     setSelectedCategory(value);
     setUnsavedChanges(true);
-    setFillActivity(value)
+    setFillActivity(value);
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyCategory: {
         id: value ? value?.parent_category_id : '',
       },
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   // console.log('selectedCategory', selectedCategory);

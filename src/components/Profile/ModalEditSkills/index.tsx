@@ -168,7 +168,7 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
         );
         if (result) {
           const resultProfile = await profileApi.getProfileInformationMoreV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (resultProfile) {
             setOpenModalEditSkills({
@@ -188,7 +188,9 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
           type: 'error',
           content: message,
         });
-        const profile_skill_edit_skill_name = document.getElementById('profile_skill_edit_skill_name') as HTMLElement;
+        const profile_skill_edit_skill_name = document.getElementById(
+          'profile_skill_edit_skill_name',
+        ) as HTMLElement;
         // console.log(idError);
 
         switch (idError) {
@@ -264,7 +266,7 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={languageRedux === 1 ? 'Kỹ năng' : 'Skill'}
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {skill && skill.length > 255 ? (
@@ -282,8 +284,9 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${skill ? skill.length : '0'
-                }/255`}</span>
+              <span className="number-text">{`${
+                skill ? skill.length : '0'
+              }/255`}</span>
             </div>
           </Box>
           <Box sx={{ marginBottom: '12px' }}>

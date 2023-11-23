@@ -119,7 +119,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);
@@ -286,7 +286,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         const result = await profileApi.updateContact(info);
         if (result) {
           const getProfileV3 = await profileApi.getProfileInformationV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
 
           if (getProfileV3) {
@@ -297,10 +297,18 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         }
       } else {
         message.error(messageError);
-        const contact_info_phone = document.getElementById('contact_info_phone') as HTMLElement;
-        const contact_info_email = document.getElementById('contact_info_email') as HTMLElement;
-        const contact_info_fb = document.getElementById('contact_info_fb') as HTMLElement;
-        const contact_info_linkedin = document.getElementById('contact_info_linkedin') as HTMLElement;
+        const contact_info_phone = document.getElementById(
+          'contact_info_phone',
+        ) as HTMLElement;
+        const contact_info_email = document.getElementById(
+          'contact_info_email',
+        ) as HTMLElement;
+        const contact_info_fb = document.getElementById(
+          'contact_info_fb',
+        ) as HTMLElement;
+        const contact_info_linkedin = document.getElementById(
+          'contact_info_linkedin',
+        ) as HTMLElement;
 
         switch (idError) {
           case 1:
@@ -383,7 +391,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={language?.phone_number}
               inputMode="numeric"
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {regexCheckPhone.test(phone) === false ? (
@@ -423,7 +431,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="example@.gamil.com"
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {email.length === 0 ? (
@@ -469,7 +477,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Facebook"
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {fb.trim() !== '' && fb.length > 100 ? (
@@ -509,7 +517,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Linkedin"
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {linkIn.trim() !== '' && linkIn.length > 100 ? (

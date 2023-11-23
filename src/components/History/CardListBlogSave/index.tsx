@@ -51,7 +51,7 @@ const CardListBlogSave = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -168,10 +168,9 @@ const CardListBlogSave = () => {
           >
             {languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-              {
-                searchParams.get('c') === '3-0' &&
-                  languageRedux === 1 ? ' > Đã lưu' : ' > Saved articles'
-              }
+              {searchParams.get('c') === '3-0' && languageRedux === 1
+                ? ' > Đã lưu'
+                : ' > Saved articles'}
             </span>
           </Typography>
         </div>

@@ -57,7 +57,7 @@ function PDFViewer() {
   const getProfileModerV3 = async () => {
     try {
       const result = await profileApi.getProfileInformationMoreV3(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {

@@ -49,9 +49,13 @@ const CompanyAll = () => {
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi'
-          : languageRedux === 2 ? 'en'
-            : languageRedux === 3 ? 'ko' : 'vi',
+        languageRedux === 1
+          ? 'vi'
+          : languageRedux === 2
+            ? 'en'
+            : languageRedux === 3
+              ? 'ko'
+              : 'vi',
       );
       if (result) {
         // setDataLocations(result.data);
@@ -71,7 +75,7 @@ const CompanyAll = () => {
     //         educations,
     //         18,
     //         page,
-    //         languageRedux === 1 ? 'vi' : 'en',
+    //          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //     );
     //     if (result) {
     //         setTotal(result.data.total);
@@ -94,7 +98,7 @@ const CompanyAll = () => {
         size,
         20,
         0,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result && result?.data?.companies?.length !== 0) {
         setTotal(result?.data?.total);
@@ -154,7 +158,7 @@ const CompanyAll = () => {
         size,
         20,
         0,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       console.log('result', result && result?.data?.companies?.length);
 
@@ -174,7 +178,7 @@ const CompanyAll = () => {
         setTotal(result?.data?.total);
         setListData([]);
         setHasMore(false);
-        setListData([])
+        setListData([]);
       }
     } catch (error) {
       console.log('error', error);
@@ -198,7 +202,7 @@ const CompanyAll = () => {
       //     educations,
       //     19,
       //     nextPage,
-      //     languageRedux === 1 ? 'vi' : 'en',
+      //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
       // if (result && result.data.cvFilters.length !== 0) {
       //     setListData((prev: any) => [...prev, ...result?.data.cvFilters]);
@@ -213,7 +217,7 @@ const CompanyAll = () => {
         size,
         20,
         nextPage,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       setHasMore(true);
       if (result && result?.data?.companies?.length === 20) {

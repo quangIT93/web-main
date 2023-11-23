@@ -121,7 +121,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
       // const result = await postApi.getById(POST_ID);
       const result = await postApi.getPostV3(
         detailPosted?.id,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       // console.log('result', result2);
       if (result) {
@@ -222,7 +222,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
         detailPosted?.post_id,
         5,
         null,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -331,8 +331,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                           ? 'Nam'
                           : 'Male'
                         : languageRedux === 1
-                        ? 'Nữ'
-                        : 'Female'}
+                          ? 'Nữ'
+                          : 'Female'}
                     </span>
                   </div>
                 </div>
@@ -407,8 +407,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                       {candidate?.email
                         ? candidate.email
                         : languageRedux === 1
-                        ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'}
+                          ? 'Thông tin chưa cập nhật'
+                          : 'Not updated information'}
                     </p>
                   </div>
                   <div className="item-detail-candidate">
@@ -419,8 +419,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                       {candidate?.phone
                         ? candidate.phone
                         : languageRedux === 1
-                        ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'}
+                          ? 'Thông tin chưa cập nhật'
+                          : 'Not updated information'}
                     </p>
                   </div>
                   <div className="item-detail-candidate">
@@ -433,8 +433,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                             return `${value.parent_category}, `;
                           })
                         : languageRedux === 1
-                        ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'}
+                          ? 'Thông tin chưa cập nhật'
+                          : 'Not updated information'}
                     </p>
                   </div>
                 </div>
@@ -442,8 +442,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                   {candidate?.introduction
                     ? candidate.introduction
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'}
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'}
                 </h2>
               </Box>
             </div>

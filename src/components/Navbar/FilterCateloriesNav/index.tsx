@@ -60,24 +60,20 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   const DropdownRender = (menus: React.ReactNode) => (
     <div className="filter-loca-cate">
       <Text className="title-filter_location">
-        {
-          languageRedux === 1 ?
-            "Chọn danh mục nghề nghiệp" :
-            languageRedux === 2 ?
-              "Select a career category" :
-              languageRedux === 3 &&
-              "카테고리를 선택합니다"
-        }
+        {languageRedux === 1
+          ? 'Chọn danh mục nghề nghiệp'
+          : languageRedux === 2
+            ? 'Select a career category'
+            : languageRedux === 3 && '카테고리를 선택합니다'}
       </Text>
       {menus}
       <Divider style={{ margin: 4 }}>
-        {disable ?
-          languageRedux === 1 ?
-            "Chỉ có thể tối đa 10 danh mục" :
-            languageRedux === 2 ?
-              "Only up to 10 categories can be" :
-              languageRedux === 3 &&
-              "최대 10개의 카테고리만 가능합니다"
+        {disable
+          ? languageRedux === 1
+            ? 'Chỉ có thể tối đa 10 danh mục'
+            : languageRedux === 2
+              ? 'Only up to 10 categories can be'
+              : languageRedux === 3 && '최대 10개의 카테고리만 가능합니다'
           : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
@@ -95,9 +91,9 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
     JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
       : userProfile?.categories.map((profile: any) => [
-        profile?.parent_category_id,
-        profile?.child_category_id,
-      ]),
+          profile?.parent_category_id,
+          profile?.child_category_id,
+        ]),
   );
 
   searchParams
@@ -108,9 +104,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? 'vi'
-          : languageRedux === 2 ? 'en'
-            : languageRedux === 3 ? 'ko' : 'vi',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setDataCategories(result.data);
@@ -185,34 +179,34 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           options={
             dataCategories
               ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                // disabled:
-                //   cateId.length < 2
-                //     ? false
-                //     : cateId.length <= 2 &&
-                //       cateId.includes(parentCategory.parent_category_id)
-                //     ? false
-                //     : true,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true;
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false;
-                        break;
+                  value: parentCategory.parent_category_id,
+                  label: parentCategory.parent_category,
+                  // disabled:
+                  //   cateId.length < 2
+                  //     ? false
+                  //     : cateId.length <= 2 &&
+                  //       cateId.includes(parentCategory.parent_category_id)
+                  //     ? false
+                  //     : true,
+                  children: parentCategory.childs.map((child: any) => {
+                    var dis = false;
+                    //check id child  when disable = true
+                    if (disable) {
+                      dis = true;
+                      for (const elem of categoriesId) {
+                        if (elem === child.id) {
+                          dis = false;
+                          break;
+                        }
                       }
                     }
-                  }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                    return {
+                      value: child.id,
+                      label: child.name,
+                      disabled: dis,
+                    };
+                  }),
+                }))
               : []
           }
           onChange={onChange}
@@ -220,12 +214,12 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
             listCate?.current?.length !== 0
               ? listCate?.current
               : listCate?.current?.length === 0 &&
-                location?.pathname === '/search-results'
+                  location?.pathname === '/search-results'
                 ? []
                 : userProfile?.categories.map((profile: any) => [
-                  profile?.parent_category_id,
-                  profile?.child_category_id,
-                ])
+                    profile?.parent_category_id,
+                    profile?.child_category_id,
+                  ])
           }
           value={reset ? [] : listCateProps}
           multiple
@@ -235,12 +229,11 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           showCheckedStrategy={SHOW_CHILD}
           style={{ width: '100%', borderRadius: '2px' }}
           placeholder={
-            languageRedux === 1 ?
-              "Chọn danh mục nghề nghiệp" :
-              languageRedux === 2 ?
-                "Select a career category" :
-                languageRedux === 3 &&
-                "카테고리를 선택합니다"
+            languageRedux === 1
+              ? 'Chọn danh mục nghề nghiệp'
+              : languageRedux === 2
+                ? 'Select a career category'
+                : languageRedux === 3 && '카테고리를 선택합니다'
           }
         />
       </div>

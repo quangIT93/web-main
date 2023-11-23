@@ -51,14 +51,14 @@ const DetailCompany = () => {
       setLoading(true);
       const result = await apiCompanyV3.getCompanyById(
         companyId,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result.status === 200) {
         setLoading(false);
         setCompanyData(result.data);
         setBookmarked(result.data.isBookmarked);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const getApplicationPositionCount = async () => {
@@ -68,7 +68,7 @@ const DetailCompany = () => {
         companyId,
         0,
         20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result.status === 200 && result.data.posts.length === 20) {
@@ -90,7 +90,7 @@ const DetailCompany = () => {
         setPostOfCompany(result.data.posts);
         setPage('0');
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleFollowCompany = async () => {
@@ -201,7 +201,10 @@ const DetailCompany = () => {
                   className={styles.company_bell}
                   onClick={handleFollowCompany}
                   style={{
-                    display: localStorage.getItem('accountId') === company?.accountId ? 'none' : 'flex'
+                    display:
+                      localStorage.getItem('accountId') === company?.accountId
+                        ? 'none'
+                        : 'flex',
                   }}
                 >
                   {bookmarked ? (

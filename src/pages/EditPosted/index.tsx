@@ -141,7 +141,7 @@ const EditPosted = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -219,7 +219,7 @@ const EditPosted = () => {
     try {
       const result = await postApi.getPostbyId(
         postId,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (
         result &&
@@ -264,7 +264,7 @@ const EditPosted = () => {
         0,
         20,
         '-1',
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -316,7 +316,9 @@ const EditPosted = () => {
     );
     formData.append(
       'salaryMax',
-      String(editDataPosted?.salaryMax).toString().replace(',', ''),
+      String(editDataPosted?.salaryMax)
+        .toString()
+        .replace(',', ''),
     );
     formData.append(
       'isWorkingWeekend',
@@ -449,7 +451,8 @@ const EditPosted = () => {
     //   };
     // }
     if (
-      (Number(editDataPosted?.salaryMin) === 0 && editDataPosted?.salaryType !== 6)
+      Number(editDataPosted?.salaryMin) === 0 &&
+      editDataPosted?.salaryType !== 6
     ) {
       return {
         message: language?.post_page?.err_salary,
@@ -458,7 +461,8 @@ const EditPosted = () => {
       };
     }
     if (
-      (Number(editDataPosted?.salaryMax) === 0 && editDataPosted?.salaryType !== 6)
+      Number(editDataPosted?.salaryMax) === 0 &&
+      editDataPosted?.salaryType !== 6
     ) {
       return {
         message: language?.post_page?.err_salary,
@@ -480,18 +484,20 @@ const EditPosted = () => {
       (editDataPosted?.phoneNumber && editDataPosted?.phoneNumber?.length > 11)
     ) {
       return {
-        message: languageRedux === 1 ?
-          "Số điện thoại không được bỏ trống và phải ít hơn 10 ký tự." :
-          "Phone number cannot be blank and must be less than 10 characters.",
+        message:
+          languageRedux === 1
+            ? 'Số điện thoại không được bỏ trống và phải ít hơn 10 ký tự.'
+            : 'Phone number cannot be blank and must be less than 10 characters.',
         checkForm: false,
         idError: 10,
       };
     }
     if (editDataPosted?.description === '') {
       return {
-        message: languageRedux === 1 ?
-          "Hãy nhập mô tả công việc." :
-          "Please enter a job description.",
+        message:
+          languageRedux === 1
+            ? 'Hãy nhập mô tả công việc.'
+            : 'Please enter a job description.',
         checkForm: false,
         idError: 11,
       };
@@ -502,9 +508,10 @@ const EditPosted = () => {
       editDataPosted?.startDate > editDataPosted?.endDate
     ) {
       return {
-        message: languageRedux === 1
-          ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
-          : 'The start date cannot exceed the end date',
+        message:
+          languageRedux === 1
+            ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
+            : 'The start date cannot exceed the end date',
         checkForm: false,
         idError: 12,
       };
@@ -533,19 +540,45 @@ const EditPosted = () => {
           type: 'error',
           content: message,
         });
-        const edit_post_title_job = document.getElementById('edit_post_title_job') as HTMLElement;
-        const edit_post_company_name = document.getElementById('edit_post_company_name') as HTMLElement;
-        const edit_post_place_city = document.getElementById('edit_post_place_city') as HTMLElement;
-        const edit_post_place_district = document.getElementById('edit_post_place_district') as HTMLElement;
-        const edit_post_place_ward = document.getElementById('edit_post_place_ward') as HTMLElement;
-        const edit_post_place_address = document.getElementById('edit_post_place_address') as HTMLElement;
-        const edit_post_category = document.getElementById('edit_post_category') as HTMLElement;
-        const edit_post_salaryMin = document.getElementById('edit_post_salaryMin') as HTMLElement;
-        const edit_post_salaryMax = document.getElementById('edit_post_salaryMax') as HTMLElement;
-        const edit_post_phone = document.getElementById('edit_post_phone') as HTMLElement;
-        const edit_post_description = document.getElementById('edit_post_description') as HTMLElement;
-        const edit_post_start_date = document.getElementById('edit_post_start_date') as HTMLElement;
-        const edit_post_end_date = document.getElementById('edit_post_end_date') as HTMLElement;
+        const edit_post_title_job = document.getElementById(
+          'edit_post_title_job',
+        ) as HTMLElement;
+        const edit_post_company_name = document.getElementById(
+          'edit_post_company_name',
+        ) as HTMLElement;
+        const edit_post_place_city = document.getElementById(
+          'edit_post_place_city',
+        ) as HTMLElement;
+        const edit_post_place_district = document.getElementById(
+          'edit_post_place_district',
+        ) as HTMLElement;
+        const edit_post_place_ward = document.getElementById(
+          'edit_post_place_ward',
+        ) as HTMLElement;
+        const edit_post_place_address = document.getElementById(
+          'edit_post_place_address',
+        ) as HTMLElement;
+        const edit_post_category = document.getElementById(
+          'edit_post_category',
+        ) as HTMLElement;
+        const edit_post_salaryMin = document.getElementById(
+          'edit_post_salaryMin',
+        ) as HTMLElement;
+        const edit_post_salaryMax = document.getElementById(
+          'edit_post_salaryMax',
+        ) as HTMLElement;
+        const edit_post_phone = document.getElementById(
+          'edit_post_phone',
+        ) as HTMLElement;
+        const edit_post_description = document.getElementById(
+          'edit_post_description',
+        ) as HTMLElement;
+        const edit_post_start_date = document.getElementById(
+          'edit_post_start_date',
+        ) as HTMLElement;
+        const edit_post_end_date = document.getElementById(
+          'edit_post_end_date',
+        ) as HTMLElement;
         console.log(idError);
 
         switch (idError) {

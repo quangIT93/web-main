@@ -91,13 +91,13 @@ const ProfileCv: React.FC = () => {
   const getProfileModerV3 = async () => {
     try {
       const result = await profileApi.getProfileInformationMoreV3(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
         dispatch(setProfileMeInformationMoreV3(result));
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -115,11 +115,11 @@ const ProfileCv: React.FC = () => {
       const result = await apiCv.putThemeCv(item?.id, 1);
       if (result) {
         const resultProfileV3 = await profileApi.getProfileInformationMoreV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         dispatch(setProfileMeInformationMoreV3(resultProfileV3));
       }
-    } catch (error) { }
+    } catch (error) {}
 
     // setSelectedId(id);
   };
@@ -254,13 +254,21 @@ const ProfileCv: React.FC = () => {
                           <p>
                             {languageRedux === 1
                               ? 'Ngày tạo: ' +
-                              moment(new Date(item?.createdAt)).format('HH:mm') +
-                              ', ' +
-                              moment(new Date(item?.createdAt)).format('DD/MM/YYYY')
+                                moment(new Date(item?.createdAt)).format(
+                                  'HH:mm',
+                                ) +
+                                ', ' +
+                                moment(new Date(item?.createdAt)).format(
+                                  'DD/MM/YYYY',
+                                )
                               : 'Created at: ' +
-                              moment(new Date(item?.createdAt)).format('HH:mm') +
-                              ', ' +
-                              moment(new Date(item?.createdAt)).format('DD/MM/YYYY')}
+                                moment(new Date(item?.createdAt)).format(
+                                  'HH:mm',
+                                ) +
+                                ', ' +
+                                moment(new Date(item?.createdAt)).format(
+                                  'DD/MM/YYYY',
+                                )}
                           </p>
                         </div>
                         <div className="cv-item_right__actions">
@@ -337,7 +345,7 @@ const ProfileCv: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

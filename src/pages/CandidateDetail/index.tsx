@@ -97,7 +97,7 @@ const CandidateDetail: React.FC = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -145,7 +145,7 @@ const CandidateDetail: React.FC = () => {
       const candidateId = searchParams.get('application_id') ?? '';
       const result = await postApi.getById(
         postId,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -154,7 +154,7 @@ const CandidateDetail: React.FC = () => {
       const detailCandidate = await historyRecruiter.GetAJobApplication(
         postId,
         candidateId,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (detailCandidate) {

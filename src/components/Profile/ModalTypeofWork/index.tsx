@@ -83,13 +83,13 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
       const result = await profileApi.putProfileJobV3(valueType, null);
       if (result) {
         const resultProfileV3 = await profileApi.getProfileInformationMoreV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         dispatch(setProfileMeInformationMoreV3(resultProfileV3));
         dispatch(setAlertEditInfo(true));
         setOpenModalTypeofWork(false);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
@@ -161,7 +161,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
             placeholder={'Loại công việc'}
             size="small"
             sx={{ width: '100%' }}
-          // error={!gender} // Đánh dấu lỗi
+            // error={!gender} // Đánh dấu lỗi
           >
             <MenuItem value={1}>
               {languageRedux === 1 ? 'Toàn thời gian' : 'Fulltime'}

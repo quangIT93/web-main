@@ -148,7 +148,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
         0,
         20,
         null,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setDataPost(result.data);
@@ -186,7 +186,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     try {
       const result = await postApi.getById(
         itemPost.post_id,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       // console.log('reuslt', result.data);
       if (result) {

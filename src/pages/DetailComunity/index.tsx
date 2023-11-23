@@ -111,7 +111,7 @@ const Comunity = () => {
       if (POST_COMMUNITY_ID) {
         const result = await communityApi.getCommunityDetailId(
           POST_COMMUNITY_ID,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (result && result.status !== 400) {
           setLike(result?.data?.liked);
@@ -331,10 +331,14 @@ const Comunity = () => {
                 : detail?.type === 1
                   ? languageRedux === 1
                     ? 'Câu chuyện việc làm'
-                    : 'Working story'
+                    : languageRedux === 2
+                      ? 'Working story'
+                      : languageRedux === 3 && '워킹스토리'
                   : languageRedux === 1
                     ? 'Tin tức'
-                    : 'Recruitment news'}
+                    : languageRedux === 2
+                      ? 'Recruitment news'
+                      : languageRedux === 3 && '뉴스'}
             </h3>
           </div>
           <div className="title-comunity">

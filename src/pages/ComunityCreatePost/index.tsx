@@ -77,7 +77,7 @@ const ComunityCreatePost = () => {
       if (POST_COMMUNITY_ID) {
         const result = await communityApi.getCommunityDetailId(
           POST_COMMUNITY_ID,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (result) {
           setCommunityPost(result?.data);
@@ -469,8 +469,8 @@ const ComunityCreatePost = () => {
                 ? 'Sửa bài viết'
                 : 'Edit post'
               : languageRedux === 1
-              ? 'Tạo bài viết mới'
-              : 'Creat new post'}
+                ? 'Tạo bài viết mới'
+                : 'Creat new post'}
           </h3>
         </div>
         <div className="create-post-body">
@@ -670,8 +670,8 @@ const ComunityCreatePost = () => {
                   ? 'Lưu bài'
                   : 'Save post'
                 : languageRedux === 1
-                ? 'Đăng bài viết'
-                : 'Post an article'}
+                  ? 'Đăng bài viết'
+                  : 'Post an article'}
             </Button>
           </div>
         </div>

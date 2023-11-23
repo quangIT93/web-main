@@ -11,12 +11,11 @@ import { RootState } from '../../store/reducer';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
 import languageApi from 'api/languageApi';
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref,
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  },
+);
 
 // interface IShowNotificativeSave {
 //   showNofySave: boolean;
@@ -38,7 +37,7 @@ const ShowNotificativeSave: React.FC = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);

@@ -79,7 +79,7 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
     //   const result = await apiCv.deleteProfileReference([id]);
     //   if (result) {
     //     const resultProfile = await profileApi.getProfileV3(
-    //       languageRedux === 1 ? 'vi' : 'en',
+    //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //     );
     //     if (resultProfile) {
     //       dispatch(setProfileV3(resultProfile));
@@ -110,7 +110,7 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
     //   const result = await apiCv.putProfileReference(name, phone, email, id);
     //   if (result) {
     //     const resultProfile = await profileApi.getProfileV3(
-    //       languageRedux === 1 ? 'vi' : 'en',
+    //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //     );
     //     if (resultProfile) {
     //       dispatch(setProfileV3(resultProfile));

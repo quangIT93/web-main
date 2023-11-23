@@ -64,7 +64,7 @@ const ComunityNews = () => {
       '10',
       sort,
       0,
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
 
     //
@@ -109,7 +109,7 @@ const ComunityNews = () => {
         '10',
         sort,
         0,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         console.log(result?.data?.communications);
@@ -154,7 +154,7 @@ const ComunityNews = () => {
       '10',
       sort,
       0,
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
 
     //
@@ -176,7 +176,7 @@ const ComunityNews = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -216,18 +216,24 @@ const ComunityNews = () => {
         <div className="comunityPostNews">
           <div className="title-comunity-news">
             <div className="title-comunity-news-content">
-              <h3>{languageRedux === 1 ? `Tin tức` : `Recruitment news`}</h3>
+              <h3>
+                {languageRedux === 1
+                  ? 'Tin tức'
+                  : languageRedux === 2
+                    ? 'Recruitment news'
+                    : languageRedux === 3 && '뉴스'}
+              </h3>
               <p>
                 {
                   loading
                     ? 'Loading...'
                     : languageRedux === 1
-                    ? `${new Intl.NumberFormat('en-US').format(
-                        total,
-                      )} bài viết mới`
-                    : `${new Intl.NumberFormat('en-US').format(
-                        total,
-                      )} new posts`
+                      ? `${new Intl.NumberFormat('en-US').format(
+                          total,
+                        )} bài viết mới`
+                      : `${new Intl.NumberFormat('en-US').format(
+                          total,
+                        )} new posts`
                   // : language?.community_page?.today_hijob_has +
                   //   ' ' +
                   //   total +

@@ -183,15 +183,15 @@ const ThemesJob: React.FC = () => {
         // null,
         // Number(searchParams.get('categories-id')),
         profile.length !== 0 &&
-        profile?.profileLocations?.length > 0 &&
-        profile?.profileLocations?.map((item: any) => {
-          return item.province.id;
-        }),
+          profile?.profileLocations?.length > 0 &&
+          profile?.profileLocations?.map((item: any) => {
+            return item.province.id;
+          }),
         null,
         null,
         20,
         null,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -261,7 +261,15 @@ const ThemesJob: React.FC = () => {
       <div className="title-container">
         <div className="title">
           <SuggestIcon width={25} height={25} />
-          <h2>{language?.nearby_jobs}</h2>
+          <h2>
+            {languageRedux === 1
+              ? 'Công việc gợi ý'
+              : languageRedux === 2
+                ? 'Suggested jobs in your city'
+                : languageRedux === 3
+                  ? '추천 직업'
+                  : 'Công việc gợi ý'}
+          </h2>
         </div>
         {/* <div
           className="view-all"
@@ -320,7 +328,7 @@ const ThemesJob: React.FC = () => {
                 container
                 spacing={3}
                 columns={{ xs: 12, sm: 4, md: 12 }}
-              // sx={{ marginTop: '-8px' }}
+                // sx={{ marginTop: '-8px' }}
               >
                 {nearJob.map((item: PostNewestV3, index: number) => (
                   <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
@@ -378,7 +386,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-              //   onClick={handleClose}
+                //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>
@@ -388,20 +396,22 @@ const ThemesJob: React.FC = () => {
             className="view-all-down"
             onClick={handleMoveToMoreJob}
             style={{
-              display: !nearJob ||
+              display:
+                !nearJob ||
                 nearJob.length === 0 ||
-                !localStorage.getItem('accessToken') ?
-                'none' : 'flex',
+                !localStorage.getItem('accessToken')
+                  ? 'none'
+                  : 'flex',
             }}
           >
-            <p> {
-              languageRedux === 1 ?
-                "Xem tất cả" :
-                languageRedux === 2 ?
-                  "View all" :
-                  languageRedux === 3 &&
-                  "다 보기"
-            }</p>
+            <p>
+              {' '}
+              {languageRedux === 1
+                ? 'Xem tất cả'
+                : languageRedux === 2
+                  ? 'View all'
+                  : languageRedux === 3 && '다 보기'}
+            </p>
             <ArrowrightIcon width={20} height={20} />
           </div>
         </Skeleton>

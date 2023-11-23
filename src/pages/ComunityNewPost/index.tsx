@@ -80,7 +80,7 @@ const ComunityNewPost = () => {
       '10',
       sort,
       1,
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
 
     //
@@ -115,7 +115,7 @@ const ComunityNewPost = () => {
         '10',
         sort,
         1,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -176,7 +176,7 @@ const ComunityNewPost = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -238,12 +238,12 @@ const ComunityNewPost = () => {
                   loading
                     ? 'Loading...'
                     : languageRedux === 1
-                    ? `${new Intl.NumberFormat('en-US').format(
-                        total,
-                      )} bài viết mới`
-                    : `${new Intl.NumberFormat('en-US').format(
-                        total,
-                      )} new posts`
+                      ? `${new Intl.NumberFormat('en-US').format(
+                          total,
+                        )} bài viết mới`
+                      : `${new Intl.NumberFormat('en-US').format(
+                          total,
+                        )} new posts`
 
                   // language?.community_page?.today_hijob_has +
                   //   ' ' +

@@ -85,7 +85,7 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
             }
             const resultProfileV3L2 =
               await profileApi.getProfileInformationMoreV3(
-                languageRedux === 1 ? 'vi' : 'en',
+                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
               );
             if (resultProfileV3L2) {
               dispatch(setProfileMeInformationMoreV3(resultProfileV3L2));
@@ -104,7 +104,7 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
           } else {
             const resultProfileV3L2 =
               await profileApi.getProfileInformationMoreV3(
-                languageRedux === 1 ? 'vi' : 'en',
+                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
               );
             if (resultProfileV3L2) {
               dispatch(setProfileMeInformationMoreV3(resultProfileV3L2));
@@ -125,7 +125,7 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
     }
 
     try {
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (

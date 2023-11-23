@@ -16,7 +16,7 @@ const NoDataComponent: React.FC<any> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -49,14 +49,13 @@ const NoDataComponent: React.FC<any> = (props) => {
         height="245px"
       />
       <p style={{ fontSize: 20, color: 'gray', marginBottom: 20 }}>
-        {
-          props.loading === true ?
-            languageRedux === 1
-              ? 'Đang tải dữ liệu'
-              : 'Loading data...' :
-            languageRedux === 1
-              ? 'Không có thông tin hiển thị'
-              : 'No display information'}
+        {props.loading === true
+          ? languageRedux === 1
+            ? 'Đang tải dữ liệu'
+            : 'Loading data...'
+          : languageRedux === 1
+            ? 'Không có thông tin hiển thị'
+            : 'No display information'}
       </p>
     </div>
   );

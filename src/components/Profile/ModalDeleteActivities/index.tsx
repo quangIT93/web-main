@@ -78,7 +78,7 @@ const ModalDeleteActivities: React.FC<IModalProfileDelete> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -105,7 +105,7 @@ const ModalDeleteActivities: React.FC<IModalProfileDelete> = (props) => {
       );
       if (result) {
         const resultProfile = await profileApi.getProfileInformationMoreV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
 
         resultProfile && dispatch(setProfileMeInformationMoreV3(resultProfile));

@@ -90,25 +90,20 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   const DropdownRender = (menus: React.ReactNode) => (
     <div className="filter-loca-cate">
       <Text className="title-filter_location">
-        {
-          languageRedux === 1 ?
-            "Chọn địa điểm" :
-            languageRedux === 2 ?
-              "Select location" :
-              languageRedux === 3 &&
-              "위치를  선택합니다"
-        }
+        {languageRedux === 1
+          ? 'Chọn địa điểm'
+          : languageRedux === 2
+            ? 'Select location'
+            : languageRedux === 3 && '위치를  선택합니다'}
       </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
         {proviId.length === 2
-          ?
-          languageRedux === 1 ?
-            "Chỉ có thể tối đa 10 khu vực" :
-            languageRedux === 2 ?
-              "Only up to 10 areas can be" :
-              languageRedux === 3 &&
-              "최대 10개 영역까지만 가능합니다"
+          ? languageRedux === 1
+            ? 'Chỉ có thể tối đa 10 khu vực'
+            : languageRedux === 2
+              ? 'Only up to 10 areas can be'
+              : languageRedux === 3 && '최대 10개 영역까지만 가능합니다'
           : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
@@ -126,9 +121,9 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
     JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       : userProfile?.profileLocations?.map((profile: any) => [
-        profile?.province?.id,
-        profile?.id,
-      ]),
+          profile?.province?.id,
+          profile?.id,
+        ]),
   );
 
   // console.log('cookies', JSON.parse(getCookie('userFiltered') || '{}'));
@@ -140,7 +135,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   const getAllLocaitions = async () => {
     try {
       // const result = await locationApi.getAllLocation(
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
       // if (result) {
       //   // setDataLocations(result.data);
@@ -218,12 +213,11 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             maxTagCount="responsive"
             size="large"
             placeholder={
-              languageRedux === 1 ?
-                "Chọn địa điểm" :
-                languageRedux === 2 ?
-                  "Select location" :
-                  languageRedux === 3 &&
-                  "위치를  선택합니다"
+              languageRedux === 1
+                ? 'Chọn địa điểm'
+                : languageRedux === 2
+                  ? 'Select location'
+                  : languageRedux === 3 && '위치를  선택합니다'
             }
             inputIcon={<EnvironmentOutlined />}
             suffixIcon={<ArrowFilterIcon width={14} height={10} />}
@@ -231,49 +225,49 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             value={reset ? [] : dataLocations.length !== 0 ? listDis : []}
             defaultValue={
               listLocation.current?.length !== 0 &&
-                listLocation.current !== undefined &&
-                userProfile.length !== 0
+              listLocation.current !== undefined &&
+              userProfile.length !== 0
                 ? listLocation.current
                 : listLocation.current?.length === 0 &&
-                  location?.pathname === '/search-results'
+                    location?.pathname === '/search-results'
                   ? []
                   : userProfile?.profileLocations?.map((profile: any) => [
-                    profile?.province?.id,
-                    profile?.id,
-                  ])
+                      profile?.province?.id,
+                      profile?.id,
+                    ])
             }
             options={
               dataLocations
                 ? dataLocations?.map((dataLocation: any) => ({
-                  value: dataLocation.province_id,
-                  label: dataLocation.province_fullName,
-                  // disabled:
-                  //   proviId.length < 2
-                  //     ? false
-                  //     : proviId.length <= 2 &&
-                  //       proviId.includes(dataLocation.province_id)
-                  //     ? false
-                  //     : true,
-                  children: dataLocation.districts.map(
-                    (child: { district_id: string; district: string }) => {
-                      var dis = false;
-                      if (disable) {
-                        dis = true;
-                        for (const elem of locId) {
-                          if (elem === child.district_id) {
-                            dis = false;
-                            break;
+                    value: dataLocation.province_id,
+                    label: dataLocation.province_fullName,
+                    // disabled:
+                    //   proviId.length < 2
+                    //     ? false
+                    //     : proviId.length <= 2 &&
+                    //       proviId.includes(dataLocation.province_id)
+                    //     ? false
+                    //     : true,
+                    children: dataLocation.districts.map(
+                      (child: { district_id: string; district: string }) => {
+                        var dis = false;
+                        if (disable) {
+                          dis = true;
+                          for (const elem of locId) {
+                            if (elem === child.district_id) {
+                              dis = false;
+                              break;
+                            }
                           }
                         }
-                      }
-                      return {
-                        value: child.district_id,
-                        label: child.district,
-                        disabled: dis,
-                      };
-                    },
-                  ),
-                }))
+                        return {
+                          value: child.district_id,
+                          label: child.district,
+                          disabled: dis,
+                        };
+                      },
+                    ),
+                  }))
                 : []
             }
             onChange={onChange}

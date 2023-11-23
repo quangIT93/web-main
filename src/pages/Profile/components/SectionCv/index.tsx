@@ -255,7 +255,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         // const result3 = await apiCv.deleteProfileReference(item3);
         // if (result3) {
         //   const resultProfile = await profileApi.getProfileV3(
-        //     languageRedux === 1 ? 'vi' : 'en',
+        //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         //   );
         //   if (resultProfile) {
         //     dispatch(setProfileV3(resultProfile));
@@ -327,7 +327,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
       const result = await apiCv.postProfileHobbies(hobbieValues);
       if (result) {
         const resultProfileV3 = await profileApi.getProfileInformationMoreV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (resultProfileV3) {
           dispatch(setProfileMeInformationMoreV3(resultProfileV3));

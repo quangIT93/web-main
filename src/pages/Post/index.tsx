@@ -276,7 +276,7 @@ const Post: React.FC = () => {
   //   }
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -294,7 +294,7 @@ const Post: React.FC = () => {
   const getProfileComanyV3 = async () => {
     try {
       const result = await profileApi.getProfileCompanyV3(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -385,9 +385,13 @@ const Post: React.FC = () => {
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi'
-          : languageRedux === 2 ? 'en'
-            : languageRedux === 3 ? 'ko' : 'vi',
+        languageRedux === 1
+          ? 'vi'
+          : languageRedux === 2
+            ? 'en'
+            : languageRedux === 3
+              ? 'ko'
+              : 'vi',
       );
       if (result) {
         // setDataLocations(result.data);
@@ -728,7 +732,7 @@ const Post: React.FC = () => {
   const handleFillCompany = async () => {
     try {
       // const result = await apiCompany.getCampanyByAccountApi(
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
 
       if (profileV3?.companyInfo) {
@@ -755,7 +759,7 @@ const Post: React.FC = () => {
       } else {
         setOpenModalNoteCreateCompany(true);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const checkPostedToday = async () => {
@@ -789,7 +793,7 @@ const Post: React.FC = () => {
   const setProfleCompany = async () => {
     try {
       const result = await profileApi.getProfileCompanyV3(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -819,7 +823,7 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-          // style={{ textAlign: 'center', display: 'block' }}
+            // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>{language?.profile_page?.create_post}</h1>
             <div className="post-main_switch">

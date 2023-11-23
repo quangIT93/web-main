@@ -21,7 +21,7 @@ interface IEditNameFaxCompany {
   dataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
@@ -31,13 +31,19 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges,setIsValid } = props;
+  const {
+    dataCompany,
+    setDataCompany,
+    is_profile,
+    setUnsavedChanges,
+    setIsValid,
+  } = props;
   // const [language, setLanguageState] = React.useState<any>();
 
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);
@@ -61,7 +67,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
       ...preValue,
       taxCode: value,
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   const handleEditCompanyName = (
@@ -73,7 +79,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
       ...preValue,
       name: value,
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   return (
@@ -97,7 +103,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_name}
           disabled={is_profile ? true : false}
-        //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.name?.length > 255 ? (
@@ -115,8 +121,9 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${dataCompany?.name?.length ? dataCompany?.name?.length : '0'
-            }/255`}</span>
+          <span className="number-text">{`${
+            dataCompany?.name?.length ? dataCompany?.name?.length : '0'
+          }/255`}</span>
         </div>
       </div>
       <div className="edit-tax-company">
@@ -138,7 +145,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_tax}
           disabled={is_profile ? true : false}
-        //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.taxCode?.length > 255 ? (
@@ -150,8 +157,9 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${dataCompany?.taxCode?.length ? dataCompany?.taxCode?.length : '0'
-            }/255`}</span>
+          <span className="number-text">{`${
+            dataCompany?.taxCode?.length ? dataCompany?.taxCode?.length : '0'
+          }/255`}</span>
         </div>
       </div>
     </div>

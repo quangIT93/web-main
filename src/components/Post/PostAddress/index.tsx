@@ -40,7 +40,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setFillWardId,
     language,
     languageRedux,
-    setIsValidSubmit
+    setIsValidSubmit,
   } = props;
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
@@ -73,7 +73,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   // const getAllProvinces = async () => {
   //   try {
   //     const allLocation = await locationApi.getAllLocation(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
 
   //     if (allLocation) {
@@ -92,7 +92,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       if (selectedProvince) {
         const districts = await locationApi.getDistrictsById(
           selectedProvince.province_id,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (districts) {
           setDataDistrict(districts.data);
@@ -109,7 +109,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       if (selectedDistrict) {
         const allward = await locationApi.getWardsId(
           selectedDistrict.id,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (allward) {
           setDataWard(allward.data);
@@ -147,24 +147,24 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setFillWardId(null);
     setFillDistrict(null);
     setFillProvince(null);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const handleDistrictChange = (event: any, value: any) => {
     setSelectedDistrict(value);
     setFillDistrict(value);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const handleChangeWardId = (e: any, value: any) => {
     setSelectedWard(value);
     setWardId(value.id);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const handleChangeAddress = (e: any) => {
     setAddress(e.target.value);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   return (
@@ -172,7 +172,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       <div className="post-address_top">
         <div
           className="post-title"
-        // style={{ position: 'relative' }}
+          // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -194,14 +194,14 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
                 {...params}
                 placeholder={language?.post_page?.place_city}
                 size="small"
-              // id="post_job_city"
+                // id="post_job_city"
               />
             )}
             style={{ marginTop: '0.5rem' }}
           />
           <div
             className="wrap-noti_input"
-          // style={{ position: 'absolute', bottom: '-15px' }}
+            // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {!fillProvince && selectedProvince === null ? (
               <span className="helper-text">
@@ -216,7 +216,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
         </div>
         <div
           className="post-title"
-        // style={{ position: 'relative' }}
+          // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -245,7 +245,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           />
           <div
             className="wrap-noti_input"
-          // style={{ position: 'absolute', bottom: '-15px' }}
+            // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {selectedDistrict === null && !fillDistrict ? (
               <span className="helper-text">
@@ -262,7 +262,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       <div className="post-address_bottom">
         <div
           className="post-title"
-        // style={{ position: 'relative' }}
+          // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -290,7 +290,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           />
           <div
             className="wrap-noti_input"
-          // style={{ position: 'absolute', bottom: '-15px' }}
+            // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {selectedWard === null && fillWardId?.id === '' ? (
               <span className="helper-text">
@@ -339,8 +339,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             ) : (
               <></>
             )}
-            <span className="number-text">{`${address ? address.length : '0'
-              }/255`}</span>
+            <span className="number-text">{`${
+              address ? address.length : '0'
+            }/255`}</span>
           </div>
         </div>
       </div>

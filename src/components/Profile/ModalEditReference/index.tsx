@@ -241,7 +241,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         );
         if (result) {
           const resultProfile = await profileApi.getProfileInformationMoreV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (resultProfile) {
             dispatch(setProfileMeInformationMoreV3(resultProfile));
@@ -263,10 +263,19 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         }
       } else {
         message.error(messageError);
-        const profile_reference_edit_full_name = document.getElementById('profile_reference_edit_full_name') as HTMLElement;
-        const profile_reference_edit_phone = document.getElementById('profile_reference_edit_phone') as HTMLElement;
-        const profile_reference_edit_email = document.getElementById('profile_reference_edit_email') as HTMLElement;
-        const profile_reference_edit_additional_information = document.getElementById('profile_reference_edit_additional_information') as HTMLElement;
+        const profile_reference_edit_full_name = document.getElementById(
+          'profile_reference_edit_full_name',
+        ) as HTMLElement;
+        const profile_reference_edit_phone = document.getElementById(
+          'profile_reference_edit_phone',
+        ) as HTMLElement;
+        const profile_reference_edit_email = document.getElementById(
+          'profile_reference_edit_email',
+        ) as HTMLElement;
+        const profile_reference_edit_additional_information =
+          document.getElementById(
+            'profile_reference_edit_additional_information',
+          ) as HTMLElement;
         // console.log(idError);
 
         switch (idError) {
@@ -287,7 +296,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             break;
         }
       }
-    } catch (error) { }
+    } catch (error) {}
     // setReferenceValues((prev: any) => [
     //   {
     //     fullName: fullName,
@@ -364,7 +373,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={languageRedux === 1 ? 'Họ và tên' : 'Full name'}
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {fullName && fullName.length > 255 ? (
@@ -382,8 +391,9 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${fullName ? fullName.length : '0'
-                }/255`}</span>
+              <span className="number-text">{`${
+                fullName ? fullName.length : '0'
+              }/255`}</span>
             </div>
           </Box>
           <Box sx={{ marginBottom: '12px' }}>
@@ -407,7 +417,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
               placeholder={
                 languageRedux === 1 ? 'Số điện thoại' : 'Phone number'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {regexCheckPhone.test(phone) === false ? (
@@ -447,7 +457,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={languageRedux === 1 ? 'Email' : 'Email'}
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {regexCheckEmail.test(mail) === false ? (
@@ -486,8 +496,8 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
               multiline
               rows={4}
               id="profile_reference_edit_additional_information"
-            // label="Một số đặc điểm nhận diện công ty"
-            // placeholder={language?.profile_page?.place_additional_information}
+              // label="Một số đặc điểm nhận diện công ty"
+              // placeholder={language?.profile_page?.place_additional_information}
             />
             <div className="wrap-noti_input">
               {description.length === 0 ? (

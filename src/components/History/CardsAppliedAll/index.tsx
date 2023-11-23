@@ -56,7 +56,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -77,7 +77,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
         null,
         10,
         1,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -110,7 +110,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
       lastPostId,
       11,
       1,
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
     if (result.data.length <= 10) {
       setIsVisible(false);
@@ -134,7 +134,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
         lastPostId,
         10,
         1,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setUploading(false);

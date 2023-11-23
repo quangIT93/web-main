@@ -69,7 +69,7 @@ const ModalDeleteHobbies: React.FC<IModalProfileDelete> = (props) => {
   // const getlanguageApi = async () => {
   //     try {
   //         const result = await languageApi.getLanguage(
-  //             languageRedux === 1 ? 'vi' : 'en',
+  //              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //         );
   //         if (result) {
   //             setLanguage(result.data);
@@ -91,7 +91,7 @@ const ModalDeleteHobbies: React.FC<IModalProfileDelete> = (props) => {
       const result = await apiCv.deleteProfileHobbies();
       if (result) {
         const resultProfile = await profileApi.getProfileInformationMoreV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
 
         resultProfile && dispatch(setProfileMeInformationMoreV3(resultProfile));

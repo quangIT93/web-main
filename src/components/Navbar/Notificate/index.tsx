@@ -140,9 +140,7 @@ const Notificate = () => {
     try {
       setIsLoading(true);
       const result = await notificationApi.getNotificationV2(
-        languageRedux === 1 ? 'vi'
-          : languageRedux === 2 ? 'en'
-            : languageRedux === 3 ? 'ko' : 'vi',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         20,
         '0',
       );
@@ -151,7 +149,7 @@ const Notificate = () => {
         setIsLoading(false);
         setDataNotification(result.data.notifications);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -163,9 +161,7 @@ const Notificate = () => {
     try {
       // const result = await notificationKeywordApi.getNotificationKeyword();
       const result = await notificationKeywordApi.getNotificationKeywordV3(
-        languageRedux === 1 ? 'vi'
-          : languageRedux === 2 ? 'en'
-            : languageRedux === 3 ? 'ko' : 'vi'
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       // console.log('keyword v3', result);
       if (result) {
@@ -173,7 +169,7 @@ const Notificate = () => {
         setValueApp(result.data.status.pushStatus);
         setValueMall(result.data.status.emailStatus);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -222,7 +218,6 @@ const Notificate = () => {
     try {
       const result = await notificationApi.putProfileSkill(notiId, typeText);
       if (result) {
-
         switch (typeText) {
           case 'keyword':
             window.open(`post-detail?post-id=${postId}`, '_parent');
@@ -232,16 +227,11 @@ const Notificate = () => {
             window.open(`detail-company?companyId=${postId}`, '_parent');
             break;
 
-
           default:
             break;
         }
-
-
-
-
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleClickNoty = async (
@@ -273,7 +263,6 @@ const Notificate = () => {
           //   );
           // }
 
-
           switch (typeText) {
             case 'recruiter':
               window.open(
@@ -294,22 +283,18 @@ const Notificate = () => {
               break;
 
             default:
-
               break;
           }
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleClickCompany = async (
     companyId: number,
     typeText: string,
-    notiId: number,) => {
-
-
-
-  }
+    notiId: number,
+  ) => {};
 
   const handleChangeEmail = async (e: any) => {
     console.log(e.target.value);
@@ -398,9 +383,7 @@ const Notificate = () => {
       console.log('nextPage', nextPage);
 
       const result = await notificationApi.getNotificationV2(
-        languageRedux === 1 ? 'vi'
-          : languageRedux === 2 ? 'en'
-            : languageRedux === 3 ? 'ko' : 'vi',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         20,
         nextPage,
       );
@@ -432,32 +415,28 @@ const Notificate = () => {
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">
         <div
-          className={`top-notificate_system ${activeSystem ? 'active-system' : ''
-            }`}
+          className={`top-notificate_system ${
+            activeSystem ? 'active-system' : ''
+          }`}
           onClick={handleClickActiveSystem}
         >
-          {
-            languageRedux === 1 ?
-              "Thông báo" :
-              languageRedux === 2 ?
-                "Notification" :
-                languageRedux === 3 &&
-                "알림"
-          }
+          {languageRedux === 1
+            ? 'Thông báo'
+            : languageRedux === 2
+              ? 'Notification'
+              : languageRedux === 3 && '알림'}
         </div>
         <div
-          className={`top-notificate_keyword ${activeKeyword ? 'active-keyword' : ''
-            }`}
+          className={`top-notificate_keyword ${
+            activeKeyword ? 'active-keyword' : ''
+          }`}
           onClick={handleClickActiveKeyword}
         >
-          {
-            languageRedux === 1 ?
-              "Từ khóa" :
-              languageRedux === 2 ?
-                "Keyword" :
-                languageRedux === 3 &&
-                "키워드"
-          }
+          {languageRedux === 1
+            ? 'Từ khóa'
+            : languageRedux === 2
+              ? 'Keyword'
+              : languageRedux === 3 && '키워드'}
         </div>
       </div>
       <div className="bottom-notificate" id="scrollableDiv">
@@ -478,8 +457,9 @@ const Notificate = () => {
                   return (
                     <div
                       key={index}
-                      className={`wrap-system ${notificate?.data?.isRead ? `` : `readed`
-                        }`}
+                      className={`wrap-system ${
+                        notificate?.data?.isRead ? `` : `readed`
+                      }`}
                       onClick={() =>
                         handleClickNotiKey(
                           notificate.data.companyId,
@@ -563,81 +543,95 @@ const Notificate = () => {
                     </div>
                   );
                 } else if (notificate.data.typeText === 'viewProfile') {
-                  return <div
-                    key={index}
-                    className={`wrap-notificate_system ${notificate?.data?.isRead !== undefined &&
-                      !notificate?.data?.isRead
-                      ? 'readed'
-                      : notificate.data?.isRead !== undefined &&
-                        notificate.data?.isRead
-                        ? ''
-                        : ''
+                  return (
+                    <div
+                      key={index}
+                      className={`wrap-notificate_system ${
+                        notificate?.data?.isRead !== undefined &&
+                        !notificate?.data?.isRead
+                          ? 'readed'
+                          : notificate.data?.isRead !== undefined &&
+                              notificate.data?.isRead
+                            ? ''
+                            : ''
                       }`}
-                    onClick={() =>
-                      handleClickNotiKey(
-                        notificate.data.companyId,
-                        notificate.data.typeText,
-                        notificate.data.notificationId,
-                      )
-                    }
-                    style={{ display: "flex" }}
-                  >
-                    <div style={{
-                      marginLeft: "8px",
-                      maxWidth: "80px",
-                      maxHeight: "80px",
-                      borderRadius: "12px"
-                    }}>
-                      {/* <img src={notificate.companyLogo} alt="" /> */}
-                      <img
+                      onClick={() =>
+                        handleClickNotiKey(
+                          notificate.data.companyId,
+                          notificate.data.typeText,
+                          notificate.data.notificationId,
+                        )
+                      }
+                      style={{ display: 'flex' }}
+                    >
+                      <div
                         style={{
-                          minWidth: "80px",
-                          minHeight: "80px",
-                          objectFit: "cover",
-                          borderRadius: "12px"
+                          marginLeft: '8px',
+                          maxWidth: '80px',
+                          maxHeight: '80px',
+                          borderRadius: '12px',
                         }}
-                        src="https://www.elle.vn/wp-content/uploads/2017/07/25/hinh-anh-dep-1.jpg" alt="" />
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", marginLeft: "12px", justifyItems: "center", justifyContent: "center" }}>
-                      <h3
-                        className='wrap-notificate_systemH3'
-                      >{notificate.content_app.title}</h3>
-                      <h5
-                        dangerouslySetInnerHTML={{
-                          __html: notificate.content_app.body,
+                      >
+                        {/* <img src={notificate.companyLogo} alt="" /> */}
+                        <img
+                          style={{
+                            minWidth: '80px',
+                            minHeight: '80px',
+                            objectFit: 'cover',
+                            borderRadius: '12px',
+                          }}
+                          src="https://www.elle.vn/wp-content/uploads/2017/07/25/hinh-anh-dep-1.jpg"
+                          alt=""
+                        />
+                      </div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          marginLeft: '12px',
+                          justifyItems: 'center',
+                          justifyContent: 'center',
                         }}
-                      />
-                      <div className="wrap-time">
-                        <p>
-                          {new Date(
-                            notificate.data.createdAt,
-                          ).toLocaleTimeString([], {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
-                        </p>
-                        <p>
-                          {new Date(
-                            notificate.data.createdAt,
-                          ).toLocaleDateString('en-GB')}
-                        </p>
+                      >
+                        <h3 className="wrap-notificate_systemH3">
+                          {notificate.content_app.title}
+                        </h3>
+                        <h5
+                          dangerouslySetInnerHTML={{
+                            __html: notificate.content_app.body,
+                          }}
+                        />
+                        <div className="wrap-time">
+                          <p>
+                            {new Date(
+                              notificate.data.createdAt,
+                            ).toLocaleTimeString([], {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}
+                          </p>
+                          <p>
+                            {new Date(
+                              notificate.data.createdAt,
+                            ).toLocaleDateString('en-GB')}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-
+                  );
                 } else {
                   return (
                     <div
                       key={index}
-                      className={`wrap-notificate_system ${notificate?.data?.isRead !== undefined &&
+                      className={`wrap-notificate_system ${
+                        notificate?.data?.isRead !== undefined &&
                         !notificate?.data?.isRead
-                        ? 'readed'
-                        : notificate.data?.isRead !== undefined &&
-                          notificate.data?.isRead
-                          ? ''
-                          : ''
-                        }`}
+                          ? 'readed'
+                          : notificate.data?.isRead !== undefined &&
+                              notificate.data?.isRead
+                            ? ''
+                            : ''
+                      }`}
                       onClick={() =>
                         handleClickNoty(
                           notificate.data.postId,
@@ -680,14 +674,12 @@ const Notificate = () => {
         ) : (
           <div className="wrap-keyword">
             <p>
-              {
-                languageRedux === 1 ?
-                  "Bạn muốn nhận danh sách công việc theo từ khóa tìm kiếm nhanh chóng qua:" :
-                  languageRedux === 2 ?
-                    "You want to get job listings by keyword quickly search via:" :
-                    languageRedux === 3 &&
-                    "다음을 통해 키워드별로 빠르게 검색하려는 작업 목록:"
-              }
+              {languageRedux === 1
+                ? 'Bạn muốn nhận danh sách công việc theo từ khóa tìm kiếm nhanh chóng qua:'
+                : languageRedux === 2
+                  ? 'You want to get job listings by keyword quickly search via:'
+                  : languageRedux === 3 &&
+                    '다음을 통해 키워드별로 빠르게 검색하려는 작업 목록:'}
             </p>
             <div className="wrap-checkbox_keyword">
               <div className="checkbox-keyword">
@@ -702,14 +694,11 @@ const Notificate = () => {
                   style={{ cursor: 'not-allowed' }}
                 />
                 <label htmlFor="app" style={{ color: '#ccc' }}>
-                  {
-                    languageRedux === 1 ?
-                      "Ứng dụng" :
-                      languageRedux === 2 ?
-                        "App" :
-                        languageRedux === 3 &&
-                        "앱"
-                  }
+                  {languageRedux === 1
+                    ? 'Ứng dụng'
+                    : languageRedux === 2
+                      ? 'App'
+                      : languageRedux === 3 && '앱'}
                 </label>
               </div>
               <div className="checkbox-keyword">
@@ -722,47 +711,40 @@ const Notificate = () => {
                   checked={valueMall === 1 ? true : false}
                 />
                 <label htmlFor="email">
-                  {
-                    languageRedux === 1 ?
-                      "Email" :
-                      languageRedux === 2 ?
-                        "Email" :
-                        languageRedux === 3 &&
-                        "이메일"
-                  }
+                  {languageRedux === 1
+                    ? 'Email'
+                    : languageRedux === 2
+                      ? 'Email'
+                      : languageRedux === 3 && '이메일'}
                 </label>
               </div>
             </div>
             <div className="count-keyword">
               <p>
-                {
-                  languageRedux === 1 ?
-                    "Bạn đã lưu trữ được:" :
-                    languageRedux === 2 ?
-                      "You have archived:" :
-                      languageRedux === 3 &&
-                      "보관했습니다:"
-                }
-                <strong>{` ${dataNotificationKeyword.keywords.length > 0
-                  ? dataNotificationKeyword.keywords.length
-                  : 0
-                  }/10 `}</strong>
-                {
-                  languageRedux === 1 ?
-                    "gợi ý công việc" :
-                    languageRedux === 2 ?
-                      "job suggestion" :
-                      languageRedux === 3 &&
-                      "일자리 제안"
-                }
+                {languageRedux === 1
+                  ? 'Bạn đã lưu trữ được:'
+                  : languageRedux === 2
+                    ? 'You have archived:'
+                    : languageRedux === 3 && '보관했습니다:'}
+                <strong>{` ${
+                  dataNotificationKeyword.keywords.length > 0
+                    ? dataNotificationKeyword.keywords.length
+                    : 0
+                }/10 `}</strong>
+                {languageRedux === 1
+                  ? 'gợi ý công việc'
+                  : languageRedux === 2
+                    ? 'job suggestion'
+                    : languageRedux === 3 && '일자리 제안'}
               </p>
             </div>
             {dataNotificationKeyword ? (
               dataNotificationKeyword?.keywords?.map(
                 (dataKeyword: any, index: number) => (
                   <div
-                    className={`wrap-content_keyword ${idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
-                      }`}
+                    className={`wrap-content_keyword ${
+                      idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
+                    }`}
                     key={index}
                   >
                     <div
@@ -779,11 +761,12 @@ const Notificate = () => {
                           <Tooltip
                             title={dataKeyword.keywordDistricts.map(
                               (location: any, index: number) => {
-                                return `${location.fullName}${index ===
+                                return `${location.fullName}${
+                                  index ===
                                   dataKeyword.keywordDistricts.length - 1
-                                  ? ''
-                                  : ', '
-                                  }`;
+                                    ? ''
+                                    : ', '
+                                }`;
                               },
                             )}
                             placement="top"
@@ -791,11 +774,12 @@ const Notificate = () => {
                             <p>
                               {dataKeyword.keywordDistricts.map(
                                 (location: any, index: number) => {
-                                  return `${location.fullName}${index ===
+                                  return `${location.fullName}${
+                                    index ===
                                     dataKeyword.keywordDistricts.length - 1
-                                    ? ''
-                                    : ', '
-                                    }`;
+                                      ? ''
+                                      : ', '
+                                  }`;
                                 },
                               )}
                             </p>
@@ -807,11 +791,12 @@ const Notificate = () => {
                           <Tooltip
                             title={dataKeyword.keywordCategories.map(
                               (cate: any, index: number) => {
-                                return `${cate.fullName}${index ===
+                                return `${cate.fullName}${
+                                  index ===
                                   dataKeyword.keywordCategories.length - 1
-                                  ? ''
-                                  : ', '
-                                  }`;
+                                    ? ''
+                                    : ', '
+                                }`;
                               },
                             )}
                             placement="top"
@@ -819,11 +804,12 @@ const Notificate = () => {
                             <p>
                               {dataKeyword.keywordCategories.map(
                                 (cate: any, index: number) => {
-                                  return `${cate.fullName}${index ===
+                                  return `${cate.fullName}${
+                                    index ===
                                     dataKeyword.keywordCategories.length - 1
-                                    ? ''
-                                    : ', '
-                                    }`;
+                                      ? ''
+                                      : ', '
+                                  }`;
                                 },
                               )}
                             </p>
@@ -868,10 +854,11 @@ const Notificate = () => {
           </div>
         )}
         <div
-          className={`modal-delete_keyword ${openModalDeleteKeyword && !activeSystem
-            ? 'open-modal_deleteKeyword'
-            : ''
-            }`}
+          className={`modal-delete_keyword ${
+            openModalDeleteKeyword && !activeSystem
+              ? 'open-modal_deleteKeyword'
+              : ''
+          }`}
         >
           <h4>{language?.delete_this_keyword}</h4>
           <p>{language?.keywords_will_not_be_recoverable_after_deletion}</p>

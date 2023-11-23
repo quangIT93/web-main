@@ -275,7 +275,7 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
         if (result) {
           // console.log(result);
           const resultProfile = await profileApi.getProfileInformationMoreV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
 
           resultProfile &&
@@ -297,11 +297,21 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
         }
       } else {
         message.error(messageError);
-        const profile_activity_title = document.getElementById('profile_activity_title') as HTMLElement;
-        const profile_activity_employer = document.getElementById('profile_activity_employer') as HTMLElement;
-        const profile_activity_description = document.getElementById('profile_activity_description') as HTMLElement;
-        const profile_activity_start_date = document.getElementById('profile_activity_start_date') as HTMLElement;
-        const profile_activity_end_date = document.getElementById('profile_activity_end_date') as HTMLElement;
+        const profile_activity_title = document.getElementById(
+          'profile_activity_title',
+        ) as HTMLElement;
+        const profile_activity_employer = document.getElementById(
+          'profile_activity_employer',
+        ) as HTMLElement;
+        const profile_activity_description = document.getElementById(
+          'profile_activity_description',
+        ) as HTMLElement;
+        const profile_activity_start_date = document.getElementById(
+          'profile_activity_start_date',
+        ) as HTMLElement;
+        const profile_activity_end_date = document.getElementById(
+          'profile_activity_end_date',
+        ) as HTMLElement;
         // console.log(idError);
 
         switch (idError) {
@@ -387,7 +397,7 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
               placeholder={
                 languageRedux === 1 ? 'Tiêu đề hoạt động' : 'Function Title'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {activity.title && activity.title.length > 255 ? (
@@ -405,8 +415,9 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${activity.title ? activity.title.length : '0'
-                }/255`}</span>
+              <span className="number-text">{`${
+                activity.title ? activity.title.length : '0'
+              }/255`}</span>
             </div>
           </Box>
           <Box sx={{ marginBottom: '12px' }}>
@@ -428,7 +439,7 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={languageRedux === 1 ? 'Nhà tuyển dụng' : 'Employer'}
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {activity.employer && activity.employer.length > 255 ? (
@@ -446,15 +457,16 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${activity.employer ? activity.employer.length : '0'
-                }/255`}</span>
+              <span className="number-text">{`${
+                activity.employer ? activity.employer.length : '0'
+              }/255`}</span>
             </div>
           </Box>
           <Box sx={{ marginBottom: '12px' }}>
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DemoContainer
                 components={['DatePicker']}
-              //   sx={{ display: 'flex' }}
+                //   sx={{ display: 'flex' }}
               >
                 <div className="activity-time-wraper">
                   <Typography
@@ -486,30 +498,24 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
                   />
                   <div className="wrap-noti_input">
                     {activity.endDate &&
-                      new Date(activity.startDate).getFullYear() >
+                    new Date(activity.startDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Thời gian bắt đầu không thể lớn hơn thời gian hiện tại." :
-                            "The start time cannot be greater than the current time."
-                        }
+                        {languageRedux === 1
+                          ? 'Thời gian bắt đầu không thể lớn hơn thời gian hiện tại.'
+                          : 'The start time cannot be greater than the current time.'}
                       </span>
                     ) : !new Date(activity.startDate).getFullYear() ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Vui lòng nhập Thời gian bắt đầu." :
-                            "Please enter start date."
-                        }
+                        {languageRedux === 1
+                          ? 'Vui lòng nhập Thời gian bắt đầu.'
+                          : 'Please enter start date.'}
                       </span>
                     ) : new Date(activity.startDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Thời gian bắt đầu không thể nhỏ hơn 1900." :
-                            "The start time cannot be less than 1900."
-                        }
+                        {languageRedux === 1
+                          ? 'Thời gian bắt đầu không thể nhỏ hơn 1900.'
+                          : 'The start time cannot be less than 1900.'}
                       </span>
                     ) : (
                       <></>
@@ -523,7 +529,7 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DemoContainer
                 components={['DatePicker']}
-              //   sx={{ display: 'flex' }}
+                //   sx={{ display: 'flex' }}
               >
                 <div className="activity-time-wraper">
                   <Typography
@@ -555,30 +561,24 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
                   />
                   <div className="wrap-noti_input">
                     {activity.endDate &&
-                      new Date(activity.endDate).getFullYear() >
+                    new Date(activity.endDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Thời gian kết thúc không thể lớn hơn thời gian hiện tại." :
-                            "The end time cannot be greater than the current time."
-                        }
+                        {languageRedux === 1
+                          ? 'Thời gian kết thúc không thể lớn hơn thời gian hiện tại.'
+                          : 'The end time cannot be greater than the current time.'}
                       </span>
                     ) : !new Date(activity.endDate).getFullYear() ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Vui lòng nhập Thời gian kết thúc." :
-                            "Please enter End date."
-                        }
+                        {languageRedux === 1
+                          ? 'Vui lòng nhập Thời gian kết thúc.'
+                          : 'Please enter End date.'}
                       </span>
                     ) : new Date(activity.endDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Thời gian kết thúc không thể nhỏ hơn 1900." :
-                            "The end time cannot be less than 1900."
-                        }
+                        {languageRedux === 1
+                          ? 'Thời gian kết thúc không thể nhỏ hơn 1900.'
+                          : 'The end time cannot be less than 1900.'}
                       </span>
                     ) : (
                       <></>
@@ -615,7 +615,7 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
                   ? 'Mô tả quá trình thực tập của bạn'
                   : 'Description your activity'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {activity.description.length === 0 ? (

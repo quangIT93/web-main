@@ -138,7 +138,7 @@ const ThemesJob: React.FC = () => {
   //     Number(themeId),
   //     9,
   //     threshold,
-  //     languageRedux === 1 ? 'vi' : 'en',
+  //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //   );
 
   //   if (result) {
@@ -167,7 +167,7 @@ const ThemesJob: React.FC = () => {
       let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
       setLoadingCarousel(true);
       const result = await themeApi.getThemesEnable(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -180,7 +180,7 @@ const ThemesJob: React.FC = () => {
             : result?.data[0]?.id,
           9,
           0,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (list) {
           setPostByTheme(list);
@@ -225,7 +225,7 @@ const ThemesJob: React.FC = () => {
     window.open('/more-jobs', '_parent');
   };
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
   return (
     <Box
       sx={{ flexGrow: 1, paddingBottom: '24px' }}
@@ -235,7 +235,15 @@ const ThemesJob: React.FC = () => {
       <div className="title-container">
         <div className="title">
           <TopicJobIcon width={25} height={25} />
-          <h2>{language?.jobs_by_theme}</h2>
+          <h2>
+            {languageRedux === 1
+              ? 'Công việc theo chủ đề'
+              : languageRedux === 2
+                ? 'Job by hot places'
+                : languageRedux === 3
+                  ? '핫플레이스별작업'
+                  : 'Công việc theo chủ đề'}
+          </h2>
           <div className="help-search" onClick={handleClickHelpSearch}>
             <QuestionMarkIcon />
             <div className={`login__hover__container `}>
@@ -331,7 +339,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-              //   onClick={handleClose}
+                //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>
@@ -342,17 +350,18 @@ const ThemesJob: React.FC = () => {
           className="view-all-down"
           onClick={handleMoveToMoreJob}
           style={{
-            display: !post || post.length === 0 || post.length < 10 ? 'none' : 'flex'
+            display:
+              !post || post.length === 0 || post.length < 10 ? 'none' : 'flex',
           }}
         >
-          <p> {
-            languageRedux === 1 ?
-              "Xem tất cả" :
-              languageRedux === 2 ?
-                "View all" :
-                languageRedux === 3 &&
-                "다 보기"
-          }</p>
+          <p>
+            {' '}
+            {languageRedux === 1
+              ? 'Xem tất cả'
+              : languageRedux === 2
+                ? 'View all'
+                : languageRedux === 3 && '다 보기'}
+          </p>
           <ArrowrightIcon width={20} height={20} />
         </div>
       </Skeleton>

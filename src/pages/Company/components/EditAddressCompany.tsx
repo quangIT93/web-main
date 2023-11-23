@@ -28,7 +28,7 @@ interface IEditPostAddress {
   setFillProvince: React.Dispatch<React.SetStateAction<any>>;
   setFillDistrict: React.Dispatch<React.SetStateAction<any>>;
   setFillWard: React.Dispatch<React.SetStateAction<any>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
@@ -38,14 +38,16 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { setDataCompany,
+  const {
+    setDataCompany,
     dataCompany,
     is_profile,
     setUnsavedChanges,
     setFillProvince,
     setFillDistrict,
     setFillWard,
-    setIsValid } = props;
+    setIsValid,
+  } = props;
 
   // const [dataProvinces, setDataProvinces] = useState<any>(null);
   const [dataDistricts, setDataDistrict] = useState<any>(null);
@@ -127,7 +129,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   // const getAllProvinces = async () => {
   //   try {
   //     const allLocation = await locationApi.getAllLocation(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
 
   //     if (allLocation) {
@@ -147,7 +149,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
       ) {
         const districts = await locationApi.getDistrictsById(
           dataCompany?.companyLocation?.district?.province?.id,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
 
         if (districts) {
@@ -157,7 +159,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
         if (selectedProvince) {
           const districts = await locationApi.getDistrictsById(
             selectedProvince?.province_id,
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (districts) {
             setDataDistrict(districts?.data);
@@ -175,7 +177,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
       if (dataDistricts && dataWards === null) {
         const allward = await locationApi.getWardsId(
           dataCompany?.companyLocation?.district?.id,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
 
         if (allward) {
@@ -185,7 +187,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
         if (selectedDistrict) {
           const allward = await locationApi.getWardsId(
             selectedDistrict?.id,
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (allward) {
             setDataWard(allward?.data);
@@ -225,7 +227,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     setFillWard(null);
     setFillProvince(value);
     setDataWard([]);
-    setIsValid(false)
+    setIsValid(false);
   };
 
   const handleDistrictChange = (event: any, value: any) => {
@@ -234,20 +236,20 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     setSelectedWard(null);
     setFillWard(null);
     setFillDistrict(value);
-    setIsValid(false)
+    setIsValid(false);
   };
 
   const handleChangeWardId = (event: any, value: any) => {
     setUnsavedChanges(true);
     setSelectedWard(value);
-    setFillWard(value)
+    setFillWard(value);
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyLocation: {
         id: value ? value.id : '',
       },
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   const handleChangeAddress = (e: any) => {
@@ -255,7 +257,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
       ...preValue,
       address: e.target?.value,
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   return (

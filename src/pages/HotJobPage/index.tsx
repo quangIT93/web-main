@@ -240,7 +240,7 @@ const HotJobpage: React.FC = () => {
         `/v3/posts/topic/${searchParams.get('hotjob-id')}?a=394,370`,
         pageNumber,
         searchParams.get('hotjob-type') === '1' ? 18 : 20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
 
         // !idFilterProvinces && profileV3.length !== 0
         //   ? profileV3.addressText.id
@@ -317,7 +317,7 @@ const HotJobpage: React.FC = () => {
   //       url,
   //       nextPage,
   //       searchParams.get('hotjob-id') === '1' ? 18 : 20,
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //       idFilterProvinces,
   //     );
   //     if (result) {
@@ -369,7 +369,7 @@ const HotJobpage: React.FC = () => {
   const getProvinces = async () => {
     try {
       const result = await locationApi.getAllProvinces(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       console.log('result', result.data);
 
@@ -449,7 +449,7 @@ const HotJobpage: React.FC = () => {
     }
   }, [provincesData, languageRedux]);
 
-  const handleClickFilterHotjob = () => { };
+  const handleClickFilterHotjob = () => {};
 
   const handleChangeFilterHotjob = (event: SelectChangeEvent) => {
     // localStorage.setItem('filterHotjobProvince', value);
@@ -468,7 +468,7 @@ const HotJobpage: React.FC = () => {
         `/v3/posts/topic/${searchParams.get('hotjob-id')}?a=394,370`,
         nextPage,
         searchParams.get('hotjob-type') === '1' ? 18 : 20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
 
         // !idFilterProvinces && profileV3.length !== 0
         //   ? profileV3.addressText.id
@@ -535,10 +535,14 @@ const HotJobpage: React.FC = () => {
                                     : searchParams.get('hotjob-id') === '11'
                                       ? 'Beauty'
                                       : 'Loading...'}{' '}
-                {languageRedux === 1 ? 'có' : 'has'}{' '}
+                {languageRedux === 1
+                  ? 'có'
+                  : languageRedux === 2
+                    ? 'has'
+                    : languageRedux === 3 && ':'}{' '}
                 {hotjob.length !== 0
                   ? // ? Number(hotJobTotal.toLocaleString())
-                  new Intl.NumberFormat('en-US').format(hotJobTotal)
+                    new Intl.NumberFormat('en-US').format(hotJobTotal)
                   : languageRedux === 1
                     ? '0 kết quả'
                     : '0 result'}
@@ -548,11 +552,15 @@ const HotJobpage: React.FC = () => {
                     // language?.hot_job_page?.result
                     languageRedux === 1 && hotjob.length !== 0
                       ? 'kết quả'
-                      : hotJobTotal >= 2 && hotjob.length !== 0
+                      : languageRedux === 2 &&
+                          hotJobTotal >= 2 &&
+                          hotjob.length !== 0
                         ? 'results'
-                        : hotJobTotal < 2 && hotjob.length !== 0
+                        : languageRedux === 2 &&
+                            hotJobTotal < 2 &&
+                            hotjob.length !== 0
                           ? 'result'
-                          : ''
+                          : '건'
                   }
                 </span>
               </h3>
@@ -577,9 +585,7 @@ const HotJobpage: React.FC = () => {
                       }}
                     >
                       {optionsProvinces.map((v: any) => {
-                        return <MenuItem
-                          value={v.value}>{v.label}
-                        </MenuItem>;
+                        return <MenuItem value={v.value}>{v.label}</MenuItem>;
                       })}
                     </Select>
                   ) : (
@@ -682,7 +688,7 @@ const HotJobpage: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-          //  onClick={handleClose}
+            //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>

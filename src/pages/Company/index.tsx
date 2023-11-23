@@ -153,21 +153,20 @@ const Company: React.FC<ICompany> = (props) => {
 
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [ShowModalUnsave, setShowModalUnsave] = useState(false);
-  const [ShowModalFisnishCreateCompany, setShowModalFisnishCreateCompany] = useState(false);
+  const [ShowModalFisnishCreateCompany, setShowModalFisnishCreateCompany] =
+    useState(false);
   const [isValid, setIsValid] = useState(true);
   // const [language, setLanguageState] = React.useState<any>();
   const dispatch = useDispatch();
   const [openModalEditCompany, setOpenModalEditCompanySuccess] =
     React.useState(false);
 
-
   const analytics: any = getAnalytics();
-
 
   const getProfileComanyV3 = async () => {
     try {
       const result = await profileApi.getProfileCompanyV3(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -197,7 +196,7 @@ const Company: React.FC<ICompany> = (props) => {
     try {
       setLoading(true);
       // const result = await apiCompany.getCampanyByAccountApi(
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
       if (profileCompanyV3.id) {
         setTimeout(() => {
@@ -234,10 +233,10 @@ const Company: React.FC<ICompany> = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log("isvalid", isValid);
-  
+  console.log('isvalid', isValid);
+
   useEffect(() => {
-    const handleBeforeUnload = (event: any) => {   
+    const handleBeforeUnload = (event: any) => {
       if (isValid === false) {
         const message =
           languageRedux === 1
@@ -258,16 +257,14 @@ const Company: React.FC<ICompany> = (props) => {
     };
   }, [isValid]);
 
-
-
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -356,9 +353,10 @@ const Company: React.FC<ICompany> = (props) => {
     }
     if (dataCompany?.email.length > 50) {
       return {
-        message: languageRedux === 1 ?
-          "Email không được vượt quá 50 ký tự." :
-          "Email must not exceed 50 characters.",
+        message:
+          languageRedux === 1
+            ? 'Email không được vượt quá 50 ký tự.'
+            : 'Email must not exceed 50 characters.',
         checkForm: false,
         idError: 8,
       };
@@ -393,9 +391,10 @@ const Company: React.FC<ICompany> = (props) => {
     }
     if (dataCompany?.website.length > 100) {
       return {
-        message: languageRedux === 1 ?
-          "Website không được vượt quá 100 ký tự." :
-          "Website must not exceed 100 characters.",
+        message:
+          languageRedux === 1
+            ? 'Website không được vượt quá 100 ký tự.'
+            : 'Website must not exceed 100 characters.',
         checkForm: false,
         idError: 10,
       };
@@ -444,9 +443,10 @@ const Company: React.FC<ICompany> = (props) => {
     }
     if (dataCompany?.description.length > 1000) {
       return {
-        message: languageRedux === 1 ?
-          "Mô tả không được quá 1000 ký tự." :
-          "Description must not exceed 1000 characters.",
+        message:
+          languageRedux === 1
+            ? 'Mô tả không được quá 1000 ký tự.'
+            : 'Description must not exceed 1000 characters.',
         checkForm: false,
         idError: 13,
       };
@@ -455,7 +455,7 @@ const Company: React.FC<ICompany> = (props) => {
     return {
       message: '',
       checkForm: true,
-      idError: 0
+      idError: 0,
     };
   };
 
@@ -476,7 +476,7 @@ const Company: React.FC<ICompany> = (props) => {
             });
 
             const resultProfileV3 = await profileApi.getProfileInformationV3(
-              languageRedux === 1 ? 'vi' : 'en',
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             );
             if (resultProfileV3) {
               dispatch(setProfileMeInformationV3(resultProfileV3));
@@ -498,19 +498,45 @@ const Company: React.FC<ICompany> = (props) => {
           type: 'error',
           content: message,
         });
-        const company_upload_avatar = document.getElementById('company_upload_avatar') as HTMLElement;
-        const company_name = document.getElementById('company_name') as HTMLElement;
-        const company_city = document.getElementById('company_city') as HTMLElement;
-        const company_district = document.getElementById('company_district') as HTMLElement;
-        const company_ward = document.getElementById('company_ward') as HTMLElement;
-        const company_address = document.getElementById('company_address') as HTMLElement;
-        const company_phone = document.getElementById('company_phone') as HTMLElement;
-        const company_email = document.getElementById('company_email') as HTMLElement;
-        const company_place_role = document.getElementById('company_place_role') as HTMLElement;
-        const company_website = document.getElementById('company_website') as HTMLElement;
-        const company_place_activity = document.getElementById('company_place_activity') as HTMLElement;
-        const company_place_size = document.getElementById('company_place_size') as HTMLElement;
-        const company_place_des = document.getElementById('company_place_des') as HTMLElement;
+        const company_upload_avatar = document.getElementById(
+          'company_upload_avatar',
+        ) as HTMLElement;
+        const company_name = document.getElementById(
+          'company_name',
+        ) as HTMLElement;
+        const company_city = document.getElementById(
+          'company_city',
+        ) as HTMLElement;
+        const company_district = document.getElementById(
+          'company_district',
+        ) as HTMLElement;
+        const company_ward = document.getElementById(
+          'company_ward',
+        ) as HTMLElement;
+        const company_address = document.getElementById(
+          'company_address',
+        ) as HTMLElement;
+        const company_phone = document.getElementById(
+          'company_phone',
+        ) as HTMLElement;
+        const company_email = document.getElementById(
+          'company_email',
+        ) as HTMLElement;
+        const company_place_role = document.getElementById(
+          'company_place_role',
+        ) as HTMLElement;
+        const company_website = document.getElementById(
+          'company_website',
+        ) as HTMLElement;
+        const company_place_activity = document.getElementById(
+          'company_place_activity',
+        ) as HTMLElement;
+        const company_place_size = document.getElementById(
+          'company_place_size',
+        ) as HTMLElement;
+        const company_place_des = document.getElementById(
+          'company_place_des',
+        ) as HTMLElement;
         console.log(idError);
 
         switch (idError) {
@@ -597,19 +623,45 @@ const Company: React.FC<ICompany> = (props) => {
           type: 'error',
           content: message,
         });
-        const company_upload_avatar = document.getElementById('company_upload_avatar') as HTMLElement;
-        const company_name = document.getElementById('company_name') as HTMLElement;
-        const company_city = document.getElementById('company_city') as HTMLElement;
-        const company_district = document.getElementById('company_district') as HTMLElement;
-        const company_ward = document.getElementById('company_ward') as HTMLElement;
-        const company_address = document.getElementById('company_address') as HTMLElement;
-        const company_phone = document.getElementById('company_phone') as HTMLElement;
-        const company_email = document.getElementById('company_email') as HTMLElement;
-        const company_place_role = document.getElementById('company_place_role') as HTMLElement;
-        const company_website = document.getElementById('company_website') as HTMLElement;
-        const company_place_activity = document.getElementById('company_place_activity') as HTMLElement;
-        const company_place_size = document.getElementById('company_place_size') as HTMLElement;
-        const company_place_des = document.getElementById('company_place_des') as HTMLElement;
+        const company_upload_avatar = document.getElementById(
+          'company_upload_avatar',
+        ) as HTMLElement;
+        const company_name = document.getElementById(
+          'company_name',
+        ) as HTMLElement;
+        const company_city = document.getElementById(
+          'company_city',
+        ) as HTMLElement;
+        const company_district = document.getElementById(
+          'company_district',
+        ) as HTMLElement;
+        const company_ward = document.getElementById(
+          'company_ward',
+        ) as HTMLElement;
+        const company_address = document.getElementById(
+          'company_address',
+        ) as HTMLElement;
+        const company_phone = document.getElementById(
+          'company_phone',
+        ) as HTMLElement;
+        const company_email = document.getElementById(
+          'company_email',
+        ) as HTMLElement;
+        const company_place_role = document.getElementById(
+          'company_place_role',
+        ) as HTMLElement;
+        const company_website = document.getElementById(
+          'company_website',
+        ) as HTMLElement;
+        const company_place_activity = document.getElementById(
+          'company_place_activity',
+        ) as HTMLElement;
+        const company_place_size = document.getElementById(
+          'company_place_size',
+        ) as HTMLElement;
+        const company_place_des = document.getElementById(
+          'company_place_des',
+        ) as HTMLElement;
         console.log(idError);
 
         switch (idError) {
@@ -713,7 +765,6 @@ const Company: React.FC<ICompany> = (props) => {
     // }));
 
     if (formData) {
-
       haveCompany
         ? handleUpdateCompany(formData, formDataImages)
         : handleCreateCompany(formData);
@@ -825,7 +876,6 @@ const Company: React.FC<ICompany> = (props) => {
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
               setIsValid={setIsValid}
-
             />
             <EditAddressCompany
               dataCompany={dataCompany}
@@ -839,7 +889,6 @@ const Company: React.FC<ICompany> = (props) => {
               setFillProvince={setFillProvince}
               setFillWard={setFillWard}
               setIsValid={setIsValid}
-
             />
             <EditPhoneMailCompany
               dataCompany={dataCompany}
@@ -847,7 +896,6 @@ const Company: React.FC<ICompany> = (props) => {
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
               setIsValid={setIsValid}
-
             />
             <EditRoleWebCompany
               dataCompany={dataCompany}
@@ -856,7 +904,6 @@ const Company: React.FC<ICompany> = (props) => {
               setUnsavedChanges={setUnsavedChanges}
               setFillRole={setFillRole}
               setIsValid={setIsValid}
-
             />
 
             <EditFieldScaleCompany
@@ -867,7 +914,6 @@ const Company: React.FC<ICompany> = (props) => {
               setFillActivity={setFillActivity}
               setFillSize={setFillSize}
               setIsValid={setIsValid}
-
             />
             <EditImageCompany
               dataCompany={dataCompany}
@@ -875,7 +921,6 @@ const Company: React.FC<ICompany> = (props) => {
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
               setIsValid={setIsValid}
-
             />
             <EditDescripeCompany
               dataCompany={dataCompany}
@@ -883,7 +928,6 @@ const Company: React.FC<ICompany> = (props) => {
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
               setIsValid={setIsValid}
-
             />
 
             <button
@@ -918,8 +962,7 @@ const Company: React.FC<ICompany> = (props) => {
         handleSubmit={handleSubmit}
       />
 
-      <ModalIntroduceCreateCompany
-      />
+      <ModalIntroduceCreateCompany />
 
       <div style={{ display: is_profile ? 'none' : 'block' }}>
         {/* <RollTop /> */}

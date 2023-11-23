@@ -50,7 +50,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     try {
       const result = await postApi.getPostV3(
         Number(searchParams.get('post_id')),
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result.data !== null) {
         // setUserChat({
@@ -107,12 +107,12 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   const getAllUserChat = async () => {
     try {
       const result = await messageApi.getUserChated(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       // const post = await postApi.getPostV3(
       //   Number(searchParams.get('post_id')),
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
 
       if (result) {
@@ -168,14 +168,14 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   //         await historyRecruiter.GetAJobApplication(
   //           Number(searchParams.get('post_id')),
   //           searchParams.get('application_id') ?? '',
-  //           languageRedux === 1 ? 'vi' : 'en',
+  //            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //         );
 
   //       if (resultHistoryRecruiter) {
   //         // console.log('ressssss', result.data);
   //         const resultPost = await postApi.getPostV3(
   //           Number(searchParams.get('post_id')),
-  //           languageRedux === 1 ? 'vi' : 'en',
+  //            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //         );
   //         // console.log(resultHistoryRecruiter.data);
   //         // console.log('resultPost', resultPost);
@@ -202,7 +202,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   //       }
   //     } else {
   //       const resultGetUserChated = await messageApi.getUserChated(
-  //         languageRedux === 1 ? 'vi' : 'en',
+  //          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //       );
   //       console.log('result.data', resultGetUserChated.data);
 
@@ -227,7 +227,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   //           } else {
   //             const resultGetPostV3 = await postApi.getPostV3(
   //               Number(searchParams.get('post_id')),
-  //               languageRedux === 1 ? 'vi' : 'en',
+  //                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //             );
 
   //             // console.log('v3', resultGetPostV3);
@@ -265,7 +265,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   //       if (searchParams.get('post_id') && searchParams.get('user_id')) {
   //         const result = await postApi.getPostV3(
   //           Number(searchParams.get('post_id')),
-  //           languageRedux === 1 ? 'vi' : 'en',
+  //            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //         );
 
   //         setUserInfoChat({

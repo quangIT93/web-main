@@ -155,7 +155,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);
@@ -340,7 +340,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
         const result = await profileApi.createProfileEducation(education);
         if (result) {
           const getProfileV3 = await profileApi.getProfileInformationMoreV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           await dispatch(setProfileMeInformationMoreV3(getProfileV3) as any);
           dispatch(setAlertSuccess(true));
@@ -407,7 +407,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
 
   const getTypeAcademic = async () => {
     const result = await candidateSearch.getAcademicTypes(
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
     if (result) {
       setTypeAcademic(result.data);

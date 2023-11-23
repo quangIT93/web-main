@@ -20,7 +20,7 @@ interface IEditDescripeCompany {
   dataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
@@ -30,13 +30,19 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges, setIsValid} = props;
+  const {
+    dataCompany,
+    setDataCompany,
+    is_profile,
+    setUnsavedChanges,
+    setIsValid,
+  } = props;
   // const [language, setLanguageState] = React.useState<any>();
 
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);
@@ -60,7 +66,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
       ...preValue,
       description: value,
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   return (
@@ -86,7 +92,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           onChange={handleEditCompanyDes}
           sx={{ width: '100%', marginTop: '8px', fontSize: '14px' }}
           placeholder={language?.company_page?.place_des}
-        //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.description?.length === 0 ? (

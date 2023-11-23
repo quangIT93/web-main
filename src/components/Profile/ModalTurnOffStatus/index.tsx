@@ -33,7 +33,7 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
       const result = await profileApi.putProfileJobV3(null, 0);
       if (result) {
         const resultProfileV3 = await profileApi.getProfileInformationV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (resultProfileV3) {
           dispatch(setProfileMeInformationV3(resultProfileV3));
@@ -42,7 +42,7 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
           setLoadingSwitch(false);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleCancel = () => {

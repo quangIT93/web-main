@@ -97,7 +97,7 @@ const BreadcrumbsCpn: React.FC = () => {
       // setIsLoading(true);
       const result = await categoriesApi.getAllChildCategories(
         valueJobChild?.id,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         // setIsLoading(false);
@@ -179,7 +179,7 @@ const BreadcrumbsCpn: React.FC = () => {
     //   //   null,
     //   //   9,
     //   //   0,
-    //   //   languageRedux === 1 ? 'vi' : 'en',
+    //   //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //   // );
 
     //   const result2 = await postApi.getPostNewestV3(
@@ -189,7 +189,7 @@ const BreadcrumbsCpn: React.FC = () => {
     //     null,
     //     10,
     //     thersholdId,
-    //     languageRedux === 1 ? 'vi' : 'en',
+    //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //   );
 
     //   // const result = await postApi.getPostNewestV3(
@@ -199,7 +199,7 @@ const BreadcrumbsCpn: React.FC = () => {
     //   //   null,
     //   //   10,
     //   //   null,
-    //   //   languageRedux === 1 ? 'vi' : 'en',
+    //   //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //   // );
     //   if (result2) {
     //     // setPostNewest(result);

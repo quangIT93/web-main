@@ -382,7 +382,7 @@ const CategoryDropdown: React.FC = () => {
         if (result) {
           setSearchJob(true);
           const resultProfileV3 = await profileApi.getProfileInformationV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (resultProfileV3) {
             dispatch(setProfileMeInformationV3(resultProfileV3));
@@ -393,7 +393,7 @@ const CategoryDropdown: React.FC = () => {
         setOpenModalTurnOffStatus(true);
         setSearchJob(false);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
@@ -431,14 +431,11 @@ const CategoryDropdown: React.FC = () => {
             >
               <IconMenu />
               <h3>
-                {
-                  languageRedux === 1 ?
-                    "DANH MỤC" :
-                    languageRedux === 2 ?
-                      "MENU" :
-                      languageRedux === 3 &&
-                      "메뉴"
-                }
+                {languageRedux === 1
+                  ? 'DANH MỤC'
+                  : languageRedux === 2
+                    ? 'MENU'
+                    : languageRedux === 3 && '메뉴'}
               </h3>
             </div>
             <BreadcrumbMenuItems />
@@ -470,11 +467,17 @@ const CategoryDropdown: React.FC = () => {
                       //     "Trạng thái tìm việc đang bật:" :
                       //     "Job search status is on:" :
                       languageRedux === 1
-                        ? `Trạng thái tìm việc đang ${profileV3.isSearch === 1 ? 'bật' : 'tắt'}:`
-                        : languageRedux === 2 ?
-                          `Job search status is ${profileV3.isSearch === 1 ? 'on' : 'off'}:`
+                        ? `Trạng thái tìm việc đang ${
+                            profileV3.isSearch === 1 ? 'bật' : 'tắt'
+                          }:`
+                        : languageRedux === 2
+                          ? `Job search status is ${
+                              profileV3.isSearch === 1 ? 'on' : 'off'
+                            }:`
                           : languageRedux === 3 &&
-                          `채용정보 검색 상태가 꺼져 ${profileV3.isSearch === 1 ? '있습니다' : '있습니다'}:`
+                            `채용정보 검색 상태가 꺼져 ${
+                              profileV3.isSearch === 1 ? '있습니다' : '있습니다'
+                            }:`
                     }
                   </p>
                   <Switch
@@ -537,14 +540,11 @@ const CategoryDropdown: React.FC = () => {
                 >
                   <FormOutlined style={{ color: 'white' }} />
                   <p style={{ marginLeft: 10, color: 'white' }}>
-                    {
-                      languageRedux === 1 ?
-                        "Đăng bài" :
-                        languageRedux === 2 ?
-                          "Post" :
-                          languageRedux === 3 &&
-                          "게시물"
-                    }
+                    {languageRedux === 1
+                      ? 'Đăng bài'
+                      : languageRedux === 2
+                        ? 'Post'
+                        : languageRedux === 3 && '게시물'}
                   </p>
                 </Link>
               </div>
@@ -616,18 +616,16 @@ const CategoryDropdown: React.FC = () => {
               <div className="top-item" onClick={() => handleExpand(1)}>
                 <h3>
                   {profileV3.typeRoleData === 0
-                    ? languageRedux === 1 ?
-                      "Thông tin việc làm" :
-                      languageRedux === 2 ?
-                        "Job information" :
-                        languageRedux === 3 &&
-                        "취업 정보"
-                    : languageRedux === 1 ?
-                      "Thông tin tuyển dụng" :
-                      languageRedux === 2 ?
-                        "Employment information" :
-                        languageRedux === 3 &&
-                        "모집 정보"}
+                    ? languageRedux === 1
+                      ? 'Thông tin việc làm'
+                      : languageRedux === 2
+                        ? 'Job information'
+                        : languageRedux === 3 && '취업 정보'
+                    : languageRedux === 1
+                      ? 'Thông tin tuyển dụng'
+                      : languageRedux === 2
+                        ? 'Employment information'
+                        : languageRedux === 3 && '모집 정보'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -645,12 +643,11 @@ const CategoryDropdown: React.FC = () => {
                   }}
                   onClick={moveToAppliedJob}
                 >
-                  {languageRedux === 1 ?
-                    "Việc làm đã ứng tuyển" :
-                    languageRedux === 2 ?
-                      "Apllied Jobs" :
-                      languageRedux === 3 &&
-                      "어플라이드 잡스"}
+                  {languageRedux === 1
+                    ? 'Việc làm đã ứng tuyển'
+                    : languageRedux === 2
+                      ? 'Apllied Jobs'
+                      : languageRedux === 3 && '어플라이드 잡스'}
                 </h3>
                 <h3
                   onClick={
@@ -660,15 +657,16 @@ const CategoryDropdown: React.FC = () => {
                   }
                 >
                   {profileV3.typeRoleData === 0
-                    ? languageRedux === 1 ?
-                      "Việc làm đã lưu" :
-                      languageRedux === 2 ?
-                        "Saved jobs" :
-                        languageRedux === 3 &&
-                        "저장된 작업"
+                    ? languageRedux === 1
+                      ? 'Việc làm đã lưu'
+                      : languageRedux === 2
+                        ? 'Saved jobs'
+                        : languageRedux === 3 && '저장된 작업'
                     : languageRedux === 1
                       ? 'Việc làm tuyển dụng đã đăng'
-                      : 'Recruitment posted'}
+                      : languageRedux === 2
+                        ? 'Recruitment posted'
+                        : languageRedux === 3 && '저장된 작업'}
                 </h3>
                 <h3
                   onClick={
@@ -678,15 +676,16 @@ const CategoryDropdown: React.FC = () => {
                   }
                 >
                   {profileV3.typeRoleData === 0
-                    ? languageRedux === 1 ?
-                      "Công việc mới nhất" :
-                      languageRedux === 2 ?
-                        "Newest jobs" :
-                        languageRedux === 3 &&
-                        "새 작업"
+                    ? languageRedux === 1
+                      ? 'Công việc mới nhất'
+                      : languageRedux === 2
+                        ? 'Newest jobs'
+                        : languageRedux === 3 && '새 작업'
                     : languageRedux === 1
                       ? 'Bài tuyển dụng đang mở'
-                      : 'Job posting is opening'}
+                      : languageRedux === 2
+                        ? 'Job posting is opening'
+                        : languageRedux === 3 && '마감되지 않은 채용정보'}
                 </h3>
                 <h3
                   onClick={
@@ -696,15 +695,16 @@ const CategoryDropdown: React.FC = () => {
                   }
                 >
                   {profileV3.typeRoleData === 0
-                    ? languageRedux === 1 ?
-                      "Công việc nổi bật" :
-                      languageRedux === 2 ?
-                        "Hot jobs" :
-                        languageRedux === 3 &&
-                        "핫잡스"
+                    ? languageRedux === 1
+                      ? 'Công việc nổi bật'
+                      : languageRedux === 2
+                        ? 'Hot jobs'
+                        : languageRedux === 3 && '핫잡스'
                     : languageRedux === 1
                       ? 'Bài tuyển dụng đã đóng'
-                      : 'Job posting is closed'}
+                      : languageRedux === 2
+                        ? 'Job posting is closed'
+                        : languageRedux === 3 && '채용이 마감되었습니다'}
                 </h3>
                 <h3
                   onClick={
@@ -714,15 +714,16 @@ const CategoryDropdown: React.FC = () => {
                   }
                 >
                   {profileV3.typeRoleData === 0
-                    ? languageRedux === 1 ?
-                      "Công việc theo chủ đề" :
-                      languageRedux === 2 ?
-                        "Job by hot places" :
-                        languageRedux === 3 &&
-                        "핫플레이스별작업"
+                    ? languageRedux === 1
+                      ? 'Công việc theo chủ đề'
+                      : languageRedux === 2
+                        ? 'Job by hot places'
+                        : languageRedux === 3 && '핫플레이스별작업'
                     : languageRedux === 1
                       ? 'Đăng bài tuyển dụng'
-                      : 'Post recruitment posts'}
+                      : languageRedux === 2
+                        ? 'Post recruitment posts'
+                        : languageRedux === 3 && '채용 공고 만들기'}
                 </h3>
                 <h3
                   onClick={
@@ -732,31 +733,31 @@ const CategoryDropdown: React.FC = () => {
                   }
                 >
                   {profileV3.typeRoleData === 0
-                    ? languageRedux === 1 ?
-                      "Công việc gợi ý" :
-                      languageRedux === 2 ?
-                        "Suggested jobs" :
-                        languageRedux === 3 &&
-                        "추천 직업"
+                    ? languageRedux === 1
+                      ? 'Công việc gợi ý'
+                      : languageRedux === 2
+                        ? 'Suggested jobs'
+                        : languageRedux === 3 && '추천 직업'
                     : languageRedux === 1
                       ? 'Thông tin công ty'
-                      : "Company's information"}
+                      : languageRedux === 2
+                        ? "Company's information"
+                        : languageRedux === 3 && '회사 정보'}
                 </h3>
               </div>
             </div>
             <div
               className="category-dropdown-item"
-            // style={{ display: profileV3.typeRoleData === 0 ? 'block' : 'none' }}
+              // style={{ display: profileV3.typeRoleData === 0 ? 'block' : 'none' }}
             >
               <div className="top-item" onClick={() => handleExpand(2)}>
                 <h3>
                   {profileV3.typeRoleData === 0
-                    ? languageRedux === 1 ?
-                      "Hồ sơ & cv" :
-                      languageRedux === 2 ?
-                        "Resume & CV" :
-                        languageRedux === 3 &&
-                        "이력서 & CV"
+                    ? languageRedux === 1
+                      ? 'Hồ sơ & cv'
+                      : languageRedux === 2
+                        ? 'Resume & CV'
+                        : languageRedux === 3 && '이력서 & CV'
                     : languageRedux === 1
                       ? 'Thông tin ứng viên'
                       : 'Candidates information'}
@@ -779,15 +780,16 @@ const CategoryDropdown: React.FC = () => {
                   }
                 >
                   {profileV3.typeRoleData === 0
-                    ? languageRedux === 1 ?
-                      "Tạo mới CV" :
-                      languageRedux === 2 ?
-                        "Create a new CV" :
-                        languageRedux === 3 &&
-                        "새 CV 만들기"
+                    ? languageRedux === 1
+                      ? 'Tạo mới CV'
+                      : languageRedux === 2
+                        ? 'Create a new CV'
+                        : languageRedux === 3 && '새 CV 만들기'
                     : languageRedux === 1
                       ? 'Danh sách ứng viên mới nhất'
-                      : 'Newest candidate list'}
+                      : languageRedux === 2
+                        ? 'Newest candidate list'
+                        : languageRedux === 3 && '최신 인재 정보'}
                 </h3>
                 <h3
                   onClick={
@@ -797,15 +799,16 @@ const CategoryDropdown: React.FC = () => {
                   }
                 >
                   {profileV3.typeRoleData === 0
-                    ? languageRedux === 1 ?
-                      "Quản lý CV" :
-                      languageRedux === 2 ?
-                        "CV management" :
-                        languageRedux === 3 &&
-                        "CV관리"
+                    ? languageRedux === 1
+                      ? 'Quản lý CV'
+                      : languageRedux === 2
+                        ? 'CV management'
+                        : languageRedux === 3 && 'CV관리'
                     : languageRedux === 1
                       ? 'Tìm kiếm ứng viên'
-                      : 'Search for candidate'}
+                      : languageRedux === 2
+                        ? 'Search for candidate'
+                        : languageRedux === 3 && '인재 검색'}
                 </h3>
                 <h3
                   onClick={
@@ -815,29 +818,27 @@ const CategoryDropdown: React.FC = () => {
                   }
                 >
                   {profileV3.typeRoleData === 0
-                    ? languageRedux === 1 ?
-                      "Hướng dẫn tạo CV" :
-                      languageRedux === 2 ?
-                        "Instructions for creating a CV" :
-                        languageRedux === 3 &&
-                        "CV 작성 안내"
+                    ? languageRedux === 1
+                      ? 'Hướng dẫn tạo CV'
+                      : languageRedux === 2
+                        ? 'Instructions for creating a CV'
+                        : languageRedux === 3 && 'CV 작성 안내'
                     : languageRedux === 1
                       ? 'Danh sách ứng viên đã lưu'
-                      : 'Saved candidate list'}
+                      : languageRedux === 2
+                        ? 'Saved candidate list'
+                        : languageRedux === 3 && '저장한 인재'}
                 </h3>
               </div>
             </div>
             <div className="category-dropdown-item">
               <div className="top-item" onClick={() => handleExpand(3)}>
                 <h3>
-                  {
-                    languageRedux === 1 ?
-                      "Cộng đồng" :
-                      languageRedux === 2 ?
-                        "Community" :
-                        languageRedux === 3 &&
-                        "공동체"
-                  }
+                  {languageRedux === 1
+                    ? 'Cộng đồng'
+                    : languageRedux === 2
+                      ? 'Community'
+                      : languageRedux === 3 && '공동체'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -850,58 +851,43 @@ const CategoryDropdown: React.FC = () => {
                 }}
               >
                 <h3 onClick={moveToWorkingStory}>
-                  {
-                    languageRedux === 1 ?
-                      "Câu chuyện việc làm" :
-                      languageRedux === 2 ?
-                        "Working story" :
-                        languageRedux === 3 &&
-                        "워킹스토리"
-                  }
+                  {languageRedux === 1
+                    ? 'Câu chuyện việc làm'
+                    : languageRedux === 2
+                      ? 'Working story'
+                      : languageRedux === 3 && '워킹스토리'}
                 </h3>
                 <h3 onClick={moveToHijobNews}>
-                  {
-                    languageRedux === 1 ?
-                      "Tin tức" :
-                      languageRedux === 2 ?
-                        "News" :
-                        languageRedux === 3 &&
-                        "뉴스"
-                  }
+                  {languageRedux === 1
+                    ? 'Tin tức'
+                    : languageRedux === 2
+                      ? 'News'
+                      : languageRedux === 3 && '뉴스'}
                 </h3>
                 <h3 onClick={moveToPostArticle}>
-                  {
-                    languageRedux === 1 ?
-                      "Đăng bài viết mới" :
-                      languageRedux === 2 ?
-                        "Post new articles" :
-                        languageRedux === 3 &&
-                        "새로운 글을 게시합니다"
-                  }
+                  {languageRedux === 1
+                    ? 'Đăng bài viết mới'
+                    : languageRedux === 2
+                      ? 'Post new articles'
+                      : languageRedux === 3 && '새로운 글을 게시합니다'}
                 </h3>
                 <h3 onClick={moveToSavedArticle}>
-                  {
-                    languageRedux === 1 ?
-                      "Bài viết đã lưu" :
-                      languageRedux === 2 ?
-                        "Saved post" :
-                        languageRedux === 3 &&
-                        "저장된게시물"
-                  }
+                  {languageRedux === 1
+                    ? 'Bài viết đã lưu'
+                    : languageRedux === 2
+                      ? 'Saved post'
+                      : languageRedux === 3 && '저장된게시물'}
                 </h3>
               </div>
             </div>
             <div className="category-dropdown-item">
               <div className="top-item" onClick={() => handleExpand(4)}>
                 <h3>
-                  {
-                    languageRedux === 1 ?
-                      "Hỗ trợ khách hàng" :
-                      languageRedux === 2 ?
-                        "Customer support" :
-                        languageRedux === 3 &&
-                        "고객지원서비스"
-                  }
+                  {languageRedux === 1
+                    ? 'Hỗ trợ khách hàng'
+                    : languageRedux === 2
+                      ? 'Customer support'
+                      : languageRedux === 3 && '고객지원서비스'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -914,41 +900,38 @@ const CategoryDropdown: React.FC = () => {
                 }}
               >
                 <h3 onClick={moveToPolicy}>
-                  {
-                    languageRedux === 1 ?
-                      "Chính sách bảo mật" :
-                      languageRedux === 2 ?
-                        "Privacy Policy" :
-                        languageRedux === 3 &&
-                        "개인정보보호정책"
-                  }
+                  {languageRedux === 1
+                    ? 'Chính sách bảo mật'
+                    : languageRedux === 2
+                      ? 'Privacy Policy'
+                      : languageRedux === 3 && '개인정보보호정책'}
                 </h3>
                 <h3 onClick={moveToSupportTerms}>
-                  {
-                    languageRedux === 1 ?
-                      "Điều khoản hỗ trợ" :
-                      languageRedux === 2 ?
-                        "Support terms" :
-                        languageRedux === 3 &&
-                        "지원조건"
-                  }
+                  {languageRedux === 1
+                    ? 'Điều khoản hỗ trợ'
+                    : languageRedux === 2
+                      ? 'Support terms'
+                      : languageRedux === 3 && '지원조건'}
                 </h3>
                 <h3 onClick={moveToMemberGuide}>
-                  {
-                    languageRedux === 1 ?
-                      "Hướng dẫn thành viên" :
-                      languageRedux === 2 ?
-                        "Member Guide" :
-                        languageRedux === 3 &&
-                        "회원안내"
-                  }
+                  {languageRedux === 1
+                    ? 'Hướng dẫn thành viên'
+                    : languageRedux === 2
+                      ? 'Member Guide'
+                      : languageRedux === 3 && '회원안내'}
                 </h3>
               </div>
             </div>
 
             <div className="category-dropdown-item">
               <div className="top-item" onClick={() => handleExpand(5)}>
-                <h3>{languageRedux === 1 ? 'Công ty' : 'Company'}</h3>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Công ty'
+                    : languageRedux === 2
+                      ? 'Company'
+                      : languageRedux === 3 && '회사'}
+                </h3>
                 <ArrowIcon fill="black" />
               </div>
               <div
@@ -960,17 +943,28 @@ const CategoryDropdown: React.FC = () => {
                 }}
               >
                 <h3 onClick={moveToSearchCompany}>
-                  {languageRedux === 1 ? 'Tìm kiếm công ty' : 'Search company'}
+                  {languageRedux === 1
+                    ? 'Tìm kiếm công ty'
+                    : languageRedux === 2
+                      ? 'Search company'
+                      : languageRedux === 3 && '회사 검색'}
                 </h3>
                 <h3 onClick={moveToHistoryCompany}>
-                  {languageRedux === 1 ? 'Công ty đã lưu' : 'Saved company'}
-                </h3>
-
-                {/* <h3 onClick={moveToHistoryCompany}>
                   {languageRedux === 1
-                    ? 'Nhà tuyển dụng xem hồ sơ'
-                    : 'Employers view resumes'}
-                </h3> */}
+                    ? 'Công ty đã lưu'
+                    : languageRedux === 2
+                      ? 'Saved company'
+                      : languageRedux === 3 && '저장한 회사'}
+                </h3>
+                {profileV3.typeRoleData === 0 && (
+                  <h3 onClick={moveToHistoryCompany}>
+                    {languageRedux === 1
+                      ? 'Nhà tuyển dụng xem hồ sơ'
+                      : languageRedux === 2
+                        ? 'Employers view resumes'
+                        : languageRedux === 3 && '이력서 열람 회사'}
+                  </h3>
+                )}
               </div>
             </div>
           </div>

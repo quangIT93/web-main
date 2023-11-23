@@ -93,7 +93,7 @@ const AppliedPostedJob: React.FC = () => {
   const getBannerRoleUser = async () => {
     try {
       const result = await bannersApi.getBannersApi(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         null,
       );
       if (result) {
@@ -139,24 +139,20 @@ const AppliedPostedJob: React.FC = () => {
       const result =
         profile?.typeRoleData === 0
           ? await historyApplicator.getAllSubmitedApplied(
-            null,
-            10,
-            1,
-            languageRedux === 1 ? 'vi'
-              : languageRedux === 2 ? 'en'
-                : languageRedux === 3 ? 'ko' : 'vi',
-          )
+              null,
+              10,
+              1,
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+            )
           : await historyRecruiter.GetInformationAndCandidatesCount(
-            0,
-            10,
-            '1',
-            languageRedux === 1 ? 'vi'
-              : languageRedux === 2 ? 'en'
-                : languageRedux === 3 ? 'ko' : 'vi',
-          );
+              0,
+              10,
+              '1',
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+            );
       // const result = await applitedPostedApi.getAllApplitedPostedApi(
       //   0,
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
@@ -229,7 +225,7 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -370,7 +366,7 @@ const AppliedPostedJob: React.FC = () => {
           </div>
           <Skeleton loading={loading} active>
             {appliedPostedJob.length !== 0 &&
-              localStorage.getItem('accessToken') ? (
+            localStorage.getItem('accessToken') ? (
               <div
                 style={{
                   display: 'flex',
@@ -381,18 +377,16 @@ const AppliedPostedJob: React.FC = () => {
                 <AppliedPostedIcon width={30} height={30} />
                 <h2>
                   {profile?.typeRoleData === 0
-                    ? languageRedux === 1 ?
-                      "Việc làm đã ứng tuyển" :
-                      languageRedux === 2 ?
-                        "Apllied Jobs" :
-                        languageRedux === 3 &&
-                        "어플라이드 잡스"
-                    : languageRedux === 1 ?
-                      "Đã đăng tuyển" :
-                      languageRedux === 2 ?
-                        "Posted job" :
-                        languageRedux === 3 &&
-                        "등록되기"}
+                    ? languageRedux === 1
+                      ? 'Việc làm đã ứng tuyển'
+                      : languageRedux === 2
+                        ? 'Apllied Jobs'
+                        : languageRedux === 3 && '어플라이드 잡스'
+                    : languageRedux === 1
+                      ? 'Đã đăng tuyển'
+                      : languageRedux === 2
+                        ? 'Posted job'
+                        : languageRedux === 3 && '등록되기'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />

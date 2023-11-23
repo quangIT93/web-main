@@ -145,7 +145,7 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
         const result = await apiCv.postProfileSkill(level, skill);
         if (result) {
           const resultProfile = await profileApi.getProfileInformationMoreV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (resultProfile) {
             setOpenModalSkills(false);
@@ -160,7 +160,9 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
           type: 'error',
           content: message,
         });
-        const profile_skill_skill_name = document.getElementById('profile_skill_skill_name') as HTMLElement;
+        const profile_skill_skill_name = document.getElementById(
+          'profile_skill_skill_name',
+        ) as HTMLElement;
         // console.log(idError);
 
         switch (idError) {
@@ -245,7 +247,7 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={languageRedux === 1 ? 'Kỹ năng' : 'Skill'}
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {skill.length > 255 ? (

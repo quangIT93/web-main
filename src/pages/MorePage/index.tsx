@@ -182,7 +182,7 @@ const MoreJobsPage: React.FC = () => {
 
     try {
       const result = await themesApi.getThemesEnable(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -218,16 +218,16 @@ const MoreJobsPage: React.FC = () => {
           ? 'HiJob - Công việc mới nhất'
           : 'HiJob - Newest Jobs'
         : typeJob === 'hot-job'
-        ? languageRedux === 1
-          ? 'HiJob - Xem tất cả loại công việc'
-          : 'HiJob - View all category jobs'
-        : typeJob === 'suggested'
-        ? languageRedux === 1
-          ? 'HiJob - Công việc gợi ý'
-          : 'HiJob - Suggested jobs in your city'
-        : languageRedux === 1
-        ? 'HiJob - Công việc theo chủ đề'
-        : 'HiJob - job by hot places';
+          ? languageRedux === 1
+            ? 'HiJob - Xem tất cả loại công việc'
+            : 'HiJob - View all category jobs'
+          : typeJob === 'suggested'
+            ? languageRedux === 1
+              ? 'HiJob - Công việc gợi ý'
+              : 'HiJob - Suggested jobs in your city'
+            : languageRedux === 1
+              ? 'HiJob - Công việc theo chủ đề'
+              : 'HiJob - job by hot places';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
@@ -358,27 +358,29 @@ const MoreJobsPage: React.FC = () => {
               // null,
               20,
               null,
-              languageRedux === 1 ? 'vi' : 'en',
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             )
           : typeJob === 'suggested'
-          ? await nearByApi.getNearByJobV3(
-              !idFilterProvinces && profileV3.length !== 0
-                ? profileV3.addressText.id
-                : idFilterProvinces
-                ? [idFilterProvinces]
-                : ['79'],
-              null,
-              null,
-              20,
-              null,
-              languageRedux === 1 ? 'vi' : 'en',
-            )
-          : await postApi.getPostByThemeId(
-              storedSettings?.placeId ? storedSettings?.placeId : placeIdRedux,
-              19,
-              0,
-              languageRedux === 1 ? 'vi' : 'en',
-            );
+            ? await nearByApi.getNearByJobV3(
+                !idFilterProvinces && profileV3.length !== 0
+                  ? profileV3.addressText.id
+                  : idFilterProvinces
+                    ? [idFilterProvinces]
+                    : ['79'],
+                null,
+                null,
+                20,
+                null,
+                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+              )
+            : await postApi.getPostByThemeId(
+                storedSettings?.placeId
+                  ? storedSettings?.placeId
+                  : placeIdRedux,
+                19,
+                0,
+                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+              );
 
       setHasMore(true);
       if (result) {
@@ -466,27 +468,29 @@ const MoreJobsPage: React.FC = () => {
               null,
               20,
               thersholdId,
-              languageRedux === 1 ? 'vi' : 'en',
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             )
           : typeJob === 'suggested'
-          ? await nearByApi.getNearByJobV3(
-              !idFilterProvinces && profileV3.length !== 0
-                ? profileV3.addressText.id
-                : idFilterProvinces
-                ? [idFilterProvinces]
-                : ['79'],
-              null,
-              null,
-              20,
-              nextPage,
-              languageRedux === 1 ? 'vi' : 'en',
-            )
-          : await postApi.getPostByThemeId(
-              storedSettings?.placeId ? storedSettings?.placeId : placeIdRedux,
-              20,
-              thersholdId,
-              languageRedux === 1 ? 'vi' : 'en',
-            );
+            ? await nearByApi.getNearByJobV3(
+                !idFilterProvinces && profileV3.length !== 0
+                  ? profileV3.addressText.id
+                  : idFilterProvinces
+                    ? [idFilterProvinces]
+                    : ['79'],
+                null,
+                null,
+                20,
+                nextPage,
+                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+              )
+            : await postApi.getPostByThemeId(
+                storedSettings?.placeId
+                  ? storedSettings?.placeId
+                  : placeIdRedux,
+                20,
+                thersholdId,
+                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+              );
 
       if (
         result &&
@@ -560,7 +564,7 @@ const MoreJobsPage: React.FC = () => {
   const getProvinces = async () => {
     try {
       const result = await locationApi.getAllProvinces(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -648,12 +652,22 @@ const MoreJobsPage: React.FC = () => {
                   {typeJob === 'new'
                     ? language?.newest_jobs
                     : typeJob === 'hot-job'
-                    ? languageRedux === 1
-                      ? 'Xem tất cả loại công việc'
-                      : 'View all category jobs'
-                    : typeJob === 'suggested'
-                    ? language?.nearby_jobs
-                    : language?.jobs_by_theme}
+                      ? languageRedux === 1
+                        ? 'Xem tất cả loại công việc'
+                        : languageRedux === 2
+                          ? 'View all category jobs'
+                          : languageRedux === 3 && '모든 유형의 채용정보 보기'
+                      : typeJob === 'suggested'
+                        ? languageRedux === 1
+                          ? 'Công việc gợi ý'
+                          : languageRedux === 2
+                            ? 'Suggested jobs in your city'
+                            : languageRedux === 3 && '지역내 모든 추천'
+                        : languageRedux === 1
+                          ? 'Công việc theo Chủ đề'
+                          : languageRedux === 2
+                            ? 'Job by hot places'
+                            : languageRedux === 3 && '지역내 모든 추천'}
                 </h3>
                 {typeJob === 'suggested' ? (
                   <div className="filter-hotjob">
@@ -673,7 +687,11 @@ const MoreJobsPage: React.FC = () => {
                           placeholder={
                             languageRedux === 1
                               ? 'Chọn địa chỉ'
-                              : 'Select Address'
+                              : languageRedux === 2
+                                ? 'Select address'
+                                : languageRedux === 3
+                                  ? '지역내 모든 추천'
+                                  : 'Chọn địa chỉ'
                           }
                         >
                           {optionsProvinces?.map((v: any) => {

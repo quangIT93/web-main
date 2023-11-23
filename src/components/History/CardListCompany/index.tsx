@@ -59,7 +59,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
       const result = await apiCompanyV3.getBookmarkCompany(
         0,
         20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         newOld === 1 ? 'DESC' : 'ASC',
       );
 
@@ -79,7 +79,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
       const result = await apiCompanyV3.getCompanyView(
         0,
         20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -103,7 +103,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
       const result = await apiCompanyV3.getBookmarkCompany(
         nextPage,
         20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         newOld === 1 ? 'DESC' : 'ASC',
       );
 
@@ -136,7 +136,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
       const result = await apiCompanyV3.getBookmarkCompany(
         nextPage,
         20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         newOld === 1 ? 'DESC' : 'ASC',
       );
 

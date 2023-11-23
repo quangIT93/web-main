@@ -36,9 +36,7 @@ const NewestCompany = () => {
         undefined,
         12,
         0,
-        languageRedux === 1 ? 'vi'
-          : languageRedux === 2 ? 'en'
-            : languageRedux === 3 ? 'ko' : 'vi',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setLoading(false);
@@ -78,7 +76,13 @@ const NewestCompany = () => {
       >
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <IconNewestCompany width={25} height={25} />
-          <h2>{languageRedux === 1 ? 'Công ty mới nhất' : 'Newest company'}</h2>
+          <h2>
+            {languageRedux === 1
+              ? 'Công ty mới nhất'
+              : languageRedux === 2
+                ? 'Newest company'
+                : languageRedux === 3 && '최신 회사'}
+          </h2>
         </div>
         {/* {profileV3?.typeRoleData === 1 ? ( */}
         {/* <div
@@ -124,14 +128,11 @@ const NewestCompany = () => {
         }}
       >
         <p style={{ cursor: 'pointer' }}>
-          {
-            languageRedux === 1 ?
-              "Xem tất cả" :
-              languageRedux === 2 ?
-                "View all" :
-                languageRedux === 3 &&
-                "다 보기"
-          }
+          {languageRedux === 1
+            ? 'Xem tất cả'
+            : languageRedux === 2
+              ? 'View all'
+              : languageRedux === 3 && '다 보기'}
         </p>
         <ArrowrightIcon width={20} height={20} />
       </div>

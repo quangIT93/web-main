@@ -44,7 +44,7 @@ const CardListBlogCreate = () => {
         page,
         '10',
         sort,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setCreatedPost(result?.data?.communications);
@@ -81,7 +81,7 @@ const CardListBlogCreate = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -119,7 +119,7 @@ const CardListBlogCreate = () => {
         nextPage,
         '10',
         sort,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       //
@@ -182,10 +182,9 @@ const CardListBlogCreate = () => {
           >
             {languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-              {
-                searchParams.get('c') === '3-1' &&
-                  languageRedux === 1 ? ' > Bài viết bạn đã tạo' : ' > Posted articles'
-              }
+              {searchParams.get('c') === '3-1' && languageRedux === 1
+                ? ' > Bài viết bạn đã tạo'
+                : ' > Posted articles'}
             </span>
           </Typography>
         </div>
@@ -280,8 +279,8 @@ const CardListBlogCreate = () => {
                   {item?.createdAtText
                     ? item?.createdAtText
                     : new Date(item?.createdAt).toLocaleDateString('en-GB') +
-                    ', ' +
-                    moment(new Date(item?.createdAt)).format('HH:mm')}
+                      ', ' +
+                      moment(new Date(item?.createdAt)).format('HH:mm')}
                 </p>
               </div>
               <div className="body-item-actions">

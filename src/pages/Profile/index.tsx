@@ -260,7 +260,7 @@ const Profile: React.FC = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -280,7 +280,7 @@ const Profile: React.FC = () => {
   const fecthDataProfile = async () => {
     try {
       const result = await profileApi.getProfile(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setProfileUser(result.data);
@@ -375,7 +375,7 @@ const Profile: React.FC = () => {
   const getCompanyInforByAccount = async () => {
     try {
       // const result = await apiCompany.getCampanyByAccountApi(
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
 
       if (profileComanyV3?.companyInfomation?.id !== null) {
@@ -397,7 +397,7 @@ const Profile: React.FC = () => {
       const result = await profileApi.deleteCV();
       if (result) {
         const result = await profileApi.getProfile(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (result) {
           setProfileUser(result.data);
@@ -406,7 +406,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // cancel delete cv
@@ -434,7 +434,7 @@ const Profile: React.FC = () => {
 
       if (result) {
         const result = await profileApi.getProfileInformationV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (result) {
           setProfileMeInformationV3(result);
@@ -474,7 +474,7 @@ const Profile: React.FC = () => {
       const response = await profileApi.postAvatar(formData);
       if (response) {
         const getProfileV3 = await profileApi.getProfileInformationV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         dispatch(setProfileMeInformationV3(getProfileV3) as any);
         return getProfileV3.data.avatarPath;
@@ -491,12 +491,12 @@ const Profile: React.FC = () => {
     try {
       if (profileV3.typeRoleData === 1) {
         const result = await profileApi.getProfileCompanyV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         dispatch(setProfileMeCompanyV3(result));
       } else if (profileV3.typeRoleData === 0) {
         const result = await profileApi.getProfileInformationMoreV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         dispatch(setProfileMeInformationMoreV3(result));
       }
@@ -914,7 +914,7 @@ const Profile: React.FC = () => {
           </Snackbar>
         </Stack>
         {profileV3.typeRoleData === 0 &&
-          profileMorev3?.profilesCvs?.length === 0 ? (
+        profileMorev3?.profilesCvs?.length === 0 ? (
           <ModalIntroduceCv />
         ) : (
           <></>

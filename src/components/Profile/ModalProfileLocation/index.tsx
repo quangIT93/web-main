@@ -102,7 +102,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);
@@ -136,7 +136,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   // const allLocation = async () => {
   //   try {
   //     const allLocation = await locationApi.getAllLocation(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
 
   //     if (allLocation) {
@@ -260,7 +260,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
       );
       if (result) {
         const getProfileV3 = await profileApi.getProfileInformationV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         await dispatch(setProfileMeInformationV3(getProfileV3) as any);
         dispatch(setAlertEditInfo(true));

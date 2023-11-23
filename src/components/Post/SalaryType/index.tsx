@@ -20,10 +20,16 @@ interface ISalaryType {
   setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const SalaryType: React.FC<ISalaryType> = (props) => {
-  const { salaryType, setSalaryType, language, languageRedux, setIsValidSubmit} = props;
+  const {
+    salaryType,
+    setSalaryType,
+    language,
+    languageRedux,
+    setIsValidSubmit,
+  } = props;
   const handleChangeSalaryType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSalaryType(Number(e.target.value));
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const [salary, setSalary] = React.useState<AxiosResponse | null>(null);
@@ -31,7 +37,7 @@ const SalaryType: React.FC<ISalaryType> = (props) => {
   // call api get salaryType
   const getSalaryType = async () => {
     const result = await siteApi.getSalaryType(
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
     if (result) {
       setSalary(result);

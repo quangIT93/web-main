@@ -27,7 +27,7 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
 
   const getTypeJob = async () => {
     const result = await siteApi.getJobType(
-      languageRedux === 1 ? "vi" : "en"
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
     if (result) {
       setJobTypes(result);
@@ -49,10 +49,7 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
   return (
     <FormControl sx={{ width: '100%', marginTop: '24px' }}>
       <FormLabel id="editPostTypeJob" sx={styleLabel}>
-        {
-          language?.job_type1
-        }{' '}
-        <span style={{ color: 'red' }}>*</span>
+        {language?.job_type1} <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row

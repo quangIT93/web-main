@@ -94,7 +94,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);
@@ -112,7 +112,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setDataCategories(result.data);
@@ -170,7 +170,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
       );
       if (result) {
         const getProfileV3 = await profileApi.getProfileInformationV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
 
         if (getProfileV3) {

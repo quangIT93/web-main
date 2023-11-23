@@ -78,7 +78,7 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
     //   const result = await apiCv.deleteProfileLanguage([id]);
     //   if (result) {
     //     const resultProfile = await profileApi.getProfileV3(
-    //       languageRedux === 1 ? 'vi' : 'en',
+    //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //     );
     //     if (resultProfile) {
     //       dispatch(setProfileV3(resultProfile));
@@ -117,9 +117,7 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
             }}
           >
             <h3>{item?.languageName}</h3>
-            <p>
-              {item?.dataLevel.data}
-            </p>
+            <p>{item?.dataLevel.data}</p>
           </Space>
         </div>
       </div>

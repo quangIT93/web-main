@@ -175,7 +175,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
       const result = await apiCv.putThemeCv(item?.id, 1);
       if (result) {
         const resultProfileV3 = await profileApi.getProfileInformationMoreV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         dispatch(setProfileMeInformationMoreV3(resultProfileV3));
         if (resultProfileV3 && resultProfileV3?.data?.profilesCvs?.length > 0) {
@@ -198,7 +198,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
       const result = await profileApi.deleteCV();
       if (result) {
         const result = await profileApi.getProfile(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (result) {
           setProfileUser(result.data);
@@ -429,18 +429,18 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                   ? 'Toàn thời gian'
                   : 'Fulltime'
                 : profileV3More.jobTypeId === 2
-                ? languageRedux === 1
-                  ? 'Bán thời gian'
-                  : 'Parttime'
-                : profileV3More.jobTypeId === 4
-                ? languageRedux === 1
-                  ? 'Làm việc tự do'
-                  : 'Freelancer'
-                : profileV3More.jobTypeId === 7
-                ? languageRedux === 1
-                  ? 'Thực tập'
-                  : 'Intern'
-                : language?.unupdated}
+                  ? languageRedux === 1
+                    ? 'Bán thời gian'
+                    : 'Parttime'
+                  : profileV3More.jobTypeId === 4
+                    ? languageRedux === 1
+                      ? 'Làm việc tự do'
+                      : 'Freelancer'
+                    : profileV3More.jobTypeId === 7
+                      ? languageRedux === 1
+                        ? 'Thực tập'
+                        : 'Intern'
+                      : language?.unupdated}
             </Button>
           </Space>
         </div>

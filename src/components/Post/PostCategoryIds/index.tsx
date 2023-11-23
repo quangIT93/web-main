@@ -8,6 +8,8 @@ import { AutocompleteInputChangeReason } from '@mui/material/Autocomplete';
 import categoriesApi from '../../../api/categoriesApi';
 
 import './style.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 interface Option {
   id: string;
@@ -51,10 +53,14 @@ const options: Option[] = [
 const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
   const { selectedOptions, setSelectedOptions } = props;
   const [categories, setCategories] = React.useState<Option[]>([]);
-
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const getAllParentCategories = async () => {
     try {
-      const result = await categoriesApi.getAllParentCategories('vi');
+      const result = await categoriesApi.getAllParentCategories(
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+      );
       if (result) {
         setCategories(result.data);
       }

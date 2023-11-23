@@ -37,7 +37,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
     languageRedux,
     setFillProvince,
     setFillDistrict,
-    setFillWard
+    setFillWard,
   } = props;
 
   const [dataProvinces, setDataProvinces] = useState<any>(null);
@@ -87,7 +87,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
   const getAllProvinces = async () => {
     try {
       const allLocation = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (allLocation) {
@@ -104,7 +104,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
       if (dataPostById && dataDistricts === null) {
         const districts = await locationApi.getDistrictsById(
           dataPostById?.province_id,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
 
         if (districts) {
@@ -114,7 +114,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
         if (selectedProvince) {
           const districts = await locationApi.getDistrictsById(
             selectedProvince?.province_id,
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (districts) {
             setDataDistrict(districts.data);
@@ -132,7 +132,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
       if (dataDistricts && dataWards === null) {
         const allward = await locationApi.getWardsId(
           dataPostById.district_id,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (allward) {
           setDataWard(allward.data);
@@ -141,7 +141,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
         if (selectedDistrict) {
           const allward = await locationApi.getWardsId(
             selectedDistrict?.id,
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (allward) {
             setDataWard(allward.data);
@@ -191,7 +191,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
 
   const handleChangeWardId = (event: any, value: any) => {
     setSelectedWard(value);
-    setFillWard(value)
+    setFillWard(value);
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       ward_id: value?.id,

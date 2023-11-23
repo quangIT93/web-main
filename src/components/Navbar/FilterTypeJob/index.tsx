@@ -48,7 +48,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={jobType ? jobType : undefined}
-    // defaultValue={jobType ? jobType : 5}
+      // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -115,18 +115,17 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   // console.log('type', TYPE_JOB);
   const getTypeJob = async () => {
     const result = await siteApi.getJobType(
-      languageRedux === 1 ? 'vi'
-        : languageRedux === 2 ? 'en'
-          : languageRedux === 3 ? 'ko' : 'vi',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
     const updatedData = [
       {
-        id: 5, name: languageRedux === 1 ?
-          "Tất cả" :
-          languageRedux === 2 ?
-            "All" :
-            languageRedux === 3 &&
-            "모두"
+        id: 5,
+        name:
+          languageRedux === 1
+            ? 'Tất cả'
+            : languageRedux === 2
+              ? 'All'
+              : languageRedux === 3 && '모두',
       },
       ...result.data,
     ];
@@ -163,12 +162,11 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         optionLabelProp="label"
         value={
           reset
-            ? languageRedux === 1 ?
-              "Loại hình công việc" :
-              languageRedux === 2 ?
-                "Job type" :
-                languageRedux === 3 &&
-                "직종"
+            ? languageRedux === 1
+              ? 'Loại hình công việc'
+              : languageRedux === 2
+                ? 'Job type'
+                : languageRedux === 3 && '직종'
             : valueRender
               ? valueRender.name
               : undefined
@@ -176,12 +174,11 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder={
-          languageRedux === 1 ?
-            "Loại hình công việc" :
-            languageRedux === 2 ?
-              "Job type" :
-              languageRedux === 3 &&
-              "직종"
+          languageRedux === 1
+            ? 'Loại hình công việc'
+            : languageRedux === 2
+              ? 'Job type'
+              : languageRedux === 3 && '직종'
         }
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
@@ -196,12 +193,11 @@ const FilterTypeJob: React.FC<TypeJob> = ({
               fontSize: '16px',
             }}
           >
-            {languageRedux === 1 ?
-              "Loại hình công việc" :
-              languageRedux === 2 ?
-                "Job type" :
-                languageRedux === 3 &&
-                "직종"}
+            {languageRedux === 1
+              ? 'Loại hình công việc'
+              : languageRedux === 2
+                ? 'Job type'
+                : languageRedux === 3 && '직종'}
           </div>
           <CustomOption
             jobType={TYPE_JOB}

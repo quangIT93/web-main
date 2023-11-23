@@ -114,7 +114,7 @@ const SeachEducation: React.FC<ISeachEducation> = (props) => {
   const academicTypesFnc = async () => {
     try {
       const result = await candidateSearch.getAcademicTypes(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setAcademicType(result.data);

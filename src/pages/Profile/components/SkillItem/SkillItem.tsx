@@ -67,7 +67,7 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
     // const result = await apiCv.deleteProfileSkill([id]);
     // if (result) {
     //   const resultProfile = await profileApi.getProfileV3(
-    //     languageRedux === 1 ? 'vi' : 'en',
+    //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //   );
     //   dispatch(setProfileV3(resultProfile));
     //   dispatch(setAlert(true));
@@ -104,9 +104,7 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
             }}
           >
             <h3>{item?.skillName}</h3>
-            <p>
-              {item?.dataLevel?.data}
-            </p>
+            <p>{item?.dataLevel?.data}</p>
           </Space>
         </div>
       </div>

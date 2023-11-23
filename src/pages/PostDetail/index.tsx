@@ -234,7 +234,7 @@ const Detail = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -336,7 +336,7 @@ const Detail = () => {
       // const result = await postApi.getById(POST_ID);
       const result = await postApi.getPostV3(
         POST_ID,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       // console.log('result', result2);
       if (result && profileV3) {
@@ -404,7 +404,7 @@ const Detail = () => {
         // get post related by id post
         const postNewest = await postApi.getPostRelated(
           POST_ID,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         //setPost related
         setPostNewest(postNewest);
@@ -420,7 +420,7 @@ const Detail = () => {
       // setIsLoading(true);
       const result = await postApi.getById(
         postID,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         // setIsLoading(false);

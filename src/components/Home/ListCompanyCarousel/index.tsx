@@ -133,7 +133,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
           newValue,
           9,
           0,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (result) {
           setPostByTheme(result);
@@ -283,8 +283,8 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                   item.id === placeIdCookie
                     ? '2px solid #0d99ff'
                     : index === 0 && placeIdCookie === undefined
-                    ? '2px solid #0d99ff'
-                    : '',
+                      ? '2px solid #0d99ff'
+                      : '',
               }}
             >
               <div className="slide-item">

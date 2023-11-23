@@ -26,14 +26,21 @@ interface IEditPostAddress {
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
   setFillRole: React.Dispatch<React.SetStateAction<any>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges, setFillRole, setIsValid } = props;
+  const {
+    setDataCompany,
+    dataCompany,
+    is_profile,
+    setUnsavedChanges,
+    setFillRole,
+    setIsValid,
+  } = props;
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -92,7 +99,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const getRoles = async () => {
     try {
       const roles = await apiCompany.getAllRolesCompany(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (roles) {
@@ -113,14 +120,14 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const handleEditCompanyRole = (event: any, value: any) => {
     setSelectedRole(value);
     setUnsavedChanges(true);
-    setFillRole(value)
+    setFillRole(value);
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyRoleInfomation: {
         id: value ? value.id : '',
       },
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   const handleEditCompanyWeb = (
@@ -132,7 +139,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
       ...preValue,
       website: value,
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   return (
@@ -159,7 +166,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
               {...params}
               placeholder={language?.company_page?.place_role}
               size="small"
-            // value={dataCompany?.companyRole?.name}
+              // value={dataCompany?.companyRole?.name}
             />
           )}
           isOptionEqualToValue={(option, value) => {
@@ -199,7 +206,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_web}
           disabled={is_profile ? true : false}
-        //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.website?.length > 100 ? (

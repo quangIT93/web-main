@@ -199,7 +199,7 @@ const NewJobs: React.FC = () => {
     //   null,
     //   9,
     //   thersholdId,
-    //   languageRedux === 1 ? 'vi' : 'en',
+    //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     // );
 
     const result2 = await postApi.getPostNewestV3(
@@ -213,7 +213,7 @@ const NewJobs: React.FC = () => {
       null,
       10,
       thersholdId,
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
 
     if (result2) {
@@ -242,7 +242,7 @@ const NewJobs: React.FC = () => {
       //   null,
       //   20,
       //   null,
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
       // console.log('childCateloriesArray', childCateloriesArray);
       setLoading(true);
@@ -267,7 +267,7 @@ const NewJobs: React.FC = () => {
         null,
         20,
         null,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       // console.log('result2222222222222222', result2.data);
@@ -314,7 +314,7 @@ const NewJobs: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
 
   return (
     <>
@@ -334,7 +334,13 @@ const NewJobs: React.FC = () => {
             <div className="title">
               <NewJobIcon width={25} height={25} />
               <h2>
-                {languageRedux === 1 ? 'Công việc mới nhất' : 'Newest Jobs'}
+                {languageRedux === 1
+                  ? 'Công việc mới nhất'
+                  : languageRedux === 2
+                    ? 'Newest Jobs'
+                    : languageRedux === 3
+                      ? '새 작업'
+                      : 'Công việc mới nhất'}
               </h2>
               <div className="help-search" onClick={handleClickHelpSearch}>
                 <QuestionMarkIcon />
@@ -381,20 +387,24 @@ const NewJobs: React.FC = () => {
                 </Grid>
               ))}
             </Grid>
-            <div className="view-all-down"
+            <div
+              className="view-all-down"
               onClick={handleMoveToMoreJob}
               style={{
-                display: !postNewestV3.data || postNewestV3.data.length === 0 ? 'none' : 'flex'
+                display:
+                  !postNewestV3.data || postNewestV3.data.length === 0
+                    ? 'none'
+                    : 'flex',
               }}
             >
-              <p> {
-                languageRedux === 1 ?
-                  "Xem tất cả" :
-                  languageRedux === 2 ?
-                    "View all" :
-                    languageRedux === 3 &&
-                    "다 보기"
-              }</p>
+              <p>
+                {' '}
+                {languageRedux === 1
+                  ? 'Xem tất cả'
+                  : languageRedux === 2
+                    ? 'View all'
+                    : languageRedux === 3 && '다 보기'}
+              </p>
               <ArrowrightIcon width={20} height={20} />
             </div>
           </Skeleton>

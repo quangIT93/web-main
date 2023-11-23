@@ -140,7 +140,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         searchParams.get('user_id'),
         // 36353,
         Number(searchParams.get('post_id')),
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         // setTimeout(() => {
@@ -524,16 +524,16 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                     {userInfoChat.salary_type_id === 1
                       ? 'Giờ'
                       : userInfoChat.salary_type_id === 2
-                      ? 'Ngày'
-                      : userInfoChat.salary_type_id === 3
-                      ? 'Tháng'
-                      : userInfoChat.salary_type_id === 4
-                      ? 'Tuần'
-                      : userInfoChat.salary_type_id === 5
-                      ? 'Công việc'
-                      : userInfoChat.salary_type_id === 6
-                      ? 'Thương lượng'
-                      : ''}
+                        ? 'Ngày'
+                        : userInfoChat.salary_type_id === 3
+                          ? 'Tháng'
+                          : userInfoChat.salary_type_id === 4
+                            ? 'Tuần'
+                            : userInfoChat.salary_type_id === 5
+                              ? 'Công việc'
+                              : userInfoChat.salary_type_id === 6
+                                ? 'Thương lượng'
+                                : ''}
                   </p>
                 </div>
               </div>
@@ -554,14 +554,14 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                 {userInfoChat.post_status === 3
                   ? 'Đã đóng'
                   : userInfoChat.applied === false &&
-                    userInfoChat.post_status === 0
-                  ? 'Chưa duyệt'
-                  : userInfoChat.applied === false &&
-                    userInfoChat.post_status === 1
-                  ? 'Ứng tuyển ngay'
-                  : userInfoChat.applied === true
-                  ? 'Đã ứng tuyển'
-                  : ''}
+                      userInfoChat.post_status === 0
+                    ? 'Chưa duyệt'
+                    : userInfoChat.applied === false &&
+                        userInfoChat.post_status === 1
+                      ? 'Ứng tuyển ngay'
+                      : userInfoChat.applied === true
+                        ? 'Đã ứng tuyển'
+                        : ''}
               </Button>
             </div>
           ) : (

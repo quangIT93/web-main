@@ -13,13 +13,17 @@ import Autoplay from 'embla-carousel-autoplay';
 
 // import Api
 import bannersApi from 'api/apiBanner';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const EmblaCarousel: React.FC = () => {
   const options: EmblaOptionsType = {
     loop: true,
     align: 'center',
   };
-
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   //   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
@@ -48,7 +52,10 @@ const EmblaCarousel: React.FC = () => {
   );
 
   const getBannersApi = async () => {
-    const result = await bannersApi.getBannersApi('vi', null);
+    const result = await bannersApi.getBannersApi(
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+      null,
+    );
     try {
       if (result) setDataBanners(result.data);
     } catch (error) {

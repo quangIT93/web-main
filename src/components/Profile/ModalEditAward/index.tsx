@@ -179,7 +179,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
         );
         if (result) {
           const resultProfile = await profileApi.getProfileInformationMoreV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
 
           resultProfile &&
@@ -194,8 +194,12 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
         }
       } else {
         message.error(messageError);
-        const profile_award_edit_title = document.getElementById('profile_award_edit_title') as HTMLElement;
-        const profile_award_edit_description = document.getElementById('profile_award_edit_description') as HTMLElement;
+        const profile_award_edit_title = document.getElementById(
+          'profile_award_edit_title',
+        ) as HTMLElement;
+        const profile_award_edit_description = document.getElementById(
+          'profile_award_edit_description',
+        ) as HTMLElement;
         // console.log(idError);
 
         switch (idError) {
@@ -271,7 +275,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
               placeholder={
                 languageRedux === 1 ? 'Tiêu đề giải thưởng' : 'Award Title'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {award.title && award.title.length > 255 ? (
@@ -289,8 +293,9 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${award.title ? award.title.length : '0'
-                }/255`}</span>
+              <span className="number-text">{`${
+                award.title ? award.title.length : '0'
+              }/255`}</span>
             </div>
           </Box>
           {/* <Box sx={{ marginBottom: '12px' }}>
@@ -348,7 +353,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
                   ? 'Mô tả giải thưởng của bạn'
                   : 'Description your award'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <div className="wrap-noti_input">
