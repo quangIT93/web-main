@@ -1341,7 +1341,11 @@ const Detail = () => {
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      {language?.post_detail_page?.see_all}
+                      {languageRedux === 1
+                        ? 'Xem tất cả'
+                        : languageRedux === 2
+                          ? 'View all'
+                          : languageRedux === 3 && '다 보기'}
                     </h3>
                   </div>
                   <div className="mid-title_companyAddress">
@@ -1363,7 +1367,11 @@ const Detail = () => {
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      {language?.post_detail_page?.see_on_map}
+                      {languageRedux === 1
+                        ? 'Xem trên bản đồ'
+                        : languageRedux === 2
+                          ? 'View on map'
+                          : languageRedux === 3 && '지도에서 보기'}
                     </h3>
                   </div>
                 </div>
