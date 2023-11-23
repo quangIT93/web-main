@@ -297,7 +297,11 @@ const AppliedPostedJob: React.FC = () => {
                     //   waitForTransition: true,
                     //   stopOnLastSlide: false,
                     // }}
-                    navigation={true}
+                    // navigation={true}
+                    autoplay={{
+                      delay: 3500,
+                      disableOnInteraction: false,
+                    }}
                     pagination={{ clickable: true }}
                     modules={[Autoplay, Pagination]}
                     className="banner-rescruit-swiper mySwiper"
@@ -479,7 +483,7 @@ const AppliedPostedJob: React.FC = () => {
               slidesPerView={slidesPerView}
               pagination={true}
               spaceBetween={24}
-              modules={[Mousewheel, Navigation, Pagination]}
+              modules={[Mousewheel, Navigation]}
               className="applied-posted-jobs_swiper"
               style={{
                 display:
