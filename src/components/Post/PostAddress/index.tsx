@@ -207,7 +207,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập tên công ty'
-                  : 'Please enter company name'}
+                  : languageRedux === 2
+                    ? 'Please enter company name'
+                    : languageRedux === 3 && '회사명을 입력해주세요'}
               </span>
             ) : (
               <></>
@@ -251,7 +253,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập tên quận'
-                  : 'Please enter district name'}
+                  : languageRedux === 2
+                    ? 'Please enter district name'
+                    : languageRedux === 3 && '지역명을 입력해주세요'}
               </span>
             ) : (
               <></>
@@ -296,7 +300,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập tên phường'
-                  : 'Please enter ward name'}
+                  : languageRedux === 2
+                    ? 'Please enter ward name'
+                    : languageRedux === 3 && '병동명을 입력해주세요'}
               </span>
             ) : (
               <></>
@@ -328,13 +334,18 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Địa chỉ không được vượt quá 255 ký tự'
-                  : 'Address cannot exceed 255 characters'}
+                  : languageRedux === 2
+                    ? 'Address cannot exceed 255 characters'
+                    : languageRedux === 3 &&
+                      '주소는 255자를 초과할 수 없습니다.'}
               </span>
             ) : !address ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Địa chỉ không được bỏ trống'
-                  : 'Address cannot be empty'}
+                  : languageRedux === 2
+                    ? 'Address cannot be empty'
+                    : languageRedux === 3 && '주소가 비어 있으면 안 됩니다.'}
               </span>
             ) : (
               <></>

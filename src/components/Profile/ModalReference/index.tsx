@@ -370,7 +370,13 @@ const ModalReference: React.FC<IModalReference> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              {languageRedux === 1 ? 'Số điện thoại' : 'Phone number'}{' '}
+              {languageRedux === 1
+                ? 'Số điện thoại'
+                : languageRedux === 2
+                  ? 'Phone number'
+                  : languageRedux === 3
+                    ? '전화 번호'
+                    : 'Số điện thoại'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -382,7 +388,13 @@ const ModalReference: React.FC<IModalReference> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={
-                languageRedux === 1 ? 'Số điện thoại' : 'Phone number'
+                languageRedux === 1
+                  ? 'Số điện thoại'
+                  : languageRedux === 2
+                    ? 'Phone number'
+                    : languageRedux === 3
+                      ? '전화 번호'
+                      : 'Số điện thoại'
               }
               // error={titleError} // Đánh dấu lỗi
             />

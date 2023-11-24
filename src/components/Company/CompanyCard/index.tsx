@@ -79,7 +79,6 @@ const CompanyCard: React.FC<Iprops> = (props) => {
     }
   };
 
-
   return (
     <>
       <Card
@@ -149,7 +148,11 @@ const CompanyCard: React.FC<Iprops> = (props) => {
                 <div
                   onClick={(e: any) => handleSaveCompany(e, props?.item?.id)}
                   style={{
-                    display: localStorage.getItem('accountId') === props?.item?.accountId ? 'none' : 'flex'
+                    display:
+                      localStorage.getItem('accountId') ===
+                      props?.item?.accountId
+                        ? 'none'
+                        : 'flex',
                   }}
                 >
                   {props.item?.isBookmarked ? (
@@ -198,7 +201,10 @@ const CompanyCard: React.FC<Iprops> = (props) => {
                     title={
                       languageRedux === 1
                         ? `${props.item.amountPost} vị trí tuyển dụng`
-                        : `${props.item.amountPost} apllication position`
+                        : languageRedux === 2
+                          ? `${props.item.amountPost} apllication position`
+                          : languageRedux === 3 &&
+                            `공석 ${props.item.amountPost}개`
                     }
                   >
                     <Typography
@@ -215,7 +221,10 @@ const CompanyCard: React.FC<Iprops> = (props) => {
                     >
                       {languageRedux === 1
                         ? `${props.item.amountPost} vị trí tuyển dụng`
-                        : `${props.item.amountPost} apllication position`}
+                        : languageRedux === 2
+                          ? `${props.item.amountPost} apllication position`
+                          : languageRedux === 3 &&
+                            `공석 ${props.item.amountPost}개`}
                     </Typography>
                   </Tooltip>
                 </div>

@@ -434,8 +434,8 @@ const CategoryDropdown: React.FC = () => {
                 {languageRedux === 1
                   ? 'DANH MỤC'
                   : languageRedux === 2
-                    ? 'MENU'
-                    : languageRedux === 3 && '메뉴'}
+                    ? 'Category'
+                    : languageRedux === 3 && '카테고리'}
               </h3>
             </div>
             <BreadcrumbMenuItems />
@@ -491,7 +491,10 @@ const CategoryDropdown: React.FC = () => {
                         <p>
                           {languageRedux === 1
                             ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
-                            : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
+                            : languageRedux === 2
+                              ? `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`
+                              : languageRedux === 3 &&
+                                '고용주가 귀하를 쉽게 찾을 수 있도록 귀하의 구직 상태가 켜져 있으므로 귀하가 적합한 일자리를 찾을 가능성이 더 높아집니다.'}
                         </p>
                       </div>
                     </div>
@@ -760,7 +763,9 @@ const CategoryDropdown: React.FC = () => {
                         : languageRedux === 3 && '이력서 & CV'
                     : languageRedux === 1
                       ? 'Thông tin ứng viên'
-                      : 'Candidates information'}
+                      : languageRedux === 2
+                        ? 'Candidates information'
+                        : languageRedux === 3 && '인재 정보'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>

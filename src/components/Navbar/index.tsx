@@ -1222,7 +1222,11 @@ const Navbar: React.FC = () => {
             }}
           >
             <LoginArrowBlackIcon />
-            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+               {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
           </Button> */}
         </div>
       </div>
@@ -2185,7 +2189,11 @@ const Navbar: React.FC = () => {
             }}
           >
             <LoginArrowBlackIcon />
-            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+               {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
           </Button> */}
                   </div>
                 </div>

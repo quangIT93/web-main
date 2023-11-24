@@ -151,13 +151,19 @@ const SeachEducation: React.FC<ISeachEducation> = (props) => {
         value={reset && valueRender ? undefined : valueRender?.data}
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder={languageRedux === 1 ? 'Trình độ học vấn' : 'Education'}
+        placeholder={
+          languageRedux === 1
+            ? 'Trình độ học vấn'
+            : languageRedux === 2
+              ? 'Education'
+              : languageRedux === 3 && '최종학력'
+        }
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
         // open={true}
         // onMouseLeave={set}
       >
         <Option className="type-salary" value={valueRender?.id} label="">
-          <div className="sssssssssssssssssssssssssss">
+          <div className="type-salary__item">
             <CustomOption
               academicType={academicType}
               setTypeAcademic={setTypeAcademic}

@@ -74,7 +74,9 @@ const ModalPost: React.FC<IModalPost> = (props) => {
           >
             {languageRedux === 1
               ? 'Đã đăng tuyển thành công!'
-              : 'Successfully posted!'}
+              : languageRedux === 2
+                ? 'Successfully posted!'
+                : languageRedux === 3 && '성공적으로 게시되었습니다!'}
             <IconButton
               aria-label="close"
               onClick={handleClose}
@@ -94,7 +96,10 @@ const ModalPost: React.FC<IModalPost> = (props) => {
           >
             {languageRedux === 1
               ? 'Bạn có thể theo dõi bài đăng tuyển của mình thông qua:'
-              : 'You can track your job posting through:'}
+              : languageRedux === 2
+                ? 'You can track your job posting through:'
+                : languageRedux === 3 &&
+                  '다음을 통해 채용 공고를 추적할 수 있습니다.'}
           </h6>
 
           {/* <h4
@@ -163,7 +168,11 @@ const ModalPost: React.FC<IModalPost> = (props) => {
                 backgroundColor: '#0d99ff',
               }}
             >
-              {languageRedux === 1 ? 'Đến trang lịch sử' : 'Go to history page'}
+              {languageRedux === 1
+                ? 'Đến trang lịch sử'
+                : languageRedux === 2
+                  ? 'Go to history page'
+                  : languageRedux === 3 && '기록 페이지로 이동'}
             </Button>
             {/* <Button
               onClick={onclick}

@@ -155,7 +155,11 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Độ dài mô tả phải lớn hơn 0 và nhỏ hơn 1000'
-            : 'Description length must be greater than 0 and less than 1000',
+            : languageRedux === 2
+              ? 'Description length must be greater than 0 and less than 1000'
+              : languageRedux === 3
+                ? '설명 길이는 0보다 크고 1000보다 작아야 합니다.'
+                : 'Độ dài mô tả phải lớn hơn 0 và nhỏ hơn 1000',
         checkForm: false,
         idError: 2,
       };
@@ -333,7 +337,11 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              {languageRedux === 1 ? 'Miêu tả' : 'Description'}{' '}
+              {languageRedux === 1
+                ? 'Mô tả'
+                : languageRedux === 2
+                  ? 'Description'
+                  : languageRedux === 3 && '회사설명'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField

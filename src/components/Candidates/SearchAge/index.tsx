@@ -177,14 +177,26 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
         }
         className=""
         size="large"
-        placeholder={languageRedux === 1 ? 'Độ tuổi' : 'Age'}
+        placeholder={
+          languageRedux === 1
+            ? 'Độ tuổi'
+            : languageRedux === 2
+              ? 'Age'
+              : languageRedux === 3 && '나이'
+        }
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
         open={isSelectOpen}
         dropdownRender={(menu) => (
           <div className="wrap-radio_candidateAge">
             {/* {menu} */}
             <div className="title-search_age">
-              <h3>{languageRedux === 1 ? 'Độ tuổi' : 'Age'}</h3>
+              <h3>
+                {languageRedux === 1
+                  ? 'Độ tuổi'
+                  : languageRedux === 2
+                    ? 'Age'
+                    : languageRedux === 3 && '나이'}
+              </h3>
             </div>
 
             <Divider style={{ margin: '8px 0' }} />

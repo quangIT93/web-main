@@ -71,7 +71,9 @@ const ApplyPosition: React.FC<IApplyPosition> = (props) => {
         message.error(
           languageRedux === 1
             ? 'Không còn công việc để xem'
-            : 'No more jobs available',
+            : languageRedux === 2
+              ? 'No more jobs available'
+              : languageRedux === 3 && '더 이상 볼 일이 없습니다',
         );
       }
     } catch (error) {

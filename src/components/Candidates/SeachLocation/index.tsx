@@ -193,7 +193,13 @@ const SeachLocation: React.FC<ISearchLocation> = (props) => {
               }))
             : []
         }
-        placeholder={languageRedux === 1 ? 'Địa điểm' : 'Location'}
+        placeholder={
+          languageRedux === 1
+            ? 'Địa điểm'
+            : languageRedux === 2
+              ? 'Location'
+              : languageRedux === 3 && '위치'
+        }
       />
     </div>
   );

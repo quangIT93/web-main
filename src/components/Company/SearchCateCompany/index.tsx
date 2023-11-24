@@ -65,11 +65,23 @@ const SearchCateCompany: React.FC<ISearchCate> = (props) => {
   const DropdownRender = (menus: React.ReactNode) => (
     <div className="filter-cate-company filter-company">
       <Text className="title-filter_location">
-        {languageRedux === 1 ? 'Ngành nghề' : 'Career'}
+        {languageRedux === 1
+          ? 'Ngành nghề'
+          : languageRedux === 2
+            ? 'Career'
+            : languageRedux === 3 && '직업'}
       </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable ? 'Vui lòng chọn ngành nghề bạn muốn tìm kiếm.' : ''}
+        {disable
+          ? languageRedux === 1
+            ? 'Vui lòng chọn ngành nghề bạn muốn tìm kiếm.'
+            : languageRedux === 2
+              ? 'Please select the profession you want to search for'
+              : languageRedux === 3
+                ? '검색하고 싶은 직업을 선택해주세요.'
+                : 'Vui lòng chọn ngành nghề bạn muốn tìm kiếm.'
+          : ''}
       </Divider>
     </div>
   );
@@ -111,7 +123,13 @@ const SearchCateCompany: React.FC<ISearchCate> = (props) => {
               }))
             : []
         }
-        placeholder={languageRedux === 1 ? 'Ngành nghề' : 'Career'}
+        placeholder={
+          languageRedux === 1
+            ? 'Ngành nghề'
+            : languageRedux === 2
+              ? 'Career'
+              : languageRedux === 3 && '직업'
+        }
       />
     </div>
   );

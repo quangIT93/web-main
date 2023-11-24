@@ -62,7 +62,13 @@ const CustomOption = ({
   return (
     <div className="wrap-radio_company">
       <div className="title-company">
-        <h3>{languageRedux === 1 ? 'Quy mô công ty' : "Company's size"}</h3>
+        <h3>
+          {languageRedux === 1
+            ? 'Quy mô công ty'
+            : languageRedux === 2
+              ? "Company's size"
+              : languageRedux === 3 && '회사 규모'}
+        </h3>
       </div>
       <Radio.Group
         style={{ width: '100%' }}
@@ -144,7 +150,13 @@ const SearchSizeCompany: React.FC<ISeachEducation> = (props) => {
         value={reset && valueRender ? undefined : valueRender?.nameText}
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder={languageRedux === 1 ? 'Quy mô công ty' : "Company's size"}
+        placeholder={
+          languageRedux === 1
+            ? 'Quy mô công ty'
+            : languageRedux === 2
+              ? "Company's size"
+              : languageRedux === 3 && '회사 규모'
+        }
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
         // open={true}
         // onMouseLeave={set}

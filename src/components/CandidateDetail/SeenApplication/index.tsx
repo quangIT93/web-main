@@ -30,7 +30,9 @@ const SeenApplication: React.FC<ISeenApplication> = (props) => {
   const [openReject, setOpenReject] = React.useState(false);
   const [openApprove, setOpenApprove] = React.useState(false);
   const handleClose = () => setOpenReject(false);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
 
   const handleClickReject = async () => {
     const candidateId = parseInt(searchParams.get('application_id') ?? '');
@@ -71,11 +73,11 @@ const SeenApplication: React.FC<ISeenApplication> = (props) => {
         }}
         onClick={() => setOpenReject(true)}
       >
-        {
-          languageRedux === 1 ?
-            "Từ chối hồ sơ" :
-            "Reject application"
-        }
+        {languageRedux === 1
+          ? 'Từ chối hồ sơ'
+          : languageRedux === 2
+            ? 'Reject application'
+            : languageRedux === 3 && '신청 거부'}
       </Button>
       <Button
         name="SeenApplicationApprove"
@@ -89,11 +91,11 @@ const SeenApplication: React.FC<ISeenApplication> = (props) => {
         }}
         onClick={() => setOpenApprove(true)}
       >
-        {
-          languageRedux === 1 ?
-            "Duyệt hồ sơ" :
-            "Browse profiles"
-        }
+        {languageRedux === 1
+          ? 'Duyệt hồ sơ'
+          : languageRedux === 2
+            ? 'Browse profiles'
+            : languageRedux === 3 && '프로필 찾아보기'}
       </Button>
       <Modal
         open={openReject}
@@ -103,31 +105,34 @@ const SeenApplication: React.FC<ISeenApplication> = (props) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {
-              languageRedux === 1 ?
-                "Từ chối hồ sơ ?" :
-                "Reject application?"
-            }
+            {languageRedux === 1
+              ? 'Từ chối hồ sơ ?'
+              : languageRedux === 2
+                ? 'Reject application?'
+                : languageRedux === 3 && '신청 거부'}
           </Typography>
           <Typography id="modal-modal-description" sx={{ my: 3 }}>
-            {
-              languageRedux === 1 ?
-                "Ứng viên này không phù hợp với công việc của bạn" :
-                "This candidate is not suitable for your job"
-            }
+            {languageRedux === 1
+              ? 'Ứng viên này không phù hợp với công việc của bạn'
+              : languageRedux === 2
+                ? 'This candidate is not suitable for your job'
+                : languageRedux === 3 &&
+                  '이 후보자는 귀하의 직무에 적합하지 않습니다.'}
           </Typography>
           <div className="button-modal_reject">
             <Button type="default" danger onClick={() => setOpenReject(false)}>
-              {
-                languageRedux === 1 ?
-                  "Huỷ" : "Cancel"
-              }
+              {languageRedux === 1
+                ? 'Huỷ'
+                : languageRedux === 2
+                  ? 'Cancel'
+                  : languageRedux === 3 && '취소'}
             </Button>
             <Button type="primary" onClick={handleClickReject}>
-              {
-                languageRedux === 1 ?
-                  "Đồng ý" : "Ok"
-              }
+              {languageRedux === 1
+                ? 'Đồng ý'
+                : languageRedux === 2
+                  ? 'Ok'
+                  : languageRedux === 3 && '동의하다'}
             </Button>
           </div>
         </Box>
@@ -140,31 +145,34 @@ const SeenApplication: React.FC<ISeenApplication> = (props) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {
-              languageRedux === 1 ?
-                "Duyệt hồ sơ ?" :
-                "Browse profiles ?"
-            }
+            {languageRedux === 1
+              ? 'Duyệt hồ sơ'
+              : languageRedux === 2
+                ? 'Browse profiles'
+                : languageRedux === 3 && '프로필 찾아보기'}
           </Typography>
           <Typography id="modal-modal-description" sx={{ my: 3 }}>
-            {
-              languageRedux === 1 ?
-                "Ứng viên sẽ nhận được thông báo từ bạn" :
-                "Candidates will receive notification from you"
-            }
+            {languageRedux === 1
+              ? 'Ứng viên sẽ nhận được thông báo từ bạn'
+              : languageRedux === 2
+                ? 'Candidates will receive notification from you'
+                : languageRedux === 3 &&
+                  '신청자는 귀하로부터 통지를 받게 됩니다'}
           </Typography>
           <div className="button-modal_reject">
             <Button type="default" danger onClick={() => setOpenApprove(false)}>
-              {
-                languageRedux === 1 ?
-                  "Huỷ" : "Cancel"
-              }
+              {languageRedux === 1
+                ? 'Huỷ'
+                : languageRedux === 2
+                  ? 'Cancel'
+                  : languageRedux === 3 && '취소'}
             </Button>
             <Button type="primary" onClick={handleClickApproved}>
-              {
-                languageRedux === 1 ?
-                  "Đồng ý" : "Ok"
-              }
+              {languageRedux === 1
+                ? 'Đồng ý'
+                : languageRedux === 2
+                  ? 'Ok'
+                  : languageRedux === 3 && '동의하다'}
             </Button>
           </div>
         </Box>

@@ -327,8 +327,8 @@ const BreadcrumbsCpn: React.FC = () => {
         >
           {arrayChild?.length === 0 || arrayChild?.length === undefined
             ? languageRedux === 1
-              ? `Tất cả`
-              : `All`
+              ? 'Tất cả'
+              : 'All'
             : arrayChild?.map(
                 (value: { id: number; name: string }, index: number) => (
                   <div key={index}>

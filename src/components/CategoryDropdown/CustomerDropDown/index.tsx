@@ -21,7 +21,11 @@ const CustomerDropDown: React.FC<ICvDropDown> = (props) => {
       key: '1',
       label: (
         <a onClick={moveToPolicy}>
-          {languageRedux === 1 ? 'Chính sách bảo mật' : 'Privacy Policy'}
+          {languageRedux === 1
+            ? 'Chính sách bảo mật'
+            : languageRedux === 2
+              ? 'Privacy Policy'
+              : languageRedux === 3 && '개인정보보호정책'}
         </a>
       ),
     },
@@ -29,7 +33,11 @@ const CustomerDropDown: React.FC<ICvDropDown> = (props) => {
       key: '2',
       label: (
         <a onClick={moveToSupportTerms}>
-          {languageRedux === 1 ? 'Điều khoản hỗ trợ' : 'Support terms'}
+          {languageRedux === 1
+            ? 'Điều khoản hỗ trợ'
+            : languageRedux === 2
+              ? 'Support terms'
+              : languageRedux === 3 && '지원조건'}
         </a>
       ),
     },
@@ -37,7 +45,11 @@ const CustomerDropDown: React.FC<ICvDropDown> = (props) => {
       key: '3',
       label: (
         <a onClick={moveToMemberGuide}>
-          {languageRedux === 1 ? 'Hướng dẫn thành viên' : 'Member Guide'}
+          {languageRedux === 1
+            ? 'Hướng dẫn thành viên'
+            : languageRedux === 2
+              ? 'Member Guide'
+              : languageRedux === 3 && '회원안내'}
         </a>
       ),
     },
@@ -49,7 +61,13 @@ const CustomerDropDown: React.FC<ICvDropDown> = (props) => {
       placement="bottomLeft"
       trigger={['hover']}
     >
-      <h3>{languageRedux === 1 ? 'Hỗ trợ khách hàng' : 'Customer support'}</h3>
+      <h3>
+        {languageRedux === 1
+          ? 'Hỗ trợ khách hàng'
+          : languageRedux === 2
+            ? 'Customer support'
+            : languageRedux === 3 && '고객지원서비스'}
+      </h3>
     </Dropdown>
   );
 };

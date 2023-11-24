@@ -27,19 +27,19 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
     titleJob,
     companyName,
     language,
-    setIsValidSubmit
+    setIsValidSubmit,
   } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
   const handleChangeTitleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleJob(e.target.value);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const handleChangeCompanyForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCompanyName(e.target.value);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const styleLabel = {
@@ -75,19 +75,24 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tiêu đề công việc không được vượt quá 255 ký tự'
-                : 'Job Title cannot exceed 255 characters'}
+                : languageRedux === 2
+                  ? 'Job Title cannot exceed 255 characters'
+                  : languageRedux === 3 && '직위는 255자를 초과할 수 없습니다.'}
             </span>
           ) : !titleJob ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tiêu đề công việc không được bỏ trống'
-                : 'Job title cannot be empty'}
+                : languageRedux === 2
+                  ? 'Job title cannot be empty'
+                  : languageRedux === 3 && '직함은 비워 둘 수 없습니다.'}
             </span>
           ) : (
             <></>
           )}
-          <span className="number-text">{`${titleJob ? titleJob.length : '0'
-            }/255`}</span>
+          <span className="number-text">{`${
+            titleJob ? titleJob.length : '0'
+          }/255`}</span>
         </div>
       </div>
       <div className="post-titleCompany post-title">
@@ -116,19 +121,25 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tên công ty không được vượt quá 255 ký tự'
-                : 'Company Name cannot exceed 255 characters'}
+                : languageRedux === 2
+                  ? 'Company Name cannot exceed 255 characters'
+                  : languageRedux === 3 &&
+                    '회사 이름은 255자를 초과할 수 없습니다.'}
             </span>
           ) : !companyName ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tên công ty không được bỏ trống'
-                : 'Company Name cannot be empty'}
+                : languageRedux === 2
+                  ? 'Company Name cannot be empty'
+                  : languageRedux === 3 && '회사 이름은 비워 둘 수 없습니다.'}
             </span>
           ) : (
             <></>
           )}
-          <span className="number-text">{`${companyName ? companyName.length : '0'
-            }/255`}</span>
+          <span className="number-text">{`${
+            companyName ? companyName.length : '0'
+          }/255`}</span>
         </div>
       </div>
     </div>

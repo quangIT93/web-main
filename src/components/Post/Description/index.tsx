@@ -17,10 +17,16 @@ interface IDescription {
 }
 
 const Description: React.FC<IDescription> = (props) => {
-  const { setDescription, description, language, languageRedux, setIsValidSubmit } = props;
+  const {
+    setDescription,
+    description,
+    language,
+    languageRedux,
+    setIsValidSubmit,
+  } = props;
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   // const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -50,13 +56,17 @@ const Description: React.FC<IDescription> = (props) => {
           <span className="helper-text">
             {languageRedux === 1
               ? 'Mô tả không được vượt quá 4000 ký tự'
-              : 'Description cannot exceed 4000 characters'}
+              : languageRedux === 2
+                ? 'Description cannot exceed 4000 characters'
+                : languageRedux === 3 && '설명은 4,000자를 초과할 수 없습니다'}
           </span>
         ) : description.length === 0 ? (
           <span className="helper-text">
             {languageRedux === 1
               ? 'Mô tả được để trống'
-              : 'Description cannot be blank'}
+              : languageRedux === 2
+                ? 'Description cannot be blank'
+                : languageRedux === 3 && '설명은 비워둘 수 없습니다.'}
           </span>
         ) : (
           <></>

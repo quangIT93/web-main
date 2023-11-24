@@ -76,8 +76,22 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
         />
         <label
           htmlFor="color_mode"
-          data-on={languageRedux === 1 ? 'Nhà tuyển dụng' : 'Recruiter'}
-          data-off={languageRedux === 1 ? 'Ứng viên' : 'Candidate'}
+          data-on={
+            languageRedux === 1
+              ? 'Nhà tuyển dụng'
+              : languageRedux === 2
+                ? 'Employer'
+                : languageRedux === 3
+                  ? '고용주'
+                  : 'Nhà tuyển dụng'
+          }
+          data-off={
+            languageRedux === 1
+              ? 'Ứng viên'
+              : languageRedux === 2
+                ? 'Candidate'
+                : languageRedux === 3 && '후보자'
+          }
           className="btn-color-mode-switch-inner"
         ></label>
       </label>

@@ -54,7 +54,13 @@ const CustomOption = ({
   return (
     <div className="wrap-radio_candidate">
       <div className="title-candidate filter-candidate">
-        <h3>{languageRedux === 1 ? 'Giới tính' : 'Sex'}</h3>
+        <h3>
+          {languageRedux === 1
+            ? 'Giới tính'
+            : languageRedux === 2
+              ? 'Sex'
+              : languageRedux === 3 && '성별'}
+        </h3>
       </div>
       <Radio.Group
         style={{ width: '100%' }}
@@ -99,22 +105,42 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
 
   const [valueRender, setValueRender] = React.useState<any>({
     id: -1,
-    data: languageRedux === 1 ? 'Tất cả' : 'All',
+    data:
+      languageRedux === 1
+        ? 'Tất cả'
+        : languageRedux === 2
+          ? 'All'
+          : languageRedux === 3 && '전부',
   });
   // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   var gender = [
     {
       id: -1,
-      data: languageRedux === 1 ? 'Tất cả' : 'All',
+      data:
+        languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부',
     },
     {
       id: 1,
-      data: languageRedux === 1 ? 'Nam' : 'Male',
+      data:
+        languageRedux === 1
+          ? 'Nam'
+          : languageRedux === 2
+            ? 'Male'
+            : languageRedux === 3 && '남성',
     },
     {
       id: 0,
-      data: languageRedux === 1 ? 'Nữ' : 'Female',
+      data:
+        languageRedux === 1
+          ? 'Nữ'
+          : languageRedux === 2
+            ? 'Female'
+            : languageRedux === 3 && '여성',
     },
   ];
 
@@ -125,7 +151,15 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
 
   React.useEffect(() => {
     if (reset) {
-      setValueRender({ id: -1, data: languageRedux === 1 ? 'Tất cả' : 'All' });
+      setValueRender({
+        id: -1,
+        data:
+          languageRedux === 1
+            ? 'Tất cả'
+            : languageRedux === 2
+              ? 'All'
+              : languageRedux === 3 && '전부',
+      });
     }
   }, [reset]);
 
@@ -144,12 +178,20 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
           valueRender && reset
             ? languageRedux === 1
               ? 'Tất cả'
-              : 'All'
+              : languageRedux === 2
+                ? 'All'
+                : languageRedux === 3 && '전부'
             : valueRender?.data
         }
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder={languageRedux === 1 ? 'Giới tính' : 'Sex'}
+        placeholder={
+          languageRedux === 1
+            ? 'Giới tính'
+            : languageRedux === 2
+              ? 'Sex'
+              : languageRedux === 3 && '성별'
+        }
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="5" label="">

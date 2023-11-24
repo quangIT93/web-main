@@ -493,7 +493,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 onClick={() => window.open('/profile-cv', '_parent')}
               >
                 {/* {language?.edit} */}
-                {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
+                {languageRedux === 1
+                  ? 'Xem tất cả'
+                  : languageRedux === 2
+                    ? 'View all'
+                    : languageRedux === 3 && '다 보기'}
               </p>
             </div>
           </div>

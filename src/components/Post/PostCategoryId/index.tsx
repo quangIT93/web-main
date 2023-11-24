@@ -152,7 +152,9 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
           <span className="helper-text">
             {languageRedux === 1
               ? 'Vui lòng nhập tên phường'
-              : 'Please enter ward name'}
+              : languageRedux === 2
+                ? 'Please enter ward name'
+                : languageRedux === 3 && '병동명을 입력해주세요'}
           </span>
         ) : (
           <></>

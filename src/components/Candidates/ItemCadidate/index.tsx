@@ -82,7 +82,6 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
         }}
       >
         <div className="item-candidate-content">
-
           <div className="wrap-img_candidate">
             <img
               src={
@@ -152,7 +151,9 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                       ? item.hideEmail
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'
+                        : languageRedux === 2
+                          ? 'Not updated information'
+                          : languageRedux === 3 && '업데이트되지 않은 정보'
                   }
                 >
                   <span className="text-info-candidate">
@@ -160,7 +161,9 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                       ? item.hideEmail
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'}
+                        : languageRedux === 2
+                          ? 'Not updated information'
+                          : languageRedux === 3 && '업데이트되지 않은 정보'}
                   </span>
                 </Tooltip>
               </li>
@@ -175,7 +178,9 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                       ? item.hidePhone
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'
+                        : languageRedux === 2
+                          ? 'Not updated information'
+                          : languageRedux === 3 && '업데이트되지 않은 정보'
                   }
                 >
                   <span className="text-info-candidate">
@@ -183,7 +188,9 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                       ? item.hidePhone
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'}
+                        : languageRedux === 2
+                          ? 'Not updated information'
+                          : languageRedux === 3 && '업데이트되지 않은 정보'}
                   </span>
                 </Tooltip>
               </li>
@@ -196,21 +203,25 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                   title={
                     item?.categoriesData?.length !== 0
                       ? item.categoriesData?.map((value: any) => {
-                        return `${value.fullName}, `;
-                      })
+                          return `${value.fullName}, `;
+                        })
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'
+                        : languageRedux === 2
+                          ? 'Not updated information'
+                          : languageRedux === 3 && '업데이트되지 않은 정보'
                   }
                 >
                   <span className="text-info-candidate">
                     {item.categoriesData.length !== 0
                       ? item.categoriesData.map((value: any) => {
-                        return `${value.fullName}, `;
-                      })
+                          return `${value.fullName}, `;
+                        })
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'}
+                        : languageRedux === 2
+                          ? 'Not updated information'
+                          : languageRedux === 3 && '업데이트되지 않은 정보'}
                   </span>
                 </Tooltip>
               </li>
@@ -220,7 +231,9 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 ? item.introduction
                 : languageRedux === 1
                   ? 'Thông tin chưa cập nhật'
-                  : 'Not updated information'}
+                  : languageRedux === 2
+                    ? 'Not updated information'
+                    : languageRedux === 3 && '업데이트되지 않은 정보'}
             </h2>
           </div>
         </div>

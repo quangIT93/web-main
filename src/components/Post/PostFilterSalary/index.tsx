@@ -21,8 +21,16 @@ interface PropsSalaryFilterSubnav {
 }
 
 const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
-  const { setSalaryMax, setSalaryMin, salaryMax, salaryMin, salaryType, languageRedux, language, setIsValidSubmit } =
-    props;
+  const {
+    setSalaryMax,
+    setSalaryMin,
+    salaryMax,
+    salaryMin,
+    salaryType,
+    languageRedux,
+    language,
+    setIsValidSubmit,
+  } = props;
   // const VND_TO_USD = 0.000043; // Conversion rate: 1 VND = 0.000043 USD
   // const USD_TO_VND = 23155;
 
@@ -39,7 +47,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
 
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       setSalaryMin(inputValue.replace(',', ''));
-      setIsValidSubmit(false)
+      setIsValidSubmit(false);
     }
   };
   const handleChangesalaryMax = (
@@ -51,7 +59,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
     const reg = /[0-9]+$/;
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       setSalaryMax(inputValue.replace(',', ''));
-      setIsValidSubmit(false)
+      setIsValidSubmit(false);
     }
   };
 
@@ -130,9 +138,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.post_page?.min_salary
-            }{' '}
+            {language?.post_page?.min_salary}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
@@ -148,13 +154,15 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
           />
           <div
             className="wrap-noti_input"
-          // style={{ position: 'absolute', bottom: '-15px' }}
+            // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {salaryMin === 0 ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập mức lương'
-                  : 'Please enter salary'}
+                  : languageRedux === 2
+                    ? 'Please enter salary'
+                    : languageRedux === 3 && '급여를 입력해주세요'}
               </span>
             ) : (
               <></>
@@ -172,9 +180,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.post_page?.max_salary
-            }{' '}
+            {language?.post_page?.max_salary}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
@@ -190,13 +196,15 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
           />
           <div
             className="wrap-noti_input"
-          // style={{ position: 'absolute', bottom: '-15px' }}
+            // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {salaryMin === 0 ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập mức lương'
-                  : 'Please enter salary'}
+                  : languageRedux === 2
+                    ? 'Please enter salary'
+                    : languageRedux === 3 && '급여를 입력해주세요'}
               </span>
             ) : (
               <></>

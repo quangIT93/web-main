@@ -156,8 +156,11 @@ const ModalDeleteAwards: React.FC<IModalProfileDelete> = (props) => {
             sx={{ marginBottom: '12px' }}
           >
             {languageRedux === 1
-              ? 'Nếu thực hiện chức năng này, tất cả các giải thưởng của bạn sẽ bị xóa'
-              : 'If you perform this function, all your awards will be deleted'}
+              ? 'Nếu thực hiện chức năng này, tất cả các thông tin của bạn sẽ bị xóa'
+              : languageRedux === 2
+                ? 'If you perform this function, all your information will be deleted'
+                : languageRedux === 3 &&
+                  '이 기능을 수행하면 모든 정보가 삭제됩니다'}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '100px' }}>

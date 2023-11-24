@@ -398,7 +398,10 @@ const AppliedPostedJob: React.FC = () => {
                             ? `Công việc đã ứng tuyển/Đăng tuyển sẽ hiển thị trạng thái
                         trong vòng 30 ngày, sau 30 ngày bạn có thể kiểm tra các
                         công việc đã Ứng tuyển/Đăng tuyển trong lịch sử.`
-                            : `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`}
+                            : languageRedux === 2
+                              ? `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`
+                              : languageRedux === 3 &&
+                                '지원/게시된 채용공고는 30일 이내에 현황이 표시되며, 30일 이후에는 지원/게시된 채용공고 현황을 히스토리에서 확인할 수 있습니다.'}
                         </p>
                       </div>
                       {/* <Button
@@ -408,7 +411,11 @@ const AppliedPostedJob: React.FC = () => {
             }}
           >
             <LoginArrowBlackIcon />
-            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+               {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
           </Button> */}
                     </div>
                   </div>
@@ -437,7 +444,11 @@ const AppliedPostedJob: React.FC = () => {
                 }}
               >
                 <LoginArrowIcon />
-                {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+                   {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
               </Button>
             </div>
           </div> */}

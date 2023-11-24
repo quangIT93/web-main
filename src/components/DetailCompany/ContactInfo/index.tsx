@@ -112,14 +112,23 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
         <div className={styles.company_information}>
           <div className={styles.company_information_left}>
             <div className={styles.company_information_describe}>
-              <h3>{languageRedux === 1 ? 'Mô tả' : 'Describe'}</h3>
+              <h3>
+                {languageRedux === 1
+                  ? 'Mô tả'
+                  : languageRedux === 2
+                    ? 'Describe'
+                    : languageRedux === 3 && '설명'}
+              </h3>
               <TextArea
                 value={
                   company?.description
                     ? company.description
                     : languageRedux === 1
                       ? 'Thông tin công ty chưa cập nhật'
-                      : 'Company information not updated yet'
+                      : languageRedux === 2
+                        ? 'Company information not updated yet'
+                        : languageRedux === 3 &&
+                          '회사정보가 업데이트되지 않았습니다.'
                 }
                 autoSize
                 // showCount
@@ -127,26 +136,41 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
             </div>
             <div className={styles.company_information_basic}>
               <h3>
-                {languageRedux === 1 ? 'Thông tin cơ bản' : 'Basic information'}
+                {languageRedux === 1
+                  ? 'Thông tin cơ bản'
+                  : languageRedux === 2
+                    ? 'Basic information'
+                    : languageRedux === 3 && '기준 정부·'}
               </h3>
               <ul>
                 <li>
                   <TaxCodeDetailPostIcon />
                   <p>
-                    {languageRedux === 1 ? 'Mã số thuế: ' : 'Tax code: '}
+                    {languageRedux === 1
+                      ? 'Mã số thuế: '
+                      : languageRedux === 2
+                        ? 'Tax code: '
+                        : languageRedux === 3 && '세금 코드: '}
                     <span>
                       {company?.taxCode
                         ? company.taxCode
                         : languageRedux === 1
                           ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                          : languageRedux === 2
+                            ? 'Company information not updated yet'
+                            : languageRedux === 3 &&
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
                 <li>
                   <LocationDetailPostIcon />
                   <p>
-                    {languageRedux === 1 ? 'Địa chỉ: ' : 'Address: '}
+                    {languageRedux === 1
+                      ? 'Địa chỉ: '
+                      : languageRedux === 2
+                        ? 'Address: '
+                        : languageRedux === 3 && '주소'}
                     <span
                       onClick={handleClickShowMap}
                       style={
@@ -159,7 +183,10 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                         ? `${company.address}, ${company.companyLocation.fullName}, ${company.companyLocation.district.fullName}, ${company.companyLocation.district.province.fullName}`
                         : languageRedux === 1
                           ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                          : languageRedux === 2
+                            ? 'Company information not updated yet'
+                            : languageRedux === 3 &&
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
@@ -179,27 +206,41 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                         ? company.email
                         : languageRedux === 1
                           ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                          : languageRedux === 2
+                            ? 'Company information not updated yet'
+                            : languageRedux === 3 &&
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
                 <li>
                   <PhoneDetailPostIcon />
                   <p>
-                    {languageRedux === 1 ? 'Điện thoại: ' : 'Phone: '}
+                    {languageRedux === 1
+                      ? 'Điện thoại: '
+                      : languageRedux === 2
+                        ? 'Phone: '
+                        : languageRedux === 3 && '전화번호'}
                     <span>
                       {company?.phone
                         ? company.phone
                         : languageRedux === 1
                           ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                          : languageRedux === 2
+                            ? 'Company information not updated yet'
+                            : languageRedux === 3 &&
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
                 <li>
                   <WebDetailPostIcon />
                   <p>
-                    {languageRedux === 1 ? 'Trang web: ' : 'Website: '}
+                    {languageRedux === 1
+                      ? 'Trang web: '
+                      : languageRedux === 2
+                        ? 'Website: '
+                        : languageRedux === 3 && '웹사이트'}
                     <span
                       style={
                         company?.address
@@ -219,26 +260,39 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                           ? company.website
                           : languageRedux === 1
                             ? 'Thông tin công ty chưa cập nhật'
-                            : 'Company information not updated yet'}
+                            : languageRedux === 2
+                              ? 'Company information not updated yet'
+                              : languageRedux === 3 &&
+                                '회사정보가 업데이트되지 않았습니다.'}
                       </a>
                       {/* {company?.website
                         ? company.website
-                        : languageRedux === 1
-                          ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'} */}
+                        :languageRedux === 1
+                      ? 'Thông tin công ty chưa cập nhật'
+                      : languageRedux === 2
+                        ? 'Company information not updated yet'
+                        : languageRedux === 3 &&
+                          '회사정보가 업데이트되지 않았습니다.'} */}
                     </span>
                   </p>
                 </li>
                 <li>
                   <IconCategory />
                   <p>
-                    {languageRedux === 1 ? 'Ngành nghề: ' : 'Category: '}
+                    {languageRedux === 1
+                      ? 'Ngành nghề: '
+                      : languageRedux === 2
+                        ? 'Category: '
+                        : languageRedux === 3 && '카테고리'}
                     <span>
                       {company?.companyCategory?.fullName
                         ? company.companyCategory.fullName
                         : languageRedux === 1
                           ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                          : languageRedux === 2
+                            ? 'Company information not updated yet'
+                            : languageRedux === 3 &&
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
@@ -247,13 +301,18 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   <p>
                     {languageRedux === 1
                       ? 'Quy mô công ty: '
-                      : 'Company size: '}
+                      : languageRedux === 2
+                        ? 'Company size: '
+                        : languageRedux === 3 && '회사 규모'}
                     <span>
                       {company?.companySizeInfomation?.nameText
                         ? company?.companySizeInfomation?.nameText
                         : languageRedux === 1
                           ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                          : languageRedux === 2
+                            ? 'Company information not updated yet'
+                            : languageRedux === 3 &&
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
@@ -270,7 +329,13 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
           >
             {Object.keys(position).length !== 0 ? (
               <>
-                <h3>{languageRedux === 1 ? 'Xem bản đồ' : 'View the map'}</h3>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Xem bản đồ'
+                    : languageRedux === 2
+                      ? 'View the map'
+                      : languageRedux === 3 && '지도 보기'}
+                </h3>
                 <MapContainer
                   className="leaf_let_map"
                   center={[position.lat, position.lng]}
@@ -293,7 +358,11 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
         </div>
         <div className={styles.company_image}>
           <h3>
-            {languageRedux === 1 ? 'Hình ảnh công ty' : "Company's images"}
+            {languageRedux === 1
+              ? 'Hình ảnh công ty'
+              : languageRedux === 2
+                ? "Company's images"
+                : languageRedux === 3 && '회사 이미지'}
           </h3>
 
           {company && company?.id && company.images?.length !== 0 ? (
@@ -340,7 +409,10 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                         <p>
                           {languageRedux === 1
                             ? 'Chưa có hình ảnh về công ty'
-                            : 'No image of the company yet'}
+                            : languageRedux === 2
+                              ? 'No image of the company yet'
+                              : languageRedux === 3 &&
+                                '아직 회사 이미지가 없습니다.'}
                         </p>
                       </div>
                     </div>
@@ -368,14 +440,19 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
               <p>
                 {languageRedux === 1
                   ? 'Chưa có hình ảnh về công ty'
-                  : 'No image of the company yet'}
+                  : languageRedux === 2
+                    ? 'No image of the company yet'
+                    : languageRedux === 3 && '아직 회사 이미지가 없습니다.'}
               </p>
             </div>
           ) : (
             <p>
               {languageRedux === 1
                 ? 'Thông tin công ty chưa cập nhật'
-                : 'Company information not updated yet'}
+                : languageRedux === 2
+                  ? 'Company information not updated yet'
+                  : languageRedux === 3 &&
+                    '회사정보가 업데이트되지 않았습니다.'}
             </p>
           )}
         </div>

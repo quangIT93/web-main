@@ -58,9 +58,9 @@ const CompanyRole: React.FC<ICompany> = (props) => {
       'image/*': [],
     },
     // maxFiles: 5,
-    onDragEnter: () => { },
-    onDragLeave: () => { },
-    onDrop: () => { },
+    onDragEnter: () => {},
+    onDragLeave: () => {},
+    onDrop: () => {},
   });
 
   const items: TabsProps['items'] = [
@@ -75,12 +75,10 @@ const CompanyRole: React.FC<ICompany> = (props) => {
     },
     {
       key: '2',
-      label: <p>
-        {
-          languageRedux === 1 ? "Đánh giá" : "Review"
-        }
-      </p>,
-      children: <ReviewCompany company={companyData} companyId={companyData.id} />,
+      label: <p>{languageRedux === 1 ? 'Đánh giá' : 'Review'}</p>,
+      children: (
+        <ReviewCompany company={companyData} companyId={companyData.id} />
+      ),
     },
   ];
 
@@ -158,7 +156,10 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                         ? companyData.name
                         : languageRedux === 1
                           ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                          : languageRedux === 2
+                            ? 'Company information not updated yet'
+                            : languageRedux === 3 &&
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </h3>
                   </div>
                 </div>

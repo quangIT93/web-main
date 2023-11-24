@@ -7,7 +7,7 @@ import { Input } from 'antd';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
 
-import "./style.scss"
+import './style.scss';
 
 interface IPhoneNumber {
   setPhoneNumber: React.Dispatch<React.SetStateAction<string>>;
@@ -23,7 +23,6 @@ interface NumericInputProps {
   onChange: (value: string) => void;
   languageRedux: any;
   language: any;
-  
 }
 
 const NumericInput = (props: NumericInputProps) => {
@@ -57,7 +56,8 @@ const NumericInput = (props: NumericInputProps) => {
   );
 };
 const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
-  const { setPhoneNumber, phone, language, languageRedux, setIsValidSubmit } = props;
+  const { setPhoneNumber, phone, language, languageRedux, setIsValidSubmit } =
+    props;
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
@@ -77,10 +77,7 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         component="label"
         htmlFor="company"
       >
-        {
-          language?.contact_phone_number
-        }{' '}
-        <span style={{ color: 'red' }}>*</span>
+        {language?.contact_phone_number} <span style={{ color: 'red' }}>*</span>
       </Typography>
       <NumericInput
         style={{
@@ -96,8 +93,9 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         }}
         value={phone}
         onChange={(value) => {
-          setIsValidSubmit(false)
-          return setPhoneNumber(value)}}
+          setIsValidSubmit(false);
+          return setPhoneNumber(value);
+        }}
         languageRedux={languageRedux}
         language={language}
       />
@@ -106,18 +104,25 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
           <span className="helper-text">
             {languageRedux === 1
               ? 'Số điện thoại không đúng định dạng'
-              : 'The phone number is not in the correct format'}
+              : languageRedux === 2
+                ? 'The phone number is not in the correct format'
+                : languageRedux === 3 &&
+                  '전화 번호의 형식이 올바르지 않습니다.'}
           </span>
         ) : phone && phone.length === 0 ? (
           <span className="helper-text">
             {languageRedux === 1
               ? 'Số điện thoại không được bỏ trống'
-              : 'Phone cannot be empty'}
+              : languageRedux === 2
+                ? 'Phone cannot be empty'
+                : languageRedux === 3 && '전화는 비워 둘 수 없습니다.'}
           </span>
         ) : (
           <></>
         )}
-        <span className="number-text">{`${phone ? phone.length : "0"}/11`}</span>
+        <span className="number-text">{`${
+          phone ? phone.length : '0'
+        }/11`}</span>
       </div>
       {/* <Input
         value={`${phone}d`}

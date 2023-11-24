@@ -25,26 +25,31 @@ import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 import ModalNotiValidateCompany from '#components/Post/ModalNotiValidateCompany';
 import { Backdrop, CircularProgress } from '@mui/material';
 const LandingHijob = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const [info, setInfo] = useState({
-    from_name: "",
-    user_email: "",
-    message: "",
-  })
+    from_name: '',
+    user_email: '',
+    message: '',
+  });
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
     React.useState<any>(false);
   const [openModalNoteValidateCompany, setOpenModalNoteValidateCompany] =
     React.useState<any>(false);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const [openModalSendRequestSuccess, setOpenModalSendRequestSuccess] = React.useState(false);
+  const [openModalSendRequestSuccess, setOpenModalSendRequestSuccess] =
+    React.useState(false);
   const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
   const handleChange = (e: any) => {
-    setInfo(values => ({
+    setInfo((values) => ({
       ...values,
-      [e.target.name]: e.target.value
-    }))
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const form = React.useRef<any>(null);
@@ -175,7 +180,7 @@ const LandingHijob = () => {
             break;
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   // console.log(profileV3);
 
@@ -198,17 +203,17 @@ const LandingHijob = () => {
         return;
       }
     } else {
-      if (profileV3.companyInfo !== null &&
+      if (
+        profileV3.companyInfo !== null &&
         profileV3.companyInfo.status === 0
       ) {
         setOpenModalNoteValidateCompany(true);
         return;
       } else {
-        window.open(`/post`, '_parent')
+        window.open(`/post`, '_parent');
       }
     }
-  }
-
+  };
 
   const handleMoveToRegister = () => {
     const register_form = document.getElementById(
@@ -446,11 +451,23 @@ const LandingHijob = () => {
                 </div>
                 <div className={styles.register_input}>
                   <p>
-                    {languageRedux === 1 ? 'Số điện thoại' : 'Phone number'}
+                    {languageRedux === 1
+                      ? 'Số điện thoại'
+                      : languageRedux === 2
+                        ? 'Phone number'
+                        : languageRedux === 3
+                          ? '전화 번호'
+                          : 'Số điện thoại'}
                   </p>
                   <Input
                     placeholder={
-                      languageRedux === 1 ? 'Số điện thoại' : 'Phone number'
+                      languageRedux === 1
+                        ? 'Số điện thoại'
+                        : languageRedux === 2
+                          ? 'Phone number'
+                          : languageRedux === 3
+                            ? '전화 번호'
+                            : 'Số điện thoại'
                     }
                     ref={inputPhoneRef}
                     allowClear
@@ -609,7 +626,7 @@ const LandingHijob = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={openBackdrop}
-      //  onClick={handleClose}
+        //  onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>

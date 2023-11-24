@@ -162,14 +162,26 @@ const HistoryPost = () => {
       // childs: [language?.all],
       title:
         languageRedux === 1 ? 'Các công việc đã ứng tuyển' : 'Applied jobs',
-      childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
+      childs: [
+        languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '모두',
+      ],
     },
     {
       id: 1,
       // title: language?.history_page?.saved_jobs,
       // childs: [language?.all],
       title: languageRedux === 1 ? 'Các công việc đã lưu' : 'Saved jobs',
-      childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
+      childs: [
+        languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '모두',
+      ],
     },
     {
       id: 2,
@@ -177,7 +189,11 @@ const HistoryPost = () => {
       title:
         languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs',
       childs: [
-        languageRedux === 1 ? 'Tất cả' : 'All',
+        languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '모두',
         languageRedux === 1 ? 'Các công việc chưa đóng' : 'Unclosed jobs',
         languageRedux === 1 ? 'Các công việc đã đóng' : 'Closed jobs',
 
@@ -202,7 +218,11 @@ const HistoryPost = () => {
       // title: language?.history_page?.list_of_articles,
       title: languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates',
       childs: [
-        languageRedux === 1 ? 'Tất cả' : 'All',
+        languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '모두',
         // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
         // language?.history_page?.saved,
         // language?.history_page?.posts_created,

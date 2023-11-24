@@ -589,7 +589,10 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Thời gian bắt đầu không thể lớn hơn thời gian hiện tại.'
-                          : 'The start time cannot be greater than the current time.'}
+                          : languageRedux === 2
+                            ? 'The start time cannot be greater than the current time.'
+                            : languageRedux === 3 &&
+                              '시작 시간은 현재 시간보다 클 수 없습니다.'}
                       </span>
                     ) : !new Date(experience.startDate).getFullYear() ? (
                       <span className="helper-text">
@@ -601,7 +604,10 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Thời gian bắt đầu không thể nhỏ hơn 1900.'
-                          : 'The start time cannot be less than 1900.'}
+                          : languageRedux === 2
+                            ? 'The start time cannot be less than 1900.'
+                            : languageRedux === 3 &&
+                              '시작 시간은 1900보다 작을 수 없습니다.'}
                       </span>
                     ) : (
                       <></>

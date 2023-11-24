@@ -26,7 +26,8 @@ const CreateCv: React.FC<ICreateCv> = (props) => {
     (state: RootState) => state.dataProfileInformationMoreV3.data,
   );
   const [openModalCheckInfo, setOpenModalCheckInfo] = React.useState(false);
-  const [typeOfModalCheckInfo, setTypeOfModalCheckInfo] = React.useState<any>('');
+  const [typeOfModalCheckInfo, setTypeOfModalCheckInfo] =
+    React.useState<any>('');
 
   const handleMoveToCreateCv = () => {
     window.open('/templates-cv', '_parent');
@@ -64,7 +65,7 @@ const CreateCv: React.FC<ICreateCv> = (props) => {
       return;
     }
     window.open('/templates-cv', '_parent');
-  }
+  };
 
   return (
     <div
@@ -92,7 +93,14 @@ const CreateCv: React.FC<ICreateCv> = (props) => {
         className="iconDiv"
         sx={{
           '&:after': {
-            content: languageRedux === 1 ? '"Tạo mới CV"' : '"Create a new CV"',
+            content:
+              languageRedux === 1
+                ? '"Tạo mới CV"'
+                : languageRedux === 2
+                  ? '"Create a new CV"'
+                  : languageRedux === 3
+                    ? `"새 CV 만들기"`
+                    : `"Tạo mới CV"`,
           },
           '&:hover': {
             width: languageRedux === 1 ? '194px' : '230px',

@@ -55,10 +55,18 @@ const ModalUnlockCandidate = () => {
       </p>
       <div className="update-info-buttons">
         <Button type="primary" shape="round" onClick={handleConfirm}>
-          {languageRedux === 1 ? 'Xác nhận' : 'Confirm'}
+          {languageRedux === 1
+            ? 'Xác nhận'
+            : languageRedux === 2
+              ? 'Confirm'
+              : languageRedux === 3 && '확인하다'}
         </Button>
         <Button type="text" shape="round" onClick={handleCancel}>
-          {languageRedux === 1 ? 'Hủy' : 'Cancel'}
+          {languageRedux === 1
+            ? 'Hủy'
+            : languageRedux === 2
+              ? 'Cancel'
+              : languageRedux === 3 && '취소'}
         </Button>
       </div>
     </Modal>

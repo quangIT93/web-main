@@ -195,7 +195,10 @@ const DetailCompany = () => {
                     ? company.name
                     : languageRedux === 1
                       ? 'Thông tin công ty chưa cập nhật'
-                      : 'Company information not updated yet'}
+                      : languageRedux === 2
+                        ? 'Company information not updated yet'
+                        : languageRedux === 3 &&
+                          '회사정보가 업데이트되지 않았습니다.'}
                 </h3>
                 <div
                   className={styles.company_bell}

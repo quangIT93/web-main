@@ -301,7 +301,10 @@ const ThemesJob: React.FC = () => {
             <p>
               {languageRedux === 1
                 ? 'Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.'
-                : 'Quickly find a job that fits your needs.'}
+                : languageRedux === 2
+                  ? 'Quickly find a job that fits your needs.'
+                  : languageRedux === 3 &&
+                    '귀하의 필요에 맞는 일자리를 빠르게 찾으십시오.'}
             </p>
           </div>
           <div className="suggest-job-not-loging_right">
@@ -312,7 +315,11 @@ const ThemesJob: React.FC = () => {
               }}
             >
               <LoginArrowIcon />
-              {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+              {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
             </Button>
           </div>
         </div>

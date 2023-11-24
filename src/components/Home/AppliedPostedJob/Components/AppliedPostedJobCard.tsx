@@ -28,12 +28,11 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
   // const [openModalLogin, setOpenModalLogin] = React.useState(false);
-  const language = useSelector(
-    (state: RootState) => state.dataLanguage.languages,
+
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
   );
-  const checkPost = useSelector(
-    (state: RootState) => state.checkPost.data,
-  );
+  const checkPost = useSelector((state: RootState) => state.checkPost.data);
   const handleClickItem = async (
     e: React.MouseEvent<HTMLDivElement>,
     id: number,
@@ -44,7 +43,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
     //   ? window.open(`/post-detail?post-id=${id}`, '_blank')
     //   : window.open(`/history?post=2`, '_parent');
     if (type === 'application') {
-      window.open(`/post-detail?post-id=${id}`, '_blank')
+      window.open(`/post-detail?post-id=${id}`, '_blank');
     } else {
       window.open(`/history?post=2`, '_parent');
       await dispatch<any>(setDataCheckPost(props.item));
@@ -52,7 +51,6 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
   };
 
   // console.log(checkPost);
-
 
   const handleImageError = () => {
     setError(true);
@@ -255,7 +253,11 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 fontSize: '12px',
               }}
             >
-              {language?.history_page?.applied_on}
+              {languageRedux === 1
+                ? 'Đã nộp vào'
+                : languageRedux === 2
+                  ? 'Submitted'
+                  : languageRedux === 3 && '신청일'}
               &nbsp;
               {new Date(props.item.created_at).toLocaleDateString('en-GB')}
               ,&nbsp;
@@ -276,7 +278,11 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 {props.item.num_of_application}
               </strong>
               &nbsp;
-              {language?.home_page?.x_candidates_have_applied}
+              {languageRedux === 1
+                ? 'ứng viên đã nộp hồ sơ'
+                : languageRedux === 2
+                  ? 'applied candidate'
+                  : languageRedux === 3 && '지원자가 이력서를 제출했습니다'}
             </span>
           </div>
           <div
@@ -299,18 +305,38 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             className="button-approved"
           >
             {props.item.application_status === 1
-              ? language?.applied1
+              ? languageRedux === 1
+                ? 'Đã ứng tuyển'
+                : languageRedux === 2
+                  ? 'Applied'
+                  : languageRedux === 3 && '지원되였습니다.'
               : props.item.application_status === 2
-                ? language?.approved
+                ? languageRedux === 1
+                  ? 'Đã được duyệt'
+                  : languageRedux === 2
+                    ? 'Approved'
+                    : languageRedux === 3 && '승인되였습니다..'
                 : props.item.application_status === 3
-                  ? language?.rejected
-                  : language?.hired}
+                  ? languageRedux === 1
+                    ? 'Đã từ chối'
+                    : languageRedux === 2
+                      ? 'Rejected'
+                      : languageRedux === 3 && '거부'
+                  : languageRedux === 1
+                    ? 'Đã tuyển ứng viên này'
+                    : languageRedux === 2
+                      ? 'this candidate has been recruited'
+                      : languageRedux === 3 && '모집되었습니다'}
           </div>
           <div
             style={{ display: props.type === 'post' ? 'flex' : 'none' }}
             className="button-check"
           >
-            {language?.check_now}
+            {languageRedux === 1
+              ? 'Kiểm tra ngay'
+              : languageRedux === 2
+                ? 'Check now'
+                : languageRedux === 3 && '지금 확인하세요'}
             <div className="icon">
               <BackIcon fill="white" />
             </div>

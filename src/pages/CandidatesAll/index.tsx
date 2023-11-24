@@ -440,7 +440,11 @@ const CandidatesAll = () => {
                 className="submit-seach_button seach-button_Confirm"
                 onClick={handleSubmitSearchCandidate}
               >
-                {languageRedux === 1 ? 'Xác nhận' : 'Confirm'}
+                {languageRedux === 1
+                  ? 'Xác nhận'
+                  : languageRedux === 2
+                    ? 'Confirm'
+                    : languageRedux === 3 && '확인하다'}
               </div>
 
               <div
