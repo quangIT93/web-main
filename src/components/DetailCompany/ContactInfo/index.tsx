@@ -22,6 +22,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import './style.scss';
 import { useLocation } from 'react-router-dom';
+import apiCompany from 'api/apiCompany';
 
 interface IContactInfo {
   company: any;
@@ -43,6 +44,10 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
     iconUrl: require('leaflet/dist/images/marker-icon.png'),
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
   });
+
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
 
   const handleClickShowMap = () => {
     if (company?.address) {
@@ -68,43 +73,60 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
     window.location.href = emailLink;
   };
 
-  const getLocation = async (address: string) => {
-    // const apiKey = 'AIzaSyAroW1_MSLcU7aNvX9FjvNZy8eps9yDtr0';
-    const apiKey = 'AIzaSyA8gjzoebEdb7Oy7x-StIr214ojMVq25qM';
-    // const apiKey = 'AIzaSyDdDbr7ZTHQxUyo3p-A0G5rHYNU3J3QTbU';
+  const locationCompany = async (id: number) => {
     try {
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-          address,
-        )}&key=${apiKey}`,
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch: ${response.status} ${response.statusText}`,
-        );
-      }
-
-      const data = await response.json();
-      console.log('Data', data);
-
-      if (data.status === 'OK' && data.results.length > 0) {
-        const location = data.results[0].geometry.location;
-        setPosition(location);
-        return location;
-      } else {
-        throw new Error('Không tìm thấy địa điểm.');
+      const result = await apiCompany.updateLocation(id);
+      if (result) {
+        console.log(result);
       }
     } catch (error) {
-      console.error('Error fetching location:', error);
+      console.log('error', error);
     }
   };
 
   useEffect(() => {
-    const address1 = `${company?.address}, ${company?.companyLocation?.fullName}, ${company?.companyLocation?.district?.fullName}, ${company?.companyLocation?.district?.province?.fullName}`;
+    if (profileV3.companyInfo && profileV3.companyInfo.longitude === null) {
+      locationCompany(profileV3.companyInfo.id);
+    }
+  }, [profileV3]);
 
-    getLocation(address1);
-  }, []);
+  // const getLocation = async (address: string) => {
+  //   // const apiKey = 'AIzaSyAroW1_MSLcU7aNvX9FjvNZy8eps9yDtr0';
+  //   const apiKey = 'AIzaSyA8gjzoebEdb7Oy7x-StIr214ojMVq25qM';
+  //   // const apiKey = 'AIzaSyDdDbr7ZTHQxUyo3p-A0G5rHYNU3J3QTbU';
+  //   try {
+  //     const response = await fetch(
+  //       `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+  //         address,
+  //       )}&key=${apiKey}`,
+  //     );
+
+  //     if (!response.ok) {
+  //       throw new Error(
+  //         `Failed to fetch: ${response.status} ${response.statusText}`,
+  //       );
+  //     }
+
+  //     const data = await response.json();
+  //     console.log('Data', data);
+
+  //     if (data.status === 'OK' && data.results.length > 0) {
+  //       const location = data.results[0].geometry.location;
+  //       setPosition(location);
+  //       return location;
+  //     } else {
+  //       throw new Error('Không tìm thấy địa điểm.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching location:', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const address1 = `${company?.address}, ${company?.companyLocation?.fullName}, ${company?.companyLocation?.district?.fullName}, ${company?.companyLocation?.district?.province?.fullName}`;
+
+  //   getLocation(address1);
+  // }, []);
 
   return (
     <div className={styles.contact_info_container}>
