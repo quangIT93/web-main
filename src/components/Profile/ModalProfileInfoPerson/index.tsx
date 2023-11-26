@@ -253,7 +253,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         message:
           languageRedux === 1
             ? 'Tên không được vượt quá 90 ký tự'
-            : 'Full name cannot exceed 90 characters',
+            : languageRedux === 2
+              ? 'Full name cannot exceed 90 characters'
+              : languageRedux === 3 && '이름은 90자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -263,7 +265,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         message:
           languageRedux === 1
             ? 'Địa chỉ không được bỏ trống'
-            : 'Location cannot be left blank',
+            : languageRedux === 2
+              ? 'Address cannot be empty'
+              : languageRedux === 3 && '주소가 비어 있으면 안 됩니다.',
         checkForm: false,
         idError: 2,
       };
@@ -273,7 +277,10 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         message:
           languageRedux === 1
             ? 'Năm sinh không được vượt quá năm hiện tại'
-            : 'Year of birth cannot exceed the current year',
+            : languageRedux === 2
+              ? 'Year of birth cannot exceed the current year'
+              : languageRedux === 3 &&
+                '출생 연도는 현재 연도를 초과할 수 없습니다.',
         checkForm: false,
         idError: 5,
       };
@@ -283,7 +290,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         message:
           languageRedux === 1
             ? 'Vị trí không được để trống'
-            : 'The position cannot be left blank',
+            : languageRedux === 2
+              ? 'The position cannot be left blank'
+              : languageRedux === 3 && '해당 위치는 비워둘 수 없습니다.',
         checkForm: false,
         idError: 3,
       };
@@ -293,7 +302,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         message:
           languageRedux === 1
             ? 'Vị trí không được vượt quá 100 ký tự'
-            : 'Position cannot exceed 100 characters',
+            : languageRedux === 2
+              ? 'Position cannot exceed 100 characters'
+              : languageRedux === 3 && '위치는 100자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 3,
       };
@@ -311,7 +322,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         message:
           languageRedux === 1
             ? 'Giới thiệu bản thân không được vượt quá 500 ký tự'
-            : 'Introduce yourself cannot exceed 500 characters',
+            : languageRedux === 2
+              ? 'Introduce yourself cannot exceed 500 characters'
+              : languageRedux === 3 && '자기소개는 500자를 넘지 않아야 합니다.',
         checkForm: false,
         idError: 4,
       };
@@ -321,7 +334,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         message:
           languageRedux === 1
             ? 'Năm sinh không được nhỏ hơn 1900'
-            : 'Year of birth cannot be less than 1900',
+            : languageRedux === 2
+              ? 'Year of birth cannot be less than 1900'
+              : languageRedux === 3 && '생년월일은 1900년 이상이어야 합니다.',
         checkForm: false,
         idError: 5,
       };
@@ -481,13 +496,18 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   <span className="helper-text">
                     {languageRedux === 1
                       ? 'Tên không được vượt quá 90 ký tự'
-                      : 'Full name cannot exceed 90 characters'}
+                      : languageRedux === 2
+                        ? 'Full name cannot exceed 90 characters'
+                        : languageRedux === 3 &&
+                          '이름은 90자를 초과할 수 없습니다.'}
                   </span>
                 ) : name?.length === 0 ? (
                   <span className="helper-text">
                     {languageRedux === 1
                       ? 'Tên không được để trống'
-                      : 'Full name cannot be blank'}
+                      : languageRedux === 2
+                        ? 'Full name cannot be blank'
+                        : languageRedux === 3 && '이름은 비워둘 수 없습니다.'}
                   </span>
                 ) : (
                   <></>
@@ -551,19 +571,27 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                     <span className="helper-text">
                       {languageRedux === 1
                         ? 'Năm sinh không được vượt quá năm hiện tại'
-                        : 'Year of birth cannot exceed the current year'}
+                        : languageRedux === 2
+                          ? 'Year of birth cannot exceed the current year'
+                          : languageRedux === 3 &&
+                            '출생 연도는 현재 연도를 초과할 수 없습니다.'}
                     </span>
                   ) : !new Date(day).getFullYear() ? (
                     <span className="helper-text">
                       {languageRedux === 1
                         ? 'Vui lòng nhập ngày sinh'
-                        : 'Please enter date of birth'}
+                        : languageRedux === 2
+                          ? 'Please enter date of birth'
+                          : languageRedux === 3 && '생년월일을 입력해주세요'}
                     </span>
                   ) : new Date(day).getFullYear() < 1900 ? (
                     <span className="helper-text">
                       {languageRedux === 1
                         ? 'Năm sinh không được nhỏ hơn 1900'
-                        : 'Year of birth cannot be less than 1900'}
+                        : languageRedux === 2
+                          ? 'Year of birth cannot be less than 1900'
+                          : languageRedux === 3 &&
+                            '생년월일은 1900년 이상이어야 합니다.'}
                     </span>
                   ) : (
                     ''
@@ -613,7 +641,11 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 component="label"
                 htmlFor="nameProfile"
               >
-                {languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'}{' '}
+                {languageRedux === 1
+                  ? 'Vị trí ứng tuyển'
+                  : languageRedux === 2
+                    ? 'Position'
+                    : languageRedux === 3 && '위치'}{' '}
                 <span className="color-asterisk">*</span>
               </Typography>
               <TextField
@@ -625,7 +657,13 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 size="small"
                 sx={{ width: '100%', marginTop: '4px' }}
                 placeholder={
-                  languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'
+                  languageRedux === 1
+                    ? 'Vị trí ứng tuyển'
+                    : languageRedux === 2
+                      ? 'Position'
+                      : languageRedux === 3
+                        ? '위치'
+                        : 'Vị trí ứng tuyển'
                 }
                 // error={titleError} // Đánh dấu lỗi
               />
@@ -634,13 +672,19 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   <span className="helper-text">
                     {languageRedux === 1
                       ? 'Vị trí không được vượt quá 100 ký tự'
-                      : 'Position cannot exceed 100 characters'}
+                      : languageRedux === 2
+                        ? 'Position cannot exceed 100 characters'
+                        : languageRedux === 3 &&
+                          '위치는 100자를 초과할 수 없습니다.'}
                   </span>
                 ) : jobTypeName?.length === 0 ? (
                   <span className="helper-text">
                     {languageRedux === 1
-                      ? 'Vị trí không được vượt quá 100 ký tự'
-                      : 'Position cannot exceed 100 characters'}
+                      ? 'Vị trí không được để trống'
+                      : languageRedux === 2
+                        ? 'The position cannot be left blank'
+                        : languageRedux === 3 &&
+                          '해당 위치는 비워둘 수 없습니다.'}
                   </span>
                 ) : (
                   <></>
@@ -655,7 +699,11 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 component="label"
                 htmlFor="startTime"
               >
-                {languageRedux === 1 ? 'Mục tiêu nghề nghiệp' : 'Career goals'}{' '}
+                {languageRedux === 1
+                  ? 'Mục tiêu nghề nghiệp'
+                  : languageRedux === 2
+                    ? 'Career goals'
+                    : languageRedux === 3 && '경력 목표'}{' '}
                 <span className="color-asterisk">*</span>
               </Typography>
               <TextField
@@ -686,13 +734,18 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   <span className="helper-text">
                     {languageRedux === 1
                       ? 'Mục tiêu nghề nghiệp không được bỏ trống'
-                      : 'Career goals cannot be empty'}
+                      : languageRedux === 2
+                        ? 'Career goals cannot be empty'
+                        : languageRedux === 3 &&
+                          '경력 목표는 비워둘 수 없습니다.'}
                   </span>
                 ) : introduction?.length > 500 ? (
                   <span className="helper-text">
                     {languageRedux === 1
                       ? 'Mục tiêu nghề nghiệp không được vượt quá 500 ký tự'
-                      : 'Career goals cannot exceed 500 characters'}
+                      : languageRedux === 2
+                        ? 'Career goals cannot exceed 500 characters'
+                        : '경력 목표는 500자를 초과할 수 없습니다.'}
                   </span>
                 ) : (
                   <></>

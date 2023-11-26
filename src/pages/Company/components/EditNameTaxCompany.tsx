@@ -110,13 +110,18 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tên công ty không được vượt quá 255 ký tự'
-                : 'Company name cannot exceed 255 characters'}
+                : languageRedux === 2
+                  ? 'Company Name cannot exceed 255 characters'
+                  : languageRedux === 3 &&
+                    '회사 이름은 255자를 초과할 수 없습니다.'}
             </span>
           ) : dataCompany?.name?.length === 0 ? (
             <span className="helper-text">
               {languageRedux === 1
-                ? 'Tên công ty được để trống'
-                : 'Company name cannot be blank'}
+                ? 'Tên công ty không được bỏ trống'
+                : languageRedux === 2
+                  ? 'Company Name cannot be empty'
+                  : languageRedux === 3 && '회사 이름은 비워 둘 수 없습니다.'}
             </span>
           ) : (
             <></>
@@ -152,7 +157,10 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Mã số thuế không được vượt quá 255 ký tự'
-                : 'Tax code cannot exceed 255 characters'}
+                : languageRedux === 2
+                  ? 'Tax code cannot exceed 255 characters'
+                  : languageRedux === 3 &&
+                    '세금 코드는 255자를 초과할 수 없습니다.'}
             </span>
           ) : (
             <></>

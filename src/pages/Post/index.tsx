@@ -313,7 +313,11 @@ const Post: React.FC = () => {
         const message =
           languageRedux === 1
             ? 'Dữ liệu của bạn chưa được gửi, bạn có chắc chắn muốn rời đi?'
-            : 'Your data has not been sent, you definitely want to leave?';
+            : languageRedux === 2
+              ? 'Your data has not been sent, you definitely want to leave?'
+              : languageRedux === 3
+                ? '귀하의 데이터가 전송되지 않았습니다. 나가시겠습니까?'
+                : 'Dữ liệu của bạn chưa được gửi, bạn có chắc chắn muốn rời đi?';
         event.preventDefault();
         event.returnValue = message || true;
         return message;
@@ -421,7 +425,10 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Tên công việc không được quá 255 ký tự'
-            : 'The job name must not exceed 255 characters',
+            : languageRedux === 2
+              ? 'The job name must not exceed 255 characters'
+              : languageRedux === 3 &&
+                '작업 이름은 255자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -438,7 +445,10 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Tên công ty không được quá 255 ký tự'
-            : 'The company name must not exceed 255 characters',
+            : languageRedux === 2
+              ? 'The company name must not exceed 255 characters'
+              : languageRedux === 3 &&
+                '회사 이름은 255자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 2,
       };
@@ -511,7 +521,9 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Hãy nhập mô tả công việc.'
-            : 'Please enter a job description.',
+            : languageRedux === 2
+              ? 'Please enter a job description.'
+              : languageRedux === 3 && '직무 내용을 입력해주세요.',
         checkForm: false,
         idError: 12,
       };
@@ -522,7 +534,10 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
-            : 'The start date cannot exceed the end date',
+            : languageRedux === 2
+              ? 'The start date cannot exceed the end date'
+              : languageRedux === 3 &&
+                '시작 날짜는 종료 날짜를 초과할 수 없습니다.',
         checkForm: false,
         idError: 13,
       };
@@ -543,7 +558,10 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Ngày bắt đầu không được nhỏ hơn thời gian hiện tại'
-            : 'The start date cannot be less than the current time',
+            : languageRedux === 2
+              ? 'The start date cannot be less than the current time'
+              : languageRedux === 3 &&
+                '시작 날짜는 현재 시각을 초과할 수 없습니다.',
         checkForm: false,
         idError: 13,
       };
@@ -554,7 +572,9 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Vui lòng nhập ngày bắt đầu'
-            : 'Please enter a start date',
+            : languageRedux === 2
+              ? 'Please enter a start date'
+              : languageRedux === 3 && '시작일을 입력하세요.',
         checkForm: false,
         idError: 13,
       };
@@ -565,7 +585,9 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Vui lòng nhập ngày kết thúc'
-            : 'Please enter an end date',
+            : languageRedux === 2
+              ? 'Please enter end date'
+              : languageRedux === 3 && '종료일을 입력해 주세요',
         checkForm: false,
         idError: 14,
       };

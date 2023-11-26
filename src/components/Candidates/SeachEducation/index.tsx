@@ -69,7 +69,14 @@ const CustomOption = ({
   return (
     <div className="wrap-radio_candidate">
       <div className="title-candidate">
-        <h3> Trình độ học vấn</h3>
+        <h3>
+          {' '}
+          {languageRedux === 1
+            ? 'Trình độ học vấn'
+            : languageRedux === 2
+              ? 'Education'
+              : languageRedux === 3 && '최종학력'}
+        </h3>
       </div>
       <Radio.Group
         style={{ width: '100%' }}

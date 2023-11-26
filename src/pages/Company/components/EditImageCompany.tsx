@@ -14,10 +14,16 @@ interface IEditImageCompany {
   setDataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
-  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges, setIsValid } = props;
+  const {
+    dataCompany,
+    setDataCompany,
+    is_profile,
+    setUnsavedChanges,
+    setIsValid,
+  } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -56,7 +62,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
     const files = event.target.files;
     setUnsavedChanges(true);
     // setImage(event.target.files && event.target.files[0]);
-    setIsValid(false)
+    setIsValid(false);
     const imagesUpload: any = Array.from(
       event.target.files ? event.target.files : [],
     );
@@ -302,7 +308,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       <div className="edit-image-company-content">
         <h3>
           <span>
-            {languageRedux === 1 ? 'Hình ảnh công ty' : "Company's image"}
+            {languageRedux === 1
+              ? 'Hình ảnh công ty'
+              : languageRedux === 2
+                ? "Company's image"
+                : languageRedux === 3 && '회사 이미지'}
           </span>
           <p
             style={{
@@ -314,7 +324,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
             }}
           >
             <label style={{ cursor: 'pointer' }} htmlFor="submit">
-              {languageRedux === 1 ? 'Thêm hình ảnh' : 'Add images'}
+              {languageRedux === 1
+                ? 'Thêm hình ảnh'
+                : languageRedux === 2
+                  ? 'Add images'
+                  : languageRedux === 3 && '이미지 추가'}
             </label>
             <input
               id="submit"
@@ -363,7 +377,9 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
                   <p>
                     {languageRedux === 1
                       ? 'Thêm hình ảnh cho bài viết'
-                      : 'Add an image to the post'}
+                      : languageRedux === 2
+                        ? 'Add an image to the post'
+                        : languageRedux === 3 && '기사에 이미지 추가'}
                   </p>
                 </div>
               </div>

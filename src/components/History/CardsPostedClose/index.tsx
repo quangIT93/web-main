@@ -212,11 +212,15 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
           >
             {languageRedux === 1
               ? 'Các công việc đã đăng tuyển'
-              : 'Posted jobs'}
+              : languageRedux === 2
+                ? 'Posted jobs'
+                : languageRedux === 3 && '게시된 작업'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
               {searchParams.get('c') === '2-2' && languageRedux === 1
-                ? ' > Các công việc đã đóng'
-                : ' > Closed jobs'}
+                ? '> Các công việc đã đóng'
+                : languageRedux === 2
+                  ? '> Closed jobs'
+                  : languageRedux === 3 && '> 채용이 마감되었습니다'}
             </span>
           </Typography>
         </div>

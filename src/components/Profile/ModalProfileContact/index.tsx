@@ -186,7 +186,9 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Số điện thoại không được bỏ trống'
-            : 'Phone number cannot be empty',
+            : languageRedux === 2
+              ? 'Phone cannot be empty'
+              : languageRedux === 3 && '전화는 비워 둘 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -196,7 +198,9 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Số điện thoại không đúng định dạng'
-            : 'The phone number is not in the correct format',
+            : languageRedux === 2
+              ? 'The phone number is not in the correct format'
+              : languageRedux === 3 && '전화 번호의 형식이 올바르지 않습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -206,7 +210,9 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Email không được bỏ trống'
-            : 'Email cannot be empty',
+            : languageRedux === 2
+              ? 'Email cannot be empty'
+              : languageRedux === 3 && '이메일이 비어 있지 않습니다',
         checkForm: false,
         idError: 2,
       };
@@ -216,7 +222,9 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Email không đúng định dạng'
-            : 'The Email is not in the correct format',
+            : languageRedux === 2
+              ? 'The Email is not in the correct format'
+              : languageRedux === 3 && '이메일의 형식이 올바르지 않습니다.',
         checkForm: false,
         idError: 2,
       };
@@ -227,7 +235,10 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Link Facebook không đúng định dạng'
-            : 'The Facebook link is not in the correct format',
+            : languageRedux === 2
+              ? 'The Facebook link is not in the correct format'
+              : languageRedux === 3 &&
+                'Facebook 링크의 형식이 올바르지 않습니다.',
         checkForm: false,
         idError: 3,
       };
@@ -237,7 +248,10 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Link Linkedin không đúng định dạng'
-            : 'The Linkedin link is not in the correct format',
+            : languageRedux === 2
+              ? 'The Linkedin link is not in the correct format'
+              : languageRedux === 3 &&
+                'Linkedin 링크가 올바른 형식이 아닙니다.',
         checkForm: false,
         idError: 4,
       };
@@ -248,7 +262,10 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Link Facebook không được vượt quá 100 ký tự'
-            : 'The Facebook link cannot exceed 100 characters',
+            : languageRedux === 2
+              ? 'The Facebook link cannot exceed 100 characters'
+              : languageRedux === 3 &&
+                'Facebook 링크는 100자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 3,
       };
@@ -258,7 +275,10 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Link Linkedin không được vượt quá 100 ký tự'
-            : 'The Linkedin link cannot exceed 100 characters',
+            : languageRedux === 2
+              ? 'The Linkedin link cannot exceed 100 characters'
+              : languageRedux === 3 &&
+                'Linkedin 링크는 100자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 4,
       };
@@ -398,13 +418,18 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Số điện thoại không đúng định dạng'
-                    : 'The phone number is not in the correct format'}
+                    : languageRedux === 2
+                      ? 'The phone number is not in the correct format'
+                      : languageRedux === 3 &&
+                        '전화 번호의 형식이 올바르지 않습니다.'}
                 </span>
               ) : phone.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Số điện thoại không được bỏ trống'
-                    : 'Phone cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Phone cannot be empty'
+                      : languageRedux === 3 && '전화는 비워 둘 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -438,19 +463,27 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Email không được bỏ trống'
-                    : 'Email cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Email cannot be empty'
+                      : languageRedux === 3 && '이메일이 비어 있지 않습니다'}
                 </span>
               ) : email.length > 50 ? (
                 <span className="helper-text">
                   {languageRedux === 1
-                    ? 'Email không được bỏ trống'
-                    : 'Email cannot exceed 50 characters'}
+                    ? 'Email không được vượt quá 50 ký tự'
+                    : languageRedux === 2
+                      ? 'Email cannot exceed 50 characters'
+                      : languageRedux === 3 &&
+                        '이메일은 50자를 초과할 수 없습니다.'}
                 </span>
               ) : regexCheckEmail.test(email) === false ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Email không đúng định dạng'
-                    : 'The Email is not in the correct format'}
+                    : languageRedux === 2
+                      ? 'The Email is not in the correct format'
+                      : languageRedux === 3 &&
+                        '이메일의 형식이 올바르지 않습니다.'}
                 </span>
               ) : (
                 <></>
@@ -484,13 +517,19 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Link Facebook không được vượt quá 100 ký tự'
-                    : 'The Facebook link cannot exceed 100 characters'}
+                    : languageRedux === 2
+                      ? 'The Facebook link cannot exceed 100 characters'
+                      : languageRedux === 3 &&
+                        'Facebook 링크는 100자를 초과할 수 없습니다.'}
                 </span>
               ) : fb.trim() !== '' && validURL(fb) === false ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Link Facebook không đúng định dạng'
-                    : 'The Facebook link is not in the correct format'}
+                    : languageRedux === 2
+                      ? 'The Facebook link is not in the correct format'
+                      : languageRedux === 3 &&
+                        'Facebook 링크의 형식이 올바르지 않습니다.'}
                 </span>
               ) : (
                 <></>
@@ -524,13 +563,19 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Link Linkedin không được vượt quá 100 ký tự'
-                    : 'The Linkedin link cannot exceed 100 characters'}
+                    : languageRedux === 2
+                      ? 'The Linkedin link cannot exceed 100 characters'
+                      : languageRedux === 3 &&
+                        'Linkedin 링크는 100자를 초과할 수 없습니다.'}
                 </span>
               ) : linkIn.trim() !== '' && validURL(linkIn) === false ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Link Linkedin không đúng định dạng'
-                    : 'The Linkedin link is not in the correct format'}
+                    : languageRedux === 2
+                      ? 'The Linkedin link is not in the correct format'
+                      : languageRedux === 3 &&
+                        'Linkedin 링크가 올바른 형식이 아닙니다.'}
                 </span>
               ) : (
                 <></>

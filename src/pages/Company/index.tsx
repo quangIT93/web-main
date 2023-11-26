@@ -241,7 +241,10 @@ const Company: React.FC<ICompany> = (props) => {
         const message =
           languageRedux === 1
             ? 'Dữ liệu của bạn chưa được gửi, bạn có chắc chắn muốn rời đi?'
-            : 'Your data has not been sent, you definitely want to leave?';
+            : languageRedux === 2
+              ? 'Your data has not been sent, you definitely want to leave?'
+              : languageRedux === 3 &&
+                '귀하의 데이터가 전송되지 않았습니다. 나가시겠습니까?';
         event.preventDefault();
         event.returnValue = message || true;
         return message;
@@ -355,8 +358,10 @@ const Company: React.FC<ICompany> = (props) => {
       return {
         message:
           languageRedux === 1
-            ? 'Email không được vượt quá 50 ký tự.'
-            : 'Email must not exceed 50 characters.',
+            ? 'Email không được vượt quá 50 ký tự'
+            : languageRedux === 2
+              ? 'Email cannot exceed 50 characters'
+              : languageRedux === 3 && '이메일은 50자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 8,
       };
@@ -394,7 +399,9 @@ const Company: React.FC<ICompany> = (props) => {
         message:
           languageRedux === 1
             ? 'Website không được vượt quá 100 ký tự.'
-            : 'Website must not exceed 100 characters.',
+            : languageRedux === 2
+              ? 'Website must not exceed 100 characters.'
+              : languageRedux === 3 && '웹사이트는 100자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 10,
       };
@@ -446,7 +453,9 @@ const Company: React.FC<ICompany> = (props) => {
         message:
           languageRedux === 1
             ? 'Mô tả không được quá 1000 ký tự.'
-            : 'Description must not exceed 1000 characters.',
+            : languageRedux === 2
+              ? 'Description must not exceed 1000 characters.'
+              : languageRedux === 3 && '설명은 1,000자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 13,
       };
@@ -830,7 +839,9 @@ const Company: React.FC<ICompany> = (props) => {
             <h1>
               {languageRedux === 1
                 ? 'Thông tin công ty'
-                : "Company's information"}
+                : languageRedux === 2
+                  ? "Company's information"
+                  : languageRedux === 3 && '회사 정보'}
             </h1>
 
             <Space
@@ -856,7 +867,10 @@ const Company: React.FC<ICompany> = (props) => {
             <p>
               {languageRedux === 1
                 ? 'Bạn cần điền thông tin công ty của mình để đăng tin tuyển dụng, tìm kiếm ứng viên.'
-                : 'You need to fill in your company information to post job vacancies, search for candidates.'}
+                : languageRedux === 2
+                  ? 'You need to fill in your company information to post job vacancies, search for candidates.'
+                  : languageRedux === 3 &&
+                    '채용 공고 게시 및 후보자 검색을 위해서는 회사 정보를 입력해야 합니다.'}
             </p>
           </div>
         </div>

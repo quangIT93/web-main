@@ -179,7 +179,9 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Email không được bỏ trống'
-                : 'Email cannot be empty'}
+                : languageRedux === 2
+                  ? 'Email cannot be empty'
+                  : languageRedux === 3 && '이메일이 비어 있지 않습니다'}
             </span>
           ) : (
             <></>
@@ -213,13 +215,19 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Link web không được vượt quá 100 ký tự'
-                : 'Web link cannot exceed 100 characters'}
+                : languageRedux === 2
+                  ? 'Web link cannot exceed 100 characters'
+                  : languageRedux === 3 &&
+                    '웹 링크는 100자를 초과할 수 없습니다.'}
             </span>
           ) : validURL(dataCompany?.website) === false ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Link web không đúng định dạng'
-                : 'Web link is not in the correct format'}
+                : languageRedux === 2
+                  ? 'Web link is not in the correct format'
+                  : languageRedux === 3 &&
+                    '웹 링크의 형식이 올바르지 않습니다.'}
             </span>
           ) : (
             <></>

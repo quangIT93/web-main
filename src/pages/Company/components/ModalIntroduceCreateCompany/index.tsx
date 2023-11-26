@@ -17,14 +17,13 @@ import apiCv from 'api/apiCv';
 import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
-
-
-const ModalIntroduceCreateCompany= () => {
+const ModalIntroduceCreateCompany = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
 
-  const [openIntroduceCreateCompany, setOpenIntroduceCreateCompany] = useState(false);
+  const [openIntroduceCreateCompany, setOpenIntroduceCreateCompany] =
+    useState(false);
 
   const profileV3 = useSelector(
     (state: RootState) => state.dataProfileInformationV3.data,
@@ -72,7 +71,9 @@ const ModalIntroduceCreateCompany= () => {
           >
             {languageRedux === 1
               ? 'Hướng dẫn đăng ký thông tin công ty'
-              : 'Instructions for registering company information'}
+              : languageRedux === 2
+                ? 'Instructions for registering company information'
+                : languageRedux === 3 && '회사 정보 등록 방법'}
           </h3>
           <img style={{ width: 146 }} src="/companyIntroduce.png" alt="CV" />
         </div>
@@ -91,7 +92,10 @@ const ModalIntroduceCreateCompany= () => {
             <p>
               {languageRedux === 1
                 ? 'Điền thông tin công ty của bạn theo mẫu có sẵn.'
-                : 'Fill in your company information according to the available form.'}
+                : languageRedux === 2
+                  ? 'Fill in your company information according to the available form.'
+                  : languageRedux === 3 &&
+                    '사용 가능한 양식에 따라 회사 정보를 입력하세요.'}
             </p>
           </div>
           <div className="introduce-cv_item">
@@ -101,7 +105,10 @@ const ModalIntroduceCreateCompany= () => {
             <p>
               {languageRedux === 1
                 ? 'HiJob sẽ kiểm tra, xác minh thông tin công ty và phê duyệt trước thông tin công ty của bạn'
-                : 'HiJob will check, verify company information and pre-approve your company information.'}
+                : languageRedux === 2
+                  ? 'HiJob will check, verify company information and pre-approve your company information.'
+                  : languageRedux === 3 &&
+                    'HiJob은 회사 정보를 확인, 검증하고 귀하의 회사 정보를 사전 승인합니다.'}
             </p>
           </div>
           <div className="introduce-cv_item">
@@ -111,14 +118,21 @@ const ModalIntroduceCreateCompany= () => {
             <p>
               {languageRedux === 1
                 ? 'Sau khi xác minh và phê duyệt thành công thông tin công ty. Bạn có thể đăng tin tuyển dụng tại HiJob.'
-                : 'After successfully verifying and approving company information. You can post job advertisements at HiJob.'}
+                : languageRedux === 2
+                  ? 'After successfully verifying and approving company information. You can post job advertisements at HiJob.'
+                  : languageRedux === 3 &&
+                    '회사 정보를 성공적으로 확인하고 승인한 후. HiJob에 채용 광고를 게시할 수 있습니다.'}
             </p>
           </div>
         </div>
       </div>
       <div className="create-buttons-cv-modal">
         <Button type="primary" shape="round" onClick={handleCancel}>
-          {languageRedux === 1 ? 'Đăng ký ngay' : 'Register now'}
+          {languageRedux === 1
+            ? 'Đăng ký ngay'
+            : languageRedux === 2
+              ? 'Register now'
+              : languageRedux === 3 && '지금 등록하세요'}
         </Button>
       </div>
     </Modal>

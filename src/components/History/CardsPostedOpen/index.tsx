@@ -224,11 +224,15 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
           >
             {languageRedux === 1
               ? 'Các công việc đã đăng tuyển'
-              : 'Posted jobs'}
+              : languageRedux === 2
+                ? 'Posted jobs'
+                : languageRedux === 3 && '게시된 작업'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
               {searchParams.get('c') === '2-1' && languageRedux === 1
-                ? ' > Các công việc chưa đóng'
-                : ' > Unclosed jobs'}
+                ? '> Các công việc chưa đóng'
+                : languageRedux === 2
+                  ? '> Unclosed jobs'
+                  : languageRedux === 3 && '> 마감되지 않은 채용정보'}
             </span>
           </Typography>
         </div>

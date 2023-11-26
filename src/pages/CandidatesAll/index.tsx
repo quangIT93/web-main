@@ -383,7 +383,9 @@ const CandidatesAll = () => {
           <h3>
             {languageRedux === 1
               ? 'Tìm kiếm ứng viên'
-              : 'Looking for candidates'}
+              : languageRedux === 2
+                ? 'Looking for candidates'
+                : languageRedux === 3 && '후보자 검색'}
           </h3>
           <Button
             type="primary"
@@ -391,14 +393,18 @@ const CandidatesAll = () => {
           >
             {languageRedux === 1
               ? 'Danh sách ứng viên đã lưu'
-              : 'Saved candidate list'}
+              : languageRedux === 2
+                ? 'Saved candidate list'
+                : languageRedux === 3 && '저장된 후보자 목록'}
           </Button>
         </div>
         <div className="search-candidate">
           <p>
             {languageRedux === 1
               ? 'Tìm ứng viên phù hợp với công ty của bạn!'
-              : 'Find the right candidate for your company!'}
+              : languageRedux === 2
+                ? 'Find the right candidate for your company!'
+                : languageRedux === 3 && '회사에 적합한 후보자를 찾아보세요'}
           </p>
           <div className="list-search">
             {/* <div className="list-search_top">
@@ -451,7 +457,11 @@ const CandidatesAll = () => {
                 className="submit-seach_button seach-button_Reset"
                 onClick={handleResetSearchCandidate}
               >
-                {languageRedux === 1 ? 'Đặt lại' : 'Reset'}
+                {languageRedux === 1
+                  ? 'Đặt lại'
+                  : languageRedux === 2
+                    ? 'Reset'
+                    : languageRedux === 3 && '초기화'}
               </div>
             </div>
             {/* <div className="list-search_bottom"></div> */}
@@ -466,10 +476,18 @@ const CandidatesAll = () => {
               //   gender !== -1 &&
               open ? (
                 <h3>
-                  {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
+                  {languageRedux === 1
+                    ? 'Kết quả tìm kiếm:'
+                    : languageRedux === 2
+                      ? 'Found results:'
+                      : languageRedux === 3 && '검색 결과'}
                   <span>
                     {` ${total}`}
-                    {languageRedux === 1 ? ' ứng cử viên' : ' candidates'}
+                    {languageRedux === 1
+                      ? ' ứng cử viên'
+                      : languageRedux === 2
+                        ? ' candidates'
+                        : languageRedux === 3 && ' 후보자'}
                   </span>
                 </h3>
               ) : (

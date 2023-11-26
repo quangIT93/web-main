@@ -161,7 +161,11 @@ const HistoryPost = () => {
       // title: language?.history_page?.applied_jobs,
       // childs: [language?.all],
       title:
-        languageRedux === 1 ? 'Các công việc đã ứng tuyển' : 'Applied jobs',
+        languageRedux === 1
+          ? 'Các công việc đã ứng tuyển'
+          : languageRedux === 2
+            ? 'Apllied jobs'
+            : languageRedux === 3 && '지원한 직업들',
       childs: [
         languageRedux === 1
           ? 'Tất cả'
@@ -174,7 +178,12 @@ const HistoryPost = () => {
       id: 1,
       // title: language?.history_page?.saved_jobs,
       // childs: [language?.all],
-      title: languageRedux === 1 ? 'Các công việc đã lưu' : 'Saved jobs',
+      title:
+        languageRedux === 1
+          ? 'Các công việc đã lưu'
+          : languageRedux === 2
+            ? 'Saved jobs'
+            : languageRedux === 3 && '저장된 작업',
       childs: [
         languageRedux === 1
           ? 'Tất cả'
@@ -187,15 +196,27 @@ const HistoryPost = () => {
       id: 2,
       // title: language?.history_page?.posted_jobs,
       title:
-        languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs',
+        languageRedux === 1
+          ? 'Các công việc đã đăng tuyển'
+          : languageRedux === 2
+            ? 'Posted jobs'
+            : languageRedux === 3 && '게시된 작업',
       childs: [
         languageRedux === 1
           ? 'Tất cả'
           : languageRedux === 2
             ? 'All'
             : languageRedux === 3 && '모두',
-        languageRedux === 1 ? 'Các công việc chưa đóng' : 'Unclosed jobs',
-        languageRedux === 1 ? 'Các công việc đã đóng' : 'Closed jobs',
+        languageRedux === 1
+          ? 'Các công việc chưa đóng'
+          : languageRedux === 2
+            ? 'Unclosed jobs'
+            : languageRedux === 3 && '마감되지 않은 채용정보',
+        languageRedux === 1
+          ? 'Các công việc đã đóng'
+          : languageRedux === 2
+            ? 'Closed jobs'
+            : languageRedux === 3 && '채용이 마감되었습니다',
 
         // language?.history_page?.unclosed_jobs,
 
@@ -205,10 +226,23 @@ const HistoryPost = () => {
     {
       id: 3,
       // title: language?.history_page?.list_of_articles,
-      title: languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles',
+      title:
+        languageRedux === 1
+          ? 'Danh sách bài viết'
+          : languageRedux === 2
+            ? 'List of articles'
+            : languageRedux === 3 && '글 목록',
       childs: [
-        languageRedux === 1 ? 'Đã lưu' : 'Saved',
-        languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posted',
+        languageRedux === 1
+          ? 'Đã lưu'
+          : languageRedux === 2
+            ? 'Saved'
+            : languageRedux === 3 && '저장됨',
+        languageRedux === 1
+          ? 'Bài viết bạn đã tạo'
+          : languageRedux === 2
+            ? 'Posted articles'
+            : languageRedux === 3 && '등록되기',
         // language?.history_page?.saved,
         // language?.history_page?.posts_created,
       ],
@@ -216,7 +250,12 @@ const HistoryPost = () => {
     {
       id: 4,
       // title: language?.history_page?.list_of_articles,
-      title: languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates',
+      title:
+        languageRedux === 1
+          ? 'Danh sách ứng viên'
+          : languageRedux === 2
+            ? 'List of candidates'
+            : languageRedux === 3 && '후보자 리스트',
       childs: [
         languageRedux === 1
           ? 'Tất cả'
@@ -231,9 +270,18 @@ const HistoryPost = () => {
     {
       id: 5,
       // title: language?.history_page?.list_of_articles,
-      title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
+      title:
+        languageRedux === 1
+          ? 'Danh sách công ty'
+          : languageRedux === 2
+            ? 'List of companies'
+            : languageRedux === 3 && '관심한 회사',
       childs: [
-        languageRedux === 1 ? 'Công ty đã lưu' : 'Saved company',
+        languageRedux === 1
+          ? 'Công ty đã lưu'
+          : languageRedux === 2
+            ? 'Saved comopanies'
+            : languageRedux === 3 && '저장한 회사',
         // languageRedux === 1
         //   ? 'Nhà tuyển dụng xem hồ sơ'
         //   : 'Employers view resumes',

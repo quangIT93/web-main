@@ -70,7 +70,9 @@ const ModalIntroduceCv: React.FC<any> = () => {
           >
             {languageRedux === 1
               ? 'Hướng dẫn tạo CV trên HiJob'
-              : 'Instructions for creating a CV on HiJob'}
+              : languageRedux === 2
+                ? 'Instructions for creating a CV on HiJob'
+                : languageRedux === 3 && 'HiJob에서 이력서 작성 지침'}
           </h3>
           <img style={{ width: 146 }} src="/cv3 1.png" alt="CV" />
         </div>
@@ -89,7 +91,9 @@ const ModalIntroduceCv: React.FC<any> = () => {
             <p>
               {languageRedux === 1
                 ? 'Điền đầy đủ thông tin của bạn trong trang Hồ sơ.'
-                : 'Fill in your information in the Profile page.'}
+                : languageRedux === 2
+                  ? 'Fill in your information in the Profile page.'
+                  : '프로필 페이지에 정보를 입력하세요.'}
             </p>
           </div>
           <div className="introduce-cv_item">
@@ -99,7 +103,9 @@ const ModalIntroduceCv: React.FC<any> = () => {
             <p>
               {languageRedux === 1
                 ? 'HiJob sẽ tự động điền thông tin từ hồ sơ của bạn. Xem và chọn mẫu CV mà bạn ưng ý.'
-                : 'HiJob will automatically fill in information from your profile. View and choose the CV template you like.'}
+                : languageRedux === 2
+                  ? 'HiJob will automatically fill in information from your profile. View and choose the CV template you like.'
+                  : 'HiJob은 귀하의 프로필 정보를 자동으로 입력합니다. 마음에 드는 이력서 템플릿을 보고 선택하세요.'}
             </p>
           </div>
           <div className="introduce-cv_item">
@@ -109,17 +115,28 @@ const ModalIntroduceCv: React.FC<any> = () => {
             <p>
               {languageRedux === 1
                 ? 'Sau khi hoàn thành, hãy lưu ngay trong hồ sơ tìm việc của bạn trên HiJob (tối đa 10 mẫu CV), hoặc tải xuống miễn phí dưới dạng PDF.'
-                : 'Once completed, immediately save your job search resume on HiJob (up to 10 CV templates), or download it for free as PDF.'}
+                : languageRedux === 2
+                  ? 'Once completed, immediately save your job search resume on HiJob (up to 10 CV templates), or download it for free as PDF.'
+                  : languageRedux === 3 &&
+                    '완료되면 즉시 HiJob의 구직 프로필에 저장하거나(최대 10개의 이력서 템플릿) PDF로 무료로 다운로드하세요.'}
             </p>
           </div>
         </div>
       </div>
       <div className="create-buttons-cv-modal">
         <Button type="primary" shape="round" onClick={handleCancel}>
-          {languageRedux === 1 ? 'Cập nhật thông tin' : 'Update information'}
+          {languageRedux === 1
+            ? 'Chưa cập nhật thông tin'
+            : languageRedux === 2
+              ? 'Not updated information"'
+              : languageRedux === 3 && '정보 업데이트를 아직 하지 않음'}
         </Button>
         <Button type="primary" shape="round" onClick={handleSubmit}>
-          {languageRedux === 1 ? 'Tạo CV ngay' : 'Create your CV now'}
+          {languageRedux === 1
+            ? 'Tạo CV ngay'
+            : languageRedux === 2
+              ? 'Create your CV now'
+              : languageRedux === 3 && '지금 이력서를 작성하세요'}
         </Button>
       </div>
     </Modal>

@@ -219,8 +219,8 @@ const MoreJobsPage: React.FC = () => {
           : 'HiJob - Newest Jobs'
         : typeJob === 'hot-job'
           ? languageRedux === 1
-            ? 'HiJob - Xem tất cả loại công việc'
-            : 'HiJob - View all category jobs'
+            ? 'Xem tất cả loại công việc'
+            : 'View all category jobs'
           : typeJob === 'suggested'
             ? languageRedux === 1
               ? 'HiJob - Công việc gợi ý'
@@ -512,7 +512,9 @@ const MoreJobsPage: React.FC = () => {
         message.error(
           languageRedux === 1
             ? 'Không còn công việc để hiện thị'
-            : 'No more job to show',
+            : languageRedux === 2
+              ? 'No more job to show'
+              : languageRedux === 3 && '더 이상 표시할 채용정보가 없습니다.',
         );
       }
     } catch (error) {}
@@ -650,7 +652,11 @@ const MoreJobsPage: React.FC = () => {
               >
                 <h3>
                   {typeJob === 'new'
-                    ? language?.newest_jobs
+                    ? languageRedux === 1
+                      ? 'Công việc mới nhất'
+                      : languageRedux === 2
+                        ? 'Newest jobs'
+                        : languageRedux === 3 && '새 작업'
                     : typeJob === 'hot-job'
                       ? languageRedux === 1
                         ? 'Xem tất cả loại công việc'

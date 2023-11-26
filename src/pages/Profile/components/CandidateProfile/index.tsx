@@ -427,7 +427,9 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               {profileV3More.jobTypeId === 1
                 ? languageRedux === 1
                   ? 'Toàn thời gian'
-                  : 'Fulltime'
+                  : languageRedux === 2
+                    ? 'Fulltime'
+                    : languageRedux === 3 && '풀 타임'
                 : profileV3More.jobTypeId === 2
                   ? languageRedux === 1
                     ? 'Bán thời gian'

@@ -127,8 +127,10 @@ const CardListBlogSave = () => {
         setPage('0');
         message.error(
           languageRedux === 1
-            ? 'Đã hết bài viết để hiển thị'
-            : 'Out of posts to show',
+            ? 'Không còn bài viết để hiển thị'
+            : languageRedux === 2
+              ? 'No more posts to show'
+              : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
         );
         setIsVisible(false);
         // console.log('Đã hết bài viết để hiển thị', result);
@@ -166,11 +168,17 @@ const CardListBlogSave = () => {
               lineHeight: '24px',
             }}
           >
-            {languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles'}
+            {languageRedux === 1
+              ? 'Danh sách bài viết'
+              : languageRedux === 2
+                ? 'List of articles'
+                : languageRedux === 3 && '글 목록'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
               {searchParams.get('c') === '3-0' && languageRedux === 1
-                ? ' > Đã lưu'
-                : ' > Saved articles'}
+                ? '> Đã lưu'
+                : languageRedux === 2
+                  ? '> Saved articles'
+                  : languageRedux === 3 && '> 저정되기'}
             </span>
           </Typography>
         </div>

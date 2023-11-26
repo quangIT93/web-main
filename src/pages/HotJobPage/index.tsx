@@ -545,7 +545,9 @@ const HotJobpage: React.FC = () => {
                     new Intl.NumberFormat('en-US').format(hotJobTotal)
                   : languageRedux === 1
                     ? '0 kết quả'
-                    : '0 result'}
+                    : languageRedux === 2
+                      ? '0 result'
+                      : languageRedux === 3 && '0 결과'}
                 <span>
                   {' '}
                   {
@@ -574,7 +576,13 @@ const HotJobpage: React.FC = () => {
                       defaultValue={'0'}
                       onChange={handleChangeFilterHotjob}
                       placeholder={
-                        languageRedux === 1 ? 'Chọn địa chỉ' : 'Select Address'
+                        languageRedux === 1
+                          ? 'Chọn địa chỉ'
+                          : languageRedux === 2
+                            ? 'Select Address'
+                            : languageRedux === 3
+                              ? '주소 선택'
+                              : 'Chọn địa chỉ'
                       }
                       sx={{
                         fontSize: '14px',

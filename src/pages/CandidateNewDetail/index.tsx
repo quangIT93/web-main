@@ -261,8 +261,12 @@ const CandidateNewDetail = () => {
                   style={{ backgroundColor: 'transparent', color: 'black' }}
                 >
                   {languageRedux === 1
-                    ? 'Mở khóa ứng viên'
-                    : 'Unlock Candidates'}
+                          ? 'Mở khóa ứng viên'
+                          : languageRedux === 2
+                            ? 'Unlock Candidates'
+                            : languageRedux === 3
+                              ? '후보자 잠금 해제'
+                              : 'Mở khóa ứng viên'}
                 </Button>
               ) : (
                 <Button
@@ -271,8 +275,12 @@ const CandidateNewDetail = () => {
                   onClick={() => handleUnLockCandidate(candidate?.accountId)}
                 >
                   {languageRedux === 1
-                    ? 'Mở khóa ứng viên'
-                    : 'Unlock Candidates'}
+                          ? 'Mở khóa ứng viên'
+                          : languageRedux === 2
+                            ? 'Unlock Candidates'
+                            : languageRedux === 3
+                              ? '후보자 잠금 해제'
+                              : 'Mở khóa ứng viên'}
                 </Button>
               )} */}
 
@@ -302,10 +310,17 @@ const CandidateNewDetail = () => {
                         Dùng 1 lượt/Point để xem thông tin liên hệ của ứng viên
                         này
                       </p>
-                    ) : (
+                    ) : languageRedux === 2 ? (
                       <p style={{ color: '#fff' }}>
                         Use 1 turn/Point to view candidate contact information
                       </p>
+                    ) : (
+                      languageRedux === 3 && (
+                        <p style={{ color: '#fff' }}>
+                          이 후보자의 연락처 정보를 보려면 1 턴/포인트를
+                          사용하십시오.
+                        </p>
+                      )
                     )
                   }
                 >
@@ -333,7 +348,11 @@ const CandidateNewDetail = () => {
                       <div>
                         {languageRedux === 1
                           ? 'Mở khóa ứng viên'
-                          : 'Unlock Candidates'}
+                          : languageRedux === 2
+                            ? 'Unlock Candidates'
+                            : languageRedux === 3
+                              ? '후보자 잠금 해제'
+                              : 'Mở khóa ứng viên'}
                       </div>
                     </div>
                   </Button>
@@ -365,7 +384,11 @@ const CandidateNewDetail = () => {
                     <div>
                       {languageRedux === 1
                         ? 'Mở khóa ứng viên'
-                        : 'Unlock Candidates'}
+                        : languageRedux === 2
+                          ? 'Unlock Candidates'
+                          : languageRedux === 3
+                            ? '후보자 잠금 해제'
+                            : 'Mở khóa ứng viên'}
                     </div>
                   </div>
                 </Button>
@@ -388,13 +411,19 @@ const CandidateNewDetail = () => {
                   ? candidate?.profilesCvs[0]?.pdfURL !== undefined
                     ? languageRedux === 1
                       ? 'Xem hồ sơ'
-                      : 'Have a resume'
+                      : languageRedux === 2
+                        ? 'Have a resume'
+                        : languageRedux === 3 && '프로필보기'
                     : languageRedux === 1
                       ? 'Không có hồ sơ'
-                      : 'Not have a resume'
+                      : languageRedux === 2
+                        ? 'Not have a resume'
+                        : languageRedux === 3 && '프로필 없음'
                   : languageRedux === 1
                     ? 'Xem hồ sơ'
-                    : 'View resume'}
+                    : languageRedux === 2
+                      ? 'Have a resume'
+                      : languageRedux === 3 && '프로필보기'}
               </Button>
 
               <div
@@ -435,8 +464,10 @@ const CandidateNewDetail = () => {
           >
             <h3>
               {languageRedux === 1
-                ? 'Thông tin cá nhân'
-                : 'Candidate information'}
+                ? 'Thông tin ứng viên'
+                : languageRedux === 2
+                  ? 'Candidate information'
+                  : languageRedux === 3 && '후보자 정보'}
             </h3>
           </div>
           <div className="info-detail">
@@ -657,7 +688,15 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Kỹ năng'
+                : languageRedux === 2
+                  ? 'Skills'
+                  : languageRedux === 3
+                    ? '기술'
+                    : 'Kỹ năng'}
+            </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
@@ -680,7 +719,13 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Ngoại ngữ'
+                : languageRedux === 2
+                  ? 'Languages'
+                  : languageRedux === 3 && '외국어'}
+            </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0
@@ -705,7 +750,13 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1 ? 'Các hoạt động' : 'Activities'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Các hoạt động'
+                : languageRedux === 2
+                  ? 'Activities'
+                  : languageRedux === 3 && '활동'}
+            </h3>
           </div>
           {candidate?.profileActivities?.length !== 0 ? (
             candidate?.profileActivities?.map((item: any, index: number) => (
@@ -735,7 +786,13 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1 ? 'Người giới thiệu' : 'References'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Người giới thiệu'
+                : languageRedux === 2
+                  ? 'References'
+                  : languageRedux === 3 && '참고자료'}
+            </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesReferences?.length !== 0
@@ -760,7 +817,13 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1 ? 'Các giải thưởng' : 'Awards'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Các giải thưởng'
+                : languageRedux === 2
+                  ? 'Awards'
+                  : languageRedux === 3 && '수상 내역'}
+            </h3>
           </div>
           {candidate?.profileAwards?.length !== 0 ? (
             candidate?.profileAwards?.map((item: any, index: number) => (
@@ -789,7 +852,13 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1 ? 'Sở thích' : 'Hobbies'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Sở thích'
+                : languageRedux === 2
+                  ? 'Hobbies'
+                  : languageRedux === 3 && '관심'}
+            </h3>
           </div>
           <Space
             wrap
@@ -826,7 +895,9 @@ const CandidateNewDetail = () => {
           >
             {languageRedux === 1
               ? 'Bạn đã lưu ứng viên thành công !'
-              : 'You have successfully saved the candidate!'}
+              : languageRedux === 2
+                ? 'You have successfully saved the candidate!'
+                : languageRedux === 3 && '후보자를 성공적으로 저장했습니다!'}
           </Alert>
         </Snackbar>
       </Stack>
@@ -845,7 +916,10 @@ const CandidateNewDetail = () => {
           >
             {languageRedux === 1
               ? 'Bạn đã hủy lưu ứng viên thành công!'
-              : 'You have successfully unsaved the candidate!'}
+              : languageRedux === 2
+                ? 'You have successfully unsaved the candidate!'
+                : languageRedux === 3 &&
+                  '후보자 저장을 성공적으로 취소했습니다.'}
           </Alert>
         </Snackbar>
       </Stack>

@@ -79,7 +79,9 @@ const ShowNotificativeSave: React.FC = () => {
             {/* {language?.job_has_been_saved} */}
             {languageRedux === 1
               ? 'Bạn đã lưu thành công'
-              : 'Saved successfully'}
+              : languageRedux === 2
+                ? 'Saved successfully'
+                : languageRedux === 3 && '성공적으로 저장되었습니다.'}
           </Alert>
         </Snackbar>
       </Stack>

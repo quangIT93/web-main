@@ -145,7 +145,9 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Tên không được bỏ trống'
-            : 'Full name cannot be empty',
+            : languageRedux === 2
+              ? 'Full name cannot be empty'
+              : languageRedux === 3 && '이름은 비워둘 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -155,7 +157,9 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Tên không được vượt quá 255 ký tự'
-            : 'Full name cannot exceed 255 characters',
+            : languageRedux === 2
+              ? 'Full name cannot exceed 255 characters'
+              : languageRedux === 3 && '이름은 255자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -165,7 +169,9 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Số điện thoại không được bỏ trống'
-            : 'Phone cannot be empty',
+            : languageRedux === 2
+              ? 'Phone cannot be empty'
+              : languageRedux === 3 && '전화는 비워 둘 수 없습니다.',
         checkForm: false,
         idError: 2,
       };
@@ -175,7 +181,9 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Số điện thoại không đúng định dạng'
-            : 'The phone number is not in the correct format',
+            : languageRedux === 2
+              ? 'The phone number is not in the correct format'
+              : languageRedux === 3 && '전화 번호의 형식이 올바르지 않습니다.',
         checkForm: false,
         idError: 2,
       };
@@ -185,7 +193,9 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Email không được bỏ trống'
-            : 'Email cannot be empty',
+            : languageRedux === 2
+              ? 'Email cannot be empty'
+              : languageRedux === 3 && '이메일이 비어 있지 않습니다',
         checkForm: false,
         idError: 3,
       };
@@ -195,7 +205,9 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Email không đúng định dạng'
-            : 'The Email is not in the correct format',
+            : languageRedux === 2
+              ? 'The Email is not in the correct format'
+              : languageRedux === 3 && '이메일의 형식이 올바르지 않습니다.',
         checkForm: false,
         idError: 3,
       };
@@ -205,7 +217,9 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Thông tin thêm không được bỏ trống'
-            : 'Additional information cannot be empty',
+            : languageRedux === 2
+              ? 'Additional information cannot be empty'
+              : languageRedux === 3 && '추가 정보는 비워둘 수 없습니다.',
         checkForm: false,
         idError: 4,
       };
@@ -215,7 +229,10 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Thông tin thêm không được vượt quá 1000 ký tự'
-            : 'Additional information cannot exceed 1000 characters',
+            : languageRedux === 2
+              ? 'Additional information cannot exceed 1000 characters'
+              : languageRedux === 3 &&
+                '추가 정보는 1000자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 4,
       };
@@ -350,7 +367,11 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             align="center"
             sx={{ marginBottom: '12px' }}
           >
-            {languageRedux === 1 ? 'Sửa người giới thiệu' : 'Edit Reference'}
+            {languageRedux === 1
+              ? 'Sửa người giới thiệu'
+              : languageRedux === 2
+                ? 'Edit Reference'
+                : languageRedux === 3 && '추천인 편집'}
           </Typography>
           <Box sx={{ marginBottom: '12px' }}>
             <Typography
@@ -361,7 +382,9 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             >
               {languageRedux === 1
                 ? 'Họ và tên của người tham khảo'
-                : 'Reference’s Full name'}{' '}
+                : languageRedux === 2
+                  ? 'Reference’s Full name'
+                  : languageRedux === 3 && '참고인의 성명'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -372,7 +395,15 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
               onChange={handleOnchangeFullName}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={languageRedux === 1 ? 'Họ và tên' : 'Full name'}
+              placeholder={
+                languageRedux === 1
+                  ? 'Họ và tên của người tham khảo'
+                  : languageRedux === 2
+                    ? 'Reference’s Full name'
+                    : languageRedux === 3
+                      ? '참고인의 성명'
+                      : 'Họ và tên của người tham khảo'
+              }
               // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
@@ -380,13 +411,21 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Tên kỹ năng không được vượt quá 255 ký tự'
-                    : 'Skill names cannot exceed 255 characters'}
+                    : languageRedux === 2
+                      ? 'Skill names cannot exceed 255 characters'
+                      : languageRedux === 3
+                        ? '스킬 이름은 255자를 초과할 수 없습니다.'
+                        : 'Tên kỹ năng không được vượt quá 255 ký tự'}
                 </span>
               ) : !fullName ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Tên kỹ năng không được bỏ trống'
-                    : 'Skill names cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Skill names cannot be empty'
+                      : languageRedux === 3
+                        ? '스킬 이름은 비워둘 수 없습니다.'
+                        : 'Tên kỹ năng không được bỏ trống.'}
                 </span>
               ) : (
                 <></>
@@ -443,13 +482,18 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Số điện thoại không đúng định dạng'
-                    : 'The phone number is not in the correct format'}
+                    : languageRedux === 2
+                      ? 'The phone number is not in the correct format'
+                      : languageRedux === 3 &&
+                        '전화 번호의 형식이 올바르지 않습니다.'}
                 </span>
               ) : phone.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Số điện thoại không được bỏ trống'
-                    : 'Phone cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Phone cannot be empty'
+                      : languageRedux === 3 && '전화는 비워 둘 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -464,7 +508,13 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              {languageRedux === 1 ? 'Email' : 'Email'}{' '}
+              {languageRedux === 1
+                ? 'Email'
+                : languageRedux === 2
+                  ? 'Email'
+                  : languageRedux === 3
+                    ? '이메일'
+                    : 'Email'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -475,7 +525,15 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
               onChange={handleOnchangeMail}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={languageRedux === 1 ? 'Email' : 'Email'}
+              placeholder={
+                languageRedux === 1
+                  ? 'Email'
+                  : languageRedux === 2
+                    ? 'Email'
+                    : languageRedux === 3
+                      ? '이메일'
+                      : 'Email'
+              }
               // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
@@ -483,13 +541,18 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Email không đúng định dạng'
-                    : 'The Email is not in the correct format'}
+                    : languageRedux === 2
+                      ? 'The Email is not in the correct format'
+                      : languageRedux === 3 &&
+                        '이메일의 형식이 올바르지 않습니다.'}
                 </span>
               ) : mail.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Email không được bỏ trống'
-                    : 'Email cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Email cannot be empty'
+                      : languageRedux === 3 && '이메일이 비어 있지 않습니다'}
                 </span>
               ) : (
                 <></>
@@ -523,13 +586,19 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Thông tin thêm không được bỏ trống'
-                    : 'Additional information cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Additional information cannot be empty'
+                      : languageRedux === 3 &&
+                        '추가 정보는 비워둘 수 없습니다.'}
                 </span>
               ) : description.length > 1000 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Thông tin thêm không được vượt quá 1000 ký tự'
-                    : 'Additional information cannot exceed 1000 characters'}
+                    : languageRedux === 2
+                      ? 'Additional information cannot exceed 1000 characters'
+                      : languageRedux === 3 &&
+                        '추가 정보는 1000자를 초과할 수 없습니다.'}
                 </span>
               ) : (
                 <></>

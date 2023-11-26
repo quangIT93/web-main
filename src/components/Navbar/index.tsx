@@ -1251,7 +1251,13 @@ const Navbar: React.FC = () => {
             display: profileV3.typeRoleData === 0 ? 'flex' : 'none',
           }}
         >
-          <h3>{languageRedux === 1 ? 'Cập nhật hồ sơ' : 'Update profile'}</h3>
+          <h3>
+            {languageRedux === 1
+              ? 'Cập nhật hồ sơ'
+              : languageRedux === 2
+                ? 'Update profile'
+                : languageRedux === 3 && '프로필 업데이트'}
+          </h3>
           <div className="login__hover__p">
             <p>
               {languageRedux === 1

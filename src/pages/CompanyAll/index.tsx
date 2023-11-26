@@ -265,7 +265,11 @@ const CompanyAll = () => {
       <div className="company">
         <div className="header-company">
           <h3>
-            {languageRedux === 1 ? 'Tìm kiếm công ty' : 'Looking company'}
+            {languageRedux === 1
+              ? 'Tìm kiếm công ty'
+              : languageRedux === 2
+                ? 'Search company'
+                : languageRedux === 3 && '회사 검색'}
           </h3>
           {/* <Button
                         type="primary"
@@ -280,7 +284,9 @@ const CompanyAll = () => {
           <p>
             {languageRedux === 1
               ? 'Tìm công ty phù hợp với bạn!'
-              : 'Find the company for your job!'}
+              : languageRedux === 2
+                ? 'Find the company for your job!'
+                : languageRedux === 3 && '당신에게 딱 맞는 회사를 찾아보세요!'}
           </p>
           <div className="list-search">
             {/* <div className="list-search_top">
@@ -321,7 +327,11 @@ const CompanyAll = () => {
                 className="submit-seach_button seach-button_Reset"
                 onClick={handleResetSearchCandidate}
               >
-                {languageRedux === 1 ? 'Đặt lại' : 'Reset'}
+                {languageRedux === 1
+                  ? 'Đặt lại'
+                  : languageRedux === 2
+                    ? 'Reset'
+                    : languageRedux === 3 && '초기화'}
               </div>
             </div>
             {/* <div className="list-search_bottom"></div> */}
@@ -330,10 +340,18 @@ const CompanyAll = () => {
         <div className="list-candidates">
           <div className="list-candidates_title">
             <h3>
-              {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
+              {languageRedux === 1
+                ? 'Kết quả tìm kiếm:'
+                : languageRedux === 2
+                  ? 'Found results:'
+                  : languageRedux === 3 && '검색 결과'}
               <span>
                 {total}
-                {languageRedux === 1 ? ' công ty' : ' company'}
+                {languageRedux === 1
+                  ? ' công ty'
+                  : languageRedux === 2
+                    ? ' company'
+                    : languageRedux === 3 && '회사'}
               </span>
             </h3>
           </div>

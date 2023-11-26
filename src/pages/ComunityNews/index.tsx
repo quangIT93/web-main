@@ -82,7 +82,9 @@ const ComunityNews = () => {
       message.error(
         languageRedux === 1
           ? 'Không còn bài viết để hiển thị'
-          : 'No more posts to show',
+          : languageRedux === 2
+            ? 'No more posts to show'
+            : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
       );
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
@@ -165,8 +167,10 @@ const ComunityNews = () => {
       setPage('0');
       message.error(
         languageRedux === 1
-          ? 'Đã hết bài viết để hiển thị'
-          : 'Out of posts to show',
+          ? 'Không còn bài viết để hiển thị'
+          : languageRedux === 2
+            ? 'No more posts to show'
+            : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
       );
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
@@ -231,9 +235,14 @@ const ComunityNews = () => {
                       ? `${new Intl.NumberFormat('en-US').format(
                           total,
                         )} bài viết mới`
-                      : `${new Intl.NumberFormat('en-US').format(
-                          total,
-                        )} new posts`
+                      : languageRedux === 2
+                        ? `${new Intl.NumberFormat('en-US').format(
+                            total,
+                          )} new posts`
+                        : languageRedux &&
+                          `${new Intl.NumberFormat('en-US').format(
+                            total,
+                          )} 새 게시물`
                   // : language?.community_page?.today_hijob_has +
                   //   ' ' +
                   //   total +

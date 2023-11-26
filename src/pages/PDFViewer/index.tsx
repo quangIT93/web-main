@@ -114,7 +114,13 @@ function PDFViewer() {
       {urlPdf.id ? (
         <div className="viewPdf-content">
           <div className="header-content-viewPdf">
-            <h2>{languageRedux === 1 ? 'Nội dung CV' : 'Content CV'}</h2>
+            <h2>
+              {languageRedux === 1
+                ? 'Nội dung CV'
+                : languageRedux === 2
+                  ? 'Content CV'
+                  : languageRedux === 3 && 'CV 내용'}
+            </h2>
             <div className="installCV">
               <p onClick={() => handleDownload(urlPdf.pdfURL, urlPdf?.name)}>
                 Tải CV

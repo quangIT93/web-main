@@ -159,14 +159,29 @@ const Comunity = () => {
       title:
         languageRedux === 1
           ? 'Bạn có chắc muốn xóa bình luận này'
-          : 'Are you sure delete this comment',
+          : languageRedux === 2
+            ? 'Are you sure delete this comment'
+            : languageRedux === 3 && '이 댓글을 삭제하시겠습니까?',
       content:
         languageRedux === 1
           ? 'Sau khi xóa, bình luận này sẽ không còn xuất hiện nữa'
-          : 'Once deleted, this comment will no longer appear',
-      okText: languageRedux === 1 ? 'Có' : 'Yes',
+          : languageRedux === 2
+            ? 'Once deleted, this comment will no longer appear'
+            : languageRedux === 3 &&
+              '삭제되면 이 댓글은 더 이상 표시되지 않습니다.',
+      okText:
+        languageRedux === 1
+          ? 'Có'
+          : languageRedux === 2
+            ? 'Yes'
+            : languageRedux === 3 && '가지다',
       okType: 'danger',
-      cancelText: languageRedux === 1 ? 'Không' : 'No',
+      cancelText:
+        languageRedux === 1
+          ? 'Không'
+          : languageRedux === 2
+            ? 'No'
+            : languageRedux === 3 && '아니요',
       onOk() {
         handleDeleteCmt(postId, cmtId);
       },
@@ -241,7 +256,9 @@ const Comunity = () => {
       message.error(
         languageRedux === 1
           ? 'Bạn chưa nhập bình luận'
-          : 'You have not entered a comment',
+          : languageRedux === 2
+            ? 'You have not entered a comment'
+            : languageRedux === 3 && '아직 댓글을 입력하지 않았습니다.',
       );
       setCmtContent('');
       return;
@@ -571,7 +588,11 @@ const Comunity = () => {
                   placeholder={
                     languageRedux === 1
                       ? 'Nhập bình luận của bạn ...'
-                      : 'Enter your comment ...'
+                      : languageRedux === 2
+                        ? 'Enter your comment ...'
+                        : languageRedux === 3
+                          ? '댓글을 입력하세요...'
+                          : 'Nhập bình luận của bạn ...'
                   }
                   autoSize
                   // showCount

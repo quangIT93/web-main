@@ -37,7 +37,11 @@ const ModalShowAvatar: React.FC<IModalShowAvatar> = (props) => {
             textAlign: 'center',
           }}
         >
-          {languageRedux === 1 ? 'Avatar ứng viên' : 'Candidate avatar'}
+          {languageRedux === 1
+            ? 'Avatar ứng viên'
+            : languageRedux === 2
+              ? 'Candidate avatar'
+              : languageRedux === 3 && '후보자 아바타'}
         </h3>
       }
       open={openModalShowAvatar}

@@ -222,7 +222,9 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
         messageError:
           languageRedux === 1
             ? 'Tiêu đề không được bỏ trống'
-            : 'Professional title cannot be empty',
+            : languageRedux === 2
+              ? 'Title cannot be empty'
+              : languageRedux === 3 && '제목은 비워둘 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -232,7 +234,9 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
         messageError:
           languageRedux === 1
             ? 'Tiêu đề không được vượt quá 50 ký tự'
-            : 'Professional title cannot exceed 50 characters',
+            : languageRedux === 2
+              ? 'Professional title cannot exceed 50 characters'
+              : languageRedux === 3 && '제목은 50자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -242,7 +246,9 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
         messageError:
           languageRedux === 1
             ? 'Tên công ty không được bỏ trống'
-            : 'Company names cannot be empty',
+            : languageRedux === 2
+              ? 'Company Name cannot be empty'
+              : languageRedux === 3 && '회사 이름은 비워 둘 수 없습니다.',
         checkForm: false,
         idError: 2,
       };
@@ -252,7 +258,9 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
         messageError:
           languageRedux === 1
             ? 'Tên công ty không được vượt quá 50 ký tự'
-            : 'Company names cannot exceed 50 characters',
+            : languageRedux === 2
+              ? 'Company names cannot exceed 50 characters'
+              : languageRedux === 3 && '회사 이름은 50자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 2,
       };
@@ -273,7 +281,11 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
         messageError:
           languageRedux === 1
             ? 'Năm bắt đầu không được vượt quá năm hiện tại'
-            : 'The starting year cannot exceed the current year',
+            : languageRedux === 2
+              ? 'The starting year cannot exceed the current year'
+              : languageRedux === 3
+                ? '시작 연도는 현재 연도를 초과할 수 없습니다.'
+                : 'Năm bắt đầu không được vượt quá năm hiện tại',
         checkForm: false,
         idError: 3,
       };
@@ -292,7 +304,9 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
         messageError:
           languageRedux === 1
             ? 'Năm kết thúc không được vượt quá năm hiện tại'
-            : 'The final year cannot exceed the current year',
+            : languageRedux === 2
+              ? 'The final year cannot exceed the current year'
+              : '종료 연도는 현재 연도를 초과할 수 없습니다.',
         checkForm: false,
         idError: 4,
       };
@@ -306,7 +320,11 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
         messageError:
           languageRedux === 1
             ? 'Năm bắt đầu không được vượt quá năm kết thúc'
-            : 'The starting year cannot exceed the final year',
+            : languageRedux === 2
+              ? 'The starting year cannot exceed the final year'
+              : languageRedux === 3
+                ? '시작 연도는 종료 연도를 초과할 수 없습니다.'
+                : 'Năm bắt đầu không được vượt quá năm kết thúc',
         checkForm: false,
         idError: 4,
       };
@@ -317,7 +335,9 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
         messageError:
           languageRedux === 1
             ? 'Thông tin thêm không được bỏ trống'
-            : 'Additional information cannot be empty',
+            : languageRedux === 2
+              ? 'Additional information cannot be empty'
+              : languageRedux === 3 && '추가 정보는 비워둘 수 없습니다.',
         checkForm: false,
         idError: 5,
       };
@@ -326,8 +346,11 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
       return {
         messageError:
           languageRedux === 1
-            ? 'Thông tin thêm không được vượt quá 500 ký tự'
-            : 'Additional information cannot exceed 500 characters',
+            ? 'Thông tin bố sung không được vượt quá 500 ký tự'
+            : languageRedux === 2
+              ? 'Additional information cannot exceed 500 characters'
+              : languageRedux === 3 &&
+                '추가 정보는 500자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 5,
       };
@@ -467,13 +490,17 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Bạn đã nhập quá 50 ký tự.'
-                    : 'You have entered more than 50 characters.'}
+                    : languageRedux === 2
+                      ? 'You have entered more than 50 characters.'
+                      : languageRedux === 3 && '50자를 초과하여 입력했습니다.'}
                 </span>
               ) : experience.title.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vui lòng nhập chức danh.'
-                    : 'Please enter your title.'}
+                    : languageRedux === 2
+                      ? 'Please enter your title.'
+                      : languageRedux === 3 && '당신의 직함을 입력해 주세요'}
                 </span>
               ) : (
                 <></>
@@ -507,13 +534,17 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Bạn đã nhập quá 50 ký tự.'
-                    : 'You have entered more than 50 characters.'}
+                    : languageRedux === 2
+                      ? 'You have entered more than 50 characters.'
+                      : languageRedux === 3 && '50자를 초과하여 입력했습니다.'}
                 </span>
               ) : experience.companyName.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vui lòng nhập tên trường/tổ chức.'
-                    : 'Please enter school/organization name.'}
+                    : languageRedux === 2
+                      ? 'Please enter school/organization.'
+                      : languageRedux === 3 && '학교/기관명을 입력해주세요.'}
                 </span>
               ) : (
                 <></>
@@ -571,8 +602,10 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                     ) : !new Date(experience.startDate).getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
-                          ? 'Vui lòng nhập Thời gian bắt đầu.'
-                          : 'Please enter start date.'}
+                          ? 'Vui lòng nhập thời gian bắt đầu'
+                          : languageRedux === 2
+                            ? 'Please enter start date'
+                            : languageRedux === 3 && '시작일을 입력해 주세요'}
                       </span>
                     ) : new Date(experience.startDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
@@ -624,19 +657,27 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Thời gian kết thúc không thể lớn hơn thời gian hiện tại.'
-                          : 'The end time cannot be greater than the current time.'}
+                          : languageRedux === 2
+                            ? 'The end time cannot be greater than the current time.'
+                            : languageRedux === 3 &&
+                              '종료 시간은 현재 시간보다 클 수 없습니다.'}
                       </span>
                     ) : !new Date(experience.endDate).getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Vui lòng nhập Thời gian kết thúc.'
-                          : 'Please enter End date.'}
+                          : languageRedux === 2
+                            ? 'Please enter End date.'
+                            : languageRedux === 3 && '종료 시간을 입력하세요.'}
                       </span>
                     ) : new Date(experience.endDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Thời gian kết thúc không thể nhỏ hơn 1900.'
-                          : 'The end time cannot be less than 1900.'}
+                          : languageRedux === 2
+                            ? 'The end time cannot be less than 1900.'
+                            : languageRedux === 3 &&
+                              '종료 시간은 1900보다 작을 수 없습니다.'}
                       </span>
                     ) : (
                       <></>
@@ -672,13 +713,17 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Bạn đã nhập quá 500 ký tự.'
-                    : 'You have entered more than 500 characters.'}
+                    : languageRedux === 2
+                      ? 'You have entered more than 500 characters.'
+                      : languageRedux === 3 && '500자를 초과하여 입력했습니다.'}
                 </span>
               ) : experience.extraInformation.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vui lòng nhập thông tin bổ sung.'
-                    : 'Please enter additional information.'}
+                    : languageRedux === 2
+                      ? 'Please enter additional information.'
+                      : languageRedux === 3 && '추가 정보를 입력해주세요'}
                 </span>
               ) : (
                 <></>

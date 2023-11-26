@@ -46,7 +46,9 @@ const ModalMaxUnlock: React.FC<IModalMaxUnlock> = (props) => {
         >
           {languageRedux === 1
             ? 'Không thể mở khóa thông tin ứng viên'
-            : 'Unable to unlock candidate information'}
+            : languageRedux === 2
+              ? 'Unable to unlock candidate information'
+              : '후보자 정보를 잠금 해제할 수 없습니다.'}
         </h3>
       }
       footer={null}
@@ -69,7 +71,10 @@ const ModalMaxUnlock: React.FC<IModalMaxUnlock> = (props) => {
       >
         {languageRedux === 1
           ? 'Tài khoản của bạn hiện không đủ Point/lượt mở khóa thông tin ứng viên.\n\nVui lòng liên hệ nhân viên hỗ trợ để xử lý vấn đề này.'
-          : 'Your account currently does not have enough Points/turns to unlock candidate information.\n\nPlease contact support staff to resolve this issue.'}
+          : languageRedux === 2
+            ? 'Your account currently does not have enough Points/turns to unlock candidate information.\n\nPlease contact support staff to resolve this issue.'
+            : languageRedux === 3 &&
+              '현재 귀하의 계정에는 후보자 정보를 잠금 해제할 만큼 충분한 포인트/턴이 없습니다.\n\n이 문제를 처리하려면 지원 담당자에게 문의하십시오.'}
       </p>
       <div className="unlock-candidate-info-modal">
         <div className="unlock-candidate-info-item">

@@ -699,7 +699,15 @@ const Profile: React.FC = () => {
                 <p>{language?.date_of_birth}</p>
                 <p>{language?.sex}</p>
                 <p>{language?.location}</p>
-                <p>{languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'}</p>
+                <p>
+                  {languageRedux === 1
+                    ? 'Vị trí ứng tuyển'
+                    : languageRedux === 2
+                      ? 'Position'
+                      : languageRedux === 3
+                        ? '위치'
+                        : 'Vị trí ứng tuyển'}
+                </p>
               </div>
               <div className="div-detail-row right">
                 <p>

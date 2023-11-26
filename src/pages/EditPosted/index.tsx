@@ -487,7 +487,10 @@ const EditPosted = () => {
         message:
           languageRedux === 1
             ? 'Số điện thoại không được bỏ trống và phải ít hơn 10 ký tự.'
-            : 'Phone number cannot be blank and must be less than 10 characters.',
+            : languageRedux === 2
+              ? 'Phone number cannot be blank and must be less than 10 characters.'
+              : languageRedux === 3 &&
+                '전화번호는 비워둘 수 없으며 10자 미만이어야 합니다.',
         checkForm: false,
         idError: 10,
       };
@@ -497,7 +500,9 @@ const EditPosted = () => {
         message:
           languageRedux === 1
             ? 'Hãy nhập mô tả công việc.'
-            : 'Please enter a job description.',
+            : languageRedux === 2
+              ? 'Please enter a job description.'
+              : languageRedux === 3 && '직무 내용을 입력해주세요.',
         checkForm: false,
         idError: 11,
       };
@@ -511,7 +516,10 @@ const EditPosted = () => {
         message:
           languageRedux === 1
             ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
-            : 'The start date cannot exceed the end date',
+            : languageRedux === 2
+              ? 'The start date cannot exceed the end date'
+              : languageRedux === 3 &&
+                '시작 날짜는 종료 날짜를 초과할 수 없습니다.',
         checkForm: false,
         idError: 12,
       };

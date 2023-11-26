@@ -197,7 +197,9 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Vui lòng chọn lĩnh vực hoạt động'
-                : 'Please select your field of activity'}
+                : languageRedux === 2
+                  ? 'Please select your field of activity'
+                  : languageRedux === 3 && '귀하의 활동분야를 선택해주세요.'}
             </span>
           ) : (
             <></>
@@ -239,7 +241,9 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Vui lòng chọn quy mô công ty'
-                : 'Please select company size'}
+                : languageRedux === 2
+                  ? 'Please select company size'
+                  : languageRedux === 3 && '회사규모를 선택해 주세요'}
             </span>
           ) : (
             <></>

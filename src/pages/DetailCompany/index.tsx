@@ -134,7 +134,13 @@ const DetailCompany = () => {
     {
       key: '1',
       label: (
-        <p>{languageRedux === 1 ? 'Thông tin liên hệ' : 'Contact Info'}</p>
+        <p>
+          {languageRedux === 1
+            ? 'Thông tin liên hệ'
+            : languageRedux === 2
+              ? 'Contact Info'
+              : languageRedux === 3 && '연락처 정보'}
+        </p>
       ),
       children: <ContactInfo company={company} />,
     },
@@ -142,7 +148,11 @@ const DetailCompany = () => {
       key: '2',
       label: (
         <p>
-          {languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Application positions'}
+          {languageRedux === 1
+            ? 'Vị trí ứng tuyển'
+            : languageRedux === 2
+              ? 'Application positions'
+              : languageRedux === 3 && '위치'}
           <span style={{ color: '#0D99FF' }}>
             {' '}
             {'('}
@@ -166,7 +176,15 @@ const DetailCompany = () => {
     },
     {
       key: '3',
-      label: <p>{languageRedux === 1 ? 'Đánh giá' : 'Review'}</p>,
+      label: (
+        <p>
+          {languageRedux === 1
+            ? 'Đánh giá'
+            : languageRedux === 2
+              ? 'Review'
+              : languageRedux === 3 && '평가하다'}
+        </p>
+      ),
       children: <ReviewCompany company={company} companyId={companyId} />,
     },
   ];
@@ -176,7 +194,11 @@ const DetailCompany = () => {
       <div className={styles.detail_company_content}>
         <div className={styles.detail_company_title}>
           <h3>
-            {languageRedux === 1 ? 'Chi tiết công ty' : 'View detail Company'}
+            {languageRedux === 1
+              ? 'Chi tiết công ty'
+              : languageRedux === 2
+                ? 'Detail Company'
+                : languageRedux === 3 && '자세한 회사 정보'}
           </h3>
         </div>
         <Skeleton loading={loading} active>
@@ -215,7 +237,13 @@ const DetailCompany = () => {
                   ) : (
                     <IconBellNewestCompany width={24} height={24} />
                   )}
-                  <p>{languageRedux === 1 ? 'Theo dõi' : 'Follow'}</p>
+                  <p>
+                    {languageRedux === 1
+                      ? 'Theo dõi'
+                      : languageRedux === 2
+                        ? 'Follow'
+                        : languageRedux === 3 && '좇다'}
+                  </p>
                 </div>
               </div>
               <div className={styles.company_address}>
@@ -226,7 +254,10 @@ const DetailCompany = () => {
                       ? company.companyLocation.district.province.fullName
                       : languageRedux === 1
                         ? 'Thông tin công ty chưa cập nhật'
-                        : 'Company information not updated yet'}
+                        : languageRedux === 2
+                          ? 'Company information not updated yet'
+                          : languageRedux === 3 &&
+                            '회사정보가 업데이트되지 않았습니다.'}
                   </p>
                 </div>
                 <div className={styles.address_item}>
@@ -234,7 +265,9 @@ const DetailCompany = () => {
                   <p>
                     {languageRedux === 1
                       ? `${applyPostitions} vị trí ứng tuyển`
-                      : `${applyPostitions} application positions`}
+                      : languageRedux === 2
+                        ? `${applyPostitions} application positions`
+                        : languageRedux === 3 && `${applyPostitions} 위치`}
                   </p>
                 </div>
               </div>

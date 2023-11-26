@@ -55,7 +55,9 @@ const ModalUnsaveCompany: React.FC<IModalUnsaveCompany> = (props) => {
         >
           {languageRedux === 1
             ? 'Bạn chưa lưu thông tin công ty'
-            : 'You have not saved your company information'}
+            : languageRedux === 2
+              ? 'You have not saved your company information'
+              : languageRedux === 3 && '회사정보를 저장하지 않으셨습니다'}
         </Typography>
         <Typography
           id="modal-modal-title"
@@ -65,7 +67,10 @@ const ModalUnsaveCompany: React.FC<IModalUnsaveCompany> = (props) => {
         >
           {languageRedux === 1
             ? 'Bạn có muốn lưu thông tin công ty trước khi chuyển trang không?'
-            : 'Do you want to save your company information before switching pages?'}
+            : languageRedux === 2
+              ? 'Do you want to save your company information before switching pages?'
+              : languageRedux === 3 &&
+                '페이지를 전환하기 전에 회사 정보를 저장하시겠습니까?'}
         </Typography>
 
         <Box

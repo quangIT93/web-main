@@ -301,7 +301,9 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng chọn Thành phố'
-                  : 'Please select City'}
+                  : languageRedux === 2
+                    ? 'Please select City'
+                    : languageRedux === 3 && '도시를 선택하세요'}
               </span>
             ) : (
               <></>
@@ -343,7 +345,9 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng chọn quận'
-                  : 'Please select district'}
+                  : languageRedux === 2
+                    ? 'Please select district'
+                    : languageRedux === 3 && '지역을 선택해주세요'}
               </span>
             ) : (
               <></>
@@ -385,7 +389,9 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng chọn phường'
-                  : 'Please select award'}
+                  : languageRedux === 2
+                    ? 'Please select award'
+                    : languageRedux === 3 && '병동을 선택해주세요'}
               </span>
             ) : (
               <></>
@@ -418,19 +424,27 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập địa chỉ'
-                  : 'Please enter address'}
+                  : languageRedux === 2
+                    ? 'Please enter address'
+                    : languageRedux === 3 && '주소를 입력해주세요'}
               </span>
             ) : dataCompany && dataCompany?.address?.length < 10 ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Độ dài địa chỉ phải nhiều hơn 10 ký tự'
-                  : 'Address length must be more than 10 characters'}
+                  : languageRedux === 2
+                    ? 'Address length must be more than 10 characters'
+                    : languageRedux === 3 &&
+                      '주소 길이는 10자 이상이어야 합니다.'}
               </span>
             ) : dataCompany && dataCompany?.address?.length > 255 ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Độ dài địa chỉ không được vượt quá 255 ký tự'
-                  : 'Address length cannot exceed 255 characters'}
+                  : languageRedux === 2
+                    ? 'Address length cannot exceed 255 characters'
+                    : languageRedux === 3 &&
+                      '주소 길이는 255자를 초과할 수 없습니다.'}
               </span>
             ) : (
               <></>

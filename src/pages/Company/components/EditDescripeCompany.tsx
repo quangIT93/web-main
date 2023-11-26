@@ -99,13 +99,18 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Thông tin thêm không được bỏ trống'
-                : 'Additional information cannot be empty'}
+                : languageRedux === 2
+                  ? 'Additional information cannot be empty'
+                  : languageRedux === 3 && '추가 정보는 비워둘 수 없습니다.'}
             </span>
           ) : dataCompany?.description?.length > 1000 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Thông tin thêm không được vượt quá 1000 ký tự'
-                : 'Additional information cannot exceed 1000 characters'}
+                : languageRedux === 2
+                  ? 'Additional information cannot exceed 1000 characters'
+                  : languageRedux === 3 &&
+                    '추가 정보는 1000자를 초과할 수 없습니다.'}
             </span>
           ) : (
             <></>
