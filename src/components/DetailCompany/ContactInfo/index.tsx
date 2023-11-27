@@ -71,7 +71,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
   const locationCompany = async (id: number) => {
     try {
       const result = await apiCompany.updateLocation(id);
-      if (result && result.statusCode === 200) {
+      if (result) {
         window.location.reload();
       }
     } catch (error) {
