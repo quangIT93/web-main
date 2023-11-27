@@ -187,7 +187,11 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
             },
           }}
         >
-          {language?.history_page?.applied_jobs}
+          {languageRedux === 1
+            ? 'Các công việc đã ứng tuyển'
+            : languageRedux === 2
+              ? 'Apllied jobs'
+              : '지원한 직업들'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '0-0' && languageRedux === 1
               ? ' > ất cả'
