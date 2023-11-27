@@ -343,7 +343,11 @@ const Comunity = () => {
 
             <h3>
               {fromHistory === '31' || fromHistory === '30'
-                ? language?.history
+                ? languageRedux === 1
+                  ? 'Lịch sử'
+                  : languageRedux === 2
+                    ? 'History'
+                    : '기록'
                 : detail?.type === 1
                   ? languageRedux === 1
                     ? 'Câu chuyện việc làm'
