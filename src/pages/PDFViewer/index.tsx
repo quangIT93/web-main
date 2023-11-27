@@ -63,7 +63,7 @@ function PDFViewer() {
       if (result) {
         dispatch(setProfileMeInformationMoreV3(result));
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -123,7 +123,11 @@ function PDFViewer() {
             </h2>
             <div className="installCV">
               <p onClick={() => handleDownload(urlPdf.pdfURL, urlPdf?.name)}>
-                Tải CV
+                {languageRedux === 1
+                  ? 'Tải CV'
+                  : languageRedux === 2
+                    ? 'Download CV'
+                    : '이력서 다운로드'}
               </p>
               {/* <p></p> */}
             </div>
@@ -133,7 +137,7 @@ function PDFViewer() {
             loading={<Spin indicator={antIcon} />}
             noData={<Spin indicator={antIcon} />}
             onLoadSuccess={onDocumentLoadSuccess}
-            // className="page-cv-wrapper"
+          // className="page-cv-wrapper"
           >
             {Array.apply(null, Array(pageNumber))
               .map((x, i) => i + 1)

@@ -185,7 +185,8 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
             content:
               languageRedux === 1
                 ? 'Đổi CV thành công'
-                : 'Successfully changed CV',
+                : languageRedux === 2 ? 'Successfully changed CV'
+                  : '이력서를 성공적으로 변경했습니다.',
           });
         }
       }
@@ -564,7 +565,9 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 <p>
                   {languageRedux === 1
                     ? 'Chọn HiJob CV/Resume của bạn để Nhà tuyển dụng xem, đánh giá và lựa chọn!'
-                    : 'Choose your HiJob CV/Resume for Employers to view, evaluate and select!'}
+                    : languageRedux === 2 ?
+                      'Choose your HiJob CV/Resume for Employers to view, evaluate and select!'
+                      : '고용주가 보고 평가하고 선택할 수 있도록 HiJob 이력서/이력서를 선택하세요!'}
                 </p>
                 <Swiper
                   // navigation={true}
@@ -640,7 +643,9 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                     <span className="text-cv-default">
                                       {languageRedux === 1
                                         ? 'Đặt làm CV chính'
-                                        : 'Set as main CV'}
+                                        : languageRedux === 2
+                                          ? 'Set as main CV'
+                                          : '주요 이력서로 설정'}
                                     </span>
 
                                     <span
@@ -663,7 +668,9 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                     >
                                       {languageRedux === 1
                                         ? 'CV chính'
-                                        : 'Main CV'}
+                                        : languageRedux === 2
+                                          ? 'Main CV'
+                                          : '주요 이력서'}
                                     </span>
 
                                     <span style={{ marginLeft: '4px' }}>
