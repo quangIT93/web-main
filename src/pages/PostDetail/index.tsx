@@ -105,6 +105,7 @@ import { postDetailEn } from 'validations/lang/en/postDetail';
 
 import { setCookie } from 'cookies';
 import { Helmet } from 'react-helmet';
+import apiCompany from 'api/apiCompany';
 // import { Language } from '#components/Navbar/Css';
 
 // const itemsShare = [
@@ -189,14 +190,7 @@ const Detail = () => {
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  // const [title, setTitle] = React.useState('');
-  // const [tabValue, setTabValue] = React.useState('1');
-
-  const [positionMap, setPositionMap] = React.useState<any>({});
-
   const [thumbsSwiper, setThumbsSwiper] = React.useState<any>(null);
-
-  // const [width, setWidth] = React.useState<Number>(1050);
   const [post, setPost] = React.useState<AxiosResponse | null>(null);
   const [postPrev, setPostPrev] = React.useState<AxiosResponse | null>(null);
   const [postNext, setPostNext] = React.useState<AxiosResponse | null>(null);
@@ -204,7 +198,6 @@ const Detail = () => {
     null,
   );
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
-  // const [language, setLanguage] = React.useState<any>();
   const [textButton, setTextButton] = React.useState<string>(
     language?.post_detail_page?.apply,
   );
@@ -231,23 +224,6 @@ const Detail = () => {
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
   });
 
-  // const getlanguageApi = async () => {
-  //   try {
-  //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
-  //     );
-  //     if (result) {
-  //       setLanguage(result.data);
-  //       // setUser(result);
-  //     }
-  //   } catch (error) {
-  //     // setLoading(false);
-  //   }
-  // };
-
-  // React.useEffect(() => {
-  //   getlanguageApi();
-  // }, [languageRedux]);
   const itemsShare = [
     {
       nameShare: language?.post_detail_page?.copy_link,
@@ -842,55 +818,48 @@ const Detail = () => {
     setKeyTab(key);
   };
 
-  const handleChangeGoogleMap = () => {
-    console.log('thay doi');
+  const handleClickMapCompany = () => {
+    window.open(
+      'https://www.google.com/maps/place/' +
+        `${post?.data?.postCompanyInformation?.address}, ${
+          post?.data?.postCompanyInformation?.companyLocation
+            ? post?.data?.postCompanyInformation?.companyLocation.fullName
+            : ''
+        }, ${
+          post?.data?.postCompanyInformation?.companyLocation?.district
+            ? post?.data?.postCompanyInformation?.companyLocation?.district
+                ?.fullName
+            : ''
+        }, ${
+          post?.data?.postCompanyInformation?.companyLocation?.district
+            ?.province
+            ? post?.data?.postCompanyInformation?.companyLocation?.district
+                ?.province?.fullName
+            : ''
+        }`,
+    );
   };
 
-  const getLocation = async (address: string) => {
-    // const apiKey = 'AIzaSyAroW1_MSLcU7aNvX9FjvNZy8eps9yDtr0';
-    const apiKey = 'AIzaSyA8gjzoebEdb7Oy7x-StIr214ojMVq25qM';
-    // const apiKey = 'AIzaSyDdDbr7ZTHQxUyo3p-A0G5rHYNU3J3QTbU';
+  const locationCompany = async (id: number) => {
     try {
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-          address,
-        )}&key=${apiKey}`,
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch: ${response.status} ${response.statusText}`,
-        );
-      }
-
-      const data = await response.json();
-      console.log('Data', data);
-      console.log('address', address);
-
-      if (data.status === 'OK' && data.results.length > 0) {
-        const location = data.results[0].geometry.location;
-        setPositionMap(location);
-        return location;
-      } else {
-        throw new Error('Không tìm thấy địa điểm.');
+      const result = await apiCompany.updateLocation(id);
+      if (result) {
+        console.log(result);
       }
     } catch (error) {
-      console.error('Error fetching location:', error);
+      console.log('error', error);
     }
   };
 
   useEffect(() => {
-    if (post) {
-      const address1 = `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`;
-      getLocation(address1);
+    if (
+      post?.data?.postCompanyInformation &&
+      post?.data?.postCompanyInformation?.latitude === null
+    ) {
+      locationCompany(post?.data?.postCompanyInformation?.id);
     }
   }, [post]);
 
-  console.log('post', post);
-  console.log(
-    '  Object.keys(position).length',
-    Object.keys(positionMap).length,
-  );
   const items: TabsProps['items'] = [
     {
       key: '1',
@@ -1175,7 +1144,10 @@ const Detail = () => {
                     <p>{language?.post_detail_page?.address}</p>
                   </div>
                   <div className="div-detail-titleItem">
-                    <h5 onClick={handleChangeGoogleMap}>
+                    <h5
+                      onClick={handleClickMapCompany}
+                      style={{ color: '#0d99ff', cursor: 'pointer' }}
+                    >
                       {post?.data?.postCompanyInformation
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
                           `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
@@ -1189,14 +1161,15 @@ const Detail = () => {
                     <MailDetailPostIcon />
                     <p>Email</p>
                   </div>
-                  <div
-                    className="div-detail-titleItem"
-                    onClick={() =>
-                      handleSendMail(post?.data?.postCompanyInformation?.email)
-                    }
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <h5>
+                  <div className="div-detail-titleItem">
+                    <h5
+                      style={{ color: '#0d99ff', cursor: 'pointer' }}
+                      onClick={() =>
+                        handleSendMail(
+                          post?.data?.postCompanyInformation?.email,
+                        )
+                      }
+                    >
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.email
                         : language?.post_detail_page?.not_update}
@@ -1230,14 +1203,15 @@ const Detail = () => {
                           : '#'
                       }
                     >
-                      {post?.data?.postCompanyInformation
+                      {post?.data?.postCompanyInformation &&
+                      post?.data?.postCompanyInformation?.website
                         ? post?.data?.postCompanyInformation?.website
                         : language?.post_detail_page?.not_update}
                     </a>
                     {/* </h5> */}
                   </div>
                 </div>
-                {Object.keys(positionMap).length !== 0 && (
+                {/* {Object.keys(positionMap).length !== 0 && (
                   <div className="div-detail-items">
                     <MapContainer
                       className="leaf_let_map"
@@ -1266,7 +1240,7 @@ const Detail = () => {
                       </Marker>
                     </MapContainer>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           </div>
@@ -1614,13 +1588,57 @@ const Detail = () => {
                   </Button> */}
                 </div>
                 <div className="div-suggest">
-                  <h3>{language?.post_detail_page?.similar_jobs}</h3>
-                  <div className="item">
-                    {postNewest?.data?.posts.map(
-                      (item: PostNewest, index: null | number) => (
-                        <ItemSuggest item={item} key={index} />
-                      ),
+                  <div className="div-suggest__map">
+                    {post?.data?.postCompanyInformation?.latitude &&
+                    post?.data?.postCompanyInformation?.longitude ? (
+                      <>
+                        <h3>
+                          {languageRedux === 1 ? 'Xem bản đồ' : 'View the map'}
+                        </h3>
+                        <MapContainer
+                          className="leaf_let_map"
+                          center={[
+                            post?.data?.postCompanyInformation?.latitude,
+                            post?.data?.postCompanyInformation?.longitude,
+                          ]}
+                          zoom={20}
+                          scrollWheelZoom={true}
+                        >
+                          <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                          />
+                          <Marker
+                            position={[
+                              post?.data?.postCompanyInformation?.latitude,
+                              post?.data?.postCompanyInformation?.longitude,
+                            ]}
+                            eventHandlers={{
+                              click: () => {
+                                window.open(
+                                  'https://www.google.com/maps/place/' +
+                                    `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`,
+                                );
+                              },
+                            }}
+                          >
+                            <Popup>{`${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`}</Popup>
+                          </Marker>
+                        </MapContainer>
+                      </>
+                    ) : (
+                      <></>
                     )}
+                  </div>
+                  <div className="div-suggest__job">
+                    <h3>{language?.post_detail_page?.similar_jobs}</h3>
+                    <div className="item">
+                      {postNewest?.data?.posts.map(
+                        (item: PostNewest, index: null | number) => (
+                          <ItemSuggest item={item} key={index} />
+                        ),
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
