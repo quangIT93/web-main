@@ -22,6 +22,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import './style.scss';
 import { useLocation } from 'react-router-dom';
+import apiCompany from 'api/apiCompany';
 
 interface IContactInfo {
   company: any;
@@ -36,7 +37,6 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const [position, setPosition] = useState<any>({});
 
   L.Icon.Default.mergeOptions({
     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -68,43 +68,22 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
     window.location.href = emailLink;
   };
 
-  const getLocation = async (address: string) => {
-    // const apiKey = 'AIzaSyAroW1_MSLcU7aNvX9FjvNZy8eps9yDtr0';
-    const apiKey = 'AIzaSyA8gjzoebEdb7Oy7x-StIr214ojMVq25qM';
-    // const apiKey = 'AIzaSyDdDbr7ZTHQxUyo3p-A0G5rHYNU3J3QTbU';
+  const locationCompany = async (id: number) => {
     try {
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-          address,
-        )}&key=${apiKey}`,
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch: ${response.status} ${response.statusText}`,
-        );
-      }
-
-      const data = await response.json();
-      console.log('Data', data);
-
-      if (data.status === 'OK' && data.results.length > 0) {
-        const location = data.results[0].geometry.location;
-        setPosition(location);
-        return location;
-      } else {
-        throw new Error('Không tìm thấy địa điểm.');
+      const result = await apiCompany.updateLocation(id);
+      if (result && result.statusCode === 200) {
+        window.location.reload();
       }
     } catch (error) {
-      console.error('Error fetching location:', error);
+      console.log('error', error);
     }
   };
 
   useEffect(() => {
-    const address1 = `${company?.address}, ${company?.companyLocation?.fullName}, ${company?.companyLocation?.district?.fullName}, ${company?.companyLocation?.district?.province?.fullName}`;
-
-    getLocation(address1);
-  }, []);
+    if (company?.latitude === null && company?.longitude === null) {
+      locationCompany(company.id);
+    }
+  }, [company]);
 
   return (
     <div className={styles.contact_info_container}>
@@ -268,12 +247,12 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
             // }}
             // style={{ display: 'none' }}
           >
-            {Object.keys(position).length !== 0 ? (
+            {company?.latitude && company?.longitude ? (
               <>
                 <h3>{languageRedux === 1 ? 'Xem bản đồ' : 'View the map'}</h3>
                 <MapContainer
-                  className="leaf_let_map"
-                  center={[position.lat, position.lng]}
+                  className={styles.leaf_let_map}
+                  center={[company?.latitude, company?.longitude]}
                   zoom={20}
                   scrollWheelZoom={true}
                 >
@@ -281,7 +260,17 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
-                  <Marker position={[position.lat, position.lng]}>
+                  <Marker
+                    position={[company?.latitude, company?.longitude]}
+                    eventHandlers={{
+                      click: () => {
+                        window.open(
+                          'https://www.google.com/maps/place/' +
+                            `${company.address}, ${company.companyLocation.fullName}, ${company.companyLocation.district.fullName}, ${company.companyLocation.district.province.fullName}`,
+                        );
+                      },
+                    }}
+                  >
                     <Popup>{`${company.address}, ${company.companyLocation.fullName}, ${company.companyLocation.district.fullName}, ${company.companyLocation.district.province.fullName}`}</Popup>
                   </Marker>
                 </MapContainer>

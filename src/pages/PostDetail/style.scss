@@ -863,6 +863,8 @@
                           .leaf_let_map {
                             height: 430px;
                             z-index: 1;
+
+
                         
                             .leaflet-control-attribution {
                                 display: none;
@@ -1435,6 +1437,15 @@
           padding-top: 10px;
           border-radius: 10px;
           height: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 25px;
+
+          .div-suggest__map {
+            h3 {
+              margin-bottom: 20px;
+            }
+          }
 
           h3 {
             font-size: 24px;
