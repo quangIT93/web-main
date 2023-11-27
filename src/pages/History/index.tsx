@@ -295,7 +295,9 @@ const HistoryPost = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Lịch sử ứng tuyển/đăng tuyển'
-        : 'HiJob - Job application/posting history';
+        : languageRedux === 2
+          ? 'HiJob - Job application/posting history'
+          : 'HiJob - 입사지원/게시내역';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_history' as string,

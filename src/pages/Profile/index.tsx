@@ -249,7 +249,9 @@ const Profile: React.FC = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Tìm việc làm, tuyển dụng'
-        : 'HiJob - Find a job, recruit';
+        : languageRedux === 2 ?
+          'HiJob - Find a job, recruit' :
+          'HiJob - 일자리 찾기, 채용';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,

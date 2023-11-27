@@ -120,7 +120,9 @@ const CandidateDetail: React.FC = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Chi tiết ứng viên'
-        : 'HiJob - Candidate Details';
+        : languageRedux === 2 ?
+          'HiJob - Candidate Details' :
+          'HiJob - 후보자 세부정보';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_candidate_detail' as string,

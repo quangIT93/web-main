@@ -81,7 +81,11 @@ const Message = () => {
     // document.title = language?.messages_page?.title_page;
 
     document.title =
-      languageRedux === 1 ? 'HiJob - Nhắn tin' : 'HiJob - Messaging';
+      languageRedux === 1
+        ? 'HiJob - Nhắn tin'
+        : languageRedux === 2
+          ? 'HiJob - Messaging'
+          : 'HiJob - 문자 메시지';
     logEvent(analytics, 'screen_view' as string, {
       page_title: '/web_message ',
     });

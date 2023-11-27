@@ -184,7 +184,8 @@ const Company: React.FC<ICompany> = (props) => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Thông tin công ty'
-        : "HiJob - Company's Information";
+        : languageRedux === 2 ? "HiJob - Company's Information"
+          : "HiJob - 회사 정보";
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_company' as string,

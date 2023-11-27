@@ -247,7 +247,11 @@ const NewJobs: React.FC = () => {
     // Cập nhật title và screen name trong Firebase Analytics
     // document.title = language?.search_results_page?.title_page;
     document.title =
-      languageRedux === 1 ? 'HiJob - Tìm kiếm công việc' : 'HiJob - Job Search';
+      languageRedux === 1
+        ? 'HiJob - Tìm kiếm công việc'
+        : languageRedux === 2
+          ? 'HiJob - Job Search'
+          : 'HiJob - 채용 정보 검색';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_search' as string,

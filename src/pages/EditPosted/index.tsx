@@ -162,7 +162,9 @@ const EditPosted = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - HiJob - Chi tiết bài tuyển dụng'
-        : 'HiJob - Job Post Details';
+        : languageRedux === 2 ?
+          'HiJob - Job Post Details' :
+          'HiJob - 모집 내용';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_editPost' as string,

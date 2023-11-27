@@ -214,7 +214,9 @@ const HotJobpage: React.FC = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Bài tuyển dụng nổi bật'
-        : 'HiJob - Hot Job Post';
+        : languageRedux === 2
+          ? 'HiJob - Hot Job Post'
+          : 'HiJob - 주요 채용 게시물';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
