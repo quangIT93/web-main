@@ -90,24 +90,26 @@ const CardListCandidate: React.FC = () => {
         setUploading(false);
         message.error(
           languageRedux === 1
-            ? 'Không còn ứng cử viên để xem'
-            : 'No more candidates to see',
+            ? 'Không còn ứng cử viên để xem.'
+            : languageRedux === 2 ? 'No more candidates to see.'
+              : '더 이상 지켜볼 후보자가 없습니다.',
         );
       }
     } catch (error) {
       console.log('error', error);
     }
   };
-
+  const dispatch = useDispatch();
   useEffect(() => {
     dataCandidates();
-  }, []);
+  }, [languageRedux]);
 
   const hanhleClicKCandleSaveCandidate = async (e: any, accountId: string) => {
     try {
       const result = await candidateSearch.postBookmarkCandidate(accountId);
       if (result) {
         dataCandidates();
+        dispatch<any>(setAlertCancleSave(true));
       }
     } catch (error) {
       console.log('error', error);
@@ -131,11 +133,17 @@ const CardListCandidate: React.FC = () => {
             lineHeight: '24px',
           }}
         >
-          {languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates'}
+          {languageRedux === 1
+            ? 'Danh sách ứng viên'
+            : languageRedux === 2
+              ? 'List of candidates'
+              : '후보자 리스트'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '4-0' && languageRedux === 1
-              ? ' > Tất cả'
-              : ' > All'}
+              ? ' > ất cả'
+              : languageRedux === 2
+                ? ' > All'
+                : ' > 전부'}
           </span>
         </Typography>
       </Box>
@@ -146,7 +154,7 @@ const CardListCandidate: React.FC = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -158,7 +166,7 @@ const CardListCandidate: React.FC = () => {
                 // <Skeleton loading={loading} active>
                 <ListCardSaveCandidate
                   item={dataBookmark}
-                  handleDeleteBookmark={() => {}}
+                  handleDeleteBookmark={() => { }}
                   index={i}
                   key={i}
                   language={[]}
@@ -192,7 +200,11 @@ const CardListCandidate: React.FC = () => {
               loading={uploading}
               onClick={handleGetmoreCandidates}
             >
-              {language?.more}
+              {languageRedux === 1
+                ? 'Xem thêm'
+                : languageRedux === 2
+                  ? 'See more'
+                  : '더보기'}
               {/* Xem thêm */}
             </Button>
           </Box>

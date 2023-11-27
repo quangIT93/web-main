@@ -145,11 +145,11 @@ const NewJobs: React.FC = () => {
     // openNotificate,
     search,
   }: // setRefNav,
-  {
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-    search: boolean;
-  } = useContext(HomeValueContext);
+    {
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+      search: boolean;
+    } = useContext(HomeValueContext);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -309,7 +309,7 @@ const NewJobs: React.FC = () => {
 
   const LIST_DIS_ID =
     userFilteredCookies?.list_dis?.length > 0 ||
-    userFilteredCookies?.list_dis?.length !== undefined
+      userFilteredCookies?.list_dis?.length !== undefined
       ? userFilteredCookies?.list_dis?.map((dis: any) => dis[1])
       : [];
 
@@ -322,7 +322,7 @@ const NewJobs: React.FC = () => {
   //   .map((dis) => dis[1]);
   const LIST_CATEGORIES_ID =
     userFilteredCookies?.list_cate?.length !== 0 ||
-    userFilteredCookies?.list_cate !== undefined
+      userFilteredCookies?.list_cate !== undefined
       ? userFilteredCookies?.list_cate?.map((cate: any) => cate[1])
       : [];
   // searchParams
@@ -1076,7 +1076,11 @@ const NewJobs: React.FC = () => {
                       handleChange(e, page);
                     }}
                   >
-                    <p>{language?.more}</p>
+                    <p>{languageRedux === 1
+            ? 'Xem thêm'
+            : languageRedux === 2
+              ? 'See more'
+              : '더보기'}</p>
                     <MoreICon width={20} height={20} />
                   </Space>
                 </Stack> */}
@@ -1091,7 +1095,7 @@ const NewJobs: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -1134,7 +1138,7 @@ const NewJobs: React.FC = () => {
                   : languageRedux === 2
                     ? 'Add keywords related to the job or company name you want'
                     : languageRedux === 3 &&
-                      '원하는 회사 이름이나 업무 관련 키워드를 추가'}
+                    '원하는 회사 이름이나 업무 관련 키워드를 추가'}
               </p>
             ) : (
               <p className="title-modal_noteKeyword">
@@ -1188,29 +1192,29 @@ const NewJobs: React.FC = () => {
               options={
                 dataAllLocation
                   ? dataAllLocation?.map((dataLocation: any) => ({
-                      value: dataLocation.province_id,
-                      label: dataLocation.province_fullName,
-                      children: dataLocation.districts.map(
-                        (child: { district_id: string; district: string }) => {
-                          var dis = false;
-                          // setLocId([]);
-                          if (disableLocation) {
-                            dis = true;
-                            for (const elem of locId) {
-                              if (elem === child.district_id) {
-                                dis = false;
-                                break;
-                              }
+                    value: dataLocation.province_id,
+                    label: dataLocation.province_fullName,
+                    children: dataLocation.districts.map(
+                      (child: { district_id: string; district: string }) => {
+                        var dis = false;
+                        // setLocId([]);
+                        if (disableLocation) {
+                          dis = true;
+                          for (const elem of locId) {
+                            if (elem === child.district_id) {
+                              dis = false;
+                              break;
                             }
                           }
-                          return {
-                            value: child.district_id,
-                            label: child.district,
-                            disabled: dis,
-                          };
-                        },
-                      ),
-                    }))
+                        }
+                        return {
+                          value: child.district_id,
+                          label: child.district,
+                          disabled: dis,
+                        };
+                      },
+                    ),
+                  }))
                   : []
               }
               onChange={onChangeLocation}
@@ -1231,27 +1235,27 @@ const NewJobs: React.FC = () => {
               options={
                 dataCategories
                   ? dataCategories.map((parentCategory: any) => ({
-                      value: parentCategory.parent_category_id,
-                      label: parentCategory.parent_category,
-                      children: parentCategory.childs.map((child: any) => {
-                        var dis = false;
-                        //check id child  when disable = true
-                        if (disableCatelory) {
-                          dis = true;
-                          for (const elem of categoriesId) {
-                            if (elem === child.id) {
-                              dis = false;
-                              break;
-                            }
+                    value: parentCategory.parent_category_id,
+                    label: parentCategory.parent_category,
+                    children: parentCategory.childs.map((child: any) => {
+                      var dis = false;
+                      //check id child  when disable = true
+                      if (disableCatelory) {
+                        dis = true;
+                        for (const elem of categoriesId) {
+                          if (elem === child.id) {
+                            dis = false;
+                            break;
                           }
                         }
-                        return {
-                          value: child.id,
-                          label: child.name,
-                          disabled: dis,
-                        };
-                      }),
-                    }))
+                      }
+                      return {
+                        value: child.id,
+                        label: child.name,
+                        disabled: dis,
+                      };
+                    }),
+                  }))
                   : []
               }
               onChange={onChangeCateLory}
@@ -1393,7 +1397,7 @@ const NewJobs: React.FC = () => {
                 : languageRedux === 2
                   ? 'You have successfully added keywords, maybe notifications will bother you, you can turn off notifications in Keyword Notifications.'
                   : languageRedux === 3 &&
-                    '키워드 추가에 성공했고, 알림이 방해가 될 수 있으며, 키워드 알림란의 알림을 키워드 알림란에 알림을 꺼도 됩니다.'}
+                  '키워드 추가에 성공했고, 알림이 방해가 될 수 있으며, 키워드 알림란의 알림을 키워드 알림란에 알림을 꺼도 됩니다.'}
             </p>
             <p className="text-modal_createKeySuccess">
               {languageRedux === 1
@@ -1401,7 +1405,7 @@ const NewJobs: React.FC = () => {
                 : languageRedux === 2
                   ? 'Do you want to go to keyword notifications?'
                   : languageRedux === 3 &&
-                    '키워드 알림 항목으로 이동하시겠습니까?'}
+                  '키워드 알림 항목으로 이동하시겠습니까?'}
             </p>
             <div
               style={{

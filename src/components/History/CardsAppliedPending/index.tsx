@@ -147,7 +147,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // click card
@@ -226,7 +226,11 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                 loading={uploading}
                 onClick={handleClickAddItem}
               >
-                {language?.more}
+                {languageRedux === 1
+                  ? 'Xem thêm'
+                  : languageRedux === 2
+                    ? 'See more'
+                    : '더보기'}
               </Button>
             </Box>
           </div>

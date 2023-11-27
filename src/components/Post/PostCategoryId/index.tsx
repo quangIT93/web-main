@@ -100,36 +100,48 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         component="label"
         htmlFor="jobTitle"
       >
-        {language?.category} <span style={{ color: 'red' }}>*</span>
+        {
+          languageRedux === 1
+            ? "Danh mục nghề nghiệp"
+            : languageRedux === 2
+              ? "Category"
+              : '직업 디렉토리'
+        } <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Cascader
         defaultValue={fillCate}
         value={fillCate}
-        placeholder="Loại hình công việc"
+        placeholder={
+          languageRedux === 1
+            ? "Danh mục nghề nghiệp"
+            : languageRedux === 2
+              ? "Career category"
+              : '직업 디렉토리'
+        }
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true;
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false;
-                        break;
-                      }
+              value: parentCategory.parent_category_id,
+              label: parentCategory.parent_category,
+              children: parentCategory.childs.map((child: any) => {
+                var dis = false;
+                //check id child  when disable = true
+                if (disable) {
+                  dis = true;
+                  for (const elem of categoriesId) {
+                    if (elem === child.id) {
+                      dis = false;
+                      break;
                     }
                   }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                }
+                return {
+                  value: child.id,
+                  label: child.name,
+                  disabled: dis,
+                };
+              }),
+            }))
             : []
         }
         dropdownRender={DropdownRender}
@@ -146,15 +158,15 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
       />
       <div
         className="wrap-noti_input"
-        // style={{ position: 'absolute', bottom: '-15px' }}
+      // style={{ position: 'absolute', bottom: '-15px' }}
       >
         {fillCate.length === 0 ? (
           <span className="helper-text">
             {languageRedux === 1
-              ? 'Vui lòng nhập tên phường'
+              ? 'Vui lòng chọn danh mục nghề nghiệp'
               : languageRedux === 2
-                ? 'Please enter ward name'
-                : languageRedux === 3 && '병동명을 입력해주세요'}
+                ? 'Please select a career category'
+                : languageRedux === 3 && '직업 카테고리를 선택해주세요.'}
           </span>
         ) : (
           <></>

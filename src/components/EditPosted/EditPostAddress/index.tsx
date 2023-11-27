@@ -215,7 +215,15 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="addressTitle"
           >
-            {language?.post_page.city} <span style={{ color: 'red' }}>*</span>
+            {
+              languageRedux === 1
+                ? 'Thành phố'
+                : languageRedux === 2
+                  ? 'City'
+                  : languageRedux === 3
+                    ? '도시'
+                    : 'Thành phố'
+            } <span style={{ color: 'red' }}>*</span>
           </Typography>
 
           <Autocomplete
@@ -227,7 +235,15 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder={language?.post_page.place_city}
+                placeholder={
+                  languageRedux === 1
+                    ? 'Thành phố'
+                    : languageRedux === 2
+                      ? 'City'
+                      : languageRedux === 3
+                        ? '도시'
+                        : 'Thành phố'
+                }
                 size="small"
                 value={selectedProvince?.province_fullName}
               />
@@ -246,7 +262,15 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {language?.post_page.district}{' '}
+            {
+              languageRedux === 1
+                ? 'Quận'
+                : languageRedux === 2
+                  ? 'District'
+                  : languageRedux === 3
+                    ? '군'
+                    : 'Quận'
+            }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
@@ -258,7 +282,15 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             renderInput={(params: any) => (
               <TextField
                 {...params}
-                placeholder={language?.post_page.place_district}
+                placeholder={
+                  languageRedux === 1
+                    ? 'Quận'
+                    : languageRedux === 2
+                      ? 'District'
+                      : languageRedux === 3
+                        ? '군'
+                        : 'Quận'
+                }
                 size="small"
               />
             )}
@@ -277,7 +309,15 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {language?.post_page.ward} <span style={{ color: 'red' }}>*</span>
+            {
+              languageRedux === 1
+                ? 'Phường/Xã'
+                : languageRedux === 2
+                  ? 'Ward'
+                  : languageRedux === 3
+                    ? '동/읍'
+                    : 'Phường/Xã'
+            } <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataWards ? dataWards : []}
@@ -288,7 +328,15 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder={language?.post_page.place_ward}
+                placeholder={
+                  languageRedux === 1
+                    ? 'Phường/Xã'
+                    : languageRedux === 2
+                      ? 'Ward'
+                      : languageRedux === 3
+                        ? '동/읍'
+                        : 'Phường/Xã'
+                }
                 size="small"
               />
             )}
@@ -306,7 +354,15 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {language?.post_page.address}{' '}
+            {
+              languageRedux === 1
+                ? 'Địa chỉ'
+                : languageRedux === 2
+                  ? 'Address'
+                  : languageRedux === 3
+                    ? '주소'
+                    : 'Địa chỉ'
+            }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <TextField
@@ -317,7 +373,15 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             onChange={handleChangeAddress}
             size="small"
             sx={{ width: '100%', marginTop: '0.5rem' }}
-            placeholder={language?.post_page.place_address}
+            placeholder={
+              languageRedux === 1
+                ? 'Địa chỉ'
+                : languageRedux === 2
+                  ? 'Address'
+                  : languageRedux === 3
+                    ? '주소'
+                    : 'Địa chỉ'
+            }
           />
         </div>
       </div>

@@ -15,7 +15,7 @@ interface IEditPostPeriodDate {
 }
 
 const EditPostPeriodDate: React.FC<IEditPostPeriodDate> = (props) => {
-  const { setEditDataPosted, editDataPosted, language } = props
+  const { setEditDataPosted, editDataPosted, language, languageRedux } = props
 
   // const [isDatePeriod, setIsPeriodDate] = useState<number>(1)
 
@@ -32,7 +32,13 @@ const EditPostPeriodDate: React.FC<IEditPostPeriodDate> = (props) => {
     <FormControl sx={{ marginTop: '24px' }}>
       <FormLabel id="limit-time" component="legend" sx={styleLabel}>
         {
-          language?.working_time
+          languageRedux === 1
+            ? "Thời gian làm việc"
+            : languageRedux === 2
+              ? "Working period"
+              : languageRedux === 3
+                ? '근무 기간'
+                : "Thời gian làm việc"
         }{' '}
         <span style={{ color: 'red' }}>*</span>
       </FormLabel>
@@ -47,7 +53,13 @@ const EditPostPeriodDate: React.FC<IEditPostPeriodDate> = (props) => {
           value={0}
           control={<Radio id="limited-time-radio1" />}
           label={
-            language?.indefinite_term
+            languageRedux === 1
+              ? "Không thời hạn"
+              : languageRedux === 2
+                ? "Indefinite"
+                : languageRedux === 3
+                  ? '무기한'
+                  : "Không thời hạn"
           }
           htmlFor="limited-time-radio1"
         />
@@ -55,7 +67,13 @@ const EditPostPeriodDate: React.FC<IEditPostPeriodDate> = (props) => {
           value={1}
           control={<Radio id="limited-time-radio" />}
           label={
-            language?.fixed_term
+            languageRedux === 1
+              ? "Có thời hạn"
+              : languageRedux === 2
+                ? "Fixed - term"
+                : languageRedux === 3
+                  ? '마감일이 있습니다'
+                  : "Có thời hạn"
           }
           htmlFor="limited-time-radio"
         />

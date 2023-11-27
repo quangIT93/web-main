@@ -48,7 +48,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={jobType ? jobType : undefined}
-      // defaultValue={jobType ? jobType : 5}
+    // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -125,7 +125,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({
             ? 'Tất cả'
             : languageRedux === 2
               ? 'All'
-              : languageRedux === 3 && '모두',
+              : languageRedux === 3 && '전부',
       },
       ...result.data,
     ];

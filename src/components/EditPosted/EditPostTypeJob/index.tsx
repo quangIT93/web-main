@@ -49,7 +49,15 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
   return (
     <FormControl sx={{ width: '100%', marginTop: '24px' }}>
       <FormLabel id="editPostTypeJob" sx={styleLabel}>
-        {language?.job_type1} <span style={{ color: 'red' }}>*</span>
+        {
+          languageRedux === 1
+            ? "Loại công việc"
+            : languageRedux === 2
+              ? "Job types"
+              : languageRedux === 3
+                ? '일의 종류'
+                : "Loại công việc"
+        } <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row

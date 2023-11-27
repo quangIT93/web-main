@@ -61,7 +61,13 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder={language?.post_page?.place_phone}
+      placeholder={
+        languageRedux === 1
+          ? "Số điện thoại liên hệ"
+          : languageRedux === 2
+            ? "Contact phone number"
+            : '연락 전화번호'
+      }
       inputProps={{ maxLength: 10 }}
       size="small"
       sx={{ width: '100%', marginTop: '8px' }}
@@ -156,7 +162,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
                 : languageRedux === 2
                   ? 'The phone number is not in the correct format'
                   : languageRedux === 3 &&
-                    '전화 번호의 형식이 올바르지 않습니다.'}
+                  '전화 번호의 형식이 올바르지 않습니다.'}
             </span>
           ) : dataCompany && dataCompany?.phone?.length === 0 ? (
             <span className="helper-text">
@@ -169,9 +175,8 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${
-            dataCompany?.phone?.length ? dataCompany?.phone?.length : '0'
-          }/10`}</span>
+          <span className="number-text">{`${dataCompany?.phone?.length ? dataCompany?.phone?.length : '0'
+            }/10`}</span>
         </div>
       </div>
       <div className="edit-mail-company">
@@ -193,7 +198,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_email}
           disabled={is_profile ? true : false}
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.email?.length === 0 ? (
@@ -211,7 +216,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
                 : languageRedux === 2
                   ? 'Email cannot exceed 50 characters'
                   : languageRedux === 3 &&
-                    '이메일은 50자를 초과할 수 없습니다.'}
+                  '이메일은 50자를 초과할 수 없습니다.'}
             </span>
           ) : regexCheckEmail.test(dataCompany?.email) === false ? (
             <span className="helper-text">
@@ -224,9 +229,8 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${
-            dataCompany?.email?.length ? dataCompany?.email?.length : '0'
-          }/50`}</span>
+          <span className="number-text">{`${dataCompany?.email?.length ? dataCompany?.email?.length : '0'
+            }/50`}</span>
         </div>
       </div>
     </div>

@@ -221,7 +221,11 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     // Disable the "All" checkbox at the root level
     showCheckedStrategy: SHOW_PARENT,
     // treeDefaultExpandAll,
-    placeholder: language?.career_objective,
+    placeholder: languageRedux === 1
+      ? 'Lĩnh vực quan tâm'
+      : languageRedux === 2
+        ? 'Career objective'
+        : '관심 분야',
     style: {
       width: '100%',
       zIndex: '1302 !important',
@@ -268,12 +272,21 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
           component="h2"
           align="center"
         >
-          {language?.career_objective}
+          {languageRedux === 1
+            ? 'Lĩnh vực quan tâm'
+            : languageRedux === 2
+              ? 'Career objective'
+              : '관심 분야'}
         </Typography>
 
         <TreeSelect {...tProps} />
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {language?.profile_page?.save_info}
+          {languageRedux === 1
+            ? 'Lưu thông tin'
+            : languageRedux === 2
+              ? 'Save information'
+              : languageRedux === 3 &&
+              '정보 저장'}
         </Button>
       </Box>
     </Modal>

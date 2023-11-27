@@ -44,7 +44,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={SALARY_TYPE}
-      // defaultValue={SALARY_TYPE}
+    // defaultValue={SALARY_TYPE}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -84,7 +84,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
           : languageRedux === 2
             ? 'All'
             : languageRedux === 3
-              ? '모두'
+              ? '전부'
               : 'Tất cả',
     },
   ]);
@@ -113,7 +113,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
             : languageRedux === 2
               ? 'All'
               : languageRedux === 3
-                ? '모두'
+                ? '전부'
                 : 'Tất cả',
       },
       ...result.data,

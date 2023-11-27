@@ -490,7 +490,7 @@ const EditPosted = () => {
             : languageRedux === 2
               ? 'Phone number cannot be blank and must be less than 10 characters.'
               : languageRedux === 3 &&
-                '전화번호는 비워둘 수 없으며 10자 미만이어야 합니다.',
+              '전화번호는 비워둘 수 없으며 10자 미만이어야 합니다.',
         checkForm: false,
         idError: 10,
       };
@@ -519,7 +519,7 @@ const EditPosted = () => {
             : languageRedux === 2
               ? 'The start date cannot exceed the end date'
               : languageRedux === 3 &&
-                '시작 날짜는 종료 날짜를 초과할 수 없습니다.',
+              '시작 날짜는 종료 날짜를 초과할 수 없습니다.',
         checkForm: false,
         idError: 12,
       };
@@ -652,7 +652,15 @@ const EditPosted = () => {
         <CategoryDropdown /> */}
         <div className="edit-posted_main">
           <div className="edit-title_post">
-            <h1>{language?.post_page?.edit_post}</h1>
+            <h1>
+              {
+                languageRedux === 1
+                  ? "Chỉnh sửa bài đăng tuyển dụng"
+                  : languageRedux === 2
+                    ? "Edit job posting"
+                    : languageRedux === 3 && "채용 공고 편집"
+              }
+            </h1>
           </div>
           <Skeleton loading={loading} active>
             <form action="">
@@ -660,6 +668,7 @@ const EditPosted = () => {
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
                 language={language}
+                languageRedux={languageRedux}
               />
 
               <EditPostAddress
@@ -711,6 +720,7 @@ const EditPosted = () => {
                   setEditDataPosted={setEditDataPosted}
                   editDataPosted={memoizedEditDataPosted}
                   language={language}
+                  languageRedux={languageRedux}
                 />
               ) : (
                 <></>
@@ -720,6 +730,7 @@ const EditPosted = () => {
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
                 language={language}
+                languageRedux={languageRedux}
               />
               <EditPostCategoryId
                 setEditDataPosted={setEditDataPosted}
@@ -741,6 +752,7 @@ const EditPosted = () => {
                 editDataPosted={memoizedEditDataPosted}
                 salaryType={editDataPosted?.salaryType}
                 language={language}
+                languageRedux={languageRedux}
               />
 
               <EditPostFilterSalary
@@ -771,7 +783,13 @@ const EditPosted = () => {
                 onClick={handleSubmit}
                 className="btn-edit_submitForm"
               >
-                {language?.post_page?.save_edit_post}
+                {
+                  languageRedux === 1
+                    ? "Lưu chỉnh sửa"
+                    : languageRedux === 2
+                      ? "Save edits"
+                      : '수정사항 저장'
+                }
               </button>
             </form>
           </Skeleton>

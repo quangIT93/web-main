@@ -93,7 +93,9 @@ const CardListBlogSave = () => {
   // commun
   const handleGetAllWorkingStory = async () => {
     try {
-      const result = await communityApi.getCommunityBookmarked(page);
+      const result = await communityApi.getCommunityBookmarked(page,
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+      );
       if (result) {
         setStories(result?.data?.communications);
         if (result?.data?.communications?.length < 10) {
@@ -116,7 +118,9 @@ const CardListBlogSave = () => {
     try {
       setUploading(true);
       const nextPage = parseInt(page) + 1;
-      const result = await communityApi.getCommunityBookmarked(nextPage);
+      const result = await communityApi.getCommunityBookmarked(nextPage,
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi'
+      );
 
       //
       if (result && result?.data?.communications?.length !== 0) {
@@ -175,10 +179,10 @@ const CardListBlogSave = () => {
                 : languageRedux === 3 && '글 목록'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
               {searchParams.get('c') === '3-0' && languageRedux === 1
-                ? '> Đã lưu'
+                ? '  Đã lưu'
                 : languageRedux === 2
-                  ? '> Saved articles'
-                  : languageRedux === 3 && '> 저정되기'}
+                  ? ' > Saved articles'
+                  : languageRedux === 3 && ' > 저정되기'}
             </span>
           </Typography>
         </div>
@@ -196,21 +200,33 @@ const CardListBlogSave = () => {
                 onClick={handleClickItemMenu}
               >
                 <LikeIcon />
-                <p>{language?.history_page?.likes}</p>
+                <p>{languageRedux === 1
+            ? 'Lượt thích'
+            : languageRedux === 2
+              ? 'Likes"'
+              : '좋아요'}</p>
               </li>
               <li
                 className="dropdown_item-2"
                 style={{ display: openMenu ? 'flex' : 'none' }}
               >
                 <EysIcon />
-                <p>{language?.history_page?.views}</p>
+                <p>{languageRedux === 1
+            ? 'Lượt xem'
+            : languageRedux === 2
+              ? 'Views"'
+              : '보다'}</p>
               </li>
               <li
                 className="dropdown_item-3"
                 style={{ display: openMenu ? 'flex' : 'none' }}
               >
                 <CommentIcon />
-                <p>{language?.history_page?.comments}</p>
+                <p>{languageRedux === 1
+            ? 'Lượt bình luận'
+            : languageRedux === 2
+              ? 'Comments"'
+              : '댓글 수'}</p>
               </li>
             </ul> */}
         {/* </div> */}
@@ -261,7 +277,11 @@ const CardListBlogSave = () => {
               loading={uploading}
               onClick={handleChange}
             >
-              {language?.more}
+              {languageRedux === 1
+                ? 'Xem thêm'
+                : languageRedux === 2
+                  ? 'See more'
+                  : '더보기'}
             </Button>
           </Box>
         ) : (

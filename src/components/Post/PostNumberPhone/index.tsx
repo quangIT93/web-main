@@ -49,7 +49,13 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder={language?.post_page?.place_phone}
+      placeholder={
+        languageRedux === 1
+          ? "Số điện thoại liên hệ"
+          : languageRedux === 2
+            ? "Contact phone number"
+            : '연락 전화번호'
+      }
       maxLength={11}
       id="post_job_phone"
     />
@@ -77,7 +83,13 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         component="label"
         htmlFor="company"
       >
-        {language?.contact_phone_number} <span style={{ color: 'red' }}>*</span>
+        {
+          languageRedux === 1
+            ? "Số điện thoại liên hệ"
+            : languageRedux === 2
+              ? "Contact phone number"
+              : '연락 전화번호'
+        } <span style={{ color: 'red' }}>*</span>
       </Typography>
       <NumericInput
         style={{
@@ -107,7 +119,7 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
               : languageRedux === 2
                 ? 'The phone number is not in the correct format'
                 : languageRedux === 3 &&
-                  '전화 번호의 형식이 올바르지 않습니다.'}
+                '전화 번호의 형식이 올바르지 않습니다.'}
           </span>
         ) : phone && phone.length === 0 ? (
           <span className="helper-text">
@@ -120,9 +132,8 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         ) : (
           <></>
         )}
-        <span className="number-text">{`${
-          phone ? phone.length : '0'
-        }/11`}</span>
+        <span className="number-text">{`${phone ? phone.length : '0'
+          }/11`}</span>
       </div>
       {/* <Input
         value={`${phone}d`}

@@ -17,7 +17,7 @@ interface IPostPeriodDate {
 }
 
 const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
-  const { setIsPeriodDate, isPeriodDate, language , setIsValidSubmit} = props;
+  const { setIsPeriodDate, isPeriodDate, language, setIsValidSubmit, languageRedux } = props;
 
   const handleChangePeriodDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     // console.log('thoi gian lam viec', e.target.value);
@@ -32,7 +32,15 @@ const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
         component="legend"
         sx={styleLabel}
       >
-        {language?.working_time} <span style={{ color: 'red' }}>*</span>
+        {
+          languageRedux === 1
+            ? "Thời gian làm việc"
+            : languageRedux === 2
+              ? "Working period"
+              : languageRedux === 3
+                ? '근무 기간'
+                : "Thời gian làm việc"
+        } <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row
@@ -44,13 +52,29 @@ const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
         <FormControlLabel
           value={0}
           control={<Radio id="limited-time-radio1" />}
-          label={language?.indefinite_term}
+          label={
+            languageRedux === 1
+              ? "Không thời hạn"
+              : languageRedux === 2
+                ? "Indefinite"
+                : languageRedux === 3
+                  ? '무기한'
+                  : "Không thời hạn"
+          }
           htmlFor="limited-time-radio1"
         />
         <FormControlLabel
           value={1}
           control={<Radio id="limited-time-radio" />}
-          label={language?.fixed_term}
+          label={
+            languageRedux === 1
+              ? "Có thời hạn"
+              : languageRedux === 2
+                ? "Fixed - term"
+                : languageRedux === 3
+                  ? '마감일이 있습니다'
+                  : "Có thời hạn"
+          }
           htmlFor="limited-time-radio"
         />
       </RadioGroup>

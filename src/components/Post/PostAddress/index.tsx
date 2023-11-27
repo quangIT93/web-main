@@ -172,7 +172,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       <div className="post-address_top">
         <div
           className="post-title"
-          // style={{ position: 'relative' }}
+        // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -180,7 +180,15 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {language?.post_page?.city} <span style={{ color: 'red' }}>*</span>
+            {
+              languageRedux === 1
+                ? 'Thành phố'
+                : languageRedux === 2
+                  ? 'City'
+                  : languageRedux === 3
+                    ? '도시'
+                    : 'Thành phố'
+            } <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataProvinces ? dataProvinces : []}
@@ -192,16 +200,24 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder={language?.post_page?.place_city}
+                placeholder={
+                  languageRedux === 1
+                    ? 'Thành phố'
+                    : languageRedux === 2
+                      ? 'City'
+                      : languageRedux === 3
+                        ? '도시'
+                        : 'Thành phố'
+                }
                 size="small"
-                // id="post_job_city"
+              // id="post_job_city"
               />
             )}
             style={{ marginTop: '0.5rem' }}
           />
           <div
             className="wrap-noti_input"
-            // style={{ position: 'absolute', bottom: '-15px' }}
+          // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {!fillProvince && selectedProvince === null ? (
               <span className="helper-text">
@@ -218,7 +234,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
         </div>
         <div
           className="post-title"
-          // style={{ position: 'relative' }}
+        // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -226,7 +242,15 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {language?.post_page?.district}{' '}
+            {
+              languageRedux === 1
+                ? 'Quận'
+                : languageRedux === 2
+                  ? 'District'
+                  : languageRedux === 3
+                    ? '군'
+                    : 'Quận'
+            }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
@@ -239,7 +263,15 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             renderInput={(params: any) => (
               <TextField
                 {...params}
-                placeholder={language?.post_page?.place_district}
+                placeholder={
+                  languageRedux === 1
+                    ? 'Quận'
+                    : languageRedux === 2
+                      ? 'District'
+                      : languageRedux === 3
+                        ? '군'
+                        : 'Quận'
+                }
                 size="small"
               />
             )}
@@ -247,7 +279,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           />
           <div
             className="wrap-noti_input"
-            // style={{ position: 'absolute', bottom: '-15px' }}
+          // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {selectedDistrict === null && !fillDistrict ? (
               <span className="helper-text">
@@ -266,7 +298,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       <div className="post-address_bottom">
         <div
           className="post-title"
-          // style={{ position: 'relative' }}
+        // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -274,7 +306,15 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {language?.post_page?.ward} <span style={{ color: 'red' }}>*</span>
+            {
+              languageRedux === 1
+                ? 'Phường/Xã'
+                : languageRedux === 2
+                  ? 'Ward'
+                  : languageRedux === 3
+                    ? '동/읍'
+                    : 'Phường/Xã'
+            } <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataWard ? dataWard : []}
@@ -286,7 +326,15 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder={language?.post_page?.place_ward}
+                placeholder={
+                  languageRedux === 1
+                    ? 'Phường/Xã'
+                    : languageRedux === 2
+                      ? 'Ward'
+                      : languageRedux === 3
+                        ? '동/읍'
+                        : 'Phường/Xã'
+                }
                 size="small"
               />
             )}
@@ -294,7 +342,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           />
           <div
             className="wrap-noti_input"
-            // style={{ position: 'absolute', bottom: '-15px' }}
+          // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {selectedWard === null && fillWardId?.id === '' ? (
               <span className="helper-text">
@@ -316,7 +364,15 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {language?.post_page?.address}{' '}
+            {
+              languageRedux === 1
+                ? 'Địa chỉ'
+                : languageRedux === 2
+                  ? 'Address'
+                  : languageRedux === 3
+                    ? '주소'
+                    : 'Địa chỉ'
+            }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <TextField
@@ -327,7 +383,15 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             onChange={handleChangeAddress}
             size="small"
             sx={{ width: '100%', marginTop: '0.5rem' }}
-            placeholder={language?.post_page?.place_address}
+            placeholder={
+              languageRedux === 1
+                ? 'Địa chỉ'
+                : languageRedux === 2
+                  ? 'Address'
+                  : languageRedux === 3
+                    ? '주소'
+                    : 'Địa chỉ'
+            }
           />
           <div className="wrap-noti_input">
             {address && address.length > 255 ? (
@@ -337,7 +401,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
                   : languageRedux === 2
                     ? 'Address cannot exceed 255 characters'
                     : languageRedux === 3 &&
-                      '주소는 255자를 초과할 수 없습니다.'}
+                    '주소는 255자를 초과할 수 없습니다.'}
               </span>
             ) : !address ? (
               <span className="helper-text">
@@ -350,9 +414,8 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             ) : (
               <></>
             )}
-            <span className="number-text">{`${
-              address ? address.length : '0'
-            }/255`}</span>
+            <span className="number-text">{`${address ? address.length : '0'
+              }/255`}</span>
           </div>
         </div>
       </div>

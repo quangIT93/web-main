@@ -217,10 +217,10 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
                 : languageRedux === 3 && '게시된 작업'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
               {searchParams.get('c') === '2-2' && languageRedux === 1
-                ? '> Các công việc đã đóng'
+                ? ' > Các công việc đã đóng'
                 : languageRedux === 2
-                  ? '> Closed jobs'
-                  : languageRedux === 3 && '> 채용이 마감되었습니다'}
+                  ? ' > Closed jobs'
+                  : languageRedux === 3 && ' > 채용이 마감되었습니다'}
             </span>
           </Typography>
         </div>
@@ -234,8 +234,16 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">{language?.history_page?.latest}</MenuItem>
-          <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
+          <MenuItem value="Mới nhất">{languageRedux === 1
+            ? 'Mới nhất'
+            : languageRedux === 2
+              ? 'Newest'
+              : languageRedux === 3 && '최신'}</MenuItem>
+          <MenuItem value="Cũ nhất">{languageRedux === 1
+            ? 'Cũ nhất'
+            : languageRedux === 2
+              ? 'Oldest'
+              : languageRedux === 3 && '가장 오래된'}</MenuItem>
         </TextField>
       </Box>
 
@@ -249,7 +257,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={loading}
-            // onClick={handleClose}
+          // onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -288,7 +296,11 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
                   loading={uploading}
                   onClick={handleAddItem}
                 >
-                  {language?.more}
+                  {languageRedux === 1
+                    ? 'Xem thêm'
+                    : languageRedux === 2
+                      ? 'See more'
+                      : '더보기'}
                 </Button>
               </Box>
             </div>

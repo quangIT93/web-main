@@ -216,11 +216,19 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
             lineHeight: '24px',
           }}
         >
-          {language?.history_page?.saved_jobs}
+          {
+            languageRedux === 1
+              ? 'Các công việc đã lưu'
+              : languageRedux === 2
+                ? 'Saved jobs'
+                : languageRedux === 3 && '저장된 작업'
+          }
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '1-0' && languageRedux === 1
-              ? ' > Tất cả'
-              : ' > All'}
+              ? ' > ất cả'
+              : languageRedux === 2
+                ? ' > All'
+                : ' > 전부'}
           </span>
         </Typography>
         <TextField
@@ -233,8 +241,20 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">{language?.history_page?.latest}</MenuItem>
-          <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
+          <MenuItem value="Mới nhất">{
+            languageRedux === 1
+              ? 'Mới nhất'
+              : languageRedux === 2
+                ? 'Newest'
+                : languageRedux === 3 && '최신'
+          }</MenuItem>
+          <MenuItem value="Cũ nhất">{
+            languageRedux === 1
+              ? 'Cũ nhất'
+              : languageRedux === 2
+                ? 'Oldest'
+                : languageRedux === 3 && '가장 오래된'
+          }</MenuItem>
         </TextField>
       </Box>
       <Backdrop
@@ -244,7 +264,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={loading}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -285,7 +305,11 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
               loading={uploading}
               onClick={handleClickAddItem}
             >
-              {language?.more}
+              {languageRedux === 1
+                ? 'Xem thêm'
+                : languageRedux === 2
+                  ? 'See more'
+                  : '더보기'}
             </Button>
           </Box>
         </div>

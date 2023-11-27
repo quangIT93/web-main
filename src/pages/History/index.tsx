@@ -92,8 +92,8 @@ const HistoryPost = () => {
         : companyView === 50
           ? '5-0'
           : // companyView === 51
-            //   ? '5-1' :
-            community_post === 31
+          //   ? '5-1' :
+          community_post === 31
             ? '3-1'
             : community_post === 30
               ? '3-0'
@@ -171,7 +171,7 @@ const HistoryPost = () => {
           ? 'Tất cả'
           : languageRedux === 2
             ? 'All'
-            : languageRedux === 3 && '모두',
+            : languageRedux === 3 && '전부',
       ],
     },
     {
@@ -189,7 +189,7 @@ const HistoryPost = () => {
           ? 'Tất cả'
           : languageRedux === 2
             ? 'All'
-            : languageRedux === 3 && '모두',
+            : languageRedux === 3 && '전부',
       ],
     },
     {
@@ -206,7 +206,7 @@ const HistoryPost = () => {
           ? 'Tất cả'
           : languageRedux === 2
             ? 'All'
-            : languageRedux === 3 && '모두',
+            : languageRedux === 3 && '전부',
         languageRedux === 1
           ? 'Các công việc chưa đóng'
           : languageRedux === 2
@@ -261,7 +261,7 @@ const HistoryPost = () => {
           ? 'Tất cả'
           : languageRedux === 2
             ? 'All'
-            : languageRedux === 3 && '모두',
+            : languageRedux === 3 && '전부',
         // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
         // language?.history_page?.saved,
         // language?.history_page?.posts_created,
@@ -343,10 +343,10 @@ const HistoryPost = () => {
       {activeChild === '0-0'
         ? language?.all
         : // : activeChild === '0-1'
-          // ? 'Đã được duyệt'
-          // : activeChild === '0-2'
-          // ? 'Đang chờ duyệt'
-          ''}
+        // ? 'Đã được duyệt'
+        // : activeChild === '0-2'
+        // ? 'Đang chờ duyệt'
+        ''}
 
       {activeChild === '1-0' ? language?.all : ''}
 
@@ -355,7 +355,11 @@ const HistoryPost = () => {
         : activeChild === '2-1'
           ? language?.history_page?.not_closed_yet
           : activeChild === '2-2'
-            ? language?.closed
+            ? languageRedux === 1
+              ? 'Đã đóng'
+              : languageRedux === 2
+                ? 'Closed'
+                : '닫은'
             : ''}
       {activeChild === '3-0'
         ? language?.history_page?.saved
@@ -368,8 +372,8 @@ const HistoryPost = () => {
       {activeChild === '5-0'
         ? language?.all
         : // : activeChild === '5-1'
-          //   ? language?.history_page?.have_been_created
-          ''}
+        //   ? language?.history_page?.have_been_created
+        ''}
     </Typography>,
   ];
   const CardsPost = useMemo(() => {
@@ -571,9 +575,8 @@ const HistoryPost = () => {
                     header={
                       <div
                         onClick={() => handleClickSubTitle(index)}
-                        className={`${
-                          ItemLeft === index ? 'activeItem' : ''
-                        } panel-title_text`}
+                        className={`${ItemLeft === index ? 'activeItem' : ''
+                          } panel-title_text`}
                       >
                         <RightOutlined style={{ fontSize: '12px' }} />
                         <span style={{ marginLeft: '8px' }}>{item.title}</span>

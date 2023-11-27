@@ -183,10 +183,10 @@ const ThemesJob: React.FC = () => {
         // null,
         // Number(searchParams.get('categories-id')),
         profile.length !== 0 &&
-          profile?.profileLocations?.length > 0 &&
-          profile?.profileLocations?.map((item: any) => {
-            return item.province.id;
-          }),
+        profile?.profileLocations?.length > 0 &&
+        profile?.profileLocations?.map((item: any) => {
+          return item.province.id;
+        }),
         null,
         null,
         20,
@@ -304,7 +304,7 @@ const ThemesJob: React.FC = () => {
                 : languageRedux === 2
                   ? 'Quickly find a job that fits your needs.'
                   : languageRedux === 3 &&
-                    '귀하의 필요에 맞는 일자리를 빠르게 찾으십시오.'}
+                  '귀하의 필요에 맞는 일자리를 빠르게 찾으십시오.'}
             </p>
           </div>
           <div className="suggest-job-not-loging_right">
@@ -335,7 +335,7 @@ const ThemesJob: React.FC = () => {
                 container
                 spacing={3}
                 columns={{ xs: 12, sm: 4, md: 12 }}
-                // sx={{ marginTop: '-8px' }}
+              // sx={{ marginTop: '-8px' }}
               >
                 {nearJob.map((item: PostNewestV3, index: number) => (
                   <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
@@ -359,7 +359,11 @@ const ThemesJob: React.FC = () => {
                 {localStorage.getItem('accessToken') ? (
                   <div className="more-job">
                     <button onClick={handleChange}>
-                      <p>{language?.more}</p>
+                      <p>{languageRedux === 1
+            ? 'Xem thêm'
+            : languageRedux === 2
+              ? 'See more'
+              : '더보기'}</p>
                       <MoreICon width={20} height={20} />
                     </button>
                   </div>
@@ -393,7 +397,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>
@@ -405,8 +409,8 @@ const ThemesJob: React.FC = () => {
             style={{
               display:
                 !nearJob ||
-                nearJob.length === 0 ||
-                !localStorage.getItem('accessToken')
+                  nearJob.length === 0 ||
+                  !localStorage.getItem('accessToken')
                   ? 'none'
                   : 'flex',
             }}

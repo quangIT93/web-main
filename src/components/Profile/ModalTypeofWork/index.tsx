@@ -89,7 +89,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
         dispatch(setAlertEditInfo(true));
         setOpenModalTypeofWork(false);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -121,7 +121,12 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
           component="h2"
           align="center"
         >
-          {/* {language?.working_location} */}
+          {/* {languageRedux === 1
+              ? 'Khu vực làm việc'
+              : languageRedux === 2
+                ? 'Working location'
+                : languageRedux === 3 &&
+                '근무 위치'} */}
           {languageRedux === 1
             ? 'Loại hình công việc'
             : languageRedux === 2
@@ -165,7 +170,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
             placeholder={'Loại công việc'}
             size="small"
             sx={{ width: '100%' }}
-            // error={!gender} // Đánh dấu lỗi
+          // error={!gender} // Đánh dấu lỗi
           >
             <MenuItem value={1}>
               {languageRedux === 1
@@ -178,7 +183,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
               {languageRedux === 1
                 ? 'Bán thời gian'
                 : languageRedux === 2
-                  ? 'Parttime'
+                  ? 'Part time'
                   : languageRedux === 3 && '파트타임'}
             </MenuItem>
             <MenuItem value={4}>

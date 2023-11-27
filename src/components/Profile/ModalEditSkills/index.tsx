@@ -292,7 +292,7 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
                       ? '기술'
                       : 'Kỹ năng'
               }
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {skill && skill.length > 255 ? (
@@ -318,9 +318,8 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                skill ? skill.length : '0'
-              }/255`}</span>
+              <span className="number-text">{`${skill ? skill.length : '0'
+                }/255`}</span>
             </div>
           </Box>
           <Box sx={{ marginBottom: '12px' }}>
@@ -395,7 +394,12 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
             </TextField>
           </Box>
           <Button variant="contained" fullWidth onClick={handleSubmit}>
-            {language?.profile_page?.save_info}
+            {languageRedux === 1
+              ? 'Lưu thông tin'
+              : languageRedux === 2
+                ? 'Save information'
+                : languageRedux === 3 &&
+                '정보 저장'}
           </Button>
         </Box>
       </Modal>

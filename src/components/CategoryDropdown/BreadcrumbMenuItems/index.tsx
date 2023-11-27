@@ -211,7 +211,7 @@ const BreadcrumbMenuItems: React.FC = () => {
                         : searchParams.get('hotjob-id') === '8'
                           ? 'Restaurant Service'
                           : searchParams.get('hotjob-id') === '9'
-                            ? 'Parttime'
+                            ? 'Part time'
                             : searchParams.get('hotjob-id') === '10'
                               ? 'Marketing'
                               : searchParams.get('hotjob-id') === '11'
@@ -370,23 +370,23 @@ const BreadcrumbMenuItems: React.FC = () => {
                                           ? 'Translator'
                                           : languageRedux === 3 && '번역'
                                       : searchParams.get('categories-id') ===
-                                          '14'
+                                        '14'
                                         ? languageRedux === 1
                                           ? 'Khoa học - Kỹ thuật'
                                           : languageRedux === 2
                                             ? 'Science - Technology'
                                             : languageRedux === 3 && '과학-기술'
                                         : searchParams.get('categories-id') ===
-                                            '15'
+                                          '15'
                                           ? languageRedux === 1
                                             ? 'Chuyển nhà/Vệ sinh'
                                             : languageRedux === 2
                                               ? 'House moving/Cleaning'
                                               : languageRedux === 3 &&
-                                                '이사/ 청소 서비스'
+                                              '이사/ 청소 서비스'
                                           : searchParams.get(
-                                                'categories-id',
-                                              ) === '16'
+                                            'categories-id',
+                                          ) === '16'
                                             ? languageRedux === 1
                                               ? 'Ngành khác'
                                               : languageRedux === 2
@@ -396,7 +396,7 @@ const BreadcrumbMenuItems: React.FC = () => {
                                               ? 'Tất cả'
                                               : languageRedux === 2
                                                 ? 'All'
-                                                : languageRedux === 3 && '모두',
+                                                : languageRedux === 3 && '전부',
         },
       ],
     },
@@ -465,15 +465,15 @@ const BreadcrumbMenuItems: React.FC = () => {
         {
           title:
             searchParams.get('c') === '1-0' ||
-            searchParams.get('c') === '2-0' ||
-            searchParams.get('c') === '2-0' ||
-            searchParams.get('c') === '0-0' ||
-            searchParams.get('c') === '4-0'
+              searchParams.get('c') === '2-0' ||
+              searchParams.get('c') === '2-0' ||
+              searchParams.get('c') === '0-0' ||
+              searchParams.get('c') === '4-0'
               ? languageRedux === 1
                 ? 'Tất cả'
                 : languageRedux === 2
                   ? 'All'
-                  : languageRedux === 3 && '모두'
+                  : languageRedux === 3 && '전부'
               : searchParams.get('c') === '2-1'
                 ? languageRedux === 1
                   ? 'Các công việc chưa đóng'

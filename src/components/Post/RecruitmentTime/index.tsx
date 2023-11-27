@@ -68,7 +68,15 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            {language?.post_page?.start_date}{' '}
+            {
+              languageRedux === 1
+                ? "Ngày bắt đầu"
+                : languageRedux === 2
+                  ? "Start date"
+                  : languageRedux === 3
+                    ? '시작일'
+                    : "Ngày bắt đầu"
+            }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
@@ -90,7 +98,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
                   : languageRedux === 2
                     ? 'The start date cannot exceed the end date'
                     : languageRedux === 3 &&
-                      '시작 날짜는 종료 날짜를 초과할 수 없습니다.'}
+                    '시작 날짜는 종료 날짜를 초과할 수 없습니다.'}
               </span>
             ) : !new Date(startDate).getFullYear() ? (
               <span className="helper-text">
@@ -113,7 +121,15 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            {language?.post_page?.end_date}{' '}
+            {
+              languageRedux === 1
+                ? "Ngày kết thúc"
+                : languageRedux === 2
+                  ? "End date"
+                  : languageRedux === 3
+                    ? '종료일'
+                    : "Ngày kết thúc"
+            }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
@@ -137,7 +153,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
                   : languageRedux === 2
                     ? 'The start date cannot exceed the end date'
                     : languageRedux === 3 &&
-                      '시작 날짜는 종료 날짜를 초과할 수 없습니다.'}
+                    '시작 날짜는 종료 날짜를 초과할 수 없습니다.'}
               </span>
             ) : !new Date(endDate).getFullYear() ? (
               <span className="helper-text">

@@ -51,11 +51,15 @@ const NoCompanyData: React.FC<any> = (props) => {
       <p style={{ fontSize: 20, color: 'gray', marginTop: 20 }}>
         {props.loading === true
           ? languageRedux === 1
-            ? 'Đang tải dữ liệu'
-            : 'Loading data...'
+            ? 'Đang tải dữ liệu...'
+            : languageRedux === 2
+              ? 'Loading data...'
+              : languageRedux === 3 && '로드 중...'
           : languageRedux === 1
             ? 'Bạn chưa lưu công ty nào'
-            : "You haven't saved any companies"}
+            : languageRedux === 2 ?
+              "You haven't saved any companies"
+              : "아직 저장한 회사가 없습니다."}
       </p>
     </div>
   );

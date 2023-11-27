@@ -309,7 +309,12 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     // Disable the "All" checkbox at the root level
     showCheckedStrategy: SHOW_PARENT,
     // treeDefaultExpandAll,
-    placeholder: language?.working_location,
+    placeholder: languageRedux === 1
+      ? 'Khu vực làm việc'
+      : languageRedux === 2
+        ? 'Working location'
+        : languageRedux === 3 &&
+        '근무 위치',
     style: {
       width: '100%',
       zIndex: '1302',
@@ -349,7 +354,12 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
           component="h2"
           align="center"
         >
-          {language?.working_location}
+          {languageRedux === 1
+            ? 'Khu vực làm việc'
+            : languageRedux === 2
+              ? 'Working location'
+              : languageRedux === 3 &&
+              '근무 위치'}
         </Typography>
 
         {/* <FormControl sx={{ width: '100%', margin: '12px auto' }} size="small">
@@ -389,7 +399,12 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
         <TreeSelect {...tProps} />
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {language?.profile_page?.save_info}
+          {languageRedux === 1
+            ? 'Lưu thông tin'
+            : languageRedux === 2
+              ? 'Save information'
+              : languageRedux === 3 &&
+              '정보 저장'}
         </Button>
       </Box>
     </Modal>

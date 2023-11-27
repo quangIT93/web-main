@@ -58,7 +58,13 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             htmlFor="startTime"
           >
             {
-              language?.post_page.start_date
+              languageRedux === 1
+                ? "Ngày bắt đầu"
+                : languageRedux === 2
+                  ? "Start date"
+                  : languageRedux === 3
+                    ? '시작일'
+                    : "Ngày bắt đầu"
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -88,7 +94,13 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             htmlFor="startTime"
           >
             {
-              language?.post_page.end_date
+              languageRedux === 1
+                ? "Ngày kết thúc"
+                : languageRedux === 2
+                  ? "End date"
+                  : languageRedux === 3
+                    ? '종료일'
+                    : "Ngày kết thúc"
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>

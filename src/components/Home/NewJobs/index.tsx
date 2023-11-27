@@ -314,7 +314,7 @@ const NewJobs: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
 
   return (
     <>
@@ -350,7 +350,8 @@ const NewJobs: React.FC = () => {
                       <p>
                         {languageRedux === 1
                           ? 'Công việc mới nhất sẽ xuất hiện dựa theo Lĩnh vực quan tâm của bạn trong phần thông tin cá nhân.'
-                          : 'Newest Jobs will show jobs rely on your Career Objective in Profile.'}
+                          : languageRedux === 2 ? 'Newest Jobs will show jobs rely on your Career Objective in Profile.'
+                            : '귀하의 개인적인 관심사에 따라 최신 채용 기회를 확인할 수 있습니다.'}
                       </p>
                     </div>
                     {/* <Button
@@ -422,7 +423,11 @@ const NewJobs: React.FC = () => {
                 handleChange(e, page);
               }}
             >
-              <p>{language?.more}</p>
+              <p>{languageRedux === 1
+            ? 'Xem thêm'
+            : languageRedux === 2
+              ? 'See more'
+              : '더보기'}</p>
               <MoreICon width={20} height={20} />
             </Space>
           </Stack> */}

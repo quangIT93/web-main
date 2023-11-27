@@ -103,7 +103,8 @@ const CreateCv: React.FC<ICreateCv> = (props) => {
                     : `"Tạo mới CV"`,
           },
           '&:hover': {
-            width: languageRedux === 1 ? '194px' : '230px',
+            width: languageRedux === 1 ? '194px'
+              : languageRedux === 2 ? '230px' : '180px',
           },
           bottom: role === 0 ? '140px' : '',
         }}

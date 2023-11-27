@@ -324,7 +324,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
 
     if (education?.extraInformation?.trim() === '') {
       return {
-        messageError: language?.profile_page?.err_additional_information,
+        messageError: languageRedux === 1
+          ? 'Vui lòng nhập thông tin bổ sung'
+          : languageRedux === 2
+            ? 'Please enter additional information'
+            : '추가 정보를 입력해주세요',
         checkForm: false,
         idError: 5,
       };
@@ -337,7 +341,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             : languageRedux === 2
               ? 'Additional information cannot exceed 500 characters'
               : languageRedux === 3 &&
-                '추가 정보는 500자를 초과할 수 없습니다.',
+              '추가 정보는 500자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 5,
       };
@@ -464,7 +468,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             align="center"
             sx={{ marginBottom: '12px' }}
           >
-            {language?.profile_page?.add_education}
+            {languageRedux === 1
+              ? 'Thêm thông tin trình độ học vấn'
+              : languageRedux === 2
+                ? 'Add education information'
+                : '학력 정보 추가'}
           </Typography>
           <Box sx={styleChildBox}>
             <Typography
@@ -473,7 +481,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               component="label"
               htmlFor="nameProfile"
             >
-              {language?.school_organization}{' '}
+              {languageRedux === 1
+                ? 'Trường/Tổ chức'
+                : languageRedux === 2
+                  ? 'School/Organization'
+                  : '학교/단체'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -484,8 +496,12 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               onChange={handleChangeSchool}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={language?.profile_page?.place_school}
-              // error={titleError} // Đánh dấu lỗi
+              placeholder={languageRedux === 1
+                ? 'Nhập tên trường hoặc tổ chức'
+                : languageRedux === 2
+                  ? 'Enter the school or organization name'
+                  : '학교 또는 조직 이름을 입력하세요.'}
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {education.companyName && education.companyName.length > 50 ? (
@@ -507,9 +523,8 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                education.companyName ? education.companyName.length : '0'
-              }/50`}</span>
+              <span className="number-text">{`${education.companyName ? education.companyName.length : '0'
+                }/50`}</span>
             </div>
           </Box>
 
@@ -520,7 +535,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               component="label"
               htmlFor="nameProfile"
             >
-              {language?.major} <span className="color-asterisk">*</span>
+              {languageRedux === 1
+                ? 'Chuyên ngành'
+                : languageRedux === 2
+                  ? 'Major'
+                  : '전문화'} <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               type="text"
@@ -530,8 +549,12 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               onChange={handleChangeMajor}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={language?.major}
-              // error={titleError} // Đánh dấu lỗi
+              placeholder={languageRedux === 1
+                ? 'Chuyên ngành'
+                : languageRedux === 2
+                  ? 'Major'
+                  : '전문화'}
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {education.major.length > 50 ? (
@@ -549,7 +572,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                     : languageRedux === 2
                       ? 'Please enter a major name.'
                       : languageRedux === 3 &&
-                        '전문 분야의 이름을 입력하십시오'}
+                      '전문 분야의 이름을 입력하십시오'}
                 </span>
               ) : (
                 <></>
@@ -570,7 +593,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                     component="label"
                     htmlFor="startTime"
                   >
-                    {language?.start_time}
+                    {languageRedux === 1
+                      ? 'Thời gian bắt đầu'
+                      : languageRedux === 2
+                        ? 'Start time'
+                        : '시작 시간'}
                     <span className="color-asterisk">*</span>
                   </Typography>
                   <DatePicker
@@ -593,7 +620,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   />
                   <div className="wrap-noti_input">
                     {education.startDate &&
-                    new Date(education.startDate).getFullYear() >
+                      new Date(education.startDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
@@ -601,7 +628,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                           : languageRedux === 2
                             ? 'The start time cannot be greater than the current time.'
                             : languageRedux === 3 &&
-                              '시작 시간은 현재 시간보다 클 수 없습니다.'}
+                            '시작 시간은 현재 시간보다 클 수 없습니다.'}
                       </span>
                     ) : !new Date(education.startDate).getFullYear() ? (
                       <span className="helper-text">
@@ -618,7 +645,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                           : languageRedux === 2
                             ? 'The start time cannot be less than 1900.'
                             : languageRedux === 3 &&
-                              '시작 시간은 1900보다 작을 수 없습니다.'}
+                            '시작 시간은 1900보다 작을 수 없습니다.'}
                       </span>
                     ) : (
                       <></>
@@ -632,7 +659,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                     component="label"
                     htmlFor="startTime"
                   >
-                    {language?.finish_time}{' '}
+                    {languageRedux === 1
+                      ? 'Thời gian kết thúc'
+                      : languageRedux === 2
+                        ? 'End time'
+                        : '종료 시간'}{' '}
                     <span className="color-asterisk">*</span>
                   </Typography>
                   <DatePicker
@@ -656,7 +687,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   />
                   <div className="wrap-noti_input">
                     {education.endDate &&
-                    new Date(education.endDate).getFullYear() >
+                      new Date(education.endDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
@@ -664,7 +695,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                           : languageRedux === 2
                             ? 'The end time cannot be greater than the current time.'
                             : languageRedux === 3 &&
-                              '종료 시간은 현재 시간보다 클 수 없습니다.'}
+                            '종료 시간은 현재 시간보다 클 수 없습니다.'}
                       </span>
                     ) : !new Date(education.endDate).getFullYear() ? (
                       <span className="helper-text">
@@ -681,7 +712,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                           : languageRedux === 2
                             ? 'The end time cannot be less than 1900.'
                             : languageRedux === 3 &&
-                              '종료 시간은 1900보다 작을 수 없습니다.'}
+                            '종료 시간은 1900보다 작을 수 없습니다.'}
                       </span>
                     ) : (
                       <></>
@@ -715,7 +746,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               placeholder={'Loại công việc'}
               size="small"
               sx={{ width: '100%' }}
-              // error={!gender} // Đánh dấu lỗi
+            // error={!gender} // Đánh dấu lỗi
             >
               {typeAcademic?.map((value: any, index: number) => {
                 return <MenuItem value={index + 1}>{value.data}</MenuItem>;
@@ -741,7 +772,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               component="label"
               htmlFor="startTime"
             >
-              {language?.additional_information}{' '}
+              {languageRedux === 1
+                ? 'Thông tin bổ sung'
+                : languageRedux === 2
+                  ? 'Additional information'
+                  : '추가 정보'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -751,12 +786,16 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               multiline
               rows={4}
               // label="Một số đặc điểm nhận diện công ty"
-              placeholder={language?.profile_page?.place_additional_information}
+              placeholder={languageRedux === 1
+                ? 'Thông tin bổ sung'
+                : languageRedux === 2
+                  ? 'Additional information'
+                  : '추가 정보'}
               id="profile_education_additional_information"
             />
             <div className="wrap-noti_input">
               {education?.extraInformation &&
-              education?.extraInformation.length > 500 ? (
+                education?.extraInformation.length > 500 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Bạn đã nhập quá 500 ký tự.'
@@ -775,16 +814,20 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                education?.extraInformation
-                  ? education?.extraInformation.length
-                  : '0'
-              }/500`}</span>
+              <span className="number-text">{`${education?.extraInformation
+                ? education?.extraInformation.length
+                : '0'
+                }/500`}</span>
             </div>
           </Box>
 
           <Button variant="contained" fullWidth onClick={handleSubmit}>
-            {language?.profile_page?.save_info}
+            {languageRedux === 1
+              ? 'Lưu thông tin'
+              : languageRedux === 2
+                ? 'Save information'
+                : languageRedux === 3 &&
+                '정보 저장'}
           </Button>
         </Box>
       </Modal>

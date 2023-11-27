@@ -23,7 +23,7 @@ interface IEditPostNumberPhone {
 }
 
 const NumericInput = (props: NumericInputProps) => {
-  const { value, onChange, language } = props;
+  const { value, onChange, languageRedux } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
@@ -49,7 +49,13 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder={language?.post_page.place_phone}
+      placeholder={
+        languageRedux === 1
+          ? "Số điện thoại liên hệ"
+          : languageRedux === 2
+            ? "Contact phone number"
+            : '연락 전화번호'
+      }
       maxLength={16}
       id="edit_post_phone"
     />
@@ -73,7 +79,11 @@ const EditPostNumberPhone: React.FC<IEditPostNumberPhone> = (props) => {
         htmlFor="company"
       >
         {
-          language?.contact_phone_number
+          languageRedux === 1
+            ? "Số điện thoại liên hệ"
+            : languageRedux === 2
+              ? "Contact phone number"
+              : '연락 전화번호'
         }{' '}
         <span style={{ color: 'red' }}>*</span>
       </Typography>

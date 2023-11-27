@@ -38,7 +38,13 @@ const Description: React.FC<IDescription> = (props) => {
         component="label"
         htmlFor="startTime"
       >
-        {language?.job_description} <span style={{ color: 'red' }}>*</span>
+        {
+          languageRedux === 1
+            ? "Mô tả công việc"
+            : languageRedux === 2
+              ? "Job description"
+              : '업무 설명서'
+        } <span style={{ color: 'red' }}>*</span>
       </Typography>
       <TextField
         // className={classes.textarea}
@@ -47,7 +53,13 @@ const Description: React.FC<IDescription> = (props) => {
         multiline
         rows={6}
         // label="Một số đặc điểm nhận diện công ty"
-        placeholder={language?.post_page?.place_des}
+        placeholder={
+          languageRedux === 1
+            ? "Mô tả công việc"
+            : languageRedux === 2
+              ? "Job description"
+              : '업무 설명서'
+        }
         value={description}
         id="post_job_description"
       />

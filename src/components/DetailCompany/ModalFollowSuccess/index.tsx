@@ -69,7 +69,8 @@ const ModalFollowSuccess: React.FC<IModalPostReviewSuccess> = (props) => {
                     shape="round"
                     onClick={handleCloseModal}
                 >
-                    {languageRedux === 1 ? 'Đã hiểu' : 'Ok'}
+                    {languageRedux === 1 ? 'Đã hiểu'
+                        : languageRedux === 2 ? 'Ok' : '이해했다'}
                 </Button>
             </div>
         </Modal>

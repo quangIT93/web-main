@@ -189,7 +189,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           });
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // confirm delete cv
@@ -207,7 +207,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -329,7 +329,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{language?.career_objective}</h3>
+            <h3>{languageRedux === 1
+              ? 'Lĩnh vực quan tâm'
+              : languageRedux === 2
+                ? 'Career objective'
+                : '관심 분야'}</h3>
             <Space
               style={{ cursor: 'pointer' }}
               onClick={() => setOpenModalCareerObjective(true)}
@@ -339,22 +343,30 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               </div>
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                {language?.edit}
+                {languageRedux === 1
+                  ? 'Sửa'
+                  : languageRedux === 2
+                    ? 'Edit'
+                    : '고치다'}
               </p>
             </Space>
           </div>
           <Space wrap className="item-info-work">
             {profileV3?.profileCategories?.length !== 0
               ? profileV3?.profileCategories?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.parentCategory.fullName}
-                      {'/ '}
-                      {item.fullName}
-                    </Button>
-                  ),
-                )
-              : language?.unupdated}
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    {item.parentCategory.fullName}
+                    {'/ '}
+                    {item.fullName}
+                  </Button>
+                ),
+              )
+              : languageRedux === 1
+                ? 'Chưa cập nhật'
+                : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}
           </Space>
         </div>
       </Skeleton>
@@ -367,7 +379,12 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{language?.working_location}</h3>
+            <h3>{languageRedux === 1
+              ? 'Khu vực làm việc'
+              : languageRedux === 2
+                ? 'Working location'
+                : languageRedux === 3 &&
+                '근무 위치'}</h3>
             <Space
               style={{ cursor: 'pointer' }}
               onClick={() => setOpenModalLocation(true)}
@@ -377,20 +394,28 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               </div>
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                {language?.edit}
+                {languageRedux === 1
+                  ? 'Sửa'
+                  : languageRedux === 2
+                    ? 'Edit'
+                    : '고치다'}
               </p>
             </Space>
           </div>
           <Space wrap className="item-info-work">
             {profileV3?.profileLocations?.length !== 0
               ? profileV3?.profileLocations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.fullName}
-                    {', '}
-                    {item?.province?.fullName}
-                  </Button>
-                ))
-              : language?.unupdated}
+                <Button key={index} className="btn" type="text">
+                  {item?.fullName}
+                  {', '}
+                  {item?.province?.fullName}
+                </Button>
+              ))
+              : languageRedux === 1
+                ? 'Chưa cập nhật'
+                : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}
           </Space>
         </div>
       </Skeleton>
@@ -407,7 +432,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
             }}
           >
             <h3>
-              {languageRedux === 1 ? 'Loại hình công việc' : 'Type of work'}
+              {languageRedux === 1
+                ? 'Loại hình công việc'
+                : languageRedux === 2
+                  ? 'Type of work'
+                  : languageRedux === 3 && '일의 종류'}
             </h3>
             <Space
               style={{ cursor: 'pointer' }}
@@ -418,7 +447,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               </div>
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                {language?.edit}
+                {languageRedux === 1
+                  ? 'Sửa'
+                  : languageRedux === 2
+                    ? 'Edit'
+                    : '고치다'}
               </p>
             </Space>
           </div>
@@ -433,16 +466,26 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 : profileV3More.jobTypeId === 2
                   ? languageRedux === 1
                     ? 'Bán thời gian'
-                    : 'Parttime'
+                    : languageRedux === 2
+                      ? 'Part time'
+                      : '파트타임'
                   : profileV3More.jobTypeId === 4
                     ? languageRedux === 1
                       ? 'Làm việc tự do'
-                      : 'Freelancer'
+                      : languageRedux === 2
+                        ? 'Freelancer'
+                        : languageRedux === 3 && '자유롭게 일하세요'
                     : profileV3More.jobTypeId === 7
                       ? languageRedux === 1
                         ? 'Thực tập'
-                        : 'Intern'
-                      : language?.unupdated}
+                        : languageRedux === 2
+                          ? 'Intern'
+                          : languageRedux === 3 && '인턴'
+                      : languageRedux === 1
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                          ? 'Not updated yet'
+                          : languageRedux === 3 && '업데이트하지 않음'}
             </Button>
           </Space>
         </div>
@@ -460,7 +503,9 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
             <h3>
               {languageRedux === 1
                 ? 'Hồ sơ CV/Hồ sơ để ứng tuyển'
-                : 'Profile CV/Resume to apply'}
+                : languageRedux === 2 ?
+                  'Profile CV/Resume to apply' :
+                  '이력서/지원서'}
             </h3>
             <div
               style={{
@@ -470,7 +515,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 gap: '8px',
                 // display: profileV3?.profilesCvs?.length === 0 ? 'none' : 'flex',
               }}
-              // onClick={() => setOpenModalLocation(true)}
+            // onClick={() => setOpenModalLocation(true)}
             >
               {/* <div className="edit-icon">
                 <PencilIcon width={15} height={15} />
@@ -482,8 +527,14 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 style={{ background: '#0D99FF', fontSize: '14px' }}
                 onClick={moveToCreateCV}
               >
-                {/* {language?.edit} */}
-                {languageRedux === 1 ? 'Tạo mới CV' : 'Create a new CV'}
+                {/* {languageRedux === 1
+              ? 'Sửa'
+              : languageRedux === 2
+                ? 'Edit'
+                : '고치다'} */}
+                {languageRedux === 1 ? 'Tạo mới CV'
+                  : languageRedux === 2 ? 'Create a new CV' :
+                    '새 이력서 만들기'}
               </Button>
               <p
                 style={{
@@ -494,7 +545,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 }}
                 onClick={() => window.open('/profile-cv', '_parent')}
               >
-                {/* {language?.edit} */}
+                {/* {languageRedux === 1
+              ? 'Sửa'
+              : languageRedux === 2
+                ? 'Edit'
+                : '고치다'} */}
                 {languageRedux === 1
                   ? 'Xem tất cả'
                   : languageRedux === 2
@@ -638,7 +693,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                 onClick={() =>
                                   handleDownloadCV(item?.pdfURL, item?.name)
                                 }
-                                // onClick={handleClickDownloadCv}
+                              // onClick={handleClickDownloadCv}
                               >
                                 <DownloadCVIcon width={14} height={14} />
                               </div>
@@ -655,7 +710,9 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 <p>
                   {languageRedux === 1
                     ? 'Bạn chưa có HiJob CV/Resume để Nhà tuyển dụng xem, đánh giá và lựa chọn!'
-                    : "You don't have a HiJob CV/Resume for recruitment to view, evaluate and choose!"}
+                    : languageRedux === 2 ?
+                      "You don't have a HiJob CV/Resume for recruitment to view, evaluate and choose!"
+                      : '채용 시 보고 평가하고 선택할 수 있는 HiJob 이력서/이력서가 없습니다!'}
                 </p>
                 <img style={{ width: 200 }} src="/cv3 1.png" alt="CV" />
               </Space>
@@ -675,7 +732,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{language?.education}</h3>
+            <h3>{languageRedux === 1
+              ? 'Trình độ học vấn'
+              : languageRedux === 2
+                ? 'Education'
+                : languageRedux === 3 && '최종학력'}</h3>
           </div>
           {profileMore?.profilesEducations?.length !== 0 ? (
             profileMore?.profilesEducations?.map(
@@ -684,7 +745,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               ),
             )
           ) : (
-            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+            <div style={{ marginTop: '16px' }}>{languageRedux === 1
+              ? 'Chưa cập nhật'
+              : languageRedux === 2
+                ? 'Not updated yet'
+                : languageRedux === 3 && '업데이트하지 않음'}</div>
           )}
 
           <div
@@ -701,7 +766,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                {language?.add}
+                {languageRedux === 1
+                  ? 'Thêm'
+                  : languageRedux === 2
+                    ? 'Add'
+                    : '더'}
               </p>
             </Space>
           </div>
@@ -716,7 +785,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{language?.working_experience}</h3>
+            <h3>{languageRedux === 1
+              ? 'Kinh nghiệm làm việc'
+              : languageRedux === 2
+                ? 'Working experience'
+                : '업무 경험'}</h3>
           </div>
           {profileMore?.profilesExperiences?.length !== 0 ? (
             profileMore?.profilesExperiences?.map(
@@ -725,7 +798,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               ),
             )
           ) : (
-            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+            <div style={{ marginTop: '16px' }}>{languageRedux === 1
+              ? 'Chưa cập nhật'
+              : languageRedux === 2
+                ? 'Not updated yet'
+                : languageRedux === 3 && '업데이트하지 않음'}</div>
           )}
 
           <div
@@ -742,7 +819,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                {language?.add}
+                {languageRedux === 1
+                  ? 'Thêm'
+                  : languageRedux === 2
+                    ? 'Add'
+                    : '더'}
               </p>
             </Space>
           </div>
@@ -830,7 +911,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-                // direction="vertical"
+              // direction="vertical"
               >
                 <Popconfirm
                   title={language?.profile_page?.delete_cv}

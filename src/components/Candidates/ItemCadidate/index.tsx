@@ -153,7 +153,7 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                         ? 'Thông tin chưa cập nhật'
                         : languageRedux === 2
                           ? 'Not updated information'
-                          : languageRedux === 3 && '업데이트되지 않은 정보'
+                          : '업데이트되지 않은 정보'
                   }
                 >
                   <span className="text-info-candidate">
@@ -163,7 +163,7 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                         ? 'Thông tin chưa cập nhật'
                         : languageRedux === 2
                           ? 'Not updated information'
-                          : languageRedux === 3 && '업데이트되지 않은 정보'}
+                          : '업데이트되지 않은 정보'}
                   </span>
                 </Tooltip>
               </li>
@@ -180,7 +180,7 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                         ? 'Thông tin chưa cập nhật'
                         : languageRedux === 2
                           ? 'Not updated information'
-                          : languageRedux === 3 && '업데이트되지 않은 정보'
+                          : '업데이트되지 않은 정보'
                   }
                 >
                   <span className="text-info-candidate">
@@ -190,7 +190,7 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                         ? 'Thông tin chưa cập nhật'
                         : languageRedux === 2
                           ? 'Not updated information'
-                          : languageRedux === 3 && '업데이트되지 않은 정보'}
+                          : '업데이트되지 않은 정보'}
                   </span>
                 </Tooltip>
               </li>
@@ -203,25 +203,25 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                   title={
                     item?.categoriesData?.length !== 0
                       ? item.categoriesData?.map((value: any) => {
-                          return `${value.fullName}, `;
-                        })
+                        return `${value.fullName}, `;
+                      })
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
                         : languageRedux === 2
                           ? 'Not updated information'
-                          : languageRedux === 3 && '업데이트되지 않은 정보'
+                          : '업데이트되지 않은 정보'
                   }
                 >
                   <span className="text-info-candidate">
                     {item.categoriesData.length !== 0
                       ? item.categoriesData.map((value: any) => {
-                          return `${value.fullName}, `;
-                        })
+                        return `${value.fullName}, `;
+                      })
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
                         : languageRedux === 2
                           ? 'Not updated information'
-                          : languageRedux === 3 && '업데이트되지 않은 정보'}
+                          : '업데이트되지 않은 정보'}
                   </span>
                 </Tooltip>
               </li>

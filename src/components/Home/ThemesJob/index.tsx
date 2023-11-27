@@ -225,7 +225,7 @@ const ThemesJob: React.FC = () => {
     window.open('/more-jobs', '_parent');
   };
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
   return (
     <Box
       sx={{ flexGrow: 1, paddingBottom: '24px' }}
@@ -252,7 +252,8 @@ const ThemesJob: React.FC = () => {
                   <p>
                     {languageRedux === 1
                       ? 'Mục này sẽ gợi ý cho bạn việc làm gần các địa điểm nổi tiếng trong thành phố của bạn.'
-                      : 'This section will suggest you some jobs near hot places in your city.'}
+                      : languageRedux === 2 ? 'This section will suggest you some jobs near hot places in your city.'
+                        : '이 섹션에서는 귀하의 도시에서 유명한 장소 근처의 일자리를 제안합니다.'}
                   </p>
                 </div>
                 {/* <Button
@@ -292,7 +293,8 @@ const ThemesJob: React.FC = () => {
           <p>
             {languageRedux === 1
               ? 'Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn.'
-              : 'Search for jobs in famous locations in your city.'}
+              : languageRedux === 2 ? 'Search for jobs in famous locations in your city.'
+                : '귀하의 도시 내 인기 있는 장소에서 일자리를 검색해 보세요.'}
           </p>
         </div>
       ) : (
@@ -343,7 +345,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>

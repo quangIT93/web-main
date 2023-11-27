@@ -173,7 +173,11 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     {
       id: 2,
       statusId: 1,
-      statusName: language?.history_page?.seen,
+      statusName: languageRedux === 1
+        ? 'Đã xem'
+        : languageRedux === 2
+          ? 'Seen'
+          : '보았다',
       background: '#aaaaaa',
       position: '60%',
       borderRadius: '15px',
@@ -278,7 +282,13 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
       />
       <Box>
         <h3 style={{ margin: '12px 0' }}>
-          {language?.history_page?.list_of_candidates}
+          {
+            languageRedux === 1
+              ? 'Danh sách ứng viên'
+              : languageRedux === 2
+                ? 'List of candidates'
+                : '후보자 목록'
+          }
         </h3>
         {dataCandidates?.applications.map((candidate: any, index: number) => (
           <Card
@@ -295,9 +305,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               boxShadow: 'none',
               borderRadius: '5px',
               margin: '8px 0',
-              background: `${
-                candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
-              }`,
+              background: `${candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
+                }`,
             }}
             onClick={(e) =>
               handleClickCandidate(e, candidate.id, detailPosted?.id)
@@ -329,10 +338,12 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                       {candidate.gender === 1
                         ? languageRedux === 1
                           ? 'Nam'
-                          : 'Male'
+                          : languageRedux === 2
+                            ? 'Male' : '남성'
                         : languageRedux === 1
                           ? 'Nữ'
-                          : 'Female'}
+                          : languageRedux === 2
+                            ? 'Female' : '여성'}
                     </span>
                   </div>
                 </div>
@@ -407,8 +418,10 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                       {candidate?.email
                         ? candidate.email
                         : languageRedux === 1
-                          ? 'Thông tin chưa cập nhật'
-                          : 'Not updated information'}
+                          ? 'Chưa cập nhật thông tin'
+                          : languageRedux === 2
+                            ? 'Not updated information'
+                            : '업데이트되지 않은 정보'}
                     </p>
                   </div>
                   <div className="item-detail-candidate">
@@ -419,8 +432,10 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                       {candidate?.phone
                         ? candidate.phone
                         : languageRedux === 1
-                          ? 'Thông tin chưa cập nhật'
-                          : 'Not updated information'}
+                          ? 'Chưa cập nhật thông tin'
+                          : languageRedux === 2
+                            ? 'Not updated information'
+                            : '업데이트되지 않은 정보'}
                     </p>
                   </div>
                   <div className="item-detail-candidate">
@@ -430,11 +445,13 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                     <p>
                       {candidate?.categories?.length !== 0
                         ? candidate.categories?.map((value: any) => {
-                            return `${value.parent_category}, `;
-                          })
+                          return `${value.parent_category}, `;
+                        })
                         : languageRedux === 1
-                          ? 'Thông tin chưa cập nhật'
-                          : 'Not updated information'}
+                          ? 'Chưa cập nhật thông tin'
+                          : languageRedux === 2
+                            ? 'Not updated information'
+                            : '업데이트되지 않은 정보'}
                     </p>
                   </div>
                 </div>
@@ -442,8 +459,10 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                   {candidate?.introduction
                     ? candidate.introduction
                     : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'}
+                      ? 'Chưa cập nhật thông tin'
+                      : languageRedux === 2
+                        ? 'Not updated information'
+                        : '업데이트되지 않은 정보'}
                 </h2>
               </Box>
             </div>
@@ -458,7 +477,11 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
           }}
         >
           {dataCandidates?.length > 0 ? (
-            <Button variant="contained">{language?.more}</Button>
+            <Button variant="contained">{languageRedux === 1
+              ? 'Xem thêm'
+              : languageRedux === 2
+                ? 'See more'
+                : '더보기'}</Button>
           ) : (
             <></>
           )}

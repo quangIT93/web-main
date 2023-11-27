@@ -185,7 +185,7 @@ const ModalCourse: React.FC<IModalInternship> = (props) => {
                     ? '코스'
                     : 'Khóa học'
             }
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
@@ -219,14 +219,14 @@ const ModalCourse: React.FC<IModalInternship> = (props) => {
                     ? '회사 이름'
                     : 'Tên công ty'
             }
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DemoContainer
               components={['DatePicker']}
-              //   sx={{ display: 'flex' }}
+            //   sx={{ display: 'flex' }}
             >
               <div className="course-time-wraper">
                 <Typography
@@ -257,7 +257,7 @@ const ModalCourse: React.FC<IModalInternship> = (props) => {
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DemoContainer
               components={['DatePicker']}
-              //   sx={{ display: 'flex' }}
+            //   sx={{ display: 'flex' }}
             >
               <div className="course-time-wraper">
                 <Typography
@@ -285,7 +285,12 @@ const ModalCourse: React.FC<IModalInternship> = (props) => {
           </LocalizationProvider>
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {language?.profile_page?.save_info}
+          {languageRedux === 1
+            ? 'Lưu thông tin'
+            : languageRedux === 2
+              ? 'Save information'
+              : languageRedux === 3 &&
+              '정보 저장'}
         </Button>
       </Box>
     </Modal>

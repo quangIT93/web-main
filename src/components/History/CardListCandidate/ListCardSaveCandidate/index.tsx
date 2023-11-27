@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // import { useDispatch } from 'react-redux';
 //import scss
@@ -37,6 +37,8 @@ import {
   GenderIcon,
   GenderFemaleIcon,
 } from '#components/Icons/iconCandidate';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 interface IitemNewJob {
   item: any;
   handleDeleteBookmark: (event: any, index: number, bookmarkId: number) => any;
@@ -58,21 +60,27 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const {
     language,
-    languageRedux,
+    // languageRedux,
     item,
     index,
     hanhleClicKCandleSaveCandidate,
   } = props;
   const [error, setError] = React.useState(false);
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
     localStorage.setItem('candidateId', id);
     window.open(`/candidate-new-detail`, '_parent');
   };
-
+  const [info, setInfor] = useState<any>(item);
   const handleImageError = () => {
     setError(true);
   };
+  console.log("info", info.profileData.hidePhone);
+
+  useEffect(() => {
+    setInfor(item);
+  }, [languageRedux, item])
 
   return (
     <>
@@ -92,27 +100,30 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
           justifyContent: 'space-between',
           position: 'relative',
         }}
+        key={index}
       >
         <div
           className="item-candidate-history"
-          //   onClick={() => handleClickItemCandidate(item.accountId)}
+          //   onClick={() => handleClickItemCandidate(info.accountId)}
           onClick={(e) => {
             e.stopPropagation();
-            handleClickItem(e, props.item?.profileData?.accountId);
+            handleClickItem(e, info?.profileData.accountId);
           }}
         >
           <div className="item-candidate-content-history">
             <div className="wrap-img_candidate">
               <img
                 src={
-                  item?.profileData?.imageData
-                    ? item?.profileData?.imageData?.avatar
-                    : item?.profileData.genderData === 'Nam' || item.genderData === 'Male'
+                  info?.profileData.imageData
+                    ? info?.profileData.imageData?.avatar
+                    : info?.profileData.genderData === 'Nam'
+                      || info.profileData.genderData === 'Male'
+                      || info.profileData.genderData === '남성'
                       ? male_null_avatar
                       : female_null_avatar
                 }
                 style={{
-                  filter: item?.profileData?.imageData?.avatar
+                  filter: info?.profileData.imageData?.avatar
                     ? 'blur(3px)'
                     : 'none',
                 }}
@@ -125,7 +136,7 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                     <PersonIcon />
                   </span>
                   <span>
-                    {moment(new Date(item?.profileData?.birthdayData))
+                    {moment(new Date(info?.profileData.birthdayData))
                       .format('yyyy')
                       .replace(/\d{2}$/, 'xx')}
                   </span>
@@ -134,12 +145,12 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   <span className="icon-age_item-candidate">
                     <GenderIcon />
                   </span>
-                  <span>{item?.profileData?.genderData}</span>
+                  <span>{info?.profileData.genderData}</span>
                 </div>
               </div>
             </div>
             <div className="info-candidate">
-              <h3>{item?.profileData?.name}</h3>
+              <h3>{info?.profileData.name}</h3>
               <ul>
                 {/* <li style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div className="item-birthday item-infoUser">
@@ -147,7 +158,7 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                     <PersonIcon />
                   </span>
                   <span>
-                    {moment(new Date(item?.profileData?.birthdayData))
+                    {moment(new Date(info?.profileData.birthdayData))
                       .format('yyyy')
                       .replace(/\d{2}$/, 'xx')}
                   </span>
@@ -156,7 +167,7 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   <span>
                     <GenderIcon />
                   </span>
-                  <span>{item?.profileData?.genderData}</span>
+                  <span>{info?.profileData.genderData}</span>
                 </div>
               </li> */}
                 <li>
@@ -166,19 +177,23 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   <Tooltip
                     placement="top"
                     title={
-                      item?.hideEmail
-                        ? item.hideEmail
+                      info?.profileData.hideEmail
+                        ? info.profileData.hideEmail
                         : languageRedux === 1
                           ? 'Thông tin chưa cập nhật'
-                          : 'Not updated information'
+                          : languageRedux === 2
+                            ? 'Not updated information'
+                            : '업데이트되지 않은 정보'
                     }
                   >
                     <span className="text-info-candidate">
-                      {item?.hideEmail
-                        ? item.hideEmail
+                      {info?.profileData.hideEmail
+                        ? info.profileData.hideEmail
                         : languageRedux === 1
                           ? 'Thông tin chưa cập nhật'
-                          : 'Not updated information'}
+                          : languageRedux === 2
+                            ? 'Not updated information'
+                            : '업데이트되지 않은 정보'}
                     </span>
                   </Tooltip>
                 </li>
@@ -189,19 +204,24 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   <Tooltip
                     placement="top"
                     title={
-                      item?.hidePhone
-                        ? item.hidePhone
+                      info?.profileData.hidePhone
+                        ? info.profileData.hidePhone
                         : languageRedux === 1
                           ? 'Thông tin chưa cập nhật'
-                          : 'Not updated information'
+                          : languageRedux === 2
+                            ? 'Not updated information'
+                            : '업데이트되지 않은 정보'
                     }
                   >
                     <span className="text-info-candidate">
-                      {item?.hidePhone
-                        ? item.hidePhone
-                        : languageRedux === 1
+                      {info?.profileData.hidePhone
+                        ? info.profileData.hidePhone
+                        :
+                        languageRedux === 1
                           ? 'Thông tin chưa cập nhật'
-                          : 'Not updated information'}
+                          : languageRedux === 2
+                            ? 'Not updated information'
+                            : '업데이트되지 않은 정보'}
                     </span>
                   </Tooltip>
                 </li>
@@ -212,37 +232,43 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   <Tooltip
                     placement="top"
                     title={
-                      item?.profileData?.childCategoriesData?.length !== 0
-                        ? item?.profileData?.childCategoriesData?.map(
+                      info?.profileData.childCategoriesData?.length !== 0
+                        ? info?.profileData.childCategoriesData?.map(
                           (value: any) => {
                             return `${value.fullName}, `;
                           },
                         )
                         : languageRedux === 1
                           ? 'Thông tin chưa cập nhật'
-                          : 'Not updated information'
+                          : languageRedux === 2
+                            ? 'Not updated information'
+                            : '업데이트되지 않은 정보'
                     }
                   >
                     <span className="text-info-candidate">
-                      {item?.profileData?.childCategoriesData?.length !== 0
-                        ? item?.profileData?.childCategoriesData?.map(
+                      {info?.profileData.childCategoriesData?.length !== 0
+                        ? info?.profileData.childCategoriesData?.map(
                           (value: any) => {
                             return `${value.fullName}, `;
                           },
                         )
                         : languageRedux === 1
                           ? 'Thông tin chưa cập nhật'
-                          : 'Not updated information'}
+                          : languageRedux === 2
+                            ? 'Not updated information'
+                            : '업데이트되지 않은 정보'}
                     </span>
                   </Tooltip>
                 </li>
               </ul>
               <h2>
-                {item?.introduction
-                  ? item.introduction
+                {info?.profileData.introduction
+                  ? info.profileData.introduction
                   : languageRedux === 1
                     ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'}
+                    : languageRedux === 2
+                      ? 'Not updated information'
+                      : '업데이트되지 않은 정보'}
               </h2>
             </div>
           </div>
@@ -257,7 +283,7 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
           onClick={(e) =>
             hanhleClicKCandleSaveCandidate(
               e,
-              props?.item?.profileData?.accountId,
+              info?.profileData.accountId,
             )
           }
         >

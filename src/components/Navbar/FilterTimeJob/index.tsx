@@ -245,7 +245,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
                   languageRedux === 2 ?
                     "All" :
                     languageRedux === 3 &&
-                    "모두"
+                    "전부"
               }
               control={
                 <Checkbox

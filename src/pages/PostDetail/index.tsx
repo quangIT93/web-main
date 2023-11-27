@@ -319,7 +319,7 @@ const Detail = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -356,30 +356,52 @@ const Detail = () => {
           setTextButton(
             languageRedux === 1
               ? 'Chỉnh sửa bài tuyển dụng'
-              : 'Edit job posting',
+              : languageRedux === 2 ?
+                'Edit job posting' :
+                "채용 게시물 수정",
           );
           setBackgroundButton('gray');
           setCheckPostUser(true);
         } else if (result.data.status === 3) {
           setBackgroundButton('gray');
-          setTextButton(languageRedux === 1 ? 'Bài đăng đã đóng' : 'Closed');
+          setTextButton(languageRedux === 1
+            ? 'Bài đăng đã đóng'
+            : languageRedux === 2
+              ? 'Post is closed'
+              : '게시물이 닫혔습니다');
           // setBackgroundButton('#0D99FF');
           result.data.applied = true;
         } else if (result.data.applied) {
           setBackgroundButton('gray');
-          setTextButton(languageRedux === 1 ? 'Đã ứng tuyển' : 'Applied');
+          setTextButton(languageRedux === 1
+            ? 'Đã ứng tuyển'
+            : languageRedux === 2
+              ? 'Applied'
+              : '지원되였습니다');
         } else {
           if (profileV3.length !== 0) {
             if (profileV3.typeRoleData === 0) {
-              setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
+              setTextButton(languageRedux === 1
+                ? 'Ứng tuyển ngay'
+                : languageRedux === 2
+                  ? 'Apply now'
+                  : '지금 신청하세요');
             } else {
-              setTextButton(languageRedux === 1 ? 'Xem' : 'View');
+              setTextButton(languageRedux === 1
+                ? 'Xem'
+                : languageRedux === 2
+                  ? 'View'
+                  : '보다');
             }
           } else {
-            setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
+            setTextButton(languageRedux === 1
+              ? 'Ứng tuyển ngay'
+              : languageRedux === 2
+                ? 'Apply now'
+                : '지금 신청하세요');
           }
           result?.data?.companyResourceData?.name === 'HIJOB' &&
-          profileV3.typeRoleData === 1
+            profileV3.typeRoleData === 1
             ? setBackgroundButton('gray')
             : setBackgroundButton('#0D99FF');
           // setCheckPostUser(true);
@@ -710,7 +732,9 @@ const Detail = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Chi tiết bài tuyển dụng'
-        : 'HiJob - Job Post Details';
+        : languageRedux === 2 ?
+          'HiJob - Job Post Details' :
+          'HiJob - 모집 내용';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_post_detail' as string,
@@ -736,17 +760,14 @@ const Detail = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-        `${post?.data.address}, ${
-          post?.data.location ? post?.data.location.fullName : ''
-        }, ${
-          post?.data?.location?.district
-            ? post?.data?.location?.district?.fullName
-            : ''
-        }, ${
-          post?.data?.location?.district?.province
-            ? post?.data.district?.province?.fullName
-            : ''
-        }`,
+      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
+      }, ${post?.data?.location?.district
+        ? post?.data?.location?.district?.fullName
+        : ''
+      }, ${post?.data?.location?.district?.province
+        ? post?.data.district?.province?.fullName
+        : ''
+      }`,
     );
   };
 
@@ -894,7 +915,11 @@ const Detail = () => {
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: language?.post_detail_page?.job_information,
+      label: languageRedux === 1
+        ? 'Thông tin việc làm'
+        : languageRedux === 2 ?
+          'Job information' :
+          '채용정보',
       children: (
         <>
           <div className="job-title-container">
@@ -912,7 +937,13 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <JobTypePostIcon />
-                  <p>{language?.post_detail_page?.job_type}</p>
+                  <p>{
+                    languageRedux === 1
+                      ? "Loại công việc"
+                      : languageRedux === 2
+                        ? "Job types"
+                        : '일의 종류'
+                  }</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>{post?.data.postJobType.fullName}</h5>
@@ -921,7 +952,11 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <ClockPostIcon />
-                  <p>{language?.post_detail_page?.working_hour}</p>
+                  <p>{languageRedux === 1
+                    ? "Giờ làm việc"
+                    : languageRedux === 2
+                      ? "Working hours"
+                      : '노동시간'}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
@@ -941,7 +976,11 @@ const Detail = () => {
               >
                 <div className="div-detail-row-titleItem">
                   <CalendarPostIcon />
-                  <p>{language?.post_detail_page?.working_time}</p>
+                  <p>{languageRedux === 1
+                    ? "Thời gian làm việc"
+                    : languageRedux === 2
+                      ? "Working period"
+                      : '근무 기간'}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
@@ -956,33 +995,65 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <CalendarPostIcon />
-                  <p>{language?.post_detail_page?.work_on_weekends}</p>
+                  <p>{languageRedux === 1
+                    ? "Làm việc cuối tuần"
+                    : languageRedux === 2
+                      ? "Working on the weekend"
+                      : '주말 근무'}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
                     {post?.data.isWorkingWeekend === 0
-                      ? language?.post_detail_page?.weekend_no
-                      : language?.post_detail_page?.weekend_yes}
+                      ?
+                      languageRedux === 1
+                        ? "Không làm việc cuối tuần"
+                        : languageRedux === 2
+                          ? "Do not work weekends"
+                          : '주말에는 일하지 마세요'
+                      :
+                      languageRedux === 1
+                        ? "Làm việc cuối tuần"
+                        : languageRedux === 2
+                          ? "Weekend work available"
+                          : '주말 근무'}
                   </h5>
                 </div>
               </div>
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <MonitorPostIcon />
-                  <p>{language?.post_detail_page?.work_remotely}</p>
+                  <p>{languageRedux === 1
+                    ? "Làm việc từ xa"
+                    : languageRedux === 2
+                      ? "Remote work"
+                      : '원격으로 작업'}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
                     {post?.data.isRemotely === 0
-                      ? language?.post_detail_page?.remote_no
-                      : language?.post_detail_page?.remote_yes}
+                      ?
+                      languageRedux === 1
+                        ? "Không làm việc từ xa"
+                        : languageRedux === 2
+                          ? "Does not work remotely"
+                          : '원격으로 일하지 마세요'
+                      :
+                      languageRedux === 1
+                        ? "Làm việc từ xa"
+                        : languageRedux === 2
+                          ? "Remote work is available"
+                          : '원격으로 작업'}
                   </h5>
                 </div>
               </div>
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <DollarPostIcon />
-                  <p>{language?.post_detail_page?.salary}</p>
+                  <p>{languageRedux === 1
+                    ? "Mức lương"
+                    : languageRedux === 2
+                      ? "Salary"
+                      : '목르엉'}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   {post?.data.postSalaryType.id === 6 ? (
@@ -1003,7 +1074,11 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <WorkPostIcon />
-                  <p>{language?.post_detail_page?.job_category}</p>
+                  <p>{languageRedux === 1
+                    ? "Danh mục nghề nghiệp"
+                    : languageRedux === 2
+                      ? "Category"
+                      : '직업 디렉토리'}</p>
                 </div>
                 <div
                   className="div-detail-row-titleItem"
@@ -1021,7 +1096,11 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <ClockPostIcon />
-                  <p>{language?.post_detail_page?.expiration_date}</p>
+                  <p>{languageRedux === 1
+                    ? "Ngày hết hạn"
+                    : languageRedux === 2
+                      ? "Expiration date"
+                      : '만료일'}</p>
                 </div>
                 <div
                   className="div-detail-row-titleItem"
@@ -1030,9 +1109,13 @@ const Detail = () => {
                   <h5>
                     {post?.data.expiredDate
                       ? `${new Date(post?.data.expiredDate).toLocaleDateString(
-                          'en-GB',
-                        )}`
-                      : language?.post_detail_page?.indefinite}
+                        'en-GB',
+                      )}`
+                      : languageRedux === 1
+                        ? "Vô thời hạn"
+                        : languageRedux === 2
+                          ? "Indefinitely"
+                          : '제한 없는'}
                   </h5>
                 </div>
               </div>
@@ -1066,9 +1149,9 @@ const Detail = () => {
                   '_parent',
                 );
               }}
-              // onClick={() => {
-              //   console.log(post?.data);
-              // }}
+            // onClick={() => {
+            //   console.log(post?.data);
+            // }}
             ></Button>
             <Button
               onClick={onclick}
@@ -1082,7 +1165,7 @@ const Detail = () => {
                 fontWeight: 'normal',
                 cursor:
                   post?.data?.companyResourceData?.name === 'HIJOB' &&
-                  profileV3.typeRoleData === 1
+                    profileV3.typeRoleData === 1
                     ? 'no-drop'
                     : 'pointer',
                 // position: 'absolute',
@@ -1098,7 +1181,11 @@ const Detail = () => {
     },
     post?.data?.postCompanyInformation && {
       key: '2',
-      label: language?.post_detail_page?.company_infor,
+      label: languageRedux === 1
+        ? 'Thông tin công ty'
+        : languageRedux === 2
+          ? "Company's information"
+          : '회사 정보',
       style: {
         display:
           post?.data?.postCompanyInformation && key === '2' ? 'flex' : 'none',
@@ -1144,50 +1231,82 @@ const Detail = () => {
               </div>
               <div className="div-detail-rowCompany">
                 <h3 style={{ display: 'block' }}>
-                  {language?.post_detail_page?.company_description}
+                  {languageRedux === 1
+                    ? 'Mô tả'
+                    : languageRedux === 2
+                      ? 'Describe'
+                      : '설명'}
                 </h3>
                 <div className="div-detail_descCompany">
                   <p>
                     {post?.data.postCompanyInformation
                       ? post?.data.postCompanyInformation?.description
-                      : language?.post_detail_page?.not_update}
+                      : languageRedux === 1
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                          ? 'Not updated yet'
+                          : '업데이트하지 않음'}
                   </p>
                 </div>
               </div>
               <div className="div-detail-rowCompany">
-                <h3>{language?.post_detail_page?.basic_info}</h3>
+                <h3>{languageRedux === 1
+                  ? 'Thông tin cơ bản'
+                  : languageRedux === 2
+                    ? 'Basic information'
+                    : '기준 정부'}</h3>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <TaxCodeDetailPostIcon />
-                    <p>{language?.post_detail_page?.tax_code}</p>
+                    <p>{languageRedux === 1
+                      ? 'Mã số thuế'
+                      : languageRedux === 2
+                        ? 'Tax code'
+                        : '세금 코드'}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
                       {post?.data?.postCompanyInformation.taxCode
                         ? post?.data?.postCompanyInformation?.taxCode
-                        : language?.post_detail_page?.not_update}
+                        : languageRedux === 1
+                          ? 'Chưa cập nhật'
+                          : languageRedux === 2
+                            ? 'Not updated yet'
+                            : languageRedux === 3 && '업데이트하지 않음'}
                     </h5>
                   </div>
                 </div>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <LocationDetailPostIcon />
-                    <p>{language?.post_detail_page?.address}</p>
+                    <p>{languageRedux === 1
+                      ? 'Địa chỉ'
+                      : languageRedux === 2
+                        ? 'Address'
+                        : '주소'}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5 onClick={handleChangeGoogleMap}>
                       {post?.data?.postCompanyInformation
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
-                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
-                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
-                        : language?.post_detail_page?.not_update}
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                        : languageRedux === 1
+                          ? 'Chưa cập nhật'
+                          : languageRedux === 2
+                            ? 'Not updated yet'
+                            : languageRedux === 3 && '업데이트하지 않음'}
                     </h5>
                   </div>
                 </div>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <MailDetailPostIcon />
-                    <p>Email</p>
+                    <p>{languageRedux === 1
+                      ? 'Email'
+                      : languageRedux === 2
+                        ? 'Email'
+                        : '이메일'}</p>
                   </div>
                   <div
                     className="div-detail-titleItem"
@@ -1199,27 +1318,43 @@ const Detail = () => {
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.email
-                        : language?.post_detail_page?.not_update}
+                        : languageRedux === 1
+                          ? 'Chưa cập nhật'
+                          : languageRedux === 2
+                            ? 'Not updated yet'
+                            : languageRedux === 3 && '업데이트하지 않음'}
                     </h5>
                   </div>
                 </div>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <PhoneDetailPostIcon />
-                    <p>{language?.post_detail_page?.phone_number}</p>
+                    <p>{languageRedux === 1
+                      ? 'Số điện thoại'
+                      : languageRedux === 2
+                        ? 'Phone number'
+                        : '전화 번호'}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.phone
-                        : language?.post_detail_page?.not_update}
+                        : languageRedux === 1
+                          ? 'Chưa cập nhật'
+                          : languageRedux === 2
+                            ? 'Not updated yet'
+                            : languageRedux === 3 && '업데이트하지 않음'}
                     </h5>
                   </div>
                 </div>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <WebDetailPostIcon />
-                    <p>Website</p>
+                    <p>{languageRedux === 1
+                      ? 'Trang web'
+                      : languageRedux === 2
+                        ? 'Website'
+                        : '웹사이트'}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     {/* <h5> */}
@@ -1232,7 +1367,11 @@ const Detail = () => {
                     >
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.website
-                        : language?.post_detail_page?.not_update}
+                        : languageRedux === 1
+                          ? 'Chưa cập nhật'
+                          : languageRedux === 2
+                            ? 'Not updated yet'
+                            : languageRedux === 3 && '업데이트하지 않음'}
                     </a>
                     {/* </h5> */}
                   </div>
@@ -1255,7 +1394,7 @@ const Detail = () => {
                           click: () => {
                             window.open(
                               'https://www.google.com/maps/place/' +
-                                `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`,
+                              `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`,
                             );
                           },
                         }}
@@ -1350,17 +1489,14 @@ const Detail = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${
-                      post?.data?.location ? post?.data?.location?.fullName : ''
-                    }, ${
-                      post?.data?.location?.district
+                    <h3>{`${post?.data.address}, ${post?.data?.location ? post?.data?.location?.fullName : ''
+                      }, ${post?.data?.location?.district
                         ? post?.data?.location?.district?.fullName
                         : ''
-                    }, ${
-                      post?.data?.location?.district?.province
+                      }, ${post?.data?.location?.district?.province
                         ? post?.data?.location?.district?.province?.fullName
                         : ''
-                    }`}</h3>
+                      }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -1407,7 +1543,12 @@ const Detail = () => {
                             send
                           </Link>
                         </div> */}
-                      <h3>{language?.post_detail_page?.share}</h3>
+                      <h3>{
+                        languageRedux === 1 ?
+                          "Chia sẻ"
+                          : languageRedux === 2
+                            ? "Share" : "공유하다"
+                      }</h3>
                     </div>
                     <div className="actions-item" onClick={handleClickSave}>
                       {bookmarked ? (
@@ -1416,7 +1557,10 @@ const Detail = () => {
                       ) : (
                         <SaveIconOutline width={24} height={24} />
                       )}
-                      <h3>{language?.post_detail_page?.save}</h3>
+                      <h3>{languageRedux === 1 ?
+                        "Lưu"
+                        : languageRedux === 2
+                          ? "Save" : "구하다"}</h3>
                     </div>
                   </div>
                 </div>
@@ -1549,7 +1693,12 @@ const Detail = () => {
               <div className="description-container">
                 <div className="div-description-mo">
                   <div className="description">
-                    <h3>{language?.post_detail_page?.job_description}</h3>
+                    <h3>{
+                      languageRedux === 1 ?
+                        "Mô tả công việc"
+                        : languageRedux === 2
+                          ? "Job description" : "업무 설명서"
+                    }</h3>
                     <div
                       style={{
                         whiteSpace: 'pre-line',
@@ -1565,12 +1714,17 @@ const Detail = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                          // onClick={handlePreviousPost}
+                        // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
                           </div>
-                          <span>{language?.post_detail_page?.pre_job}</span>
+                          <span>{
+                            languageRedux === 1 ?
+                              "Công việc trước"
+                              : languageRedux === 2
+                                ? "Prev job" : "이전 직업"
+                          }</span>
                         </div>
                         <div
                           className="description-button_next"
@@ -1579,7 +1733,12 @@ const Detail = () => {
                             color: postNext ? 'black' : '#cccc',
                           }}
                         >
-                          <span>{language?.post_detail_page?.next_job}</span>
+                          <span>{
+                            languageRedux === 1 ?
+                              "Công việc sau"
+                              : languageRedux === 2
+                                ? "Next job" : "다음 직업"
+                          }</span>
                           <div
                             className="icon"
                             style={
@@ -1622,7 +1781,14 @@ const Detail = () => {
                   </Button> */}
                 </div>
                 <div className="div-suggest">
-                  <h3>{language?.post_detail_page?.similar_jobs}</h3>
+                  <h3>
+                    {
+                      languageRedux === 1 ?
+                        "Việc làm tương tự"
+                        : languageRedux === 2
+                          ? "Same job" : "같은 직업"
+                    }
+                  </h3>
                   <div className="item">
                     {postNewest?.data?.posts.map(
                       (item: PostNewest, index: null | number) => (
@@ -1685,19 +1851,16 @@ const Detail = () => {
                     <Typography sx={{ ml: 2 }}>
                       <AddressDetailPostIcon width={16} height={16} />
                       <span style={{ marginLeft: '8px' }}>
-                        {`${post?.data.address}, ${
-                          post?.data?.location
-                            ? post?.data?.location?.fullName
-                            : ''
-                        }, ${
-                          post?.data?.location?.district
+                        {`${post?.data.address}, ${post?.data?.location
+                          ? post?.data?.location?.fullName
+                          : ''
+                          }, ${post?.data?.location?.district
                             ? post?.data?.location?.district?.fullName
                             : ''
-                        }, ${
-                          post?.data?.location?.district?.province
+                          }, ${post?.data?.location?.district?.province
                             ? post?.data?.location?.district?.province?.fullName
                             : ''
-                        }`}
+                          }`}
                       </span>
                     </Typography>
                     {/* <div className="mid-title_companyName">
@@ -1779,10 +1942,14 @@ const Detail = () => {
                 {profileV3.typeRoleData === 0
                   ? languageRedux === 1
                     ? 'Ứng tuyển cho công việc này'
-                    : 'Apply for this job'
+                    : languageRedux === 2 ?
+                      'Apply for this job' :
+                      "이 직업에 지원하세요"
                   : languageRedux === 1
                     ? 'Xem công việc này'
-                    : 'View this job'}
+                    : languageRedux === 2 ?
+                      'View this job'
+                      : '이 직업 보기'}
               </Typography>
               <Typography
                 id="modal-modal-title"
@@ -1791,10 +1958,22 @@ const Detail = () => {
                 sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
               >
                 {post?.data?.companyResourceData?.name === 'HIJOB'
-                  ? language?.post_detail_page?.apply_this_job_des
+                  ? languageRedux === 1 ? 'Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Ứng tuyển cho công việc này?'
+                    : languageRedux === 2 ? 'Your information will be sent to employers. Apply for this job?' :
+                      '귀하의 정보가 고용주에게 전송됩니다. 이 직업에 지원하시겠습니까?'
                   : isApplied
-                    ? language?.post_detail_page?.have_applied_yet
-                    : language?.post_detail_page?.forward_des}
+                    ?
+                    languageRedux === 1 ?
+                      "Bạn đã ứng tuyển công việc này chưa?" :
+                      languageRedux === 2 ?
+                        "Have you applied for this job?" :
+                        "아직 이 직업에 지원하셨나요?"
+                    :
+                    languageRedux === 1 ?
+                      "Bạn có muốn chuyển sang trang của bài đăng này không?" :
+                      languageRedux === 2 ?
+                        "Do you want to switch to this post's page?" :
+                        "이 게시물의 페이지로 전환하시겠습니까?"}
               </Typography>
 
               <Box
@@ -1815,8 +1994,18 @@ const Detail = () => {
                   }}
                 >
                   {isApplied
-                    ? language?.post_detail_page?.not_yet
-                    : language?.no}
+                    ?
+                    languageRedux === 1 ?
+                      "Chưa" :
+                      languageRedux === 2 ?
+                        "Not yet" :
+                        "아직 아님"
+                    :
+                    languageRedux === 1
+                      ? "Không"
+                      : languageRedux === 2
+                        ? "No"
+                        : '아니요'}
                 </Button>
                 <Button
                   type="primary"
@@ -1832,8 +2021,19 @@ const Detail = () => {
                   }}
                 >
                   {isApplied
-                    ? language?.post_detail_page?.already
-                    : language?.yes}
+                    ?
+                    languageRedux === 1 ?
+                      "Rồi" :
+                      languageRedux === 2 ?
+                        "Already" :
+                        "이미"
+                    :
+                    languageRedux === 1
+                      ? 'Có'
+                      : languageRedux === 2
+                        ? 'Yes'
+                        : '가지다'
+                  }
                 </Button>
               </Box>
             </Box>

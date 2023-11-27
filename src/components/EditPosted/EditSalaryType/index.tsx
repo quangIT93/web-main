@@ -47,7 +47,13 @@ const EditSalaryType: React.FC<ISalaryType> = (props) => {
     <Box sx={{ marginTop: '24px' }}>
       <FormControl sx={{ width: '100%' }}>
         <FormLabel id="demo-row-radio-buttons-group-label" sx={styleLabel}>
-          {language?.job_type} <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1
+              ? "Trả lương theo"
+              : languageRedux === 2
+                ? "Calculate salary"
+                : '......에 따라 급여를 지급하기'
+          }<span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
           row

@@ -11,6 +11,7 @@ interface IStyleWork {
   setIsRemotely: React.Dispatch<React.SetStateAction<number>>;
   language: any;
   setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+  languageRedux: any
 }
 
 const StyleWork: React.FC<IStyleWork> = (props) => {
@@ -20,7 +21,8 @@ const StyleWork: React.FC<IStyleWork> = (props) => {
     setIsWorkingWeekend,
     setIsRemotely,
     language,
-    setIsValidSubmit
+    setIsValidSubmit,
+    languageRedux
   } = props;
 
   const handleWeekendChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +42,15 @@ const StyleWork: React.FC<IStyleWork> = (props) => {
       className="post-styleWork"
     >
       <FormControlLabel
-        label={language?.working_on_the_weekend}
+        label={
+          languageRedux === 1
+            ? "Làm việc cuối tuần"
+            : languageRedux === 2
+              ? "Working on the weekend"
+              : languageRedux === 3
+                ? '주말 근무'
+                : "Làm việc cuối tuần"
+        }
         control={
           <Checkbox
             checked={isWorkingWeekend === 0 ? false : true}
@@ -49,7 +59,15 @@ const StyleWork: React.FC<IStyleWork> = (props) => {
         }
       />
       <FormControlLabel
-        label={language?.remote_work}
+        label={
+          languageRedux === 1
+            ? "Làm việc từ xa"
+            : languageRedux === 2
+              ? "Remote work"
+              : languageRedux === 3
+                ? '원격으로 작업'
+                : "Làm việc từ xa"
+        }
         control={
           <Checkbox
             checked={isRemotely === 0 ? false : true}

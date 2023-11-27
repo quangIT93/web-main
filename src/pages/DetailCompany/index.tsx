@@ -58,7 +58,7 @@ const DetailCompany = () => {
         setCompanyData(result.data);
         setBookmarked(result.data.isBookmarked);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const getApplicationPositionCount = async () => {
@@ -90,7 +90,7 @@ const DetailCompany = () => {
         setPostOfCompany(result.data.posts);
         setPage('0');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleFollowCompany = async () => {
@@ -152,7 +152,7 @@ const DetailCompany = () => {
             ? 'Vị trí ứng tuyển'
             : languageRedux === 2
               ? 'Application positions'
-              : languageRedux === 3 && '위치'}
+              : languageRedux === 3 && '모집 위치'}
           <span style={{ color: '#0D99FF' }}>
             {' '}
             {'('}
@@ -220,7 +220,7 @@ const DetailCompany = () => {
                       : languageRedux === 2
                         ? 'Company information not updated yet'
                         : languageRedux === 3 &&
-                          '회사정보가 업데이트되지 않았습니다.'}
+                        '회사정보가 업데이트되지 않았습니다.'}
                 </h3>
                 <div
                   className={styles.company_bell}
@@ -257,7 +257,7 @@ const DetailCompany = () => {
                         : languageRedux === 2
                           ? 'Company information not updated yet'
                           : languageRedux === 3 &&
-                            '회사정보가 업데이트되지 않았습니다.'}
+                          '회사정보가 업데이트되지 않았습니다.'}
                   </p>
                 </div>
                 <div className={styles.address_item}>
@@ -267,7 +267,7 @@ const DetailCompany = () => {
                       ? `${applyPostitions} vị trí ứng tuyển`
                       : languageRedux === 2
                         ? `${applyPostitions} application positions`
-                        : languageRedux === 3 && `${applyPostitions} 위치`}
+                        : languageRedux === 3 && `${applyPostitions} 모집 위치`}
                   </p>
                 </div>
               </div>

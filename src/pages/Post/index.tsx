@@ -428,7 +428,7 @@ const Post: React.FC = () => {
             : languageRedux === 2
               ? 'The job name must not exceed 255 characters'
               : languageRedux === 3 &&
-                '작업 이름은 255자를 초과할 수 없습니다.',
+              '작업 이름은 255자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -448,7 +448,7 @@ const Post: React.FC = () => {
             : languageRedux === 2
               ? 'The company name must not exceed 255 characters'
               : languageRedux === 3 &&
-                '회사 이름은 255자를 초과할 수 없습니다.',
+              '회사 이름은 255자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 2,
       };
@@ -537,7 +537,7 @@ const Post: React.FC = () => {
             : languageRedux === 2
               ? 'The start date cannot exceed the end date'
               : languageRedux === 3 &&
-                '시작 날짜는 종료 날짜를 초과할 수 없습니다.',
+              '시작 날짜는 종료 날짜를 초과할 수 없습니다.',
         checkForm: false,
         idError: 13,
       };
@@ -561,7 +561,7 @@ const Post: React.FC = () => {
             : languageRedux === 2
               ? 'The start date cannot be less than the current time'
               : languageRedux === 3 &&
-                '시작 날짜는 현재 시각을 초과할 수 없습니다.',
+              '시작 날짜는 현재 시각을 초과할 수 없습니다.',
         checkForm: false,
         idError: 13,
       };
@@ -740,7 +740,10 @@ const Post: React.FC = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Tạo bài đăng tuyển dụng'
-        : 'HiJob - Create job posting';
+        : languageRedux === 2
+          ? 'HiJob - Create job posting'
+          : languageRedux === 3 ?
+            'HiJob - 채용 공고 만들기' : 'HiJob - Tạo bài đăng tuyển dụng';
     // document.title = language?.post_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
@@ -781,7 +784,7 @@ const Post: React.FC = () => {
       } else {
         setOpenModalNoteCreateCompany(true);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const checkPostedToday = async () => {
@@ -845,11 +848,31 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-            // style={{ textAlign: 'center', display: 'block' }}
+          // style={{ textAlign: 'center', display: 'block' }}
           >
-            <h1>{language?.profile_page?.create_post}</h1>
+            <h1>
+              {
+                languageRedux === 1
+                  ? 'Tạo bài đăng tuyển dụng'
+                  : languageRedux === 2
+                    ? 'Create job posting'
+                    : languageRedux === 3
+                      ? '채용 공고 만들기'
+                      : 'Tạo bài đăng tuyển dụng'
+              }
+            </h1>
             <div className="post-main_switch">
-              <h4>{language?.post_page?.auto_fill}</h4>
+              <h4>
+                {
+                  languageRedux === 1
+                    ? 'HiJob sẽ tự động điền tất cả các thông tin công việc trước đó của bạn!'
+                    : languageRedux === 2
+                      ? 'HiJob will automatically fill all your previous job information!'
+                      : languageRedux === 3
+                        ? 'HiJob이 자동으로 당신의 이전 직업 정보를 전부 입력하겠습니다!'
+                        : 'HiJob sẽ tự động điền tất cả các thông tin công việc trước đó của bạn!'
+                }
+              </h4>
               <Switch
                 checked={openModalFillDataPost}
                 // checkedHelmetren=""
@@ -859,7 +882,17 @@ const Post: React.FC = () => {
             </div>
           </div>
           <div className="fill-company" onClick={handleFillCompany}>
-            <h3>{language?.post_page?.fill_company}</h3>
+            <h3>
+              {
+                languageRedux === 1
+                  ? 'Điền nhanh thông tin công ty'
+                  : languageRedux === 2
+                    ? 'Auto - Fill in company information'
+                    : languageRedux === 3
+                      ? '회사정보를 빠르게 입력하세요'
+                      : 'Điền nhanh thông tin công ty'
+              }
+            </h3>
           </div>
           <form onSubmit={handleSubmit} onClick={handleClickForm}>
             <PostJobCompany
@@ -931,6 +964,7 @@ const Post: React.FC = () => {
               setIsRemotely={setIsRemotely}
               language={language}
               setIsValidSubmit={setIsValidSubmit}
+              languageRedux={languageRedux}
             />
             <PostTime
               startTime={startTime}
@@ -939,6 +973,7 @@ const Post: React.FC = () => {
               setEndTime={setEndTime}
               language={language}
               setIsValidSubmit={setIsValidSubmit}
+              languageRedux={languageRedux}
             />
 
             <PostCategoryId
@@ -965,6 +1000,7 @@ const Post: React.FC = () => {
               salaryType={salaryType}
               language={language}
               setIsValidSubmit={setIsValidSubmit}
+              languageRedux={languageRedux}
             />
 
             <PostFilterSalary

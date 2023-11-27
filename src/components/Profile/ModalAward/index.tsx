@@ -135,7 +135,7 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
             : languageRedux === 2
               ? 'Title length must be greater than 0 and less than 255'
               : languageRedux === 3 &&
-                '제목 길이는 0보다 크고 255보다 작아야 합니다.',
+              '제목 길이는 0보다 크고 255보다 작아야 합니다.',
         checkForm: false,
         idError: 1,
       };
@@ -152,7 +152,7 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
             : languageRedux === 2
               ? 'Description length must be greater than 0 and less than 1000'
               : languageRedux === 3 &&
-                '설명 길이는 0보다 크고 1000보다 작아야 합니다.',
+              '설명 길이는 0보다 크고 1000보다 작아야 합니다.',
         checkForm: false,
         idError: 2,
       };
@@ -288,7 +288,7 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
                       ? '수상명'
                       : 'Tiêu đề giải thưởng'
               }
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {award.title && award.title.length > 255 ? (
@@ -298,7 +298,7 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
                     : languageRedux === 2
                       ? 'Title cannot exceed 255 characters'
                       : languageRedux === 3 &&
-                        '제목은 255자를 초과할 수 없습니다.'}
+                      '제목은 255자를 초과할 수 없습니다.'}
                 </span>
               ) : !award.title ? (
                 <span className="helper-text">
@@ -311,9 +311,8 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                award.title ? award.title.length : '0'
-              }/255`}</span>
+              <span className="number-text">{`${award.title ? award.title.length : '0'
+                }/255`}</span>
             </div>
           </Box>
           {/* <Box sx={{ marginBottom: '12px' }}>
@@ -379,7 +378,7 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
                       ? '수상 경력을 설명하세요.'
                       : 'Mô tả giải thưởng của bạn'
               }
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {award.description.length === 0 ? (
@@ -389,7 +388,7 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
                     : languageRedux === 2
                       ? 'Additional information cannot be empty'
                       : languageRedux === 3 &&
-                        '추가 정보는 비워둘 수 없습니다.'}
+                      '추가 정보는 비워둘 수 없습니다.'}
                 </span>
               ) : award.description.length > 1000 ? (
                 <span className="helper-text">
@@ -398,7 +397,7 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
                     : languageRedux === 2
                       ? 'Additional information cannot exceed 1000 characters'
                       : languageRedux === 3 &&
-                        '추가 정보는 1000자를 초과할 수 없습니다.'}
+                      '추가 정보는 1000자를 초과할 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -407,7 +406,12 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
             </div>
           </Box>
           <Button variant="contained" fullWidth onClick={handleSubmit}>
-            {language?.profile_page?.save_info}
+            {languageRedux === 1
+              ? 'Lưu thông tin'
+              : languageRedux === 2
+                ? 'Save information'
+                : languageRedux === 3 &&
+                '정보 저장'}
           </Button>
         </Box>
       </Modal>

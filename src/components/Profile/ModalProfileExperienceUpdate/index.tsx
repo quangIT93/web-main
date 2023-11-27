@@ -335,7 +335,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
 
     if (experience.extraInformation === '') {
       return {
-        message: language?.profile_page?.err_additional_information,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập thông tin bổ sung'
+          : languageRedux === 2
+            ? 'Please enter additional information'
+            : '추가 정보를 입력해주세요',
         checkForm: false,
         idError: 5,
       };
@@ -348,7 +352,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             : languageRedux === 2
               ? 'Additional information cannot exceed 500 characters'
               : languageRedux === 3 &&
-                '추가 정보는 500자를 초과할 수 없습니다.',
+              '추가 정보는 500자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 5,
       };
@@ -432,7 +436,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       console.log(error);
       messageApi.open({
         type: 'error',
-        content: language?.profile_page?.check_info_please,
+        content: languageRedux === 1
+          ? 'Vui lòng kiểm tra lại thông tin đã nhập'
+          : languageRedux === 2
+            ? 'Please check the information entered again'
+            : '입력한 정보를 다시 확인해 주세요.',
       });
     }
   };
@@ -478,7 +486,13 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             align="center"
             sx={{ marginBottom: '12px' }}
           >
-            {language?.profile_page?.edit_working_experience}
+            {
+              languageRedux === 1
+                ? 'Sửa thông tin kinh nghiệm làm việc'
+                : languageRedux === 2
+                  ? 'Edit working experience'
+                  : '경력 정보 편집'
+            }
           </Typography>
           <Box sx={styleChildBox}>
             <Typography
@@ -487,7 +501,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               component="label"
               htmlFor="nameProfile"
             >
-              {language?.professional_titles}{' '}
+              {languageRedux === 1
+                ? 'Chức danh'
+                : languageRedux === 2
+                  ? 'Professional titles'
+                  : '제목'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -498,8 +516,12 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               onChange={handleChangeTitle}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={language?.professional_titles}
-              // error={titleError} // Đánh dấu lỗi
+              placeholder={languageRedux === 1
+                ? 'Chức danh'
+                : languageRedux === 2
+                  ? 'Professional titles'
+                  : '제목'}
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {experience.title && experience.title.length > 50 ? (
@@ -521,9 +543,8 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                experience.title ? experience.title.length : '0'
-              }/50`}</span>
+              <span className="number-text">{`${experience.title ? experience.title.length : '0'
+                }/50`}</span>
             </div>
           </Box>
           <Box sx={styleChildBox}>
@@ -533,7 +554,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               component="label"
               htmlFor="nameProfile"
             >
-              {language?.company_organization}{' '}
+              {languageRedux === 1
+                ? 'Công ty/Tổ chức'
+                : languageRedux === 2
+                  ? 'Company/Organization'
+                  : '회사/조직'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -544,8 +569,12 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               onChange={handleChangeSchool}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={language?.company_organization}
-              // error={titleError} // Đánh dấu lỗi
+              placeholder={languageRedux === 1
+                ? 'Công ty/Tổ chức'
+                : languageRedux === 2
+                  ? 'Company/Organization'
+                  : '회사/조직'}
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {experience.companyName && experience.companyName.length > 50 ? (
@@ -567,9 +596,8 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                experience.companyName ? experience.companyName.length : '0'
-              }/50`}</span>
+              <span className="number-text">{`${experience.companyName ? experience.companyName.length : '0'
+                }/50`}</span>
             </div>
           </Box>
 
@@ -586,7 +614,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                     component="label"
                     htmlFor="startTime"
                   >
-                    {language?.start_time}{' '}
+                    {languageRedux === 1
+                      ? 'Thời gian bắt đầu'
+                      : languageRedux === 2
+                        ? 'Start time'
+                        : '시작 시간'}{' '}
                     <span className="color-asterisk">*</span>
                   </Typography>
                   <DatePicker
@@ -609,7 +641,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   />
                   <div className="wrap-noti_input">
                     {experience.startDate &&
-                    new Date(experience.startDate).getFullYear() >
+                      new Date(experience.startDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
@@ -617,7 +649,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                           : languageRedux === 2
                             ? 'The start time cannot be greater than the current time.'
                             : languageRedux === 3 &&
-                              '시작 시간은 현재 시간보다 클 수 없습니다.'}
+                            '시작 시간은 현재 시간보다 클 수 없습니다.'}
                       </span>
                     ) : !new Date(experience.startDate).getFullYear() ? (
                       <span className="helper-text">
@@ -634,7 +666,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                           : languageRedux === 2
                             ? 'The start time cannot be less than 1900.'
                             : languageRedux === 3 &&
-                              '시작 시간은 1900보다 작을 수 없습니다.'}
+                            '시작 시간은 1900보다 작을 수 없습니다.'}
                       </span>
                     ) : (
                       <></>
@@ -648,7 +680,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                     component="label"
                     htmlFor="startTime"
                   >
-                    {language?.finish_time}{' '}
+                    {languageRedux === 1
+                      ? 'Thời gian kết thúc'
+                      : languageRedux === 2
+                        ? 'End time'
+                        : '종료 시간'}{' '}
                     <span className="color-asterisk">*</span>
                   </Typography>
                   <DatePicker
@@ -672,7 +708,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   />
                   <div className="wrap-noti_input">
                     {experience.endDate &&
-                    new Date(experience.endDate).getFullYear() >
+                      new Date(experience.endDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
@@ -680,7 +716,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                           : languageRedux === 2
                             ? 'The end time cannot be greater than the current time.'
                             : languageRedux === 3 &&
-                              '종료 시간은 현재 시간보다 클 수 없습니다.'}
+                            '종료 시간은 현재 시간보다 클 수 없습니다.'}
                       </span>
                     ) : !new Date(experience.endDate).getFullYear() ? (
                       <span className="helper-text">
@@ -697,7 +733,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                           : languageRedux === 2
                             ? 'The end time cannot be less than 1900.'
                             : languageRedux === 3 &&
-                              '종료 시간은 1900보다 작을 수 없습니다.'}
+                            '종료 시간은 1900보다 작을 수 없습니다.'}
                       </span>
                     ) : (
                       <></>
@@ -714,7 +750,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               component="label"
               htmlFor="startTime"
             >
-              {language?.additional_information}{' '}
+              {languageRedux === 1
+                ? 'Thông tin bổ sung'
+                : languageRedux === 2
+                  ? 'Additional information'
+                  : '추가 정보'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -726,11 +766,15 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               rows={4}
               id="profile_experience_edit_additional_information"
               // label="Một số đặc điểm nhận diện công ty"
-              placeholder={language?.profile_page?.place_additional_information}
+              placeholder={languageRedux === 1
+                ? 'Thông tin bổ sung'
+                : languageRedux === 2
+                  ? 'Additional information'
+                  : '추가 정보'}
             />
             <div className="wrap-noti_input">
               {experience.extraInformation &&
-              experience.extraInformation.length > 500 ? (
+                experience.extraInformation.length > 500 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Bạn đã nhập quá 500 ký tự.'
@@ -749,16 +793,20 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${
-                experience.extraInformation
-                  ? experience.extraInformation.length
-                  : '0'
-              }/500`}</span>
+              <span className="number-text">{`${experience.extraInformation
+                ? experience.extraInformation.length
+                : '0'
+                }/500`}</span>
             </div>
           </Box>
 
           <Button variant="contained" fullWidth onClick={handleSubmit}>
-            {language?.profile_page?.save_info}
+            {languageRedux === 1
+              ? 'Lưu thông tin'
+              : languageRedux === 2
+                ? 'Save information'
+                : languageRedux === 3 &&
+                '정보 저장'}
           </Button>
         </Box>
       </Modal>

@@ -15,10 +15,11 @@ interface IPostSalaryType {
   salaryType?: number;
   language: any;
   setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+  languageRedux: any;
 }
 
 const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
-  const { moneyType, setMoneyType, salaryType, language, setIsValidSubmit} = props;
+  const { moneyType, setMoneyType, salaryType, language, setIsValidSubmit, languageRedux } = props;
 
   const handleChangeMoneyType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMoneyType(Number(e.target.value));
@@ -44,7 +45,11 @@ const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
           }}
         >
           {
-            language?.salary
+            languageRedux === 1
+              ? "Mức lương"
+              : languageRedux === 2
+                ? "Salary"
+                : '목르엉'
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </FormLabel>

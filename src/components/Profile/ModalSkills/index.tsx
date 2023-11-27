@@ -275,7 +275,7 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
                       ? '기술'
                       : 'Kỹ năng'
               }
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {skill.length > 255 ? (
@@ -376,7 +376,12 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
             </TextField>
           </Box>
           <Button variant="contained" fullWidth onClick={handleSubmit}>
-            {language?.profile_page?.save_info}
+            {languageRedux === 1
+              ? 'Lưu thông tin'
+              : languageRedux === 2
+                ? 'Save information'
+                : languageRedux === 3 &&
+                '정보 저장'}
           </Button>
         </Box>
       </Modal>

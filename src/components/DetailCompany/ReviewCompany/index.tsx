@@ -228,7 +228,11 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
       <div className={styles.review_company_content}>
         <div className={styles.review_company_left}>
           <div className={styles.review_company_5_star}>
-            <h3>{languageRedux === 1 ? 'Được đánh giá' : 'Reviewed'}</h3>
+            <h3>{
+              languageRedux === 1 ? 'Được đánh giá'
+                : languageRedux === 2 ? 'Reviewed' :
+                  "검토됨"
+            }</h3>
             <div className={styles.star_5_wrap}>
               <p>{averageRated !== null ? `(${averageRated}/5)` : `(0/5)`}</p>
               <CompanyRating
@@ -237,7 +241,11 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
             </div>
           </div>
           <div className={styles.review_company_list_review}>
-            <h3>{languageRedux === 1 ? 'Đánh giá' : 'Evaluate'}</h3>
+            <h3>{
+              languageRedux === 1 ? 'Đánh giá'
+                : languageRedux === 2 ? 'Evaluate' :
+                  '평가하다'
+            }</h3>
             <InfiniteScroll
               dataLength={companyRating && companyRating?.length}
               next={fetchMoreData}
@@ -269,7 +277,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                                   ? item.profileData.nameHide
                                   : languageRedux === 1
                                     ? 'Thông tin chưa cập nhật'
-                                    : 'Information not updated yet'}
+                                    : languageRedux === 2
+                                      ? 'Not updated information'
+                                      : '업데이트되지 않은 정보'}
                               </h2>
 
                               <p>
@@ -302,7 +312,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
           }}
         >
           <div className={styles.review_company_title}>
-            <h3>{languageRedux === 1 ? 'Đánh giá của bạn' : 'Your review'}</h3>
+            <h3>{languageRedux === 1 ? 'Đánh giá của bạn'
+              : languageRedux === 2 ? 'Your review'
+                : '당신의 검토'}</h3>
             {Object.keys(myReview).length === 0 ? (
               <div className={styles.rating}>
                 <input
@@ -365,7 +377,9 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
               <div className={styles.delete_review}>
                 <CompanyRating rating={myReview.star} />
                 <Button type="text" danger onClick={handleDeleteReview}>
-                  {languageRedux === 1 ? 'Xóa đánh giá' : 'Delete review'}
+                  {languageRedux === 1 ? 'Xóa đánh giá'
+                    : languageRedux === 2 ? 'Delete review' :
+                      "리뷰 삭제"}
                 </Button>
               </div>
             )}
@@ -378,48 +392,52 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
                 placeholder={
                   languageRedux === 1
                     ? 'Nhập đánh giá của bạn...'
-                    : 'Enter your review...'
+                    : languageRedux === 2 ? 'Enter your review...'
+                      : '리뷰를 입력하세요...'
                 }
                 autoSize={{ minRows: 20, maxRows: 22 }}
                 ref={inputRef}
-                // rows={20}
+              // rows={20}
               />
               <div className={styles.notice_input}>
                 {review?.length > 3000 ? (
                   <span className={styles.helper_text}>
                     {languageRedux === 1
                       ? 'Đánh giá không được vượt quá 3000 ký tự'
-                      : 'Review cannot exceed 3000 characters'}
+                      : languageRedux === 2 ? 'Review cannot exceed 3000 characters'
+                        : '리뷰는 3000자를 초과할 수 없습니다.'}
                   </span>
                 ) : review?.length === 0 ? (
                   <span className={styles.helper_text}>
                     {languageRedux === 1
-                      ? 'Đánh giá không được để trống '
-                      : 'Review cannot be blank '}
+                      ? 'Đánh giá không được để trống'
+                      : languageRedux === 2 ? 'Review cannot be blank'
+                        : '리뷰는 비워둘 수 없습니다.'}
                   </span>
                 ) : (
                   <></>
                 )}
-                <span className={styles.number_text}>{`${
-                  review?.length === undefined ? 0 : review.length
-                }/3000`}</span>
+                <span className={styles.number_text}>{`${review?.length === undefined ? 0 : review.length
+                  }/3000`}</span>
               </div>
             </div>
             <Button
               type="primary"
               ghost
               onClick={handleSubmitReview}
-              // disabled={
-              //     star === 0 && review === '' ? true :
-              //         star === 0 ? true : false}
+            // disabled={
+            //     star === 0 && review === '' ? true :
+            //         star === 0 ? true : false}
             >
               {Object.keys(myReview).length === 0
                 ? languageRedux === 1
                   ? 'Đăng bài đánh giá'
-                  : 'Post a review'
+                  : languageRedux === 2 ? 'Post a review'
+                    : '리뷰 게시'
                 : languageRedux === 1
                   ? 'Sửa bài đánh giá'
-                  : 'Edit a review'}
+                  : languageRedux === 2 ? 'Edit a review'
+                    : '리뷰 편집'}
             </Button>
           </div>
         </div>
@@ -431,7 +449,7 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={openBackdrop}
-          //  onClick={handleClose}
+        //  onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>

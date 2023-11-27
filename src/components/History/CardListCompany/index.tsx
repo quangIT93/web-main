@@ -208,13 +208,19 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
             lineHeight: '24px',
           }}
         >
-          {languageRedux === 1 ? 'Danh sách công ty' : 'List of companies'}
+          {languageRedux === 1
+            ? 'Danh sách công ty'
+            : languageRedux === 2
+              ? 'List of companies'
+              : '관심한 회사'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {
               searchParams.get('c') === '5-0'
                 ? languageRedux === 1
                   ? ' > Công ty đã lưu'
-                  : ' > Saved company'
+                  : languageRedux === 2
+                    ? ' > Saved comopanies'
+                    : ' > 저장한 회사'
                 : ''
 
               // : searchParams.get('c') === '5-1'
@@ -237,95 +243,113 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
             // height: '48px',
           }}
         >
-          <MenuItem value={1}>{language?.history_page?.latest}</MenuItem>
-          <MenuItem value={0}>{language?.history_page?.oldest}</MenuItem>
+          <MenuItem value={1}>{languageRedux === 1
+            ? 'Mới nhất'
+            : languageRedux === 2
+              ? 'Newest'
+              : languageRedux === 3 && '최신'}</MenuItem>
+          <MenuItem value={0}>{languageRedux === 1
+            ? 'Cũ nhất'
+            : languageRedux === 2
+              ? 'Oldest'
+              : languageRedux === 3 && '가장 오래된'}</MenuItem>
         </TextField>
       </Box>
-      {activeChild === '5-0' ? (
-        <div className="history-post" style={{ marginTop: '16px' }}>
-          <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-            {companyData.map((dataBookmark: any, index: number) => (
-              <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
-                <CompanyCardHistory
-                  item={dataBookmark.CompanyData}
-                  index={index}
-                  saveCompanyList={saveCompanyList}
-                  setSaveCompanyList={setSaveCompanyList}
-                />
-              </Grid>
-            ))}
-          </Grid>
-          <Box
-            sx={{
-              margin: '12px auto',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Button
-              style={{
-                width: 130,
-                height: 40,
-                marginBottom: '2rem',
-                backgroundColor: `#0D99FF`,
-                color: '#FFFFFF',
-                fontWeight: 'bold',
-                display: isVisible ? 'block' : 'none',
+      {activeChild === '5-0' &&
+        companyData?.length !== 0
+        ? (
+          <div className="history-post" style={{ marginTop: '16px' }}>
+            <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
+              {companyData.map((dataBookmark: any, index: number) => (
+                <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+                  <CompanyCardHistory
+                    item={dataBookmark.CompanyData}
+                    index={index}
+                    saveCompanyList={saveCompanyList}
+                    setSaveCompanyList={setSaveCompanyList}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+            <Box
+              sx={{
+                margin: '12px auto',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
-              loading={uploading}
-              onClick={handleGetmoreCompany}
             >
-              {language?.more}
-              {/* Xem thêm */}
-            </Button>
-          </Box>
-        </div>
-      ) : (
-        //  :
-        // activeChild === '5-1' ? (
-        //   <div className="history-post" style={{ marginTop: '16px' }}>
-        //     <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-        //       {companyDataView.map((dataView: any, index: number) => (
-        //         <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
-        //           <CompanyViewCardHistory
-        //             item={dataView}
-        //             index={index}
-        //             saveCompanyList={saveCompanyListView}
-        //             setSaveCompanyList={setSaveCompanyListView}
-        //           />
-        //         </Grid>
-        //       ))}
-        //     </Grid>
-        //     <Box
-        //       sx={{
-        //         margin: '12px auto',
-        //         display: 'flex',
-        //         alignItems: 'center',
-        //         justifyContent: 'center',
-        //       }}
-        //     >
-        //       <Button
-        //         style={{
-        //           width: 130,
-        //           height: 40,
-        //           marginBottom: '2rem',
-        //           backgroundColor: `#0D99FF`,
-        //           color: '#FFFFFF',
-        //           fontWeight: 'bold',
-        //           display: isVisible ? 'block' : 'none',
-        //         }}
-        //         loading={uploading}
-        //         onClick={handleGetmoreCompanyView}
-        //       >
-        //         {language?.more}
-        //         {/* Xem thêm */}
-        //       </Button>
-        //     </Box>
-        //   </div>
-        // )
-        <NoCompanyData />
-      )}
+              <Button
+                style={{
+                  width: 130,
+                  height: 40,
+                  marginBottom: '2rem',
+                  backgroundColor: `#0D99FF`,
+                  color: '#FFFFFF',
+                  fontWeight: 'bold',
+                  display: isVisible ? 'block' : 'none',
+                }}
+                loading={uploading}
+                onClick={handleGetmoreCompany}
+              >
+                {languageRedux === 1
+                  ? 'Xem thêm'
+                  : languageRedux === 2
+                    ? 'See more'
+                    : '더보기'}
+                {/* Xem thêm */}
+              </Button>
+            </Box>
+          </div>
+        ) : (
+          //  :
+          // activeChild === '5-1' ? (
+          //   <div className="history-post" style={{ marginTop: '16px' }}>
+          //     <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
+          //       {companyDataView.map((dataView: any, index: number) => (
+          //         <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+          //           <CompanyViewCardHistory
+          //             item={dataView}
+          //             index={index}
+          //             saveCompanyList={saveCompanyListView}
+          //             setSaveCompanyList={setSaveCompanyListView}
+          //           />
+          //         </Grid>
+          //       ))}
+          //     </Grid>
+          //     <Box
+          //       sx={{
+          //         margin: '12px auto',
+          //         display: 'flex',
+          //         alignItems: 'center',
+          //         justifyContent: 'center',
+          //       }}
+          //     >
+          //       <Button
+          //         style={{
+          //           width: 130,
+          //           height: 40,
+          //           marginBottom: '2rem',
+          //           backgroundColor: `#0D99FF`,
+          //           color: '#FFFFFF',
+          //           fontWeight: 'bold',
+          //           display: isVisible ? 'block' : 'none',
+          //         }}
+          //         loading={uploading}
+          //         onClick={handleGetmoreCompanyView}
+          //       >
+          //         {languageRedux === 1
+          //   ? 'Xem thêm'
+          // : languageRedux === 2
+          //   ? 'See more'
+          //   : '더보기'}
+          //         {/* Xem thêm */}
+          //       </Button >
+          //     </Box>
+          //   </div>
+          // )
+          <NoCompanyData />
+        )}
 
       <Backdrop
         sx={{
@@ -334,7 +358,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>

@@ -238,7 +238,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             : languageRedux === 2
               ? 'The Facebook link is not in the correct format'
               : languageRedux === 3 &&
-                'Facebook 링크의 형식이 올바르지 않습니다.',
+              'Facebook 링크의 형식이 올바르지 않습니다.',
         checkForm: false,
         idError: 3,
       };
@@ -251,7 +251,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             : languageRedux === 2
               ? 'The Linkedin link is not in the correct format'
               : languageRedux === 3 &&
-                'Linkedin 링크가 올바른 형식이 아닙니다.',
+              'Linkedin 링크가 올바른 형식이 아닙니다.',
         checkForm: false,
         idError: 4,
       };
@@ -265,7 +265,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             : languageRedux === 2
               ? 'The Facebook link cannot exceed 100 characters'
               : languageRedux === 3 &&
-                'Facebook 링크는 100자를 초과할 수 없습니다.',
+              'Facebook 링크는 100자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 3,
       };
@@ -278,7 +278,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             : languageRedux === 2
               ? 'The Linkedin link cannot exceed 100 characters'
               : languageRedux === 3 &&
-                'Linkedin 링크는 100자를 초과할 수 없습니다.',
+              'Linkedin 링크는 100자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 4,
       };
@@ -390,7 +390,13 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             align="center"
             sx={{ marginBottom: '12px' }}
           >
-            {language?.contact_information}
+            {languageRedux === 1
+              ? 'Thông tin liên hệ'
+              : languageRedux === 2
+                ? 'Contact information'
+                : languageRedux === 3
+                  ? '연락처'
+                  : 'Thông tin liên hệ'}
           </Typography>
           <Box sx={styleChildBox}>
             <Typography
@@ -399,7 +405,11 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              {language?.phone_number} <span className="color-asterisk">*</span>
+              {languageRedux === 1
+                ? 'Số điện thoại'
+                : languageRedux === 2
+                  ? 'Phone number'
+                  : '전화 번호'} <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               type="tel"
@@ -409,9 +419,13 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               onChange={handleSetPhone}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={language?.phone_number}
+              placeholder={languageRedux === 1
+                ? 'Số điện thoại'
+                : languageRedux === 2
+                  ? 'Phone number'
+                  : '전화 번호'}
               inputMode="numeric"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {regexCheckPhone.test(phone) === false ? (
@@ -421,7 +435,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
                     : languageRedux === 2
                       ? 'The phone number is not in the correct format'
                       : languageRedux === 3 &&
-                        '전화 번호의 형식이 올바르지 않습니다.'}
+                      '전화 번호의 형식이 올바르지 않습니다.'}
                 </span>
               ) : phone.length === 0 ? (
                 <span className="helper-text">
@@ -445,7 +459,11 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              Email <span className="color-asterisk">*</span>
+              {languageRedux === 1
+                ? 'Email'
+                : languageRedux === 2
+                  ? 'Email'
+                  : '이메일'} <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               type="text"
@@ -456,7 +474,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="example@.gamil.com"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {email.length === 0 ? (
@@ -474,7 +492,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
                     : languageRedux === 2
                       ? 'Email cannot exceed 50 characters'
                       : languageRedux === 3 &&
-                        '이메일은 50자를 초과할 수 없습니다.'}
+                      '이메일은 50자를 초과할 수 없습니다.'}
                 </span>
               ) : regexCheckEmail.test(email) === false ? (
                 <span className="helper-text">
@@ -483,7 +501,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
                     : languageRedux === 2
                       ? 'The Email is not in the correct format'
                       : languageRedux === 3 &&
-                        '이메일의 형식이 올바르지 않습니다.'}
+                      '이메일의 형식이 올바르지 않습니다.'}
                 </span>
               ) : (
                 <></>
@@ -499,7 +517,11 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              Link Facebook
+              {languageRedux === 1
+                ? 'Link Facebook'
+                : languageRedux === 2
+                  ? 'Link Facebook'
+                  : '페이스북'}
             </Typography>
             <TextField
               type="text"
@@ -509,8 +531,12 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               onChange={handleSetFB}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder="Facebook"
-              // error={titleError} // Đánh dấu lỗi
+              placeholder={languageRedux === 1
+                ? 'Link Facebook'
+                : languageRedux === 2
+                  ? 'Link Facebook'
+                  : '페이스북'}
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {fb.trim() !== '' && fb.length > 100 ? (
@@ -520,7 +546,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
                     : languageRedux === 2
                       ? 'The Facebook link cannot exceed 100 characters'
                       : languageRedux === 3 &&
-                        'Facebook 링크는 100자를 초과할 수 없습니다.'}
+                      'Facebook 링크는 100자를 초과할 수 없습니다.'}
                 </span>
               ) : fb.trim() !== '' && validURL(fb) === false ? (
                 <span className="helper-text">
@@ -529,7 +555,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
                     : languageRedux === 2
                       ? 'The Facebook link is not in the correct format'
                       : languageRedux === 3 &&
-                        'Facebook 링크의 형식이 올바르지 않습니다.'}
+                      'Facebook 링크의 형식이 올바르지 않습니다.'}
                 </span>
               ) : (
                 <></>
@@ -545,7 +571,13 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              Link Linkedin
+              {
+                languageRedux === 1
+                  ? 'Link LinkedIn'
+                  : languageRedux === 2
+                    ? 'Link LinkedIn'
+                    : '링크드인'
+              }
             </Typography>
             <TextField
               type="text"
@@ -555,8 +587,14 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               onChange={handleLinkIn}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder="Linkedin"
-              // error={titleError} // Đánh dấu lỗi
+              placeholder={
+                languageRedux === 1
+                  ? 'Link LinkedIn'
+                  : languageRedux === 2
+                    ? 'Link LinkedIn'
+                    : '링크드인'
+              }
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {linkIn.trim() !== '' && linkIn.length > 100 ? (
@@ -566,7 +604,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
                     : languageRedux === 2
                       ? 'The Linkedin link cannot exceed 100 characters'
                       : languageRedux === 3 &&
-                        'Linkedin 링크는 100자를 초과할 수 없습니다.'}
+                      'Linkedin 링크는 100자를 초과할 수 없습니다.'}
                 </span>
               ) : linkIn.trim() !== '' && validURL(linkIn) === false ? (
                 <span className="helper-text">
@@ -575,7 +613,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
                     : languageRedux === 2
                       ? 'The Linkedin link is not in the correct format'
                       : languageRedux === 3 &&
-                        'Linkedin 링크가 올바른 형식이 아닙니다.'}
+                      'Linkedin 링크가 올바른 형식이 아닙니다.'}
                 </span>
               ) : (
                 <></>
@@ -585,7 +623,12 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
           </Box>
 
           <Button variant="contained" fullWidth onClick={handleSubmit}>
-            {language?.profile_page?.save_info}
+            {languageRedux === 1
+              ? 'Lưu thông tin'
+              : languageRedux === 2
+                ? 'Save information'
+                : languageRedux === 3 &&
+                '정보 저장'}
           </Button>
         </Box>
       </Modal>

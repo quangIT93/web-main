@@ -244,7 +244,7 @@ const Company: React.FC<ICompany> = (props) => {
             : languageRedux === 2
               ? 'Your data has not been sent, you definitely want to leave?'
               : languageRedux === 3 &&
-                '귀하의 데이터가 전송되지 않았습니다. 나가시겠습니까?';
+              '귀하의 데이터가 전송되지 않았습니다. 나가시겠습니까?';
         event.preventDefault();
         event.returnValue = message || true;
         return message;
@@ -263,11 +263,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$',
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -856,7 +856,11 @@ const Company: React.FC<ICompany> = (props) => {
               </div>
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                {language?.edit}
+                {languageRedux === 1
+                  ? 'Sửa'
+                  : languageRedux === 2
+                    ? 'Edit'
+                    : '고치다'}
               </p>
             </Space>
           </div>
@@ -870,7 +874,7 @@ const Company: React.FC<ICompany> = (props) => {
                 : languageRedux === 2
                   ? 'You need to fill in your company information to post job vacancies, search for candidates.'
                   : languageRedux === 3 &&
-                    '채용 공고 게시 및 후보자 검색을 위해서는 회사 정보를 입력해야 합니다.'}
+                  '채용 공고 게시 및 후보자 검색을 위해서는 회사 정보를 입력해야 합니다.'}
             </p>
           </div>
         </div>

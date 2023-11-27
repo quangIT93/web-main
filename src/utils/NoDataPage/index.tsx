@@ -50,12 +50,19 @@ const NoDataComponent: React.FC<any> = (props) => {
       />
       <p style={{ fontSize: 20, color: 'gray', marginBottom: 20 }}>
         {props.loading === true
-          ? languageRedux === 1
-            ? 'Đang tải dữ liệu'
-            : 'Loading data...'
-          : languageRedux === 1
-            ? 'Không có thông tin hiển thị'
-            : 'No display information'}
+          ?
+          languageRedux === 1
+            ? 'Đang tải dữ liệu...'
+            : languageRedux === 2
+              ? 'Loading data...'
+              : languageRedux === 3 && '로드 중...'
+          :
+          languageRedux === 1
+            ? 'Không có thông tin hiển thị!'
+            : languageRedux === 2
+              ? 'No display information!'
+              : languageRedux === 3 && '표시되는 정보가 없습니다!'
+        }
       </p>
     </div>
   );
