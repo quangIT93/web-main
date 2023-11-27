@@ -1148,7 +1148,9 @@ const NewJobs: React.FC = () => {
               <p className="title-modal_noteKeyword">
                 {languageRedux === 1
                   ? 'Vui lòng nhập vị trí và danh mục'
-                  : 'Please enter Location and Category'}
+                  : languageRedux === 2 ?
+                    'Please enter Location and Category' :
+                    '위치와 카테고리를 입력해주세요'}
               </p>
             )}
 
