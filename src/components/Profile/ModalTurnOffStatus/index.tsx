@@ -42,7 +42,7 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
           setLoadingSwitch(false);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleCancel = () => {
@@ -63,7 +63,7 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
             // fontWeight: '700',
             lineHeight: '24px',
             letterSpacing: '0em',
-            textAlign: 'left',
+            textAlign: 'center',
           }}
         >
           {languageRedux === 1
@@ -87,7 +87,7 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
           fontWeight: '400',
           lineHeight: '24px',
           letterSpacing: '0.5px',
-          textAlign: 'left',
+          textAlign: 'center',
         }}
       >
         {languageRedux === 1
