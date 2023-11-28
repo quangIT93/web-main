@@ -998,7 +998,9 @@ const Profile: React.FC = () => {
             >
               {languageRedux === 1
                 ? 'Bạn đã thêm thông tin thành công !'
-                : 'You have saved the information successfully !'}
+                : languageRedux === 2 ?
+                  'You have saved the information successfully !'
+                  : '정보를 성공적으로 추가했습니다!'}
             </Alert>
           </Snackbar>
         </Stack>
@@ -1017,7 +1019,9 @@ const Profile: React.FC = () => {
             >
               {languageRedux === 1
                 ? 'Vui lòng nhập đầy đủ thông tin !'
-                : 'Please enter complete information !'}
+                : languageRedux === 2
+                  ? 'Please enter complete information !'
+                  : '완전한 정보를 입력해주세요!'}
             </Alert>
           </Snackbar>
         </Stack>
@@ -1036,7 +1040,9 @@ const Profile: React.FC = () => {
             >
               {languageRedux === 1
                 ? 'Cập nhật thông tin thành công !'
-                : 'Update information successfully !'}
+                : languageRedux === 2
+                  ? 'Update information successfully !'
+                  : '성공적으로 업데이트되었습니다!'}
             </Alert>
           </Snackbar>
         </Stack>

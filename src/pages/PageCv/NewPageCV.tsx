@@ -36,6 +36,7 @@ import 'swiper/css/navigation';
 // import required modules
 import { Autoplay, Mousewheel, Navigation } from 'swiper';
 import { log } from "util";
+import { getAnalytics, logEvent } from "firebase/analytics";
 const NewPageCV = () => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data);
@@ -83,7 +84,18 @@ const NewPageCV = () => {
         getTheme();
         // Lấy danh sách các phần tử .slick-active trong Slider
     }, [profileMoreV3]);
-
+    const analytics: any = getAnalytics();
+    React.useEffect(() => {
+        document.title =
+            languageRedux === 1
+                ? 'HiJob - Hướng dẫn tạo mẫu CV'
+                : languageRedux === 2 ? "HiJob - Instructions for creating a sample CV"
+                    : "HiJob - 이력서 작성 안내";
+        logEvent(analytics, 'screen_view' as string, {
+            page_title: '/landing-hijob' as string,
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [languageRedux]);
     return (
         <div className={styles.new_page_cv_container}>
             <Navbar />

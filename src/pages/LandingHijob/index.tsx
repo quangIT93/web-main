@@ -24,6 +24,7 @@ import ModalLogin from '#components/Home/ModalLogin';
 import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 import ModalNotiValidateCompany from '#components/Post/ModalNotiValidateCompany';
 import { Backdrop, CircularProgress } from '@mui/material';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 const LandingHijob = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -51,7 +52,18 @@ const LandingHijob = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
+  const analytics: any = getAnalytics();
+  React.useEffect(() => {
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Landing HiJob'
+        : languageRedux === 2 ? "HiJob - Landing HiJob"
+          : "HiJob - HiJob 착륙";
+    logEvent(analytics, 'screen_view' as string, {
+      page_title: '/landing-hijob' as string,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
   const form = React.useRef<any>(null);
   const inputNameRef = React.useRef<InputRef>(null);
   const inputEmailRef = React.useRef<InputRef>(null);
@@ -531,7 +543,11 @@ const LandingHijob = () => {
                   />
                 </div>
                 <div className={styles.register_input}>
-                  <p>Email</p>
+                  <p>{languageRedux === 1
+                    ? 'Email: '
+                    : languageRedux === 2
+                      ? 'Email: '
+                      : '이메일: '}</p>
                   <Input
                     placeholder="Example@gmail.com"
                     ref={inputEmailRef}

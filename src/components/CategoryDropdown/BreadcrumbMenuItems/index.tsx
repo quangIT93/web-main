@@ -921,6 +921,28 @@ const BreadcrumbMenuItems: React.FC = () => {
         },
       ],
     },
+    {
+      location: '/landing-hijob',
+      menu: [
+        {
+          title:
+            languageRedux === 1
+              ? 'Trang chủ'
+              : languageRedux === 2
+                ? 'Home'
+                : languageRedux === 3 && '홈',
+          href: '/',
+        },
+        {
+          title:
+            languageRedux === 1
+              ? 'Landing HiJob'
+              : languageRedux === 2
+                ? 'Landing HiJob'
+                : 'HiJob 착륙',
+        },
+      ],
+    },
   ];
 
   const menuItems = locations
