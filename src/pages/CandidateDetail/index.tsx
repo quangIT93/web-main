@@ -411,7 +411,11 @@ const CandidateDetail: React.FC = () => {
                       fontStyle: 'italic',
                     }}
                   >
-                    {language?.post_detail_page?.closed}
+                    {languageRedux === 1
+                      ? 'Bài đăng đã đóng'
+                      : languageRedux === 2
+                        ? 'Post is closed'
+                        : '게시물이 닫혔습니다'}
                   </p>
                 ) : (
                   <p
@@ -486,7 +490,11 @@ const CandidateDetail: React.FC = () => {
                         // 'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697190564373-1b072f22-916b-49f4-8ab8-fd37e3f3b6a4.jpg'
                       }
                       style={{ height: '70px', width: '70px' }}
-                      alt={'ảnh lỗi'}
+                      alt={languageRedux === 1
+                        ? 'Hình ảnh bị lỗi'
+                        : languageRedux === 2
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'}
                     />
                   </Badge>
                   <div style={{ marginLeft: '10px' }}>
@@ -604,9 +612,25 @@ const CandidateDetail: React.FC = () => {
                   <p>
                     {dataCandidate?.applicationProfile?.gender
                       ? dataCandidate?.applicationProfile?.gender === 1
-                        ? language?.male
-                        : language?.female
-                      : language?.male}
+                        ?
+                        languageRedux === 1
+                          ? 'Nam'
+                          : languageRedux === 2
+                            ? 'Male'
+                            : '남성'
+                        :
+                        languageRedux === 1
+                          ? 'Nữ'
+                          : languageRedux === 2
+                            ? 'Female'
+                            : '여성'
+                      :
+                      languageRedux === 1
+                        ? 'Nam'
+                        : languageRedux === 2
+                          ? 'Male'
+                          : '남성'
+                    }
                   </p>
                   <p>
                     {dataCandidate?.applicationProfile?.address?.name

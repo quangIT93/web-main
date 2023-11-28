@@ -233,7 +233,11 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                           ? props.item.resource.company_icon
                           : ''
                       }
-                      alt="ảnh"
+                      alt={languageRedux === 1
+                        ? 'Hình ảnh bị lỗi'
+                        : languageRedux === 2
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'}
                       onError={handleImageError}
                     />
                   )}
@@ -315,7 +319,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                   ? 'Đã được duyệt'
                   : languageRedux === 2
                     ? 'Approved'
-                    : languageRedux === 3 && '승인되였습니다..'
+                    : languageRedux === 3 && '승인되였습니다.'
                 : props.item.application_status === 3
                   ? languageRedux === 1
                     ? 'Đã từ chối'

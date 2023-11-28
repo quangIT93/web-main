@@ -82,7 +82,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
 
         if (validateImagesReply.isError) {
           console.log('::: Invalid images');
-          return toast.warn(language?.err_none_img);
+          return toast.warn(languageRedux === 1
+            ? 'Hình ảnh bị lỗi'
+            : languageRedux === 2
+              ? 'Image is corrupted'
+              : '이미지가 손상되었습니다');
         } else {
           const compressedImages: any = [];
           console.log('compressedImages', compressedImages);
@@ -153,7 +157,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (fileUploaded.length > 5) {
         messageApi.open({
           type: 'error',
-          content: language?.limit_5_img,
+          content: languageRedux === 1
+            ? 'Chỉ có thể tối đa 5 hình ảnh'
+            : languageRedux === 2
+              ? 'Only up to 5 images can be'
+              : '최대 5개의 이미지가 허용됩니다.',
         });
         return;
       }
@@ -201,7 +209,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (newFileSelected.length > 5) {
         messageApi.open({
           type: 'error',
-          content: language?.limit_5_img,
+          content: languageRedux === 1
+            ? 'Chỉ có thể tối đa 5 hình ảnh'
+            : languageRedux === 2
+              ? 'Only up to 5 images can be'
+              : '최대 5개의 이미지가 허용됩니다.',
         });
 
         return;
@@ -230,7 +242,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             if (newImageSelected.length > 5) {
               messageApi.open({
                 type: 'error',
-                content: language?.limit_5_img,
+                content: languageRedux === 1
+                  ? 'Chỉ có thể tối đa 5 hình ảnh'
+                  : languageRedux === 2
+                    ? 'Only up to 5 images can be'
+                    : '최대 5개의 이미지가 허용됩니다.',
               });
 
               return;
@@ -287,7 +303,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       const validateImagesReply = validatePostImages(imagesToCheck);
       if (validateImagesReply.isError) {
         // console.log('::: Invalid images');
-        return toast.warn(language?.err_none_img);
+        return toast.warn(languageRedux === 1
+          ? 'Hình ảnh bị lỗi'
+          : languageRedux === 2
+            ? 'Image is corrupted'
+            : '이미지가 손상되었습니다');
       } else {
         try {
           console.log('imagesToCheck', imagesToCheck);
@@ -324,7 +344,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (files.length > 5) {
         messageApi.open({
           type: 'error',
-          content: language?.limit_5_img,
+          content: languageRedux === 1
+            ? 'Chỉ có thể tối đa 5 hình ảnh'
+            : languageRedux === 2
+              ? 'Only up to 5 images can be'
+              : '최대 5개의 이미지가 허용됩니다.',
         });
         return;
       }
@@ -344,7 +368,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             if (newImageSelected.length > 5) {
               messageApi.open({
                 type: 'error',
-                content: language?.limit_5_img,
+                content: languageRedux === 1
+                  ? 'Chỉ có thể tối đa 5 hình ảnh'
+                  : languageRedux === 2
+                    ? 'Only up to 5 images can be'
+                    : '최대 5개의 이미지가 허용됩니다.',
               });
               return;
             }
@@ -422,7 +450,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
               <img
                 key={index}
                 src={image}
-                alt={language?.err_none_img}
+                alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'}
                 style={{
                   height: '150px',
                   width: '150px',

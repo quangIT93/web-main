@@ -63,10 +63,10 @@ const NumericInput = (props: NumericInputProps) => {
       onBlur={handleBlur}
       placeholder={
         languageRedux === 1
-          ? "Số điện thoại liên hệ"
+          ? 'Số điện thoại'
           : languageRedux === 2
-            ? "Contact phone number"
-            : '연락 전화번호'
+            ? 'Phone number'
+            : '전화 번호'
       }
       inputProps={{ maxLength: 10 }}
       size="small"
@@ -144,7 +144,11 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          {language?.phone_number} <span style={{ color: 'red' }}>*</span>
+          {languageRedux === 1
+            ? 'Số điện thoại'
+            : languageRedux === 2
+              ? 'Phone number'
+              : '전화 번호'} <span style={{ color: 'red' }}>*</span>
         </Typography>
         <NumericInput
           value={dataCompany?.phone}
@@ -186,7 +190,13 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          Email <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1
+              ? 'Email'
+              : languageRedux === 2
+                ? 'Email'
+                : '이메일'
+          } <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -196,7 +206,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           onChange={handleEditCompanyMail}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={language?.company_page?.place_email}
+          placeholder='example@gmail.com'
           disabled={is_profile ? true : false}
         //   error={titleError} // Đánh dấu lỗi
         />

@@ -380,8 +380,16 @@ const HotJobpage: React.FC = () => {
           administrative_region_id: 0,
           administrative_unit_id: 0,
           code_name: 'All',
-          full_name: 'All',
-          full_name_en: 'All',
+          full_name: languageRedux === 1
+            ? 'Tất cả'
+            : languageRedux === 2
+              ? 'All'
+              : '전부',
+          full_name_en: languageRedux === 1
+            ? 'Tất cả'
+            : languageRedux === 2
+              ? 'All'
+              : '전부',
           id: '0',
           name: 'All',
           name_en: 'All',
@@ -515,28 +523,76 @@ const HotJobpage: React.FC = () => {
               <h3>
                 {/* {language?.title_hot_jobs}{' '} */}
                 {searchParams.get('hotjob-id') === '2'
-                  ? language?.remote_work
+                  ? languageRedux === 1
+                    ? 'Làm việc từ xa'
+                    : languageRedux === 2
+                      ? 'Remote work'
+                      : '원격으로 작업'
                   : searchParams.get('hotjob-id') === '1'
-                    ? 'Influencer'
+                    ? languageRedux === 1
+                      ? 'Influencer'
+                      : languageRedux === 2
+                        ? 'Influencer'
+                        : '영향력 있는 사람'
                     : searchParams.get('hotjob-id') === '3'
-                      ? language?.hot_job_page?.short_time
+                      ? languageRedux === 1
+                        ? 'Công việc ngắn hạn'
+                        : languageRedux === 2
+                          ? 'Short-term job'
+                          : '단기 근무'
                       : searchParams.get('hotjob-id') === '4'
-                        ? language?.hot_job_page?.job_today
+                        ? languageRedux === 1
+                          ? 'Công việc hôm nay'
+                          : languageRedux === 2
+                            ? "Today's job"
+                            : '오늘의 작업'
                         : searchParams.get('hotjob-id') === '5'
-                          ? 'Freelancer'
+                          ? languageRedux === 1
+                            ? 'Làm việc tự do'
+                            : languageRedux === 2
+                              ? 'Freelancer'
+                              : '프리랜서'
                           : searchParams.get('hotjob-id') === '6'
-                            ? 'Driver'
+                            ? languageRedux === 1
+                              ? 'Tài xế'
+                              : languageRedux === 2
+                                ? 'Driver'
+                                : '운전사'
                             : searchParams.get('hotjob-id') === '7'
-                              ? 'Restaurant Service'
+                              ? languageRedux === 1
+                                ? 'Dịch vụ nhà hàng'
+                                : languageRedux === 2
+                                  ? 'Restaurant Service'
+                                  : '레스토랑 서비스'
                               : searchParams.get('hotjob-id') === '8'
-                                ? 'Restaurant Service'
+                                ? languageRedux === 1
+                                  ? 'Dịch vụ nhà hàng'
+                                  : languageRedux === 2
+                                    ? 'Restaurant Service'
+                                    : '레스토랑 서비스'
                                 : searchParams.get('hotjob-id') === '9'
-                                  ? 'Part time'
+                                  ? languageRedux === 1
+                                    ? 'Bán thời gian'
+                                    : languageRedux === 2
+                                      ? 'Part time'
+                                      : '파트타임'
                                   : searchParams.get('hotjob-id') === '10'
-                                    ? 'Marketing'
+                                    ? languageRedux === 1
+                                      ? 'Tiếp thị'
+                                      : languageRedux === 2
+                                        ? 'Marketing'
+                                        : '마케팅'
                                     : searchParams.get('hotjob-id') === '11'
-                                      ? 'Beauty'
-                                      : 'Loading...'}{' '}
+                                      ? languageRedux === 1
+                                        ? 'Làm đẹp'
+                                        : languageRedux === 2
+                                          ? 'Beauty'
+                                          : '아름다움'
+                                      : languageRedux === 1
+                                        ? 'Đang tải'
+                                        : languageRedux === 2
+                                          ? 'Loading'
+                                          : '로드 중'}{' '}
                 {languageRedux === 1
                   ? 'có'
                   : languageRedux === 2

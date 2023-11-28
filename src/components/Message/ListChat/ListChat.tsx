@@ -405,8 +405,15 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       !profileV3.email
     ) {
       api.info({
-        message: language?.post_detail_page?.update_infor_mess,
-        description: language?.post_detail_page?.update_infor_des,
+        message: languageRedux === 1 ?
+          "Cập nhật thông tin" :
+          languageRedux === 2 ?
+            "Update information" : "정보 업데이트",
+        description: languageRedux === 1 ?
+          "Vui lòng cập nhật thông tin để ứng tuyển công việc" :
+          languageRedux === 2 ?
+            "Please update your information to apply for the job" :
+            "해당 직무에 지원하려면 정보를 업데이트하세요.",
         placement: 'top',
         icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
       });
@@ -706,7 +713,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                       <hr className="horizontal-line"></hr>
                       <span className="date-chat">
                         {chatDate === new Date().toLocaleDateString()
-                          ? language?.messages_page?.to_day
+                          ? languageRedux === 1
+                            ? 'Hôm nay'
+                            : languageRedux === 2
+                              ? 'Today'
+                              : '오늘'
                           : chatDate}
                       </span>
                       <hr className="horizontal-line"></hr>
@@ -803,7 +814,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
               component="h2"
               sx={{ textAlign: 'center', color: '#0d99ff' }}
             >
-              {language?.post_detail_page?.apply_this_job_mess}
+              {languageRedux === 1
+                ? 'Ứng tuyển cho công việc này'
+                : languageRedux === 2
+                  ? 'Apply for this job'
+                  : '이 직업에 지원하세요'}
             </Typography>
             <Typography
               id="modal-modal-title"

@@ -197,25 +197,65 @@ const BreadcrumbMenuItems: React.FC = () => {
         {
           title:
             searchParams.get('hotjob-id') === '6'
-              ? 'Driver'
+              ? languageRedux === 1
+                ? 'Tài xế'
+                : languageRedux === 2
+                  ? 'Driver'
+                  : '운전사'
               : searchParams.get('hotjob-id') === '2'
-                ? 'Remote'
+                ? languageRedux === 1
+                  ? 'Làm việc từ xa'
+                  : languageRedux === 2
+                    ? 'Remote work'
+                    : '원격으로 작업'
                 : searchParams.get('hotjob-id') === '5'
-                  ? 'Freelancer'
+                  ? languageRedux === 1
+                    ? 'Làm việc tự do'
+                    : languageRedux === 2
+                      ? 'Freelancer'
+                      : '프리랜서'
                   : searchParams.get('hotjob-id') === '1'
-                    ? 'Influencer'
+                    ? languageRedux === 1
+                      ? 'Influencer'
+                      : languageRedux === 2
+                        ? 'Influencer'
+                        : '영향력 있는 사람'
                     : searchParams.get('hotjob-id') === '3'
-                      ? 'Short time'
+                      ? languageRedux === 1
+                        ? 'Công việc ngắn hạn'
+                        : languageRedux === 2
+                          ? 'Short-term job'
+                          : '단기 근무'
                       : searchParams.get('hotjob-id') === '4'
-                        ? 'Job today'
+                        ? languageRedux === 1
+                          ? 'Công việc hôm nay'
+                          : languageRedux === 2
+                            ? "Today's job"
+                            : '오늘의 작업'
                         : searchParams.get('hotjob-id') === '8'
-                          ? 'Restaurant Service'
+                          ? languageRedux === 1
+                            ? 'Dịch vụ nhà hàng'
+                            : languageRedux === 2
+                              ? 'Restaurant Service'
+                              : '레스토랑 서비스'
                           : searchParams.get('hotjob-id') === '9'
-                            ? 'Part time'
+                            ? languageRedux === 1
+                              ? 'Bán thời gian'
+                              : languageRedux === 2
+                                ? 'Part time'
+                                : '파트타임'
                             : searchParams.get('hotjob-id') === '10'
-                              ? 'Marketing'
+                              ? languageRedux === 1
+                                ? 'Tiếp thị'
+                                : languageRedux === 2
+                                  ? 'Marketing'
+                                  : '마케팅'
                               : searchParams.get('hotjob-id') === '11'
-                                ? 'Beauty'
+                                ? languageRedux === 1
+                                  ? 'Làm đẹp'
+                                  : languageRedux === 2
+                                    ? 'Beauty'
+                                    : '아름다움'
                                 : '',
         },
       ],
@@ -709,7 +749,11 @@ const BreadcrumbMenuItems: React.FC = () => {
           href: '/',
         },
         {
-          title: 'Profile',
+          title: languageRedux === 1
+            ? 'Trang cá nhân'
+            : languageRedux === 2
+              ? 'Profile'
+              : '개인 페이지',
           href: '/profile',
         },
         {

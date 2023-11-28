@@ -369,35 +369,57 @@ const EditPosted = () => {
   const validValue = () => {
     if (editDataPosted?.title === '') {
       return {
-        message: language?.post_page?.err_job_title,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập tên công việc'
+          : languageRedux === 2
+            ? 'Please enter job name'
+            : languageRedux === 3 &&
+            '직업 이름을 입력해주세요',
         checkForm: false,
         idError: 1,
       };
     }
     if (editDataPosted?.company_name === '') {
       return {
-        message: language?.post_page?.err_company_name,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập tên công ty'
+          : languageRedux === 2
+            ? 'Please enter company name'
+            : languageRedux === 3 &&
+            '회사명을 입력해주세요',
         checkForm: false,
         idError: 2,
       };
     }
     if (fillProvince === null) {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 3,
       };
     }
     if (fillDistrict === null) {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 4,
       };
     }
     if (fillWard === null) {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
@@ -410,14 +432,22 @@ const EditPosted = () => {
     // }
     if (editDataPosted?.ward_id === '') {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
     }
     if (editDataPosted?.address === '') {
       return {
-        message: language?.post_page?.err_address,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập địa chỉ'
+          : languageRedux === 2
+            ? 'Please enter your address'
+            : '주소를 입력해주세요',
         checkForm: false,
         idError: 6,
       };
@@ -435,7 +465,11 @@ const EditPosted = () => {
       editDataPosted?.categoryIds?.length <= 0
     ) {
       return {
-        message: language?.post_page?.err_cate,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn danh mục nghề nghiệp'
+          : languageRedux === 2
+            ? 'Please select a career category'
+            : '직업 카테고리를 선택해주세요.',
         checkForm: false,
         idError: 7,
       };
@@ -457,7 +491,11 @@ const EditPosted = () => {
       editDataPosted?.salaryType !== 6
     ) {
       return {
-        message: language?.post_page?.err_salary,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập mức lương'
+          : languageRedux === 2
+            ? 'Please enter salary'
+            : '급여를 입력해주세요',
         checkForm: false,
         idError: 8,
       };
@@ -467,14 +505,22 @@ const EditPosted = () => {
       editDataPosted?.salaryType !== 6
     ) {
       return {
-        message: language?.post_page?.err_salary,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập mức lương'
+          : languageRedux === 2
+            ? 'Please enter salary'
+            : '급여를 입력해주세요',
         checkForm: false,
         idError: 9,
       };
     }
     if (Number(editDataPosted?.salaryMax) < Number(editDataPosted?.salaryMin)) {
       return {
-        message: language?.post_page?.err_verify_salary,
+        message: languageRedux === 1 ?
+          "Lương tối thiểu không được lớn hơn lương tối đa" :
+          languageRedux === 2 ?
+            "Minimum cannot be greater than maximum" :
+            "최소 금액은 최대 금액보다 클 수 없습니다.",
         checkForm: false,
         idError: 9,
       };
@@ -638,7 +684,11 @@ const EditPosted = () => {
       if (error?.response?.data?.message === 'Invalid date value') {
         messageApi.open({
           type: 'error',
-          content: language?.post_page?.err_date,
+          content: languageRedux === 1
+            ? 'Vui lòng nhập lại ngày làm việc'
+            : languageRedux === 2
+              ? 'Please enter a business date again'
+              : '근무일을 다시 입력해주세요.',
         });
       }
     }

@@ -249,7 +249,11 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const handleSubmit = async () => {
     try {
       if (value.length > 10) {
-        message.error(language?.limit_10_location);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 10 khu vực'
+          : languageRedux === 2
+            ? 'Only up to 10 areas can be'
+            : '영역은 최대 10개까지만 있을 수 있습니다.');
 
         setValue(locations?.map((v: any, i) => v.id));
         return;

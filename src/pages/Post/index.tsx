@@ -415,7 +415,12 @@ const Post: React.FC = () => {
     console.log(startDate < Date.now());
     if (titleJob === '') {
       return {
-        message: language?.post_page?.err_job_title,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập tên công việc'
+          : languageRedux === 2
+            ? 'Please enter job name'
+            : languageRedux === 3 &&
+            '직업 이름을 입력해주세요',
         checkForm: false,
         idError: 1,
       };
@@ -435,7 +440,12 @@ const Post: React.FC = () => {
     }
     if (companyName === '') {
       return {
-        message: language?.post_page?.err_company_name,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập tên công ty'
+          : languageRedux === 2
+            ? 'Please enter company name'
+            : languageRedux === 3 &&
+            '회사명을 입력해주세요',
         checkForm: false,
         idError: 2,
       };
@@ -455,63 +465,100 @@ const Post: React.FC = () => {
     }
     if (fillProvince === '') {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 3,
       };
     }
     if (fillDistrict === null) {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 4,
       };
     }
     if (wardId === '') {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
     }
     if (address === '') {
       return {
-        message: language?.post_page?.err_address,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập địa chỉ'
+          : languageRedux === 2
+            ? 'Please enter your address'
+            : '주소를 입력해주세요',
         checkForm: false,
         idError: 6,
       };
     }
     if (categoriesId.length <= 0) {
       return {
-        message: language?.post_page?.err_cate,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn danh mục nghề nghiệp'
+          : languageRedux === 2
+            ? 'Please select a career category'
+            : '직업 카테고리를 선택해주세요.',
         checkForm: false,
         idError: 7,
       };
     }
     if (Number(salaryMin) === 0 && salaryType !== 6) {
       return {
-        message: language?.post_page?.err_salary,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập mức lương'
+          : languageRedux === 2
+            ? 'Please enter salary'
+            : '급여를 입력해주세요',
         checkForm: false,
         idError: 8,
       };
     }
     if (Number(salaryMax) === 0 && salaryType !== 6) {
       return {
-        message: language?.post_page?.err_salary,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập mức lương'
+          : languageRedux === 2
+            ? 'Please enter salary'
+            : '급여를 입력해주세요',
         checkForm: false,
         idError: 9,
       };
     }
     if (Number(salaryMax) < Number(salaryMin)) {
       return {
-        message: language?.post_page?.err_verify_salary,
+        message: languageRedux === 1 ?
+          "Lương tối thiểu không được lớn hơn lương tối đa" :
+          languageRedux === 2 ?
+            "Minimum cannot be greater than maximum" :
+            "최소 금액은 최대 금액보다 클 수 없습니다.",
         checkForm: false,
         idError: 10,
       };
     }
     if (phoneNumber === '' || phoneNumber.length < 10) {
       return {
-        message: language?.company_page?.err_phone_mess,
+        message: languageRedux === 1
+          ? 'Số điện thoại không được bỏ trống và phải ít hơn 10 ký tự.'
+          : languageRedux === 2
+            ? 'Phone number cannot be blank and must be less than 10 characters.'
+            : languageRedux === 3 &&
+            '전화번호는 비워둘 수 없으며 10자 미만이어야 합니다.',
         checkForm: false,
         idError: 11,
       };
@@ -720,12 +767,20 @@ const Post: React.FC = () => {
       if (error?.response?.data?.message === 'You only can post 1 job/day') {
         messageApi.open({
           type: 'error',
-          content: language?.post_page?.err_1_post_per_day,
+          content: languageRedux === 1
+            ? 'Bạn chỉ có thể đăng 1 bài trong 1 ngày'
+            : languageRedux === 2
+              ? 'You can only post 1 post in 1 day'
+              : '하루에 1개의 게시물만 게시할 수 있습니다.',
         });
       } else if (error?.response?.data?.message === 'Invalid date value') {
         messageApi.open({
           type: 'error',
-          content: language?.post_page?.err_date,
+          content: languageRedux === 1
+            ? 'Vui lòng nhập lại ngày làm việc'
+            : languageRedux === 2
+              ? 'Please enter a business date again'
+              : '근무일을 다시 입력해주세요.',
         });
       }
     }
@@ -1034,7 +1089,11 @@ const Post: React.FC = () => {
               onClick={handleSubmit}
               className="btn-submitForm"
             >
-              {language?.save}
+              {languageRedux === 1
+                ? 'Lưu'
+                : languageRedux === 2
+                  ? 'Save'
+                  : '구하다'}
             </button>
           </form>
         </div>

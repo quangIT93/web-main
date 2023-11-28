@@ -426,7 +426,11 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                         <img
                           key={index}
                           src={item?.imagePath}
-                          alt={language?.err_none_img}
+                          alt={languageRedux === 1
+                            ? 'Hình ảnh bị lỗi'
+                            : languageRedux === 2
+                              ? 'Image is corrupted'
+                              : '이미지가 손상되었습니다'}
                         />
                       </div>
                     ))}

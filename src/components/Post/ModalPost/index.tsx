@@ -99,7 +99,7 @@ const ModalPost: React.FC<IModalPost> = (props) => {
               : languageRedux === 2
                 ? 'You can track your job posting through:'
                 : languageRedux === 3 &&
-                  '다음을 통해 채용 공고를 추적할 수 있습니다.'}
+                '다음을 통해 채용 공고를 추적할 수 있습니다.'}
           </h6>
 
           {/* <h4
@@ -112,12 +112,20 @@ const ModalPost: React.FC<IModalPost> = (props) => {
             style={{ display: 'flex', justifyContent: 'space-around' }}
           >
             <img
-              alt="ảnh lỗi"
+              alt={languageRedux === 1
+                ? 'Hình ảnh bị lỗi'
+                : languageRedux === 2
+                  ? 'Image is corrupted'
+                  : '이미지가 손상되었습니다'}
               src={require('../../../img/langdingPage/QRcode-ggplay.png')}
             />
             <img
               style={{ marginLeft: 10 }}
-              alt="ảnh lỗi"
+              alt={languageRedux === 1
+                ? 'Hình ảnh bị lỗi'
+                : languageRedux === 2
+                  ? 'Image is corrupted'
+                  : '이미지가 손상되었습니다'}
               src={require('../../../img/langdingPage/QRcode-appstore.png')}
             />
           </div>
@@ -131,7 +139,11 @@ const ModalPost: React.FC<IModalPost> = (props) => {
             >
               <img
                 id="img-gallery"
-                alt="lỗi ảnh"
+                alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'}
                 src={require('../../../img/langdingPage/image 43.png')}
               />
             </Link>
@@ -140,7 +152,11 @@ const ModalPost: React.FC<IModalPost> = (props) => {
               target="_blank"
             >
               <img
-                alt="lỗi ảnh"
+                alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'}
                 src={require('../../../img/langdingPage/image 45.png')}
               />
             </Link>

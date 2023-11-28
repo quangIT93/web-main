@@ -406,7 +406,11 @@ const Profile: React.FC = () => {
         }
         setOpen(false);
         setFileList([]);
-        message.success(language?.profile_page?.alert_delete_cv_success);
+        message.success(languageRedux === 1
+          ? 'Xóa CV thành công'
+          : languageRedux === 2
+            ? 'Successfully deleted CV'
+            : '이력서를 삭제했습니다.');
       }
     } catch (error) { }
   };
@@ -414,7 +418,11 @@ const Profile: React.FC = () => {
   // cancel delete cv
   const cancel = () => {
     setOpen(false);
-    message.error(language?.profile_page?.cancel);
+    message.error(languageRedux === 1
+      ? 'Huỷ'
+      : languageRedux === 2
+        ? 'Cancel'
+        : '취소');
   };
 
   // handle upload cv
@@ -428,10 +436,18 @@ const Profile: React.FC = () => {
     try {
       if (profileMorev3.cvUrlPath !== null) {
         result = await profileApi.updateCV(formData);
-        mess = language?.profile_page?.alert_update_cv_success;
+        mess = languageRedux === 1
+          ? 'Cập nhật CV thành công'
+          : languageRedux === 2
+            ? 'Successfully updated CV'
+            : '이력서가 업데이트되었습니다.';
       } else {
         result = await profileApi.createCV(formData);
-        mess = language?.profile_page?.alert_add_cv_success;
+        mess = languageRedux === 1
+          ? 'Thêm CV thành công'
+          : languageRedux === 2
+            ? 'Added CV successfully'
+            : '이력서를 성공적으로 추가했습니다.';
       }
 
       if (result) {
@@ -645,7 +661,11 @@ const Profile: React.FC = () => {
                       marginTop: '5px',
                     }}
                   >
-                    <img src="/images/profile/HiCoin.png" alt="ảnh" />
+                    <img src="/images/profile/HiCoin.png" alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'} />
                     <p style={{ marginLeft: '5px' }}>0</p>
                   </div> */}
                 </div>

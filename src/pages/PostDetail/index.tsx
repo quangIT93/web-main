@@ -203,10 +203,17 @@ const Detail = () => {
   const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(
     null,
   );
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
   // const [language, setLanguage] = React.useState<any>();
   const [textButton, setTextButton] = React.useState<string>(
-    language?.post_detail_page?.apply,
+    languageRedux === 1
+      ? 'Ứng tuyển'
+      : languageRedux === 2
+        ? 'Apply'
+        : '신병 모집'
   );
   const [key, setKeyTab] = React.useState<string>('1');
   const [backgroundButton, setBackgroundButton] =
@@ -221,9 +228,6 @@ const Detail = () => {
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   // const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
-  const languageRedux = useSelector(
-    (state: RootState) => state.changeLaguage.language,
-  );
 
   L.Icon.Default.mergeOptions({
     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -250,17 +254,29 @@ const Detail = () => {
   // }, [languageRedux]);
   const itemsShare = [
     {
-      nameShare: language?.post_detail_page?.copy_link,
+      nameShare: languageRedux === 1
+        ? 'Sao chép liên kết'
+        : languageRedux === 2
+          ? 'Copy Link'
+          : '링크를 복사',
       icon: <CopyIcon />,
       source: '',
     },
     {
-      nameShare: 'Mail',
+      nameShare: languageRedux === 1
+        ? 'Email'
+        : languageRedux === 2
+          ? 'Email'
+          : '이메일',
       icon: <MailIcon />,
       source: '',
     },
     {
-      nameShare: 'Facebook',
+      nameShare: languageRedux === 1
+        ? 'Facebook'
+        : languageRedux === 2
+          ? 'Facebook'
+          : '페이스북',
       icon: <FacebookIcon />,
       source: '',
     },
@@ -528,8 +544,16 @@ const Detail = () => {
         (checkApply && post?.data?.companyResourceData?.name === 'HIJOB')
       ) {
         api.info({
-          message: language?.post_detail_page?.applied_alert_mess,
-          description: language?.post_detail_page?.applied_alert_des,
+          message: languageRedux === 1
+            ? 'Bạn đã ứng tuyển công việc này!'
+            : languageRedux === 2
+              ? 'You have applied for this job!'
+              : '이 직무에 지원하셨습니다!',
+          description: languageRedux === 1
+            ? 'Nhà tuyển dụng sẽ liên hệ bạn sớm nếu hồ sơ đạt yêu cầu.'
+            : languageRedux === 2
+              ? 'The employer will contact you soon if the profile meets the requirements.'
+              : '귀하의 신청서가 요구 사항을 충족하면 고용주가 곧 귀하에게 연락할 것입니다.',
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'blue' }} />,
         });
@@ -562,8 +586,15 @@ const Detail = () => {
         !profileV3.email
       ) {
         api.info({
-          message: language?.post_detail_page?.update_infor_mess,
-          description: language?.post_detail_page?.update_infor_des,
+          message: languageRedux === 1 ?
+            "Cập nhật thông tin" :
+            languageRedux === 2 ?
+              "Update information" : "정보 업데이트",
+          description: languageRedux === 1 ?
+            "Vui lòng cập nhật thông tin để ứng tuyển công việc" :
+            languageRedux === 2 ?
+              "Please update your information to apply for the job" :
+              "해당 직무에 지원하려면 정보를 업데이트하세요.",
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
         });
@@ -650,15 +681,29 @@ const Detail = () => {
   };
   const handleClickShareSource = (nameShare: string, postId: number) => {
     // window.location.href = `mailto:${email}`;
-    if (nameShare === 'Mail') {
+    if (nameShare === 'Email' || nameShare === '이메일') {
       // window.location.href = `mailto:quangbk54@gmail.com`;
-      const subject = 'HiJob đề xuất công việc dành cho bạn';
-      const title = 'Hãy nhập nội dung email tại đây.';
+      const subject = languageRedux === 1
+        ? 'HiJob đề xuất công việc dành cho bạn'
+        : languageRedux === 2
+          ? 'HiJob recommends jobs for you'
+          : 'HiJob이 당신에게 일자리를 추천해 드립니다';
+      const title = languageRedux === 1
+        ? 'Hãy nhập nội dung email tại đây.'
+        : languageRedux === 2
+          ? 'Please enter email content here.'
+          : '여기에 이메일 내용을 입력하세요.';
 
-      const content = `
-        HiJob mong muốn sẽ giúp bạn tìm được công việc mơ ước của mình. Chúng tôi đã tìm được những công việc mới nhất có thể phù hợp với bạn bạn.
-        Hãy nhấn vào link đính kèm để xem thêm thông tin chi tiết về công việc.
-        `;
+      const content = languageRedux === 1
+        ? `
+      HiJob mong muốn sẽ giúp bạn tìm được công việc mơ ước của mình. Chúng tôi đã tìm được những công việc mới nhất có thể phù hợp với bạn bạn.
+      Hãy nhấn vào link đính kèm để xem thêm thông tin chi tiết về công việc.
+      `
+        : languageRedux === 2
+          ? `HiJob hopes to help you find your dream job. We have found the latest jobs that may be suitable for you.
+        Click on the attached link to see more detailed information about the job.`
+          : `HiJob은 귀하가 꿈의 직업을 찾는 데 도움이 되기를 바랍니다. 우리는 귀하에게 적합한 최신 직업을 찾았습니다.
+        첨부된 링크를 클릭하시면 해당 직무에 대한 자세한 내용을 보실 수 있습니다.` ;
       const emailBody = encodeURIComponent(
         `${title} ${content} ${post?.data.shareLink}`,
       );
@@ -684,14 +729,18 @@ const Detail = () => {
     //     encodeURIComponent('523018296116961');
     //   window.location.href = messengerLink;
     // }
-    if (nameShare === 'Facebook') {
+    if (nameShare === 'Facebook' || nameShare === '페이스북') {
       // const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
       //   post?.data?.companyResourceData?.name === 'HIJOB'
       //     ? post?.data.shareLink
       //     : post?.data.shareLink,
       // )}`;
 
-      const titleShare = 'hijob chia sẻ công việc cho bạn';
+      const titleShare = languageRedux === 1
+        ? 'HiJob chia sẻ công việc cho bạn'
+        : languageRedux === 2
+          ? 'HiJob shares jobs for you'
+          : 'HiJob이 당신을 위해 일자리를 공유합니다';
 
       const url = `https://www.facebook.com/sharer/sharer.php?u=https://hijob.site/post-đetail/post-id=${postId}&quote=${encodeURIComponent(
         titleShare,
@@ -705,7 +754,7 @@ const Detail = () => {
           : post?.data.shareLink,
       )}`;
     }
-    if (nameShare === 'Sao chép liên kết' || nameShare === 'Copy link') {
+    if (nameShare === 'Sao chép liên kết' || nameShare === 'Copy link' || nameShare === '링크를 복사') {
       copy(
         post?.data?.companyResourceData?.name === 'HIJOB'
           ? post?.data.shareLink
@@ -786,21 +835,33 @@ const Detail = () => {
       // console.log('result ung tiyen', result);
       if (result && post?.data?.applied) {
         // openNotification();
-        setTextButton(language?.post_detail_page?.applied);
+        setTextButton(languageRedux === 1
+          ? 'Đã ứng tuyển'
+          : languageRedux === 2
+            ? 'Applied'
+            : '지원되였습니다.');
         setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
         setOpenModalApply(false);
       } else {
         // openNotification();
-        setTextButton(language?.post_detail_page?.applied);
+        setTextButton(languageRedux === 1
+          ? 'Đã ứng tuyển'
+          : languageRedux === 2
+            ? 'Applied'
+            : '지원되였습니다.');
         setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
         setOpenModalApply(false);
       }
     } catch (error) {
-      setTextButton(language?.post_detail_page?.applied);
+      setTextButton(languageRedux === 1
+        ? 'Đã ứng tuyển'
+        : languageRedux === 2
+          ? 'Applied'
+          : '지원되였습니다.');
       // setBackgroundButton('gray');
       setCheckApply(true);
       // window.open(post?.data.resource.url, '_blank');
@@ -819,8 +880,15 @@ const Detail = () => {
       !profileV3.email
     ) {
       api.info({
-        message: language?.post_detail_page?.update_infor_mess,
-        description: language?.post_detail_page?.update_infor_des,
+        message: languageRedux === 1 ?
+          "Cập nhật thông tin" :
+          languageRedux === 2 ?
+            "Update information" : "정보 업데이트",
+        description: languageRedux === 1 ?
+          "Vui lòng cập nhật thông tin để ứng tuyển công việc" :
+          languageRedux === 2 ?
+            "Please update your information to apply for the job" :
+            "해당 직무에 지원하려면 정보를 업데이트하세요.",
         placement: 'top',
         icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
       });
@@ -836,7 +904,11 @@ const Detail = () => {
         (result.code as number) === (201 as any)
       ) {
         // openNotification();
-        setTextButton(language?.post_detail_page?.applied);
+        setTextButton(languageRedux === 1
+          ? 'Đã ứng tuyển'
+          : languageRedux === 2
+            ? 'Applied'
+            : '지원되였습니다');
         setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
@@ -1630,7 +1702,11 @@ const Detail = () => {
                             className="div-job-img-swipper_item"
                             key={index}
                           >
-                            <img src={item.url} alt={language?.err_none_img} />
+                            <img src={item.url} alt={languageRedux === 1
+                              ? 'Hình ảnh bị lỗi'
+                              : languageRedux === 2
+                                ? 'Image is corrupted'
+                                : '이미지가 손상되었습니다'} />
                           </SwiperSlide>
                         );
                       })
@@ -1638,7 +1714,11 @@ const Detail = () => {
                       <SwiperSlide className="div-job-img-swipper_item">
                         <img
                           src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png"
-                          alt={language?.err_none_img}
+                          alt={languageRedux === 1
+                            ? 'Hình ảnh bị lỗi'
+                            : languageRedux === 2
+                              ? 'Image is corrupted'
+                              : '이미지가 손상되었습니다'}
                           style={{ objectFit: 'cover' }}
                         />
                       </SwiperSlide>
@@ -1817,7 +1897,11 @@ const Detail = () => {
                 component="h2"
                 style={{ position: 'relative' }}
               >
-                {language?.post_detail_page?.share_this_job}
+                {languageRedux === 1
+                  ? 'Chia sẻ công việc này'
+                  : languageRedux === 2
+                    ? 'Share this job'
+                    : '이 직업을 공유하세요'}
                 <IconButton
                   aria-label="close"
                   onClick={handleCloseModalShare}

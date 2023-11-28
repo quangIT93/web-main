@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import { LocationHomeIcon, DolaIcon } from '#components/Icons';
 
 import { Tooltip } from 'antd';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 // import moment from 'moment';
 // import bookMarkApi from 'api/bookMarkApi';
@@ -25,7 +27,7 @@ import { Tooltip } from 'antd';
 
 const AnotherPost: React.FC<any> = (props) => {
   const [error, setError] = React.useState(false);
-
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
   // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
   //   window.open(`/post-detail?post-id=${id}`);
   // };
@@ -174,7 +176,11 @@ const AnotherPost: React.FC<any> = (props) => {
                     ? props.item.resource.company_icon
                     : ''
                 }
-                alt="ảnh"
+                alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'}
                 onError={() => {
                   setError(true);
                 }}

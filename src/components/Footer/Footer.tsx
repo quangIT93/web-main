@@ -157,7 +157,7 @@ const Footer: React.FC = () => {
     // console.log('Current window width:', currentWidth);
   });
 
-  useEffect(() => {}, [languageRedux]);
+  useEffect(() => { }, [languageRedux]);
 
   useEffect(() => {
     if (windowWidth) {
@@ -205,14 +205,14 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-                transform: 'translateY(calc(-100% - 36px))',
-                borderTop: '1px solid #ccc',
-              }
+              transform: 'translateY(calc(-100% - 36px))',
+              borderTop: '1px solid #ccc',
+            }
             : !open && !windowWidth
               ? {
-                  transform: 'translateY(calc(0% + 36px))',
-                  visibility: 'hidden',
-                }
+                transform: 'translateY(calc(0% + 36px))',
+                visibility: 'hidden',
+              }
               : { transform: 'none' }
         }
       >
@@ -237,7 +237,11 @@ const Footer: React.FC = () => {
                 width={66}
                 height={80}
                 src={require('../../img/langdingPage/logoHiJob.png')}
-                alt={language?.err_none_img}
+                alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'}
               />
             </div>
 
@@ -261,7 +265,7 @@ const Footer: React.FC = () => {
                 : languageRedux === 2
                   ? 'Address: 79 Quoc Huong, Thao Dien Ward, District 2, HCMC'
                   : languageRedux === 3 &&
-                    '주소: 79 Quoc Huong, P. 호치민시 2군, HCM시'}
+                  '주소: 79 Quoc Huong, P. 호치민시 2군, HCM시'}
             </p>
             <p>
               {languageRedux === 1
@@ -339,14 +343,22 @@ const Footer: React.FC = () => {
                   width={124}
                   height={124}
                   src={require('../../img/langdingPage/QRcode-ggplay.png')}
-                  alt={language?.err_none_img}
+                  alt={languageRedux === 1
+                    ? 'Hình ảnh bị lỗi'
+                    : languageRedux === 2
+                      ? 'Image is corrupted'
+                      : '이미지가 손상되었습니다'}
                 />
                 <img
                   width={124}
                   height={124}
                   style={{ marginLeft: 10 }}
                   src={require('../../img/langdingPage/QRcode-appstore.png')}
-                  alt={language?.err_none_img}
+                  alt={languageRedux === 1
+                    ? 'Hình ảnh bị lỗi'
+                    : languageRedux === 2
+                      ? 'Image is corrupted'
+                      : '이미지가 손상되었습니다'}
                 />
               </div>
               <div className="div-link-app">
@@ -359,7 +371,11 @@ const Footer: React.FC = () => {
                     height={35}
                     id="img-gallery"
                     src={require('../../img/langdingPage/image 43.png')}
-                    alt={language?.err_none_img}
+                    alt={languageRedux === 1
+                      ? 'Hình ảnh bị lỗi'
+                      : languageRedux === 2
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'}
                   />
                 </Link>
                 <Link
@@ -370,7 +386,11 @@ const Footer: React.FC = () => {
                     width={117}
                     height={35}
                     src={require('../../img/langdingPage/image 45.png')}
-                    alt={language?.err_none_img}
+                    alt={languageRedux === 1
+                      ? 'Hình ảnh bị lỗi'
+                      : languageRedux === 2
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'}
                   />
                 </Link>
               </div>
@@ -387,20 +407,32 @@ const Footer: React.FC = () => {
                 <Link to="https://www.facebook.com/hijobOfficial/">
                   <img
                     src={require('../../img/langdingPage/imagefb.png')}
-                    alt={language?.err_none_img}
+                    alt={languageRedux === 1
+                      ? 'Hình ảnh bị lỗi'
+                      : languageRedux === 2
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'}
                   />
                 </Link>
                 {/* <Link to={document.URL}>
                   <img
                     id="img-gallery"
                     src={require('../../img/langdingPage/imagein.png')}
-                    alt={language?.err_none_img}
+                    alt={languageRedux === 1
+                            ? 'Hình ảnh bị lỗi'
+                            : languageRedux === 2
+                              ? 'Image is corrupted'
+                              : '이미지가 손상되었습니다'}
                   />
                 </Link>
                 <Link to={document.URL}>
                   <img
                     src={require('../../img/langdingPage/imageyou.png')}
-                    alt={language?.err_none_img}
+                    alt={languageRedux === 1
+                            ? 'Hình ảnh bị lỗi'
+                            : languageRedux === 2
+                              ? 'Image is corrupted'
+                              : '이미지가 손상되었습니다'}
                   />
                 </Link> */}
               </div>

@@ -230,7 +230,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
   const validValue = () => {
     if (experience.title === '') {
       return {
-        message: language?.profile_page?.err_professional,
+        message: languageRedux === 1
+          ? 'Tiêu đề không được bỏ trống'
+          : languageRedux === 2
+            ? 'Title cannot be empty'
+            : '제목은 비워둘 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -250,7 +254,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
 
     if (experience.companyName === '') {
       return {
-        message: language?.profile_page?.err_company,
+        message: languageRedux === 1
+          ? 'Tên công ty không được bỏ trống'
+          : languageRedux === 2
+            ? 'Company Name cannot be empty'
+            : '회사 이름은 비워 둘 수 없습니다.',
         checkForm: false,
         idError: 2,
       };
@@ -271,7 +279,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
 
     if (!experience.startDate) {
       return {
-        message: language?.profile_page?.err_start_time,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập ngày bắt đầu'
+          : languageRedux === 2
+            ? 'Please enter a start date'
+            : '시작일을 입력하세요.',
         checkForm: false,
         idError: 3,
       };
@@ -296,7 +308,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
 
     if (!experience.endDate) {
       return {
-        message: language?.profile_page?.err_finish_time,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập Ngày kết thúc'
+          : languageRedux === 2
+            ? 'Please enter an End Date'
+            : '종료일을 입력하세요.',
         checkForm: false,
         idError: 4,
       };

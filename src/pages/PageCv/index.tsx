@@ -60,7 +60,7 @@ const PageCv = () => {
       if (result) {
         setGetThemeCv(result.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   useEffect(() => {
     getTheme();
@@ -86,7 +86,7 @@ const PageCv = () => {
                   : languageRedux === 2
                     ? 'Stand out to Employers with a custom, professional CV'
                     : languageRedux === 3 &&
-                      '맞춤형 전문 CV로 고용주의 눈에 띄세요'}
+                    '맞춤형 전문 CV로 고용주의 눈에 띄세요'}
               </h5>
               <p>
                 {languageRedux === 1
@@ -143,7 +143,11 @@ const PageCv = () => {
                   <SwiperSlide className="div-job-img-swipper_item">
                     <img
                       src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png"
-                      alt={language?.err_none_img}
+                      alt={languageRedux === 1
+                        ? 'Hình ảnh bị lỗi'
+                        : languageRedux === 2
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'}
                       style={{ objectFit: 'cover' }}
                     />
                   </SwiperSlide>
@@ -200,7 +204,11 @@ const PageCv = () => {
                 <SwiperSlide className="div-job-img-swipper_item">
                   <img
                     src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png"
-                    alt={language?.err_none_img}
+                    alt={languageRedux === 1
+                      ? 'Hình ảnh bị lỗi'
+                      : languageRedux === 2
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'}
                     style={{ objectFit: 'cover' }}
                   />
                 </SwiperSlide>
@@ -254,7 +262,7 @@ const PageCv = () => {
                 : languageRedux === 2
                   ? 'At HiJob you can easily create a CV Online and Download with countless professional CV templates to help make an impression for employers and help you increase your job search efficiency.'
                   : languageRedux === 3 &&
-                    'HiJob에서는 고용주에게 깊은 인상을 남기고 구직 효율성을 높이는 데 도움이 되는 수많은 전문 CV 템플릿을 사용하여 온라인으로 쉽게 이력서를 만들고 다운로드할 수 있습니다.'}
+                  'HiJob에서는 고용주에게 깊은 인상을 남기고 구직 효율성을 높이는 데 도움이 되는 수많은 전문 CV 템플릿을 사용하여 온라인으로 쉽게 이력서를 만들고 다운로드할 수 있습니다.'}
             </p>
             <div
               className="wrap-bnt_bannerShow"
@@ -286,7 +294,7 @@ const PageCv = () => {
                 : languageRedux === 2
                   ? 'You can download your CV as PDF and send directly via email. Or save your representative CV to send go to the job posting on HiJob.'
                   : languageRedux === 3 &&
-                    'CV를 PDF로 다운로드하여 이메일로 직접 보낼 수 있습니다. 또는 담당자의 CV를 저장하여 HiJob의 채용 소식으로 보내세요.'}
+                  'CV를 PDF로 다운로드하여 이메일로 직접 보낼 수 있습니다. 또는 담당자의 CV를 저장하여 HiJob의 채용 소식으로 보내세요.'}
             </p>
             <div
               className="wrap-cvchange_login"
@@ -300,7 +308,7 @@ const PageCv = () => {
                     : languageRedux === 2
                       ? 'Login now hijob.site'
                       : languageRedux === 3 &&
-                        '지금 hijob.site에 로그인하세요.'}
+                      '지금 hijob.site에 로그인하세요.'}
                 </span>
                 <IconArrowLeft />
               </p>
@@ -330,7 +338,7 @@ const PageCv = () => {
                   : languageRedux === 2
                     ? 'The more detailed and complete your CV will be, the more attractive it will be more reputable NTDs proactively connect and send to you the most attractive job opportunities.'
                     : languageRedux === 3 &&
-                      'CV가 더 자세하고 완전할수록 평판이 좋은 고용주가 적극적으로 연결하여 가장 매력적인 취업 기회를 보내줄 것입니다.'}
+                    'CV가 더 자세하고 완전할수록 평판이 좋은 고용주가 적극적으로 연결하여 가장 매력적인 취업 기회를 보내줄 것입니다.'}
               </li>
               <li>
                 {languageRedux === 1
@@ -345,7 +353,7 @@ const PageCv = () => {
                   : languageRedux === 2
                     ? 'HiJob will automatically fill in your information from your profile. View and choose the CV template you like.'
                     : languageRedux === 3 &&
-                      'HiJob은 귀하의 프로필 정보를 자동으로 입력합니다. 마음에 드는 이력서 템플릿을 보고 선택하세요.'}
+                    'HiJob은 귀하의 프로필 정보를 자동으로 입력합니다. 마음에 드는 이력서 템플릿을 보고 선택하세요.'}
               </li>
               <li>
                 {languageRedux === 1
@@ -353,7 +361,7 @@ const PageCv = () => {
                   : languageRedux === 2
                     ? 'Once completed, immediately save your job search resume on HiJob (up to 10 CV templates), or download it for free as PDF.'
                     : languageRedux === 3 &&
-                      '완료되면 즉시 HiJob의 구직 프로필에 저장하거나(최대 10개의 이력서 템플릿) PDF로 무료로 다운로드하세요.'}
+                    '완료되면 즉시 HiJob의 구직 프로필에 저장하거나(최대 10개의 이력서 템플릿) PDF로 무료로 다운로드하세요.'}
               </li>
             </ul>
             <div
@@ -387,7 +395,7 @@ const PageCv = () => {
                   : languageRedux === 2
                     ? `1. What is CV? Things you need to keep in mind when writing your CV`
                     : languageRedux === 3 &&
-                      '1. CV란 무엇입니까? CV를 작성할 때 염두에 두어야 할 사항'}
+                    '1. CV란 무엇입니까? CV를 작성할 때 염두에 두어야 할 사항'}
               </li>
               <li>
                 {languageRedux === 1
@@ -402,7 +410,7 @@ const PageCv = () => {
                   : languageRedux === 2
                     ? `3. How to create a simple CV template?`
                     : languageRedux === 3 &&
-                      '3. 간단한 CV 템플릿을 만드는 방법'}
+                    '3. 간단한 CV 템플릿을 만드는 방법'}
               </li>
               <li>
                 {languageRedux === 1
@@ -410,7 +418,7 @@ const PageCv = () => {
                   : languageRedux === 2
                     ? `4. Some notes when writing and submitting CV for you`
                     : languageRedux === 3 &&
-                      '4. CV 작성 및 제출 시 반드시 이해해야 할 사항'}
+                    '4. CV 작성 및 제출 시 반드시 이해해야 할 사항'}
               </li>
               <li>
                 {languageRedux === 1

@@ -153,7 +153,11 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content: language?.history_page?.out_job,
+            content: languageRedux === 1
+              ? 'Đã hết công việc để hiển thị'
+              : languageRedux === 2
+                ? 'Out of job to display'
+                : '보여줄 일이 부족해',
           });
           return;
         }

@@ -284,14 +284,22 @@ const Company: React.FC<ICompany> = (props) => {
       dataCompany?.logoPath?.status === 'removed'
     ) {
       return {
-        message: language?.company_page?.err_logo_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn logo công ty'
+          : languageRedux === 2
+            ? 'Please select company logo'
+            : '회사 로고를 선택해주세요',
         checkForm: false,
         idError: 1,
       };
     }
     if (dataCompany?.name.trim() === '') {
       return {
-        message: language?.company_page?.err_name_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập tên công ty'
+          : languageRedux === 2
+            ? 'Please enter company name'
+            : '회사명을 입력해주세요',
         checkForm: false,
         idError: 2,
       };
@@ -304,35 +312,55 @@ const Company: React.FC<ICompany> = (props) => {
     // }
     if (fillProvince === null) {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 3,
       };
     }
     if (fillDistrict === null) {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 4,
       };
     }
     if (fillWard === null) {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
     }
     if (dataCompany?.companyLocation === '') {
       return {
-        message: language?.company_page?.err_location_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
     }
     if (dataCompany?.address === '' || dataCompany?.address.length <= 10) {
       return {
-        message: language?.company_page?.err_address_mess,
+        message: languageRedux === 1
+          ? 'Địa chỉ phải dài hơn 10 ký tự'
+          : languageRedux === 2
+            ? 'Address must be longer than 10 characters'
+            : '주소는 10자 이상이어야 합니다',
         checkForm: false,
         idError: 6,
       };
@@ -343,14 +371,22 @@ const Company: React.FC<ICompany> = (props) => {
       (dataCompany?.phone && dataCompany?.phone?.length > 11)
     ) {
       return {
-        message: language?.company_page?.err_phone_mess,
+        message: languageRedux === 1
+          ? 'Số điện thoại sai định dạng'
+          : languageRedux === 2
+            ? 'Invalid phone number format'
+            : '전화번호 형식이 잘못되었습니다.',
         checkForm: false,
         idError: 7,
       };
     }
     if (dataCompany?.email === '') {
       return {
-        message: language?.company_page?.err_email_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập email công ty'
+          : languageRedux === 2
+            ? 'Please enter company email'
+            : '회사 이메일을 입력해주세요',
         checkForm: false,
         idError: 8,
       };
@@ -369,28 +405,44 @@ const Company: React.FC<ICompany> = (props) => {
     }
     if (regexCheckEmail.test(dataCompany?.email) === false) {
       return {
-        message: language?.company_page?.err_verify_email_mess,
+        message: languageRedux === 1
+          ? 'Định dạng email không đúng'
+          : languageRedux === 2
+            ? 'Incorrect email format'
+            : '이메일 형식이 잘못되었습니다.',
         checkForm: false,
         idError: 8,
       };
     }
     if (fillRole === null) {
       return {
-        message: language?.company_page?.err_role_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn vai trò của bạn'
+          : languageRedux === 2
+            ? 'Please select your role'
+            : '당신의 역할을 선택해주세요',
         checkForm: false,
         idError: 9,
       };
     }
     if (dataCompany?.companyRoleInfomation === '') {
       return {
-        message: language?.company_page?.err_role_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn vai trò của bạn'
+          : languageRedux === 2
+            ? 'Please select your role'
+            : '당신의 역할을 선택해주세요',
         checkForm: false,
         idError: 9,
       };
     }
     if (dataCompany?.website === '') {
       return {
-        message: language?.company_page?.err_web_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập website công ty'
+          : languageRedux === 2
+            ? 'Please enter company website'
+            : '회사 홈페이지를 입력해주세요',
         checkForm: false,
         idError: 10,
       };
@@ -409,42 +461,66 @@ const Company: React.FC<ICompany> = (props) => {
     }
     if (validURL(dataCompany?.website) === false) {
       return {
-        message: language?.company_page?.err_verify_web_mess,
+        message: languageRedux === 1
+          ? 'Định dạng website không chính xác'
+          : languageRedux === 2
+            ? 'Incorrect website format'
+            : '웹사이트 형식이 잘못되었습니다.',
         checkForm: false,
         idError: 10,
       };
     }
     if (fillActivity === null) {
       return {
-        message: language?.company_page?.err_cate_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn danh mục nghề nghiệp'
+          : languageRedux === 2
+            ? 'Please select a career category'
+            : '직업 카테고리를 선택해주세요.',
         checkForm: false,
         idError: 11,
       };
     }
     if (dataCompany?.companyCategory === '') {
       return {
-        message: language?.company_page?.err_cate_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn danh mục nghề nghiệp'
+          : languageRedux === 2
+            ? 'Please select a career category'
+            : '직업 카테고리를 선택해주세요.',
         checkForm: false,
         idError: 11,
       };
     }
     if (fillSize === null) {
       return {
-        message: language?.company_page?.err_size_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn quy mô công ty'
+          : languageRedux === 2
+            ? 'Please select company size'
+            : '회사규모를 선택해 주세요',
         checkForm: false,
         idError: 12,
       };
     }
     if (dataCompany?.companySizeInfomation === '') {
       return {
-        message: language?.company_page?.err_size_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn quy mô công ty'
+          : languageRedux === 2
+            ? 'Please select company size'
+            : '회사규모를 선택해 주세요',
         checkForm: false,
         idError: 12,
       };
     }
     if (dataCompany?.description === '') {
       return {
-        message: language?.company_page?.err_des_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập mô tả công ty'
+          : languageRedux === 2
+            ? 'Please enter company description'
+            : '회사 설명을 입력하세요.',
         checkForm: false,
         idError: 13,
       };
@@ -482,7 +558,11 @@ const Company: React.FC<ICompany> = (props) => {
             setIsValid(true);
             messageApi.open({
               type: 'success',
-              content: language?.company_page?.create_success,
+              content: languageRedux === 1
+                ? 'Tạo công ty thành công'
+                : languageRedux === 2
+                  ? 'Create successful company'
+                  : '성공적인 회사 만들기',
             });
 
             const resultProfileV3 = await profileApi.getProfileInformationV3(
@@ -499,7 +579,11 @@ const Company: React.FC<ICompany> = (props) => {
           } else {
             messageApi.open({
               type: 'error',
-              content: language?.company_page?.create_error,
+              content: languageRedux === 1
+                ? 'Tạo công ty không thành công'
+                : languageRedux === 2
+                  ? 'Create company failed'
+                  : '회사를 만드는 데 실패했습니다.',
             });
           }
         }
@@ -616,7 +700,11 @@ const Company: React.FC<ICompany> = (props) => {
             setIsValid(true);
             messageApi.open({
               type: 'success',
-              content: language?.company_page?.update_success,
+              content: languageRedux === 1
+                ? 'Cập nhật thông tin công ty thành công'
+                : languageRedux === 2
+                  ? 'Updating company information successfully'
+                  : '회사 정보가 업데이트되었습니다.',
             });
 
             setDataCompany((pre: any) => ({ ...pre, images: [] }));
@@ -624,7 +712,11 @@ const Company: React.FC<ICompany> = (props) => {
           } else {
             messageApi.open({
               type: 'error',
-              content: 'Lỗi update images',
+              content: languageRedux === 1
+                ? 'Lỗi cập nhật hình ảnh công ty'
+                : languageRedux === 2
+                  ? "Error updating company image"
+                  : '회사 이미지를 업데이트하는 중에 오류가 발생했습니다.',
             });
           }
         }
@@ -955,7 +1047,13 @@ const Company: React.FC<ICompany> = (props) => {
               className="btn-edit_submitForm"
               style={{ display: is_profile ? 'none' : 'block' }}
             >
-              {language?.save}
+              {
+                languageRedux === 1
+                  ? 'Lưu'
+                  : languageRedux === 2
+                    ? 'Save'
+                    : '구하다'
+              }
             </button>
           </form>
         </Skeleton>

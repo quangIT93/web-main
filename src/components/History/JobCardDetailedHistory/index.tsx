@@ -370,7 +370,11 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 fontSize: '12px',
               }}
             >
-              {language?.candidate_detail_page?.does_not_accept}
+              {languageRedux === 1
+                ? 'Không chấp nhận'
+                : languageRedux === 2
+                  ? 'Does not accept'
+                  : '수락하지 않음'}
             </p>
           )}
         </Box>

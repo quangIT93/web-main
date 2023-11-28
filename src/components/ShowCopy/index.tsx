@@ -71,7 +71,11 @@ const ShowCopy: React.FC = () => {
             onClose={handleClose}
             sx={{ width: '100%', backgroundColor: '#000000' }}
           >
-            {language?.post_detail_page?.copy_link_success}
+            {languageRedux === 1
+              ? 'Bạn đã lưu thành công liên kết'
+              : languageRedux === 2
+                ? 'You have successfully saved the link'
+                : '링크를 성공적으로 저장했습니다.'}
           </Alert>
         </Snackbar>
       </Stack>

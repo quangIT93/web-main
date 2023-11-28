@@ -241,7 +241,7 @@ const CandidatesAll = () => {
           setHasMore(true);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   React.useEffect(() => {
     getAllCandidates();
@@ -350,7 +350,7 @@ const CandidatesAll = () => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   const analytics: any = getAnalytics();
   React.useEffect(() => {
@@ -359,8 +359,10 @@ const CandidatesAll = () => {
     //   language?.company_page?.title_page;
     document.title =
       languageRedux === 1
-        ? 'Hijob - Tìm kiếm ứng viên'
-        : 'Hijob - Search for talent';
+        ? 'HiJob - Tìm kiếm ứng viên'
+        : languageRedux === 2 ?
+          'HiJob - Search for talent'
+          : 'HiJob - 후보자 검색';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/list-candidate' as string,

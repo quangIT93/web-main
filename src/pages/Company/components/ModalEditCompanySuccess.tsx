@@ -52,7 +52,11 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
           sx={{ textAlign: 'center', color: '#0d99ff' }}
         >
           {
-            language?.company_page?.alert_update_success
+            languageRedux === 1
+              ? 'Đã chỉnh sửa thông tin công ty thành công!'
+              : languageRedux === 2
+                ? 'Company information edited successfully!'
+                : '회사 정보가 성공적으로 편집되었습니다!'
           }
         </Typography>
         <Typography
@@ -62,7 +66,11 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
           sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
         >
           {
-            language?.company_page?.alert_move_to_profile
+            languageRedux === 1
+              ? 'Bạn có muốn quay về trang thông tin cá nhân!'
+              : languageRedux === 2
+                ? 'Do you want to return to your profile page!'
+                : '개인정보 페이지로 돌아가시겠습니까?'
           }
         </Typography>
 
@@ -84,7 +92,11 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
             }}
           >
             {
-              language?.no
+              languageRedux === 1
+                ? "Không"
+                : languageRedux === 2
+                  ? "No"
+                  : '아니요'
             }
           </Button>
           <Button
@@ -98,7 +110,11 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
             }}
           >
             {
-              language?.yes
+              languageRedux === 1
+                ? 'Có'
+                : languageRedux === 2
+                  ? 'Yes'
+                  : '가지다'
             }
           </Button>
         </Box>

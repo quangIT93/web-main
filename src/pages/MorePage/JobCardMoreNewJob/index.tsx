@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 //import scss
 import './style.scss';
 
@@ -24,6 +24,7 @@ import { Space, Tooltip } from 'antd';
 import bookMarkApi from 'api/bookMarkApi';
 
 import ModalLogin from '../../../components/Home/ModalLogin';
+import { RootState } from 'store';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
 
 interface PostMoreJob {
@@ -76,7 +77,7 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [infor, setInfor] = React.useState<any>();
-
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
   React.useEffect(() => {
     setInfor(props.item);
   }, [props.item]);
@@ -219,7 +220,11 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                           ? infor?.companyResourceData?.logo
                           : ''
                       }
-                      alt="ảnh"
+                      alt={languageRedux === 1
+                        ? 'Hình ảnh bị lỗi'
+                        : languageRedux === 2
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'}
                       onError={() =>
                         handleImageError(infor?.companyResourceData?.logo)
                       }
@@ -359,7 +364,11 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                       ? infor?.companyResourceData?.logo
                       : ''
                   }
-                  alt="ảnh"
+                  alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'}
                   onError={handleImageError}
                 />
               )}

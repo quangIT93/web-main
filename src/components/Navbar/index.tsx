@@ -980,7 +980,7 @@ const Navbar: React.FC = () => {
           ? 'Trả lương theo'
           : languageRedux === 2
             ? 'Calculate salary:'
-            : languageRedux === 3 && '......에 따라 급여를 지급하기',
+            : languageRedux === 3 && '그에 따라 지불',
     };
     setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };

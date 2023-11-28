@@ -49,7 +49,11 @@ const ModalShowAvatar: React.FC<IModalShowAvatar> = (props) => {
       className="modal-show-avatar-container"
     >
       {/* {roleRedux === 0 ? <CandidateIcon /> : <RecruiterIcon />} */}
-      <img src={image} alt="ảnh lỗi" />
+      <img src={image} alt={languageRedux === 1
+        ? 'Hình ảnh bị lỗi'
+        : languageRedux === 2
+          ? 'Image is corrupted'
+          : '이미지가 손상되었습니다'} />
     </Modal>
   );
 };

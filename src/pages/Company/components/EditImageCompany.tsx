@@ -127,7 +127,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
 
     if (files) {
       if (files.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
         return;
       }
       const newImages: string[] = [];
@@ -150,7 +154,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
               })),
             ];
             if (newImageSelected.length > 5) {
-              message.error(language?.limit_5_img);
+              message.error(languageRedux === 1
+                ? 'Chỉ có thể tối đa 5 hình ảnh'
+                : languageRedux === 2
+                  ? 'Only up to 5 images can be'
+                  : '최대 5개의 이미지가 허용됩니다.');
               return;
             }
             setSelectedImages(newImageSelected);
@@ -190,7 +198,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       // console.log('fileUploaded : ', fileUploaded);
 
       if (fileUploaded.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
         return;
       }
 
@@ -204,7 +216,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       ];
 
       if (newFileSelected.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
 
         return;
       }
@@ -237,7 +253,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
               })),
             ];
             if (newImageSelected.length > 5) {
-              message.error(language?.limit_5_img);
+              message.error(languageRedux === 1
+                ? 'Chỉ có thể tối đa 5 hình ảnh'
+                : languageRedux === 2
+                  ? 'Only up to 5 images can be'
+                  : '최대 5개의 이미지가 허용됩니다.');
 
               return;
             }
@@ -368,7 +388,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
                     display:
                       (selectedImages?.length === 0 &&
                         selectedFiles?.length === 0) ||
-                      isDragActive
+                        isDragActive
                         ? 'flex'
                         : 'none',
                   }}
@@ -390,7 +410,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
                   <img
                     key={index}
                     src={item?.imagePath}
-                    alt={language?.err_none_img}
+                    alt={languageRedux === 1
+                      ? 'Hình ảnh bị lỗi'
+                      : languageRedux === 2
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'}
                   />
                   <div
                     className="deleteButton"

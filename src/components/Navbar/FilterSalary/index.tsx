@@ -423,7 +423,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           />
           {checkSalary ? (
             <i style={{ color: 'red', marginBottom: '24px' }}>
-              {language?.verify_max_min_salary}
+              {languageRedux === 1 ?
+                "Lương tối thiểu không được lớn hơn lương tối đa" :
+                languageRedux === 2 ?
+                  "Minimum cannot be greater than maximum" :
+                  "최소 금액은 최대 금액보다 클 수 없습니다."}
             </i>
           ) : (
             <></>

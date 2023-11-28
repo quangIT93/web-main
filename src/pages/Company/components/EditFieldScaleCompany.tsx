@@ -168,7 +168,12 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="addressTitle"
         >
-          {language?.company_page?.field}{' '}
+          {
+            languageRedux === 1 ?
+              "Lĩnh vực hoạt động" :
+              languageRedux === 2 ?
+                "Field of activity" : "활동 분야"
+          }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
 
@@ -182,7 +187,10 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={language?.company_page?.place_field}
+              placeholder={languageRedux === 1 ?
+                "Lĩnh vực hoạt động" :
+                languageRedux === 2 ?
+                  "Field of activity" : "활동 분야"}
               size="small"
               value={selectedCategory?.parent_category}
             />
@@ -214,7 +222,11 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="jobTitle"
         >
-          {language?.company_size} <span style={{ color: 'red' }}>*</span>
+          {languageRedux === 1
+            ? 'Quy mô công ty'
+            : languageRedux === 2
+              ? "Company's size"
+              : '회사 규모'} <span style={{ color: 'red' }}>*</span>
         </Typography>
         <Autocomplete
           disabled={is_profile ? true : false}
@@ -226,7 +238,11 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={language?.company_page?.place_size}
+              placeholder={languageRedux === 1
+                ? 'Quy mô công ty'
+                : languageRedux === 2
+                  ? "Company's size"
+                  : '회사 규모'}
               size="small"
               value={selectedSize?.nameText}
             />

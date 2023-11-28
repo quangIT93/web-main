@@ -192,7 +192,11 @@ const ComunityCreatePost = () => {
 
     if (files) {
       if (files.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
         return;
       }
       const newImages: string[] = [];
@@ -215,7 +219,11 @@ const ComunityCreatePost = () => {
               })),
             ];
             if (newImageSelected.length > 5) {
-              message.error(language?.limit_5_img);
+              message.error(languageRedux === 1
+                ? 'Chỉ có thể tối đa 5 hình ảnh'
+                : languageRedux === 2
+                  ? 'Only up to 5 images can be'
+                  : '최대 5개의 이미지가 허용됩니다.');
               return;
             }
             setSelectedImages(newImageSelected);
@@ -274,7 +282,11 @@ const ComunityCreatePost = () => {
       // console.log('fileUploaded : ', fileUploaded);
 
       if (fileUploaded.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
         return;
       }
 
@@ -288,7 +300,11 @@ const ComunityCreatePost = () => {
       ];
 
       if (newFileSelected.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
 
         return;
       }
@@ -317,7 +333,11 @@ const ComunityCreatePost = () => {
               })),
             ];
             if (newImageSelected.length > 5) {
-              message.error(language?.limit_5_img);
+              message.error(languageRedux === 1
+                ? 'Chỉ có thể tối đa 5 hình ảnh'
+                : languageRedux === 2
+                  ? 'Only up to 5 images can be'
+                  : '최대 5개의 이미지가 허용됩니다.');
 
               return;
             }
@@ -433,7 +453,7 @@ const ComunityCreatePost = () => {
           content: message,
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const createCommunity = async (formData: any) => {
@@ -504,7 +524,7 @@ const ComunityCreatePost = () => {
                       : languageRedux === 2
                         ? "Topics can't exceed 500 characters"
                         : languageRedux === 3 &&
-                          '제목은 500자를 초과할 수 없습니다.',
+                        '제목은 500자를 초과할 수 없습니다.',
                   );
                 }
               }}
@@ -535,7 +555,7 @@ const ComunityCreatePost = () => {
                     : languageRedux === 2
                       ? 'Topics cannot exceed 500 characters'
                       : languageRedux === 3 &&
-                        '제목은 500자를 초과할 수 없습니다.'}
+                      '제목은 500자를 초과할 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -563,7 +583,7 @@ const ComunityCreatePost = () => {
                       : languageRedux === 2
                         ? 'Post content should not exceed 1000 characters'
                         : languageRedux === 3 &&
-                          '기사 내용은 1000자를 초과할 수 없습니다.',
+                        '기사 내용은 1000자를 초과할 수 없습니다.',
                   );
                 }
               }}
@@ -587,7 +607,7 @@ const ComunityCreatePost = () => {
                     : languageRedux === 2
                       ? 'Content cannot be empty'
                       : languageRedux === 3 &&
-                        '추가 콘텐츠는 비워둘 수 없습니다.'}
+                      '추가 콘텐츠는 비워둘 수 없습니다.'}
                 </span>
               ) : valueContent.length > 1000 ? (
                 <span className="helper-text">
@@ -596,7 +616,7 @@ const ComunityCreatePost = () => {
                     : languageRedux === 2
                       ? 'Content cannot exceed 1000 characters'
                       : languageRedux === 3 &&
-                        '추가 콘텐츠는 1000자를 초과할 수 없습니다.'}
+                      '추가 콘텐츠는 1000자를 초과할 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -667,7 +687,7 @@ const ComunityCreatePost = () => {
                         display:
                           (selectedImages.length === 0 &&
                             selectedFiles.length === 0) ||
-                          isDragActive
+                            isDragActive
                             ? 'flex'
                             : 'none',
                       }}
@@ -689,7 +709,11 @@ const ComunityCreatePost = () => {
                       <img
                         key={index}
                         src={item?.image}
-                        alt={language?.err_none_img}
+                        alt={languageRedux === 1
+                          ? 'Hình ảnh bị lỗi'
+                          : languageRedux === 2
+                            ? 'Image is corrupted'
+                            : '이미지가 손상되었습니다'}
                       />
                       <div
                         className="deleteButton"
@@ -719,13 +743,13 @@ const ComunityCreatePost = () => {
               className={
                 valueTitle === '' || valueContent === ''
                   ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                    'submit'
+                  'submit'
                   : 'submit full-info'
               }
             >
               {valueTitle === '' || valueContent === ''
                 ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                  languageRedux === 1
+                languageRedux === 1
                   ? 'Lưu bài'
                   : languageRedux === 2
                     ? 'Save post'

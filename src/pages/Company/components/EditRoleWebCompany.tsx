@@ -151,7 +151,11 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="addressTitle"
         >
-          {language?.role_at_business} <span style={{ color: 'red' }}>*</span>
+          {languageRedux === 1
+            ? 'Vai trò của bạn trong công ty'
+            : languageRedux === 2
+              ? 'Your role in the company'
+              : '회사에서 귀하의 역할'} <span style={{ color: 'red' }}>*</span>
         </Typography>
 
         <Autocomplete
@@ -164,9 +168,13 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={language?.company_page?.place_role}
+              placeholder={languageRedux === 1
+                ? 'Vai trò của bạn trong công ty'
+                : languageRedux === 2
+                  ? 'Your role in the company'
+                  : '회사에서 귀하의 역할'}
               size="small"
-              // value={dataCompany?.companyRole?.name}
+            // value={dataCompany?.companyRole?.name}
             />
           )}
           isOptionEqualToValue={(option, value) => {
@@ -196,7 +204,13 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="jobTitle"
         >
-          Website <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1
+              ? 'Trang web'
+              : languageRedux === 2
+                ? 'Website'
+                : '웹사이트'
+          } <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -206,9 +220,9 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           onChange={handleEditCompanyWeb}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={language?.company_page?.place_web}
+          placeholder='https://example.com'
           disabled={is_profile ? true : false}
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.website?.length > 100 ? (
@@ -218,7 +232,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
                 : languageRedux === 2
                   ? 'Web link cannot exceed 100 characters'
                   : languageRedux === 3 &&
-                    '웹 링크는 100자를 초과할 수 없습니다.'}
+                  '웹 링크는 100자를 초과할 수 없습니다.'}
             </span>
           ) : validURL(dataCompany?.website) === false ? (
             <span className="helper-text">
@@ -227,7 +241,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
                 : languageRedux === 2
                   ? 'Web link is not in the correct format'
                   : languageRedux === 3 &&
-                    '웹 링크의 형식이 올바르지 않습니다.'}
+                  '웹 링크의 형식이 올바르지 않습니다.'}
             </span>
           ) : (
             <></>

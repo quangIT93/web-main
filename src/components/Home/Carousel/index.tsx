@@ -131,7 +131,7 @@ const EmblaCarousel: React.FC = () => {
     <>
       <div
         className="embla"
-        // style={{ position: 'fixed', top: '-100%' }}
+      // style={{ position: 'fixed', top: '-100%' }}
       >
         <div className="embla__viewport" ref={emblaRef}>
           <div
@@ -147,7 +147,11 @@ const EmblaCarousel: React.FC = () => {
                 <img
                   className="embla__slide__img"
                   src={imageByIndex(index) ? imageByIndex(index).image : ''}
-                  alt={`ảnh banner`}
+                  alt={languageRedux === 1
+                    ? 'Hình ảnh bị lỗi'
+                    : languageRedux === 2
+                      ? 'Image is corrupted'
+                      : '이미지가 손상되었습니다'}
                 />
               </div>
             ))}

@@ -385,7 +385,11 @@ const Comunity = () => {
                 ) : (
                   <SaveIconOutline width={24} height={24} />
                 )}
-                {language?.save}
+                {languageRedux === 1
+                  ? 'Lưu'
+                  : languageRedux === 2
+                    ? 'Save'
+                    : '구하다'}
               </span>
             </div>
           </div>

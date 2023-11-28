@@ -104,7 +104,11 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       if (fileUploaded.length > 5) {
         messageApi.open({
           type: 'error',
-          content: language?.limit_5_img,
+          content: languageRedux === 1
+            ? 'Chỉ có thể tối đa 5 hình ảnh'
+            : languageRedux === 2
+              ? 'Only up to 5 images can be'
+              : '최대 5개의 이미지가 허용됩니다.',
         });
         return;
       }
@@ -120,7 +124,11 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       if (newFileSelected.length > 5) {
         messageApi.open({
           type: 'error',
-          content: language?.limit_5_img,
+          content: languageRedux === 1
+            ? 'Chỉ có thể tối đa 5 hình ảnh'
+            : languageRedux === 2
+              ? 'Only up to 5 images can be'
+              : '최대 5개의 이미지가 허용됩니다.',
         });
 
         return;
@@ -445,7 +453,11 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
               <img
                 key={index}
                 src={image.image}
-                alt={language?.err_none_img}
+                alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'}
                 style={{
                   height: '150px',
                   width: '150px',

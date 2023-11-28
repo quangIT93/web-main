@@ -206,7 +206,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         }
         setOpen(false);
         setFileList([]);
-        message.success(language?.profile_page?.alert_delete_cv_success);
+        message.success(languageRedux === 1
+          ? 'Xóa CV thành công'
+          : languageRedux === 2
+            ? 'Successfully deleted CV'
+            : '이력서를 삭제했습니다.');
       }
     } catch (error) { }
   };
@@ -214,7 +218,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
   // cancel delete cv
   const cancel = () => {
     setOpen(false);
-    message.error(language?.profile_page?.cancel);
+    message.error(languageRedux === 1
+      ? 'Huỷ'
+      : languageRedux === 2
+        ? 'Cancel'
+        : '취소');
   };
 
   // const getListCv = async () => {
@@ -895,13 +903,19 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               }}
             >
               <h3>
-                {languageRedux === 1 ? 'Cv/Hồ sơ của bạn' : 'Your CV/ Resume'}
+                {languageRedux === 1
+                  ? 'CV/ Sơ yếu lý lịch'
+                  : languageRedux === 2
+                    ? 'CV/ Resume'
+                    : languageRedux === 3 && '이력서/이력서'}
               </h3>
 
               <p>
                 {languageRedux === 1
                   ? 'CV/Resume của bạn để ứng tuyển cùng HiJob!'
-                  : 'Your CV/Resume to apply with HiJob!'}
+                  : languageRedux === 2
+                    ? 'Your CV/Resume to apply with HiJob!'
+                    : '이력서/이력서가 HiJob에 지원됩니다!'}
               </p>
             </div>
             <Space
@@ -921,13 +935,29 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               // direction="vertical"
               >
                 <Popconfirm
-                  title={language?.profile_page?.delete_cv}
-                  description={language?.profile_page?.alert_delete_cv}
+                  title={languageRedux === 1 ?
+                    "Xóa CV" :
+                    languageRedux === 2 ?
+                      "Delete CV" :
+                      "이력서 삭제"}
+                  description={languageRedux === 1 ?
+                    "Bạn có muốn xóa CV này" :
+                    languageRedux === 2 ?
+                      "Do you want to delete this CV" :
+                      "이 이력서를 삭제하시겠습니까?"}
                   open={open}
                   onConfirm={confirm}
                   onCancel={cancel}
-                  okText={language?.yes}
-                  cancelText={language?.no}
+                  okText={languageRedux === 1
+                    ? 'Có'
+                    : languageRedux === 2
+                      ? 'Yes'
+                      : '가지다'}
+                  cancelText={languageRedux === 1
+                    ? "Không"
+                    : languageRedux === 2
+                      ? "No"
+                      : '아니요'}
                 >
                   <CVItem
                     url={profileMore.cv_url}

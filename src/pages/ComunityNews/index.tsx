@@ -230,7 +230,11 @@ const ComunityNews = () => {
               <p>
                 {
                   loading
-                    ? 'Loading...'
+                    ? languageRedux === 1
+                      ? 'Đang tải'
+                      : languageRedux === 2
+                        ? 'Loading'
+                        : '로드 중'
                     : languageRedux === 1
                       ? `${new Intl.NumberFormat('en-US').format(
                         total,

@@ -162,7 +162,11 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const handleSubmit = async () => {
     try {
       if (value.length > 10) {
-        message.error(language?.limit_10_careers);
+        message.error(languageRedux === 1 ?
+          "Chỉ được chọn tối đa 10 lĩnh vực quan tâm" :
+          languageRedux === 2 ?
+            "Only select up to 10 areas of interest" :
+            "관심분야는 최대 10개까지만 선택할 수 있습니다.");
         return;
       }
       const result = await profileApi.updateProfileCareer(

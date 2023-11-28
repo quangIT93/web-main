@@ -188,7 +188,11 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     {
       id: 3,
       statusId: 2,
-      statusName: language?.approved,
+      statusName: languageRedux === 1
+        ? 'Đã được duyệt'
+        : languageRedux === 2
+          ? 'Approved'
+          : '승인되였습니다.',
       background: '#5cb265',
       position: '60%',
       borderRadius: '15px',
@@ -199,7 +203,10 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     {
       id: 4,
       statusId: 3,
-      statusName: language?.rejected,
+      statusName: languageRedux === 1 ?
+        "Đã từ chối" :
+        languageRedux === 2 ?
+          "Rejected" : "거절됨",
       background: '#BD3131',
       position: '60%',
       borderRadius: '15px',
@@ -210,7 +217,10 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     {
       id: 5,
       statusId: 4,
-      statusName: language?.this_candidate_has_been_recruited,
+      statusName: languageRedux === 1 ?
+        "Đã tuyển ứng viên này" :
+        languageRedux === 2 ?
+          "This candidate has been recruited" : "이 후보자를 고용했습니다",
       background: '#0d99ff',
       position: '60%',
       borderRadius: '15px',

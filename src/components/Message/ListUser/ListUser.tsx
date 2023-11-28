@@ -466,8 +466,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           {listUserChat.map((user: any, index: number) => (
             <div
               className={`wrap-userInfo ${searchParams.get('user_id') === user?.user_id
-                  ? 'readed-message'
-                  : ''
+                ? 'readed-message'
+                : ''
                 } `}
               key={index}
               onClick={() => handleClickUserInfo(user)}
@@ -515,7 +515,11 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       <div className="list_userChat">
         <div className="wrap-img_chat">
           <img src="./images/imageListChatBegin.png" alt="" />
-          <div>{language?.you_have_no_conversation}</div>
+          <div>{languageRedux === 1 ?
+            "Bạn chưa có cuộc trò chuyện nào" :
+            languageRedux === 2 ?
+              "You don't have any chats yet" :
+              "아직 대화가 없습니다."}</div>
         </div>
       </div>
     );
@@ -524,7 +528,11 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       <div className="list_userChat">
         <div className="wrap-img_chat">
           <img src="./images/imageListChatBegin.png" alt="" />
-          <div>{language?.you_have_no_conversation}</div>
+          <div>{languageRedux === 1 ?
+            "Bạn chưa có cuộc trò chuyện nào" :
+            languageRedux === 2 ?
+              "You don't have any chats yet" :
+              "아직 대화가 없습니다."}</div>
         </div>
       </div>
     );

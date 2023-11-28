@@ -91,7 +91,11 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          {language?.company_name} <span style={{ color: 'red' }}>*</span>
+          {languageRedux === 1
+            ? 'Tên công ty'
+            : languageRedux === 2
+              ? "Company's name"
+              : '회사명을'} <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -101,9 +105,13 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           onChange={handleEditCompanyName}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={language?.company_page?.place_name}
+          placeholder={languageRedux === 1
+            ? 'Tên công ty'
+            : languageRedux === 2
+              ? "Company's name"
+              : '회사명을'}
           disabled={is_profile ? true : false}
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.name?.length > 255 ? (
@@ -113,7 +121,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
                 : languageRedux === 2
                   ? 'Company Name cannot exceed 255 characters'
                   : languageRedux === 3 &&
-                    '회사 이름은 255자를 초과할 수 없습니다.'}
+                  '회사 이름은 255자를 초과할 수 없습니다.'}
             </span>
           ) : dataCompany?.name?.length === 0 ? (
             <span className="helper-text">
@@ -126,9 +134,8 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${
-            dataCompany?.name?.length ? dataCompany?.name?.length : '0'
-          }/255`}</span>
+          <span className="number-text">{`${dataCompany?.name?.length ? dataCompany?.name?.length : '0'
+            }/255`}</span>
         </div>
       </div>
       <div className="edit-tax-company">
@@ -138,7 +145,11 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          {language?.tax_code}
+          {languageRedux === 1
+            ? 'Mã số thuế'
+            : languageRedux === 2
+              ? 'Tax code'
+              : '세금 코드'}
         </Typography>
         <TextField
           type="text"
@@ -148,9 +159,13 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           onChange={handleEditCompanyFax}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={language?.company_page?.place_tax}
+          placeholder={languageRedux === 1
+            ? 'Mã số thuế'
+            : languageRedux === 2
+              ? 'Tax code'
+              : '세금 코드'}
           disabled={is_profile ? true : false}
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.taxCode?.length > 255 ? (
@@ -160,14 +175,13 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
                 : languageRedux === 2
                   ? 'Tax code cannot exceed 255 characters'
                   : languageRedux === 3 &&
-                    '세금 코드는 255자를 초과할 수 없습니다.'}
+                  '세금 코드는 255자를 초과할 수 없습니다.'}
             </span>
           ) : (
             <></>
           )}
-          <span className="number-text">{`${
-            dataCompany?.taxCode?.length ? dataCompany?.taxCode?.length : '0'
-          }/255`}</span>
+          <span className="number-text">{`${dataCompany?.taxCode?.length ? dataCompany?.taxCode?.length : '0'
+            }/255`}</span>
         </div>
       </div>
     </div>

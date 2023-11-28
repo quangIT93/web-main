@@ -71,7 +71,11 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
     <div style={{ width: '520px' }} className="filter-loca-cate ">
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable ? language?.limit_2_cate : ''}
+        {disable ? languageRedux === 1
+          ? 'Chỉ có thể tối đa 2 danh mục'
+          : languageRedux === 2
+            ? 'Only up to 2 categories can be'
+            : '카테고리는 최대 2개까지만 가능합니다.' : ''}
       </Divider>
     </div>
   );

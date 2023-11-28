@@ -222,7 +222,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
   const validValue = () => {
     if (education?.companyName?.trim() === '') {
       return {
-        messageError: language?.profile_page?.err_school,
+        messageError: languageRedux === 1
+          ? 'Vui lòng nhập tên trường/tổ chức.'
+          : languageRedux === 2
+            ? 'Please enter school/organization.'
+            : '학교/기관명을 입력해주세요.',
         checkForm: false,
         idError: 1,
       };
@@ -241,7 +245,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
     }
     if (education?.major?.trim() === '') {
       return {
-        messageError: language?.profile_page?.err_major,
+        messageError: languageRedux === 1
+          ? 'Vui lòng nhập tên chuyên ngành'
+          : languageRedux === 2
+            ? 'Please enter a major name'
+            : '주요 이름을 입력하세요.',
         checkForm: false,
         idError: 2,
       };
@@ -261,7 +269,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
 
     if (!education?.startDate) {
       return {
-        messageError: language?.profile_page?.err_start_time,
+        messageError: languageRedux === 1
+          ? 'Vui lòng nhập ngày bắt đầu'
+          : languageRedux === 2
+            ? 'Please enter a start date'
+            : '시작일을 입력하세요.',
         checkForm: false,
         idError: 3,
       };
@@ -285,7 +297,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
 
     if (!education?.endDate) {
       return {
-        messageError: language?.profile_page?.err_finish_time,
+        messageError: languageRedux === 1
+          ? 'Vui lòng nhập Ngày kết thúc'
+          : languageRedux === 2
+            ? 'Please enter an End Date'
+            : '종료일을 입력하세요.',
         checkForm: false,
         idError: 4,
       };

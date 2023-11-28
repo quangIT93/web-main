@@ -26,7 +26,11 @@ const Footer: React.FC = () => {
               width={66}
               height={80}
               src={require('../../img/langdingPage/logoHiJob.png')}
-              alt="ảnh bị lỗi"
+              alt={languageRedux === 1
+                ? 'Hình ảnh bị lỗi'
+                : languageRedux === 2
+                  ? 'Image is corrupted'
+                  : '이미지가 손상되었습니다'}
             />
           </div>
 

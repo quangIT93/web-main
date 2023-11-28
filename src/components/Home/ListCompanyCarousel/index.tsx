@@ -290,7 +290,11 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
               <div className="slide-item">
                 <img
                   src={item.image}
-                  alt={language?.err_none_img}
+                  alt={languageRedux === 1
+                    ? 'Hình ảnh bị lỗi'
+                    : languageRedux === 2
+                      ? 'Image is corrupted'
+                      : '이미지가 손상되었습니다'}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -306,7 +310,12 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                         ? `${item.number_of_posts} việc làm`
                         : `${item.number_of_posts} jobs`} */}
                       {`${item.number_of_posts} `}
-                      {language?.home_page?.x_jobs}
+                      {
+                        languageRedux === 1 ?
+                          "công việc" :
+                          languageRedux === 2 ?
+                            "jobs" : "직업"
+                      }
                     </h6>
                   </Space>
                 </div>

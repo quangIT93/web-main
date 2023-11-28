@@ -87,7 +87,9 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
               src={
                 item?.imageData?.avatar
                   ? item?.imageData?.avatar
-                  : item.genderData === 'Nam' || item.genderData === 'Male'
+                  : item.genderData === 'Nam'
+                    || item.genderData === 'Male'
+                    || item.genderData === '남성'
                     ? male_null_avatar
                     : female_null_avatar
               }

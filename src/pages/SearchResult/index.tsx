@@ -609,7 +609,11 @@ const NewJobs: React.FC = () => {
       </Text>
       {menus}
       <Divider style={{ margin: 5 }}>
-        {disableLocation ? language?.limit_10_location : ''}
+        {disableLocation ? languageRedux === 1
+          ? 'Chỉ có thể tối đa 10 khu vực'
+          : languageRedux === 2
+            ? 'Only up to 10 areas can be'
+            : languageRedux === 3 && '최대 10개 영역까지만 가능합니다' : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
         <Button type="default" onClick={() => {}}>
@@ -729,7 +733,11 @@ const NewJobs: React.FC = () => {
       } else {
         messageApi.open({
           type: 'error',
-          content: language?.search_results_page.alert_create_fail,
+          content: languageRedux === 1
+            ? 'Tạo từ khóa công việc không thành công.'
+            : languageRedux === 2
+              ? 'Generate job keyword failed.'
+              : '채용정보 키워드 생성에 실패했습니다.',
         });
       }
     } catch (error: any) {
@@ -739,7 +747,11 @@ const NewJobs: React.FC = () => {
       ) {
         messageApi.open({
           type: 'error',
-          content: language?.limit_10_keyword,
+          content: languageRedux === 1
+            ? 'Bạn chỉ có thể tạo 10 từ khóa.'
+            : languageRedux === 2
+              ? 'You can only create 10 keywords.'
+              : '키워드는 10개까지만 만들 수 있습니다.',
         });
       }
     }
@@ -1159,7 +1171,11 @@ const NewJobs: React.FC = () => {
             } */}
 
             <Input
-              placeholder={language?.keyword2}
+              placeholder={languageRedux === 1
+                ? 'Từ khóa'
+                : languageRedux === 2
+                  ? 'Keyword'
+                  : '키워드'}
               // allowClear
               size="large"
               // onChange={onChange}

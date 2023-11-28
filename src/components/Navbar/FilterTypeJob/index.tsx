@@ -136,7 +136,13 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         const value = updatedData.find((item: any) => item.id === TYPE_JOB);
         setValueRender(value);
       } else {
-        setValueRender({ id: 5, name: language?.all });
+        setValueRender({
+          id: 5, name: languageRedux === 1
+            ? 'Tất cả'
+            : languageRedux === 2
+              ? 'All'
+              : '전부'
+        });
       }
     }
   };

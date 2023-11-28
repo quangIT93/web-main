@@ -387,7 +387,11 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                       ? props.item.resource.company_icon
                       : ''
                   }
-                  alt="ảnh"
+                  alt={languageRedux === 1
+                    ? 'Hình ảnh bị lỗi'
+                    : languageRedux === 2
+                      ? 'Image is corrupted'
+                      : '이미지가 손상되었습니다'}
                   onError={handleImageError}
                 />
               )}

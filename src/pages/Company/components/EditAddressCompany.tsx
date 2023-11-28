@@ -270,7 +270,11 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="addressTitle"
           >
-            {language?.post_page?.city} <span style={{ color: 'red' }}>*</span>
+            {languageRedux === 1
+              ? 'Thành phố'
+              : languageRedux === 2
+                ? 'City'
+                : '도시'} <span style={{ color: 'red' }}>*</span>
           </Typography>
 
           <Autocomplete
@@ -286,7 +290,11 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder={language?.post_page?.place_city}
+                placeholder={languageRedux === 1
+                  ? 'Thành phố'
+                  : languageRedux === 2
+                    ? 'City'
+                    : '도시'}
                 size="small"
                 value={selectedProvince?.province_fullName}
               />
@@ -318,7 +326,11 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {language?.post_page?.district}{' '}
+            {languageRedux === 1
+              ? 'Quận'
+              : languageRedux === 2
+                ? 'District'
+                : '군'}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
@@ -331,7 +343,11 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             renderInput={(params: any) => (
               <TextField
                 {...params}
-                placeholder={language?.post_page?.place_district}
+                placeholder={languageRedux === 1
+                  ? 'Quận'
+                  : languageRedux === 2
+                    ? 'District'
+                    : '군'}
                 size="small"
               />
             )}
@@ -363,7 +379,11 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {language?.post_page?.ward} <span style={{ color: 'red' }}>*</span>
+            {languageRedux === 1
+              ? 'Phường/Xã'
+              : languageRedux === 2
+                ? 'Ward'
+                : '동/읍'} <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             disabled={is_profile ? true : false}
@@ -375,7 +395,11 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder={language?.post_page?.place_ward}
+                placeholder={languageRedux === 1
+                  ? 'Phường/Xã'
+                  : languageRedux === 2
+                    ? 'Ward'
+                    : '동/읍'}
                 size="small"
               />
             )}
@@ -406,7 +430,11 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {language?.address1} <span style={{ color: 'red' }}>*</span>
+            {languageRedux === 1
+              ? 'Địa chỉ'
+              : languageRedux === 2
+                ? 'Address'
+                : '주소'} <span style={{ color: 'red' }}>*</span>
           </Typography>
           <TextField
             type="text"
@@ -416,7 +444,11 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             onChange={handleChangeAddress}
             size="small"
             sx={{ width: '100%', marginTop: '8px' }}
-            placeholder={language?.post_page.place_address}
+            placeholder={languageRedux === 1
+              ? 'Địa chỉ'
+              : languageRedux === 2
+                ? 'Address'
+                : '주소'}
             disabled={is_profile ? true : false}
           />
           <div className="wrap-noti_input">
@@ -435,7 +467,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
                   : languageRedux === 2
                     ? 'Address length must be more than 10 characters'
                     : languageRedux === 3 &&
-                      '주소 길이는 10자 이상이어야 합니다.'}
+                    '주소 길이는 10자 이상이어야 합니다.'}
               </span>
             ) : dataCompany && dataCompany?.address?.length > 255 ? (
               <span className="helper-text">
@@ -444,7 +476,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
                   : languageRedux === 2
                     ? 'Address length cannot exceed 255 characters'
                     : languageRedux === 3 &&
-                      '주소 길이는 255자를 초과할 수 없습니다.'}
+                    '주소 길이는 255자를 초과할 수 없습니다.'}
               </span>
             ) : (
               <></>

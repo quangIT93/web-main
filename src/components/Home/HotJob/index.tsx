@@ -240,7 +240,11 @@ const HotJob: React.FC = () => {
                   }}
                 >
                   <div className="div-img-themes-item">
-                    <img src={item?.image} alt={language?.err_none_img} />
+                    <img src={item?.image} alt={languageRedux === 1
+                      ? 'Hình ảnh bị lỗi'
+                      : languageRedux === 2
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'} />
                   </div>
                   <div className="div-info-themes-item">
                     <div className="div-info-themes-item_top">
@@ -314,7 +318,11 @@ const HotJob: React.FC = () => {
               <div className="slide-item">
                 <img
                   src={item?.image}
-                  alt={language?.err_none_img}
+                  alt={languageRedux === 1
+                            ? 'Hình ảnh bị lỗi'
+                            : languageRedux === 2
+                              ? 'Image is corrupted'
+                              : '이미지가 손상되었습니다'}
                   style={{
                     // width: '160px',
                     // height: '160px',

@@ -268,7 +268,11 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
 
     if (!experience.startDate) {
       return {
-        messageError: language?.profile_page?.err_start_time,
+        messageError: languageRedux === 1
+          ? 'Vui lòng nhập ngày bắt đầu'
+          : languageRedux === 2
+            ? 'Please enter a start date'
+            : '시작일을 입력하세요.',
         checkForm: false,
         idError: 3,
       };
@@ -293,7 +297,11 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
 
     if (!experience.endDate) {
       return {
-        messageError: language?.profile_page?.err_finish_time,
+        messageError: languageRedux === 1
+          ? 'Vui lòng nhập Ngày kết thúc'
+          : languageRedux === 2
+            ? 'Please enter an End Date'
+            : '종료일을 입력하세요.',
         checkForm: false,
         idError: 4,
       };
@@ -462,7 +470,11 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             align="center"
             sx={{ marginBottom: '12px' }}
           >
-            {language?.profile_page?.add_working_experience}
+            {languageRedux === 1
+              ? 'Thêm thông tin kinh nghiệm làm việc'
+              : languageRedux === 2
+                ? 'Add work experience information'
+                : '경력 정보를 추가하세요'}
           </Typography>
           <Box sx={styleChildBox}>
             <Typography

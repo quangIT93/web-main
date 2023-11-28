@@ -57,7 +57,7 @@ const SalaryType: React.FC<ISalaryType> = (props) => {
               ? "Trả lương theo"
               : languageRedux === 2
                 ? "Calculate salary"
-                : '......에 따라 급여를 지급하기'
+                : '그에 따라 지불'
           } <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup

@@ -56,7 +56,11 @@ const ItemInfoLeft: React.FC<Url_CV> = ({
       {isProfile && (
         <Tooltip
           placement="right"
-          title={language?.profile_page?.delete_cv}
+          title={languageRedux === 1 ?
+            "Xóa CV" :
+            languageRedux === 2 ?
+              "Delete CV" :
+              "이력서 삭제"}
           style={{ fontSize: 5 }}
         >
           {/* <DeleteOutlined

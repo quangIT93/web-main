@@ -156,7 +156,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
               ? 'Trả lương theo'
               : languageRedux === 2
                 ? 'Calculate salary:'
-                : languageRedux === 3 && '......에 따라 급여를 지급하기'
+                : languageRedux === 3 && '그에 따라 지불'
             : valueRender
               ? valueRender.value
               : undefined
@@ -168,11 +168,15 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
             ? 'Trả lương theo'
             : languageRedux === 2
               ? 'Calculate salary:'
-              : languageRedux === 3 && '......에 따라 급여를 지급하기'
+              : languageRedux === 3 && '그에 따라 지불'
         }
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
-        <Option className="type-salary" value="1" label={language?.job_type}>
+        <Option className="type-salary" value="1" label={languageRedux === 1
+          ? 'Trả lương theo'
+          : languageRedux === 2
+            ? 'Calculate salary:'
+            : '그에 따라 지불'}>
           <div
             className="title-filter"
             style={{
@@ -188,7 +192,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
               ? 'Trả lương theo'
               : languageRedux === 2
                 ? 'Calculate salary:'
-                : languageRedux === 3 && '......에 따라 급여를 지급하기'}
+                : languageRedux === 3 && '그에 따라 지불'}
           </div>
           <CustomOption
             salaryType={SALARY_TYPE}

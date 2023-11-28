@@ -315,7 +315,11 @@ const HistoryPost = () => {
       target="_parent"
       style={{ fontSize: '12px' }}
     >
-      {language?.history_page?.home}
+      {languageRedux === 1
+        ? 'Trang chủ'
+        : languageRedux === 2
+          ? 'Home'
+          : languageRedux === 3 && '홈'}
     </Link>,
     <Link
       underline="hover"
@@ -326,7 +330,11 @@ const HistoryPost = () => {
       target="_parent"
       style={{ fontSize: '12px' }}
     >
-      {language?.history_page?.history}
+      {languageRedux === 1
+        ? 'Lịch sử'
+        : languageRedux === 2
+          ? 'History'
+          : languageRedux === 3 && '기록'}
     </Link>,
     <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {ItemLeft === dataItem[0].id
@@ -343,19 +351,36 @@ const HistoryPost = () => {
     </Typography>,
     <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {activeChild === '0-0'
-        ? language?.all
+        ? languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부'
         : // : activeChild === '0-1'
         // ? 'Đã được duyệt'
         // : activeChild === '0-2'
         // ? 'Đang chờ duyệt'
         ''}
 
-      {activeChild === '1-0' ? language?.all : ''}
+      {activeChild === '1-0' ? languageRedux === 1
+        ? 'Tất cả'
+        : languageRedux === 2
+          ? 'All'
+          : languageRedux === 3 && '전부' : ''}
 
       {activeChild === '2-0'
-        ? language?.all
+        ? languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부'
         : activeChild === '2-1'
-          ? language?.history_page?.not_closed_yet
+          ?
+          languageRedux === 1
+            ? 'Các công việc chưa đóng'
+            : languageRedux === 2
+              ? 'Unclosed jobs'
+              : languageRedux === 3 && '마감되지 않은 채용정보'
           : activeChild === '2-2'
             ? languageRedux === 1
               ? 'Đã đóng'
@@ -364,15 +389,31 @@ const HistoryPost = () => {
                 : '닫은'
             : ''}
       {activeChild === '3-0'
-        ? language?.history_page?.saved
+        ? languageRedux === 1
+          ? 'Đã lưu'
+          : languageRedux === 2
+            ? 'Saved articles'
+            : languageRedux === 3 && '저정되기'
         : activeChild === '3-1'
-          ? language?.history_page?.have_been_created
+          ? languageRedux === 1
+            ? 'Bài viết bạn đã tạo'
+            : languageRedux === 2
+              ? 'Posted articles'
+              : languageRedux === 3 && '등록되기'
           : ''}
 
-      {activeChild === '4-0' ? language?.all : ''}
+      {activeChild === '4-0' ? languageRedux === 1
+        ? 'Tất cả'
+        : languageRedux === 2
+          ? 'All'
+          : languageRedux === 3 && '전부' : ''}
 
       {activeChild === '5-0'
-        ? language?.all
+        ? languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부'
         : // : activeChild === '5-1'
         //   ? language?.history_page?.have_been_created
         ''}

@@ -44,7 +44,11 @@ const NoDataComponent: React.FC<any> = (props) => {
       <img
         style={{ marginTop: '10rem' }}
         src={require('../../img/langdingPage/nodata.png')}
-        alt="ảnh bị lỗi"
+        alt={languageRedux === 1
+          ? 'Hình ảnh bị lỗi'
+          : languageRedux === 2
+            ? 'Image is corrupted'
+            : '이미지가 손상되었습니다'}
         width="208px"
         height="245px"
       />
