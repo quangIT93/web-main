@@ -1184,7 +1184,11 @@ const Navbar: React.FC = () => {
               </span>
             ) : (
               // <span>{languageData?.login}</span>
-              <span>{languageRedux === 1 ? `Đăng nhập` : `Sign in`}</span>
+              <span>{languageRedux === 1
+                ? 'Đăng nhập'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}</span>
             )}
           </div>
         </div>
