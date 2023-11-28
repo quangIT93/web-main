@@ -412,7 +412,7 @@ const Profile: React.FC = () => {
             ? 'Successfully deleted CV'
             : '이력서를 삭제했습니다.');
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // cancel delete cv
@@ -616,7 +616,7 @@ const Profile: React.FC = () => {
                         ? 'Not updated yet'
                         : languageRedux === 3 && '업데이트하지 않음'}
                   </h2>
-                  <ChangeRoleButton />
+                  {/* <ChangeRoleButton /> */}
                   {/* <div className="wrap-company">
                     <div className="wrap-company_info">
                       <h2
@@ -1047,7 +1047,7 @@ const Profile: React.FC = () => {
           </Snackbar>
         </Stack>
         {profileV3.typeRoleData === 0 &&
-          profileMorev3?.profilesCvs?.length === 0 ? (
+        profileMorev3?.profilesCvs?.length === 0 ? (
           <ModalIntroduceCv />
         ) : (
           <></>

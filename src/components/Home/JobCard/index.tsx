@@ -138,6 +138,8 @@ const JobCard: React.FC<Iprops> = (props) => {
                   width: '120px',
                   height: '120px',
                   borderRadius: 10,
+                  minWidth: '120px',
+                  minHeight: '120px',
                 }}
               />
               <div className="div-card-post-left_info">

@@ -103,7 +103,7 @@ const communityApi = {
         })
     },
 
-    getCommunityDetailId: (id: string, lang: any) => {
+    getCommunityDetailId: (id: string | null, lang: any) => {
         const URL = `/v3/communications/detail/${id}?lang=${lang}`;
         return axiosClient.get(URL)
     },

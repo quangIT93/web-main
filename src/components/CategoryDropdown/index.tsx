@@ -25,6 +25,7 @@ import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
 import BreadcrumbMenuItems from './BreadcrumbMenuItems';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
+import { profile } from 'console';
 const titleContainer: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
@@ -359,6 +360,11 @@ const CategoryDropdown: React.FC = () => {
     setOpenCategoryDropdown(false);
   };
 
+  const moveToHistoryCompanyViewer = () => {
+    window.open('/history?companyView=51', '_parent');
+    setOpenCategoryDropdown(false);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -393,7 +399,7 @@ const CategoryDropdown: React.FC = () => {
         setOpenModalTurnOffStatus(true);
         setSearchJob(false);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -467,17 +473,14 @@ const CategoryDropdown: React.FC = () => {
                       //     "Trạng thái tìm việc đang bật:" :
                       //     "Job search status is on:" :
                       languageRedux === 1
-                        ? `Trạng thái tìm việc đang ${
-                            profileV3.isSearch === 1 ? 'bật' : 'tắt'
-                          }:`
+                        ? `Trạng thái tìm việc đang ${profileV3.isSearch === 1 ? 'bật' : 'tắt'
+                        }:`
                         : languageRedux === 2
-                          ? `Job search status is ${
-                              profileV3.isSearch === 1 ? 'on' : 'off'
-                            }:`
+                          ? `Job search status is ${profileV3.isSearch === 1 ? 'on' : 'off'
+                          }:`
                           : languageRedux === 3 &&
-                            `채용정보 검색 상태가 꺼져 ${
-                              profileV3.isSearch === 1 ? '있습니다' : '있습니다'
-                            }:`
+                          `채용정보 검색 상태가 꺼져 ${profileV3.isSearch === 1 ? '있습니다' : '있습니다'
+                          }:`
                     }
                   </p>
                   <Switch
@@ -494,7 +497,7 @@ const CategoryDropdown: React.FC = () => {
                             : languageRedux === 2
                               ? `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`
                               : languageRedux === 3 &&
-                                '고용주가 귀하를 쉽게 찾을 수 있도록 귀하의 구직 상태가 켜져 있으므로 귀하가 적합한 일자리를 찾을 가능성이 더 높아집니다.'}
+                              '고용주가 귀하를 쉽게 찾을 수 있도록 귀하의 구직 상태가 켜져 있으므로 귀하가 적합한 일자리를 찾을 가능성이 더 높아집니다.'}
                         </p>
                       </div>
                     </div>
@@ -751,7 +754,7 @@ const CategoryDropdown: React.FC = () => {
             </div>
             <div
               className="category-dropdown-item"
-              // style={{ display: profileV3.typeRoleData === 0 ? 'block' : 'none' }}
+            // style={{ display: profileV3.typeRoleData === 0 ? 'block' : 'none' }}
             >
               <div className="top-item" onClick={() => handleExpand(2)}>
                 <h3>

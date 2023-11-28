@@ -58,7 +58,9 @@ const DetailCompany = () => {
         setCompanyData(result.data);
         setBookmarked(result.data.isBookmarked);
       }
-    } catch (error) { }
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   const getApplicationPositionCount = async () => {
@@ -90,7 +92,7 @@ const DetailCompany = () => {
         setPostOfCompany(result.data.posts);
         setPage('0');
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleFollowCompany = async () => {
@@ -128,7 +130,6 @@ const DetailCompany = () => {
   useEffect(() => {
     getApplicationPositionCount();
   }, [languageRedux]);
-  console.log(company);
 
   const items: TabsProps['items'] = [
     {

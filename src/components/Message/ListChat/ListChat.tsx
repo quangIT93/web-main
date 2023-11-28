@@ -139,7 +139,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       const result = await messageApi.getChatMessage(
         searchParams.get('user_id'),
         // 36353,
-        Number(searchParams.get('post_id')),
+        searchParams.get('post_id')
+          ? Number(searchParams.get('post_id'))
+          : null,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
@@ -256,8 +258,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     if (isConnected === false && !socket.current) {
       socket.current = io(
-        'https://neoworks.vn',
         // 'https://aiworks.vn',
+        'https://neoworks.vn',
         {
           extraHeaders: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -286,12 +288,14 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       socket.current.on('server-send-message-to-receiver', (data: any) => {
         // Xử lý tin nhắn từ máy chủ
         setReceivedMessages((prevReceive) => [...prevReceive, data]);
+        console.log('sender message 1111111111');
       });
 
       socket.current.on('server-send-message-was-sent', (data: any) => {
         // console.log('nhận tin nhan ve khi da gui xong', data);
         // nhận tin nhan ve khi da gui xong
         setSendMessages((prevSend: any[]) => [...prevSend, data]);
+        console.log('sender message 22222222222222');
       });
     }
   }, []); // Thêm một mảng phụ thuộc trống
@@ -305,14 +309,17 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   // message function
   const handleSendMessage = () => {
     // const socket = io('https://aiworks.vn')
+
     if (message !== '')
       socket.current.emit('client-send-message', {
         receiverId: searchParams.get('user_id'),
         message: message,
         createdAt: Date.now(),
         type: 'text',
-        postId: searchParams.get('post_id'),
-        // postId: 66587,
+        postId:
+          searchParams.get('post_id') !== 'null'
+            ? searchParams.get('post_id')
+            : null,
       });
 
     setMessage('');
@@ -340,11 +347,15 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       formData.append('files', selectedImage);
 
       socket.current.emit('client-send-message', {
-        receiverId: userInfoChat.user_id,
+        receiverId: searchParams.get('user_id'),
         files: Array.from(selectedImage),
         createdAt: Date.now(),
         type: 'image',
-        postId: searchParams.get('post_id'),
+        // postId: searchParams.get('post_id'),
+        postId:
+          searchParams.get('post_id') !== 'null'
+            ? searchParams.get('post_id')
+            : null,
       });
     }
     // setImage(selectedImage);
@@ -430,8 +441,6 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         props.setApply(true);
         setOpenModalApply(false);
       }
-
-      console.log('appli');
     } catch (error) {
       api.info({
         message: languageRedux === 1 ? 'Đăng nhập thất bại' : 'Login Failded',
@@ -442,7 +451,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     }
   };
 
-  if (userInfoChat.length !== 0) {
+  if (searchParams.get('user_id')) {
     return (
       <div
         // className="list-chat"
@@ -468,7 +477,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             <div className="wrap_img">
               <img
                 src={
-                  userInfoChat.avatar ? userInfoChat.avatar : userInfoChat.image
+                  userInfoChat.avatar
+                    ? userInfoChat.avatar
+                    : userInfoChat.image
+                      ? userInfoChat.image
+                      : ''
                 }
                 alt={userInfoChat.company_name}
                 onError={(e: any) => {
@@ -755,7 +768,6 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             }
           })}
         </div>
-
         <div className="inputs-chat">
           <input
             placeholder={

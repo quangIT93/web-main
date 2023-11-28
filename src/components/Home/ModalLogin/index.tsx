@@ -109,9 +109,6 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     ? process.env.REACT_APP_FACEBOOK_APP_ID
     : '';
   // id google client
-  const googleClient = process.env.REACT_APP_GOOGLE_CLIENT_ID
-    ? process.env.REACT_APP_GOOGLE_CLIENT_ID
-    : '';
 
   const dispatch = useDispatch();
   const {
@@ -335,8 +332,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   useEffect(() => {
     const start = () => {
       gapi.client.init({
-        clientId: googleClient,
-        scope: '',
+        clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID
+          ? process.env.REACT_APP_GOOGLE_CLIENT_ID
+          : '',
+        scope: 'email',
       });
     };
     gapi.load('client:auth2', start);
@@ -471,8 +470,12 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 )}
               />
               <GoogleLogin
-                clientId={googleClient}
-                scope="profile email"
+                clientId={
+                  process.env.REACT_APP_GOOGLE_CLIENT_ID
+                    ? process.env.REACT_APP_GOOGLE_CLIENT_ID
+                    : ''
+                }
+                scope="email"
                 render={(renderProps) => (
                   <div
                     className="bnt-login_google bnt-login"
@@ -500,10 +503,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-              // cookiePolicy={'single_host_origin'}
-              // prompt="select_account"
-              // isSignedIn={true}
-              // loginHint='loginHint' 
+                // cookiePolicy={'single_host_origin'}
+                // prompt="select_account"
+                // isSignedIn={true}
+                // loginHint='loginHint'
               />
 
               <div className="line-with-text">

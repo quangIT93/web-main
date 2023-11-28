@@ -16,7 +16,7 @@ const NoCompanyData: React.FC<any> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+  //       languageRedux === 1 ? 'vi' : 'en',
   //     );
   //     if (result) {
   //       setLanguage(result.data);

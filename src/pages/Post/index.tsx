@@ -58,6 +58,9 @@ import locationApi from 'api/locationApi';
 import profileApi from 'api/profileApi';
 import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
 import ModalNotiValidateCompany from '#components/Post/ModalNotiValidateCompany';
+//@ts-ignore
+import { FillDataPost } from '#components/Icons';
+import apiCompany from 'api/apiCompany';
 
 // redux
 // import { RootState } from 'store';
@@ -151,8 +154,12 @@ const Post: React.FC = () => {
     isDatePeriod: 0,
     startDate: null,
     endDate: null,
-    startTime: new Date(2023, 0, 2, 0, 0).getTime(),
-    endTime: new Date(2023, 0, 2, 0, 0).getTime(),
+    startTime: new Date(
+      new Date(1970, 0, 2, 7, 0).setHours(7, 0, 0, 0),
+    ).getTime(),
+    endTime: new Date(
+      new Date(1970, 0, 2, 7, 0).setHours(17, 0, 0, 0),
+    ).getTime(),
     isWorkingWeekend: 0,
     isRemotely: 0,
     salaryMin: 1000,
@@ -866,7 +873,7 @@ const Post: React.FC = () => {
 
   const handleClickForm = () => {
     if (checkPost) {
-      // setOpenCheckposted(true);
+      setOpenCheckposted(true);
     }
   };
 
@@ -928,12 +935,12 @@ const Post: React.FC = () => {
                         : 'HiJob sẽ tự động điền tất cả các thông tin công việc trước đó của bạn!'
                 }
               </h4>
-              <Switch
-                checked={openModalFillDataPost}
-                // checkedHelmetren=""
-                // unCheckedChildren=""
-                onChange={() => setOpenFillDataPost(!openModalFillDataPost)}
-              />
+              <div
+                onClick={() => setOpenFillDataPost(!openModalFillDataPost)}
+                style={{ cursor: 'pointer' }}
+              >
+                <FillDataPost />
+              </div>
             </div>
           </div>
           <div className="fill-company" onClick={handleFillCompany}>

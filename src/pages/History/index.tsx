@@ -91,19 +91,19 @@ const HistoryPost = () => {
         ? '4-0'
         : companyView === 50
           ? '5-0'
-          : // companyView === 51
-          //   ? '5-1' :
-          community_post === 31
-            ? '3-1'
-            : community_post === 30
-              ? '3-0'
-              : saved_jobs === 1
-                ? '1-0'
-                : recruitment_post === 'opening'
-                  ? '2-1'
-                  : recruitment_post === 'closed'
-                    ? '2-2'
-                    : '0-0',
+          : companyView === 51
+            ? '5-1'
+            : community_post === 31
+              ? '3-1'
+              : community_post === 30
+                ? '3-0'
+                : saved_jobs === 1
+                  ? '1-0'
+                  : recruitment_post === 'opening'
+                    ? '2-1'
+                    : recruitment_post === 'closed'
+                      ? '2-2'
+                      : '0-0',
   );
   const [ItemLeft, setItemLeft] = React.useState<null | number>(
     hotjobtype === 2
@@ -282,9 +282,10 @@ const HistoryPost = () => {
           : languageRedux === 2
             ? 'Saved comopanies'
             : languageRedux === 3 && '저장한 회사',
-        // languageRedux === 1
-        //   ? 'Nhà tuyển dụng xem hồ sơ'
-        //   : 'Employers view resumes',
+        languageRedux === 1
+          ? 'Nhà tuyển dụng xem hồ sơ'
+          : languageRedux === 2
+            ? 'Employers view resumes' : '고용주는 이력서를 봅니다.',
       ],
     },
   ];
@@ -414,9 +415,13 @@ const HistoryPost = () => {
           : languageRedux === 2
             ? 'All'
             : languageRedux === 3 && '전부'
-        : // : activeChild === '5-1'
-        //   ? language?.history_page?.have_been_created
-        ''}
+        : activeChild === '5-1'
+          ? languageRedux === 1
+            ? 'Đã được tạo'
+            : languageRedux === 2
+              ? 'Already created'
+              : languageRedux === 3 && '생성되었습니다'
+          : ''}
     </Typography>,
   ];
   const CardsPost = useMemo(() => {

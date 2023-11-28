@@ -110,10 +110,12 @@
                 .leaf_let_map {
                     height: 430px;
                     z-index: 1;
+                    @media screen and (max-width: 430px) {
+                        height: 350px;
+                      }
 
-                    .leaflet-control-attribution {
-                        display: none;
-                    }
+                     
+                 
                 }
             }
         }

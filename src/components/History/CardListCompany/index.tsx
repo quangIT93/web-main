@@ -163,9 +163,20 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
   };
 
   useEffect(() => {
-    handleGetCompany();
-    handleGetCompanyView();
-  }, [saveCompanyList, newOld]);
+    console.log('activeChild', activeChild);
+    switch (activeChild) {
+      case '5-0':
+        handleGetCompany();
+        break;
+
+      case '5-1':
+        handleGetCompanyView();
+        break;
+
+      default:
+        break;
+    }
+  }, [saveCompanyList, newOld, activeChild]);
 
   const sortDataByDate = (value: any, arrayData: any) => {
     if (value === 1) {
@@ -216,16 +227,21 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {
               searchParams.get('c') === '5-0'
-                ? languageRedux === 1
+                ?
+                languageRedux === 1
                   ? ' > Công ty đã lưu'
                   : languageRedux === 2
                     ? ' > Saved comopanies'
                     : ' > 저장한 회사'
-                : ''
-
-              // : searchParams.get('c') === '5-1'
-              //   ? ' > Nhà tuyển dụng xem hồ sơ'
-              //   : '> Employers view resumes'
+                : searchParams.get('c') === '5-1'
+                  ?
+                  languageRedux === 1
+                    ?
+                    ' > Nhà tuyển dụng xem hồ sơ'
+                    : languageRedux === 2
+                      ? ' > Employers view resumes'
+                      : ' > 고용주는 이력서를 봅니다'
+                  : ''
             }
           </span>
         </Typography>
@@ -255,113 +271,112 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
               : languageRedux === 3 && '가장 오래된'}</MenuItem>
         </TextField>
       </Box>
-      {activeChild === '5-0' &&
-        companyData?.length !== 0
-        ? (
-          <div className="history-post" style={{ marginTop: '16px' }}>
-            <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-              {companyData.map((dataBookmark: any, index: number) => (
-                <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
-                  <CompanyCardHistory
-                    item={dataBookmark.CompanyData}
-                    index={index}
-                    saveCompanyList={saveCompanyList}
-                    setSaveCompanyList={setSaveCompanyList}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-            <Box
-              sx={{
-                margin: '12px auto',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+      {activeChild === '5-0' && companyData?.length !== 0 ? (
+        <div className="history-post" style={{ marginTop: '16px' }}>
+          <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
+            {companyData?.map((dataBookmark: any, index: number) => (
+              <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+                <CompanyCardHistory
+                  item={dataBookmark.CompanyData}
+                  index={index}
+                  saveCompanyList={saveCompanyList}
+                  setSaveCompanyList={setSaveCompanyList}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Box
+            sx={{
+              margin: '12px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Button
+              style={{
+                width: 130,
+                height: 40,
+                marginBottom: '2rem',
+                backgroundColor: `#0D99FF`,
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                display: isVisible ? 'block' : 'none',
               }}
             >
-              <Button
-                style={{
-                  width: 130,
-                  height: 40,
-                  marginBottom: '2rem',
-                  backgroundColor: `#0D99FF`,
-                  color: '#FFFFFF',
-                  fontWeight: 'bold',
-                  display: isVisible ? 'block' : 'none',
-                }}
-                loading={uploading}
-                onClick={handleGetmoreCompany}
-              >
-                {languageRedux === 1
-                  ? 'Xem thêm'
-                  : languageRedux === 2
-                    ? 'See more'
-                    : '더보기'}
-                {/* Xem thêm */}
-              </Button>
-            </Box>
-          </div>
-        ) : (
-          //  :
-          // activeChild === '5-1' ? (
-          //   <div className="history-post" style={{ marginTop: '16px' }}>
-          //     <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-          //       {companyDataView.map((dataView: any, index: number) => (
-          //         <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
-          //           <CompanyViewCardHistory
-          //             item={dataView}
-          //             index={index}
-          //             saveCompanyList={saveCompanyListView}
-          //             setSaveCompanyList={setSaveCompanyListView}
-          //           />
-          //         </Grid>
-          //       ))}
-          //     </Grid>
-          //     <Box
-          //       sx={{
-          //         margin: '12px auto',
-          //         display: 'flex',
-          //         alignItems: 'center',
-          //         justifyContent: 'center',
-          //       }}
-          //     >
-          //       <Button
-          //         style={{
-          //           width: 130,
-          //           height: 40,
-          //           marginBottom: '2rem',
-          //           backgroundColor: `#0D99FF`,
-          //           color: '#FFFFFF',
-          //           fontWeight: 'bold',
-          //           display: isVisible ? 'block' : 'none',
-          //         }}
-          //         loading={uploading}
-          //         onClick={handleGetmoreCompanyView}
-          //       >
-          //         {languageRedux === 1
-          //   ? 'Xem thêm'
-          // : languageRedux === 2
-          //   ? 'See more'
-          //   : '더보기'}
-          //         {/* Xem thêm */}
-          //       </Button >
-          //     </Box>
-          //   </div>
-          // )
-          <NoCompanyData />
-        )}
+              {languageRedux === 1
+                ? 'Xem thêm'
+                : languageRedux === 2
+                  ? 'See more'
+                  : '더보기'}
+              {/* Xem thêm */}
+            </Button>
+          </Box>
+        </div>
+      ) : activeChild === '5-1' && companyDataView?.length !== 0 ? (
+        <div className="history-post" style={{ marginTop: '16px' }}>
+          <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
+            {companyDataView?.map((dataView: any, index: number) => (
+              <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+                <CompanyViewCardHistory
+                  item={dataView}
+                  index={index}
+                  saveCompanyList={saveCompanyListView}
+                  setSaveCompanyList={setSaveCompanyListView}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Box
+            sx={{
+              margin: '12px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Button
+              style={{
+                width: 130,
+                height: 40,
+                marginBottom: '2rem',
+                backgroundColor: `#0D99FF`,
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                display: isVisible ? 'block' : 'none',
+              }}
+              loading={uploading}
+              onClick={handleGetmoreCompanyView}
+            >
+              {languageRedux === 1
+                ? 'Xem thêm'
+                : languageRedux === 2
+                  ? 'See more'
+                  : '더보기'}
+              {/* Xem thêm */}
+            </Button>
+          </Box>
+        </div>
+      ) : (
+        <NoCompanyData />
+      )}
 
-      <Backdrop
-        sx={{
-          color: '#0d99ff ',
-          backgroundColor: 'transparent',
-          zIndex: (theme: any) => theme.zIndex.drawer + 1,
-        }}
-        open={false}
-      // onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      {(activeChild === '5-1' && companyDataView?.length !== 0) ||
+        (activeChild === '5-1' && companyData?.length !== 0) ? (
+        <Backdrop
+          sx={{
+            color: '#0d99ff ',
+            backgroundColor: 'transparent',
+            zIndex: (theme: any) => theme.zIndex.drawer + 1,
+          }}
+          open={false}
+        // onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

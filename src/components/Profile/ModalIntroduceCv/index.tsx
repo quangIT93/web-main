@@ -118,7 +118,7 @@ const ModalIntroduceCv: React.FC<any> = () => {
                 : languageRedux === 2
                   ? 'Once completed, immediately save your job search resume on HiJob (up to 10 CV templates), or download it for free as PDF.'
                   : languageRedux === 3 &&
-                    '완료되면 즉시 HiJob의 구직 프로필에 저장하거나(최대 10개의 이력서 템플릿) PDF로 무료로 다운로드하세요.'}
+                  '완료되면 즉시 HiJob의 구직 프로필에 저장하거나(최대 10개의 이력서 템플릿) PDF로 무료로 다운로드하세요.'}
             </p>
           </div>
         </div>

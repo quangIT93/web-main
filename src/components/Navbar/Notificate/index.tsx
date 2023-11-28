@@ -548,12 +548,12 @@ const Notificate = () => {
                     <div
                       key={index}
                       className={`wrap-notificate_system ${notificate?.data?.isRead !== undefined &&
-                        !notificate?.data?.isRead
-                        ? 'readed'
-                        : notificate.data?.isRead !== undefined &&
-                          notificate.data?.isRead
-                          ? ''
-                          : ''
+                          !notificate?.data?.isRead
+                          ? 'readed'
+                          : notificate.data?.isRead !== undefined &&
+                            notificate.data?.isRead
+                            ? ''
+                            : ''
                         }`}
                       onClick={() =>
                         handleClickNotiKey(
@@ -580,7 +580,7 @@ const Notificate = () => {
                             objectFit: 'cover',
                             borderRadius: '12px',
                           }}
-                          src="https://www.elle.vn/wp-content/uploads/2017/07/25/hinh-anh-dep-1.jpg"
+                          src={notificate.data.companyLogo}
                           alt=""
                         />
                       </div>

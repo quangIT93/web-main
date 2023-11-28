@@ -126,7 +126,6 @@ const ReviewCompany: React.FC<IReviewCompany> = (props) => {
         20,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
-      console.log('result: ', result);
 
       if (result.status === 200 && result.data.companyRatings.length === 20) {
         setLoading(false);

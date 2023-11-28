@@ -189,8 +189,8 @@ export const NoteCadidateHijobIcon = () => {
 export const StarIconBookmark = () => {
   return (
     <svg
-      width="40"
-      height="41"
+      width="48"
+      height="50"
       viewBox="0 0 40 41"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -215,8 +215,8 @@ export const StarIconBookmark = () => {
 export const StarIconBookmarked = () => {
   return (
     <svg
-      width="40"
-      height="41"
+      width="48"
+      height="50"
       viewBox="0 0 40 41"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

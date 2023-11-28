@@ -169,6 +169,7 @@ const Navbar: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const location = useLocation();
   // const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -272,7 +273,6 @@ const Navbar: React.FC = () => {
     jobType,
   ]);
 
-  const location = useLocation();
   // use Redux manage state
 
   // value query

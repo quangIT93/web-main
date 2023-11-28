@@ -243,6 +243,9 @@ const CandidatesAll = () => {
       }
     } catch (error) { }
   };
+
+  console.log('totle', total);
+
   React.useEffect(() => {
     getAllCandidates();
   }, [languageRedux]);
@@ -283,7 +286,7 @@ const CandidatesAll = () => {
         gender,
         ageMin,
         ageMax,
-        19,
+        18,
         page,
         'vi',
       );
@@ -291,6 +294,8 @@ const CandidatesAll = () => {
       if (result) {
         setOpen(true);
         setTotal(result.data.total);
+        console.log('totle', total);
+
         setListData(result.data.cvFilters);
         if (result.data.cvFilters.length < 18) {
           setHasMore(false);
