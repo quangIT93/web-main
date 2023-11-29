@@ -8,6 +8,22 @@
 }
 
 form {
+
+  .login-GF {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    p {
+      align-items: center;
+      color: #000;
+      display: flex;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 24px;
+    }
+  }
+
   .wrapLogin {
     display: flex;
     // align-items: center;

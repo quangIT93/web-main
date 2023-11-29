@@ -4,85 +4,86 @@
 
 declare namespace NodeJS {
   interface ProcessEnv {
-    readonly NODE_ENV: 'development' | 'production' | 'test'
-    readonly PUBLIC_URL: string
+    readonly NODE_ENV: 'development' | 'production' | 'test';
+    readonly PUBLIC_URL: string;
   }
 }
 
 declare module '*.avif' {
-  const src: string
-  export default src
+  const src: string;
+  export default src;
 }
 
 declare module '*.bmp' {
-  const src: string
-  export default src
+  const src: string;
+  export default src;
 }
 
 declare module '*.gif' {
-  const src: string
-  export default src
+  const src: string;
+  export default src;
 }
 
 declare module '*.jpg' {
-  const src: string
-  export default src
+  const src: string;
+  export default src;
 }
 
 declare module '*.jpeg' {
-  const src: string
-  export default src
+  const src: string;
+  export default src;
 }
 
 declare module '*.png' {
-  const src: string
-  export default src
+  const src: string;
+  export default src;
 }
 
 declare module '*.webp' {
-  const src: string
-  export default src
+  const src: string;
+  export default src;
 }
 
 declare module '*.svg' {
-  import * as React from 'react'
+  import * as React from 'react';
 
   export const ReactComponent: React.FunctionComponent<
     React.SVGProps<SVGSVGElement> & { title?: string }
-  >
+  >;
 
-  const src: string
-  export default src
+  const src: string;
+  export default src;
 }
 
 declare module '*.module.css' {
-  const classes: { readonly [key: string]: string }
-  export default classes
+  const classes: { readonly [key: string]: string };
+  export default classes;
 }
 
 declare module '*.module.scss' {
-  const classes: { readonly [key: string]: string }
-  export default classes
+  const classes: { readonly [key: string]: string };
+  export default classes;
 }
 
 declare module '*.module.sass' {
-  const classes: { readonly [key: string]: string }
-  export default classes
+  const classes: { readonly [key: string]: string };
+  export default classes;
 }
 
 declare module 'react/jsx-runtime' {
-  export default any
+  export default any;
 }
 
 declare module 'html2pdf.js' {
-  export default any
-} 
+  export default any;
+}
 
-
-
+interface Window {
+  gapi?: any;
+}
 
 declare module '*.woff';
 declare module '*.woff2';
 
-declare module "*.ttf"
-declare module "*.ttc"
+declare module '*.ttf';
+declare module '*.ttc';

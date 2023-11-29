@@ -4,6 +4,15 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 import { RootState } from '../../../store/reducer';
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
+import {
+  CredentialResponse,
+  googleLogout,
+  useGoogleLogin,
+  GoogleLogin,
+  CodeResponse,
+  useGoogleOneTapLogin,
+  PromptMomentNotification,
+} from '@react-oauth/google';
 
 import {
   signInEmail,
@@ -16,11 +25,11 @@ import signInEmailApi from '../../../api/authApi';
 //@ts-ignore
 import OtpInput from 'react-otp-input';
 //@ts-ignore
-import FacebookLogin from '@greatsumini/react-facebook-login';
+// import FacebookLogin from '@greatsumini/react-facebook-login';
 // import { FacebookLoginClient } from '@greatsumini/react-facebook-login';
-import GoogleLogin from '@leecheuk/react-google-login';
+// import GoogleLogin from '@leecheuk/react-google-login';
 
-import { gapi } from 'gapi-script';
+// import { gapi } from 'gapi-script';
 
 // import component
 import CountdownTimer from './components/CountdownTimer';
@@ -256,12 +265,15 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
 
   // handle login google
   const responseGoogle = async (response: any) => {
+    console.log('response', response);
+    console.log('responsetokenId', response.clientId);
+
     try {
       setOpenBackdrop(true);
-      if (response.tokenId) {
+      if (response.clientId) {
         // console.log('response.tokenID', response.tokenId);
-        // console.log('response', response);
-        const result = await authApi.signInGoogle(response.tokenObj.id_token);
+
+        const result = await authApi.signInGoogle(response.credential);
         if (result) {
           fetchDataProfile(result.data, true);
           setOpenBackdrop(false);
@@ -329,18 +341,41 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState.isverifyOtp]);
 
-  useEffect(() => {
-    const start = () => {
-      gapi.client.init({
-        clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID
-          ? process.env.REACT_APP_GOOGLE_CLIENT_ID
-          : '',
-        scope: 'email',
-      });
-    };
-    gapi.load('client:auth2', start);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   const start = () => {
+  //     gapi.client.init({
+  //       clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID
+  //         ? process.env.REACT_APP_GOOGLE_CLIENT_ID
+  //         : '',
+  //       scope:
+  //         'email profile https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/userinfo.profile',
+  //     });
+  //   };
+  //   gapi.load('client:auth2', start);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
+  // useEffect(() => {
+  //   // Load the Google API client library
+  //   window.gapi.load('auth2', () => {
+  //     window.gapi.auth2
+  //       .init({
+  //         client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID
+  //           ? process.env.REACT_APP_GOOGLE_CLIENT_ID
+  //           : '',
+  //         scope:
+  //           'email profile https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/userinfo.profile',
+  //       })
+  //       .then(
+  //         () => {
+  //           // API initialization succeeded
+  //         },
+  //         (error: any) => {
+  //           console.error('Error initializing Google API client:', error);
+  //         },
+  //       );
+  //   });
+  // }, []);
 
   const handleResendCode = () => {
     setResendCode(true);
@@ -378,6 +413,17 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   //   });
   //   window.google.accounts.id.prompt();
   // }, []);
+  useGoogleOneTapLogin({
+    onSuccess: () => {},
+    onError: () => {
+      console.log('Login Failed');
+    },
+    promptMomentNotification: (notification: PromptMomentNotification) => {
+      console.log('notification', notification);
+    },
+    use_fedcm_for_prompt: true,
+    disabled: false,
+  });
 
   return (
     <Modal
@@ -429,7 +475,24 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               onClick={handleBackOtp}
             /> */}
             <form>
-              <FacebookLogin
+              <div className="login-GF">
+                <GoogleLogin
+                  onSuccess={responseGoogle}
+                  onError={() => {
+                    console.log('Login Failed');
+                  }}
+                  type="icon"
+                  shape="circle"
+                  text="signin_with"
+                />
+                <p>
+                  {languageRedux === 1
+                    ? 'Đăng nhập bằng tài khoản Facebook'
+                    : 'Sign in with Facebook account'}
+                </p>
+              </div>
+              <div className="login-GF"></div>
+              {/* <FacebookLogin
                 appId={appId}
                 autoLoad={false}
                 onSuccess={responseFacebook}
@@ -455,7 +518,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                     ? process.env.REACT_APP_GOOGLE_CLIENT_ID
                     : ''
                 }
-                scope="email"
+                scope="email profile https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/userinfo.profile"
                 render={(renderProps) => (
                   <div
                     className="bnt-login_google bnt-login"
@@ -474,11 +537,11 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-                // cookiePolicy={'single_host_origin'}
-                // prompt="select_account"
+                cookiePolicy={'single_host_origin'}
+                prompt="select_account"
                 // isSignedIn={true}
-                // loginHint='loginHint'
-              />
+                // loginHint="loginHint"
+              /> */}
 
               <div className="line-with-text">
                 <span className="line"></span>

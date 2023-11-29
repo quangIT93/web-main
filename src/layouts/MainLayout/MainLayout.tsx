@@ -6,7 +6,7 @@ import React from 'react';
 import './style.scss';
 import RollTop from '#components/RollTop';
 import Footer from '#components/Footer/Footer';
-
+import { useGoogleOneTapLogin } from '@react-oauth/google';
 interface Props {
   children: React.ReactNode;
 }
