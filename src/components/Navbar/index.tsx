@@ -827,6 +827,7 @@ const Navbar: React.FC = () => {
         const result = await authApi.signOut(refreshToken);
         if (result) {
           if (socket.current) {
+            document.cookie = 'g_state' + '=; Max-Age=99999999999999999';
             console.log('disconnect socket thành công');
             socket.current.disconnect();
             // socket.current.close();
