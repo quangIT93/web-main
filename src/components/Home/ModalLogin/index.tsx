@@ -476,7 +476,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   onError={() => {
                     console.log('Login Failed');
                   }}
-                  type="icon"
+                  // type="icon"
                   shape="circle"
                 />
                 <p>

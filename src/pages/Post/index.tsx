@@ -937,7 +937,7 @@ const Post: React.FC = () => {
               </h4>
               <div
                 onClick={() => setOpenFillDataPost(!openModalFillDataPost)}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', display: 'grid', placeItems: 'center' }}
               >
                 <FillDataPost />
               </div>

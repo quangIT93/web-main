@@ -146,17 +146,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean;
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-    search: boolean;
-  } = useContext(HomeValueContext);
+    {
+      openCollapseFilter: boolean;
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+      search: boolean;
+    } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -407,7 +407,7 @@ const Navbar: React.FC = () => {
         dispatch(setProfileMeInformationV3(result));
         setRole(result.data.typeRoleData);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -845,7 +845,7 @@ const Navbar: React.FC = () => {
           await dispatch<any>(setProfileMeInformationV3([]));
           await dispatch<any>(setProfileMeCompanyV3([]));
           await dispatch<any>(setProfileMeInformationMoreV3([]));
-          // (window as any).google.accounts.id.disableAutoSelect()
+          document.cookie = 'g_state' + '=; Max-Age=9999999'
           for (const key of keysToRemove) {
             localStorage.removeItem(key);
           }
@@ -1156,8 +1156,8 @@ const Navbar: React.FC = () => {
       className="actions-login"
       ref={refLogin}
       key="3"
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -1167,8 +1167,8 @@ const Navbar: React.FC = () => {
               icon={<UserOutlined />}
               src={
                 profileV3 &&
-                profileV3?.avatarPath &&
-                localStorage.getItem('accessToken')
+                  profileV3?.avatarPath &&
+                  localStorage.getItem('accessToken')
                   ? profileV3?.avatarPath
                   : ''
               }
@@ -1178,8 +1178,8 @@ const Navbar: React.FC = () => {
             {localStorage.getItem('accessToken') && profileV3.length !== 0 ? (
               <span>
                 {profileV3 &&
-                profileV3?.name &&
-                localStorage.getItem('accessToken')
+                  profileV3?.name &&
+                  localStorage.getItem('accessToken')
                   ? profileV3?.name
                   : ''}
               </span>
@@ -1205,8 +1205,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-            openLogin &&
-            location?.pathname === '/'
+              openLogin &&
+              location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1256,11 +1256,11 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             localStorage.getItem('accessToken') &&
-            profileV3?.name === 'Your name' &&
-            profileV3?.phone === '' &&
-            profileV3?.typeRoleData !== null &&
-            openLogin &&
-            location?.pathname === '/'
+              profileV3?.name === 'Your name' &&
+              profileV3?.phone === '' &&
+              profileV3?.typeRoleData !== null &&
+              openLogin &&
+              location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1322,7 +1322,7 @@ const Navbar: React.FC = () => {
                         : languageRedux === 2
                           ? 'Not updated information"'
                           : languageRedux === 3 &&
-                            '정보 업데이트를 아직 하지 않음'}
+                          '정보 업데이트를 아직 하지 않음'}
                   </h2>
                   <span className="sub-login_text">
                     {/* <CompanySubLoginIcon /> */}
@@ -1338,7 +1338,7 @@ const Navbar: React.FC = () => {
                               : languageRedux === 2
                                 ? 'Not updated information"'
                                 : languageRedux === 3 &&
-                                  '정보 업데이트를 아직 하지 않음'}
+                                '정보 업데이트를 아직 하지 않음'}
                         </p>
                       </>
                     ) : (
@@ -1357,7 +1357,7 @@ const Navbar: React.FC = () => {
                             : languageRedux === 2
                               ? 'Not updated information"'
                               : languageRedux === 3 &&
-                                '정보 업데이트를 아직 하지 않음'
+                              '정보 업데이트를 아직 하지 않음'
                         : profileV3?.email
                           ? profileV3?.email
                           : languageRedux === 1
@@ -1365,7 +1365,7 @@ const Navbar: React.FC = () => {
                             : languageRedux === 2
                               ? 'Not updated information"'
                               : languageRedux === 3 &&
-                                '정보 업데이트를 아직 하지 않음'}
+                              '정보 업데이트를 아직 하지 않음'}
                     </p>
                   </span>
                   {profileV3?.typeRoleData === 1 ? (
@@ -1379,7 +1379,7 @@ const Navbar: React.FC = () => {
                             : languageRedux === 2
                               ? 'Not updated information"'
                               : languageRedux === 3 &&
-                                '정보 업데이트를 아직 하지 않음'}
+                              '정보 업데이트를 아직 하지 않음'}
                       </p>
                     </span>
                   ) : (
@@ -1393,7 +1393,7 @@ const Navbar: React.FC = () => {
                             : languageRedux === 2
                               ? 'Not updated information"'
                               : languageRedux === 3 &&
-                                '정보 업데이트를 아직 하지 않음'}
+                              '정보 업데이트를 아직 하지 않음'}
                       </p>
                     </span>
                   )}
@@ -1414,16 +1414,16 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3?.profileLocations?.length > 0
                           ? profileV3?.profileLocations?.map(
-                              (location: any) => {
-                                return `${location.fullName} , `;
-                              },
-                            )
+                            (location: any) => {
+                              return `${location.fullName} , `;
+                            },
+                          )
                           : languageRedux === 1
                             ? 'Chưa cập nhật thông tin'
                             : languageRedux === 2
                               ? 'Not updated information"'
                               : languageRedux === 3 &&
-                                '정보 업데이트를 아직 하지 않음'}
+                              '정보 업데이트를 아직 하지 않음'}
                       </p>
                     </span>
                     <span
@@ -1435,14 +1435,14 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3 && profileV3?.profileCategories?.length > 0
                           ? profileV3?.profileCategories.map((profile: any) => {
-                              return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                            })
+                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                          })
                           : languageRedux === 1
                             ? 'Chưa cập nhật thông tin'
                             : languageRedux === 2
                               ? 'Not updated information"'
                               : languageRedux === 3 &&
-                                '정보 업데이트를 아직 하지 않음'}
+                              '정보 업데이트를 아직 하지 않음'}
                       </p>
                     </span>
                   </div>
@@ -1473,9 +1473,9 @@ const Navbar: React.FC = () => {
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <PaperSubLoginIcon />
                   <span>
@@ -1563,9 +1563,9 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                  // style={{
-                  //   display: openRadioGroup ? 'flex' : 'none',
-                  // }}
+                // style={{
+                //   display: openRadioGroup ? 'flex' : 'none',
+                // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
@@ -1879,14 +1879,14 @@ const Navbar: React.FC = () => {
                     <p>
                       {profileV3?.profileLocations?.length > 0
                         ? profileV3?.profileLocations?.map((location: any) => {
-                            return `${location.fullName} , `;
-                          })
+                          return `${location.fullName} , `;
+                        })
                         : languageRedux === 1
                           ? 'Chưa cập nhật thông tin'
                           : languageRedux === 2
                             ? 'Not updated information"'
                             : languageRedux === 3 &&
-                              '정보 업데이트를 아직 하지 않음'}
+                            '정보 업데이트를 아직 하지 않음'}
                     </p>
                   </span>
                   <span
@@ -1898,14 +1898,14 @@ const Navbar: React.FC = () => {
                     <p>
                       {profileV3 && profileV3?.profileCategories?.length > 0
                         ? profileV3?.profileCategories.map((profile: any) => {
-                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                          })
+                          return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                        })
                         : languageRedux === 1
                           ? 'Chưa cập nhật thông tin'
                           : languageRedux === 2
                             ? 'Not updated information"'
                             : languageRedux === 3 &&
-                              '정보 업데이트를 아직 하지 않음'}
+                            '정보 업데이트를 아직 하지 않음'}
                     </p>
                   </span>
                 </div>
@@ -1933,9 +1933,9 @@ const Navbar: React.FC = () => {
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <PaperSubLoginIcon />
                   <span>
@@ -2056,9 +2056,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${
-        openCollapseFilter ? 'show-modal_navbar' : ''
-      }`}
+      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -2178,9 +2177,9 @@ const Navbar: React.FC = () => {
                     // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
                     display:
                       localStorage.getItem('accessToken') &&
-                      location?.pathname === '/' &&
-                      openLogin &&
-                      countNoti !== 0
+                        location?.pathname === '/' &&
+                        openLogin &&
+                        countNoti !== 0
                         ? 'block'
                         : 'none',
                     position: 'absolute',
@@ -2197,16 +2196,13 @@ const Navbar: React.FC = () => {
                     <div className="login__hover__p">
                       <p>
                         {languageRedux === 1
-                          ? `Bạn có ${
-                              countNoti ? countNoti : '0'
-                            } thông báo mới!`
+                          ? `Bạn có ${countNoti ? countNoti : '0'
+                          } thông báo mới!`
                           : languageRedux === 2
-                            ? `You have ${
-                                countNoti ? countNoti : '0'
-                              } new notifications`
-                            : `${
-                                countNoti ? countNoti : '0'
-                              } 개의 새로운 알림이 있습니다!`}
+                            ? `You have ${countNoti ? countNoti : '0'
+                            } new notifications`
+                            : `${countNoti ? countNoti : '0'
+                            } 개의 새로운 알림이 있습니다!`}
                       </p>
                       <p>
                         {languageRedux === 1

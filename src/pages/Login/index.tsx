@@ -17,7 +17,7 @@ import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationRed
 import { RootState } from 'store';
 // import GoogleButton from 'react-google-button'
 declare global {
-  interface Window {}
+  interface Window { }
 }
 const Login = () => {
   const dispatch = useDispatch();
@@ -91,21 +91,22 @@ const Login = () => {
   // };
 
   const login = useGoogleLogin({
-    onSuccess: async (tokenResponse: TokenResponse) => {
+    onSuccess: async (tokenResponse) => {
       console.log(tokenResponse);
       // fetching userinfo can be done on the client or the server
-      const userInfo = await axios
-        .get('https://www.googleapis.com/oauth2/v3/userinfo', {
-          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-        })
-        .then((res) => res.data);
+      // const userInfo = await axios
+      //   .get('https://www.googleapis.com/oauth2/v3/userinfo', {
+      //     headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+      //   })
+      //   .then((res) => res.data);
       // const result = await authApi.signInGoogle(codeResponse.access_token);
       // if (result) {
       //   console.log(result);
       //   // fetchDataProfile(result.data, true);
       // }
-      console.log(userInfo);
+      // console.log(userInfo);
     },
+    // flow: 'auth-code',
   });
 
   // ===========================
@@ -144,7 +145,7 @@ const Login = () => {
 
   return (
     <>
-      <div onClick={() => login()}>Sign in with Google 🚀</div>;
+      <button onClick={() => login()}>Sign in with Google 🚀</button>;
       <GoogleLogin
         onSuccess={(credentialResponse) => {
           console.log(credentialResponse);
