@@ -72,7 +72,7 @@ const WorkingStory = () => {
 
   React.useEffect(() => {
     handleGetWorkingStory();
-  }, [like]);
+  }, [like, languageRedux]);
 
   return (
     <>

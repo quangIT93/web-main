@@ -67,7 +67,7 @@ const HijobNews = () => {
 
   React.useEffect(() => {
     handleGetHijobNews();
-  }, [like]);
+  }, [like, languageRedux]);
 
   const handleMoveToDetailPage = (id: any) => {
     window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
