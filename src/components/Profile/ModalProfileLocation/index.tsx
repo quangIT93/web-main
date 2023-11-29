@@ -400,7 +400,9 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
             {renderOptions()}
           </Select>
         </FormControl> */}
-        <TreeSelect {...tProps} />
+        <TreeSelect
+          getPopupContainer={(triggerNode) => triggerNode.parentElement}
+          {...tProps} />
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {languageRedux === 1

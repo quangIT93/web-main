@@ -80,7 +80,7 @@ const MainLayout = ({ children }: Props) => {
       client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID, // Thay YOUR_CLIENT_ID bằng Client ID của bạn
       scope: '',
       callback: handleGoogleLoginSuccess,
-      prompt_parent_id: 'g_id_onload'
+      // prompt_parent_id: 'g_id_onload'
       // cancel_on_tap_outside: false,
     });
 
@@ -120,18 +120,16 @@ const MainLayout = ({ children }: Props) => {
 
   return (
     <>
-      <div id="g_id_onload"
+      {/* <div id="g_id_onload"
         data-prompt_parent_id="g_id_onload"
         data-cancel_on_tap_outside="false"
         style={{
           position: "absolute",
-          left: "50%",
-          top: "124px",
-          width: "0",
-          height: "0",
+          right: "15%",
+          top: "210px",
           zIndex: "1001",
         }}>
-      </div>
+      </div> */}
       <Navbar />
       <CategoryDropdown />
       <div className="childrenContainer">{children}</div>
