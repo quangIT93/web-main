@@ -38,6 +38,7 @@ const CardListBlogCreate = () => {
   const [isVisible, setIsVisible] = React.useState(true);
   const [uploading, setUploading] = React.useState(false);
   const [searchParams, setSearchParams] = useSearchParams('');
+
   const handleGetCreatedPost = async () => {
     try {
       const result = await communityApi.getCommunityByAccount(
@@ -214,11 +215,13 @@ const CardListBlogCreate = () => {
                 }}
               >
                 <NewestIcon />
-                <p>{languageRedux === 1
-                  ? 'Mới nhất'
-                  : languageRedux === 2
-                    ? 'Newest'
-                    : languageRedux === 3 && '최신'}</p>
+                <p>
+                  {languageRedux === 1
+                    ? 'Mới nhất'
+                    : languageRedux === 2
+                      ? 'Newest'
+                      : languageRedux === 3 && '최신'}
+                </p>
               </li>
               <li
                 className={
@@ -252,11 +255,13 @@ const CardListBlogCreate = () => {
                 }}
               >
                 <EysIcon />
-                <p>{languageRedux === 1
-                  ? 'Lượt xem'
-                  : languageRedux === 2
-                    ? 'Views"'
-                    : '보다'}</p>
+                <p>
+                  {languageRedux === 1
+                    ? 'Lượt xem'
+                    : languageRedux === 2
+                      ? 'Views"'
+                      : '보다'}
+                </p>
               </li>
               <li
                 className={
@@ -270,11 +275,13 @@ const CardListBlogCreate = () => {
                 }}
               >
                 <CommentIcon />
-                <p>{languageRedux === 1
-                  ? 'Lượt bình luận'
-                  : languageRedux === 2
-                    ? 'Comments"'
-                    : '댓글 수'}</p>
+                <p>
+                  {languageRedux === 1
+                    ? 'Lượt bình luận'
+                    : languageRedux === 2
+                      ? 'Comments"'
+                      : '댓글 수'}
+                </p>
               </li>
             </ul>
           </div>
@@ -305,8 +312,8 @@ const CardListBlogCreate = () => {
                   {item?.createdAtText
                     ? item?.createdAtText
                     : new Date(item?.createdAt).toLocaleDateString('en-GB') +
-                    ', ' +
-                    moment(new Date(item?.createdAt)).format('HH:mm')}
+                      ', ' +
+                      moment(new Date(item?.createdAt)).format('HH:mm')}
                 </p>
               </div>
               <div className="body-item-actions">

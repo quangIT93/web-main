@@ -205,8 +205,8 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                   title={
                     item?.categoriesData?.length !== 0
                       ? item.categoriesData?.map((value: any) => {
-                        return `${value.fullName}, `;
-                      })
+                          return `${value.fullName}, `;
+                        })
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
                         : languageRedux === 2
@@ -217,8 +217,8 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                   <span className="text-info-candidate">
                     {item.categoriesData.length !== 0
                       ? item.categoriesData.map((value: any) => {
-                        return `${value.fullName}, `;
-                      })
+                          return `${value.fullName}, `;
+                        })
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
                         : languageRedux === 2

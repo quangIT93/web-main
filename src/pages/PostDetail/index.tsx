@@ -1464,7 +1464,7 @@ const Detail = () => {
       {automatic && (
         <div className="detail">
           <Helmet>
-            <title>Tuyển nhân viên</title>
+            <title>{`${post?.data.title}`}</title>
             <link
               rel="canonical"
               href="https://hijob.site/post-detail"

@@ -1,114 +1,126 @@
-// import React, { useState } from 'react'
-// import { useSelector, useDispatch } from 'react-redux'
-// import { login } from 'store/actions/auth'
+import React, { useState, useEffect } from 'react';
+import {
+  CredentialResponse,
+  googleLogout,
+  useGoogleLogin,
+  GoogleLogin,
+  CodeResponse,
+  TokenResponse,
+} from '@react-oauth/google';
 
-// // Interface mô tả dữ liệu đăng nhập
-// interface LoginData {
-//   email: string
-// }
-
-// const LoginPage: React.FC = () => {
-//   const dispatch = useDispatch()
-//   const [loginData, setLoginData] = useState<LoginData>({
-//     email: '',
-//   })
-
-//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target
-//     setLoginData((prevData) => ({ ...prevData, [name]: value }))
-//   }
-
-//   const handleLogin = () => {
-//     // Thực hiện xử lý đăng nhập, ví dụ: gửi dữ liệu đăng nhập đến server
-//     console.log(loginData)
-//     // dispatch(login(loginData))
-//   }
-
-//   return (
-//     <div>
-//       <h2>Login</h2>
-//       <form>
-//         <div>
-//           <label htmlFor="username">Username:</label>
-//           <input
-//             type="text"
-//             id="username"
-//             name="username"
-//             value={loginData.email}
-//             onChange={handleInputChange}
-//           />
-//         </div>
-//         <div>
-//           <label htmlFor="password">Password:</label>
-//           <input
-//             type="password"
-//             id="password"
-//             name="password"
-//             value={loginData.otp}
-//             onChange={handleInputChange}
-//           />
-//         </div>
-//         <button type="button" onClick={handleLogin}>
-//           Login
-//         </button>
-//       </form>
-//     </div>
-//   )
-// }
-
-// export default LoginPage
-
-import React from 'react';
-
-import signInEmailApi from 'api/authApi';
-
+import axios from 'axios';
+// import signInEmailApi from '../../../api/authApi';
+import authApi from '../../api/authApi';
+import { useDispatch, useSelector } from 'react-redux';
+import profileApi from 'api/profileApi';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
+import { RootState } from 'store';
+// import GoogleButton from 'react-google-button'
 declare global {
-  interface Window {
-    google: any;
-    gapi: any; // Thay 'any' bằng kiểu dữ liệu chính xác nếu có thể
-  }
+  interface Window { }
 }
-
-declare global {
-  interface Window {}
-}
-
 const Login = () => {
-  const googleClient = process.env.REACT_APP_GOOGLE_CLIENT_ID
-    ? process.env.REACT_APP_GOOGLE_CLIENT_ID
-    : '';
+  const dispatch = useDispatch();
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  // useEffect(() => {
+  //   // Load the Google API client library
+  //   window.gapi.load('auth2', () => {
+  //     window.gapi.auth2.init({
+  //       client_id:
+  //         '436273589347-ot9ec9jhm235q3irsvjpnltr8hsun5cp.apps.googleusercontent.com',
+  //       scope:
+  //         'email profile https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/userinfo.profile',
+  //     });
+  //   });
+  // }, []);
 
-  const handleCredentialResponse = async (response: any) => {
-    console.log('Encoded JWT ID token: ' + response.credential);
-    try {
-      const result = await signInEmailApi.signInGoogle(response.credential);
-      if (result) {
-      }
-    } catch (error) {
-      console.log('error: ', error);
-    }
-  };
-  React.useEffect(() => {
-    /* global google */
-    window.google.accounts.id.initialize({
-      client_id: googleClient,
-      scope: '',
-      callback: handleCredentialResponse,
-    });
-    window.google.accounts.id.renderButton(document.getElementById('button'), {
-      theme: 'outline',
-      size: 'large',
-    });
-    window.google.accounts.id.prompt();
-  }, []);
-  React.useEffect(() => {
-    console.log('Login');
-  }, []);
+  // const googleSignIn = async () => {
+  //   try {
+  //     console.log('login');
+  //     console.log(window.gapi.auth2.getAuthInstance().signIn());
+
+  //     window.gapi.auth2.getAuthInstance().signIn().then(onSignIn);
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  // };
+
+  // // Callback function to handle successful Google Sign-In
+  // const onSignIn = async (googleUser: any) => {
+  //   // Get user information
+  //   console.log('googleUser: ', googleUser);
+
+  //   const result = await authApi.signInFacebook(googleUser.Oc.access_token);
+  //   if (result) {
+  //     fetchDataProfile(result.data, true);
+  //   }
+  //   // You can perform additional actions here, like sending the user's data to your server.
+  // };
+
+  // const fetchDataProfile = async (auth: any, isVerifyOtp?: boolean) => {
+  //   if (isVerifyOtp) {
+  //     // console.log('Xác thực OTP thành công', authState);
+  //     // Thực hiện các hành động sau khi xác thực thành công
+  //     localStorage.setItem(
+  //       'accountId',
+  //       auth && auth.accountId ? auth.accountId : '',
+  //     );
+  //     localStorage.setItem(
+  //       'accessToken',
+  //       auth && auth.accessToken ? auth.accessToken : '',
+  //     );
+  //     localStorage.setItem(
+  //       'refreshToken',
+  //       auth && auth.refreshToken ? auth.refreshToken : '',
+  //     );
+
+  //     const resultProfileV3 = await profileApi.getProfileInformationV3(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+
+  //     if (resultProfileV3) {
+  //       dispatch(setProfileMeInformationV3(resultProfileV3));
+  //       window.open('/', '_parent');
+  //     }
+  //   } else {
+  //     console.log('Lỗi xác thực ');
+  //     // Thực hiện các hành động sau khi xác thực thất bại
+  //   }
+  // };
+
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      console.log(tokenResponse);
+      // fetching userinfo can be done on the client or the server
+      // const userInfo = await axios
+      //   .get('https://www.googleapis.com/oauth2/v3/userinfo', {
+      //     headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+      //   })
+      //   .then((res) => res.data);
+      // const result = await authApi.signInGoogle(codeResponse.access_token);
+      // if (result) {
+      //   console.log(result);
+      //   // fetchDataProfile(result.data, true);
+      // }
+      // console.log(userInfo);
+    },
+    // flow: 'auth-code',
+  });
 
   return (
-    <div>
-      <div id="button">Đăng nhập</div>
-    </div>
+    <>
+      <button onClick={() => login()}>Sign in with Google 🚀</button>;
+      <GoogleLogin
+        onSuccess={(credentialResponse) => {
+          console.log(credentialResponse);
+        }}
+        onError={() => {
+          console.log('Login Failed');
+        }}
+      />
+    </>
   );
 };
 

@@ -844,7 +844,7 @@ const Navbar: React.FC = () => {
           await dispatch<any>(setProfileMeInformationV3([]));
           await dispatch<any>(setProfileMeCompanyV3([]));
           await dispatch<any>(setProfileMeInformationMoreV3([]));
-          document.cookie = 'g_state' + '=; Max-Age=0'
+          document.cookie = 'g_state' + '=; Max-Age=9999999'
           for (const key of keysToRemove) {
             localStorage.removeItem(key);
           }
@@ -1184,11 +1184,13 @@ const Navbar: React.FC = () => {
               </span>
             ) : (
               // <span>{languageData?.login}</span>
-              <span>{languageRedux === 1
-                ? 'Đăng nhập'
-                : languageRedux === 2
-                  ? 'Sign in'
-                  : languageRedux === 3 && '로그인'}</span>
+              <span>
+                {languageRedux === 1
+                  ? 'Đăng nhập'
+                  : languageRedux === 2
+                    ? 'Sign in'
+                    : languageRedux === 3 && '로그인'}
+              </span>
             )}
           </div>
         </div>
@@ -1209,18 +1211,27 @@ const Navbar: React.FC = () => {
         }}
       >
         <div className="login__hover">
-          <h3>{languageRedux === 1 ? 'Đăng nhập ở đây'
-            : languageRedux === 2 ? 'Sign in here' : '여기서 로그인하세요'}</h3>
+          <h3>
+            {languageRedux === 1
+              ? 'Đăng nhập ở đây'
+              : languageRedux === 2
+                ? 'Sign in here'
+                : '여기서 로그인하세요'}
+          </h3>
           <div className="login__hover__p">
-            <p>{languageRedux === 1 ? 'Chọn vị trí và danh mục của bạn'
-              : languageRedux === 2 ? 'Choose your location and category'
-                : '위치와 카테고리를 선택하세요'}</p>
             <p>
-              {
-                languageRedux === 1 ? 'Chúng tôi sẽ cung cấp thông tin tuyển dụng tốt nhất'
-                  : languageRedux === 2 ? 'We will provide the best recruitment information'
-                    : '최고의 채용정보를 제공하겠습니다.'
-              }
+              {languageRedux === 1
+                ? 'Chọn vị trí và danh mục của bạn'
+                : languageRedux === 2
+                  ? 'Choose your location and category'
+                  : '위치와 카테고리를 선택하세요'}
+            </p>
+            <p>
+              {languageRedux === 1
+                ? 'Chúng tôi sẽ cung cấp thông tin tuyển dụng tốt nhất'
+                : languageRedux === 2
+                  ? 'We will provide the best recruitment information'
+                  : '최고의 채용정보를 제공하겠습니다.'}
             </p>
           </div>
           {/* <Button
@@ -2177,23 +2188,26 @@ const Navbar: React.FC = () => {
                     <h3>
                       {languageRedux === 1
                         ? 'Thông báo mới'
-                        : languageRedux === 2 ? 'New notification' :
-                          '새로운 알림'}
+                        : languageRedux === 2
+                          ? 'New notification'
+                          : '새로운 알림'}
                     </h3>
                     <div className="login__hover__p">
                       <p>
                         {languageRedux === 1
                           ? `Bạn có ${countNoti ? countNoti : '0'
                           } thông báo mới!`
-                          : languageRedux === 2 ? `You have ${countNoti ? countNoti : '0'
-                            } new notifications` :
-                            `${countNoti ? countNoti : '0'
+                          : languageRedux === 2
+                            ? `You have ${countNoti ? countNoti : '0'
+                            } new notifications`
+                            : `${countNoti ? countNoti : '0'
                             } 개의 새로운 알림이 있습니다!`}
                       </p>
                       <p>
                         {languageRedux === 1
                           ? `Vui lòng xác nhận ngay!`
-                          : languageRedux === 2 ? 'Please confirm now!'
+                          : languageRedux === 2
+                            ? 'Please confirm now!'
                             : '지금 확인해주세요!'}
                       </p>
                     </div>

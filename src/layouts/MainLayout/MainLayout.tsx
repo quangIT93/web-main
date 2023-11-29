@@ -6,10 +6,11 @@ import React, { useEffect } from 'react';
 import './style.scss';
 import RollTop from '#components/RollTop';
 import Footer from '#components/Footer/Footer';
+import { useGoogleOneTapLogin } from '@react-oauth/google';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProfileUser } from 'store/actions';
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
-import authApi from '../../../src/api/authApi'
+import authApi from '../../../src/api/authApi';
 import { RootState } from 'store';
 interface Props {
   children: React.ReactNode;
@@ -66,7 +67,7 @@ const MainLayout = ({ children }: Props) => {
       callback: handleGoogleLoginSuccess,
       // cancel_on_tap_outside: false,
     });
-    if (profileV3?.length === 0) {
+    if (localStorage.getItem('accessToken')) {
       (window as any).google.accounts.id.cancel((notification: any) =>
         console.log(notification));
     } else {
@@ -74,6 +75,7 @@ const MainLayout = ({ children }: Props) => {
         console.log(notification)
       );
     }
+    document.cookie = 'g_state' + '=; Max-Age=-9999999999999999999999999999999'
     // Xử lý lỗi khi đăng nhập bằng Gmail
     // window.onerror = (message, source, lineno, colno, error) => {
     //   handleGoogleLoginFailure(error);
