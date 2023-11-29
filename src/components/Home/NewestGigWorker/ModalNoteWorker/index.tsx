@@ -78,7 +78,9 @@ const ModalNoteWorker: React.FC<PropModalNoteWorker> = (props) => {
         >
           {languageRedux === 1
             ? 'Bạn không phải là nhà tuyển dụng!'
-            : `You don't have to be a recruiter`}
+            : languageRedux === 2
+              ? `You don't have to be a recruiter`
+              : languageRedux === 3 && '당신은 모집자가 아닙니다!'}
         </Typography>
         <Typography
           id="modal-modal-title"
@@ -89,7 +91,10 @@ const ModalNoteWorker: React.FC<PropModalNoteWorker> = (props) => {
         >
           {languageRedux === 1
             ? 'Chỉ nhà tuyển dụng mới thực hiện được thao tác trên!'
-            : `Only the recruiter can perform the above operation`}
+            : languageRedux === 2
+              ? `Only the recruiter can perform the above operation`
+              : languageRedux === 3 &&
+                '채용 담당자만이 이 작업을 수행할 수 있습니다.'}
         </Typography>
       </Box>
     </Modal>

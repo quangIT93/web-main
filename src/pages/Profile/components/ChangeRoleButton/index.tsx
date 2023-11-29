@@ -30,7 +30,7 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
         if (result) {
           dispatch<any>(setRole(1));
           const getProfileV3Data = await profileApi.getProfileInformationV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (getProfileV3Data) {
             console.log('profile updated', getProfileV3Data);
@@ -45,7 +45,7 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
         if (result) {
           dispatch<any>(setRole(0));
           const getProfileV3Data = await profileApi.getProfileInformationV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (getProfileV3Data) {
             dispatch<any>(setProfileMeInformationV3(getProfileV3Data));
@@ -76,8 +76,22 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
         />
         <label
           htmlFor="color_mode"
-          data-on={languageRedux === 1 ? 'Nhà tuyển dụng' : 'Recruiter'}
-          data-off={languageRedux === 1 ? 'Ứng viên' : 'Candidate'}
+          data-on={
+            languageRedux === 1
+              ? 'Nhà tuyển dụng'
+              : languageRedux === 2
+                ? 'Employer'
+                : languageRedux === 3
+                  ? '고용주'
+                  : 'Nhà tuyển dụng'
+          }
+          data-off={
+            languageRedux === 1
+              ? 'Ứng viên'
+              : languageRedux === 2
+                ? 'Candidate'
+                : languageRedux === 3 && '후보자'
+          }
           className="btn-color-mode-switch-inner"
         ></label>
       </label>

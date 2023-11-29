@@ -38,13 +38,14 @@ const CardListBlogCreate = () => {
   const [isVisible, setIsVisible] = React.useState(true);
   const [uploading, setUploading] = React.useState(false);
   const [searchParams, setSearchParams] = useSearchParams('');
+
   const handleGetCreatedPost = async () => {
     try {
       const result = await communityApi.getCommunityByAccount(
         page,
         '10',
         sort,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setCreatedPost(result?.data?.communications);
@@ -81,7 +82,7 @@ const CardListBlogCreate = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -119,7 +120,7 @@ const CardListBlogCreate = () => {
         nextPage,
         '10',
         sort,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       //
@@ -134,8 +135,10 @@ const CardListBlogCreate = () => {
         setPage('0');
         message.error(
           languageRedux === 1
-            ? 'Đã hết bài viết để hiển thị'
-            : 'Out of posts to show',
+            ? 'Không còn bài viết để hiển thị'
+            : languageRedux === 2
+              ? 'No more posts to show'
+              : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
         );
         setIsVisible(false);
         // console.log('Đã hết bài viết để hiển thị', result);
@@ -180,12 +183,17 @@ const CardListBlogCreate = () => {
               lineHeight: '24px',
             }}
           >
-            {languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles'}
+            {languageRedux === 1
+              ? 'Danh sách bài viết'
+              : languageRedux === 2
+                ? 'List of articles'
+                : languageRedux === 3 && '글 목록'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-              {
-                searchParams.get('c') === '3-1' &&
-                  languageRedux === 1 ? ' > Bài viết bạn đã tạo' : ' > Posted articles'
-              }
+              {searchParams.get('c') === '3-1' && languageRedux === 1
+                ? ' > Bài viết bạn đã tạo'
+                : languageRedux === 2
+                  ? ' > Posted articles'
+                  : languageRedux === 3 && ' > 등록되기'}
             </span>
           </Typography>
         </div>
@@ -207,7 +215,13 @@ const CardListBlogCreate = () => {
                 }}
               >
                 <NewestIcon />
-                <p>{language?.history_page?.latest}</p>
+                <p>
+                  {languageRedux === 1
+                    ? 'Mới nhất'
+                    : languageRedux === 2
+                      ? 'Newest'
+                      : languageRedux === 3 && '최신'}
+                </p>
               </li>
               <li
                 className={
@@ -221,7 +235,13 @@ const CardListBlogCreate = () => {
                 }}
               >
                 <LikeIcon />
-                <p>{language?.history_page?.likes}</p>
+                <p>
+                  {languageRedux === 1
+                    ? 'Lượt thích'
+                    : languageRedux === 2
+                      ? 'Likes"'
+                      : '좋아요'}
+                </p>
               </li>
               <li
                 className={
@@ -235,7 +255,13 @@ const CardListBlogCreate = () => {
                 }}
               >
                 <EysIcon />
-                <p>{language?.history_page?.views}</p>
+                <p>
+                  {languageRedux === 1
+                    ? 'Lượt xem'
+                    : languageRedux === 2
+                      ? 'Views"'
+                      : '보다'}
+                </p>
               </li>
               <li
                 className={
@@ -249,7 +275,13 @@ const CardListBlogCreate = () => {
                 }}
               >
                 <CommentIcon />
-                <p>{language?.history_page?.comments}</p>
+                <p>
+                  {languageRedux === 1
+                    ? 'Lượt bình luận'
+                    : languageRedux === 2
+                      ? 'Comments"'
+                      : '댓글 수'}
+                </p>
               </li>
             </ul>
           </div>
@@ -280,8 +312,8 @@ const CardListBlogCreate = () => {
                   {item?.createdAtText
                     ? item?.createdAtText
                     : new Date(item?.createdAt).toLocaleDateString('en-GB') +
-                    ', ' +
-                    moment(new Date(item?.createdAt)).format('HH:mm')}
+                      ', ' +
+                      moment(new Date(item?.createdAt)).format('HH:mm')}
                 </p>
               </div>
               <div className="body-item-actions">
@@ -322,7 +354,11 @@ const CardListBlogCreate = () => {
               loading={uploading}
               onClick={handleChange}
             >
-              {language?.more}
+              {languageRedux === 1
+                ? 'Xem thêm'
+                : languageRedux === 2
+                  ? 'See more'
+                  : '더보기'}
             </Button>
           </Box>
         ) : (

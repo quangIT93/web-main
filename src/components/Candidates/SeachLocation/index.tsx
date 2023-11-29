@@ -80,7 +80,7 @@ const SeachLocation: React.FC<ISearchLocation> = (props) => {
   // const getAllLocaitions = async () => {
   //   try {
   //     const result = await locationApi.getAllLocation(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setDataLocations(result.data);
@@ -193,7 +193,13 @@ const SeachLocation: React.FC<ISearchLocation> = (props) => {
               }))
             : []
         }
-        placeholder={languageRedux === 1 ? 'Địa điểm' : 'Location'}
+        placeholder={
+          languageRedux === 1
+            ? 'Địa điểm'
+            : languageRedux === 2
+              ? 'Location'
+              : languageRedux === 3 && '위치'
+        }
       />
     </div>
   );

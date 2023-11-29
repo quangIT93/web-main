@@ -14,10 +14,11 @@ interface IEditPostJobCompany {
   setEditDataPosted: any;
   editDataPosted: any;
   language: any;
+  languageRedux: any;
 }
 
 const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
-  const { setEditDataPosted, editDataPosted, language } = props;
+  const { setEditDataPosted, editDataPosted, language, languageRedux } = props;
 
   const handleEditJobName = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -49,7 +50,13 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           htmlFor="editJob"
         >
           {
-            language?.job_title
+            languageRedux === 1
+              ? 'Tên công việc'
+              : languageRedux === 2
+                ? 'Job Title'
+                : languageRedux === 3
+                  ? '직업 이름을'
+                  : 'Tên công việc'
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
@@ -62,7 +69,13 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '0.5rem' }}
           placeholder={
-            language?.job_title
+            languageRedux === 1
+              ? 'Tên công việc'
+              : languageRedux === 2
+                ? 'Job Title'
+                : languageRedux === 3
+                  ? '직업 이름을'
+                  : 'Tên công việc'
           }
         //   error={titleError} // Đánh dấu lỗi
         />
@@ -75,7 +88,13 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           htmlFor="editCompany"
         >
           {
-            language?.company
+            languageRedux === 1
+              ? 'Tên công ty'
+              : languageRedux === 2
+                ? "Company's name"
+                : languageRedux === 3
+                  ? '회사명을'
+                  : 'Tên công ty'
           }{' '}<span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
@@ -87,7 +106,13 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '0.5rem' }}
           placeholder={
-            language?.company
+            languageRedux === 1
+              ? 'Tên công ty'
+              : languageRedux === 2
+                ? "Company's name"
+                : languageRedux === 3
+                  ? '회사명을'
+                  : 'Tên công ty'
           }
         //   error={titleError} // Đánh dấu lỗi akla
         />

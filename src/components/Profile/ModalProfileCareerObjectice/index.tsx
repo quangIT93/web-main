@@ -94,7 +94,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);
@@ -112,7 +112,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setDataCategories(result.data);
@@ -162,7 +162,11 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const handleSubmit = async () => {
     try {
       if (value.length > 10) {
-        message.error(language?.limit_10_careers);
+        message.error(languageRedux === 1 ?
+          "Chỉ được chọn tối đa 10 lĩnh vực quan tâm" :
+          languageRedux === 2 ?
+            "Only select up to 10 areas of interest" :
+            "관심분야는 최대 10개까지만 선택할 수 있습니다.");
         return;
       }
       const result = await profileApi.updateProfileCareer(
@@ -170,7 +174,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
       );
       if (result) {
         const getProfileV3 = await profileApi.getProfileInformationV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
 
         if (getProfileV3) {
@@ -221,7 +225,11 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     // Disable the "All" checkbox at the root level
     showCheckedStrategy: SHOW_PARENT,
     // treeDefaultExpandAll,
-    placeholder: language?.career_objective,
+    placeholder: languageRedux === 1
+      ? 'Lĩnh vực quan tâm'
+      : languageRedux === 2
+        ? 'Career objective'
+        : '관심 분야',
     style: {
       width: '100%',
       zIndex: '1302 !important',
@@ -268,12 +276,21 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
           component="h2"
           align="center"
         >
-          {language?.career_objective}
+          {languageRedux === 1
+            ? 'Lĩnh vực quan tâm'
+            : languageRedux === 2
+              ? 'Career objective'
+              : '관심 분야'}
         </Typography>
 
         <TreeSelect {...tProps} />
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {language?.profile_page?.save_info}
+          {languageRedux === 1
+            ? 'Lưu thông tin'
+            : languageRedux === 2
+              ? 'Save information'
+              : languageRedux === 3 &&
+              '정보 저장'}
         </Button>
       </Box>
     </Modal>

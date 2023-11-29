@@ -5,7 +5,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 
 const RecuitApplication = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   return (
     <>
       <Button
@@ -22,11 +24,11 @@ const RecuitApplication = () => {
         }}
         name="RecuitApplication"
       >
-        {
-          languageRedux === 1 ?
-            "Đã tuyển ứng viên này" :
-            "Hired this candidate"
-        }
+        {languageRedux === 1
+          ? 'Đã tuyển ứng viên này'
+          : languageRedux === 2
+            ? 'Hired this candidate'
+            : languageRedux === 3 && '이 후보자를 모집했습니다.'}
       </Button>
     </>
   );

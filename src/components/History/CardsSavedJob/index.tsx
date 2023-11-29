@@ -59,7 +59,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -78,7 +78,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
     const result = await historyBookmark.getAllBookmark(
       lastPostId,
       11,
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
     if (result.data.length <= 10) {
       setIsVisible(false);
@@ -95,7 +95,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
       const result = await historyBookmark.getAllBookmark(
         newCount,
         10,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -139,7 +139,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
       const result = await historyBookmark.getAllBookmark(
         lastPostId,
         10,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -153,7 +153,11 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content: language?.history_page?.out_job,
+            content: languageRedux === 1
+              ? 'Đã hết công việc để hiển thị'
+              : languageRedux === 2
+                ? 'Out of job to display'
+                : '보여줄 일이 부족해',
           });
           return;
         }
@@ -216,12 +220,19 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
             lineHeight: '24px',
           }}
         >
-          {language?.history_page?.saved_jobs}
+          {
+            languageRedux === 1
+              ? 'Các công việc đã lưu'
+              : languageRedux === 2
+                ? 'Saved jobs'
+                : languageRedux === 3 && '저장된 작업'
+          }
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-            {
-              searchParams.get('c') === '1-0' &&
-                languageRedux === 1 ? ' > Tất cả' : ' > All'
-            }
+            {searchParams.get('c') === '1-0' && languageRedux === 1
+              ? ' > ất cả'
+              : languageRedux === 2
+                ? ' > All'
+                : ' > 전부'}
           </span>
         </Typography>
         <TextField
@@ -234,8 +245,20 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">{language?.history_page?.latest}</MenuItem>
-          <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
+          <MenuItem value="Mới nhất">{
+            languageRedux === 1
+              ? 'Mới nhất'
+              : languageRedux === 2
+                ? 'Newest'
+                : languageRedux === 3 && '최신'
+          }</MenuItem>
+          <MenuItem value="Cũ nhất">{
+            languageRedux === 1
+              ? 'Cũ nhất'
+              : languageRedux === 2
+                ? 'Oldest'
+                : languageRedux === 3 && '가장 오래된'
+          }</MenuItem>
         </TextField>
       </Box>
       <Backdrop
@@ -286,7 +309,11 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
               loading={uploading}
               onClick={handleClickAddItem}
             >
-              {language?.more}
+              {languageRedux === 1
+                ? 'Xem thêm'
+                : languageRedux === 2
+                  ? 'See more'
+                  : '더보기'}
             </Button>
           </Box>
         </div>

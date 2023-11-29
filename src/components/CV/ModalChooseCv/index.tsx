@@ -47,7 +47,10 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
         >
           {languageRedux === 1
             ? 'Chọn CV/Hồ sơ  để xin việc'
-            : 'Choose CV/Resume to apply for a job'}
+            : languageRedux === 2
+              ? 'Choose CV/Resume to apply for a job'
+              : languageRedux === 3 &&
+                '직업에 지원하려면 CV/Resume를 선택하세요.'}
         </h3>
       }
       footer={null}
@@ -68,10 +71,16 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
         {firstCv
           ? languageRedux === 1
             ? 'Bạn có muốn chọn CV / Resume đã hoàn thành của mình để xin việc, Tuyển dụng có thể tìm thấy bạn dễ dàng hơn?'
-            : 'Do you want to choose your completed CV/Resume to apply for a job, Recruitments can find you more easily?'
+            : languageRedux === 2
+              ? 'Do you want to choose your completed CV/Resume to apply for a job, Recruitments can find you more easily?'
+              : languageRedux === 3 &&
+                '직업에 지원하기 위해 완전한 CV/이력서를 선택하시겠습니까? 그렇게 하면 채용팀이 귀하를 더 쉽게 찾을 수 있습니까?'
           : languageRedux === 1
             ? 'CV / Resume bạn vừa hoàn thành sẽ được chọn cho các đơn xin việc và Nhà tuyển dụng có thể tìm thấy bạn dễ dàng hơn!'
-            : 'The CV/Resume you just completed will be selected for job applications and Employers can find you more easily!'}
+            : languageRedux === 2
+              ? 'The CV/Resume you just completed will be selected for job applications and Employers can find you more easily!'
+              : languageRedux === 3 &&
+                '방금 작성한 CV/이력서가 선택되어 입사 지원서를 보내게 되며 고용주가 귀하를 더 쉽게 찾을 수 있습니다!'}
       </p>
       <div className="share-buttons-choose-cv-modal">
         <Button type="primary" shape="round">
@@ -85,7 +94,11 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
           }}
           onClick={handleCancel}
         >
-          {languageRedux === 1 ? 'Hủy' : 'Cancel'}
+          {languageRedux === 1
+            ? 'Hủy'
+            : languageRedux === 2
+              ? 'Cancle'
+              : languageRedux === 3 && '취소'}
         </Button>
       </div>
     </Modal>

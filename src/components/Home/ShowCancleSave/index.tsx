@@ -57,7 +57,12 @@ const ShowCancleSave: React.FC = () => {
             severity="error"
             sx={{ width: '100%', backgroundColor: '#000000' }}
           >
-            {language?.unsaved_this_job}
+            {
+              languageRedux === 1 ?
+                "Đã bỏ lưu công việc" :
+                languageRedux === 2 ?
+                  "Unsaved this job" : "저장되지 않은 작업"
+            }
           </Alert>
         </Snackbar>
       </Stack>

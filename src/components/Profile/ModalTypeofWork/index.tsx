@@ -83,7 +83,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
       const result = await profileApi.putProfileJobV3(valueType, null);
       if (result) {
         const resultProfileV3 = await profileApi.getProfileInformationMoreV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         dispatch(setProfileMeInformationMoreV3(resultProfileV3));
         dispatch(setAlertEditInfo(true));
@@ -121,8 +121,17 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
           component="h2"
           align="center"
         >
-          {/* {language?.working_location} */}
-          {languageRedux === 1 ? 'Loại hình công việc' : 'Type of work'}
+          {/* {languageRedux === 1
+              ? 'Khu vực làm việc'
+              : languageRedux === 2
+                ? 'Working location'
+                : languageRedux === 3 &&
+                '근무 위치'} */}
+          {languageRedux === 1
+            ? 'Loại hình công việc'
+            : languageRedux === 2
+              ? 'Type of work'
+              : languageRedux === 3 && '일의 종류'}
         </Typography>
 
         {/* <Box sx={styleChildBox}>
@@ -164,22 +173,42 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
           // error={!gender} // Đánh dấu lỗi
           >
             <MenuItem value={1}>
-              {languageRedux === 1 ? 'Toàn thời gian' : 'Fulltime'}
+              {languageRedux === 1
+                ? 'Toàn thời gian'
+                : languageRedux === 2
+                  ? 'Fulltime'
+                  : languageRedux === 3 && '풀 타임'}
             </MenuItem>
             <MenuItem value={2}>
-              {languageRedux === 1 ? 'Bán thời gian' : 'Parttime'}
+              {languageRedux === 1
+                ? 'Bán thời gian'
+                : languageRedux === 2
+                  ? 'Part time'
+                  : languageRedux === 3 && '파트타임'}
             </MenuItem>
             <MenuItem value={4}>
-              {languageRedux === 1 ? 'Làm việc tự do' : 'Freelancer'}
+              {languageRedux === 1
+                ? 'Làm việc tự do'
+                : languageRedux === 2
+                  ? 'Freelancer'
+                  : languageRedux === 3 && '자유롭게 일하세요'}
             </MenuItem>
             <MenuItem value={7}>
-              {languageRedux === 1 ? 'Thực tập' : 'Intern'}
+              {languageRedux === 1
+                ? 'Thực tập'
+                : languageRedux === 2
+                  ? 'Intern'
+                  : languageRedux === 3 && '인턴'}
             </MenuItem>
           </TextField>
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {languageRedux === 1 ? 'Lưu' : 'Save'}
+          {languageRedux === 1
+            ? 'Lưu'
+            : languageRedux === 2
+              ? 'Save'
+              : languageRedux === 3 && '구하다'}
         </Button>
       </Box>
     </Modal>

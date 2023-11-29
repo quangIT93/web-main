@@ -283,7 +283,7 @@ const Post: React.FC = () => {
   //   }
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -301,7 +301,7 @@ const Post: React.FC = () => {
   const getProfileComanyV3 = async () => {
     try {
       const result = await profileApi.getProfileCompanyV3(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -320,7 +320,11 @@ const Post: React.FC = () => {
         const message =
           languageRedux === 1
             ? 'Dữ liệu của bạn chưa được gửi, bạn có chắc chắn muốn rời đi?'
-            : 'Your data has not been sent, you definitely want to leave?';
+            : languageRedux === 2
+              ? 'Your data has not been sent, you definitely want to leave?'
+              : languageRedux === 3
+                ? '귀하의 데이터가 전송되지 않았습니다. 나가시겠습니까?'
+                : 'Dữ liệu của bạn chưa được gửi, bạn có chắc chắn muốn rời đi?';
         event.preventDefault();
         event.returnValue = message || true;
         return message;
@@ -392,7 +396,13 @@ const Post: React.FC = () => {
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 1
+          ? 'vi'
+          : languageRedux === 2
+            ? 'en'
+            : languageRedux === 3
+              ? 'ko'
+              : 'vi',
       );
       if (result) {
         // setDataLocations(result.data);
@@ -405,14 +415,19 @@ const Post: React.FC = () => {
 
   useEffect(() => {
     getAllLocaitions();
-  }, []);
+  }, [languageRedux]);
 
   // valid values form data
   const validValue = () => {
     console.log(startDate < Date.now());
     if (titleJob === '') {
       return {
-        message: language?.post_page?.err_job_title,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập tên công việc'
+          : languageRedux === 2
+            ? 'Please enter job name'
+            : languageRedux === 3 &&
+            '직업 이름을 입력해주세요',
         checkForm: false,
         idError: 1,
       };
@@ -422,14 +437,22 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Tên công việc không được quá 255 ký tự'
-            : 'The job name must not exceed 255 characters',
+            : languageRedux === 2
+              ? 'The job name must not exceed 255 characters'
+              : languageRedux === 3 &&
+              '작업 이름은 255자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
     }
     if (companyName === '') {
       return {
-        message: language?.post_page?.err_company_name,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập tên công ty'
+          : languageRedux === 2
+            ? 'Please enter company name'
+            : languageRedux === 3 &&
+            '회사명을 입력해주세요',
         checkForm: false,
         idError: 2,
       };
@@ -439,70 +462,110 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Tên công ty không được quá 255 ký tự'
-            : 'The company name must not exceed 255 characters',
+            : languageRedux === 2
+              ? 'The company name must not exceed 255 characters'
+              : languageRedux === 3 &&
+              '회사 이름은 255자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 2,
       };
     }
     if (fillProvince === '') {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 3,
       };
     }
     if (fillDistrict === null) {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 4,
       };
     }
     if (wardId === '') {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
     }
     if (address === '') {
       return {
-        message: language?.post_page?.err_address,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập địa chỉ'
+          : languageRedux === 2
+            ? 'Please enter your address'
+            : '주소를 입력해주세요',
         checkForm: false,
         idError: 6,
       };
     }
     if (categoriesId.length <= 0) {
       return {
-        message: language?.post_page?.err_cate,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn danh mục nghề nghiệp'
+          : languageRedux === 2
+            ? 'Please select a career category'
+            : '직업 카테고리를 선택해주세요.',
         checkForm: false,
         idError: 7,
       };
     }
     if (Number(salaryMin) === 0 && salaryType !== 6) {
       return {
-        message: language?.post_page?.err_salary,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập mức lương'
+          : languageRedux === 2
+            ? 'Please enter salary'
+            : '급여를 입력해주세요',
         checkForm: false,
         idError: 8,
       };
     }
     if (Number(salaryMax) === 0 && salaryType !== 6) {
       return {
-        message: language?.post_page?.err_salary,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập mức lương'
+          : languageRedux === 2
+            ? 'Please enter salary'
+            : '급여를 입력해주세요',
         checkForm: false,
         idError: 9,
       };
     }
     if (Number(salaryMax) < Number(salaryMin)) {
       return {
-        message: language?.post_page?.err_verify_salary,
+        message: languageRedux === 1 ?
+          "Lương tối thiểu không được lớn hơn lương tối đa" :
+          languageRedux === 2 ?
+            "Minimum cannot be greater than maximum" :
+            "최소 금액은 최대 금액보다 클 수 없습니다.",
         checkForm: false,
         idError: 10,
       };
     }
     if (phoneNumber === '' || phoneNumber.length < 10) {
       return {
-        message: language?.company_page?.err_phone_mess,
+        message: languageRedux === 1
+          ? 'Số điện thoại không được bỏ trống và phải ít hơn 10 ký tự.'
+          : languageRedux === 2
+            ? 'Phone number cannot be blank and must be less than 10 characters.'
+            : languageRedux === 3 &&
+            '전화번호는 비워둘 수 없으며 10자 미만이어야 합니다.',
         checkForm: false,
         idError: 11,
       };
@@ -512,7 +575,9 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Hãy nhập mô tả công việc.'
-            : 'Please enter a job description.',
+            : languageRedux === 2
+              ? 'Please enter a job description.'
+              : languageRedux === 3 && '직무 내용을 입력해주세요.',
         checkForm: false,
         idError: 12,
       };
@@ -523,7 +588,10 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
-            : 'The start date cannot exceed the end date',
+            : languageRedux === 2
+              ? 'The start date cannot exceed the end date'
+              : languageRedux === 3 &&
+              '시작 날짜는 종료 날짜를 초과할 수 없습니다.',
         checkForm: false,
         idError: 13,
       };
@@ -544,7 +612,10 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Ngày bắt đầu không được nhỏ hơn thời gian hiện tại'
-            : 'The start date cannot be less than the current time',
+            : languageRedux === 2
+              ? 'The start date cannot be less than the current time'
+              : languageRedux === 3 &&
+              '시작 날짜는 현재 시각을 초과할 수 없습니다.',
         checkForm: false,
         idError: 13,
       };
@@ -555,7 +626,9 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Vui lòng nhập ngày bắt đầu'
-            : 'Please enter a start date',
+            : languageRedux === 2
+              ? 'Please enter a start date'
+              : languageRedux === 3 && '시작일을 입력하세요.',
         checkForm: false,
         idError: 13,
       };
@@ -566,7 +639,9 @@ const Post: React.FC = () => {
         message:
           languageRedux === 1
             ? 'Vui lòng nhập ngày kết thúc'
-            : 'Please enter an end date',
+            : languageRedux === 2
+              ? 'Please enter end date'
+              : languageRedux === 3 && '종료일을 입력해 주세요',
         checkForm: false,
         idError: 14,
       };
@@ -699,12 +774,20 @@ const Post: React.FC = () => {
       if (error?.response?.data?.message === 'You only can post 1 job/day') {
         messageApi.open({
           type: 'error',
-          content: language?.post_page?.err_1_post_per_day,
+          content: languageRedux === 1
+            ? 'Bạn chỉ có thể đăng 1 bài trong 1 ngày'
+            : languageRedux === 2
+              ? 'You can only post 1 post in 1 day'
+              : '하루에 1개의 게시물만 게시할 수 있습니다.',
         });
       } else if (error?.response?.data?.message === 'Invalid date value') {
         messageApi.open({
           type: 'error',
-          content: language?.post_page?.err_date,
+          content: languageRedux === 1
+            ? 'Vui lòng nhập lại ngày làm việc'
+            : languageRedux === 2
+              ? 'Please enter a business date again'
+              : '근무일을 다시 입력해주세요.',
         });
       }
     }
@@ -719,7 +802,10 @@ const Post: React.FC = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Tạo bài đăng tuyển dụng'
-        : 'HiJob - Create job posting';
+        : languageRedux === 2
+          ? 'HiJob - Create job posting'
+          : languageRedux === 3 ?
+            'HiJob - 채용 공고 만들기' : 'HiJob - Tạo bài đăng tuyển dụng';
     // document.title = language?.post_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
@@ -733,7 +819,7 @@ const Post: React.FC = () => {
   const handleFillCompany = async () => {
     try {
       // const result = await apiCompany.getCampanyByAccountApi(
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
 
       if (profileV3?.companyInfo) {
@@ -760,7 +846,7 @@ const Post: React.FC = () => {
       } else {
         setOpenModalNoteCreateCompany(true);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const checkPostedToday = async () => {
@@ -794,7 +880,7 @@ const Post: React.FC = () => {
   const setProfleCompany = async () => {
     try {
       const result = await profileApi.getProfileCompanyV3(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -824,11 +910,31 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-            // style={{ textAlign: 'center', display: 'block' }}
+          // style={{ textAlign: 'center', display: 'block' }}
           >
-            <h1>{language?.profile_page?.create_post}</h1>
+            <h1>
+              {
+                languageRedux === 1
+                  ? 'Tạo bài đăng tuyển dụng'
+                  : languageRedux === 2
+                    ? 'Create job posting'
+                    : languageRedux === 3
+                      ? '채용 공고 만들기'
+                      : 'Tạo bài đăng tuyển dụng'
+              }
+            </h1>
             <div className="post-main_switch">
-              <h4>{language?.post_page?.auto_fill}</h4>
+              <h4>
+                {
+                  languageRedux === 1
+                    ? 'HiJob sẽ tự động điền tất cả các thông tin công việc trước đó của bạn!'
+                    : languageRedux === 2
+                      ? 'HiJob will automatically fill all your previous job information!'
+                      : languageRedux === 3
+                        ? 'HiJob이 자동으로 당신의 이전 직업 정보를 전부 입력하겠습니다!'
+                        : 'HiJob sẽ tự động điền tất cả các thông tin công việc trước đó của bạn!'
+                }
+              </h4>
               <div
                 onClick={() => setOpenFillDataPost(!openModalFillDataPost)}
                 style={{ cursor: 'pointer' }}
@@ -838,7 +944,17 @@ const Post: React.FC = () => {
             </div>
           </div>
           <div className="fill-company" onClick={handleFillCompany}>
-            <h3>{language?.post_page?.fill_company}</h3>
+            <h3>
+              {
+                languageRedux === 1
+                  ? 'Điền nhanh thông tin công ty'
+                  : languageRedux === 2
+                    ? 'Auto - Fill in company information'
+                    : languageRedux === 3
+                      ? '회사정보를 빠르게 입력하세요'
+                      : 'Điền nhanh thông tin công ty'
+              }
+            </h3>
           </div>
           <form onSubmit={handleSubmit} onClick={handleClickForm}>
             <PostJobCompany
@@ -910,6 +1026,7 @@ const Post: React.FC = () => {
               setIsRemotely={setIsRemotely}
               language={language}
               setIsValidSubmit={setIsValidSubmit}
+              languageRedux={languageRedux}
             />
             <PostTime
               startTime={startTime}
@@ -918,6 +1035,7 @@ const Post: React.FC = () => {
               setEndTime={setEndTime}
               language={language}
               setIsValidSubmit={setIsValidSubmit}
+              languageRedux={languageRedux}
             />
 
             <PostCategoryId
@@ -944,6 +1062,7 @@ const Post: React.FC = () => {
               salaryType={salaryType}
               language={language}
               setIsValidSubmit={setIsValidSubmit}
+              languageRedux={languageRedux}
             />
 
             <PostFilterSalary
@@ -977,7 +1096,11 @@ const Post: React.FC = () => {
               onClick={handleSubmit}
               className="btn-submitForm"
             >
-              {language?.save}
+              {languageRedux === 1
+                ? 'Lưu'
+                : languageRedux === 2
+                  ? 'Save'
+                  : '구하다'}
             </button>
           </form>
         </div>

@@ -22,7 +22,7 @@ interface IEditLogoCompany {
   language: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
@@ -83,7 +83,10 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
       // } else
       if (file.size > 1024 * 1024 * 5) {
         checFileSize = false;
-        message.error(language?.company_page?.err_file);
+        message.error(languageRedux === 1 ?
+          "File phải nhỏ hơn 5mb" :
+          languageRedux === 2 ?
+            "File must be less than 5mb" : "파일은 5MB 미만이어야 합니다.");
       } else {
         setFileList([file]);
         return false;
@@ -134,7 +137,11 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          {languageRedux === 1 ? 'Logo công ty' : "Company's logo"}{' '}
+          {languageRedux === 1
+            ? 'Logo công ty'
+            : languageRedux === 2
+              ? "Company's logo"
+              : '회사 로고'}{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
         <div className="company-logo">

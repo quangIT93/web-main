@@ -47,7 +47,9 @@ const ModalSaveCvValidInfo: React.FC<IModalSaveCvValidInfo> = (props) => {
         >
           {languageRedux === 1
             ? 'Bạn chưa nhập đầy đủ thông tin'
-            : 'You have not entered complete information'}
+            : languageRedux === 2
+              ? 'You have not entered complete information'
+              : languageRedux === 3 && '완전한 정보를 입력하지 않았습니다.'}
         </h3>
       }
       footer={null}
@@ -67,7 +69,10 @@ const ModalSaveCvValidInfo: React.FC<IModalSaveCvValidInfo> = (props) => {
       >
         {languageRedux === 1
           ? 'Vui lòng nhập đầy đủ thông tin trước khi tạo CV'
-          : 'Please enter complete information before creating your CV'}
+          : languageRedux === 2
+            ? 'Please enter complete information before creating your CV'
+            : languageRedux === 3 &&
+              'CV를 작성하기 전에 완전한 정보를 입력하십시오'}
       </p>
       <div className="buttons-over-10-cv-modal">
         <Button
@@ -77,7 +82,11 @@ const ModalSaveCvValidInfo: React.FC<IModalSaveCvValidInfo> = (props) => {
             window.open('/profile', '_parent');
           }}
         >
-          {languageRedux === 1 ? 'Trang thông tin người dùng' : 'Profile page'}
+          {languageRedux === 1
+            ? 'Trang thông tin người dùng'
+            : languageRedux === 2
+              ? 'Profile page'
+              : languageRedux === 3 && '사용자 정보 페이지'}
         </Button>
         <Button
           type="text"
@@ -87,7 +96,11 @@ const ModalSaveCvValidInfo: React.FC<IModalSaveCvValidInfo> = (props) => {
           //   }}
           onClick={handleCancel}
         >
-          {languageRedux === 1 ? 'Hủy' : 'Cancel'}
+          {languageRedux === 1
+            ? 'Hủy'
+            : languageRedux === 2
+              ? 'Cancel'
+              : languageRedux === 3 && '취소'}
         </Button>
       </div>
     </Modal>

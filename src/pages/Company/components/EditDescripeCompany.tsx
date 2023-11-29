@@ -20,7 +20,7 @@ interface IEditDescripeCompany {
   dataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
@@ -30,13 +30,19 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges, setIsValid} = props;
+  const {
+    dataCompany,
+    setDataCompany,
+    is_profile,
+    setUnsavedChanges,
+    setIsValid,
+  } = props;
   // const [language, setLanguageState] = React.useState<any>();
 
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);
@@ -60,7 +66,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
       ...preValue,
       description: value,
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   return (
@@ -72,7 +78,11 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          {language?.company_description}{' '}
+          {languageRedux === 1
+            ? 'Mô tả công ty'
+            : languageRedux === 2
+              ? "Company's description"
+              : '회사 설명'}{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
@@ -85,7 +95,11 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           value={dataCompany?.description}
           onChange={handleEditCompanyDes}
           sx={{ width: '100%', marginTop: '8px', fontSize: '14px' }}
-          placeholder={language?.company_page?.place_des}
+          placeholder={languageRedux === 1
+            ? 'Mô tả công ty'
+            : languageRedux === 2
+              ? "Company's description"
+              : '회사 설명'}
         //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
@@ -93,13 +107,18 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Thông tin thêm không được bỏ trống'
-                : 'Additional information cannot be empty'}
+                : languageRedux === 2
+                  ? 'Additional information cannot be empty'
+                  : languageRedux === 3 && '추가 정보는 비워둘 수 없습니다.'}
             </span>
           ) : dataCompany?.description?.length > 1000 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Thông tin thêm không được vượt quá 1000 ký tự'
-                : 'Additional information cannot exceed 1000 characters'}
+                : languageRedux === 2
+                  ? 'Additional information cannot exceed 1000 characters'
+                  : languageRedux === 3 &&
+                  '추가 정보는 1000자를 초과할 수 없습니다.'}
             </span>
           ) : (
             <></>

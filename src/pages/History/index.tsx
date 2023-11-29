@@ -140,7 +140,7 @@ const HistoryPost = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -161,25 +161,62 @@ const HistoryPost = () => {
       // title: language?.history_page?.applied_jobs,
       // childs: [language?.all],
       title:
-        languageRedux === 1 ? 'Các công việc đã ứng tuyển' : 'Applied jobs',
-      childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
+        languageRedux === 1
+          ? 'Các công việc đã ứng tuyển'
+          : languageRedux === 2
+            ? 'Apllied jobs'
+            : languageRedux === 3 && '지원한 직업들',
+      childs: [
+        languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부',
+      ],
     },
     {
       id: 1,
       // title: language?.history_page?.saved_jobs,
       // childs: [language?.all],
-      title: languageRedux === 1 ? 'Các công việc đã lưu' : 'Saved jobs',
-      childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
+      title:
+        languageRedux === 1
+          ? 'Các công việc đã lưu'
+          : languageRedux === 2
+            ? 'Saved jobs'
+            : languageRedux === 3 && '저장된 작업',
+      childs: [
+        languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부',
+      ],
     },
     {
       id: 2,
       // title: language?.history_page?.posted_jobs,
       title:
-        languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs',
+        languageRedux === 1
+          ? 'Các công việc đã đăng tuyển'
+          : languageRedux === 2
+            ? 'Posted jobs'
+            : languageRedux === 3 && '게시된 작업',
       childs: [
-        languageRedux === 1 ? 'Tất cả' : 'All',
-        languageRedux === 1 ? 'Các công việc chưa đóng' : 'Unclosed jobs',
-        languageRedux === 1 ? 'Các công việc đã đóng' : 'Closed jobs',
+        languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부',
+        languageRedux === 1
+          ? 'Các công việc chưa đóng'
+          : languageRedux === 2
+            ? 'Unclosed jobs'
+            : languageRedux === 3 && '마감되지 않은 채용정보',
+        languageRedux === 1
+          ? 'Các công việc đã đóng'
+          : languageRedux === 2
+            ? 'Closed jobs'
+            : languageRedux === 3 && '채용이 마감되었습니다',
 
         // language?.history_page?.unclosed_jobs,
 
@@ -189,10 +226,23 @@ const HistoryPost = () => {
     {
       id: 3,
       // title: language?.history_page?.list_of_articles,
-      title: languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles',
+      title:
+        languageRedux === 1
+          ? 'Danh sách bài viết'
+          : languageRedux === 2
+            ? 'List of articles'
+            : languageRedux === 3 && '글 목록',
       childs: [
-        languageRedux === 1 ? 'Đã lưu' : 'Saved',
-        languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posted',
+        languageRedux === 1
+          ? 'Đã lưu'
+          : languageRedux === 2
+            ? 'Saved'
+            : languageRedux === 3 && '저장됨',
+        languageRedux === 1
+          ? 'Bài viết bạn đã tạo'
+          : languageRedux === 2
+            ? 'Posted articles'
+            : languageRedux === 3 && '등록되기',
         // language?.history_page?.saved,
         // language?.history_page?.posts_created,
       ],
@@ -200,9 +250,18 @@ const HistoryPost = () => {
     {
       id: 4,
       // title: language?.history_page?.list_of_articles,
-      title: languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates',
+      title:
+        languageRedux === 1
+          ? 'Danh sách ứng viên'
+          : languageRedux === 2
+            ? 'List of candidates'
+            : languageRedux === 3 && '후보자 리스트',
       childs: [
-        languageRedux === 1 ? 'Tất cả' : 'All',
+        languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부',
         // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
         // language?.history_page?.saved,
         // language?.history_page?.posts_created,
@@ -211,12 +270,22 @@ const HistoryPost = () => {
     {
       id: 5,
       // title: language?.history_page?.list_of_articles,
-      title: languageRedux === 1 ? 'Danh sách công ty' : 'List of companies',
+      title:
+        languageRedux === 1
+          ? 'Danh sách công ty'
+          : languageRedux === 2
+            ? 'List of companies'
+            : languageRedux === 3 && '관심한 회사',
       childs: [
-        languageRedux === 1 ? 'Công ty đã lưu' : 'Saved company',
+        languageRedux === 1
+          ? 'Công ty đã lưu'
+          : languageRedux === 2
+            ? 'Saved comopanies'
+            : languageRedux === 3 && '저장한 회사',
         languageRedux === 1
           ? 'Nhà tuyển dụng xem hồ sơ'
-          : 'Employers view resumes',
+          : languageRedux === 2
+            ? 'Employers view resumes' : '고용주는 이력서를 봅니다.',
       ],
     },
   ];
@@ -227,7 +296,9 @@ const HistoryPost = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Lịch sử ứng tuyển/đăng tuyển'
-        : 'HiJob - Job application/posting history';
+        : languageRedux === 2
+          ? 'HiJob - Job application/posting history'
+          : 'HiJob - 입사지원/게시내역';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_history' as string,
@@ -245,7 +316,11 @@ const HistoryPost = () => {
       target="_parent"
       style={{ fontSize: '12px' }}
     >
-      {language?.history_page?.home}
+      {languageRedux === 1
+        ? 'Trang chủ'
+        : languageRedux === 2
+          ? 'Home'
+          : languageRedux === 3 && '홈'}
     </Link>,
     <Link
       underline="hover"
@@ -256,7 +331,11 @@ const HistoryPost = () => {
       target="_parent"
       style={{ fontSize: '12px' }}
     >
-      {language?.history_page?.history}
+      {languageRedux === 1
+        ? 'Lịch sử'
+        : languageRedux === 2
+          ? 'History'
+          : languageRedux === 3 && '기록'}
     </Link>,
     <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {ItemLeft === dataItem[0].id
@@ -273,34 +352,75 @@ const HistoryPost = () => {
     </Typography>,
     <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {activeChild === '0-0'
-        ? language?.all
+        ? languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부'
         : // : activeChild === '0-1'
-          // ? 'Đã được duyệt'
-          // : activeChild === '0-2'
-          // ? 'Đang chờ duyệt'
-          ''}
+        // ? 'Đã được duyệt'
+        // : activeChild === '0-2'
+        // ? 'Đang chờ duyệt'
+        ''}
 
-      {activeChild === '1-0' ? language?.all : ''}
+      {activeChild === '1-0' ? languageRedux === 1
+        ? 'Tất cả'
+        : languageRedux === 2
+          ? 'All'
+          : languageRedux === 3 && '전부' : ''}
 
       {activeChild === '2-0'
-        ? language?.all
+        ? languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부'
         : activeChild === '2-1'
-          ? language?.history_page?.not_closed_yet
+          ?
+          languageRedux === 1
+            ? 'Các công việc chưa đóng'
+            : languageRedux === 2
+              ? 'Unclosed jobs'
+              : languageRedux === 3 && '마감되지 않은 채용정보'
           : activeChild === '2-2'
-            ? language?.closed
+            ? languageRedux === 1
+              ? 'Đã đóng'
+              : languageRedux === 2
+                ? 'Closed'
+                : '닫은'
             : ''}
       {activeChild === '3-0'
-        ? language?.history_page?.saved
+        ? languageRedux === 1
+          ? 'Đã lưu'
+          : languageRedux === 2
+            ? 'Saved articles'
+            : languageRedux === 3 && '저정되기'
         : activeChild === '3-1'
-          ? language?.history_page?.have_been_created
+          ? languageRedux === 1
+            ? 'Bài viết bạn đã tạo'
+            : languageRedux === 2
+              ? 'Posted articles'
+              : languageRedux === 3 && '등록되기'
           : ''}
 
-      {activeChild === '4-0' ? language?.all : ''}
+      {activeChild === '4-0' ? languageRedux === 1
+        ? 'Tất cả'
+        : languageRedux === 2
+          ? 'All'
+          : languageRedux === 3 && '전부' : ''}
 
       {activeChild === '5-0'
-        ? language?.all
+        ? languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부'
         : activeChild === '5-1'
-          ? language?.history_page?.have_been_created
+          ? languageRedux === 1
+            ? 'Đã được tạo'
+            : languageRedux === 2
+              ? 'Already created'
+              : languageRedux === 3 && '생성되었습니다'
           : ''}
     </Typography>,
   ];
@@ -503,9 +623,8 @@ const HistoryPost = () => {
                     header={
                       <div
                         onClick={() => handleClickSubTitle(index)}
-                        className={`${
-                          ItemLeft === index ? 'activeItem' : ''
-                        } panel-title_text`}
+                        className={`${ItemLeft === index ? 'activeItem' : ''
+                          } panel-title_text`}
                       >
                         <RightOutlined style={{ fontSize: '12px' }} />
                         <span style={{ marginLeft: '8px' }}>{item.title}</span>

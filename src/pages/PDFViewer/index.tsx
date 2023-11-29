@@ -57,13 +57,13 @@ function PDFViewer() {
   const getProfileModerV3 = async () => {
     try {
       const result = await profileApi.getProfileInformationMoreV3(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
         dispatch(setProfileMeInformationMoreV3(result));
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -114,10 +114,20 @@ function PDFViewer() {
       {urlPdf.id ? (
         <div className="viewPdf-content">
           <div className="header-content-viewPdf">
-            <h2>{languageRedux === 1 ? 'Nội dung CV' : 'Content CV'}</h2>
+            <h2>
+              {languageRedux === 1
+                ? 'Nội dung CV'
+                : languageRedux === 2
+                  ? 'Content CV'
+                  : languageRedux === 3 && 'CV 내용'}
+            </h2>
             <div className="installCV">
               <p onClick={() => handleDownload(urlPdf.pdfURL, urlPdf?.name)}>
-                Tải CV
+                {languageRedux === 1
+                  ? 'Tải CV'
+                  : languageRedux === 2
+                    ? 'Download CV'
+                    : '이력서 다운로드'}
               </p>
               {/* <p></p> */}
             </div>
@@ -127,7 +137,7 @@ function PDFViewer() {
             loading={<Spin indicator={antIcon} />}
             noData={<Spin indicator={antIcon} />}
             onLoadSuccess={onDocumentLoadSuccess}
-            // className="page-cv-wrapper"
+          // className="page-cv-wrapper"
           >
             {Array.apply(null, Array(pageNumber))
               .map((x, i) => i + 1)

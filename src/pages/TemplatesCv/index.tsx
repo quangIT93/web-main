@@ -292,7 +292,9 @@ const TemplatesCv: React.FC = () => {
             <p>
               {languageRedux === 1
                 ? 'Quay lại trang chỉnh sửa'
-                : 'Back to profile Edit'}
+                : languageRedux === 2
+                  ? 'Return to the editing page'
+                  : '편집 페이지로 돌아가기'}
             </p>
           </div>
           <div className="change-styles">
@@ -316,7 +318,11 @@ const TemplatesCv: React.FC = () => {
             <div className="line"></div>
 
             <div className="color-group">
-              <p>{languageRedux === 1 ? 'Màu sắc' : 'Color'}</p>
+              <p>{languageRedux === 1
+                ? 'Màu sắc'
+                : languageRedux === 2
+                  ? 'Color'
+                  : '색상'}</p>
               <div className="change-styles_color">
                 <div
                   className={`circle-color black`}
@@ -399,7 +405,11 @@ const TemplatesCv: React.FC = () => {
               {languageRedux === 1 ? 'Lưu và tải PDF' : 'Save & Download PDF'}
             </PDFDownloadLink> */}
             <p className="download-cv-btn">
-              {languageRedux === 1 ? 'Lưu PDF' : 'Save PDF'}
+              {languageRedux === 1
+                ? 'Lưu PDF'
+                : languageRedux === 2
+                  ? 'Save PDF'
+                  : 'PDF 저장'}
             </p>
             {/* <Button
               type="primary"
@@ -429,7 +439,7 @@ const TemplatesCv: React.FC = () => {
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={loading}
-          // onClick={handleClose}
+        // onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>

@@ -69,7 +69,7 @@ const ModalDeleteHobbies: React.FC<IModalProfileDelete> = (props) => {
   // const getlanguageApi = async () => {
   //     try {
   //         const result = await languageApi.getLanguage(
-  //             languageRedux === 1 ? 'vi' : 'en',
+  //              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //         );
   //         if (result) {
   //             setLanguage(result.data);
@@ -91,7 +91,7 @@ const ModalDeleteHobbies: React.FC<IModalProfileDelete> = (props) => {
       const result = await apiCv.deleteProfileHobbies();
       if (result) {
         const resultProfile = await profileApi.getProfileInformationMoreV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
 
         resultProfile && dispatch(setProfileMeInformationMoreV3(resultProfile));
@@ -127,7 +127,11 @@ const ModalDeleteHobbies: React.FC<IModalProfileDelete> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          {language?.profile_page?.alert_delete_info}
+          {languageRedux === 1
+            ? 'Bạn có chắc muốn xóa thông tin này chứ?'
+            : languageRedux === 2
+              ? 'Are you sure you want to delete this information?'
+              : '이 정보를 삭제하시겠습니까?'}
         </Typography>
         <Box>
           <Typography
@@ -138,8 +142,11 @@ const ModalDeleteHobbies: React.FC<IModalProfileDelete> = (props) => {
             sx={{ marginBottom: '12px' }}
           >
             {languageRedux === 1
-              ? 'Nếu thực hiện chức năng này, tất cả các sở thích của bạn sẽ bị xóa'
-              : 'If you perform this function, all your hobbies will be deleted'}
+              ? 'Nếu thực hiện chức năng này, tất cả các thông tin của bạn sẽ bị xóa'
+              : languageRedux === 2
+                ? 'If you perform this function, all your information will be deleted'
+                : languageRedux === 3 &&
+                '이 기능을 수행하면 모든 정보가 삭제됩니다'}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '100px' }}>
@@ -149,11 +156,19 @@ const ModalDeleteHobbies: React.FC<IModalProfileDelete> = (props) => {
             onClick={handleSubmitDelete}
             color="error"
           >
-            {language?.profile_page?.delete}
+            {languageRedux === 1
+              ? 'Xóa'
+              : languageRedux === 2
+                ? 'Delete'
+                : '삭제'}
           </Button>
 
           <Button variant="contained" fullWidth onClick={handleSubmitRefuse}>
-            {language?.profile_page?.return}
+            {languageRedux === 1
+              ? 'Trở về'
+              : languageRedux === 2
+                ? 'Return'
+                : '반품'}
           </Button>
         </Box>
       </Box>

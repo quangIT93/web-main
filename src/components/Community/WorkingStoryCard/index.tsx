@@ -34,6 +34,9 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const { item, index, setSaveListPost, saveListPost } = props;
   const [like, setLike] = React.useState(item && item?.liked);
   const [bookmark, setBookmark] = React.useState(item?.bookmarked);
@@ -223,7 +226,11 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
                 icon={<UserOutlined />}
               />
               <div className="info-actor_comunity">
-                <p>{language?.community_page?.author}</p>
+                <p>{languageRedux === 1
+                  ? 'Tác giả'
+                  : languageRedux === 2
+                    ? 'Author'
+                    : '작가'}</p>
                 <p>{item?.profileData?.name.slice(0, 2) + '...'}</p>
               </div>
             </div>
@@ -235,7 +242,11 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
             </ul>
             {shouldShowMoreButton ? (
               <span onClick={(e) => handleAddText(e)}>
-                {!showText ? 'Xem thêm...' : 'Xem ít...'}
+                {!showText ? `${languageRedux === 1
+                  ? 'Xem thêm'
+                  : languageRedux === 2
+                    ? 'See more'
+                    : '더보기'}...` : 'Xem ít...'}
               </span>
             ) : (
               // <span onClick={handleAddText}>Xem ít...</span>
@@ -273,7 +284,11 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
               icon={<UserOutlined />}
             />
             <div className="info-actor_comunity">
-              <p>{language?.community_page?.author}</p>
+              <p>{languageRedux === 1
+              ? 'Tác giả'
+              : languageRedux === 2
+                ? 'Author'
+                : '작가'}</p>
               <p>{item?.profileData?.name.slice(0, 2) + '...'}</p>
             </div>
           </div>

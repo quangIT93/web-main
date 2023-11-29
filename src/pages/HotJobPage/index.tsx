@@ -214,7 +214,9 @@ const HotJobpage: React.FC = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Bài tuyển dụng nổi bật'
-        : 'HiJob - Hot Job Post';
+        : languageRedux === 2
+          ? 'HiJob - Hot Job Post'
+          : 'HiJob - 주요 채용 게시물';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
@@ -240,7 +242,7 @@ const HotJobpage: React.FC = () => {
         `/v3/posts/topic/${searchParams.get('hotjob-id')}?a=394,370`,
         pageNumber,
         searchParams.get('hotjob-type') === '1' ? 18 : 20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
 
         // !idFilterProvinces && profileV3.length !== 0
         //   ? profileV3.addressText.id
@@ -317,7 +319,7 @@ const HotJobpage: React.FC = () => {
   //       url,
   //       nextPage,
   //       searchParams.get('hotjob-id') === '1' ? 18 : 20,
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //       idFilterProvinces,
   //     );
   //     if (result) {
@@ -369,7 +371,7 @@ const HotJobpage: React.FC = () => {
   const getProvinces = async () => {
     try {
       const result = await locationApi.getAllProvinces(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       console.log('result', result.data);
 
@@ -378,8 +380,16 @@ const HotJobpage: React.FC = () => {
           administrative_region_id: 0,
           administrative_unit_id: 0,
           code_name: 'All',
-          full_name: 'All',
-          full_name_en: 'All',
+          full_name: languageRedux === 1
+            ? 'Tất cả'
+            : languageRedux === 2
+              ? 'All'
+              : '전부',
+          full_name_en: languageRedux === 1
+            ? 'Tất cả'
+            : languageRedux === 2
+              ? 'All'
+              : '전부',
           id: '0',
           name: 'All',
           name_en: 'All',
@@ -468,7 +478,7 @@ const HotJobpage: React.FC = () => {
         `/v3/posts/topic/${searchParams.get('hotjob-id')}?a=394,370`,
         nextPage,
         searchParams.get('hotjob-type') === '1' ? 18 : 20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
 
         // !idFilterProvinces && profileV3.length !== 0
         //   ? profileV3.addressText.id
@@ -513,46 +523,104 @@ const HotJobpage: React.FC = () => {
               <h3>
                 {/* {language?.title_hot_jobs}{' '} */}
                 {searchParams.get('hotjob-id') === '2'
-                  ? language?.remote_work
+                  ? languageRedux === 1
+                    ? 'Làm việc từ xa'
+                    : languageRedux === 2
+                      ? 'Remote work'
+                      : '원격으로 작업'
                   : searchParams.get('hotjob-id') === '1'
-                    ? 'Influencer'
+                    ? languageRedux === 1
+                      ? 'Influencer'
+                      : languageRedux === 2
+                        ? 'Influencer'
+                        : '영향력 있는 사람'
                     : searchParams.get('hotjob-id') === '3'
-                      ? language?.hot_job_page?.short_time
+                      ? languageRedux === 1
+                        ? 'Công việc ngắn hạn'
+                        : languageRedux === 2
+                          ? 'Short-term job'
+                          : '단기 근무'
                       : searchParams.get('hotjob-id') === '4'
-                        ? language?.hot_job_page?.job_today
+                        ? languageRedux === 1
+                          ? 'Công việc hôm nay'
+                          : languageRedux === 2
+                            ? "Today's job"
+                            : '오늘의 작업'
                         : searchParams.get('hotjob-id') === '5'
-                          ? 'Freelancer'
+                          ? languageRedux === 1
+                            ? 'Làm việc tự do'
+                            : languageRedux === 2
+                              ? 'Freelancer'
+                              : '프리랜서'
                           : searchParams.get('hotjob-id') === '6'
-                            ? 'Driver'
+                            ? languageRedux === 1
+                              ? 'Tài xế'
+                              : languageRedux === 2
+                                ? 'Driver'
+                                : '운전사'
                             : searchParams.get('hotjob-id') === '7'
-                              ? 'Restaurant Service'
+                              ? languageRedux === 1
+                                ? 'Dịch vụ nhà hàng'
+                                : languageRedux === 2
+                                  ? 'Restaurant Service'
+                                  : '레스토랑 서비스'
                               : searchParams.get('hotjob-id') === '8'
-                                ? 'Restaurant Service'
+                                ? languageRedux === 1
+                                  ? 'Dịch vụ nhà hàng'
+                                  : languageRedux === 2
+                                    ? 'Restaurant Service'
+                                    : '레스토랑 서비스'
                                 : searchParams.get('hotjob-id') === '9'
-                                  ? 'Parttime'
+                                  ? languageRedux === 1
+                                    ? 'Bán thời gian'
+                                    : languageRedux === 2
+                                      ? 'Part time'
+                                      : '파트타임'
                                   : searchParams.get('hotjob-id') === '10'
-                                    ? 'Marketing'
+                                    ? languageRedux === 1
+                                      ? 'Tiếp thị'
+                                      : languageRedux === 2
+                                        ? 'Marketing'
+                                        : '마케팅'
                                     : searchParams.get('hotjob-id') === '11'
-                                      ? 'Beauty'
-                                      : 'Loading...'}{' '}
-                {languageRedux === 1 ? 'có' : 'has'}{' '}
+                                      ? languageRedux === 1
+                                        ? 'Làm đẹp'
+                                        : languageRedux === 2
+                                          ? 'Beauty'
+                                          : '아름다움'
+                                      : languageRedux === 1
+                                        ? 'Đang tải'
+                                        : languageRedux === 2
+                                          ? 'Loading'
+                                          : '로드 중'}{' '}
+                {languageRedux === 1
+                  ? 'có'
+                  : languageRedux === 2
+                    ? 'has'
+                    : languageRedux === 3 && ':'}{' '}
                 {hotjob.length !== 0
                   ? // ? Number(hotJobTotal.toLocaleString())
                   new Intl.NumberFormat('en-US').format(hotJobTotal)
                   : languageRedux === 1
                     ? '0 kết quả'
-                    : '0 result'}
+                    : languageRedux === 2
+                      ? '0 result'
+                      : languageRedux === 3 && '0 결과'}
                 <span>
                   {' '}
                   {
                     // language?.hot_job_page?.result
                     languageRedux === 1 && hotjob.length !== 0
                       ? 'kết quả'
-                      : hotJobTotal >= 2 && hotjob.length !== 0
+                      : languageRedux === 2 &&
+                        hotJobTotal >= 2 &&
+                        hotjob.length !== 0
                         ? 'results'
-                        : hotJobTotal < 2 && hotjob.length !== 0
+                        : languageRedux === 2 &&
+                          hotJobTotal < 2 &&
+                          hotjob.length !== 0
                           ? 'result'
-                          : ''
+                          : '건'
                   }
                 </span>
               </h3>
@@ -566,7 +634,13 @@ const HotJobpage: React.FC = () => {
                       defaultValue={'0'}
                       onChange={handleChangeFilterHotjob}
                       placeholder={
-                        languageRedux === 1 ? 'Chọn địa chỉ' : 'Select Address'
+                        languageRedux === 1
+                          ? 'Chọn địa chỉ'
+                          : languageRedux === 2
+                            ? 'Select Address'
+                            : languageRedux === 3
+                              ? '주소 선택'
+                              : 'Chọn địa chỉ'
                       }
                       sx={{
                         fontSize: '14px',
@@ -577,9 +651,7 @@ const HotJobpage: React.FC = () => {
                       }}
                     >
                       {optionsProvinces.map((v: any) => {
-                        return <MenuItem
-                          value={v.value}>{v.label}
-                        </MenuItem>;
+                        return <MenuItem value={v.value}>{v.label}</MenuItem>;
                       })}
                     </Select>
                   ) : (
@@ -636,10 +708,14 @@ const HotJobpage: React.FC = () => {
             //         handleChange(e, pageNumber);
             //       }}
             //     >
-            //       <p>{language?.more}</p>
+            //       <p>{languageRedux === 1
+            // ? 'Xem thêm'
+            //   : languageRedux === 2
+            //     ? 'See more'
+            //     : '더보기'}</p>
             //       <MoreICon width={20} height={20} />
             //     </Space>
-            //   </Stack>
+            //   </Stack >
             // </>
 
             <>
@@ -686,8 +762,8 @@ const HotJobpage: React.FC = () => {
           >
             <CircularProgress color="inherit" />
           </Backdrop>
-        </Box>
-      </div>
+        </Box >
+      </div >
       <ShowNotificativeSave />
       <ShowCancleSave />
       {/* <RollTop />

@@ -49,7 +49,13 @@ const CompanyAll = () => {
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 1
+          ? 'vi'
+          : languageRedux === 2
+            ? 'en'
+            : languageRedux === 3
+              ? 'ko'
+              : 'vi',
       );
       if (result) {
         // setDataLocations(result.data);
@@ -69,7 +75,7 @@ const CompanyAll = () => {
     //         educations,
     //         18,
     //         page,
-    //         languageRedux === 1 ? 'vi' : 'en',
+    //          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //     );
     //     if (result) {
     //         setTotal(result.data.total);
@@ -92,7 +98,7 @@ const CompanyAll = () => {
         size,
         20,
         0,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result && result?.data?.companies?.length !== 0) {
         setTotal(result?.data?.total);
@@ -152,7 +158,7 @@ const CompanyAll = () => {
         size,
         20,
         0,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       console.log('result', result && result?.data?.companies?.length);
 
@@ -172,7 +178,7 @@ const CompanyAll = () => {
         setTotal(result?.data?.total);
         setListData([]);
         setHasMore(false);
-        setListData([])
+        setListData([]);
       }
     } catch (error) {
       console.log('error', error);
@@ -196,7 +202,7 @@ const CompanyAll = () => {
       //     educations,
       //     19,
       //     nextPage,
-      //     languageRedux === 1 ? 'vi' : 'en',
+      //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
       // if (result && result.data.cvFilters.length !== 0) {
       //     setListData((prev: any) => [...prev, ...result?.data.cvFilters]);
@@ -211,7 +217,7 @@ const CompanyAll = () => {
         size,
         20,
         nextPage,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       setHasMore(true);
       if (result && result?.data?.companies?.length === 20) {
@@ -259,7 +265,11 @@ const CompanyAll = () => {
       <div className="company">
         <div className="header-company">
           <h3>
-            {languageRedux === 1 ? 'Tìm kiếm công ty' : 'Looking company'}
+            {languageRedux === 1
+              ? 'Tìm kiếm công ty'
+              : languageRedux === 2
+                ? 'Search company'
+                : languageRedux === 3 && '회사 검색'}
           </h3>
           {/* <Button
                         type="primary"
@@ -274,7 +284,9 @@ const CompanyAll = () => {
           <p>
             {languageRedux === 1
               ? 'Tìm công ty phù hợp với bạn!'
-              : 'Find the company for your job!'}
+              : languageRedux === 2
+                ? 'Find the company for your job!'
+                : languageRedux === 3 && '당신에게 딱 맞는 회사를 찾아보세요!'}
           </p>
           <div className="list-search">
             {/* <div className="list-search_top">
@@ -304,14 +316,22 @@ const CompanyAll = () => {
                 className="submit-seach_button seach-button_Confirm"
                 onClick={handleSubmitSearchCompany}
               >
-                {languageRedux === 1 ? 'Xác nhận' : 'Confirm'}
+                {languageRedux === 1
+                  ? 'Xác nhận'
+                  : languageRedux === 2
+                    ? 'Confirm'
+                    : languageRedux === 3 && '확인하다'}
               </div>
 
               <div
                 className="submit-seach_button seach-button_Reset"
                 onClick={handleResetSearchCandidate}
               >
-                {languageRedux === 1 ? 'Đặt lại' : 'Reset'}
+                {languageRedux === 1
+                  ? 'Đặt lại'
+                  : languageRedux === 2
+                    ? 'Reset'
+                    : languageRedux === 3 && '초기화'}
               </div>
             </div>
             {/* <div className="list-search_bottom"></div> */}
@@ -320,10 +340,18 @@ const CompanyAll = () => {
         <div className="list-candidates">
           <div className="list-candidates_title">
             <h3>
-              {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
+              {languageRedux === 1
+                ? 'Kết quả tìm kiếm:'
+                : languageRedux === 2
+                  ? 'Found results:'
+                  : languageRedux === 3 && '검색 결과'}
               <span>
                 {total}
-                {languageRedux === 1 ? ' công ty' : ' company'}
+                {languageRedux === 1
+                  ? ' công ty'
+                  : languageRedux === 2
+                    ? ' company'
+                    : languageRedux === 3 && '회사'}
               </span>
             </h3>
           </div>

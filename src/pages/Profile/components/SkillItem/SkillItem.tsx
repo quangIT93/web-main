@@ -67,7 +67,7 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
     // const result = await apiCv.deleteProfileSkill([id]);
     // if (result) {
     //   const resultProfile = await profileApi.getProfileV3(
-    //     languageRedux === 1 ? 'vi' : 'en',
+    //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //   );
     //   dispatch(setProfileV3(resultProfile));
     //   dispatch(setAlert(true));
@@ -104,9 +104,7 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
             }}
           >
             <h3>{item?.skillName}</h3>
-            <p>
-              {item?.dataLevel?.data}
-            </p>
+            <p>{item?.dataLevel?.data}</p>
           </Space>
         </div>
       </div>
@@ -121,7 +119,11 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
             <SectionEditIcon width={16} height={16} />
           </div>
           <p style={{ color: 'rgb(13, 153, 255)', fontSize: '14px' }}>
-            {languageRedux === 1 ? 'Sửa' : 'Edit'}
+            {languageRedux === 1
+              ? 'Sửa'
+              : languageRedux === 2
+                ? 'Edit'
+                : '고치다'}
           </p>
         </Space>
         <Space
@@ -132,7 +134,11 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
             <DeleteIcon width={15} height={15} />
           </div>
           <p style={{ color: '#575757', fontSize: '14px' }}>
-            {language?.profile_page?.delete}
+            {languageRedux === 1
+              ? 'Xóa'
+              : languageRedux === 2
+                ? 'Delete'
+                : '삭제'}
           </p>
         </Space>
       </div>

@@ -34,10 +34,14 @@ const CvDropDown: React.FC<ICvDropDown> = (props) => {
           {roleRedux === 0
             ? languageRedux === 1
               ? 'Tạo mới CV'
-              : 'Create a new CV'
+              : languageRedux === 2
+                ? 'Create a new CV'
+                : languageRedux === 3 && '새 CV 만들기'
             : languageRedux === 1
-              ? 'Danh sách nhân tài mới nhất'
-              : 'Newest candidate list'}
+              ? 'Danh sách ứng viên mới nhất'
+              : languageRedux === 2
+                ? 'Newest candidate list'
+                : languageRedux === 3 && '최신 인재 정보'}
         </a>
       ),
     },
@@ -48,10 +52,14 @@ const CvDropDown: React.FC<ICvDropDown> = (props) => {
           {roleRedux === 0
             ? languageRedux === 1
               ? 'Quản lý CV'
-              : 'CV management'
+              : languageRedux === 2
+                ? 'CV management'
+                : languageRedux === 3 && 'CV관리'
             : languageRedux === 1
               ? 'Tìm kiếm ứng viên'
-              : 'Search for candidate'}
+              : languageRedux === 2
+                ? 'Search for candidate'
+                : languageRedux === 3 && '인재 검색'}
         </a>
       ),
     },
@@ -66,10 +74,14 @@ const CvDropDown: React.FC<ICvDropDown> = (props) => {
           {roleRedux === 0
             ? languageRedux === 1
               ? 'Hướng dẫn tạo CV'
-              : 'Instructions for creating a CV'
+              : languageRedux === 2
+                ? 'Instructions for creating a CV'
+                : languageRedux === 3 && 'CV 작성 안내'
             : languageRedux === 1
-              ? 'Danh sách nhân tài đã lưu'
-              : 'Saved candidate list'}
+              ? 'Danh sách ứng viên đã lưu'
+              : languageRedux === 2
+                ? 'Saved candidate list'
+                : languageRedux === 3 && '저장한 인재'}
         </a>
       ),
     },
@@ -81,10 +93,14 @@ const CvDropDown: React.FC<ICvDropDown> = (props) => {
         {roleRedux === 0
           ? languageRedux === 1
             ? 'Hồ sơ & CV'
-            : 'Resume & CV'
+            : languageRedux === 2
+              ? 'Resume & CV'
+              : languageRedux === 3 && '이력서 & CV'
           : languageRedux === 1
-            ? 'Thông tin nhân tài'
-            : 'Candidate information'}
+            ? 'Chi tiết thông tin ứng viên'
+            : languageRedux === 2
+              ? 'Detailed candidate information'
+              : languageRedux === 3 && '자세한 인재 정보'}
       </h3>
     </Dropdown>
   );

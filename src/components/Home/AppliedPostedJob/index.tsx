@@ -93,7 +93,7 @@ const AppliedPostedJob: React.FC = () => {
   const getBannerRoleUser = async () => {
     try {
       const result = await bannersApi.getBannersApi(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         null,
       );
       if (result) {
@@ -142,17 +142,17 @@ const AppliedPostedJob: React.FC = () => {
               null,
               10,
               1,
-              languageRedux === 1 ? 'vi' : 'en',
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             )
           : await historyRecruiter.GetInformationAndCandidatesCount(
               0,
               10,
               '1',
-              languageRedux === 1 ? 'vi' : 'en',
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             );
       // const result = await applitedPostedApi.getAllApplitedPostedApi(
       //   0,
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
@@ -382,11 +382,15 @@ const AppliedPostedJob: React.FC = () => {
                 <h2>
                   {profile?.typeRoleData === 0
                     ? languageRedux === 1
-                      ? 'Công việc đã ứng tuyển'
-                      : 'Applied Job'
+                      ? 'Việc làm đã ứng tuyển'
+                      : languageRedux === 2
+                        ? 'Apllied Jobs'
+                        : languageRedux === 3 && '어플라이드 잡스'
                     : languageRedux === 1
-                      ? 'Công việc đã tuyển'
-                      : 'Posted Job'}
+                      ? 'Đã đăng tuyển'
+                      : languageRedux === 2
+                        ? 'Posted job'
+                        : languageRedux === 3 && '등록되기'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -398,7 +402,10 @@ const AppliedPostedJob: React.FC = () => {
                             ? `Công việc đã ứng tuyển/Đăng tuyển sẽ hiển thị trạng thái
                         trong vòng 30 ngày, sau 30 ngày bạn có thể kiểm tra các
                         công việc đã Ứng tuyển/Đăng tuyển trong lịch sử.`
-                            : `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`}
+                            : languageRedux === 2
+                              ? `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`
+                              : languageRedux === 3 &&
+                                '지원/게시된 채용공고는 30일 이내에 현황이 표시되며, 30일 이후에는 지원/게시된 채용공고 현황을 히스토리에서 확인할 수 있습니다.'}
                         </p>
                       </div>
                       {/* <Button
@@ -408,7 +415,11 @@ const AppliedPostedJob: React.FC = () => {
             }}
           >
             <LoginArrowBlackIcon />
-            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+               {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
           </Button> */}
                     </div>
                   </div>
@@ -437,7 +448,11 @@ const AppliedPostedJob: React.FC = () => {
                 }}
               >
                 <LoginArrowIcon />
-                {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+                   {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
               </Button>
             </div>
           </div> */}

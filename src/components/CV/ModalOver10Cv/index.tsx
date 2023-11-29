@@ -45,7 +45,11 @@ const ModalOver10Cv: React.FC<IModalShare> = (props) => {
             textAlign: 'center',
           }}
         >
-          {languageRedux === 1 ? 'Không thể lưu Cv' : 'Unable to save CV'}
+          {languageRedux === 1
+            ? 'Không thể lưu Cv'
+            : languageRedux === 2
+              ? 'Unable to save CV'
+              : languageRedux === 3 && 'CV를 저장할 수 없습니다.'}
         </h3>
       }
       footer={null}
@@ -65,7 +69,10 @@ const ModalOver10Cv: React.FC<IModalShare> = (props) => {
       >
         {languageRedux === 1
           ? 'Bạn chỉ có thể lưu tối đa 10 CV. Vui lòng xóa CV không sử dụng tại trang Quản lý CV'
-          : 'You can only save a maximum of 10 CVs. Please delete unused CV at the CV Management page'}
+          : languageRedux === 2
+            ? 'You can only save a maximum of 10 CVs. Please delete unused CV at the CV Management page'
+            : languageRedux === 3 &&
+              'CV는 최대 10개까지만 저장할 수 있습니다. CV 관리 페이지에서 사용하지 않은 CV를 삭제해주세요.'}
       </p>
       <div className="buttons-over-10-cv-modal">
         <Button
@@ -75,7 +82,11 @@ const ModalOver10Cv: React.FC<IModalShare> = (props) => {
             window.open('/profile-cv', '_parent');
           }}
         >
-          {languageRedux === 1 ? 'Trang quảng lý CV' : 'CV Management page'}
+          {languageRedux === 1
+            ? 'Trang quảng lý CV'
+            : languageRedux === 2
+              ? 'CV Management page'
+              : languageRedux === 3 && 'CV 관리 페이지'}
         </Button>
         <Button
           type="text"
@@ -85,7 +96,11 @@ const ModalOver10Cv: React.FC<IModalShare> = (props) => {
           //   }}
           onClick={handleCancel}
         >
-          {languageRedux === 1 ? 'Hủy' : 'Cancel'}
+          {languageRedux === 1
+            ? 'Hủy'
+            : languageRedux === 2
+              ? 'Cancel'
+              : languageRedux === 3 && '취소'}
         </Button>
       </div>
     </Modal>

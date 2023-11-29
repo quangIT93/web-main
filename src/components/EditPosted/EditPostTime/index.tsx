@@ -15,10 +15,11 @@ interface IEditPostTime {
   editDataPosted: any;
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
   language: any;
+  languageRedux: any;
 }
 
 const EditPostTime: React.FC<IEditPostTime> = (props) => {
-  const { editDataPosted, setEditDataPosted, language } = props;
+  const { editDataPosted, setEditDataPosted, language, languageRedux } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
     setEditDataPosted((preValue: any) => ({
@@ -53,7 +54,13 @@ const EditPostTime: React.FC<IEditPostTime> = (props) => {
             htmlFor="startTime"
           >
             {
-              language?.working_hour
+              languageRedux === 1
+                ? "Giờ làm việc"
+                : languageRedux === 2
+                  ? "Working hours"
+                  : languageRedux === 3
+                    ? '노동시간'
+                    : "Giờ làm việc"
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>

@@ -56,7 +56,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -77,7 +77,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
         null,
         10,
         1,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -110,7 +110,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
       lastPostId,
       11,
       1,
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
     if (result.data.length <= 10) {
       setIsVisible(false);
@@ -134,7 +134,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
         lastPostId,
         10,
         1,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setUploading(false);
@@ -142,7 +142,11 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content: language?.out_job,
+            content: languageRedux === 1
+              ? 'Đã hết công việc để hiển thị'
+              : languageRedux === 2
+                ? 'Out of job to display'
+                : '보여줄 일이 부족해',
           });
           return;
         }
@@ -152,7 +156,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // click card
@@ -187,11 +191,17 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
             },
           }}
         >
-          {language?.history_page?.applied_jobs}
+          {languageRedux === 1
+            ? 'Các công việc đã ứng tuyển'
+            : languageRedux === 2
+              ? 'Apllied jobs'
+              : '지원한 직업들'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '0-0' && languageRedux === 1
-              ? ' > Tất cả'
-              : ' > All'}
+              ? ' > ất cả'
+              : languageRedux === 2
+                ? ' > All'
+                : ' > 전부'}
           </span>
         </Typography>
         <TextField
@@ -204,8 +214,16 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">{language?.history_page?.latest}</MenuItem>
-          <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
+          <MenuItem value="Mới nhất">{languageRedux === 1
+            ? 'Mới nhất'
+            : languageRedux === 2
+              ? 'Newest'
+              : languageRedux === 3 && '최신'}</MenuItem>
+          <MenuItem value="Cũ nhất">{languageRedux === 1
+            ? 'Cũ nhất'
+            : languageRedux === 2
+              ? 'Oldest'
+              : languageRedux === 3 && '가장 오래된'}</MenuItem>
         </TextField>
       </Box>
       {/* <Skeleton loading={loading} active> */}
@@ -216,7 +234,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={loading}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -253,7 +271,11 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
               loading={uploading}
               onClick={handleClickAddItem}
             >
-              {language?.more}
+              {languageRedux === 1
+                ? 'Xem thêm'
+                : languageRedux === 2
+                  ? 'See more'
+                  : '더보기'}
             </Button>
           </Box>
         </div>

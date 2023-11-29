@@ -31,6 +31,9 @@ const HijobNewsCard: React.FC<any> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const { item, index, setSaveListPost, saveListPost } = props;
   const [like, setLike] = React.useState(item?.liked);
   const [bookmark, setBookmark] = React.useState(item?.bookmarked);
@@ -76,7 +79,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
     }
   };
 
-  React.useEffect(() => {}, [like]);
+  React.useEffect(() => { }, [like]);
 
   const handleClickSave = async (e: any) => {
     e.stopPropagation();
@@ -212,7 +215,11 @@ const HijobNewsCard: React.FC<any> = (props) => {
               /> */}
               {shouldShowMoreButton ? (
                 <span onClick={(e) => handleAddText(e)}>
-                  {!showText ? `${language?.more}...` : 'Xem ít...'}
+                  {!showText ? `${languageRedux === 1
+                    ? 'Xem thêm'
+                    : languageRedux === 2
+                      ? 'See more'
+                      : '더보기'}...` : 'Xem ít...'}
                 </span>
               ) : (
                 <></>
@@ -229,7 +236,13 @@ const HijobNewsCard: React.FC<any> = (props) => {
                   icon={<UserOutlined />}
                 />
                 <div className="info-actor_comunity">
-                  <p>{language?.community_page?.author}</p>
+                  <p>
+                    {languageRedux === 1
+                      ? 'Tác giả'
+                      : languageRedux === 2
+                        ? 'Author'
+                        : '작가'}
+                  </p>
                   <p>Hijob</p>
                 </div>
               </div>

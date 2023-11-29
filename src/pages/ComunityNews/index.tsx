@@ -64,7 +64,7 @@ const ComunityNews = () => {
       '10',
       sort,
       0,
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
 
     //
@@ -82,7 +82,9 @@ const ComunityNews = () => {
       message.error(
         languageRedux === 1
           ? 'Không còn bài viết để hiển thị'
-          : 'No more posts to show',
+          : languageRedux === 2
+            ? 'No more posts to show'
+            : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
       );
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
@@ -109,7 +111,7 @@ const ComunityNews = () => {
         '10',
         sort,
         0,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         console.log(result?.data?.communications);
@@ -154,7 +156,7 @@ const ComunityNews = () => {
       '10',
       sort,
       0,
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
 
     //
@@ -165,8 +167,10 @@ const ComunityNews = () => {
       setPage('0');
       message.error(
         languageRedux === 1
-          ? 'Đã hết bài viết để hiển thị'
-          : 'Out of posts to show',
+          ? 'Không còn bài viết để hiển thị'
+          : languageRedux === 2
+            ? 'No more posts to show'
+            : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
       );
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
@@ -176,7 +180,7 @@ const ComunityNews = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -216,18 +220,33 @@ const ComunityNews = () => {
         <div className="comunityPostNews">
           <div className="title-comunity-news">
             <div className="title-comunity-news-content">
-              <h3>{languageRedux === 1 ? `Tin tức` : `Recruitment news`}</h3>
+              <h3>
+                {languageRedux === 1
+                  ? 'Tin tức'
+                  : languageRedux === 2
+                    ? 'Recruitment news'
+                    : languageRedux === 3 && '뉴스'}
+              </h3>
               <p>
                 {
                   loading
-                    ? 'Loading...'
+                    ? languageRedux === 1
+                      ? 'Đang tải'
+                      : languageRedux === 2
+                        ? 'Loading'
+                        : '로드 중'
                     : languageRedux === 1
-                    ? `${new Intl.NumberFormat('en-US').format(
+                      ? `${new Intl.NumberFormat('en-US').format(
                         total,
                       )} bài viết mới`
-                    : `${new Intl.NumberFormat('en-US').format(
-                        total,
-                      )} new posts`
+                      : languageRedux === 2
+                        ? `${new Intl.NumberFormat('en-US').format(
+                          total,
+                        )} new posts`
+                        : languageRedux &&
+                        `${new Intl.NumberFormat('en-US').format(
+                          total,
+                        )} 새 게시물`
                   // : language?.community_page?.today_hijob_has +
                   //   ' ' +
                   //   total +
@@ -256,7 +275,11 @@ const ComunityNews = () => {
                     }}
                   >
                     <NewestIcon />
-                    <p>{language?.history_page?.latest}</p>
+                    <p>{languageRedux === 1
+                      ? 'Mới nhất'
+                      : languageRedux === 2
+                        ? 'Newest'
+                        : languageRedux === 3 && '최신'}</p>
                   </li>
                   <li
                     className={
@@ -270,7 +293,11 @@ const ComunityNews = () => {
                     }}
                   >
                     <LikeIcon />
-                    <p>{language?.history_page?.likes}</p>
+                    <p>{languageRedux === 1
+                      ? 'Lượt thích'
+                      : languageRedux === 2
+                        ? 'Likes"'
+                        : '좋아요'}</p>
                   </li>
                   <li
                     className={
@@ -284,7 +311,11 @@ const ComunityNews = () => {
                     }}
                   >
                     <EysIcon />
-                    <p>{language?.history_page?.views}</p>
+                    <p>{languageRedux === 1
+                      ? 'Lượt xem'
+                      : languageRedux === 2
+                        ? 'Views"'
+                        : '보다'}</p>
                   </li>
                   <li
                     className={
@@ -298,7 +329,11 @@ const ComunityNews = () => {
                     }}
                   >
                     <CommentIcon />
-                    <p>{language?.history_page?.comments}</p>
+                    <p>{languageRedux === 1
+                      ? 'Lượt bình luận'
+                      : languageRedux === 2
+                        ? 'Comments"'
+                        : '댓글 수'}</p>
                   </li>
                 </ul>
               </div>
@@ -340,7 +375,11 @@ const ComunityNews = () => {
                     >
                         <p>
                             {
-                                language?.more
+                                languageRedux === 1
+            ? 'Xem thêm'
+            : languageRedux === 2
+              ? 'See more'
+              : '더보기'
                             }
                         </p>
                         <MoreICon width={20} height={20} />

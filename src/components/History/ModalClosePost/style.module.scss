@@ -1,4 +1,4 @@
-.buttons-turn-off-status-modal {
+.buttons_close_post_modal {
     margin-top: 12px;
     display: flex;
     align-items: center;
@@ -6,7 +6,7 @@
     justify-content: center;
 
     button {
-        width: 153px;
+        width: 200px;
         height: 42px;
         font-family: Roboto;
         font-size: 16px;
@@ -17,10 +17,6 @@
 
         &:first-child {
             background: #0D99FF;
-        }
-
-        &:last-child {
-            color: #0D99FF;
         }
     }
 }

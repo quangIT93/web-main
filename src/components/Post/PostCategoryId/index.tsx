@@ -27,7 +27,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     setFillCate,
     language,
     languageRedux,
-    setIsValidSubmit
+    setIsValidSubmit,
   } = props;
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
@@ -41,7 +41,11 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     <div style={{ width: '520px' }} className="filter-loca-cate">
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable ? language?.limit_2_cate : ''}
+        {disable ? languageRedux === 1
+          ? 'Chỉ có thể tối đa 2 danh mục'
+          : languageRedux === 2
+            ? 'Only up to 2 categories can be'
+            : '카테고리는 최대 2개까지만 가능합니다.' : ''}
       </Divider>
     </div>
   );
@@ -56,13 +60,13 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     if (value.length > 1) {
       setDisable(true);
     }
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setDataCategories(result.data);
@@ -100,12 +104,24 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         component="label"
         htmlFor="jobTitle"
       >
-        {language?.category} <span style={{ color: 'red' }}>*</span>
+        {
+          languageRedux === 1
+            ? "Danh mục nghề nghiệp"
+            : languageRedux === 2
+              ? "Category"
+              : '직업 디렉토리'
+        } <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Cascader
         defaultValue={fillCate}
         value={fillCate}
-        placeholder="Loại hình công việc"
+        placeholder={
+          languageRedux === 1
+            ? "Danh mục nghề nghiệp"
+            : languageRedux === 2
+              ? "Career category"
+              : '직업 디렉토리'
+        }
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
@@ -151,8 +167,10 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         {fillCate.length === 0 ? (
           <span className="helper-text">
             {languageRedux === 1
-              ? 'Vui lòng nhập tên phường'
-              : 'Please enter ward name'}
+              ? 'Vui lòng chọn danh mục nghề nghiệp'
+              : languageRedux === 2
+                ? 'Please select a career category'
+                : languageRedux === 3 && '직업 카테고리를 선택해주세요.'}
           </span>
         ) : (
           <></>

@@ -42,16 +42,22 @@ const ModalPostReviewSuccess: React.FC<IModalPostReviewSuccess> = (props) => {
                         status === 'create' ?
                             languageRedux === 1
                                 ? 'Đăng đánh giá thành công'
-                                : 'Posted review successfully'
+                                : languageRedux === 2 ?
+                                    'Posted review successfully' :
+                                    "리뷰가 성공적으로 게시되었습니다."
                             :
                             status === 'edit' ?
                                 languageRedux === 1
                                     ? 'Sửa bài đánh giá thành công'
-                                    : 'Edited review successfully'
+                                    : languageRedux === 2 ?
+                                        'Edited review successfully' :
+                                        "리뷰가 성공적으로 편집되었습니다"
                                 :
                                 languageRedux === 1
                                     ? 'Xóa bài đánh giá thành công'
-                                    : 'Deleted review successfully'
+                                    : languageRedux === 2 ?
+                                        'Deleted review successfully' :
+                                        "리뷰가 삭제되었습니다."
                     }
                 </h3>
             }
@@ -74,14 +80,20 @@ const ModalPostReviewSuccess: React.FC<IModalPostReviewSuccess> = (props) => {
                     status === 'create' ?
                         languageRedux === 1
                             ? 'Bài đánh giá của bạn về công ty này đã được đăng thành công.'
-                            : 'Your review of this company has been published successfully.'
+                            : languageRedux === 2 ?
+                                'Your review of this company has been published successfully.'
+                                : "이 회사에 대한 귀하의 리뷰가 성공적으로 게시되었습니다."
                         : status === 'edit' ?
                             languageRedux === 1
                                 ? 'Bài đánh giá của bạn về công ty này đã được sửa thành công.'
-                                : 'Your review of this company has been edited successfully.'
+                                : languageRedux === 2 ?
+                                    'Your review of this company has been edited successfully.'
+                                    : "이 회사에 대한 귀하의 리뷰가 성공적으로 편집되었습니다."
                             : languageRedux === 1
                                 ? 'Bài đánh giá của bạn về công ty này đã được xóa thành công.'
-                                : 'Your review of this company has been deleted successfully.'
+                                : languageRedux === 2 ?
+                                    'Your review of this company has been deleted successfully.'
+                                    : "이 회사에 대한 귀하의 리뷰가 성공적으로 삭제되었습니다."
                 }
             </p>
             <div className={styles.modal_post_review_success_buttons}>
@@ -90,7 +102,8 @@ const ModalPostReviewSuccess: React.FC<IModalPostReviewSuccess> = (props) => {
                     shape="round"
                     onClick={handleCloseModal}
                 >
-                    {languageRedux === 1 ? 'Đã hiểu' : 'Ok'}
+                    {languageRedux === 1 ? 'Đã hiểu'
+                        : languageRedux === 2 ? 'Ok' : '이해했다'}
                 </Button>
             </div>
         </Modal>

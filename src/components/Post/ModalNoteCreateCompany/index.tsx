@@ -96,7 +96,13 @@ const ModalNoteCreateCompany: React.FC<IPropModalNoteCreatePost> = (props) => {
           >
             <CloseIcon />
           </IconButton>
-          <h2 className="title-post_guide">{language?.you_have_not_company}</h2>
+          <h2 className="title-post_guide">{
+            languageRedux === 1
+              ? 'Bạn chưa có thông tin công ty!'
+              : languageRedux === 2
+                ? "You don't have company information yet!"
+                : '아직 회사정보가 없습니다!'
+          }</h2>
           <div className="wrap-imagePost_guide">
             <img
               src="./images/guide.png"
@@ -108,7 +114,10 @@ const ModalNoteCreateCompany: React.FC<IPropModalNoteCreatePost> = (props) => {
             <p>
               {languageRedux === 1
                 ? 'Bài đăng của bạn sẽ được nhiều ứng viên hơn khi có thông tin công ty. Hãy cập nhật thông tin công ty để nhiều ứng viên quan tâm hơn!'
-                : 'Your post will be more candidates when there is company information. Please update company information so that more candidates are interested!'}
+                : languageRedux === 2
+                  ? 'Your post will be more candidates when there is company information. Please update company information so that more candidates are interested!'
+                  : languageRedux === 3 &&
+                  '회사 정보가 있으면 귀하의 게시물에 더 많은 후보자가 표시됩니다. 더 많은 지원자들이 관심을 가질 수 있도록 기업정보를 업데이트해주세요!'}
             </p>
           </div>
           {/* <div className="wrap-list_guide">
@@ -150,7 +159,11 @@ const ModalNoteCreateCompany: React.FC<IPropModalNoteCreatePost> = (props) => {
                 setOpenModalNoteCreateCompany(false);
               }}
             >
-              {languageRedux === 1 ? 'Chỉnh sửa sau' : 'Edit later'}
+              {languageRedux === 1
+                ? 'Chỉnh sửa sau'
+                : languageRedux === 2
+                  ? 'Edit later'
+                  : languageRedux === 3 && '나중에 수정하세요'}
             </Button>
             <Button
               block
@@ -160,7 +173,9 @@ const ModalNoteCreateCompany: React.FC<IPropModalNoteCreatePost> = (props) => {
             >
               {languageRedux === 1
                 ? 'Tạo thông tin công ty'
-                : 'Create company information'}
+                : languageRedux === 2
+                  ? 'Create company information'
+                  : languageRedux === 3 && '회사 정보 생성'}
             </Button>
           </div>
         </Box>

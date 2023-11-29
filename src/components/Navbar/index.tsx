@@ -146,17 +146,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -335,7 +335,7 @@ const Navbar: React.FC = () => {
   const getCompanyInforByAccount = async () => {
     try {
       // const result = await apiCompany.getCampanyByAccountApi(
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
       if (profileCompanyV3?.companyInfomation?.id != null) {
         setCompanyName(profileCompanyV3?.companyInfomation?.name);
@@ -371,7 +371,7 @@ const Navbar: React.FC = () => {
   //     await dispatch(getProfile() as any);
 
   //     const result = await profileApi.getProfile(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       dispatch(getProfile() as any);
@@ -396,18 +396,18 @@ const Navbar: React.FC = () => {
   const getDataProfileV3 = async () => {
     try {
       // const result = await profileApi.getProfileV3(
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
 
       const result = await profileApi.getProfileInformationV3(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
         dispatch(setProfileMeInformationV3(result));
         setRole(result.data.typeRoleData);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -421,7 +421,7 @@ const Navbar: React.FC = () => {
   const getCountUnread = async () => {
     try {
       const result = await messageApi.getUnread(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -445,7 +445,7 @@ const Navbar: React.FC = () => {
   const getCountAppliedNew = async () => {
     try {
       const result = await notificationApi.getNotificationCountNew(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result.data) {
@@ -827,6 +827,7 @@ const Navbar: React.FC = () => {
         const result = await authApi.signOut(refreshToken);
         if (result) {
           if (socket.current) {
+            document.cookie = 'g_state' + '=; Max-Age=99999999999999999';
             console.log('disconnect socket thành công');
             socket.current.disconnect();
             // socket.current.close();
@@ -844,7 +845,7 @@ const Navbar: React.FC = () => {
           await dispatch<any>(setProfileMeInformationV3([]));
           await dispatch<any>(setProfileMeCompanyV3([]));
           await dispatch<any>(setProfileMeInformationMoreV3([]));
-
+          // (window as any).google.accounts.id.disableAutoSelect()
           for (const key of keysToRemove) {
             localStorage.removeItem(key);
           }
@@ -868,7 +869,7 @@ const Navbar: React.FC = () => {
     try {
       const result = await applitedPostedApi.getAllApplitedPostedApi(
         0,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -884,7 +885,7 @@ const Navbar: React.FC = () => {
   // const getPropfileV3New = async () => {
   //   try {
   //     const result = await profileApi.getProfileV3(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       dispatch(setProfileV3(result));
@@ -975,7 +976,12 @@ const Navbar: React.FC = () => {
 
     let typeSalaryReset = {
       id: -1,
-      value: languageRedux === 1 ? 'Trả lương theo' : 'Payment by',
+      value:
+        languageRedux === 1
+          ? 'Trả lương theo'
+          : languageRedux === 2
+            ? 'Calculate salary:'
+            : languageRedux === 3 && '그에 따라 지불',
     };
     setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };
@@ -990,7 +996,7 @@ const Navbar: React.FC = () => {
 
     // try {
     //   const result = await languageApi.getLanguage(
-    //     languageRedux === 1 ? 'vi' : 'en',
+    //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //   );
     //   if (result) {
     //     setLanguageState(result.data);
@@ -1150,8 +1156,8 @@ const Navbar: React.FC = () => {
       className="actions-login"
       ref={refLogin}
       key="3"
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -1161,8 +1167,8 @@ const Navbar: React.FC = () => {
               icon={<UserOutlined />}
               src={
                 profileV3 &&
-                  profileV3?.avatarPath &&
-                  localStorage.getItem('accessToken')
+                profileV3?.avatarPath &&
+                localStorage.getItem('accessToken')
                   ? profileV3?.avatarPath
                   : ''
               }
@@ -1172,14 +1178,20 @@ const Navbar: React.FC = () => {
             {localStorage.getItem('accessToken') && profileV3.length !== 0 ? (
               <span>
                 {profileV3 &&
-                  profileV3?.name &&
-                  localStorage.getItem('accessToken')
+                profileV3?.name &&
+                localStorage.getItem('accessToken')
                   ? profileV3?.name
                   : ''}
               </span>
             ) : (
               // <span>{languageData?.login}</span>
-              <span>{languageRedux === 1 ? `Đăng nhập` : `Sign in`}</span>
+              <span>
+                {languageRedux === 1
+                  ? 'Đăng nhập'
+                  : languageRedux === 2
+                    ? 'Sign in'
+                    : languageRedux === 3 && '로그인'}
+              </span>
             )}
           </div>
         </div>
@@ -1193,21 +1205,34 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-              openLogin &&
-              location?.pathname === '/'
+            openLogin &&
+            location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
       >
         <div className="login__hover">
-          <h3>{languageRedux === 1 ? 'Đăng nhập ở đây' : 'Sign in here'}</h3>
+          <h3>
+            {languageRedux === 1
+              ? 'Đăng nhập ở đây'
+              : languageRedux === 2
+                ? 'Sign in here'
+                : '여기서 로그인하세요'}
+          </h3>
           <div className="login__hover__p">
-            <p>{languageData?.home_page?.choose_your_location_category}</p>
             <p>
-              {
-                languageData?.home_page
-                  ?.provide_the_best_recruitment_information
-              }
+              {languageRedux === 1
+                ? 'Chọn vị trí và danh mục của bạn'
+                : languageRedux === 2
+                  ? 'Choose your location and category'
+                  : '위치와 카테고리를 선택하세요'}
+            </p>
+            <p>
+              {languageRedux === 1
+                ? 'Chúng tôi sẽ cung cấp thông tin tuyển dụng tốt nhất'
+                : languageRedux === 2
+                  ? 'We will provide the best recruitment information'
+                  : '최고의 채용정보를 제공하겠습니다.'}
             </p>
           </div>
           {/* <Button
@@ -1217,7 +1242,11 @@ const Navbar: React.FC = () => {
             }}
           >
             <LoginArrowBlackIcon />
-            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+               {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
           </Button> */}
         </div>
       </div>
@@ -1227,11 +1256,11 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             localStorage.getItem('accessToken') &&
-              profileV3?.name === 'Your name' &&
-              profileV3?.phone === '' &&
-              profileV3?.typeRoleData !== null &&
-              openLogin &&
-              location?.pathname === '/'
+            profileV3?.name === 'Your name' &&
+            profileV3?.phone === '' &&
+            profileV3?.typeRoleData !== null &&
+            openLogin &&
+            location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1242,7 +1271,13 @@ const Navbar: React.FC = () => {
             display: profileV3.typeRoleData === 0 ? 'flex' : 'none',
           }}
         >
-          <h3>{languageRedux === 1 ? 'Cập nhật hồ sơ' : 'Update profile'}</h3>
+          <h3>
+            {languageRedux === 1
+              ? 'Cập nhật hồ sơ'
+              : languageRedux === 2
+                ? 'Update profile'
+                : languageRedux === 3 && '프로필 업데이트'}
+          </h3>
           <div className="login__hover__p">
             <p>
               {languageRedux === 1
@@ -1282,7 +1317,12 @@ const Navbar: React.FC = () => {
                   <h2>
                     {profileV3?.name
                       ? profileV3?.name
-                      : languageData?.home_page?.un_update_infor}
+                      : languageRedux === 1
+                        ? 'Chưa cập nhật thông tin'
+                        : languageRedux === 2
+                          ? 'Not updated information"'
+                          : languageRedux === 3 &&
+                            '정보 업데이트를 아직 하지 않음'}
                   </h2>
                   <span className="sub-login_text">
                     {/* <CompanySubLoginIcon /> */}
@@ -1294,8 +1334,11 @@ const Navbar: React.FC = () => {
                           {profileV3.companyInfo
                             ? profileV3.companyInfo.name
                             : languageRedux === 1
-                              ? 'Hãy cập nhật thông tin công ty'
-                              : 'Please update company information'}
+                              ? 'Chưa cập nhật thông tin'
+                              : languageRedux === 2
+                                ? 'Not updated information"'
+                                : languageRedux === 3 &&
+                                  '정보 업데이트를 아직 하지 않음'}
                         </p>
                       </>
                     ) : (
@@ -1310,11 +1353,19 @@ const Navbar: React.FC = () => {
                         ? profileV3.companyInfo
                           ? profileV3.companyInfo?.email
                           : languageRedux === 1
-                            ? 'Hãy cập nhật thông tin công ty'
-                            : 'Please update company information'
+                            ? 'Chưa cập nhật thông tin'
+                            : languageRedux === 2
+                              ? 'Not updated information"'
+                              : languageRedux === 3 &&
+                                '정보 업데이트를 아직 하지 않음'
                         : profileV3?.email
                           ? profileV3?.email
-                          : languageData?.home_page?.un_update_infor}
+                          : languageRedux === 1
+                            ? 'Chưa cập nhật thông tin'
+                            : languageRedux === 2
+                              ? 'Not updated information"'
+                              : languageRedux === 3 &&
+                                '정보 업데이트를 아직 하지 않음'}
                     </p>
                   </span>
                   {profileV3?.typeRoleData === 1 ? (
@@ -1324,8 +1375,11 @@ const Navbar: React.FC = () => {
                         {profileV3?.companyInfo
                           ? profileV3?.companyInfo?.phone
                           : languageRedux === 1
-                            ? 'Hãy cập nhật thông tin công ty'
-                            : 'Please update company information'}
+                            ? 'Chưa cập nhật thông tin'
+                            : languageRedux === 2
+                              ? 'Not updated information"'
+                              : languageRedux === 3 &&
+                                '정보 업데이트를 아직 하지 않음'}
                       </p>
                     </span>
                   ) : (
@@ -1334,7 +1388,12 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3?.phone
                           ? profileV3?.phone
-                          : languageData?.home_page?.un_update_infor}
+                          : languageRedux === 1
+                            ? 'Chưa cập nhật thông tin'
+                            : languageRedux === 2
+                              ? 'Not updated information"'
+                              : languageRedux === 3 &&
+                                '정보 업데이트를 아직 하지 않음'}
                       </p>
                     </span>
                   )}
@@ -1355,11 +1414,16 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3?.profileLocations?.length > 0
                           ? profileV3?.profileLocations?.map(
-                            (location: any) => {
-                              return `${location.fullName} , `;
-                            },
-                          )
-                          : languageData?.home_page?.un_update_infor}
+                              (location: any) => {
+                                return `${location.fullName} , `;
+                              },
+                            )
+                          : languageRedux === 1
+                            ? 'Chưa cập nhật thông tin'
+                            : languageRedux === 2
+                              ? 'Not updated information"'
+                              : languageRedux === 3 &&
+                                '정보 업데이트를 아직 하지 않음'}
                       </p>
                     </span>
                     <span
@@ -1371,9 +1435,14 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3 && profileV3?.profileCategories?.length > 0
                           ? profileV3?.profileCategories.map((profile: any) => {
-                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                          })
-                          : languageData?.home_page?.un_update_infor}
+                              return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                            })
+                          : languageRedux === 1
+                            ? 'Chưa cập nhật thông tin'
+                            : languageRedux === 2
+                              ? 'Not updated information"'
+                              : languageRedux === 3 &&
+                                '정보 업데이트를 아직 하지 않음'}
                       </p>
                     </span>
                   </div>
@@ -1386,7 +1455,13 @@ const Navbar: React.FC = () => {
               <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
-                  <span>{languageData?.home_page?.update_infor}</span>
+                  <span>
+                    {languageRedux === 1
+                      ? 'Cập nhật thông tin'
+                      : languageRedux === 2
+                        ? 'Update information'
+                        : languageRedux === 3 && '정보 업데이트'}
+                  </span>
                 </div>
               </Link>
               <Link to="/history" target="_parent">
@@ -1398,12 +1473,18 @@ const Navbar: React.FC = () => {
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
-                  <span>{languageData?.history}</span>
+                  <span>
+                    {languageRedux === 1
+                      ? 'Lịch sử'
+                      : languageRedux === 2
+                        ? 'History'
+                        : languageRedux === 3 && '기록'}
+                  </span>
                 </div>
               </Link>
               <div
@@ -1413,15 +1494,30 @@ const Navbar: React.FC = () => {
                 }}
               >
                 <span>
-                  {languageData?.approved} {`${approved}`}
+                  {languageRedux === 1
+                    ? 'Đã được duyệt:'
+                    : languageRedux === 2
+                      ? 'Approved:'
+                      : languageRedux === 3 && '승인됨:'}{' '}
+                  {`${approved}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {languageData?.home_page?.pending} {`${pending}`}
+                  {languageRedux === 1
+                    ? 'Chờ xử lý:'
+                    : languageRedux === 2
+                      ? 'Pending:'
+                      : languageRedux === 3 && '보류 중:'}{' '}
+                  {`${pending}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {languageData?.home_page?.waiting} {`${waiting}`}
+                  {languageRedux === 1
+                    ? 'Chờ phê duyệt:'
+                    : languageRedux === 2
+                      ? 'Waiting for approval:'
+                      : languageRedux === 3 && '승인 대기 중:'}{' '}
+                  {`${waiting}`}
                 </span>
               </div>
               {/* <div className="sub-login_item">
@@ -1467,9 +1563,9 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                // style={{
-                //   display: openRadioGroup ? 'flex' : 'none',
-                // }}
+                  // style={{
+                  //   display: openRadioGroup ? 'flex' : 'none',
+                  // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
@@ -1493,7 +1589,13 @@ const Navbar: React.FC = () => {
               >
                 <LogoutSubLoginIcon />
 
-                <span>{languageData?.sign_out}</span>
+                <span>
+                  {languageRedux === 1
+                    ? 'Đăng xuất'
+                    : languageRedux === 2
+                      ? 'Sign out'
+                      : languageRedux === 3 && '로그아웃'}
+                </span>
               </div>
 
               {/* <div className="sub-login_item" onClick={handleLogout}>
@@ -1510,7 +1612,7 @@ const Navbar: React.FC = () => {
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         // setDataLocations(result.data);
@@ -1532,7 +1634,7 @@ const Navbar: React.FC = () => {
     ) {
       getAllLocaitions();
     }
-  }, [openCollapseFilter]);
+  }, [openCollapseFilter, languageRedux]);
 
   const menu = [
     <Button
@@ -1777,9 +1879,14 @@ const Navbar: React.FC = () => {
                     <p>
                       {profileV3?.profileLocations?.length > 0
                         ? profileV3?.profileLocations?.map((location: any) => {
-                          return `${location.fullName} , `;
-                        })
-                        : languageData?.home_page?.un_update_infor}
+                            return `${location.fullName} , `;
+                          })
+                        : languageRedux === 1
+                          ? 'Chưa cập nhật thông tin'
+                          : languageRedux === 2
+                            ? 'Not updated information"'
+                            : languageRedux === 3 &&
+                              '정보 업데이트를 아직 하지 않음'}
                     </p>
                   </span>
                   <span
@@ -1791,9 +1898,14 @@ const Navbar: React.FC = () => {
                     <p>
                       {profileV3 && profileV3?.profileCategories?.length > 0
                         ? profileV3?.profileCategories.map((profile: any) => {
-                          return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                        })
-                        : languageData?.home_page?.un_update_infor}
+                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                          })
+                        : languageRedux === 1
+                          ? 'Chưa cập nhật thông tin'
+                          : languageRedux === 2
+                            ? 'Not updated information"'
+                            : languageRedux === 3 &&
+                              '정보 업데이트를 아직 하지 않음'}
                     </p>
                   </span>
                 </div>
@@ -1803,7 +1915,13 @@ const Navbar: React.FC = () => {
               <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
-                  <span>{languageData?.home_page?.update_infor}</span>
+                  <span>
+                    {languageRedux === 1
+                      ? 'Cập nhật thông tin'
+                      : languageRedux === 2
+                        ? 'Update information'
+                        : languageRedux === 3 && '정보 업데이트'}
+                  </span>
                 </div>
               </Link>
               <Link to="/history" target="_parent">
@@ -1815,12 +1933,18 @@ const Navbar: React.FC = () => {
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
-                  <span>{languageData?.history}</span>
+                  <span>
+                    {languageRedux === 1
+                      ? 'Lịch sử'
+                      : languageRedux === 2
+                        ? 'History'
+                        : languageRedux === 3 && '기록'}
+                  </span>
                 </div>
               </Link>
               <div
@@ -1910,7 +2034,13 @@ const Navbar: React.FC = () => {
               >
                 <LogoutSubLoginIcon />
 
-                <span>{languageData?.sign_out}</span>
+                <span>
+                  {languageRedux === 1
+                    ? 'Đăng xuất'
+                    : languageRedux === 2
+                      ? 'Sign out'
+                      : languageRedux === 3 && '로그아웃'}
+                </span>
               </div>
 
               {/* <div className="sub-login_item" onClick={handleLogout}>
@@ -1926,8 +2056,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -2047,9 +2178,9 @@ const Navbar: React.FC = () => {
                     // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
                     display:
                       localStorage.getItem('accessToken') &&
-                        location?.pathname === '/' &&
-                        openLogin &&
-                        countNoti !== 0
+                      location?.pathname === '/' &&
+                      openLogin &&
+                      countNoti !== 0
                         ? 'block'
                         : 'none',
                     position: 'absolute',
@@ -2059,20 +2190,30 @@ const Navbar: React.FC = () => {
                     <h3>
                       {languageRedux === 1
                         ? 'Thông báo mới'
-                        : 'New notification'}
+                        : languageRedux === 2
+                          ? 'New notification'
+                          : '새로운 알림'}
                     </h3>
                     <div className="login__hover__p">
                       <p>
                         {languageRedux === 1
-                          ? `Bạn có ${countNoti ? countNoti : '0'
-                          } thông báo mới!`
-                          : `You have ${countNoti ? countNoti : '0'
-                          } new notifications`}
+                          ? `Bạn có ${
+                              countNoti ? countNoti : '0'
+                            } thông báo mới!`
+                          : languageRedux === 2
+                            ? `You have ${
+                                countNoti ? countNoti : '0'
+                              } new notifications`
+                            : `${
+                                countNoti ? countNoti : '0'
+                              } 개의 새로운 알림이 있습니다!`}
                       </p>
                       <p>
                         {languageRedux === 1
                           ? `Vui lòng xác nhận ngay!`
-                          : 'Please confirm now!'}
+                          : languageRedux === 2
+                            ? 'Please confirm now!'
+                            : '지금 확인해주세요!'}
                       </p>
                     </div>
                     {/* <Button
@@ -2082,7 +2223,11 @@ const Navbar: React.FC = () => {
             }}
           >
             <LoginArrowBlackIcon />
-            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+               {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
           </Button> */}
                   </div>
                 </div>
@@ -2313,14 +2458,22 @@ const Navbar: React.FC = () => {
           <div className="btn-filter_nav">
             <Button type="default" onClick={handleResetValue}>
               {/* {languageData?.reset} */}
-              {languageRedux === 1 ? 'Đặt lại' : 'Reset'}
+              {languageRedux === 1
+                ? 'Đặt lại'
+                : languageRedux === 2
+                  ? 'Reset'
+                  : languageRedux === 3 && '초기화'}
             </Button>
             <Button
               type="primary"
               onClick={(e) => handleSearch(e, valueSearchInput)}
             >
               {/* {languageData?.apply} */}
-              {languageRedux === 1 ? 'Áp dụng' : 'Apply'}
+              {languageRedux === 1
+                ? 'Áp dụng'
+                : languageRedux === 2
+                  ? 'Apply'
+                  : languageRedux === 3 && '지원하기'}
             </Button>
           </div>
         </Collapse>

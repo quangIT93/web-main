@@ -54,7 +54,11 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
           sx={{ textAlign: 'center', color: '#0d99ff' }}
         >
           {
-            language?.post_page.alert_edit_success
+            languageRedux === 1
+              ? "Đã chỉnh sửa bài tuyển dụng thành công!"
+              : languageRedux === 2
+                ? "Successfully edited job posting!"
+                : '채용 게시물이 수정되었습니다!'
           }
         </Typography>
         <Typography
@@ -64,7 +68,11 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
           sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
         >
           {
-            language?.post_page.alert_move_to_history
+            languageRedux === 1
+              ? "Bạn có muốn quay về trang lịch sử để kiểm tra thông tin!"
+              : languageRedux === 2
+                ? "Do you want to return to the history page to check the information!"
+                : '정보를 확인하기 위해 기록 페이지로 돌아가시겠습니까?'
           }
         </Typography>
 
@@ -86,7 +94,11 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
             }}
           >
             {
-              language?.no
+              languageRedux === 1
+                ? "Không"
+                : languageRedux === 2
+                  ? "No"
+                  : '아니요'
             }
           </Button>
           <Button
@@ -97,7 +109,11 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
             }}
           >
             {
-              language?.yes
+              languageRedux === 1
+                ? "Đồng ý"
+                : languageRedux === 2
+                  ? "Agree"
+                  : '동의하다'
             }
           </Button>
         </Box>

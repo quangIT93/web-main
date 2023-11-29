@@ -153,21 +153,20 @@ const Company: React.FC<ICompany> = (props) => {
 
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [ShowModalUnsave, setShowModalUnsave] = useState(false);
-  const [ShowModalFisnishCreateCompany, setShowModalFisnishCreateCompany] = useState(false);
+  const [ShowModalFisnishCreateCompany, setShowModalFisnishCreateCompany] =
+    useState(false);
   const [isValid, setIsValid] = useState(true);
   // const [language, setLanguageState] = React.useState<any>();
   const dispatch = useDispatch();
   const [openModalEditCompany, setOpenModalEditCompanySuccess] =
     React.useState(false);
 
-
   const analytics: any = getAnalytics();
-
 
   const getProfileComanyV3 = async () => {
     try {
       const result = await profileApi.getProfileCompanyV3(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -185,7 +184,8 @@ const Company: React.FC<ICompany> = (props) => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Thông tin công ty'
-        : "HiJob - Company's Information";
+        : languageRedux === 2 ? "HiJob - Company's Information"
+          : "HiJob - 회사 정보";
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_company' as string,
@@ -197,7 +197,7 @@ const Company: React.FC<ICompany> = (props) => {
     try {
       setLoading(true);
       // const result = await apiCompany.getCampanyByAccountApi(
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
       if (profileCompanyV3.id) {
         setTimeout(() => {
@@ -234,15 +234,18 @@ const Company: React.FC<ICompany> = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log("isvalid", isValid);
-  
+  console.log('isvalid', isValid);
+
   useEffect(() => {
-    const handleBeforeUnload = (event: any) => {   
+    const handleBeforeUnload = (event: any) => {
       if (isValid === false) {
         const message =
           languageRedux === 1
             ? 'Dữ liệu của bạn chưa được gửi, bạn có chắc chắn muốn rời đi?'
-            : 'Your data has not been sent, you definitely want to leave?';
+            : languageRedux === 2
+              ? 'Your data has not been sent, you definitely want to leave?'
+              : languageRedux === 3 &&
+              '귀하의 데이터가 전송되지 않았습니다. 나가시겠습니까?';
         event.preventDefault();
         event.returnValue = message || true;
         return message;
@@ -257,8 +260,6 @@ const Company: React.FC<ICompany> = (props) => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [isValid]);
-
-
 
   const validURL = (str: string) => {
     var pattern = new RegExp(
@@ -283,14 +284,22 @@ const Company: React.FC<ICompany> = (props) => {
       dataCompany?.logoPath?.status === 'removed'
     ) {
       return {
-        message: language?.company_page?.err_logo_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn logo công ty'
+          : languageRedux === 2
+            ? 'Please select company logo'
+            : '회사 로고를 선택해주세요',
         checkForm: false,
         idError: 1,
       };
     }
     if (dataCompany?.name.trim() === '') {
       return {
-        message: language?.company_page?.err_name_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập tên công ty'
+          : languageRedux === 2
+            ? 'Please enter company name'
+            : '회사명을 입력해주세요',
         checkForm: false,
         idError: 2,
       };
@@ -303,35 +312,55 @@ const Company: React.FC<ICompany> = (props) => {
     // }
     if (fillProvince === null) {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 3,
       };
     }
     if (fillDistrict === null) {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 4,
       };
     }
     if (fillWard === null) {
       return {
-        message: language?.post_page?.err_location,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
     }
     if (dataCompany?.companyLocation === '') {
       return {
-        message: language?.company_page?.err_location_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn tỉnh thành phố'
+          : languageRedux === 2
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
     }
     if (dataCompany?.address === '' || dataCompany?.address.length <= 10) {
       return {
-        message: language?.company_page?.err_address_mess,
+        message: languageRedux === 1
+          ? 'Địa chỉ phải dài hơn 10 ký tự'
+          : languageRedux === 2
+            ? 'Address must be longer than 10 characters'
+            : '주소는 10자 이상이어야 합니다',
         checkForm: false,
         idError: 6,
       };
@@ -342,111 +371,168 @@ const Company: React.FC<ICompany> = (props) => {
       (dataCompany?.phone && dataCompany?.phone?.length > 11)
     ) {
       return {
-        message: language?.company_page?.err_phone_mess,
+        message: languageRedux === 1
+          ? 'Số điện thoại sai định dạng'
+          : languageRedux === 2
+            ? 'Invalid phone number format'
+            : '전화번호 형식이 잘못되었습니다.',
         checkForm: false,
         idError: 7,
       };
     }
     if (dataCompany?.email === '') {
       return {
-        message: language?.company_page?.err_email_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập email công ty'
+          : languageRedux === 2
+            ? 'Please enter company email'
+            : '회사 이메일을 입력해주세요',
         checkForm: false,
         idError: 8,
       };
     }
     if (dataCompany?.email.length > 50) {
       return {
-        message: languageRedux === 1 ?
-          "Email không được vượt quá 50 ký tự." :
-          "Email must not exceed 50 characters.",
+        message:
+          languageRedux === 1
+            ? 'Email không được vượt quá 50 ký tự'
+            : languageRedux === 2
+              ? 'Email cannot exceed 50 characters'
+              : languageRedux === 3 && '이메일은 50자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 8,
       };
     }
     if (regexCheckEmail.test(dataCompany?.email) === false) {
       return {
-        message: language?.company_page?.err_verify_email_mess,
+        message: languageRedux === 1
+          ? 'Định dạng email không đúng'
+          : languageRedux === 2
+            ? 'Incorrect email format'
+            : '이메일 형식이 잘못되었습니다.',
         checkForm: false,
         idError: 8,
       };
     }
     if (fillRole === null) {
       return {
-        message: language?.company_page?.err_role_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn vai trò của bạn'
+          : languageRedux === 2
+            ? 'Please select your role'
+            : '당신의 역할을 선택해주세요',
         checkForm: false,
         idError: 9,
       };
     }
     if (dataCompany?.companyRoleInfomation === '') {
       return {
-        message: language?.company_page?.err_role_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn vai trò của bạn'
+          : languageRedux === 2
+            ? 'Please select your role'
+            : '당신의 역할을 선택해주세요',
         checkForm: false,
         idError: 9,
       };
     }
     if (dataCompany?.website === '') {
       return {
-        message: language?.company_page?.err_web_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập website công ty'
+          : languageRedux === 2
+            ? 'Please enter company website'
+            : '회사 홈페이지를 입력해주세요',
         checkForm: false,
         idError: 10,
       };
     }
     if (dataCompany?.website.length > 100) {
       return {
-        message: languageRedux === 1 ?
-          "Website không được vượt quá 100 ký tự." :
-          "Website must not exceed 100 characters.",
+        message:
+          languageRedux === 1
+            ? 'Website không được vượt quá 100 ký tự.'
+            : languageRedux === 2
+              ? 'Website must not exceed 100 characters.'
+              : languageRedux === 3 && '웹사이트는 100자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 10,
       };
     }
     if (validURL(dataCompany?.website) === false) {
       return {
-        message: language?.company_page?.err_verify_web_mess,
+        message: languageRedux === 1
+          ? 'Định dạng website không chính xác'
+          : languageRedux === 2
+            ? 'Incorrect website format'
+            : '웹사이트 형식이 잘못되었습니다.',
         checkForm: false,
         idError: 10,
       };
     }
     if (fillActivity === null) {
       return {
-        message: language?.company_page?.err_cate_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn danh mục nghề nghiệp'
+          : languageRedux === 2
+            ? 'Please select a career category'
+            : '직업 카테고리를 선택해주세요.',
         checkForm: false,
         idError: 11,
       };
     }
     if (dataCompany?.companyCategory === '') {
       return {
-        message: language?.company_page?.err_cate_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn danh mục nghề nghiệp'
+          : languageRedux === 2
+            ? 'Please select a career category'
+            : '직업 카테고리를 선택해주세요.',
         checkForm: false,
         idError: 11,
       };
     }
     if (fillSize === null) {
       return {
-        message: language?.company_page?.err_size_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn quy mô công ty'
+          : languageRedux === 2
+            ? 'Please select company size'
+            : '회사규모를 선택해 주세요',
         checkForm: false,
         idError: 12,
       };
     }
     if (dataCompany?.companySizeInfomation === '') {
       return {
-        message: language?.company_page?.err_size_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng chọn quy mô công ty'
+          : languageRedux === 2
+            ? 'Please select company size'
+            : '회사규모를 선택해 주세요',
         checkForm: false,
         idError: 12,
       };
     }
     if (dataCompany?.description === '') {
       return {
-        message: language?.company_page?.err_des_mess,
+        message: languageRedux === 1
+          ? 'Vui lòng nhập mô tả công ty'
+          : languageRedux === 2
+            ? 'Please enter company description'
+            : '회사 설명을 입력하세요.',
         checkForm: false,
         idError: 13,
       };
     }
     if (dataCompany?.description.length > 1000) {
       return {
-        message: languageRedux === 1 ?
-          "Mô tả không được quá 1000 ký tự." :
-          "Description must not exceed 1000 characters.",
+        message:
+          languageRedux === 1
+            ? 'Mô tả không được quá 1000 ký tự.'
+            : languageRedux === 2
+              ? 'Description must not exceed 1000 characters.'
+              : languageRedux === 3 && '설명은 1,000자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 13,
       };
@@ -455,7 +541,7 @@ const Company: React.FC<ICompany> = (props) => {
     return {
       message: '',
       checkForm: true,
-      idError: 0
+      idError: 0,
     };
   };
 
@@ -472,11 +558,15 @@ const Company: React.FC<ICompany> = (props) => {
             setIsValid(true);
             messageApi.open({
               type: 'success',
-              content: language?.company_page?.create_success,
+              content: languageRedux === 1
+                ? 'Tạo công ty thành công'
+                : languageRedux === 2
+                  ? 'Create successful company'
+                  : '성공적인 회사 만들기',
             });
 
             const resultProfileV3 = await profileApi.getProfileInformationV3(
-              languageRedux === 1 ? 'vi' : 'en',
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             );
             if (resultProfileV3) {
               dispatch(setProfileMeInformationV3(resultProfileV3));
@@ -489,7 +579,11 @@ const Company: React.FC<ICompany> = (props) => {
           } else {
             messageApi.open({
               type: 'error',
-              content: language?.company_page?.create_error,
+              content: languageRedux === 1
+                ? 'Tạo công ty không thành công'
+                : languageRedux === 2
+                  ? 'Create company failed'
+                  : '회사를 만드는 데 실패했습니다.',
             });
           }
         }
@@ -498,19 +592,45 @@ const Company: React.FC<ICompany> = (props) => {
           type: 'error',
           content: message,
         });
-        const company_upload_avatar = document.getElementById('company_upload_avatar') as HTMLElement;
-        const company_name = document.getElementById('company_name') as HTMLElement;
-        const company_city = document.getElementById('company_city') as HTMLElement;
-        const company_district = document.getElementById('company_district') as HTMLElement;
-        const company_ward = document.getElementById('company_ward') as HTMLElement;
-        const company_address = document.getElementById('company_address') as HTMLElement;
-        const company_phone = document.getElementById('company_phone') as HTMLElement;
-        const company_email = document.getElementById('company_email') as HTMLElement;
-        const company_place_role = document.getElementById('company_place_role') as HTMLElement;
-        const company_website = document.getElementById('company_website') as HTMLElement;
-        const company_place_activity = document.getElementById('company_place_activity') as HTMLElement;
-        const company_place_size = document.getElementById('company_place_size') as HTMLElement;
-        const company_place_des = document.getElementById('company_place_des') as HTMLElement;
+        const company_upload_avatar = document.getElementById(
+          'company_upload_avatar',
+        ) as HTMLElement;
+        const company_name = document.getElementById(
+          'company_name',
+        ) as HTMLElement;
+        const company_city = document.getElementById(
+          'company_city',
+        ) as HTMLElement;
+        const company_district = document.getElementById(
+          'company_district',
+        ) as HTMLElement;
+        const company_ward = document.getElementById(
+          'company_ward',
+        ) as HTMLElement;
+        const company_address = document.getElementById(
+          'company_address',
+        ) as HTMLElement;
+        const company_phone = document.getElementById(
+          'company_phone',
+        ) as HTMLElement;
+        const company_email = document.getElementById(
+          'company_email',
+        ) as HTMLElement;
+        const company_place_role = document.getElementById(
+          'company_place_role',
+        ) as HTMLElement;
+        const company_website = document.getElementById(
+          'company_website',
+        ) as HTMLElement;
+        const company_place_activity = document.getElementById(
+          'company_place_activity',
+        ) as HTMLElement;
+        const company_place_size = document.getElementById(
+          'company_place_size',
+        ) as HTMLElement;
+        const company_place_des = document.getElementById(
+          'company_place_des',
+        ) as HTMLElement;
         console.log(idError);
 
         switch (idError) {
@@ -580,7 +700,11 @@ const Company: React.FC<ICompany> = (props) => {
             setIsValid(true);
             messageApi.open({
               type: 'success',
-              content: language?.company_page?.update_success,
+              content: languageRedux === 1
+                ? 'Cập nhật thông tin công ty thành công'
+                : languageRedux === 2
+                  ? 'Updating company information successfully'
+                  : '회사 정보가 업데이트되었습니다.',
             });
 
             setDataCompany((pre: any) => ({ ...pre, images: [] }));
@@ -588,7 +712,11 @@ const Company: React.FC<ICompany> = (props) => {
           } else {
             messageApi.open({
               type: 'error',
-              content: 'Lỗi update images',
+              content: languageRedux === 1
+                ? 'Lỗi cập nhật hình ảnh công ty'
+                : languageRedux === 2
+                  ? "Error updating company image"
+                  : '회사 이미지를 업데이트하는 중에 오류가 발생했습니다.',
             });
           }
         }
@@ -597,19 +725,45 @@ const Company: React.FC<ICompany> = (props) => {
           type: 'error',
           content: message,
         });
-        const company_upload_avatar = document.getElementById('company_upload_avatar') as HTMLElement;
-        const company_name = document.getElementById('company_name') as HTMLElement;
-        const company_city = document.getElementById('company_city') as HTMLElement;
-        const company_district = document.getElementById('company_district') as HTMLElement;
-        const company_ward = document.getElementById('company_ward') as HTMLElement;
-        const company_address = document.getElementById('company_address') as HTMLElement;
-        const company_phone = document.getElementById('company_phone') as HTMLElement;
-        const company_email = document.getElementById('company_email') as HTMLElement;
-        const company_place_role = document.getElementById('company_place_role') as HTMLElement;
-        const company_website = document.getElementById('company_website') as HTMLElement;
-        const company_place_activity = document.getElementById('company_place_activity') as HTMLElement;
-        const company_place_size = document.getElementById('company_place_size') as HTMLElement;
-        const company_place_des = document.getElementById('company_place_des') as HTMLElement;
+        const company_upload_avatar = document.getElementById(
+          'company_upload_avatar',
+        ) as HTMLElement;
+        const company_name = document.getElementById(
+          'company_name',
+        ) as HTMLElement;
+        const company_city = document.getElementById(
+          'company_city',
+        ) as HTMLElement;
+        const company_district = document.getElementById(
+          'company_district',
+        ) as HTMLElement;
+        const company_ward = document.getElementById(
+          'company_ward',
+        ) as HTMLElement;
+        const company_address = document.getElementById(
+          'company_address',
+        ) as HTMLElement;
+        const company_phone = document.getElementById(
+          'company_phone',
+        ) as HTMLElement;
+        const company_email = document.getElementById(
+          'company_email',
+        ) as HTMLElement;
+        const company_place_role = document.getElementById(
+          'company_place_role',
+        ) as HTMLElement;
+        const company_website = document.getElementById(
+          'company_website',
+        ) as HTMLElement;
+        const company_place_activity = document.getElementById(
+          'company_place_activity',
+        ) as HTMLElement;
+        const company_place_size = document.getElementById(
+          'company_place_size',
+        ) as HTMLElement;
+        const company_place_des = document.getElementById(
+          'company_place_des',
+        ) as HTMLElement;
         console.log(idError);
 
         switch (idError) {
@@ -713,7 +867,6 @@ const Company: React.FC<ICompany> = (props) => {
     // }));
 
     if (formData) {
-
       haveCompany
         ? handleUpdateCompany(formData, formDataImages)
         : handleCreateCompany(formData);
@@ -779,7 +932,9 @@ const Company: React.FC<ICompany> = (props) => {
             <h1>
               {languageRedux === 1
                 ? 'Thông tin công ty'
-                : "Company's information"}
+                : languageRedux === 2
+                  ? "Company's information"
+                  : languageRedux === 3 && '회사 정보'}
             </h1>
 
             <Space
@@ -794,7 +949,11 @@ const Company: React.FC<ICompany> = (props) => {
               </div>
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                {language?.edit}
+                {languageRedux === 1
+                  ? 'Sửa'
+                  : languageRedux === 2
+                    ? 'Edit'
+                    : '고치다'}
               </p>
             </Space>
           </div>
@@ -805,7 +964,10 @@ const Company: React.FC<ICompany> = (props) => {
             <p>
               {languageRedux === 1
                 ? 'Bạn cần điền thông tin công ty của mình để đăng tin tuyển dụng, tìm kiếm ứng viên.'
-                : 'You need to fill in your company information to post job vacancies, search for candidates.'}
+                : languageRedux === 2
+                  ? 'You need to fill in your company information to post job vacancies, search for candidates.'
+                  : languageRedux === 3 &&
+                  '채용 공고 게시 및 후보자 검색을 위해서는 회사 정보를 입력해야 합니다.'}
             </p>
           </div>
         </div>
@@ -825,7 +987,6 @@ const Company: React.FC<ICompany> = (props) => {
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
               setIsValid={setIsValid}
-
             />
             <EditAddressCompany
               dataCompany={dataCompany}
@@ -839,7 +1000,6 @@ const Company: React.FC<ICompany> = (props) => {
               setFillProvince={setFillProvince}
               setFillWard={setFillWard}
               setIsValid={setIsValid}
-
             />
             <EditPhoneMailCompany
               dataCompany={dataCompany}
@@ -847,7 +1007,6 @@ const Company: React.FC<ICompany> = (props) => {
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
               setIsValid={setIsValid}
-
             />
             <EditRoleWebCompany
               dataCompany={dataCompany}
@@ -856,7 +1015,6 @@ const Company: React.FC<ICompany> = (props) => {
               setUnsavedChanges={setUnsavedChanges}
               setFillRole={setFillRole}
               setIsValid={setIsValid}
-
             />
 
             <EditFieldScaleCompany
@@ -867,7 +1025,6 @@ const Company: React.FC<ICompany> = (props) => {
               setFillActivity={setFillActivity}
               setFillSize={setFillSize}
               setIsValid={setIsValid}
-
             />
             <EditImageCompany
               dataCompany={dataCompany}
@@ -875,7 +1032,6 @@ const Company: React.FC<ICompany> = (props) => {
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
               setIsValid={setIsValid}
-
             />
             <EditDescripeCompany
               dataCompany={dataCompany}
@@ -883,7 +1039,6 @@ const Company: React.FC<ICompany> = (props) => {
               is_profile={is_profile}
               setUnsavedChanges={setUnsavedChanges}
               setIsValid={setIsValid}
-
             />
 
             <button
@@ -892,7 +1047,13 @@ const Company: React.FC<ICompany> = (props) => {
               className="btn-edit_submitForm"
               style={{ display: is_profile ? 'none' : 'block' }}
             >
-              {language?.save}
+              {
+                languageRedux === 1
+                  ? 'Lưu'
+                  : languageRedux === 2
+                    ? 'Save'
+                    : '구하다'
+              }
             </button>
           </form>
         </Skeleton>
@@ -918,8 +1079,7 @@ const Company: React.FC<ICompany> = (props) => {
         handleSubmit={handleSubmit}
       />
 
-      <ModalIntroduceCreateCompany
-      />
+      <ModalIntroduceCreateCompany />
 
       <div style={{ display: is_profile ? 'none' : 'block' }}>
         {/* <RollTop /> */}

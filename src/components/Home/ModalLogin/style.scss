@@ -8,6 +8,34 @@
 }
 
 form {
+
+
+
+  .login-GF {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 24px;
+    .icon-google {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    img {
+      width: 38px;
+      height: 38px;
+    }
+    p {
+      align-items: center;
+      color: #000;
+      display: flex;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 24px;
+    }
+  }
+
   .wrapLogin {
     display: flex;
     // align-items: center;

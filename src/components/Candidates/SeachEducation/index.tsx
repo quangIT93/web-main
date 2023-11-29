@@ -69,7 +69,14 @@ const CustomOption = ({
   return (
     <div className="wrap-radio_candidate">
       <div className="title-candidate">
-        <h3> Trình độ học vấn</h3>
+        <h3>
+          {' '}
+          {languageRedux === 1
+            ? 'Trình độ học vấn'
+            : languageRedux === 2
+              ? 'Education'
+              : languageRedux === 3 && '최종학력'}
+        </h3>
       </div>
       <Radio.Group
         style={{ width: '100%' }}
@@ -114,7 +121,7 @@ const SeachEducation: React.FC<ISeachEducation> = (props) => {
   const academicTypesFnc = async () => {
     try {
       const result = await candidateSearch.getAcademicTypes(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setAcademicType(result.data);
@@ -151,13 +158,19 @@ const SeachEducation: React.FC<ISeachEducation> = (props) => {
         value={reset && valueRender ? undefined : valueRender?.data}
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder={languageRedux === 1 ? 'Trình độ học vấn' : 'Education'}
+        placeholder={
+          languageRedux === 1
+            ? 'Trình độ học vấn'
+            : languageRedux === 2
+              ? 'Education'
+              : languageRedux === 3 && '최종학력'
+        }
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
         // open={true}
         // onMouseLeave={set}
       >
         <Option className="type-salary" value={valueRender?.id} label="">
-          <div className="sssssssssssssssssssssssssss">
+          <div className="type-salary__item">
             <CustomOption
               academicType={academicType}
               setTypeAcademic={setTypeAcademic}

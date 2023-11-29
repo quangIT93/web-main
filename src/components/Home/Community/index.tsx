@@ -18,7 +18,9 @@ const Community = () => {
         <h3>
           {languageRedux === 1
             ? 'Câu chuyện việc làm HiJob'
-            : 'HiJob Community'}
+            : languageRedux === 2
+              ? 'HiJob Community'
+              : languageRedux === 3 && '워킹스토리'}
         </h3>
       </div>
       <div className="community-content">

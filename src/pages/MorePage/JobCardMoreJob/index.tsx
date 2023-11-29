@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useLocation } from 'react-router-dom';
 
@@ -30,6 +30,7 @@ import { Space, Tooltip } from 'antd';
 
 // import moment from 'moment';
 import bookMarkApi from 'api/bookMarkApi';
+import { RootState } from 'store';
 
 interface PostMore {
   id: number;
@@ -72,7 +73,7 @@ const JobCardMoreJob: React.FC<any> = (props) => {
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
   const location = useLocation();
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -215,7 +216,11 @@ const JobCardMoreJob: React.FC<any> = (props) => {
                           ? props.item?.companyResourceData?.logo
                           : ''
                       }
-                      alt="ảnh"
+                      alt={languageRedux === 1
+                        ? 'Hình ảnh bị lỗi'
+                        : languageRedux === 2
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'}
                       onError={handleImageError}
                     />
                   )}
@@ -354,7 +359,11 @@ const JobCardMoreJob: React.FC<any> = (props) => {
                           ? props.item?.companyResourceData?.logo
                           : ''
                       }
-                      alt="ảnh"
+                      alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'}
                       onError={handleImageError}
                     />
                   )}

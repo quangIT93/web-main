@@ -20,25 +20,37 @@ const Advertise = () => {
                     <div className="content_top">
                         <h3>
                             {
-                                languageRedux === 1 ?
-                                    "Kiến tạo sự nghiệp của riêng bạn với HiJob!" :
-                                    "Create your own career with HiJob!"
+                                languageRedux === 1
+                                    ? 'Kiến tạo sự nghiệp của riêng bạn với HiJob!'
+                                    : languageRedux === 2
+                                        ? 'Create your own career with HiJob!'
+                                        : languageRedux === 3
+                                            ? 'HiJob과 함께 나만의 경력을 만들어보세요!'
+                                            : 'Kiến tạo sự nghiệp của riêng bạn với HiJob!'
                             }
                         </h3>
                         <p>
                             {
-                                languageRedux === 1 ?
-                                    "Trải nghiệm quá trình tìm kiếm công việc, tạo riêng cho mình một bản CV chuyên nghiệp và hơn thế nữa." :
-                                    "Experience the job search process, create your own professional CV and more."
+                                languageRedux === 1
+                                    ? 'Trải nghiệm quá trình tìm kiếm công việc, tạo riêng cho mình một bản CV chuyên nghiệp và hơn thế nữa.'
+                                    : languageRedux === 2
+                                        ? 'Experience the job search process, create your own professional CV and more.'
+                                        : languageRedux === 3
+                                            ? '구직 과정을 경험하고, 자신만의 전문 이력서를 작성하는 등 다양한 활동을 즐겨보세요.'
+                                            : 'Trải nghiệm quá trình tìm kiếm công việc, tạo riêng cho mình một bản CV chuyên nghiệp và hơn thế nữa.'
                             }
                         </p>
                     </div>
                     <div className="content_bot">
                         <h3>
                             {
-                                languageRedux === 1 ?
-                                    "Tải Ứng dụng Hi Job ngay!" :
-                                    "Download the Hi Job App now!"
+                                languageRedux === 1
+                                    ? 'Tải Ứng dụng Hi Job ngay!'
+                                    : languageRedux === 2
+                                        ? 'Download the Hi Job App now!'
+                                        : languageRedux === 3
+                                            ? '지금 Hi Job 앱을 다운로드하세요!'
+                                            : 'Tải Ứng dụng Hi Job ngay!'
                             }
                         </h3>
                         <div className="qr_content">

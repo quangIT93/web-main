@@ -21,7 +21,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 
 import Loading from '#components/Loading';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 // Initialize Firebase
@@ -38,31 +38,33 @@ const App: React.FC = () => {
   let persistor = persistStore(store);
 
   return (
-    <React.Suspense fallback={<Loading />}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter>
-            <HomeValueContextProvider>
-              <ChatContextProvider>
-                <ScrollObserver>
-                  <Layout>
-                    <Routes>
-                      {/* @ts-ignore */}
-                      {routes.map(({ path, component }: RouteProps) => {
-                        return (
-                          <Route path={path} element={component} key={path} />
-                        );
-                      })}
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </Layout>
-                </ScrollObserver>
-              </ChatContextProvider>
-            </HomeValueContextProvider>
-          </BrowserRouter>
-        </PersistGate>
-      </Provider>
-    </React.Suspense>
+    <GoogleOAuthProvider clientId="436273589347-ot9ec9jhm235q3irsvjpnltr8hsun5cp.apps.googleusercontent.com">
+      <React.Suspense fallback={<Loading />}>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <BrowserRouter>
+              <HomeValueContextProvider>
+                <ChatContextProvider>
+                  <ScrollObserver>
+                    <Layout>
+                      <Routes>
+                        {/* @ts-ignore */}
+                        {routes.map(({ path, component }: RouteProps) => {
+                          return (
+                            <Route path={path} element={component} key={path} />
+                          );
+                        })}
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </Layout>
+                  </ScrollObserver>
+                </ChatContextProvider>
+              </HomeValueContextProvider>
+            </BrowserRouter>
+          </PersistGate>
+        </Provider>
+      </React.Suspense>
+    </GoogleOAuthProvider>
   );
 };
 

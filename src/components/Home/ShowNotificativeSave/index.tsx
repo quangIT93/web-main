@@ -59,7 +59,12 @@ const ShowNotificativeSave: React.FC = () => {
               backgroundColor: '#000000',
             }}
           >
-            {language?.job_has_been_saved}
+            {
+              languageRedux === 1 ?
+                "Đã lưu công việc" :
+                languageRedux === 2 ?
+                  "Job has been saved" : "작업이 저장되었습니다."
+            }
           </Alert>
         </Snackbar>
       </Stack>

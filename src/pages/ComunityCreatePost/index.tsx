@@ -77,7 +77,7 @@ const ComunityCreatePost = () => {
       if (POST_COMMUNITY_ID) {
         const result = await communityApi.getCommunityDetailId(
           POST_COMMUNITY_ID,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (result) {
           setCommunityPost(result?.data);
@@ -192,7 +192,11 @@ const ComunityCreatePost = () => {
 
     if (files) {
       if (files.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
         return;
       }
       const newImages: string[] = [];
@@ -215,7 +219,11 @@ const ComunityCreatePost = () => {
               })),
             ];
             if (newImageSelected.length > 5) {
-              message.error(language?.limit_5_img);
+              message.error(languageRedux === 1
+                ? 'Chỉ có thể tối đa 5 hình ảnh'
+                : languageRedux === 2
+                  ? 'Only up to 5 images can be'
+                  : '최대 5개의 이미지가 허용됩니다.');
               return;
             }
             setSelectedImages(newImageSelected);
@@ -274,7 +282,11 @@ const ComunityCreatePost = () => {
       // console.log('fileUploaded : ', fileUploaded);
 
       if (fileUploaded.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
         return;
       }
 
@@ -288,7 +300,11 @@ const ComunityCreatePost = () => {
       ];
 
       if (newFileSelected.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
 
         return;
       }
@@ -317,7 +333,11 @@ const ComunityCreatePost = () => {
               })),
             ];
             if (newImageSelected.length > 5) {
-              message.error(language?.limit_5_img);
+              message.error(languageRedux === 1
+                ? 'Chỉ có thể tối đa 5 hình ảnh'
+                : languageRedux === 2
+                  ? 'Only up to 5 images can be'
+                  : '최대 5개의 이미지가 허용됩니다.');
 
               return;
             }
@@ -347,7 +367,9 @@ const ComunityCreatePost = () => {
         message:
           languageRedux === 1
             ? 'Vui lòng nhập chủ đề bài viết'
-            : 'Please enter the topic of the post',
+            : languageRedux === 2
+              ? 'Please enter the topic of the post'
+              : languageRedux === 3 && '기사제목을 입력해주세요',
         checkForm: false,
       };
     }
@@ -357,7 +379,9 @@ const ComunityCreatePost = () => {
         message:
           languageRedux === 1
             ? 'Vui lòng nhập nội dung bài viết'
-            : 'Please enter the content of the post',
+            : languageRedux === 2
+              ? 'Please enter the content of the post'
+              : languageRedux === 3 && '기사 내용을 입력해주세요',
         checkForm: false,
       };
     }
@@ -418,7 +442,9 @@ const ComunityCreatePost = () => {
             content:
               languageRedux === 1
                 ? 'Sửa bài viết không thành công'
-                : 'Edit post failed',
+                : languageRedux === 2
+                  ? 'Edit post failed'
+                  : languageRedux === 3 && '글 수정 실패',
           });
         }
       } else {
@@ -427,7 +453,7 @@ const ComunityCreatePost = () => {
           content: message,
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const createCommunity = async (formData: any) => {
@@ -467,15 +493,25 @@ const ComunityCreatePost = () => {
             {POST_COMMUNITY_ID
               ? languageRedux === 1
                 ? 'Sửa bài viết'
-                : 'Edit post'
+                : languageRedux === 2
+                  ? 'Edit post'
+                  : languageRedux === 3 && '게시물 수정'
               : languageRedux === 1
-              ? 'Tạo bài viết mới'
-              : 'Creat new post'}
+                ? 'Tạo bài viết mới'
+                : languageRedux === 2
+                  ? 'Creat new post'
+                  : languageRedux === 3 && '새로운 채용 글를 만들다'}
           </h3>
         </div>
         <div className="create-post-body">
           <div className="create-post-body_input">
-            <h3>{languageRedux === 1 ? '1. Chủ đề' : '1. Topic'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? '1. Chủ đề'
+                : languageRedux === 2
+                  ? '1. Topic'
+                  : languageRedux === 3 && '1. 테마'}
+            </h3>
             <Input
               value={valueTitle}
               onChange={(e: any) => {
@@ -485,13 +521,22 @@ const ComunityCreatePost = () => {
                   message.error(
                     languageRedux === 1
                       ? 'Tiêu đề không được vượt quá 500 ký tự'
-                      : "Topics can't exceed 500 characters",
+                      : languageRedux === 2
+                        ? "Topics can't exceed 500 characters"
+                        : languageRedux === 3 &&
+                        '제목은 500자를 초과할 수 없습니다.',
                   );
                 }
               }}
               className="input-title"
               placeholder={
-                languageRedux === 1 ? 'Chủ đề cần chia sẻ' : 'Topics to share'
+                languageRedux === 1
+                  ? 'Chủ đề cần chia sẻ'
+                  : languageRedux === 2
+                    ? 'Topics to share'
+                    : languageRedux === 3
+                      ? '공유할 주제'
+                      : 'Chủ đề cần chia sẻ'
               }
             />
             <div className="wrap-noti_input">
@@ -499,13 +544,18 @@ const ComunityCreatePost = () => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Chủ đề không được bỏ trống'
-                    : 'Topics cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Topics cannot be empty'
+                      : languageRedux === 3 && '주제는 비워둘 수 없습니다.'}
                 </span>
               ) : valueTitle.length > 500 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Chủ đề không được vượt quá 500 ký tự'
-                    : 'Topics cannot exceed 500 characters'}
+                    : languageRedux === 2
+                      ? 'Topics cannot exceed 500 characters'
+                      : languageRedux === 3 &&
+                      '제목은 500자를 초과할 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -514,7 +564,13 @@ const ComunityCreatePost = () => {
             </div>
           </div>
           <div className="create-post-body_input">
-            <h3>{languageRedux === 1 ? '2. Nội dung' : '2. Contents'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? '2. Nội dung'
+                : languageRedux === 2
+                  ? '2. Contents'
+                  : languageRedux === 3 && '2. 내용'}
+            </h3>
             <TextArea
               value={valueContent}
               onChange={(e: any) => {
@@ -524,7 +580,10 @@ const ComunityCreatePost = () => {
                   message.error(
                     languageRedux === 1
                       ? 'Nội dung bài viết không được vượt quá 1000 ký tự'
-                      : 'Post content should not exceed 1000 characters',
+                      : languageRedux === 2
+                        ? 'Post content should not exceed 1000 characters'
+                        : languageRedux === 3 &&
+                        '기사 내용은 1000자를 초과할 수 없습니다.',
                   );
                 }
               }}
@@ -532,7 +591,11 @@ const ComunityCreatePost = () => {
               placeholder={
                 languageRedux === 1
                   ? 'Nội dung cần chia sẻ'
-                  : 'Content to share'
+                  : languageRedux === 2
+                    ? 'Content to share'
+                    : languageRedux === 3
+                      ? '공유할 콘텐츠'
+                      : 'Nội dung cần chia sẻ'
               }
               autoSize={{ minRows: 5, maxRows: 9 }}
             />
@@ -540,14 +603,20 @@ const ComunityCreatePost = () => {
               {valueContent.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
-                    ? 'nội dung thêm không được bỏ trống'
-                    : 'Content cannot be empty'}
+                    ? 'Nội dung thêm không được bỏ trống'
+                    : languageRedux === 2
+                      ? 'Content cannot be empty'
+                      : languageRedux === 3 &&
+                      '추가 콘텐츠는 비워둘 수 없습니다.'}
                 </span>
               ) : valueContent.length > 1000 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Nội dung thêm không được vượt quá 1000 ký tự'
-                    : 'Content cannot exceed 1000 characters'}
+                    : languageRedux === 2
+                      ? 'Content cannot exceed 1000 characters'
+                      : languageRedux === 3 &&
+                      '추가 콘텐츠는 1000자를 초과할 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -558,7 +627,11 @@ const ComunityCreatePost = () => {
           <div className="create-post-body_input">
             <h3>
               <span>
-                {languageRedux === 1 ? '3. Thêm hình ảnh' : '3. Add images'}
+                {languageRedux === 1
+                  ? 'Thêm hình ảnh'
+                  : languageRedux === 2
+                    ? 'Add images'
+                    : languageRedux === 3 && '이미지 추가'}
               </span>
               <p
                 style={{
@@ -570,7 +643,11 @@ const ComunityCreatePost = () => {
                 }}
               >
                 <label htmlFor="submit">
-                  {languageRedux === 1 ? 'Thêm hình ảnh' : 'Add images'}
+                  {languageRedux === 1
+                    ? 'Thêm hình ảnh'
+                    : languageRedux === 2
+                      ? 'Add images'
+                      : languageRedux === 3 && '이미지 추가'}
                 </label>
                 <input
                   id="submit"
@@ -610,7 +687,7 @@ const ComunityCreatePost = () => {
                         display:
                           (selectedImages.length === 0 &&
                             selectedFiles.length === 0) ||
-                          isDragActive
+                            isDragActive
                             ? 'flex'
                             : 'none',
                       }}
@@ -619,7 +696,9 @@ const ComunityCreatePost = () => {
                       <p>
                         {languageRedux === 1
                           ? 'Thêm hình ảnh cho bài viết'
-                          : 'Add an image to the post'}
+                          : languageRedux === 2
+                            ? 'Add an image to the post'
+                            : languageRedux === 3 && '기사에 이미지 추가'}
                       </p>
                     </div>
                   </div>
@@ -630,7 +709,11 @@ const ComunityCreatePost = () => {
                       <img
                         key={index}
                         src={item?.image}
-                        alt={language?.err_none_img}
+                        alt={languageRedux === 1
+                          ? 'Hình ảnh bị lỗi'
+                          : languageRedux === 2
+                            ? 'Image is corrupted'
+                            : '이미지가 손상되었습니다'}
                       />
                       <div
                         className="deleteButton"
@@ -660,18 +743,22 @@ const ComunityCreatePost = () => {
               className={
                 valueTitle === '' || valueContent === ''
                   ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                    'submit'
+                  'submit'
                   : 'submit full-info'
               }
             >
               {valueTitle === '' || valueContent === ''
                 ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                  languageRedux === 1
+                languageRedux === 1
                   ? 'Lưu bài'
-                  : 'Save post'
+                  : languageRedux === 2
+                    ? 'Save post'
+                    : languageRedux === 3 && '게시물 저장'
                 : languageRedux === 1
-                ? 'Đăng bài viết'
-                : 'Post an article'}
+                  ? 'Đăng bài viết mới'
+                  : languageRedux === 2
+                    ? 'Post new articles'
+                    : languageRedux === 3 && '새로운 글을 게시합니다'}
             </Button>
           </div>
         </div>

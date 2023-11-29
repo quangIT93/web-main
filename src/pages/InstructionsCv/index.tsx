@@ -4,9 +4,14 @@ import React from 'react';
 import './style.scss';
 
 import { dataInstruction } from './dataInContruction';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const InstructionsCv = () => {
   const [itemParent, setItemParent] = React.useState(1);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const handleClickItemIns = (id: number) => {
     setItemParent(id);
   };
@@ -18,7 +23,13 @@ const InstructionsCv = () => {
         <div className="instructionCv-container_top">
           <div className="container-top_content">
             <div className="top-content_title">
-              <h3>Hướng dẫn tạo Cv trên HiJob </h3>{' '}
+              <h3>
+                {languageRedux === 1
+                  ? 'Hướng dẫn tạo CV trên HiJob'
+                  : languageRedux === 2
+                    ? 'Instructions for creating a CV on HiJob'
+                    : languageRedux === 3 && 'HiJob에서 이력서 작성 지침'}{' '}
+              </h3>{' '}
               <h3 style={{ color: '#0d99ff' }}>Chi tiết</h3>
             </div>
             <p>

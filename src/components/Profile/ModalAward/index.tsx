@@ -132,7 +132,10 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 255'
-            : 'Title length must be greater than 0 and less than 255',
+            : languageRedux === 2
+              ? 'Title length must be greater than 0 and less than 255'
+              : languageRedux === 3 &&
+              '제목 길이는 0보다 크고 255보다 작아야 합니다.',
         checkForm: false,
         idError: 1,
       };
@@ -146,7 +149,10 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Độ dài mô tả phải lớn hơn 0 và nhỏ hơn 1000'
-            : 'Description length must be greater than 0 and less than 1000',
+            : languageRedux === 2
+              ? 'Description length must be greater than 0 and less than 1000'
+              : languageRedux === 3 &&
+              '설명 길이는 0보다 크고 1000보다 작아야 합니다.',
         checkForm: false,
         idError: 2,
       };
@@ -169,7 +175,7 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
         );
         if (result) {
           const resultProfile = await profileApi.getProfileInformationMoreV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
 
           resultProfile &&
@@ -189,8 +195,12 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
         }
       } else {
         message.error(messageError);
-        const profile_award_title = document.getElementById('profile_award_title') as HTMLElement;
-        const profile_award_description = document.getElementById('profile_award_description') as HTMLElement;
+        const profile_award_title = document.getElementById(
+          'profile_award_title',
+        ) as HTMLElement;
+        const profile_award_description = document.getElementById(
+          'profile_award_description',
+        ) as HTMLElement;
         // console.log(idError);
 
         switch (idError) {
@@ -241,7 +251,11 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
             align="center"
             sx={{ marginBottom: '12px' }}
           >
-            {languageRedux === 1 ? 'Thêm thông tin giải thưởng' : 'Add Award'}
+            {languageRedux === 1
+              ? 'Thêm thông tin giải thưởng'
+              : languageRedux === 2
+                ? 'Add Award'
+                : languageRedux === 3 && '더 많은 수상 정보'}
           </Typography>
           <Box sx={{ marginBottom: '12px' }}>
             <Typography
@@ -250,7 +264,11 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              {languageRedux === 1 ? 'Tiêu đề giải thưởng' : 'Award Title'}{' '}
+              {languageRedux === 1
+                ? 'Tiêu đề giải thưởng'
+                : languageRedux === 2
+                  ? 'Award Title'
+                  : languageRedux === 3 && '수상명'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -262,7 +280,13 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={
-                languageRedux === 1 ? 'Tiêu đề giải thưởng' : 'Award Title'
+                languageRedux === 1
+                  ? 'Tiêu đề giải thưởng'
+                  : languageRedux === 2
+                    ? 'Award Title'
+                    : languageRedux === 3
+                      ? '수상명'
+                      : 'Tiêu đề giải thưởng'
               }
             // error={titleError} // Đánh dấu lỗi
             />
@@ -271,13 +295,18 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Tiêu đề không được vượt quá 255 ký tự'
-                    : 'Title cannot exceed 255 characters'}
+                    : languageRedux === 2
+                      ? 'Title cannot exceed 255 characters'
+                      : languageRedux === 3 &&
+                      '제목은 255자를 초과할 수 없습니다.'}
                 </span>
               ) : !award.title ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Tiêu đề không được bỏ trống'
-                    : 'Title cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Title cannot be empty'
+                      : languageRedux === 3 && '제목은 비워둘 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -321,7 +350,11 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              {languageRedux === 1 ? 'Miêu tả' : 'Description'}{' '}
+              {languageRedux === 1
+                ? 'Mô tả'
+                : languageRedux === 2
+                  ? 'Description'
+                  : languageRedux === 3 && '회사설명'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -339,7 +372,11 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
               placeholder={
                 languageRedux === 1
                   ? 'Mô tả giải thưởng của bạn'
-                  : 'Description your award'
+                  : languageRedux === 2
+                    ? 'Description your award'
+                    : languageRedux === 3
+                      ? '수상 경력을 설명하세요.'
+                      : 'Mô tả giải thưởng của bạn'
               }
             // error={titleError} // Đánh dấu lỗi
             />
@@ -348,13 +385,19 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Thông tin thêm không được bỏ trống'
-                    : 'Additional information cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Additional information cannot be empty'
+                      : languageRedux === 3 &&
+                      '추가 정보는 비워둘 수 없습니다.'}
                 </span>
               ) : award.description.length > 1000 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Thông tin thêm không được vượt quá 1000 ký tự'
-                    : 'Additional information cannot exceed 1000 characters'}
+                    : languageRedux === 2
+                      ? 'Additional information cannot exceed 1000 characters'
+                      : languageRedux === 3 &&
+                      '추가 정보는 1000자를 초과할 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -363,7 +406,12 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
             </div>
           </Box>
           <Button variant="contained" fullWidth onClick={handleSubmit}>
-            {language?.profile_page?.save_info}
+            {languageRedux === 1
+              ? 'Lưu thông tin'
+              : languageRedux === 2
+                ? 'Save information'
+                : languageRedux === 3 &&
+                '정보 저장'}
           </Button>
         </Box>
       </Modal>

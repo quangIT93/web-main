@@ -5,9 +5,9 @@ import { RootState } from '../../../store/reducer';
 import { useSelector } from 'react-redux';
 const RejectedApplication: React.FC = () => {
   // const [language, setLanguageState] = React.useState<any>();
-  // const languageRedux = useSelector(
-  //   (state: RootState) => state.changeLaguage.language,
-  // );
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -44,7 +44,12 @@ const RejectedApplication: React.FC = () => {
           cursor: 'default',
         }}
       >
-        {language?.rejected}
+        {
+          languageRedux === 1 ?
+            "Đã từ chối" :
+            languageRedux === 2 ?
+              "Rejected" : "거절됨"
+        }
       </Button>
     </>
   );
