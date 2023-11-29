@@ -108,6 +108,40 @@ const Login = () => {
     },
   });
 
+  // ===========================
+  useEffect(() => {
+    // Load the Google One Tap API
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      // Initialize the Google One Tap API
+      (window as any).google.accounts.id.initialize({
+        client_id:
+          '436273589347-ot9ec9jhm235q3irsvjpnltr8hsun5cp.apps.googleusercontent.com',
+        callback: (response: any) => {
+          console.log('Google One Tap response:', response);
+
+          // Add your logic for handling the signed-in user here
+        },
+        prompt_parent_id: 'google-login-button', // ID of your button container
+      });
+
+      // Render the Google One Tap button
+      (window as any).google.accounts.id.renderButton(
+        document.getElementById('google-login-button'), // ID of your button container
+        { text: 'Sign up with Google', type: 'icon', shape: 'circle' },
+      );
+    };
+
+    // Cleanup on component unmount
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
   return (
     <>
       <div onClick={() => login()}>Sign in with Google 🚀</div>;
@@ -119,6 +153,7 @@ const Login = () => {
           console.log('Login Failed');
         }}
       />
+      <div id="google-login-button"></div>
     </>
   );
 };

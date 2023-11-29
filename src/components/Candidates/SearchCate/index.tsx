@@ -97,7 +97,7 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
     //   setDisable(true)
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profileV3]);
+  }, [profileV3, languageRedux]);
 
   //   const DropdownRender = (menus: React.ReactNode) => (
   //     <div className="filter-loca-cate">

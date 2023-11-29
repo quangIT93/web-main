@@ -136,7 +136,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
     // }
     onChange(listCate?.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);

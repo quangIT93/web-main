@@ -414,6 +414,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   //   window.google.accounts.id.prompt();
   // }, []);
 
+  useEffect(() => {}, []);
+
   return (
     <Modal
       open={openModalLogin}
@@ -612,55 +614,72 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 <span className="line"></span>
               </div>
               <div className="login-GF">
-                <FacebookLogin
-                  appId={appId}
-                  autoLoad={false}
-                  onSuccess={responseFacebook}
-                  onFail={responseFailFacebookAndGoogle}
-                  render={(renderProps: any) => (
-                    <div
-                      // className="bnt-login_google bnt-login"
-                      onClick={renderProps.onClick}
-                      className="icon-google"
-                    >
-                      <img
-                        src="loginLogo/facebookOriginal.png"
-                        alt={
-                          languageRedux === 1
-                            ? 'Hình ảnh bị lỗi'
-                            : languageRedux === 2
-                              ? 'Image is corrupted'
-                              : '이미지가 손상되었습니다'
-                        }
-                        width={29}
-                        height={30}
-                      />
-                      {/* <p className="text-login ">
+                <div className="login-GF__fb">
+                  <FacebookLogin
+                    appId={appId}
+                    autoLoad={false}
+                    onSuccess={responseFacebook}
+                    onFail={responseFailFacebookAndGoogle}
+                    render={(renderProps: any) => {
+                      console.log('renderProps', renderProps);
+
+                      return (
+                        <div
+                          // className="bnt-login_google bnt-login"
+                          onClick={renderProps.onClick}
+                          className="icon-google"
+                        >
+                          <img
+                            src="loginLogo/facebookOriginal.png"
+                            alt={
+                              languageRedux === 1
+                                ? 'Hình ảnh bị lỗi'
+                                : languageRedux === 2
+                                  ? 'Image is corrupted'
+                                  : '이미지가 손상되었습니다'
+                            }
+                            width={29}
+                            height={30}
+                          />
+                          {/* <p className="text-login ">
                         {languageRedux === 1
                           ? 'Đăng nhập bằng tài khoản Facebook'
                           : languageRedux === 2
                             ? 'Sign in with Facebook account'
                             : languageRedux === 3 && '페이스북으로 그로인'}
                       </p> */}
-                    </div>
-                  )}
-                  // style={{
-                  //   backgroundColor: '#4267b2',
-                  //   color: '#fff',
-                  //   fontSize: '16px',
-                  //   padding: '12px 24px',
-                  //   border: 'none',
-                  //   borderRadius: '4px',
-                  // }}
-                />
-                <GoogleLogin
-                  onSuccess={responseGoogle}
-                  onError={() => {
-                    console.log('Login Failed');
-                  }}
-                  type="icon"
-                  shape="circle"
-                />
+                        </div>
+                      );
+                    }}
+                    // style={{
+                    //   backgroundColor: '#4267b2',
+                    //   color: '#fff',
+                    //   fontSize: '16px',
+                    //   padding: '12px 24px',
+                    //   border: 'none',
+                    //   borderRadius: '4px',
+                    // }}
+                  />
+                </div>
+                <div className="login-GF__gg">
+                  <div className="login-GF__ggImg">
+                    <img
+                      src="loginLogo/googleOriginal.png"
+                      alt=""
+                      width={30}
+                      height={30}
+                    />
+                  </div>
+                  <GoogleLogin
+                    onSuccess={responseGoogle}
+                    onError={() => {
+                      console.log('Login Failed');
+                    }}
+                    type="icon"
+                    shape="circle"
+                    size="large"
+                  />
+                </div>
               </div>
               <button
                 type="button"
