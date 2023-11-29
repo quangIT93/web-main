@@ -89,7 +89,7 @@ const MainLayout = ({ children }: Props) => {
 
     if (!localStorage.getItem('accessToken')) {
       (window as any).google?.accounts?.id?.prompt((notification: any) =>
-        console.log(notification),
+        console.log('notification', notification),
       );
       document.cookie =
         'g_state' + '=; Max-Age=-9999999999999999999999999999999';
