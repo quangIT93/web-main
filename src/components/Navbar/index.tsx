@@ -844,7 +844,7 @@ const Navbar: React.FC = () => {
           await dispatch<any>(setProfileMeInformationV3([]));
           await dispatch<any>(setProfileMeCompanyV3([]));
           await dispatch<any>(setProfileMeInformationMoreV3([]));
-          // (window as any).google.accounts.id.disableAutoSelect()
+          document.cookie = 'g_state' + '=; Max-Age=0'
           for (const key of keysToRemove) {
             localStorage.removeItem(key);
           }
