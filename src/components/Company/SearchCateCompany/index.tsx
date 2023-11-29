@@ -55,7 +55,7 @@ const SearchCateCompany: React.FC<ISearchCate> = (props) => {
       getCategories();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profileV3]);
+  }, [profileV3, languageRedux]);
 
   const onChange = (value: string[][]) => {
     setReset(false);

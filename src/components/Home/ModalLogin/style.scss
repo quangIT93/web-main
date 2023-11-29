@@ -17,14 +17,38 @@ form {
     gap: 30px;
     justify-content: center;
     margin-bottom: 24px;
+
+    .login-GF__fb {
+      padding: 8px;
+      border: 1px solid #dadce0;
+      border-radius: 50%;
+      background-color: #fff;
+      img {
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    .login-GF__gg {
+      position: relative;
+      .login-GF__ggImg {
+        position: absolute;
+        // z-index: 1;
+        top: 58%;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        background-color: red;
+        img {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+
     .icon-google {
       display: flex;
       align-items: center;
       cursor: pointer;
-    }
-    img {
-      width: 38px;
-      height: 38px;
     }
     p {
       align-items: center;

@@ -283,7 +283,9 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
               : '관심 분야'}
         </Typography>
 
-        <TreeSelect {...tProps} />
+        <TreeSelect
+          getPopupContainer={(triggerNode) => triggerNode.parentElement}
+          {...tProps} />
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {languageRedux === 1
             ? 'Lưu thông tin'

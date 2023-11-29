@@ -91,9 +91,9 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
     JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
       : userProfile?.categories.map((profile: any) => [
-          profile?.parent_category_id,
-          profile?.child_category_id,
-        ]),
+        profile?.parent_category_id,
+        profile?.child_category_id,
+      ]),
   );
 
   searchParams
@@ -136,7 +136,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
     // }
     onChange(listCate?.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
@@ -179,34 +179,34 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           options={
             dataCategories
               ? dataCategories.map((parentCategory: any) => ({
-                  value: parentCategory.parent_category_id,
-                  label: parentCategory.parent_category,
-                  // disabled:
-                  //   cateId.length < 2
-                  //     ? false
-                  //     : cateId.length <= 2 &&
-                  //       cateId.includes(parentCategory.parent_category_id)
-                  //     ? false
-                  //     : true,
-                  children: parentCategory.childs.map((child: any) => {
-                    var dis = false;
-                    //check id child  when disable = true
-                    if (disable) {
-                      dis = true;
-                      for (const elem of categoriesId) {
-                        if (elem === child.id) {
-                          dis = false;
-                          break;
-                        }
+                value: parentCategory.parent_category_id,
+                label: parentCategory.parent_category,
+                // disabled:
+                //   cateId.length < 2
+                //     ? false
+                //     : cateId.length <= 2 &&
+                //       cateId.includes(parentCategory.parent_category_id)
+                //     ? false
+                //     : true,
+                children: parentCategory.childs.map((child: any) => {
+                  var dis = false;
+                  //check id child  when disable = true
+                  if (disable) {
+                    dis = true;
+                    for (const elem of categoriesId) {
+                      if (elem === child.id) {
+                        dis = false;
+                        break;
                       }
                     }
-                    return {
-                      value: child.id,
-                      label: child.name,
-                      disabled: dis,
-                    };
-                  }),
-                }))
+                  }
+                  return {
+                    value: child.id,
+                    label: child.name,
+                    disabled: dis,
+                  };
+                }),
+              }))
               : []
           }
           onChange={onChange}
@@ -214,12 +214,12 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
             listCate?.current?.length !== 0
               ? listCate?.current
               : listCate?.current?.length === 0 &&
-                  location?.pathname === '/search-results'
+                location?.pathname === '/search-results'
                 ? []
                 : userProfile?.categories.map((profile: any) => [
-                    profile?.parent_category_id,
-                    profile?.child_category_id,
-                  ])
+                  profile?.parent_category_id,
+                  profile?.child_category_id,
+                ])
           }
           value={reset ? [] : listCateProps}
           multiple

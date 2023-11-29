@@ -17,7 +17,7 @@ import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationRed
 import { RootState } from 'store';
 // import GoogleButton from 'react-google-button'
 declare global {
-  interface Window {}
+  interface Window { }
 }
 const Login = () => {
   const dispatch = useDispatch();
@@ -91,26 +91,61 @@ const Login = () => {
   // };
 
   const login = useGoogleLogin({
-    onSuccess: async (tokenResponse: TokenResponse) => {
+    onSuccess: async (tokenResponse) => {
       console.log(tokenResponse);
       // fetching userinfo can be done on the client or the server
-      const userInfo = await axios
-        .get('https://www.googleapis.com/oauth2/v3/userinfo', {
-          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-        })
-        .then((res) => res.data);
+      // const userInfo = await axios
+      //   .get('https://www.googleapis.com/oauth2/v3/userinfo', {
+      //     headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+      //   })
+      //   .then((res) => res.data);
       // const result = await authApi.signInGoogle(codeResponse.access_token);
       // if (result) {
       //   console.log(result);
       //   // fetchDataProfile(result.data, true);
       // }
-      console.log(userInfo);
+      // console.log(userInfo);
     },
+    // flow: 'auth-code',
   });
+
+  // ===========================
+  useEffect(() => {
+    // Load the Google One Tap API
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      // Initialize the Google One Tap API
+      (window as any).google.accounts.id.initialize({
+        client_id:
+          '436273589347-ot9ec9jhm235q3irsvjpnltr8hsun5cp.apps.googleusercontent.com',
+        callback: (response: any) => {
+          console.log('Google One Tap response:', response);
+
+          // Add your logic for handling the signed-in user here
+        },
+        prompt_parent_id: 'google-login-button', // ID of your button container
+      });
+
+      // Render the Google One Tap button
+      (window as any).google.accounts.id.renderButton(
+        document.getElementById('google-login-button'), // ID of your button container
+        { text: 'Sign up with Google', type: 'icon', shape: 'circle' },
+      );
+    };
+
+    // Cleanup on component unmount
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   return (
     <>
-      <div onClick={() => login()}>Sign in with Google 🚀</div>;
+      <button onClick={() => login()}>Sign in with Google 🚀</button>;
       <GoogleLogin
         onSuccess={(credentialResponse) => {
           console.log(credentialResponse);
@@ -119,6 +154,7 @@ const Login = () => {
           console.log('Login Failed');
         }}
       />
+      <div id="google-login-button"></div>
     </>
   );
 };
