@@ -199,7 +199,7 @@ const NewJobs: React.FC = () => {
     //   null,
     //   9,
     //   thersholdId,
-    //   languageRedux === 1 ? 'vi' : 'en',
+    //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     // );
 
     const result2 = await postApi.getPostNewestV3(
@@ -213,7 +213,7 @@ const NewJobs: React.FC = () => {
       null,
       10,
       thersholdId,
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
 
     if (result2) {
@@ -242,7 +242,7 @@ const NewJobs: React.FC = () => {
       //   null,
       //   20,
       //   null,
-      //   languageRedux === 1 ? 'vi' : 'en',
+      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       // );
       // console.log('childCateloriesArray', childCateloriesArray);
       setLoading(true);
@@ -267,7 +267,7 @@ const NewJobs: React.FC = () => {
         null,
         20,
         null,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       // console.log('result2222222222222222', result2.data);
@@ -334,7 +334,13 @@ const NewJobs: React.FC = () => {
             <div className="title">
               <NewJobIcon width={25} height={25} />
               <h2>
-                {languageRedux === 1 ? 'Công việc mới nhất' : 'Newest Jobs'}
+                {languageRedux === 1
+                  ? 'Công việc mới nhất'
+                  : languageRedux === 2
+                    ? 'Newest Jobs'
+                    : languageRedux === 3
+                      ? '새 작업'
+                      : 'Công việc mới nhất'}
               </h2>
               <div className="help-search" onClick={handleClickHelpSearch}>
                 <QuestionMarkIcon />
@@ -344,7 +350,8 @@ const NewJobs: React.FC = () => {
                       <p>
                         {languageRedux === 1
                           ? 'Công việc mới nhất sẽ xuất hiện dựa theo Lĩnh vực quan tâm của bạn trong phần thông tin cá nhân.'
-                          : 'Newest Jobs will show jobs rely on your Career Objective in Profile.'}
+                          : languageRedux === 2 ? 'Newest Jobs will show jobs rely on your Career Objective in Profile.'
+                            : '귀하의 개인적인 관심사에 따라 최신 채용 기회를 확인할 수 있습니다.'}
                       </p>
                     </div>
                     {/* <Button
@@ -354,14 +361,25 @@ const NewJobs: React.FC = () => {
             }}
           >
             <LoginArrowBlackIcon />
-            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+               {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
           </Button> */}
                   </div>
                 </div>
               </div>
             </div>
             {/* <div className="view-all" onClick={handleMoveToMoreJob}>
-              <p>{language?.home_page?.view_all}</p>
+              <p> {
+              languageRedux === 1 ?
+                "Xem tất cả" :
+                languageRedux === 2 ?
+                  "View all" :
+                  languageRedux === 3 &&
+                  "다 보기"
+            }</p>
               <ArrowrightIcon width={20} height={20} />
             </div> */}
           </div>
@@ -374,13 +392,24 @@ const NewJobs: React.FC = () => {
                 </Grid>
               ))}
             </Grid>
-            <div className="view-all-down"
+            <div
+              className="view-all-down"
               onClick={handleMoveToMoreJob}
               style={{
-                display: !postNewestV3.data || postNewestV3.data.length === 0 ? 'none' : 'flex'
+                display:
+                  !postNewestV3.data || postNewestV3.data.length === 0
+                    ? 'none'
+                    : 'flex',
               }}
             >
-              <p>{language?.home_page?.view_all}</p>
+              <p>
+                {' '}
+                {languageRedux === 1
+                  ? 'Xem tất cả'
+                  : languageRedux === 2
+                    ? 'View all'
+                    : languageRedux === 3 && '다 보기'}
+              </p>
               <ArrowrightIcon width={20} height={20} />
             </div>
           </Skeleton>
@@ -394,7 +423,11 @@ const NewJobs: React.FC = () => {
                 handleChange(e, page);
               }}
             >
-              <p>{language?.more}</p>
+              <p>{languageRedux === 1
+            ? 'Xem thêm'
+            : languageRedux === 2
+              ? 'See more'
+              : '더보기'}</p>
               <MoreICon width={20} height={20} />
             </Space>
           </Stack> */}

@@ -232,10 +232,9 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                   >
                     {props.item?.postCategories.map(
                       (cate: any, index: any) =>
-                        `${cate.parentCategory.fullName}${
-                          index < props.item.postCategories.length - 1
-                            ? ', '
-                            : ''
+                        `${cate.parentCategory.fullName}${index < props.item.postCategories.length - 1
+                          ? ', '
+                          : ''
                         }`,
                     )}
 
@@ -287,13 +286,21 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
               fontWeight: '400',
             }}
           >
-            {language?.posted_on}{' '}
+            {languageRedux === 1
+              ? 'Đã đăng vào lúc:'
+              : languageRedux === 2
+                ? 'Posted on:'
+                : languageRedux === 3 && '에 게시 됨:'}{' '}
             {props.item?.createdAt != null
               ? `${moment(props.item?.createdAt).format('DD/MM/YYYY') +
               ' ' +
               moment(new Date(props.item?.createdAt)).format('HH:mm')
               }`
-              : language?.unupdated}
+              : languageRedux === 1
+                ? 'Chưa cập nhật'
+                : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}
           </p>
           <p
             style={{
@@ -306,7 +313,19 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
             }}
           >
             {`${props.dataCandidates?.applications.length}
-            ${language?.history_page?.application_form}`}
+            ${props.dataCandidates?.applications.length <= 1
+                ? languageRedux === 1
+                  ? 'đơn ứng tuyển'
+                  : languageRedux === 2
+                    ? 'application'
+                    : '단일 적용'
+                :
+                languageRedux === 1
+                  ? 'đơn ứng tuyển'
+                  : languageRedux === 2
+                    ? 'applications'
+                    : '단일 적용'
+              }`}
           </p>
 
           {props.status === 1 ? (
@@ -319,7 +338,11 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 fontSize: '12px',
               }}
             >
-              {language?.recruiting}
+              {languageRedux === 1
+                ? 'Đang tuyển'
+                : languageRedux === 2
+                  ? 'Recruiting'
+                  : '현재 모집 중'}
             </p>
           ) : props.status === 3 ? (
             <p
@@ -331,7 +354,11 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 fontSize: '12px',
               }}
             >
-              {language?.post_detail_page?.closed}
+              {languageRedux === 1
+                ? 'Đã đóng'
+                : languageRedux === 2
+                  ? 'Closed'
+                  : '닫은'}
             </p>
           ) : (
             <p
@@ -343,7 +370,11 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 fontSize: '12px',
               }}
             >
-              {language?.candidate_detail_page?.does_not_accept}
+              {languageRedux === 1
+                ? 'Không chấp nhận'
+                : languageRedux === 2
+                  ? 'Does not accept'
+                  : '수락하지 않음'}
             </p>
           )}
         </Box>

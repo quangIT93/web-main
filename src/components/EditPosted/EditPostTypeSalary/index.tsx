@@ -17,10 +17,11 @@ interface IEditPostTypeSalary {
   editDataPosted: any
   salaryType?: number
   language: any;
+  languageRedux: any;
 }
 
 const EditPostTypeSalary: React.FC<IEditPostTypeSalary> = (props) => {
-  const { editDataPosted, setEditDataPosted, salaryType, language } = props
+  const { editDataPosted, setEditDataPosted, salaryType, languageRedux } = props
 
   const handleChangeMoneyType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditDataPosted((preValue: any) => ({
@@ -48,7 +49,11 @@ const EditPostTypeSalary: React.FC<IEditPostTypeSalary> = (props) => {
           color="warning"
         >
           {
-            language?.salary
+            languageRedux === 1
+              ? "Mức lương"
+              : languageRedux === 2
+                ? "Salary"
+                : '목르엉'
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </FormLabel>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 //import scss
 import './style.scss';
 
@@ -29,6 +29,7 @@ import { Space, Tooltip } from 'antd';
 import bookMarkApi from 'api/bookMarkApi';
 
 import { PostNewest, PostNewestV3 } from '../NewJobs';
+import { RootState } from 'store';
 
 // import { HomeValueContext } from 'context/HomeValueContextProvider';
 
@@ -80,7 +81,7 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
   );
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`, '_blank');
   };
@@ -353,7 +354,11 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
                         ? props.item.companyResourceData.logo
                         : ''
                     }
-                    alt="ảnh"
+                    alt={languageRedux === 1
+                      ? 'Hình ảnh bị lỗi'
+                      : languageRedux === 2
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'}
                   />
                 ) : (
                   <></>

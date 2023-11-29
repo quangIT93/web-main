@@ -27,7 +27,7 @@ interface IEditPostAddress {
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
   setFillActivity: React.Dispatch<React.SetStateAction<any>>;
   setFillSize: React.Dispatch<React.SetStateAction<any>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
@@ -37,7 +37,15 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges, setFillActivity, setFillSize, setIsValid } = props;
+  const {
+    setDataCompany,
+    dataCompany,
+    is_profile,
+    setUnsavedChanges,
+    setFillActivity,
+    setFillSize,
+    setIsValid,
+  } = props;
 
   const [dataSizes, setDataSizes] = useState<any>(null);
   const [selectedSize, setSelectedSize] = useState<any>(null);
@@ -89,7 +97,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const getSizes = async () => {
     try {
       const sizes = await apiCompany.getAllSizesCompany(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (sizes) {
@@ -102,7 +110,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const getCateogrys = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setDataCategories(result.data);
@@ -134,19 +142,19 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
         id: value ? value?.id : '',
       },
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
   const handleEditCompanyCategory = (event: any, value: any) => {
     setSelectedCategory(value);
     setUnsavedChanges(true);
-    setFillActivity(value)
+    setFillActivity(value);
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyCategory: {
         id: value ? value?.parent_category_id : '',
       },
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   // console.log('selectedCategory', selectedCategory);
@@ -160,7 +168,12 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="addressTitle"
         >
-          {language?.company_page?.field}{' '}
+          {
+            languageRedux === 1 ?
+              "Lĩnh vực hoạt động" :
+              languageRedux === 2 ?
+                "Field of activity" : "활동 분야"
+          }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
 
@@ -174,7 +187,10 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={language?.company_page?.place_field}
+              placeholder={languageRedux === 1 ?
+                "Lĩnh vực hoạt động" :
+                languageRedux === 2 ?
+                  "Field of activity" : "활동 분야"}
               size="small"
               value={selectedCategory?.parent_category}
             />
@@ -189,7 +205,9 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Vui lòng chọn lĩnh vực hoạt động'
-                : 'Please select your field of activity'}
+                : languageRedux === 2
+                  ? 'Please select your field of activity'
+                  : languageRedux === 3 && '귀하의 활동분야를 선택해주세요.'}
             </span>
           ) : (
             <></>
@@ -204,7 +222,11 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="jobTitle"
         >
-          {language?.company_size} <span style={{ color: 'red' }}>*</span>
+          {languageRedux === 1
+            ? 'Quy mô công ty'
+            : languageRedux === 2
+              ? "Company's size"
+              : '회사 규모'} <span style={{ color: 'red' }}>*</span>
         </Typography>
         <Autocomplete
           disabled={is_profile ? true : false}
@@ -216,7 +238,11 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={language?.company_page?.place_size}
+              placeholder={languageRedux === 1
+                ? 'Quy mô công ty'
+                : languageRedux === 2
+                  ? "Company's size"
+                  : '회사 규모'}
               size="small"
               value={selectedSize?.nameText}
             />
@@ -231,7 +257,9 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Vui lòng chọn quy mô công ty'
-                : 'Please select company size'}
+                : languageRedux === 2
+                  ? 'Please select company size'
+                  : languageRedux === 3 && '회사규모를 선택해 주세요'}
             </span>
           ) : (
             <></>

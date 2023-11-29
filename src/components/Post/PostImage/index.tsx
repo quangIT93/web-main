@@ -82,7 +82,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
 
         if (validateImagesReply.isError) {
           console.log('::: Invalid images');
-          return toast.warn(language?.err_none_img);
+          return toast.warn(languageRedux === 1
+            ? 'Hình ảnh bị lỗi'
+            : languageRedux === 2
+              ? 'Image is corrupted'
+              : '이미지가 손상되었습니다');
         } else {
           const compressedImages: any = [];
           console.log('compressedImages', compressedImages);
@@ -153,7 +157,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (fileUploaded.length > 5) {
         messageApi.open({
           type: 'error',
-          content: language?.limit_5_img,
+          content: languageRedux === 1
+            ? 'Chỉ có thể tối đa 5 hình ảnh'
+            : languageRedux === 2
+              ? 'Only up to 5 images can be'
+              : '최대 5개의 이미지가 허용됩니다.',
         });
         return;
       }
@@ -201,7 +209,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (newFileSelected.length > 5) {
         messageApi.open({
           type: 'error',
-          content: language?.limit_5_img,
+          content: languageRedux === 1
+            ? 'Chỉ có thể tối đa 5 hình ảnh'
+            : languageRedux === 2
+              ? 'Only up to 5 images can be'
+              : '최대 5개의 이미지가 허용됩니다.',
         });
 
         return;
@@ -230,7 +242,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             if (newImageSelected.length > 5) {
               messageApi.open({
                 type: 'error',
-                content: language?.limit_5_img,
+                content: languageRedux === 1
+                  ? 'Chỉ có thể tối đa 5 hình ảnh'
+                  : languageRedux === 2
+                    ? 'Only up to 5 images can be'
+                    : '최대 5개의 이미지가 허용됩니다.',
               });
 
               return;
@@ -287,7 +303,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       const validateImagesReply = validatePostImages(imagesToCheck);
       if (validateImagesReply.isError) {
         // console.log('::: Invalid images');
-        return toast.warn(language?.err_none_img);
+        return toast.warn(languageRedux === 1
+          ? 'Hình ảnh bị lỗi'
+          : languageRedux === 2
+            ? 'Image is corrupted'
+            : '이미지가 손상되었습니다');
       } else {
         try {
           console.log('imagesToCheck', imagesToCheck);
@@ -324,7 +344,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (files.length > 5) {
         messageApi.open({
           type: 'error',
-          content: language?.limit_5_img,
+          content: languageRedux === 1
+            ? 'Chỉ có thể tối đa 5 hình ảnh'
+            : languageRedux === 2
+              ? 'Only up to 5 images can be'
+              : '최대 5개의 이미지가 허용됩니다.',
         });
         return;
       }
@@ -344,7 +368,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             if (newImageSelected.length > 5) {
               messageApi.open({
                 type: 'error',
-                content: language?.limit_5_img,
+                content: languageRedux === 1
+                  ? 'Chỉ có thể tối đa 5 hình ảnh'
+                  : languageRedux === 2
+                    ? 'Only up to 5 images can be'
+                    : '최대 5개의 이미지가 허용됩니다.',
               });
               return;
             }
@@ -383,7 +411,15 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           >
             <input {...getInputProps()} />
             {/* <p>Drag and drop some files here, or click to select files</p> */}
-            <p>{language?.post_page?.drag_drop_multi}</p>
+            <p>{
+              languageRedux === 1
+                ? 'Kéo và thả nhiều file ảnh ở đây, hoặc click vào để chọn file ảnh'
+                : languageRedux === 2
+                  ? 'Drag and drop multiple image files here, or click to select image files'
+                  : languageRedux === 3
+                    ? '여기에 여러 이미지 파일을 끌어다 놓거나 클릭하여 이미지 파일을 선택하세요.'
+                    : 'Kéo và thả nhiều file ảnh ở đây, hoặc click vào để chọn file ảnh'
+            }</p>
             {/* <aside className="thumbs-containter">
               {thumbs}
             </aside> */}
@@ -414,7 +450,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
               <img
                 key={index}
                 src={image}
-                alt={language?.err_none_img}
+                alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'}
                 style={{
                   height: '150px',
                   width: '150px',
@@ -455,14 +495,30 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           p="1rem 0"
           sx={{ fontStyle: 'italic' }}
         >
-          {language?.post_page?.verify_upload}
+          {
+            languageRedux === 1
+              ? 'Có thể tải tối đa 5 ảnh, 5 ảnh không quá 5MB. (Định dạng cho phép: jpeg, jpg, png)'
+              : languageRedux === 2
+                ? "Up to 5 images can be uploaded, 5 images can't exceed 5MB. (Allowed formats: jpeg, jpg, png)"
+                : languageRedux === 3
+                  ? '사진은 최대 5장까지 업로드 가능하며, 5장의 사진은 5MB를 초과할 수 없습니다. (허용 형식: jpeg, jpg, png)'
+                  : 'Có thể tải tối đa 5 ảnh, 5 ảnh không quá 5MB. (Định dạng cho phép: jpeg, jpg, png)'
+          }
         </Typography>
         <Button
           variant="outlined"
           component="label"
           disabled={selectedImages.length === 5}
         >
-          {language?.post_page?.upload_img}
+          {
+            languageRedux === 1
+              ? "Tải ảnh"
+              : languageRedux === 2
+                ? "Upload image"
+                : languageRedux === 3
+                  ? '이미지 업로드'
+                  : "Tải ảnh"
+          }
           <input
             type="file"
             name="images"

@@ -191,7 +191,7 @@ const ThemesJob: React.FC = () => {
         null,
         20,
         null,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -261,7 +261,15 @@ const ThemesJob: React.FC = () => {
       <div className="title-container">
         <div className="title">
           <SuggestIcon width={25} height={25} />
-          <h2>{language?.nearby_jobs}</h2>
+          <h2>
+            {languageRedux === 1
+              ? 'Công việc gợi ý'
+              : languageRedux === 2
+                ? 'Suggested jobs in your city'
+                : languageRedux === 3
+                  ? '추천 직업'
+                  : 'Công việc gợi ý'}
+          </h2>
         </div>
         {/* <div
           className="view-all"
@@ -270,7 +278,14 @@ const ThemesJob: React.FC = () => {
             display: !localStorage.getItem('accessToken') ? 'none' : 'flex',
           }}
         >
-          <p>{language?.home_page?.view_all}</p>
+          <p> {
+              languageRedux === 1 ?
+                "Xem tất cả" :
+                languageRedux === 2 ?
+                  "View all" :
+                  languageRedux === 3 &&
+                  "다 보기"
+            }</p>
           <ArrowrightIcon width={20} height={20} />
         </div> */}
       </div>
@@ -286,7 +301,10 @@ const ThemesJob: React.FC = () => {
             <p>
               {languageRedux === 1
                 ? 'Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.'
-                : 'Quickly find a job that fits your needs.'}
+                : languageRedux === 2
+                  ? 'Quickly find a job that fits your needs.'
+                  : languageRedux === 3 &&
+                  '귀하의 필요에 맞는 일자리를 빠르게 찾으십시오.'}
             </p>
           </div>
           <div className="suggest-job-not-loging_right">
@@ -297,7 +315,11 @@ const ThemesJob: React.FC = () => {
               }}
             >
               <LoginArrowIcon />
-              {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+              {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
             </Button>
           </div>
         </div>
@@ -337,7 +359,11 @@ const ThemesJob: React.FC = () => {
                 {localStorage.getItem('accessToken') ? (
                   <div className="more-job">
                     <button onClick={handleChange}>
-                      <p>{language?.more}</p>
+                      <p>{languageRedux === 1
+            ? 'Xem thêm'
+            : languageRedux === 2
+              ? 'See more'
+              : '더보기'}</p>
                       <MoreICon width={20} height={20} />
                     </button>
                   </div>
@@ -381,13 +407,22 @@ const ThemesJob: React.FC = () => {
             className="view-all-down"
             onClick={handleMoveToMoreJob}
             style={{
-              display: !nearJob ||
-                nearJob.length === 0 ||
-                !localStorage.getItem('accessToken') ?
-                'none' : 'flex',
+              display:
+                !nearJob ||
+                  nearJob.length === 0 ||
+                  !localStorage.getItem('accessToken')
+                  ? 'none'
+                  : 'flex',
             }}
           >
-            <p>{language?.home_page?.view_all}</p>
+            <p>
+              {' '}
+              {languageRedux === 1
+                ? 'Xem tất cả'
+                : languageRedux === 2
+                  ? 'View all'
+                  : languageRedux === 3 && '다 보기'}
+            </p>
             <ArrowrightIcon width={20} height={20} />
           </div>
         </Skeleton>

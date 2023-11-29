@@ -263,7 +263,7 @@ const CategoryCarousel: React.FC = () => {
       //   //   null,
       //   //   19,
       //   //   null,
-      //   //   languageRedux === 1 ? 'vi' : 'en',
+      //   //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       //   // );
 
       //   resultV3 = await postApi.getPostNewestV3(
@@ -273,7 +273,7 @@ const CategoryCarousel: React.FC = () => {
       //     null,
       //     20,
       //     null,
-      //     languageRedux === 1 ? 'vi' : 'en',
+      //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       //   );
       // } else {
       //   // result = await postApi.getPostNewest(
@@ -282,7 +282,7 @@ const CategoryCarousel: React.FC = () => {
       //   //   null,
       //   //   19,
       //   //   null,
-      //   //   languageRedux === 1 ? 'vi' : 'en',
+      //   //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       //   // );
 
       //   resultV3 = await postApi.getPostNewestV3(
@@ -292,7 +292,7 @@ const CategoryCarousel: React.FC = () => {
       //     null,
       //     20,
       //     null,
-      //     languageRedux === 1 ? 'vi' : 'en',
+      //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       //   );
       // }
 
@@ -331,7 +331,7 @@ const CategoryCarousel: React.FC = () => {
     try {
       setLoading(true);
       const result = await categoriesApi.getAllParentCategories(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setTimeout(() => {
@@ -372,7 +372,7 @@ const CategoryCarousel: React.FC = () => {
   //         null,
   //         19,
   //         null,
-  //         languageRedux === 1 ? 'vi' : 'en',
+  //          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //       );
 
   //       // result = await postApi.getPostNewestV3(
@@ -382,7 +382,7 @@ const CategoryCarousel: React.FC = () => {
   //       //   null,
   //       //   20,
   //       //   null,
-  //       //   languageRedux === 1 ? 'vi' : 'en',
+  //       //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //       // );
   //     } else {
   //       result = await postApi.getPostNewest(
@@ -391,7 +391,7 @@ const CategoryCarousel: React.FC = () => {
   //         null,
   //         19,
   //         null,
-  //         languageRedux === 1 ? 'vi' : 'en',
+  //          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //       );
 
   //       // result = await postApi.getPostNewestV3(
@@ -401,7 +401,7 @@ const CategoryCarousel: React.FC = () => {
   //       //   null,
   //       //   20,
   //       //   null,
-  //       //   languageRedux === 1 ? 'vi' : 'en',
+  //       //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //       // );
   //     }
   //     if (result) {
@@ -427,7 +427,7 @@ const CategoryCarousel: React.FC = () => {
           null,
           19,
           null,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
 
         resultV3 = await postApi.getPostNewestV3(
@@ -437,7 +437,7 @@ const CategoryCarousel: React.FC = () => {
           null,
           20,
           null,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
       } else {
         result = await postApi.getPostNewest(
@@ -446,7 +446,7 @@ const CategoryCarousel: React.FC = () => {
           null,
           19,
           null,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
 
         resultV3 = await postApi.getPostNewestV3(
@@ -456,7 +456,7 @@ const CategoryCarousel: React.FC = () => {
           null,
           20,
           null,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
 
         // result = await postApi.getPostNewestV3(
@@ -466,7 +466,7 @@ const CategoryCarousel: React.FC = () => {
         //   null,
         //   20,
         //   null,
-        //   languageRedux === 1 ? 'vi' : 'en',
+        //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         // );
       }
       if (result) {
@@ -657,7 +657,9 @@ const CategoryCarousel: React.FC = () => {
                         ? // ? language?.home_page?.suggested_work
                           languageRedux === 1
                           ? 'Công việc gợi ý'
-                          : 'Suggested'
+                          : languageRedux === 2
+                            ? 'Suggested'
+                            : languageRedux === 3 && '추천 직업'
                         : item.name}
                     </span>
                   </div>

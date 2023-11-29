@@ -97,7 +97,7 @@ const BreadcrumbsCpn: React.FC = () => {
       // setIsLoading(true);
       const result = await categoriesApi.getAllChildCategories(
         valueJobChild?.id,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         // setIsLoading(false);
@@ -179,7 +179,7 @@ const BreadcrumbsCpn: React.FC = () => {
     //   //   null,
     //   //   9,
     //   //   0,
-    //   //   languageRedux === 1 ? 'vi' : 'en',
+    //   //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //   // );
 
     //   const result2 = await postApi.getPostNewestV3(
@@ -189,7 +189,7 @@ const BreadcrumbsCpn: React.FC = () => {
     //     null,
     //     10,
     //     thersholdId,
-    //     languageRedux === 1 ? 'vi' : 'en',
+    //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //   );
 
     //   // const result = await postApi.getPostNewestV3(
@@ -199,7 +199,7 @@ const BreadcrumbsCpn: React.FC = () => {
     //   //   null,
     //   //   10,
     //   //   null,
-    //   //   languageRedux === 1 ? 'vi' : 'en',
+    //   //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     //   // );
     //   if (result2) {
     //     // setPostNewest(result);
@@ -327,15 +327,17 @@ const BreadcrumbsCpn: React.FC = () => {
         >
           {arrayChild?.length === 0 || arrayChild?.length === undefined
             ? languageRedux === 1
-              ? `Tất cả`
-              : `All`
+              ? 'Tất cả'
+              : languageRedux === 2
+                ? 'All'
+                : '전부'
             : arrayChild?.map(
-                (value: { id: number; name: string }, index: number) => (
-                  <div key={index}>
-                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                  </div>
-                ),
-              )}
+              (value: { id: number; name: string }, index: number) => (
+                <div key={index}>
+                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                </div>
+              ),
+            )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -356,8 +358,8 @@ const BreadcrumbsCpn: React.FC = () => {
         // position: 'relative',
         marginTop:
           location.pathname === '/more-jobs' &&
-          localStorage.getItem('job-type') === 'new' &&
-          window.innerWidth <= 450
+            localStorage.getItem('job-type') === 'new' &&
+            window.innerWidth <= 450
             ? '20px'
             : '0px',
         maxWidth: '1080px',
@@ -394,7 +396,13 @@ const BreadcrumbsCpn: React.FC = () => {
         className="collapse-breadcrumbs"
       >
         <Typography className="header-breabcrumb_text">
-          {language?.home_page?.list}
+          {
+            languageRedux === 1
+              ? 'Danh sách'
+              : languageRedux === 2
+                ? 'List'
+                : '목록'
+          }
         </Typography>
         <Box padding={0} className="box-breadcrumbs">
           <FormGroup>
@@ -418,7 +426,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                          checkItemsCount >= MAX_CHECKED_ITEMS
+                        checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />
@@ -434,7 +442,13 @@ const BreadcrumbsCpn: React.FC = () => {
             className="btn-breadcrumb_nav"
             onClick={handleClickChoose}
           >
-            {language?.home_page?.select}
+            {
+              languageRedux === 1
+                ? 'Chọn'
+                : languageRedux === 2
+                  ? 'Select'
+                  : '선택하다'
+            }
           </button>
         </div>
       </Collapse>

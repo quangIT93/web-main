@@ -20,10 +20,16 @@ interface ISalaryType {
   setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const SalaryType: React.FC<ISalaryType> = (props) => {
-  const { salaryType, setSalaryType, language, languageRedux, setIsValidSubmit} = props;
+  const {
+    salaryType,
+    setSalaryType,
+    language,
+    languageRedux,
+    setIsValidSubmit,
+  } = props;
   const handleChangeSalaryType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSalaryType(Number(e.target.value));
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const [salary, setSalary] = React.useState<AxiosResponse | null>(null);
@@ -31,7 +37,7 @@ const SalaryType: React.FC<ISalaryType> = (props) => {
   // call api get salaryType
   const getSalaryType = async () => {
     const result = await siteApi.getSalaryType(
-      languageRedux === 1 ? 'vi' : 'en',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
     if (result) {
       setSalary(result);
@@ -46,7 +52,13 @@ const SalaryType: React.FC<ISalaryType> = (props) => {
     <Box sx={{ marginTop: '24px' }} className="post-salaryType">
       <FormControl sx={{ width: '100%' }}>
         <FormLabel id="demo-row-radio-buttons-group-label" sx={styleLabel}>
-          {language?.job_type} <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1
+              ? "Trả lương theo"
+              : languageRedux === 2
+                ? "Calculate salary"
+                : '그에 따라 지불'
+          } <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
           row

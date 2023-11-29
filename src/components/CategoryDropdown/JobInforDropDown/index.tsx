@@ -44,7 +44,11 @@ const JobInfoDropDown: React.FC<IJobInfoDropDown> = (props) => {
           style={{ display: roleRedux === 0 ? 'block' : 'none' }}
           onClick={moveToAppliedJob}
         >
-          {languageRedux === 1 ? 'Việc làm đã ứng tuyển' : 'Apllied Jobs'}
+          {languageRedux === 1
+            ? 'Việc làm đã ứng tuyển'
+            : languageRedux === 2
+              ? 'Apllied Jobs'
+              : languageRedux === 3 && '어플라이드 잡스'}
         </a>
       ),
     },
@@ -54,11 +58,15 @@ const JobInfoDropDown: React.FC<IJobInfoDropDown> = (props) => {
         <a onClick={roleRedux === 0 ? moveToSaveJob : moveToRecruimentPost}>
           {roleRedux === 0
             ? languageRedux === 1
-              ? 'Việc làm đã lưu'
-              : 'Saved jobs'
+              ? 'Các công việc đã lưu'
+              : languageRedux === 2
+                ? 'Saved jobs'
+                : languageRedux === 3 && '저장된 작업'
             : languageRedux === 1
-            ? 'Việc làm tuyển dụng đã đăng'
-            : 'Recruitment posted'}
+              ? 'Việc làm tuyển dụng đã đăng'
+              : languageRedux === 2
+                ? 'Recruitment posted'
+                : languageRedux === 3 && '게시된 작업'}
         </a>
       ),
     },
@@ -69,10 +77,14 @@ const JobInfoDropDown: React.FC<IJobInfoDropDown> = (props) => {
           {roleRedux === 0
             ? languageRedux === 1
               ? 'Công việc mới nhất'
-              : 'Newest jobs'
+              : languageRedux === 2
+                ? 'Newest jobs'
+                : languageRedux === 3 && '새 작업'
             : languageRedux === 1
-            ? 'Bài tuyển dụng đang mở'
-            : 'Job posting is opening'}
+              ? 'Bài tuyển dụng đang mở'
+              : languageRedux === 2
+                ? 'Job posting is opening'
+                : languageRedux === 3 && '마감되지 않은 채용정보'}
         </a>
       ),
     },
@@ -83,10 +95,14 @@ const JobInfoDropDown: React.FC<IJobInfoDropDown> = (props) => {
           {roleRedux === 0
             ? languageRedux === 1
               ? 'Công việc nổi bật'
-              : 'Hot jobs'
+              : languageRedux === 2
+                ? 'Hot jobs'
+                : languageRedux === 3 && '핫잡스'
             : languageRedux === 1
-            ? 'Bài tuyển dụng đã đóng'
-            : 'Job posting is closed'}
+              ? 'Bài tuyển dụng đã đóng'
+              : languageRedux === 2
+                ? 'Job posting is closed'
+                : languageRedux === 3 && '채용이 마감되었습니다'}
         </a>
       ),
     },
@@ -97,10 +113,14 @@ const JobInfoDropDown: React.FC<IJobInfoDropDown> = (props) => {
           {roleRedux === 0
             ? languageRedux === 1
               ? 'Công việc theo chủ đề'
-              : 'Job by hot places'
+              : languageRedux === 2
+                ? 'Job by hot places'
+                : languageRedux === 3 && '핫플레이스별작업'
             : languageRedux === 1
-            ? 'Đăng bài tuyển dụng'
-            : 'Post recruitment posts'}
+              ? 'Đăng bài tuyển dụng'
+              : languageRedux === 2
+                ? 'Post recruitment posts'
+                : languageRedux === 3 && '채용 공고 만들기'}
         </a>
       ),
     },
@@ -111,10 +131,14 @@ const JobInfoDropDown: React.FC<IJobInfoDropDown> = (props) => {
           {roleRedux === 0
             ? languageRedux === 1
               ? 'Công việc gợi ý'
-              : 'Suggested jobs'
+              : languageRedux === 2
+                ? 'Suggested jobs'
+                : languageRedux === 3 && '추천 직업'
             : languageRedux === 1
-            ? 'Thông tin công ty'
-            : "Company's information"}
+              ? 'Thông tin công ty'
+              : languageRedux === 2
+                ? "Company's information"
+                : languageRedux === 3 && '회사 정보'}
         </a>
       ),
     },
@@ -130,10 +154,14 @@ const JobInfoDropDown: React.FC<IJobInfoDropDown> = (props) => {
         {roleRedux === 0
           ? languageRedux === 1
             ? 'Thông tin việc làm'
-            : 'Job information'
+            : languageRedux === 2
+              ? 'Job information'
+              : languageRedux === 3 && '어플라이드 잡스'
           : languageRedux === 1
-          ? 'Thông tin tuyển dụng'
-          : 'Employment information'}
+            ? 'Thông tin tuyển dụng'
+            : languageRedux === 2
+              ? 'Employment information'
+              : languageRedux === 3 && '고용 정보'}
       </h3>
     </Dropdown>
   );

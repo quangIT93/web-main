@@ -69,7 +69,7 @@ const ModalDelete: React.FC<IModalProfileDeleteEducation> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -91,13 +91,13 @@ const ModalDelete: React.FC<IModalProfileDeleteEducation> = (props) => {
       const result = await profileApi.deleteProfileEducation(educationId);
       if (result) {
         // const profile = await profileApi.getProfile(
-        //   languageRedux === 1 ? 'vi' : 'en',
+        //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         // );
         // if (profile) {
         //   setProfileUser(profile.data);
         // }
         const getProfileV3 = await profileApi.getProfileInformationMoreV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (getProfileV3) {
           await dispatch(setProfileMeInformationMoreV3(getProfileV3) as any);
@@ -128,7 +128,11 @@ const ModalDelete: React.FC<IModalProfileDeleteEducation> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          {language?.profile_page?.alert_delete_info}
+          {languageRedux === 1
+            ? 'Bạn có chắc muốn xóa thông tin này chứ?'
+            : languageRedux === 2
+              ? 'Are you sure you want to delete this information?'
+              : '이 정보를 삭제하시겠습니까?'}
         </Typography>
         <Box sx={{ display: 'flex', gap: '100px' }}>
           <Button
@@ -137,11 +141,19 @@ const ModalDelete: React.FC<IModalProfileDeleteEducation> = (props) => {
             onClick={handleSubmitDelete}
             color="error"
           >
-            {language?.profile_page?.delete}
+            {languageRedux === 1
+              ? 'Xóa'
+              : languageRedux === 2
+                ? 'Delete'
+                : '삭제'}
           </Button>
 
           <Button variant="contained" fullWidth onClick={handleSubmitRefuse}>
-            {language?.profile_page?.return}
+            {languageRedux === 1
+              ? 'Trở về'
+              : languageRedux === 2
+                ? 'Return'
+                : '반품'}
           </Button>
         </Box>
       </Box>

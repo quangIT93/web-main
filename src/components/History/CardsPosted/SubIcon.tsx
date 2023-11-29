@@ -65,7 +65,11 @@ const SubIcon: React.FC<ISubicon> = (props) => {
       >
         <EditOutlined />
         {
-          language?.edit
+          languageRedux === 1
+            ? 'Sửa'
+            : languageRedux === 2
+              ? 'Edit'
+              : '고치다'
         }
       </div>
 
@@ -77,7 +81,17 @@ const SubIcon: React.FC<ISubicon> = (props) => {
         }
       >
         <CloseSquareOutlined />
-        {status === 3 ? language?.the_job_posting_has_been_closed : language?.close_post}
+        {status === 3 ?
+          languageRedux === 1
+            ? 'Bài tuyển dụng đã đóng'
+            : languageRedux === 2
+              ? 'The job posting is closed"'
+              : '채용 공고가 마감되었습니다' :
+          languageRedux === 1
+            ? 'Đóng bài tuyển dụng'
+            : languageRedux === 2
+              ? 'Close job posting"'
+              : '채용 공고 닫기'}
       </div>
 
       <ModalClosePost

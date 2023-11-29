@@ -85,7 +85,7 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
             }
             const resultProfileV3L2 =
               await profileApi.getProfileInformationMoreV3(
-                languageRedux === 1 ? 'vi' : 'en',
+                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
               );
             if (resultProfileV3L2) {
               dispatch(setProfileMeInformationMoreV3(resultProfileV3L2));
@@ -104,7 +104,7 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
           } else {
             const resultProfileV3L2 =
               await profileApi.getProfileInformationMoreV3(
-                languageRedux === 1 ? 'vi' : 'en',
+                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
               );
             if (resultProfileV3L2) {
               dispatch(setProfileMeInformationMoreV3(resultProfileV3L2));
@@ -125,7 +125,7 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
     }
 
     try {
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
@@ -143,7 +143,11 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
             textAlign: 'center',
           }}
         >
-          {languageRedux === 1 ? 'Xóa CV/Hồ sơ' : 'Delete CV/Resume'}
+          {languageRedux === 1
+            ? 'Xóa CV/Hồ sơ'
+            : languageRedux === 2
+              ? 'Delete CV/Resume'
+              : languageRedux === 3 && 'CV 삭제/이력서'}
         </h3>
       }
       footer={null}
@@ -163,14 +167,25 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
       >
         {languageRedux === 1
           ? 'Xóa CV/Hồ sơ của bạn, bạn sẽ không thể ứng tuyển công việc bằng cách sử dụng nó nữa.\nBạn có muốn xóa CV/Hồ sơ này không?'
-          : 'Delete your CV/Resume, you will no longer be able to apply for jobs using it.\nDo you want to delete this CV/Resume?'}
+          : languageRedux === 2
+            ? 'Delete your CV/Resume, you will no longer be able to apply for jobs using it.\nDo you want to delete this CV/Resume?'
+            : languageRedux === 3 &&
+              'CV/프로필을 삭제하면 더 이상 해당 이력서/프로필을 사용하여 직무에 지원할 수 없습니다.\n이 CV/프로필을 삭제하시겠습니까?'}
       </p>
       <div className="buttons-delete-cv-modal">
         <Button type="primary" shape="round" onClick={handleSubmit}>
-          {languageRedux === 1 ? 'Đồng ý' : 'Yes'}
+          {languageRedux === 1
+            ? 'Đồng ý'
+            : languageRedux === 2
+              ? 'Yes'
+              : languageRedux === 3 && '확인'}
         </Button>
         <Button type="text" shape="round" onClick={handleCancel}>
-          {languageRedux === 1 ? 'Hủy' : 'Cancel'}
+          {languageRedux === 1
+            ? 'Hủy'
+            : languageRedux === 2
+              ? 'Cancel'
+              : languageRedux === 3 && '취소'}
         </Button>
       </div>
     </Modal>

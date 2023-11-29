@@ -138,7 +138,7 @@ const ThemesJob: React.FC = () => {
   //     Number(themeId),
   //     9,
   //     threshold,
-  //     languageRedux === 1 ? 'vi' : 'en',
+  //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //   );
 
   //   if (result) {
@@ -167,7 +167,7 @@ const ThemesJob: React.FC = () => {
       let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
       setLoadingCarousel(true);
       const result = await themeApi.getThemesEnable(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -180,7 +180,7 @@ const ThemesJob: React.FC = () => {
             : result?.data[0]?.id,
           9,
           0,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (list) {
           setPostByTheme(list);
@@ -235,7 +235,15 @@ const ThemesJob: React.FC = () => {
       <div className="title-container">
         <div className="title">
           <TopicJobIcon width={25} height={25} />
-          <h2>{language?.jobs_by_theme}</h2>
+          <h2>
+            {languageRedux === 1
+              ? 'Công việc theo chủ đề'
+              : languageRedux === 2
+                ? 'Job by hot places'
+                : languageRedux === 3
+                  ? '핫플레이스별작업'
+                  : 'Công việc theo chủ đề'}
+          </h2>
           <div className="help-search" onClick={handleClickHelpSearch}>
             <QuestionMarkIcon />
             <div className={`login__hover__container `}>
@@ -244,7 +252,8 @@ const ThemesJob: React.FC = () => {
                   <p>
                     {languageRedux === 1
                       ? 'Mục này sẽ gợi ý cho bạn việc làm gần các địa điểm nổi tiếng trong thành phố của bạn.'
-                      : 'This section will suggest you some jobs near hot places in your city.'}
+                      : languageRedux === 2 ? 'This section will suggest you some jobs near hot places in your city.'
+                        : '이 섹션에서는 귀하의 도시에서 유명한 장소 근처의 일자리를 제안합니다.'}
                   </p>
                 </div>
                 {/* <Button
@@ -254,14 +263,25 @@ const ThemesJob: React.FC = () => {
             }}
           >
             <LoginArrowBlackIcon />
-            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+               {languageRedux === 1
+                ? 'Đăng nhập ngay'
+                : languageRedux === 2
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
           </Button> */}
               </div>
             </div>
           </div>
         </div>
         {/* <div className="view-all" onClick={handleMoveToMoreJob}>
-          <p>{language?.home_page?.view_all}</p>
+          <p> {
+              languageRedux === 1 ?
+                "Xem tất cả" :
+                languageRedux === 2 ?
+                  "View all" :
+                  languageRedux === 3 &&
+                  "다 보기"
+            }</p>
           <ArrowrightIcon width={20} height={20} />
         </div> */}
       </div>
@@ -273,7 +293,8 @@ const ThemesJob: React.FC = () => {
           <p>
             {languageRedux === 1
               ? 'Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn.'
-              : 'Search for jobs in famous locations in your city.'}
+              : languageRedux === 2 ? 'Search for jobs in famous locations in your city.'
+                : '귀하의 도시 내 인기 있는 장소에서 일자리를 검색해 보세요.'}
           </p>
         </div>
       ) : (
@@ -335,10 +356,18 @@ const ThemesJob: React.FC = () => {
           className="view-all-down"
           onClick={handleMoveToMoreJob}
           style={{
-            display: !post || post.length === 0 || post.length < 10 ? 'none' : 'flex'
+            display:
+              !post || post.length === 0 || post.length < 10 ? 'none' : 'flex',
           }}
         >
-          <p>{language?.home_page?.view_all}</p>
+          <p>
+            {' '}
+            {languageRedux === 1
+              ? 'Xem tất cả'
+              : languageRedux === 2
+                ? 'View all'
+                : languageRedux === 3 && '다 보기'}
+          </p>
           <ArrowrightIcon width={20} height={20} />
         </div>
       </Skeleton>

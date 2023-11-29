@@ -31,7 +31,13 @@ const ModalUnlockCandidate = () => {
             textAlign: 'left',
           }}
         >
-          {languageRedux === 1 ? 'Mở khóa ứng viên' : 'Unlock Candidates'}
+          {languageRedux === 1
+            ? 'Mở khóa ứng viên'
+            : languageRedux === 2
+              ? 'Unlock Candidates'
+              : languageRedux === 3
+                ? '후보자 잠금 해제'
+                : 'Mở khóa ứng viên'}
         </h3>
       }
       footer={null}
@@ -51,14 +57,26 @@ const ModalUnlockCandidate = () => {
       >
         {languageRedux === 1
           ? 'Mở khóa ứng viên để bạn có thể giao tiếp trực tiếp với ứng viên thông qua thông tin cá nhân'
-          : 'Unlock candidates so you can communicate directly with candidates through personal information!'}
+          : languageRedux === 2
+            ? 'Unlock candidates so you can communicate directly with candidates through personal information!'
+            : languageRedux
+              ? '개인 정보를 통해 후보자와 직접 소통할 수 있도록 후보자 잠금 해제'
+              : 'Mở khóa ứng viên để bạn có thể giao tiếp trực tiếp với ứng viên thông qua thông tin cá nhân'}
       </p>
       <div className="update-info-buttons">
         <Button type="primary" shape="round" onClick={handleConfirm}>
-          {languageRedux === 1 ? 'Xác nhận' : 'Confirm'}
+          {languageRedux === 1
+            ? 'Xác nhận'
+            : languageRedux === 2
+              ? 'Confirm'
+              : languageRedux === 3 && '확인하다'}
         </Button>
         <Button type="text" shape="round" onClick={handleCancel}>
-          {languageRedux === 1 ? 'Hủy' : 'Cancel'}
+          {languageRedux === 1
+            ? 'Hủy'
+            : languageRedux === 2
+              ? 'Cancel'
+              : languageRedux === 3 && '취소'}
         </Button>
       </div>
     </Modal>

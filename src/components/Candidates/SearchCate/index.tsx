@@ -79,7 +79,7 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setDataCategories(result.data);
@@ -125,11 +125,21 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
   const DropdownRender = (menus: React.ReactNode) => (
     <div className="filter-loca-cate filter-candidate">
       <Text className="title-filter_location">
-        {languageRedux === 1 ? 'Ngành nghề' : 'Career'}
+        {languageRedux === 1
+          ? 'Ngành nghề'
+          : languageRedux === 2
+            ? 'Career'
+            : languageRedux === 3 && '직업'}
       </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable ? 'Vui lòng chọn ngành nghề bạn muốn tìm kiếm.' : ''}
+        {disable
+          ? languageRedux === 1
+            ? 'Vui lòng chọn ngành nghề bạn muốn tìm kiếm.'
+            : languageRedux === 2
+              ? 'Please select the job you want to search for'
+              : languageRedux === 3 && '검색하고 싶은 직업을 선택해주세요'
+          : 'Vui lòng chọn ngành nghề bạn muốn tìm kiếm.'}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
                 <Button type="default" onClick={() => {}}>
@@ -179,7 +189,13 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
               }))
             : []
         }
-        placeholder={languageRedux === 1 ? 'Ngành nghề' : 'Career'}
+        placeholder={
+          languageRedux === 1
+            ? 'Ngành nghề'
+            : languageRedux === 2
+              ? 'Career'
+              : languageRedux === 3 && '직업'
+        }
       />
     </div>
   );

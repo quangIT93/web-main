@@ -264,12 +264,20 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                 fontWeight: '400',
               }}
             >
-              {language?.posted_on}{' '}
+              {languageRedux === 1
+                ? 'Đã đăng vào lúc:'
+                : languageRedux === 2
+                  ? 'Posted on:'
+                  : languageRedux === 3 && '에 게시 됨:'}{' '}
               {props.item?.created_at != null
                 ? moment(props.item?.created_at).format('DD/MM/YYYY') +
-                  ' ' +
-                  moment(new Date(props.item?.created_at)).format('HH:mm')
-                : language?.unupdated}
+                ' ' +
+                moment(new Date(props.item?.created_at)).format('HH:mm')
+                : languageRedux === 1
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
             </p>
 
             <p
@@ -285,8 +293,18 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
             >
               {props.item.num_of_application}{' '}
               {props.item.num_of_application <= 1
-                ? language?.history_page?.application
-                : language?.history_page?.applications}
+                ? languageRedux === 1
+                  ? 'đơn ứng tuyển'
+                  : languageRedux === 2
+                    ? 'application'
+                    : '단일 적용'
+                :
+                languageRedux === 1
+                  ? 'đơn ứng tuyển'
+                  : languageRedux === 2
+                    ? 'applications'
+                    : '단일 적용'
+              }
             </p>
             {props.item.status === 1 ? (
               <p
@@ -300,7 +318,11 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                   fontSize: '12px',
                 }}
               >
-                {language?.recruiting}
+                {languageRedux === 1
+                  ? 'Đang tuyển'
+                  : languageRedux === 2
+                    ? 'Recruiting'
+                    : '현재 모집 중'}
               </p>
             ) : props.item.status === 3 ? (
               <p
@@ -314,7 +336,11 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                   fontSize: '12px',
                 }}
               >
-                {language?.post_detail_page?.closed}
+                {languageRedux === 1
+                  ? 'Đã đóng'
+                  : languageRedux === 2
+                    ? 'Closed'
+                    : '닫은'}
               </p>
             ) : (
               <p
@@ -327,7 +353,11 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                   fontSize: '12px',
                 }}
               >
-                {language?.history_page?.does_not_accept}
+                {languageRedux === 1
+                  ? 'Không chấp nhận'
+                  : languageRedux === 2
+                    ? 'Does not accept'
+                    : '수락하지 않음'}
               </p>
             )}
           </Box>
@@ -394,7 +424,11 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                                             ? props.item.resource.company_icon
                                             : ''
                                     }
-                                    alt="ảnh"
+                                    alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'}
                                     onError={handleImageError}
                                 />
                             )}

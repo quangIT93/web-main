@@ -32,7 +32,11 @@ const EditDescription: React.FC<IEditDescription> = (props) => {
         htmlFor="startTime"
       >
         {
-          language?.job_description
+          languageRedux === 1
+            ? "Mô tả công việc"
+            : languageRedux === 2
+              ? "Job description"
+              : '업무 설명서'
         }{' '}
         <span style={{ color: 'red' }}>*</span>
       </Typography>
@@ -45,7 +49,11 @@ const EditDescription: React.FC<IEditDescription> = (props) => {
         rows={6}
         // label="Một số đặc điểm nhận diện công ty"
         placeholder={
-          language?.place_des
+          languageRedux === 1
+            ? "Mô tả công việc"
+            : languageRedux === 2
+              ? "Job description"
+              : '업무 설명서'
         }
         id="edit_post_description"
       />

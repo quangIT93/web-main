@@ -16,7 +16,7 @@ const NoDataComponent: React.FC<any> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -44,19 +44,29 @@ const NoDataComponent: React.FC<any> = (props) => {
       <img
         style={{ marginTop: '10rem' }}
         src={require('../../img/langdingPage/nodata.png')}
-        alt="ảnh bị lỗi"
+        alt={languageRedux === 1
+          ? 'Hình ảnh bị lỗi'
+          : languageRedux === 2
+            ? 'Image is corrupted'
+            : '이미지가 손상되었습니다'}
         width="208px"
         height="245px"
       />
       <p style={{ fontSize: 20, color: 'gray', marginBottom: 20 }}>
-        {
-          props.loading === true ?
-            languageRedux === 1
-              ? 'Đang tải dữ liệu'
-              : 'Loading data...' :
-            languageRedux === 1
-              ? 'Không có thông tin hiển thị'
-              : 'No display information'}
+        {props.loading === true
+          ?
+          languageRedux === 1
+            ? 'Đang tải dữ liệu...'
+            : languageRedux === 2
+              ? 'Loading data...'
+              : languageRedux === 3 && '로드 중...'
+          :
+          languageRedux === 1
+            ? 'Không có thông tin hiển thị!'
+            : languageRedux === 2
+              ? 'No display information!'
+              : languageRedux === 3 && '표시되는 정보가 없습니다!'
+        }
       </p>
     </div>
   );

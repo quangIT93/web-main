@@ -44,7 +44,11 @@ const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
             textAlign: 'center',
           }}
         >
-          {languageRedux === 1 ? 'Lưu thành Công' : 'Saved successfully'}
+          {languageRedux === 1
+            ? 'Lưu thành Công'
+            : languageRedux === 2
+              ? 'Saved successfully'
+              : languageRedux === 3 && '성공적으로 저장 되었음'}
         </h3>
       }
       footer={null}
@@ -65,7 +69,9 @@ const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
       >
         {languageRedux === 1
           ? 'Bạn đã lưu thành công CV'
-          : 'You have successfully saved'}
+          : languageRedux === 2
+            ? 'You have successfully saved'
+            : languageRedux === 3 && 'CV를 성공적으로 저장했습니다.'}
       </p>
       <div
         style={{
@@ -84,7 +90,11 @@ const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
           onChange={() => setCheckedDefault(!checkedDefault)}
         />
         <label htmlFor="SelectDefauld">
-          {languageRedux === 1 ? 'Đặt cv này thành mặc định' : 'Set as default'}
+          {languageRedux === 1
+            ? 'Đặt cv này thành mặc định'
+            : languageRedux === 2
+              ? 'Set as default'
+              : languageRedux === 3 && '이 CV를 기본값으로 설정하세요'}
         </label>
       </div>
       <div className="share-buttons-choose-cv-modal">
@@ -98,7 +108,11 @@ const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
             window.open('/profile-cv', '_parent');
           }}
         >
-          {languageRedux === 1 ? 'List CV/Hồ sơ' : 'Cv/Resume list'}
+          {languageRedux === 1
+            ? 'List CV/Hồ sơ'
+            : languageRedux === 2
+              ? 'Cv/Resume list'
+              : languageRedux === 3 && 'CV/이력서 목록'}
         </Button>
         <Button
           type="text"
@@ -108,7 +122,11 @@ const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
           //   }}
           onClick={handleCancel}
         >
-          {languageRedux === 1 ? 'Hủy' : 'Cancel'}
+          {languageRedux === 1
+            ? 'Hủy'
+            : languageRedux === 2
+              ? 'Cancel'
+              : languageRedux === 3 && '취소'}
         </Button>
       </div>
     </Modal>

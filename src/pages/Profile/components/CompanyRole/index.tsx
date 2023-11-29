@@ -68,19 +68,25 @@ const CompanyRole: React.FC<ICompany> = (props) => {
       key: '1',
       label: (
         <p>
-          {languageRedux === 1 ? 'Thông tin công ty' : "Company's information"}
+          {languageRedux === 1
+            ? 'Thông tin công ty'
+            : languageRedux === 2
+              ? "Company's information"
+              : '회사 정보'}
         </p>
       ),
       children: <ContactInfo company={companyData} />,
     },
     {
       key: '2',
-      label: <p>
-        {
-          languageRedux === 1 ? "Đánh giá" : "Review"
-        }
-      </p>,
-      children: <ReviewCompany company={companyData} companyId={companyData.id} />,
+      label: <p>{languageRedux === 1
+        ? 'Đánh giá'
+        : languageRedux === 2
+          ? "Review"
+          : '평가하다'}</p>,
+      children: (
+        <ReviewCompany company={companyData} companyId={companyData.id} />
+      ),
     },
   ];
 
@@ -111,7 +117,9 @@ const CompanyRole: React.FC<ICompany> = (props) => {
               <h1>
                 {languageRedux === 1
                   ? 'Thông tin công ty'
-                  : "Company's information"}
+                  : languageRedux === 2
+                    ? "Company's information"
+                    : '회사 정보'}
               </h1>
 
               <Space
@@ -126,7 +134,11 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 </div>
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.edit}
+                  {languageRedux === 1
+                    ? 'Sửa'
+                    : languageRedux === 2
+                      ? 'Edit'
+                      : '고치다'}
                 </p>
               </Space>
             </div>
@@ -137,7 +149,8 @@ const CompanyRole: React.FC<ICompany> = (props) => {
               <p>
                 {languageRedux === 1
                   ? 'Bạn cần điền thông tin công ty của mình để đăng tin tuyển dụng, tìm kiếm ứng viên.'
-                  : 'You need to fill in your company-role information to post job vacancies, search for candidates.'}
+                  : languageRedux === 2 ? 'You need to fill in your company-role information to post job vacancies, search for candidates.'
+                    : '채용 공고 게시 및 후보자 검색을 위해서는 회사 정보를 입력해야 합니다.'}
               </p>
             </div>
           </div>
@@ -158,7 +171,10 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                         ? companyData.name
                         : languageRedux === 1
                           ? 'Thông tin công ty chưa cập nhật'
-                          : 'Company information not updated yet'}
+                          : languageRedux === 2
+                            ? 'Company information not updated yet'
+                            : languageRedux === 3 &&
+                            '회사정보가 업데이트되지 않았습니다.'}
                     </h3>
                   </div>
                 </div>

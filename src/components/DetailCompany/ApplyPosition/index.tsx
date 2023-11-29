@@ -49,7 +49,7 @@ const ApplyPosition: React.FC<IApplyPosition> = (props) => {
         companyId,
         nextPage,
         20,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result && result.data.posts.length === 20) {
@@ -71,7 +71,9 @@ const ApplyPosition: React.FC<IApplyPosition> = (props) => {
         message.error(
           languageRedux === 1
             ? 'Không còn công việc để xem'
-            : 'No more jobs available',
+            : languageRedux === 2
+              ? 'No more jobs available'
+              : languageRedux === 3 && '더 이상 볼 일이 없습니다',
         );
       }
     } catch (error) {

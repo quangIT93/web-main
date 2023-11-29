@@ -102,7 +102,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);
@@ -136,7 +136,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   // const allLocation = async () => {
   //   try {
   //     const allLocation = await locationApi.getAllLocation(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
 
   //     if (allLocation) {
@@ -249,7 +249,11 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const handleSubmit = async () => {
     try {
       if (value.length > 10) {
-        message.error(language?.limit_10_location);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 10 khu vực'
+          : languageRedux === 2
+            ? 'Only up to 10 areas can be'
+            : '영역은 최대 10개까지만 있을 수 있습니다.');
 
         setValue(locations?.map((v: any, i) => v.id));
         return;
@@ -260,7 +264,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
       );
       if (result) {
         const getProfileV3 = await profileApi.getProfileInformationV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         await dispatch(setProfileMeInformationV3(getProfileV3) as any);
         dispatch(setAlertEditInfo(true));
@@ -309,7 +313,12 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     // Disable the "All" checkbox at the root level
     showCheckedStrategy: SHOW_PARENT,
     // treeDefaultExpandAll,
-    placeholder: language?.working_location,
+    placeholder: languageRedux === 1
+      ? 'Khu vực làm việc'
+      : languageRedux === 2
+        ? 'Working location'
+        : languageRedux === 3 &&
+        '근무 위치',
     style: {
       width: '100%',
       zIndex: '1302',
@@ -349,7 +358,12 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
           component="h2"
           align="center"
         >
-          {language?.working_location}
+          {languageRedux === 1
+            ? 'Khu vực làm việc'
+            : languageRedux === 2
+              ? 'Working location'
+              : languageRedux === 3 &&
+              '근무 위치'}
         </Typography>
 
         {/* <FormControl sx={{ width: '100%', margin: '12px auto' }} size="small">
@@ -389,7 +403,12 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
         <TreeSelect {...tProps} />
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {language?.profile_page?.save_info}
+          {languageRedux === 1
+            ? 'Lưu thông tin'
+            : languageRedux === 2
+              ? 'Save information'
+              : languageRedux === 3 &&
+              '정보 저장'}
         </Button>
       </Box>
     </Modal>

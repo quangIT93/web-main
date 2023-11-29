@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 //import scss
 import './style.scss';
 
@@ -25,6 +25,7 @@ import bookMarkApi from 'api/bookMarkApi';
 
 import { PostHotJob } from '..';
 import ModalLogin from '../../../components/Home/ModalLogin';
+import { RootState } from 'store';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
 interface Iprops {
   item: PostHotJob;
@@ -35,7 +36,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
   };
@@ -172,7 +173,11 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                           ? props.item?.companyResourceData?.logo
                           : ''
                       }
-                      alt="ảnh"
+                      alt={languageRedux === 1
+                        ? 'Hình ảnh bị lỗi'
+                        : languageRedux === 2
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'}
                       onError={handleImageError}
                     />
                   )}
@@ -311,7 +316,11 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                       ? props.item?.companyResourceData?.logo
                       : ''
                   }
-                  alt="ảnh"
+                  alt={languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'}
                   onError={handleImageError}
                 />
               )}

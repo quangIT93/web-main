@@ -59,10 +59,22 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
 
   const DropdownRender = (menus: React.ReactNode) => (
     <div className="filter-loca-cate">
-      <Text className="title-filter_location">{language?.select_cate}</Text>
+      <Text className="title-filter_location">
+        {languageRedux === 1
+          ? 'Chọn danh mục nghề nghiệp'
+          : languageRedux === 2
+            ? 'Select a career category'
+            : languageRedux === 3 && '카테고리를 선택합니다'}
+      </Text>
       {menus}
       <Divider style={{ margin: 4 }}>
-        {disable ? language?.limit_10_cate : ''}
+        {disable
+          ? languageRedux === 1
+            ? 'Chỉ có thể tối đa 10 danh mục'
+            : languageRedux === 2
+              ? 'Only up to 10 categories can be'
+              : languageRedux === 3 && '최대 10개의 카테고리만 가능합니다'
+          : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
         <Button type="default" onClick={() => {}}>
@@ -92,7 +104,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setDataCategories(result.data);
@@ -202,12 +214,12 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
             listCate?.current?.length !== 0
               ? listCate?.current
               : listCate?.current?.length === 0 &&
-                location?.pathname === '/search-results'
-              ? []
-              : userProfile?.categories.map((profile: any) => [
-                  profile?.parent_category_id,
-                  profile?.child_category_id,
-                ])
+                  location?.pathname === '/search-results'
+                ? []
+                : userProfile?.categories.map((profile: any) => [
+                    profile?.parent_category_id,
+                    profile?.child_category_id,
+                  ])
           }
           value={reset ? [] : listCateProps}
           multiple
@@ -216,7 +228,13 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           className="inputCategories input-filter_nav"
           showCheckedStrategy={SHOW_CHILD}
           style={{ width: '100%', borderRadius: '2px' }}
-          placeholder={language?.select_cate}
+          placeholder={
+            languageRedux === 1
+              ? 'Chọn danh mục nghề nghiệp'
+              : languageRedux === 2
+                ? 'Select a career category'
+                : languageRedux === 3 && '카테고리를 선택합니다'
+          }
         />
       </div>
     );

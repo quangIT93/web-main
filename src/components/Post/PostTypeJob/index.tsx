@@ -18,7 +18,8 @@ interface IPostTypeJob {
   setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
-  const { typeJob, setTypeJob, language, languageRedux, setIsValidSubmit } = props;
+  const { typeJob, setTypeJob, language, languageRedux, setIsValidSubmit } =
+    props;
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
@@ -26,7 +27,9 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
   const [jobTypes, setJobTypes] = React.useState<AxiosResponse | null>(null);
 
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType(languageRedux === 1 ? 'vi' : 'en');
+    const result = await siteApi.getJobType(
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+    );
     if (result) {
       setJobTypes(result);
     }
@@ -39,7 +42,7 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
 
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTypeJob(Number(e.target.value));
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
   // console.log('typeJob', typeJob);
   // console.log('jobTypes', jobTypes);
@@ -50,7 +53,15 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
       className="post-jobType"
     >
       <FormLabel id="demo-row-radio-buttons-group-label" sx={styleLabel}>
-        {language?.job_type1} <span style={{ color: 'red' }}>*</span>
+        {
+          languageRedux === 1
+            ? "Loại công việc"
+            : languageRedux === 2
+              ? "Job types"
+              : languageRedux === 3
+                ? '일의 종류'
+                : "Loại công việc"
+        } <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row

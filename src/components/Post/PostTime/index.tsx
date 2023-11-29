@@ -18,9 +18,16 @@ interface IPostTime {
   setEndTime: any;
   language: any;
   setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+  languageRedux: any
 }
 const PostTime: React.FC<IPostTime> = (props) => {
-  const { startTime, endTime, setStartTime, setEndTime, language, setIsValidSubmit} = props;
+  const { startTime,
+    endTime,
+    setStartTime,
+    setEndTime,
+    language,
+    setIsValidSubmit,
+    languageRedux } = props;
 
   // const [startTime, setStartTime] = React.useState<any>(
   //   new Date(1970, 0, 2, 7, 0).getTime(),
@@ -62,7 +69,13 @@ const PostTime: React.FC<IPostTime> = (props) => {
             htmlFor="startTime"
           >
             {
-              language?.working_hour
+              languageRedux === 1
+                ? "Giờ làm việc"
+                : languageRedux === 2
+                  ? "Working hours"
+                  : languageRedux === 3
+                    ? '노동시간'
+                    : "Giờ làm việc"
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>

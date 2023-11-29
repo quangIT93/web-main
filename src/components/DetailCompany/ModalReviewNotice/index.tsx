@@ -39,7 +39,9 @@ const ModalReviewNotice: React.FC<IModalReviewNotice> = (props) => {
                 >
                     {languageRedux === 1
                         ? 'Không thể đăng bài đánh giá'
-                        : 'Unable to post a review'}
+                        : languageRedux === 2 ?
+                            'Unable to post a review' :
+                            "리뷰를 게시할 수 없습니다."}
                 </h3>
             }
             footer={null}
@@ -60,7 +62,9 @@ const ModalReviewNotice: React.FC<IModalReviewNotice> = (props) => {
                 {
                     languageRedux === 1
                         ? 'Bạn chỉ có thể đăng đánh giá sau khi đánh giá số sao và viết đánh giá cho công ty.'
-                        : 'You can only post a review after giving the company a star rating and comment.'
+                        : languageRedux === 2 ?
+                            'You can only post a review after giving the company a star rating and comment.'
+                            : '별점을 매기고 회사에 대한 리뷰를 작성한 후에만 리뷰를 게시할 수 있습니다.'
                 }
             </p>
             <div className={styles.modal_review_notice_buttons}>
@@ -69,7 +73,8 @@ const ModalReviewNotice: React.FC<IModalReviewNotice> = (props) => {
                     shape="round"
                     onClick={handleCloseModal}
                 >
-                    {languageRedux === 1 ? 'Đã hiểu' : 'Ok'}
+                    {languageRedux === 1 ? 'Đã hiểu'
+                        : languageRedux === 2 ? 'Ok' : '이해했다'}
                 </Button>
             </div>
         </Modal>

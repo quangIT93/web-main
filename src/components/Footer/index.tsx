@@ -2,9 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './style.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const Footer: React.FC = () => {
   // const mail = 'contact.hijob@gmail.com';
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   return (
     <div style={{ width: '100%' }}>
       <div className="container-footer">
@@ -21,7 +26,11 @@ const Footer: React.FC = () => {
               width={66}
               height={80}
               src={require('../../img/langdingPage/logoHiJob.png')}
-              alt="ảnh bị lỗi"
+              alt={languageRedux === 1
+                ? 'Hình ảnh bị lỗi'
+                : languageRedux === 2
+                  ? 'Image is corrupted'
+                  : '이미지가 손상되었습니다'}
             />
           </div>
 
@@ -84,7 +93,13 @@ const Footer: React.FC = () => {
             </div>
           </div>
           <div className="div-socal-link">
-            <h4 style={{ color: '#0D99FF' }}>LIÊN KẾT</h4>
+            <h4 style={{ color: '#0D99FF' }}>
+              {languageRedux === 1
+                ? 'Liên kết'
+                : languageRedux === 2
+                  ? 'Link'
+                  : languageRedux === 3 && '연결'}
+            </h4>
             <div id="div-img-socal">
               <Link to="https://www.facebook.com/hijobOfficial/">
                 <img

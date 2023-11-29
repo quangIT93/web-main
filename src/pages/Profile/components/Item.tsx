@@ -81,7 +81,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -154,7 +154,11 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
             <PencilIcon width={15} height={15} />
           </div>
 
-          <p style={{ color: '#0D99FF', fontSize: '14px' }}>{language?.edit}</p>
+          <p style={{ color: '#0D99FF', fontSize: '14px' }}>{languageRedux === 1
+            ? 'Sửa'
+            : languageRedux === 2
+              ? 'Edit'
+              : '고치다'}</p>
         </Space>
         <Space
           onClick={
@@ -168,7 +172,11 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
             <DeleteIcon width={15} height={15} />
           </div>
           <p style={{ color: '#575757', fontSize: '14px' }}>
-            {language?.profile_page?.delete}
+            {languageRedux === 1
+              ? 'Xóa'
+              : languageRedux === 2
+                ? 'Delete'
+                : '삭제'}
           </p>
         </Space>
       </div>

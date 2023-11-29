@@ -56,7 +56,7 @@ const GoogleLoginButton: React.FC<PropsModalLogin> = (props) => {
       try {
         if (localStorage.getItem('accessToken')) {
           const result = await profileApi.getProfile(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
 
           // console.log('result: ', result);

@@ -31,9 +31,8 @@
         justify-content: center;
         padding: 12px 0;
         border-bottom: 1px solid #eee;
-        h3 {
 
-        }
+        h3 {}
     }
 
     .ant-radio-group {
@@ -41,8 +40,6 @@
     }
 }
 
-.ant-select-dropdown:has(#rc_select_6_list){
+.ant-select-dropdown:has(#rc_select_6_list) {
     z-index: 8 !important;
 }
-
-

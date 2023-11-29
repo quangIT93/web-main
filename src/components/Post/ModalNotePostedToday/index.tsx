@@ -72,7 +72,11 @@ const ModalNotePostedToday: React.FC<IModalNotePostedToday> = (props) => {
               position: 'relative',
             }}
           >
-            {languageRedux === 1 ? 'Thông báo!' : 'Notification!'}
+            {languageRedux === 1
+              ? 'Thông báo!'
+              : languageRedux === 2
+                ? 'Notification!'
+                : languageRedux === 3 && '공고'}
             <IconButton
               aria-label="close"
               onClick={handleClose}
@@ -92,7 +96,10 @@ const ModalNotePostedToday: React.FC<IModalNotePostedToday> = (props) => {
           >
             {languageRedux === 1
               ? 'Bạn chỉ có thể đăng 1 tin tuyển dụng mỗi ngày!'
-              : 'You can only post 1 job posting per day!'}
+              : languageRedux === 2
+                ? 'You can only post 1 job posting per day!'
+                : languageRedux === 3 &&
+                  '하루에 1개의 채용 공고만 게시할 수 있습니다!'}
           </h6>
           <h6
             className="modal-text_modalPost"
@@ -100,7 +107,9 @@ const ModalNotePostedToday: React.FC<IModalNotePostedToday> = (props) => {
           >
             {languageRedux === 1
               ? 'Vui lòng quay lại vào ngày mai!'
-              : 'Please come back tomorrow!'}
+              : languageRedux === 2
+                ? 'Please come back tomorrow!'
+                : languageRedux === 3 && '내일 다시 와주세요!'}
           </h6>
 
           {/* <h4
@@ -132,7 +141,11 @@ const ModalNotePostedToday: React.FC<IModalNotePostedToday> = (props) => {
                 backgroundColor: '#0d99ff',
               }}
             >
-              {languageRedux === 1 ? 'Đến trang chủ' : 'Go to home page'}
+              {languageRedux === 1
+                ? 'Đến trang chủ'
+                : languageRedux === 2
+                  ? 'Go to home page'
+                  : languageRedux === 3 && '홈페이지로 이동'}
             </Button>
             {/* <Button
               onClick={onclick}

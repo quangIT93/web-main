@@ -1,6 +1,7 @@
 .filter-candidate {
     position: relative;
     width: 100%;
+
     .filter-input_candidate {
         position: absolute;
         z-index: 6;
@@ -10,6 +11,7 @@
 
     .ant-select {
         width: 100% !important;
+
         .ant-select-selector {
             .ant-select-selection-item {
                 margin-left: 20px;
@@ -27,18 +29,17 @@
 
 .wrap-radio_candidateAge {
     padding-bottom: 12px;
+
     .title-search_age {
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 12px 0;
 
-        h3 {
-
-        }
+        h3 {}
 
     }
-    
+
     .ant-radio-group {
         margin: 12px 0;
     }
@@ -53,6 +54,6 @@
 
 }
 
-.ant-select-dropdown:has(.wrap-radio_candidateAge){
+.ant-select-dropdown:has(.wrap-radio_candidateAge) {
     z-index: 8 !important;
 }

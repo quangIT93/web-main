@@ -21,8 +21,16 @@ interface PropsSalaryFilterSubnav {
 }
 
 const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
-  const { setSalaryMax, setSalaryMin, salaryMax, salaryMin, salaryType, languageRedux, language, setIsValidSubmit } =
-    props;
+  const {
+    setSalaryMax,
+    setSalaryMin,
+    salaryMax,
+    salaryMin,
+    salaryType,
+    languageRedux,
+    language,
+    setIsValidSubmit,
+  } = props;
   // const VND_TO_USD = 0.000043; // Conversion rate: 1 VND = 0.000043 USD
   // const USD_TO_VND = 23155;
 
@@ -39,7 +47,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
 
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       setSalaryMin(inputValue.replace(',', ''));
-      setIsValidSubmit(false)
+      setIsValidSubmit(false);
     }
   };
   const handleChangesalaryMax = (
@@ -51,7 +59,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
     const reg = /[0-9]+$/;
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       setSalaryMax(inputValue.replace(',', ''));
-      setIsValidSubmit(false)
+      setIsValidSubmit(false);
     }
   };
 
@@ -131,14 +139,24 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              language?.post_page?.min_salary
+              languageRedux === 1
+                ? "Lương tối thiểu"
+                : languageRedux === 2
+                  ? "Min salary"
+                  : '루옹 투이 티에우'
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}
             maxLength={15}
-            placeholder="Luong toi thieu"
+            placeholder={
+              languageRedux === 1
+                ? "Lương tối thiểu"
+                : languageRedux === 2
+                  ? "Min salary"
+                  : '루옹 투이 티에우'
+            }
             onChange={handleChangesalaryMin}
             value={new Intl.NumberFormat('en-US').format(
               Number(salaryMin.toString().replace(',', '')),
@@ -154,7 +172,9 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập mức lương'
-                  : 'Please enter salary'}
+                  : languageRedux === 2
+                    ? 'Please enter salary'
+                    : languageRedux === 3 && '급여를 입력해주세요'}
               </span>
             ) : (
               <></>
@@ -173,14 +193,24 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              language?.post_page?.max_salary
+              languageRedux === 1
+                ? "Lương tối đa"
+                : languageRedux === 2
+                  ? "Max salary"
+                  : '루옹 터이 다'
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}
             maxLength={15}
-            placeholder="Luong toi da"
+            placeholder={
+              languageRedux === 1
+                ? "Lương tối đa"
+                : languageRedux === 2
+                  ? "Max salary"
+                  : '루옹 터이 다'
+            }
             onChange={handleChangesalaryMax}
             value={new Intl.NumberFormat('en-US').format(
               Number(salaryMax.toString().replace(',', '')),
@@ -196,7 +226,9 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập mức lương'
-                  : 'Please enter salary'}
+                  : languageRedux === 2
+                    ? 'Please enter salary'
+                    : languageRedux === 3 && '급여를 입력해주세요'}
               </span>
             ) : (
               <></>

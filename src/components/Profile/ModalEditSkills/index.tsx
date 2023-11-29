@@ -134,7 +134,11 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
         message:
           languageRedux === 1
             ? 'Tên kỹ năng không được bỏ trống'
-            : 'Skill names cannot be empty',
+            : languageRedux === 2
+              ? 'Skill names cannot be empty'
+              : languageRedux === 3
+                ? '스킬 이름은 비워둘 수 없습니다.'
+                : 'Tên kỹ năng không được bỏ trống.',
         checkForm: false,
         idError: 1,
       };
@@ -144,7 +148,11 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
         message:
           languageRedux === 1
             ? 'Tên kỹ năng không được vượt quá 255 ký tự'
-            : 'Skill names cannot exceed 255 characters',
+            : languageRedux === 2
+              ? 'Skill names cannot exceed 255 characters'
+              : languageRedux === 3
+                ? '스킬 이름은 255자를 초과할 수 없습니다.'
+                : 'Tên kỹ năng không được vượt quá 255 ký tự',
         checkForm: false,
         idError: 1,
       };
@@ -168,7 +176,7 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
         );
         if (result) {
           const resultProfile = await profileApi.getProfileInformationMoreV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (resultProfile) {
             setOpenModalEditSkills({
@@ -188,7 +196,9 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
           type: 'error',
           content: message,
         });
-        const profile_skill_edit_skill_name = document.getElementById('profile_skill_edit_skill_name') as HTMLElement;
+        const profile_skill_edit_skill_name = document.getElementById(
+          'profile_skill_edit_skill_name',
+        ) as HTMLElement;
         // console.log(idError);
 
         switch (idError) {
@@ -243,7 +253,11 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
             align="center"
             sx={{ marginBottom: '12px' }}
           >
-            {languageRedux === 1 ? 'Sửa kỹ năng' : 'Edit Skills'}
+            {languageRedux === 1
+              ? 'Sửa kỹ năng'
+              : languageRedux === 2
+                ? 'Edit Skills'
+                : languageRedux === 3 && '스킬 편집'}
           </Typography>
           <Box sx={{ marginBottom: '12px' }}>
             <Typography
@@ -252,7 +266,13 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              {languageRedux === 1 ? 'Kỹ năng' : 'Skill'}{' '}
+              {languageRedux === 1
+                ? 'Kỹ năng'
+                : languageRedux === 2
+                  ? 'Skills'
+                  : languageRedux === 3
+                    ? '기술'
+                    : 'Kỹ năng'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -263,7 +283,15 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
               onChange={handleOnchangeSkill}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={languageRedux === 1 ? 'Kỹ năng' : 'Skill'}
+              placeholder={
+                languageRedux === 1
+                  ? 'Kỹ năng'
+                  : languageRedux === 2
+                    ? 'Skills'
+                    : languageRedux === 3
+                      ? '기술'
+                      : 'Kỹ năng'
+              }
             // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
@@ -271,13 +299,21 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Tên kỹ năng không được vượt quá 255 ký tự'
-                    : 'Skill names cannot exceed 255 characters'}
+                    : languageRedux === 2
+                      ? 'Skill names cannot exceed 255 characters'
+                      : languageRedux === 3
+                        ? '스킬 이름은 255자를 초과할 수 없습니다.'
+                        : 'Tên kỹ năng không được vượt quá 255 ký tự'}
                 </span>
               ) : !skill ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Tên kỹ năng không được bỏ trống'
-                    : 'Skill names cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Skill names cannot be empty'
+                      : languageRedux === 3
+                        ? '스킬 이름은 비워둘 수 없습니다.'
+                        : 'Tên kỹ năng không được bỏ trống.'}
                 </span>
               ) : (
                 <></>
@@ -293,7 +329,11 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
               component="label"
               htmlFor="sex"
             >
-              {languageRedux === 1 ? 'Cấp độ' : 'Level'}{' '}
+              {languageRedux === 1
+                ? 'Cấp độ'
+                : languageRedux === 2
+                  ? 'Level'
+                  : languageRedux === 3 && '수준'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -303,30 +343,63 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
               defaultValue={1}
               onChange={handleOnchangeLevel}
               variant="outlined"
-              placeholder={languageRedux === 1 ? 'Tháng/ Năm' : 'Month/ Year'}
+              placeholder={
+                languageRedux === 1
+                  ? 'Tháng/ Năm'
+                  : languageRedux === 2
+                    ? 'Month/ Year'
+                    : languageRedux === 3
+                      ? '월/년'
+                      : 'Tháng/ Năm'
+              }
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               error={!level} // Đánh dấu lỗi
             >
               <MenuItem value={1}>
-                {languageRedux === 1 ? 'Tập sự' : 'Novice'}
+                {languageRedux === 1
+                  ? 'Tập sự'
+                  : languageRedux === 2
+                    ? 'Novice'
+                    : languageRedux === 3 && '초심자'}
               </MenuItem>
               <MenuItem value={2}>
-                {languageRedux === 1 ? 'Sơ cấp' : 'Beginner'}
+                {languageRedux === 1
+                  ? 'Sơ cấp'
+                  : languageRedux === 2
+                    ? 'Primary'
+                    : languageRedux === 3 && '주요한'}
               </MenuItem>
               <MenuItem value={3}>
-                {languageRedux === 1 ? 'Kinh nghiệm' : 'Experienced'}
+                {languageRedux === 1
+                  ? 'Kinh nghiệm'
+                  : languageRedux === 2
+                    ? 'Experienced'
+                    : languageRedux === 3 && '경험이 풍부한'}
               </MenuItem>
               <MenuItem value={4}>
-                {languageRedux === 1 ? 'Thành thạo' : 'Skillful'}
+                {languageRedux === 1
+                  ? 'Thành thạo'
+                  : languageRedux === 2
+                    ? 'Competently'
+                    : languageRedux === 3 && '유능하게'}
               </MenuItem>
               <MenuItem value={5}>
-                {languageRedux === 1 ? 'Chuyên gia' : 'Expert'}
+                {languageRedux === 1
+                  ? 'Chuyên gia'
+                  : languageRedux === 2
+                    ? 'Expert'
+                    : languageRedux === 3 && '전문가'}
               </MenuItem>
             </TextField>
           </Box>
           <Button variant="contained" fullWidth onClick={handleSubmit}>
-            {language?.profile_page?.save_info}
+            {languageRedux === 1
+              ? 'Lưu thông tin'
+              : languageRedux === 2
+                ? 'Save information'
+                : languageRedux === 3 &&
+                '정보 저장'}
           </Button>
         </Box>
       </Modal>

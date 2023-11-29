@@ -255,7 +255,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         // const result3 = await apiCv.deleteProfileReference(item3);
         // if (result3) {
         //   const resultProfile = await profileApi.getProfileV3(
-        //     languageRedux === 1 ? 'vi' : 'en',
+        //      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         //   );
         //   if (resultProfile) {
         //     dispatch(setProfileV3(resultProfile));
@@ -309,7 +309,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         message.error(
           languageRedux === 1
             ? 'Sở thích không được bỏ trống'
-            : 'Hobbies cannot be empty',
+            : languageRedux === 2
+              ? 'Hobbies cannot be empty'
+              : languageRedux === 3 && '취미는 비워둘 수 없습니다',
         );
         profile_hobbies_hobbie_name.focus();
         return;
@@ -319,7 +321,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         message.error(
           languageRedux === 1
             ? 'Sở thích không được vượt quá 1000 ký tự'
-            : 'Hobbies cannot exceed 1000 characters',
+            : languageRedux === 2
+              ? 'Hobbies cannot exceed 1000 characters'
+              : languageRedux === 3 && '취미는 1000자를 넘을 수 없습니다',
         );
         profile_hobbies_hobbie_name.focus();
         return;
@@ -327,7 +331,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
       const result = await apiCv.postProfileHobbies(hobbieValues);
       if (result) {
         const resultProfileV3 = await profileApi.getProfileInformationMoreV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (resultProfileV3) {
           dispatch(setProfileMeInformationMoreV3(resultProfileV3));
@@ -344,7 +348,13 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
       <Skeleton className="skeleton-item" loading={loading} active>
         <div className="div-profile-info">
           <div className="section-title">
-            {/* <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3> */}
+            {/* <h3>{  languageRedux === 1
+                  ? 'Kỹ năng'
+                  : languageRedux === 2
+                    ? 'Skills'
+                    : languageRedux === 3
+                      ? '기술'
+                      : 'Kỹ năng'}</h3> */}
             <div
               className="donot-show"
               style={{
@@ -354,12 +364,20 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <p>
                 {languageRedux === 1
                   ? 'Không hiện kỹ năng'
-                  : 'Don’t show experience skills'}
+                  : languageRedux === 2
+                    ? 'Don’t show experience skills'
+                    : languageRedux === 3 && '경험치 보여주지 마세요'}
               </p>
               <Switch onChange={onChangeShowSkill} />
             </div>
             <div className="profile-info-title">
-              <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
+              <h3>
+                {languageRedux === 1
+                  ? 'Kỹ năng'
+                  : languageRedux === 2
+                    ? 'Skills'
+                    : languageRedux === 3 && '기술'}
+              </h3>
               <div className="profile-info-title_actions">
                 {profileMoreV3?.profilesSkills?.length !== 0 ? (
                   <div
@@ -391,7 +409,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 ),
               )
             ) : (
-              <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+              <div style={{ marginTop: '16px' }}>{languageRedux === 1
+                ? 'Chưa cập nhật'
+                : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}</div>
             )}
           </div>
           <div
@@ -408,7 +430,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                {language?.add}
+                {languageRedux === 1
+                  ? 'Thêm'
+                  : languageRedux === 2
+                    ? 'Add'
+                    : '더'}
               </p>
             </Space>
           </div>
@@ -447,14 +473,20 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileMoreV3?.profilesLanguages?.length !== 0 ||
-                sections.includes(1)
+                  sections.includes(1)
                   ? 'block'
                   : 'none',
             }}
           >
             <div className="section-title">
               <div className="profile-info-title">
-                <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Ngoại ngữ'
+                    : languageRedux === 2
+                      ? 'Languages'
+                      : languageRedux === 3 && '외국어'}
+                </h3>
                 <div className="profile-info-title_actions">
                   {/* <div className="edit-icon">
                     <SectionEditIcon width={16} height={16} />
@@ -475,15 +507,19 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               >
                 <p>
                   {languageRedux === 1
-                    ? 'Không hiện ngoại ngữ'
-                    : 'Don’t show experience languages'}
+                    ? 'Không có kinh nghiệm ngoại ngữ để hiển thị'
+                    : languageRedux === 2
+                      ? 'No foreign language experience to display'
+                      : languageRedux === 3
+                        ? '외국어 경력을 보여주지 않음'
+                        : 'Không có kinh nghiệm ngoại ngữ để hiển thị'}
                 </p>
                 <Switch onChange={onChangeShowLanguage} />
               </div>
             </div>
             <div className="language-list">
               {profileMoreV3 &&
-              profileMoreV3?.profilesLanguages?.length !== 0 ? (
+                profileMoreV3?.profilesLanguages?.length !== 0 ? (
                 profileMoreV3?.profilesLanguages?.map(
                   (item: Ilanguages, index: number) => (
                     <div className="skill-item" key={index}>
@@ -501,7 +537,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   ),
                 )
               ) : (
-                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+                <div style={{ marginTop: '16px' }}>{languageRedux === 1
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}</div>
               )}
             </div>
             <div
@@ -520,7 +560,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.add}
+                  {languageRedux === 1
+                    ? 'Thêm'
+                    : languageRedux === 2
+                      ? 'Add'
+                      : '더'}
                 </p>
               </Space>
             </div>
@@ -576,7 +620,13 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               }}
             >
               <div className="profile-info-title">
-                <h3>{languageRedux === 1 ? 'Sở thích' : 'Hobbies'}</h3>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Sở thích'
+                    : languageRedux === 2
+                      ? 'Hobbies'
+                      : languageRedux === 3 && '관심'}
+                </h3>
                 <div className="profile-info-title_actions">
                   {/* <div className="edit-icon">
                     <SectionEditIcon width={16} height={16} />
@@ -600,7 +650,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 }}
                 onClick={handleSaveHobbies}
               >
-                {languageRedux === 1 ? 'Lưu' : 'Save'}
+                {languageRedux === 1
+                  ? 'Lưu'
+                  : languageRedux === 2
+                    ? 'Save'
+                    : languageRedux === 3 && '구하다'}
                 <IconSaveProfile />
               </div>
             </div>
@@ -608,7 +662,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <p>
                 {languageRedux === 1
                   ? 'Sở thích của bạn là gì?'
-                  : 'What do you like?'}
+                  : languageRedux === 2
+                    ? 'What do you like?'
+                    : languageRedux === 3 && '당신의 취미는 무엇입니까'}
               </p>
               <TextArea
                 value={hobbieValues}
@@ -623,7 +679,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 placeholder={
                   languageRedux === 1
                     ? 'VD: Âm nhạc, Hội họa, Khiêu vũ'
-                    : 'Ex: Music, Painting, Dancing'
+                    : languageRedux === 2
+                      ? 'Ex: Music, Painting, Dancing'
+                      : languageRedux === 3
+                        ? '예: 음악, 그림, 댄스'
+                        : 'VD: Âm nhạc, Hội họa, Khiêu vũ'
                 }
                 autoSize={{ minRows: 6, maxRows: 9 }}
                 onError={() => {
@@ -635,20 +695,26 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   <span className="helper-text">
                     {languageRedux === 1
                       ? 'Tên kỹ năng không được vượt quá 1000 ký tự'
-                      : 'Skill names cannot exceed 1000 characters'}
+                      : languageRedux === 2
+                        ? 'Skill names cannot exceed 1000 characters'
+                        : languageRedux === 3 &&
+                        '스킬 이름은 1000자를 초과할 수 없습니다.'}
                   </span>
                 ) : !hobbieValues ? (
                   <span className="helper-text">
                     {languageRedux === 1
                       ? 'Tên kỹ năng không được bỏ trống'
-                      : 'Skill names cannot be empty'}
+                      : languageRedux === 2
+                        ? 'Skill names cannot be empty'
+                        : languageRedux === 3
+                          ? '스킬 이름은 비워둘 수 없습니다.'
+                          : 'Tên kỹ năng không được bỏ trống.'}
                   </span>
                 ) : (
                   <></>
                 )}
-                <span className="number-text">{`${
-                  hobbieValues ? hobbieValues.length : '0'
-                }/1000`}</span>
+                <span className="number-text">{`${hobbieValues ? hobbieValues.length : '0'
+                  }/1000`}</span>
               </div>
             </div>
           </div>
@@ -666,7 +732,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileMoreV3?.profilesReferences?.length !== 0 ||
-                sections.includes(3)
+                  sections.includes(3)
                   ? 'block'
                   : 'none',
             }}
@@ -681,7 +747,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             >
               <div className="profile-info-title">
                 <h3>
-                  {languageRedux === 1 ? 'Người giới thiệu' : 'References'}
+                  {languageRedux === 1
+                    ? 'Người giới thiệu'
+                    : languageRedux === 2
+                      ? 'References'
+                      : languageRedux === 3 && '참고자료'}
                 </h3>
                 <div className="profile-info-title_actions">
                   {/* <div className="edit-icon">
@@ -699,7 +769,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             </div>
             <div className="skill-list">
               {profileMoreV3 &&
-              profileMoreV3?.profilesReferences?.length !== 0 ? (
+                profileMoreV3?.profilesReferences?.length !== 0 ? (
                 profileMoreV3?.profilesReferences?.map(
                   (item: IReferences, index: number) => (
                     <div className="skill-item" key={index}>
@@ -717,7 +787,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   ),
                 )
               ) : (
-                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+                <div style={{ marginTop: '16px' }}>{languageRedux === 1
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}</div>
               )}
             </div>
             <div
@@ -734,7 +808,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.add}
+                  {languageRedux === 1
+                    ? 'Thêm'
+                    : languageRedux === 2
+                      ? 'Add'
+                      : '더'}
                 </p>
               </Space>
             </div>
@@ -811,7 +889,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   </div>
                 ))
               ) : (
-                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+                <div style={{ marginTop: '16px' }}>{languageRedux === 1
+                ? 'Chưa cập nhật'
+                : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}</div>
               )}
             </div>
             <div
@@ -828,7 +910,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.add}
+                  {languageRedux === 1
+                  ? 'Thêm'
+                  : languageRedux === 2
+                    ? 'Add'
+                    : '더'}
                 </p>
               </Space>
             </div>
@@ -848,7 +934,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileMoreV3?.profileActivities?.length !== 0 ||
-                sections.includes(5)
+                  sections.includes(5)
                   ? 'block'
                   : 'none',
             }}
@@ -862,7 +948,13 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               }}
             >
               <div className="profile-info-title">
-                <h3>{languageRedux === 1 ? 'Các hoạt động' : 'Activities'}</h3>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Các hoạt động'
+                    : languageRedux === 2
+                      ? 'Activities'
+                      : languageRedux === 3 && '활동'}
+                </h3>
                 <div className="profile-info-title_actions">
                   {/* <div className="edit-icon">
                     <SectionEditIcon width={16} height={16} />
@@ -878,7 +970,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             </div>
             <div className="internship-list">
               {profileMoreV3 &&
-              profileMoreV3?.profileActivities?.length !== 0 ? (
+                profileMoreV3?.profileActivities?.length !== 0 ? (
                 profileMoreV3?.profileActivities?.map(
                   (item: IInternship, index: number) => (
                     <InternshipItem
@@ -895,7 +987,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   ),
                 )
               ) : (
-                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+                <div style={{ marginTop: '16px' }}>{languageRedux === 1
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}</div>
               )}
             </div>
             <div
@@ -912,7 +1008,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.add}
+                  {languageRedux === 1
+                    ? 'Thêm'
+                    : languageRedux === 2
+                      ? 'Add'
+                      : '더'}
                 </p>
               </Space>
             </div>
@@ -980,7 +1080,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   </div>
                 ))
               ) : (
-                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+                <div style={{ marginTop: '16px' }}>{languageRedux === 1
+                ? 'Chưa cập nhật'
+                : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}</div>
               )}
             </div>
             <div
@@ -997,7 +1101,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.add}
+                  {languageRedux === 1
+                  ? 'Thêm'
+                  : languageRedux === 2
+                    ? 'Add'
+                    : '더'}
                 </p>
               </Space>
             </div>
@@ -1017,7 +1125,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileMoreV3?.profileAwards?.length !== 0 ||
-                sections.includes(7)
+                  sections.includes(7)
                   ? 'block'
                   : 'none',
             }}
@@ -1031,7 +1139,13 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               }}
             >
               <div className="profile-info-title">
-                <h3>{languageRedux === 1 ? 'Các giải thưởng' : 'Awards'}</h3>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Các giải thưởng'
+                    : languageRedux === 2
+                      ? 'Awards'
+                      : languageRedux === 3 && '수상 내역'}
+                </h3>
                 <div className="profile-info-title_actions">
                   {/* <div className="edit-icon">
                     <SectionEditIcon width={16} height={16} />
@@ -1060,7 +1174,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   ),
                 )
               ) : (
-                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+                <div style={{ marginTop: '16px' }}>{languageRedux === 1
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}</div>
               )}
             </div>
             <div
@@ -1077,7 +1195,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.add}
+                  {languageRedux === 1
+                    ? 'Thêm'
+                    : languageRedux === 2
+                      ? 'Add'
+                      : '더'}
                 </p>
               </Space>
             </div>
@@ -1110,7 +1232,8 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               marginBottom: '16px',
             }}
           >
-            <h3>{languageRedux === 1 ? 'Thêm mục' : 'Add section'}</h3>
+            <h3>{languageRedux === 1 ? 'Thêm mục' :
+              languageRedux === 2 ? 'Add section' : '아이템 추가'}</h3>
           </div>
           <Box sx={{ flexGrow: 1 }}>
             <Grid
@@ -1128,35 +1251,44 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileMoreV3?.profilesLanguages?.length !== 0 ||
-                    sections.includes(1)
+                      sections.includes(1)
                       ? 'section-item disable'
                       : 'section-item'
                   }
                   onClick={() => handleSection(1)}
                 >
                   <SectionLanguageIcon />
-                  <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
+                  <h3>
+                    {languageRedux === 1
+                      ? 'Ngoại ngữ'
+                      : languageRedux === 2
+                        ? 'Languages'
+                        : languageRedux === 3
+                          ? '외국어'
+                          : 'Ngoại ngữ'}
+                  </h3>
                 </div>
               </Grid>
               <Grid item xs={2} sm={3} md={3}>
                 <div
                   className={
                     profileMoreV3?.profileHobbies !== null ||
-                    sections.includes(2)
+                      sections.includes(2)
                       ? 'section-item disable'
                       : 'section-item'
                   }
                   onClick={() => handleSection(2)}
                 >
                   <SectionHobbiesIcon />
-                  <h3>{languageRedux === 1 ? 'Sở thích' : 'Hobbies'}</h3>
+                  <h3>{languageRedux === 1 ? 'Sở thích'
+                    : languageRedux === 2 ? 'Hobbies' : '관심'}</h3>
                 </div>
               </Grid>
               <Grid item xs={2} sm={3} md={3}>
                 <div
                   className={
                     profileMoreV3?.profilesReferences?.length !== 0 ||
-                    sections.includes(3)
+                      sections.includes(3)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1164,7 +1296,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 >
                   <SectionReferencesIcon />
                   <h3>
-                    {languageRedux === 1 ? 'Người giới thiệu' : 'References'}
+                    {languageRedux === 1
+                      ? 'Người giới thiệu'
+                      : languageRedux === 2
+                        ? 'References'
+                        : languageRedux === 3 && '참고자료'}
                   </h3>
                 </div>
               </Grid>
@@ -1185,7 +1321,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileMoreV3?.profileActivities?.length !== 0 ||
-                    sections.includes(5)
+                      sections.includes(5)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1193,7 +1329,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 >
                   <SectionActivitiesIcon />
                   <h3>
-                    {languageRedux === 1 ? 'Các hoạt động' : 'Activities'}
+                    {languageRedux === 1
+                      ? 'Các hoạt động'
+                      : languageRedux === 2
+                        ? 'Activities'
+                        : languageRedux === 3 && '활동'}
                   </h3>
                 </div>
               </Grid>
@@ -1214,14 +1354,20 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileMoreV3?.profileAwards?.length !== 0 ||
-                    sections.includes(7)
+                      sections.includes(7)
                       ? 'section-item disable'
                       : 'section-item'
                   }
                   onClick={() => handleSection(7)}
                 >
                   <SectionAwardsIcon />
-                  <h3>{languageRedux === 1 ? 'Các giải thưởng' : 'Awards'}</h3>
+                  <h3>
+                    {languageRedux === 1
+                      ? 'Các giải thưởng'
+                      : languageRedux === 2
+                        ? 'Awards'
+                        : languageRedux === 3 && '수상 내역'}
+                  </h3>
                 </div>
               </Grid>
             </Grid>

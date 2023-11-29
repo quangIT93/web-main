@@ -26,14 +26,21 @@ interface IEditPostAddress {
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
   setFillRole: React.Dispatch<React.SetStateAction<any>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges, setFillRole, setIsValid } = props;
+  const {
+    setDataCompany,
+    dataCompany,
+    is_profile,
+    setUnsavedChanges,
+    setFillRole,
+    setIsValid,
+  } = props;
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -92,7 +99,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const getRoles = async () => {
     try {
       const roles = await apiCompany.getAllRolesCompany(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (roles) {
@@ -113,14 +120,14 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const handleEditCompanyRole = (event: any, value: any) => {
     setSelectedRole(value);
     setUnsavedChanges(true);
-    setFillRole(value)
+    setFillRole(value);
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyRoleInfomation: {
         id: value ? value.id : '',
       },
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   const handleEditCompanyWeb = (
@@ -132,7 +139,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
       ...preValue,
       website: value,
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   return (
@@ -144,7 +151,11 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="addressTitle"
         >
-          {language?.role_at_business} <span style={{ color: 'red' }}>*</span>
+          {languageRedux === 1
+            ? 'Vai trò của bạn trong công ty'
+            : languageRedux === 2
+              ? 'Your role in the company'
+              : '회사에서 귀하의 역할'} <span style={{ color: 'red' }}>*</span>
         </Typography>
 
         <Autocomplete
@@ -157,7 +168,11 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={language?.company_page?.place_role}
+              placeholder={languageRedux === 1
+                ? 'Vai trò của bạn trong công ty'
+                : languageRedux === 2
+                  ? 'Your role in the company'
+                  : '회사에서 귀하의 역할'}
               size="small"
             // value={dataCompany?.companyRole?.name}
             />
@@ -172,7 +187,9 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Email không được bỏ trống'
-                : 'Email cannot be empty'}
+                : languageRedux === 2
+                  ? 'Email cannot be empty'
+                  : languageRedux === 3 && '이메일이 비어 있지 않습니다'}
             </span>
           ) : (
             <></>
@@ -187,7 +204,13 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="jobTitle"
         >
-          Website <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1
+              ? 'Trang web'
+              : languageRedux === 2
+                ? 'Website'
+                : '웹사이트'
+          } <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -197,7 +220,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           onChange={handleEditCompanyWeb}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={language?.company_page?.place_web}
+          placeholder='https://example.com'
           disabled={is_profile ? true : false}
         //   error={titleError} // Đánh dấu lỗi
         />
@@ -206,13 +229,19 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Link web không được vượt quá 100 ký tự'
-                : 'Web link cannot exceed 100 characters'}
+                : languageRedux === 2
+                  ? 'Web link cannot exceed 100 characters'
+                  : languageRedux === 3 &&
+                  '웹 링크는 100자를 초과할 수 없습니다.'}
             </span>
           ) : validURL(dataCompany?.website) === false ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Link web không đúng định dạng'
-                : 'Web link is not in the correct format'}
+                : languageRedux === 2
+                  ? 'Web link is not in the correct format'
+                  : languageRedux === 3 &&
+                  '웹 링크의 형식이 올바르지 않습니다.'}
             </span>
           ) : (
             <></>

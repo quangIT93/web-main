@@ -30,8 +30,12 @@ interface ICardsAppliedApproved {
 }
 
 const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const language = useSelector((state: RootState) => state.dataLanguage.languages);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   // const { activeChild } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [dataApplied, setDataApplied] = useState<any>(null);
@@ -68,7 +72,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
       lastPostId,
       11,
       1,
-      'vi',
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
     if (result.data.length <= 10) {
       setIsVisible(false);
@@ -86,7 +90,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
         null,
         10,
         1,
-        'vi',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -125,7 +129,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
         lastPostId,
         10,
         1,
-        'vi',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setUploading(false);
@@ -143,7 +147,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // click card
@@ -192,7 +196,11 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
           <Box>
             <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
               {dataApplied?.map((posted: any, i: number) => (
-                <JobCardHistory item={posted} language={language} languageRedux={languageRedux} />
+                <JobCardHistory
+                  item={posted}
+                  language={language}
+                  languageRedux={languageRedux}
+                />
               ))}
             </Grid>
             <Box

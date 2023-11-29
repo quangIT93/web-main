@@ -14,10 +14,16 @@ interface IEditImageCompany {
   setDataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
-  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges, setIsValid } = props;
+  const {
+    dataCompany,
+    setDataCompany,
+    is_profile,
+    setUnsavedChanges,
+    setIsValid,
+  } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -56,7 +62,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
     const files = event.target.files;
     setUnsavedChanges(true);
     // setImage(event.target.files && event.target.files[0]);
-    setIsValid(false)
+    setIsValid(false);
     const imagesUpload: any = Array.from(
       event.target.files ? event.target.files : [],
     );
@@ -121,7 +127,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
 
     if (files) {
       if (files.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
         return;
       }
       const newImages: string[] = [];
@@ -144,7 +154,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
               })),
             ];
             if (newImageSelected.length > 5) {
-              message.error(language?.limit_5_img);
+              message.error(languageRedux === 1
+                ? 'Chỉ có thể tối đa 5 hình ảnh'
+                : languageRedux === 2
+                  ? 'Only up to 5 images can be'
+                  : '최대 5개의 이미지가 허용됩니다.');
               return;
             }
             setSelectedImages(newImageSelected);
@@ -184,7 +198,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       // console.log('fileUploaded : ', fileUploaded);
 
       if (fileUploaded.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
         return;
       }
 
@@ -198,7 +216,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       ];
 
       if (newFileSelected.length > 5) {
-        message.error(language?.limit_5_img);
+        message.error(languageRedux === 1
+          ? 'Chỉ có thể tối đa 5 hình ảnh'
+          : languageRedux === 2
+            ? 'Only up to 5 images can be'
+            : '최대 5개의 이미지가 허용됩니다.');
 
         return;
       }
@@ -231,7 +253,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
               })),
             ];
             if (newImageSelected.length > 5) {
-              message.error(language?.limit_5_img);
+              message.error(languageRedux === 1
+                ? 'Chỉ có thể tối đa 5 hình ảnh'
+                : languageRedux === 2
+                  ? 'Only up to 5 images can be'
+                  : '최대 5개의 이미지가 허용됩니다.');
 
               return;
             }
@@ -302,7 +328,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       <div className="edit-image-company-content">
         <h3>
           <span>
-            {languageRedux === 1 ? 'Hình ảnh công ty' : "Company's image"}
+            {languageRedux === 1
+              ? 'Hình ảnh công ty'
+              : languageRedux === 2
+                ? "Company's image"
+                : languageRedux === 3 && '회사 이미지'}
           </span>
           <p
             style={{
@@ -314,7 +344,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
             }}
           >
             <label style={{ cursor: 'pointer' }} htmlFor="submit">
-              {languageRedux === 1 ? 'Thêm hình ảnh' : 'Add images'}
+              {languageRedux === 1
+                ? 'Thêm hình ảnh'
+                : languageRedux === 2
+                  ? 'Add images'
+                  : languageRedux === 3 && '이미지 추가'}
             </label>
             <input
               id="submit"
@@ -354,7 +388,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
                     display:
                       (selectedImages?.length === 0 &&
                         selectedFiles?.length === 0) ||
-                      isDragActive
+                        isDragActive
                         ? 'flex'
                         : 'none',
                   }}
@@ -363,7 +397,9 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
                   <p>
                     {languageRedux === 1
                       ? 'Thêm hình ảnh cho bài viết'
-                      : 'Add an image to the post'}
+                      : languageRedux === 2
+                        ? 'Add an image to the post'
+                        : languageRedux === 3 && '기사에 이미지 추가'}
                   </p>
                 </div>
               </div>
@@ -374,7 +410,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
                   <img
                     key={index}
                     src={item?.imagePath}
-                    alt={language?.err_none_img}
+                    alt={languageRedux === 1
+                      ? 'Hình ảnh bị lỗi'
+                      : languageRedux === 2
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'}
                   />
                   <div
                     className="deleteButton"

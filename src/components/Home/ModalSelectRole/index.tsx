@@ -48,7 +48,7 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
       if (result) {
         dispatch<any>(setRole(role));
         const getProfileV3Data = await profileApi.getProfileInformationV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (getProfileV3Data) {
           dispatch<any>(setProfileMeInformationV3(getProfileV3Data));
@@ -78,8 +78,11 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
           }}
         >
           {languageRedux === 1
-            ? 'Chọn CV/Hồ sơ  để xin việc'
-            : 'Choose CV/Resume to apply for a job'}
+            ? 'Chọn CV/Hồ sơ để xin việc'
+            : languageRedux === 2
+              ? 'Choose CV/Resume to apply for a job'
+              : languageRedux === 3 &&
+                '직업에 지원하려면 CV/프로필을 선택하세요.'}
         </h3>
       }
       footer={null}
@@ -99,7 +102,10 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
       >
         {languageRedux === 1
           ? 'Chọn vai trò của bạn để HiJob có thể hỗ trợ bạn tốt hơn trong việc tìm việc làm, tìm ứng viên tiềm năng hoặc các tính năng hỗ trợ khác.'
-          : 'Select your role so HiJob can better assist you in finding jobs, potential candidates or other support features.'}
+          : languageRedux === 2
+            ? 'Select your role so HiJob can better assist you in finding jobs, potential candidates or other support features.'
+            : languageRedux === 3 &&
+              '귀하의 역할을 선택하시면 HiJob이 귀하가 더 나은 일자리를 찾고, 잠재적인 후보자 또는 기타 지원 기능을 찾는 데 도움을 드릴 수 있습니다.'}
       </p>
       <div className="modal-select-role-bottom">
         <div className="select-role">
@@ -123,7 +129,11 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
               >
                 <RecruiterIcon />
                 <Radio value={1}>
-                  {languageRedux === 1 ? 'Người tuyển dụng' : 'Recruiter'}
+                  {languageRedux === 1
+                    ? 'Người tuyển dụng'
+                    : languageRedux === 2
+                      ? 'Recruiter'
+                      : languageRedux === 3 && '모집자'}
                 </Radio>
               </Space>
               <Space
@@ -134,14 +144,22 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
               >
                 <CandidateIcon />
                 <Radio value={0}>
-                  {languageRedux === 1 ? 'Ứng viên' : 'Candidate'}
+                  {languageRedux === 1
+                    ? 'Ứng viên'
+                    : languageRedux === 2
+                      ? 'Candidate'
+                      : languageRedux === 3 && '후보자'}
                 </Radio>
               </Space>
             </Space>
           </Radio.Group>
         </div>
         <Button type="primary" shape="round" onClick={handleSubmit}>
-          {languageRedux === 1 ? 'Xác nhận' : 'Confirm'}
+          {languageRedux === 1
+            ? 'Xác nhận'
+            : languageRedux === 2
+              ? 'Confirm'
+              : languageRedux === 3 && '확인하다'}
         </Button>
       </div>
     </Modal>

@@ -70,7 +70,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguage(result.data);
@@ -107,7 +107,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
         postID,
         10,
         '-1',
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -145,7 +145,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
         lastPostId,
         5,
         '-1',
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setUploading(false);
@@ -153,7 +153,11 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content: language?.out_job,
+            content: languageRedux === 1
+              ? 'Đã hết công việc để hiển thị'
+              : languageRedux === 2
+                ? 'Out of job to display'
+                : '보여줄 일이 부족해',
           });
           return;
         }
@@ -216,12 +220,17 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
               lineHeight: '24px',
             }}
           >
-            {language?.history_page?.posted_jobs}
+            {languageRedux === 1
+              ? 'Các công việc đã đăng tuyển'
+              : languageRedux === 2
+                ? 'Posted jobs'
+                : '게시된 작업'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-              {
-                searchParams.get('c') === '2-0' &&
-                  languageRedux === 1 ? ' > Tất cả' : ' > All'
-              }
+              {searchParams.get('c') === '2-0' && languageRedux === 1
+                ? ' > ất cả'
+                : languageRedux === 2
+                  ? ' > All'
+                  : ' > 전부'}
             </span>
           </Typography>
         </div>
@@ -235,8 +244,16 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">{language?.history_page?.latest}</MenuItem>
-          <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
+          <MenuItem value="Mới nhất">{languageRedux === 1
+            ? 'Mới nhất'
+            : languageRedux === 2
+              ? 'Newest'
+              : languageRedux === 3 && '최신'}</MenuItem>
+          <MenuItem value="Cũ nhất">{languageRedux === 1
+            ? 'Cũ nhất'
+            : languageRedux === 2
+              ? 'Oldest'
+              : languageRedux === 3 && '가장 오래된'}</MenuItem>
         </TextField>
       </Box>
 
@@ -289,7 +306,11 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                   loading={uploading}
                   onClick={handleAddItem}
                 >
-                  {language?.more}
+                  {languageRedux === 1
+                    ? 'Xem thêm'
+                    : languageRedux === 2
+                      ? 'See more'
+                      : '더보기'}
                 </Button>
               </Box>
             </div>

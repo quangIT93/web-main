@@ -208,13 +208,13 @@ const SearchInput: React.FC<SearchProps> = ({
     try {
       const resultSuggest = await searchApi.getSuggestKeyWord(
         10,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       let resultHistory;
       if (localStorage.getItem('accessToken')) {
         resultHistory = await searchApi.getHistoryKeyWord(
           10,
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         resultHistory && setDataHistory(resultHistory.data);
       }
@@ -332,7 +332,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const getTotalUserSearch = async () => {
     try {
       const result = await apiTotalJob.getTotalJob(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setTotalJob(result?.data?.total);
@@ -357,7 +357,13 @@ const SearchInput: React.FC<SearchProps> = ({
       {/* {d.value} */}
 
       <div className="items-history items-search_keyword">
-        <h4>{languageRedux === 1 ? 'Từ khóa phổ biến' : 'Popular keywords'}</h4>
+        <h4>
+          {languageRedux === 1
+            ? 'Từ khóa phổ biến'
+            : languageRedux === 2
+              ? 'Popular keywords'
+              : languageRedux === 3 && '인기 키워드'}
+        </h4>
         <div className="wrap-items-history wrap-items-search">
           {dataSuggest?.map((suggest: any, index: number) => (
             <div className="item-history item-search" key={index}>
@@ -378,7 +384,13 @@ const SearchInput: React.FC<SearchProps> = ({
           display: isLogin ? 'block' : 'none',
         }}
       >
-        <h4>{language?.recently}</h4>
+        <h4>
+          {languageRedux === 1
+            ? 'Tìm kiếm gần đây'
+            : languageRedux === 2
+              ? 'Recently Search'
+              : languageRedux === 3 && '최근 검색'}
+        </h4>
         <div className="wrap-items-history wrap-items-search">
           {dataHistory?.listHistorySearch?.map(
             (history: any, index: number) => (
@@ -421,7 +433,13 @@ const SearchInput: React.FC<SearchProps> = ({
             ? `Tìm kiếm hơn ${totalJob.toLocaleString(
                 'en-US',
               )} công việc tại Việt Nam`
-            : `Search over ${totalJob.toLocaleString('en-US')} jobs in Vietnam`
+            : languageRedux === 2
+              ? `Search more than ${totalJob.toLocaleString(
+                  'en-US',
+                )} jobs in Vietnam`
+              : languageRedux === 3
+                ? `더 검색 ${totalJob.toLocaleString('en-US')} 베트남의 작업`
+                : ''
         }
         // placeholder={
         //   language?.search_over +

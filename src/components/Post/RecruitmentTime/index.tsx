@@ -33,7 +33,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
     setEndDate,
     languageRedux,
     language,
-    setIsValidSubmit
+    setIsValidSubmit,
   } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
@@ -41,7 +41,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
     var newDateTime = newDate.setHours(23, 59, 59, 999);
 
     setStartDate(newDateTime);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
@@ -49,7 +49,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
     var newDateTime = newDate.setHours(23, 59, 59, 999);
 
     setEndDate(newDateTime);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   return (
@@ -68,7 +68,15 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            {language?.post_page?.start_date}{' '}
+            {
+              languageRedux === 1
+                ? "Ngày bắt đầu"
+                : languageRedux === 2
+                  ? "Start date"
+                  : languageRedux === 3
+                    ? '시작일'
+                    : "Ngày bắt đầu"
+            }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
@@ -87,13 +95,18 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
-                  : 'The start date cannot exceed the end date'}
+                  : languageRedux === 2
+                    ? 'The start date cannot exceed the end date'
+                    : languageRedux === 3 &&
+                    '시작 날짜는 종료 날짜를 초과할 수 없습니다.'}
               </span>
             ) : !new Date(startDate).getFullYear() ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập thời gian bắt đầu'
-                  : 'Please enter start date'}
+                  : languageRedux === 2
+                    ? 'Please enter start date'
+                    : languageRedux === 3 && '시작일을 입력해 주세요'}
               </span>
             ) : (
               ''
@@ -108,7 +121,15 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            {language?.post_page?.end_date}{' '}
+            {
+              languageRedux === 1
+                ? "Ngày kết thúc"
+                : languageRedux === 2
+                  ? "End date"
+                  : languageRedux === 3
+                    ? '종료일'
+                    : "Ngày kết thúc"
+            }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
@@ -129,13 +150,18 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Thời gian bắt đầu không được vượt quá Thời gian kết thúc'
-                  : 'The start date cannot exceed the end date'}
+                  : languageRedux === 2
+                    ? 'The start date cannot exceed the end date'
+                    : languageRedux === 3 &&
+                    '시작 날짜는 종료 날짜를 초과할 수 없습니다.'}
               </span>
             ) : !new Date(endDate).getFullYear() ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập ngày kết thúc'
-                  : 'Please enter end date'}
+                  : languageRedux === 2
+                    ? 'Please enter end date'
+                    : languageRedux === 3 && '종료일을 입력해 주세요'}
               </span>
             ) : (
               ''

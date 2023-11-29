@@ -37,7 +37,11 @@ const ModalShowAvatar: React.FC<IModalShowAvatar> = (props) => {
             textAlign: 'center',
           }}
         >
-          {languageRedux === 1 ? 'Avatar ứng viên' : 'Candidate avatar'}
+          {languageRedux === 1
+            ? 'Avatar ứng viên'
+            : languageRedux === 2
+              ? 'Candidate avatar'
+              : languageRedux === 3 && '후보자 아바타'}
         </h3>
       }
       open={openModalShowAvatar}
@@ -45,7 +49,11 @@ const ModalShowAvatar: React.FC<IModalShowAvatar> = (props) => {
       className="modal-show-avatar-container"
     >
       {/* {roleRedux === 0 ? <CandidateIcon /> : <RecruiterIcon />} */}
-      <img src={image} alt="ảnh lỗi" />
+      <img src={image} alt={languageRedux === 1
+        ? 'Hình ảnh bị lỗi'
+        : languageRedux === 2
+          ? 'Image is corrupted'
+          : '이미지가 손상되었습니다'} />
     </Modal>
   );
 };

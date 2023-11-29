@@ -56,7 +56,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       ) {
         const result = await postApi.getPostV3(
           Number(searchParams.get('post_id')),
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (result.data !== null) {
           setUserInfoChat({
@@ -127,8 +127,14 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   const getAllUserChat = async () => {
     try {
       const result = await messageApi.getUserChated(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
+
+      // const post = await postApi.getPostV3(
+      //   Number(searchParams.get('post_id')),
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+
       if (result) {
         setStateUserChat(result.data);
       }
@@ -155,14 +161,14 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   //         await historyRecruiter.GetAJobApplication(
   //           Number(searchParams.get('post_id')),
   //           searchParams.get('application_id') ?? '',
-  //           languageRedux === 1 ? 'vi' : 'en',
+  //            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //         );
 
   //       if (resultHistoryRecruiter) {
   //         // console.log('ressssss', result.data);
   //         const resultPost = await postApi.getPostV3(
   //           Number(searchParams.get('post_id')),
-  //           languageRedux === 1 ? 'vi' : 'en',
+  //            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //         );
   //         // console.log(resultHistoryRecruiter.data);
   //         // console.log('resultPost', resultPost);
@@ -189,7 +195,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   //       }
   //     } else {
   //       const resultGetUserChated = await messageApi.getUserChated(
-  //         languageRedux === 1 ? 'vi' : 'en',
+  //          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //       );
   //       console.log('result.data', resultGetUserChated.data);
 
@@ -214,7 +220,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   //           } else {
   //             const resultGetPostV3 = await postApi.getPostV3(
   //               Number(searchParams.get('post_id')),
-  //               languageRedux === 1 ? 'vi' : 'en',
+  //                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //             );
 
   //             // console.log('v3', resultGetPostV3);
@@ -252,7 +258,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   //       if (searchParams.get('post_id') && searchParams.get('user_id')) {
   //         const result = await postApi.getPostV3(
   //           Number(searchParams.get('post_id')),
-  //           languageRedux === 1 ? 'vi' : 'en',
+  //            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //         );
 
   //         setUserInfoChat({
@@ -390,12 +396,19 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     return (
       <div
         // className="list_userChat"
-        className={`list_userChat ${
-          props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
-        }`}
+        className={`list_userChat ${props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
+          }`}
       >
         <div className="header-list_userChat">
-          <h4 className="title-header_listUserChat">{language?.message}</h4>
+          <h4 className="title-header_listUserChat">
+            {
+              languageRedux === 1 ?
+                "Tin nhắn" :
+                languageRedux === 2 ?
+                  "Message" :
+                  "메시지"
+            }
+          </h4>
           <div className="header-listSearch_userChat">
             {/* <Search
               className="searh-user_chat"
@@ -417,7 +430,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackDrop}
-            // onClick={handleClose}
+          // onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -445,11 +458,10 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           </div> */}
           {listUserChat.map((user: any, index: number) => (
             <div
-              className={`wrap-userInfo ${
-                searchParams.get('user_id') === user?.user_id
-                  ? 'readed-message'
-                  : ''
-              } `}
+              className={`wrap-userInfo ${searchParams.get('user_id') === user?.user_id
+                ? 'readed-message'
+                : ''
+                } `}
               key={index}
               onClick={() => handleClickUserInfo(user)}
             >
@@ -460,9 +472,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                   <div>Hijob</div>
                 )}
                 <span
-                  className={`user-online ${
-                    user?.is_online ? 'user-online_true' : ''
-                  }`}
+                  className={`user-online ${user?.is_online ? 'user-online_true' : ''
+                    }`}
                 ></span>
               </div>
               <div className="info-user_chat">
@@ -475,9 +486,9 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                   {user?.created_at
                     ? new Date(user?.created_at).toLocaleString('en-GB')
                     : //   new Date().getDay()
-                      moment(new Date()).format('DD/MM/YYYY') +
-                      ' ' +
-                      moment(new Date()).format('HH:mm:ss')}
+                    moment(new Date()).format('DD/MM/YYYY') +
+                    ' ' +
+                    moment(new Date()).format('HH:mm:ss')}
                 </small>
                 {user?.status === 1 ? (
                   <span className="count-message_readed">
@@ -497,7 +508,11 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       <div className="list_userChat">
         <div className="wrap-img_chat">
           <img src="./images/imageListChatBegin.png" alt="" />
-          <div>{language?.you_have_no_conversation}</div>
+          <div>{languageRedux === 1 ?
+            "Bạn chưa có cuộc trò chuyện nào" :
+            languageRedux === 2 ?
+              "You don't have any chats yet" :
+              "아직 대화가 없습니다."}</div>
         </div>
       </div>
     );
@@ -506,7 +521,11 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       <div className="list_userChat">
         <div className="wrap-img_chat">
           <img src="./images/imageListChatBegin.png" alt="" />
-          <div>{language?.you_have_no_conversation}</div>
+          <div>{languageRedux === 1 ?
+            "Bạn chưa có cuộc trò chuyện nào" :
+            languageRedux === 2 ?
+              "You don't have any chats yet" :
+              "아직 대화가 없습니다."}</div>
         </div>
       </div>
     );

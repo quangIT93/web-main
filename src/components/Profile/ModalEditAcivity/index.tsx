@@ -169,7 +169,9 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 255'
-            : 'Title length must be greater than 0 and less than 255',
+            : languageRedux === 2
+              ? 'Title length must be greater than 0 and less than 255'
+              : '제목 길이는 0보다 크고 255자보다 작아야 합니다.',
         checkForm: false,
         idError: 1,
       };
@@ -183,7 +185,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Độ dài nhà tuyển dụng phải lớn hơn 0 và nhỏ hơn 255'
-            : 'Employer length must be greater than 0 and less than 255',
+            : languageRedux === 2
+              ? 'Employer length must be greater than 0 and less than 255'
+              : languageRedux === 3
+                ? '고용주 길이는 0보다 크고 255자보다 작아야 합니다.'
+                : 'Độ dài nhà tuyển dụng phải lớn hơn 0 và nhỏ hơn 255',
         checkForm: false,
         idError: 2,
       };
@@ -194,7 +200,9 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Năm bắt đầu không được vượt quá năm hiện tại'
-            : 'The starting year cannot exceed the current year',
+            : languageRedux === 2
+              ? 'The starting year cannot exceed the current year'
+              : '시작 연도는 현재 연도를 초과할 수 없습니다.',
         checkForm: false,
         idError: 3,
       };
@@ -205,7 +213,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Năm kết thúc không được vượt quá năm hiện tại'
-            : 'The final year cannot exceed the current year',
+            : languageRedux === 2
+              ? 'The final year cannot exceed the current year'
+              : languageRedux === 3
+                ? '종료 연도는 현재 연도를 초과할 수 없습니다.'
+                : 'Năm kết thúc không được vượt quá năm hiện tại',
         checkForm: false,
         idError: 4,
       };
@@ -219,12 +231,15 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Năm bắt đầu không được vượt quá năm kết thúc'
-            : 'The starting year cannot exceed the final year',
+            : languageRedux === 2
+              ? 'The starting year cannot exceed the final year'
+              : languageRedux === 3
+                ? '시작 연도는 종료 연도를 초과할 수 없습니다.'
+                : 'Năm bắt đầu không được vượt quá năm kết thúc',
         checkForm: false,
         idError: 3,
       };
     }
-
 
     if (
       activity.description.trim().length > 1000 ||
@@ -234,7 +249,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
         messageError:
           languageRedux === 1
             ? 'Độ dài mô tả phải lớn hơn 0 và nhỏ hơn 1000'
-            : 'Description length must be greater than 0 and less than 1000',
+            : languageRedux === 2
+              ? 'Description length must be greater than 0 and less than 1000'
+              : languageRedux === 3
+                ? '설명 길이는 0보다 크고 1000보다 작아야 합니다.'
+                : 'Độ dài mô tả phải lớn hơn 0 và nhỏ hơn 1000',
         checkForm: false,
         idError: 5,
       };
@@ -260,7 +279,7 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
         );
         if (result) {
           const resultProfile = await profileApi.getProfileInformationMoreV3(
-            languageRedux === 1 ? 'vi' : 'en',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
 
           resultProfile &&
@@ -277,11 +296,21 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
         }
       } else {
         message.error(messageError);
-        const profile_activity_edit_title = document.getElementById('profile_activity_edit_title') as HTMLElement;
-        const profile_activity_edit_employer = document.getElementById('profile_activity_edit_employer') as HTMLElement;
-        const profile_activity_edit_description = document.getElementById('profile_activity_edit_description') as HTMLElement;
-        const profile_activity_edit_start_date = document.getElementById('profile_activity_edit_start_date') as HTMLElement;
-        const profile_activity_edit_end_date = document.getElementById('profile_activity_edit_end_date') as HTMLElement;
+        const profile_activity_edit_title = document.getElementById(
+          'profile_activity_edit_title',
+        ) as HTMLElement;
+        const profile_activity_edit_employer = document.getElementById(
+          'profile_activity_edit_employer',
+        ) as HTMLElement;
+        const profile_activity_edit_description = document.getElementById(
+          'profile_activity_edit_description',
+        ) as HTMLElement;
+        const profile_activity_edit_start_date = document.getElementById(
+          'profile_activity_edit_start_date',
+        ) as HTMLElement;
+        const profile_activity_edit_end_date = document.getElementById(
+          'profile_activity_edit_end_date',
+        ) as HTMLElement;
         // console.log(idError);
 
         switch (idError) {
@@ -344,7 +373,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
             align="center"
             sx={{ marginBottom: '12px' }}
           >
-            {languageRedux === 1 ? 'Sửa thông tin hoạt động' : 'Edit Activity'}
+            {languageRedux === 1
+              ? 'Sửa thông tin hoạt động'
+              : languageRedux === 2
+                ? 'Edit Activity'
+                : languageRedux === 3 && '활동 정보 편집'}
           </Typography>
           <Box sx={{ marginBottom: '12px' }}>
             <Typography
@@ -353,7 +386,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              {languageRedux === 1 ? 'Tiêu đề hoạt động' : 'Function Title'}{' '}
+              {languageRedux === 1
+                ? 'Tiêu đề hoạt động'
+                : languageRedux === 2
+                  ? 'Function Title'
+                  : languageRedux === 3 && '활성 제목'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -365,7 +402,13 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder={
-                languageRedux === 1 ? 'Tiêu đề hoạt động' : 'Function Title'
+                languageRedux === 1
+                  ? 'Tiêu đề hoạt động'
+                  : languageRedux === 2
+                    ? 'Function Title'
+                    : languageRedux === 3
+                      ? '활성 제목'
+                      : 'Tiêu đề hoạt động'
               }
             // error={titleError} // Đánh dấu lỗi
             />
@@ -374,13 +417,19 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Tiêu đề hoạt động không được vượt quá 255 ký tự'
-                    : 'Function title cannot exceed 255 characters'}
+                    : languageRedux === 2
+                      ? 'Function title cannot exceed 255 characters'
+                      : languageRedux === 3 &&
+                      '활동 제목은 255자를 초과할 수 없습니다.'}
                 </span>
               ) : !activity.title ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Tiêu đề hoạt động không được bỏ trống'
-                    : 'Function title cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Function title cannot be empty'
+                      : languageRedux === 3 &&
+                      '활동 제목은 비워둘 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -396,7 +445,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              {languageRedux === 1 ? 'Nhà tuyển dụng' : 'Employer'}{' '}
+              {languageRedux === 1
+                ? 'Nhà tuyển dụng'
+                : languageRedux === 2
+                  ? 'Employer'
+                  : languageRedux === 3 && '고용주'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -407,7 +460,15 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
               onChange={handleOnchangeEmployer}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={languageRedux === 1 ? 'Nhà tuyển dụng' : 'Employer'}
+              placeholder={
+                languageRedux === 1
+                  ? 'Nhà tuyển dụng'
+                  : languageRedux === 2
+                    ? 'Employer'
+                    : languageRedux === 3
+                      ? '고용주'
+                      : 'Nhà tuyển dụng'
+              }
             // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
@@ -415,13 +476,18 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Nhà tuyển dụng không được vượt quá 255 ký tự'
-                    : 'Recruitment must not exceed 255 characters'}
+                    : languageRedux === 2
+                      ? 'Recruitment must not exceed 255 characters'
+                      : languageRedux === 3 &&
+                      '고용주는 255자를 초과할 수 없습니다.'}
                 </span>
               ) : !activity.organization ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Nhà tuyển dụng không được bỏ trống'
-                    : 'Recruitment cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Recruitment cannot be empty'
+                      : languageRedux === 3 && '고용주는 비워둘 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -443,7 +509,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                     component="label"
                     htmlFor="nameProfile"
                   >
-                    {languageRedux === 1 ? 'Ngày bắt đầu' : 'Start date'}{' '}
+                    {languageRedux === 1
+                      ? 'Ngày bắt đầu'
+                      : languageRedux === 2
+                        ? 'Start date'
+                        : languageRedux === 3 && '시작일'}{' '}
                     <span className="color-asterisk">*</span>
                   </Typography>
                   <DatePicker
@@ -469,27 +539,29 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                       new Date(activity.startDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Thời gian bắt đầu không thể lớn hơn thời gian hiện tại." :
-                            "The start time cannot be greater than the current time."
-                        }
+                        {languageRedux === 1
+                          ? 'Thời gian bắt đầu không thể lớn hơn thời gian hiện tại.'
+                          : languageRedux === 2
+                            ? 'The start time cannot be greater than the current time.'
+                            : languageRedux === 3 &&
+                            '시작 시간은 현재 시간보다 클 수 없습니다.'}
                       </span>
                     ) : !new Date(activity.startDate).getFullYear() ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Vui lòng nhập Thời gian bắt đầu." :
-                            "Please enter start date."
-                        }
+                        {languageRedux === 1
+                          ? 'Vui lòng nhập thời gian bắt đầu'
+                          : languageRedux === 2
+                            ? 'Please enter start date'
+                            : languageRedux === 3 && '시작일을 입력해 주세요'}
                       </span>
                     ) : new Date(activity.startDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Thời gian bắt đầu không thể nhỏ hơn 1900." :
-                            "The start time cannot be less than 1900."
-                        }
+                        {languageRedux === 1
+                          ? 'Thời gian bắt đầu không thể nhỏ hơn 1900.'
+                          : languageRedux === 2
+                            ? 'The start time cannot be less than 1900.'
+                            : languageRedux === 3 &&
+                            '시작 시간은 1900보다 작을 수 없습니다.'}
                       </span>
                     ) : (
                       <></>
@@ -512,7 +584,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                     component="label"
                     htmlFor="nameProfile"
                   >
-                    {languageRedux === 1 ? 'Ngày kết thúc' : 'End date'}{' '}
+                    {languageRedux === 1
+                      ? 'Ngày kết thúc'
+                      : languageRedux === 2
+                        ? 'End date'
+                        : languageRedux === 3 && '종료일'}{' '}
                     <span className="color-asterisk">*</span>
                   </Typography>
                   <DatePicker
@@ -541,27 +617,29 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                       new Date(activity.endDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Thời gian kết thúc không thể lớn hơn thời gian hiện tại." :
-                            "The end time cannot be greater than the current time."
-                        }
+                        {languageRedux === 1
+                          ? 'Thời gian kết thúc không thể lớn hơn thời gian hiện tại.'
+                          : languageRedux === 2
+                            ? 'The end time cannot be greater than the current time.'
+                            : languageRedux === 3 &&
+                            '종료 시간은 현재 시간보다 클 수 없습니다.'}
                       </span>
                     ) : !new Date(activity.endDate).getFullYear() ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Vui lòng nhập Thời gian kết thúc." :
-                            "Please enter End date."
-                        }
+                        {languageRedux === 1
+                          ? 'Vui lòng nhập Thời gian kết thúc.'
+                          : languageRedux === 2
+                            ? 'Please enter End date.'
+                            : languageRedux === 3 && '종료 시간을 입력하세요.'}
                       </span>
                     ) : new Date(activity.endDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
-                        {
-                          languageRedux === 1 ?
-                            "Thời gian kết thúc không thể nhỏ hơn 1900." :
-                            "The end time cannot be less than 1900."
-                        }
+                        {languageRedux === 1
+                          ? 'Thời gian kết thúc không thể nhỏ hơn 1900.'
+                          : languageRedux === 2
+                            ? 'The end time cannot be less than 1900.'
+                            : languageRedux === 3 &&
+                            '종료 시간은 1900보다 작을 수 없습니다.'}
                       </span>
                     ) : (
                       <></>
@@ -578,7 +656,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              {languageRedux === 1 ? 'Mô tả' : 'Description'}{' '}
+              {languageRedux === 1
+                ? 'Mô tả'
+                : languageRedux === 2
+                  ? 'Description'
+                  : languageRedux === 3 && '회사설명'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -596,7 +678,11 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
               placeholder={
                 languageRedux === 1
                   ? 'Mô tả quá trình thực tập của bạn'
-                  : 'Description your activity'
+                  : languageRedux === 2
+                    ? 'Description your activity'
+                    : languageRedux === 3
+                      ? '당신의 활동을 설명하십시오'
+                      : 'Mô tả quá trình thực tập của bạn'
               }
             // error={titleError} // Đánh dấu lỗi
             />
@@ -605,13 +691,19 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Thông tin thêm không được bỏ trống'
-                    : 'Additional information cannot be empty'}
+                    : languageRedux === 2
+                      ? 'Additional information cannot be empty'
+                      : languageRedux === 3 &&
+                      '추가 정보는 비워둘 수 없습니다.'}
                 </span>
               ) : activity.description.length > 1000 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Thông tin thêm không được vượt quá 1000 ký tự'
-                    : 'Additional information cannot exceed 1000 characters'}
+                    : languageRedux === 2
+                      ? 'Additional information cannot exceed 1000 characters'
+                      : languageRedux === 3 &&
+                      '추가 정보는 1000자를 초과할 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -620,7 +712,12 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
             </div>
           </Box>
           <Button variant="contained" fullWidth onClick={handleSubmit}>
-            {language?.profile_page?.save_info}
+            {languageRedux === 1
+              ? 'Lưu thông tin'
+              : languageRedux === 2
+                ? 'Save information'
+                : languageRedux === 3 &&
+                '정보 저장'}
           </Button>
         </Box>
       </Modal>

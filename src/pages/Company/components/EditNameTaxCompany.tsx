@@ -21,7 +21,7 @@ interface IEditNameFaxCompany {
   dataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsValid : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
@@ -31,13 +31,19 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const { dataCompany, setDataCompany, is_profile, setUnsavedChanges,setIsValid } = props;
+  const {
+    dataCompany,
+    setDataCompany,
+    is_profile,
+    setUnsavedChanges,
+    setIsValid,
+  } = props;
   // const [language, setLanguageState] = React.useState<any>();
 
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);
@@ -61,7 +67,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
       ...preValue,
       taxCode: value,
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   const handleEditCompanyName = (
@@ -73,7 +79,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
       ...preValue,
       name: value,
     }));
-    setIsValid(false)
+    setIsValid(false);
   };
 
   return (
@@ -85,7 +91,11 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          {language?.company_name} <span style={{ color: 'red' }}>*</span>
+          {languageRedux === 1
+            ? 'Tên công ty'
+            : languageRedux === 2
+              ? "Company's name"
+              : '회사명을'} <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -95,7 +105,11 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           onChange={handleEditCompanyName}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={language?.company_page?.place_name}
+          placeholder={languageRedux === 1
+            ? 'Tên công ty'
+            : languageRedux === 2
+              ? "Company's name"
+              : '회사명을'}
           disabled={is_profile ? true : false}
         //   error={titleError} // Đánh dấu lỗi
         />
@@ -104,13 +118,18 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tên công ty không được vượt quá 255 ký tự'
-                : 'Company name cannot exceed 255 characters'}
+                : languageRedux === 2
+                  ? 'Company Name cannot exceed 255 characters'
+                  : languageRedux === 3 &&
+                  '회사 이름은 255자를 초과할 수 없습니다.'}
             </span>
           ) : dataCompany?.name?.length === 0 ? (
             <span className="helper-text">
               {languageRedux === 1
-                ? 'Tên công ty được để trống'
-                : 'Company name cannot be blank'}
+                ? 'Tên công ty không được bỏ trống'
+                : languageRedux === 2
+                  ? 'Company Name cannot be empty'
+                  : languageRedux === 3 && '회사 이름은 비워 둘 수 없습니다.'}
             </span>
           ) : (
             <></>
@@ -126,7 +145,11 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          {language?.tax_code}
+          {languageRedux === 1
+            ? 'Mã số thuế'
+            : languageRedux === 2
+              ? 'Tax code'
+              : '세금 코드'}
         </Typography>
         <TextField
           type="text"
@@ -136,7 +159,11 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           onChange={handleEditCompanyFax}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={language?.company_page?.place_tax}
+          placeholder={languageRedux === 1
+            ? 'Mã số thuế'
+            : languageRedux === 2
+              ? 'Tax code'
+              : '세금 코드'}
           disabled={is_profile ? true : false}
         //   error={titleError} // Đánh dấu lỗi
         />
@@ -145,7 +172,10 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Mã số thuế không được vượt quá 255 ký tự'
-                : 'Tax code cannot exceed 255 characters'}
+                : languageRedux === 2
+                  ? 'Tax code cannot exceed 255 characters'
+                  : languageRedux === 3 &&
+                  '세금 코드는 255자를 초과할 수 없습니다.'}
             </span>
           ) : (
             <></>

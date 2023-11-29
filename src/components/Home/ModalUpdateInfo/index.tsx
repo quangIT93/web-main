@@ -47,8 +47,10 @@ const ModalUpdateInfo: React.FC<IModalSelectRole> = (props) => {
               ? 'Vui lòng cập nhật hồ sơ của bạn!'
               : 'Please update your profile!'
             : languageRedux === 1
-            ? 'Vui lòng cập nhật thông tin công ty của bạn!'
-            : 'Please update your company information!'}
+              ? 'Vui lòng cập nhật thông tin công ty của bạn!'
+              : languageRedux === 2
+                ? 'Please update your company information!'
+                : languageRedux === 3 && '회사 정보를 업데이트하세요.'}
         </h3>
       }
       footer={null}
@@ -69,17 +71,31 @@ const ModalUpdateInfo: React.FC<IModalSelectRole> = (props) => {
         {roleRedux === 0
           ? languageRedux === 1
             ? 'Cập nhật thông tin cá nhân, địa điểm làm việc, ngành nghề,… sẽ giúp nhà tuyển dụng tìm thấy bạn dễ dàng hơn và HiJob sẽ giới thiệu thêm những công việc phù hợp hơn!'
-            : 'Updating your personal information, work location, industry,... will help employers find you more easily and HiJob will introduce more suitable jobs!'
+            : languageRedux === 2
+              ? 'Updating your personal information, work location, industry,... will help employers find you more easily and HiJob will introduce more suitable jobs!'
+              : languageRedux === 3 &&
+                '귀하의 개인 정보, 직장 위치, 업종 등을 업데이트하면 고용주가 귀하를 더 쉽게 찾을 수 있으며 HiJob은 귀하에게 더 적합한 일자리를 소개할 것입니다.'
           : languageRedux === 1
-          ? 'Bạn cần cập nhật thông tin công ty để có thể đăng tin tuyển dụng tìm kiếm ứng viên tiềm năng.'
-          : 'You need to update your company information to be able to post job vacancies looking for potential candidates.'}
+            ? 'Bạn cần cập nhật thông tin công ty để có thể đăng tin tuyển dụng tìm kiếm ứng viên tiềm năng.'
+            : languageRedux === 2
+              ? 'You need to update your company information to be able to post job vacancies looking for potential candidates.'
+              : languageRedux === 3 &&
+                '잠재적인 후보자를 찾는 채용 공고를 게시하려면 회사 정보를 업데이트해야 합니다.'}
       </p>
       <div className="update-info-buttons">
         <Button type="primary" shape="round" onClick={handleConfirm}>
-          {languageRedux === 1 ? 'Xác nhận' : 'Confirm'}
+          {languageRedux === 1
+            ? 'Xác nhận'
+            : languageRedux === 2
+              ? 'Confirm'
+              : languageRedux === 3 && '확인하다'}
         </Button>
         <Button type="text" shape="round" onClick={handleCancel}>
-          {languageRedux === 1 ? 'Hủy' : 'Cancel'}
+          {languageRedux === 1
+            ? 'Hủy'
+            : languageRedux === 2
+              ? 'Cancel'
+              : languageRedux === 3 && '취소'}
         </Button>
       </div>
     </Modal>

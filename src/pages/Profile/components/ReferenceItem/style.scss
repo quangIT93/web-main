@@ -1,7 +1,11 @@
 .reference-item-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
+
+    .div-item-left {
+        max-width: 90%;
+    }
 
     .div-item-right {
         display: flex;

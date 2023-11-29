@@ -13,13 +13,17 @@ import Autoplay from 'embla-carousel-autoplay';
 
 // import Api
 import bannersApi from 'api/apiBanner';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const EmblaCarousel: React.FC = () => {
   const options: EmblaOptionsType = {
     loop: true,
     align: 'center',
   };
-
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   //   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
@@ -48,7 +52,10 @@ const EmblaCarousel: React.FC = () => {
   );
 
   const getBannersApi = async () => {
-    const result = await bannersApi.getBannersApi('vi', null);
+    const result = await bannersApi.getBannersApi(
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+      null,
+    );
     try {
       if (result) setDataBanners(result.data);
     } catch (error) {
@@ -124,7 +131,7 @@ const EmblaCarousel: React.FC = () => {
     <>
       <div
         className="embla"
-        // style={{ position: 'fixed', top: '-100%' }}
+      // style={{ position: 'fixed', top: '-100%' }}
       >
         <div className="embla__viewport" ref={emblaRef}>
           <div
@@ -140,7 +147,11 @@ const EmblaCarousel: React.FC = () => {
                 <img
                   className="embla__slide__img"
                   src={imageByIndex(index) ? imageByIndex(index).image : ''}
-                  alt={`ảnh banner`}
+                  alt={languageRedux === 1
+                    ? 'Hình ảnh bị lỗi'
+                    : languageRedux === 2
+                      ? 'Image is corrupted'
+                      : '이미지가 손상되었습니다'}
                 />
               </div>
             ))}

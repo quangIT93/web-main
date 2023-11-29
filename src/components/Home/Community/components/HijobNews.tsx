@@ -34,7 +34,7 @@ const HijobNews = () => {
         '5',
         '',
         0,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setNews(result?.data?.communications);
@@ -67,23 +67,32 @@ const HijobNews = () => {
 
   React.useEffect(() => {
     handleGetHijobNews();
-  }, [like]);
+  }, [like, languageRedux]);
 
   const handleMoveToDetailPage = (id: any) => {
     window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
     localStorage.setItem('community', '.community-container');
   };
-  // console.log('new', news);
 
   return (
     <>
       <div className="community-content-title">
         <div className="community-content-title_left">
           <NewsPaperIcon width={24} height={24} />
-          <h3>{languageRedux === 1 ? 'Tin tức' : 'Recruitment News'}</h3>
+          <h3>
+            {languageRedux === 1
+              ? 'Tin tức'
+              : languageRedux === 2
+                ? 'Recruitment news'
+                : languageRedux === 3 && '뉴스'}
+          </h3>
         </div>
         <p onClick={() => window.open('/news-comunity', '_parent')}>
-          {language?.home_page?.view_all}
+          {languageRedux === 1
+            ? 'Xem tất cả'
+            : languageRedux === 2
+              ? 'View all'
+              : languageRedux === 3 && '다 보기'}
         </p>
       </div>
       <div className="community-content-body">

@@ -27,19 +27,19 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
     titleJob,
     companyName,
     language,
-    setIsValidSubmit
+    setIsValidSubmit,
   } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
   const handleChangeTitleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleJob(e.target.value);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const handleChangeCompanyForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCompanyName(e.target.value);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const styleLabel = {
@@ -56,7 +56,15 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           component="label"
           htmlFor="jobTitle"
         >
-          {language?.job_title} <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1
+              ? 'Tên công việc'
+              : languageRedux === 2
+                ? 'Job Title'
+                : languageRedux === 3
+                  ? '직업 이름을'
+                  : 'Tên công việc'
+          } <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -66,7 +74,15 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           onChange={handleChangeTitleForm}
           size="small"
           sx={{ width: '100%', marginTop: '0.5rem' }}
-          placeholder={language?.job_title}
+          placeholder={
+            languageRedux === 1
+              ? 'Tên công việc'
+              : languageRedux === 2
+                ? 'Job Title'
+                : languageRedux === 3
+                  ? '직업 이름을'
+                  : 'Tên công việc'
+          }
           // error={titleError} // Đánh dấu lỗi
           value={titleJob ? titleJob : ''}
         />
@@ -75,13 +91,17 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tiêu đề công việc không được vượt quá 255 ký tự'
-                : 'Job Title cannot exceed 255 characters'}
+                : languageRedux === 2
+                  ? 'Job Title cannot exceed 255 characters'
+                  : languageRedux === 3 && '직위는 255자를 초과할 수 없습니다.'}
             </span>
           ) : !titleJob ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tiêu đề công việc không được bỏ trống'
-                : 'Job title cannot be empty'}
+                : languageRedux === 2
+                  ? 'Job title cannot be empty'
+                  : languageRedux === 3 && '직함은 비워 둘 수 없습니다.'}
             </span>
           ) : (
             <></>
@@ -97,7 +117,15 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           component="label"
           htmlFor="company"
         >
-          {language?.company_name} <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1
+              ? 'Tên công ty'
+              : languageRedux === 2
+                ? "Company's name"
+                : languageRedux === 3
+                  ? '회사명을'
+                  : 'Tên công ty'
+          } <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -107,7 +135,15 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           size="small"
           onChange={handleChangeCompanyForm}
           sx={{ width: '100%', marginTop: '0.5rem' }}
-          placeholder={language?.company}
+          placeholder={
+            languageRedux === 1
+              ? 'Tên công ty'
+              : languageRedux === 2
+                ? "Company's name"
+                : languageRedux === 3
+                  ? '회사명을'
+                  : 'Tên công ty'
+          }
           // error={companyError} // Đánh dấu lỗi
           value={companyName}
         />
@@ -116,13 +152,18 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tên công ty không được vượt quá 255 ký tự'
-                : 'Company Name cannot exceed 255 characters'}
+                : languageRedux === 2
+                  ? 'Company Name cannot exceed 255 characters'
+                  : languageRedux === 3 &&
+                  '회사 이름은 255자를 초과할 수 없습니다.'}
             </span>
           ) : !companyName ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Tên công ty không được bỏ trống'
-                : 'Company Name cannot be empty'}
+                : languageRedux === 2
+                  ? 'Company Name cannot be empty'
+                  : languageRedux === 3 && '회사 이름은 비워 둘 수 없습니다.'}
             </span>
           ) : (
             <></>

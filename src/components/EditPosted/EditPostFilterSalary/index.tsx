@@ -97,15 +97,24 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              language?.post_page.min_salary
-
+              languageRedux === 1
+                ? "Lương tối thiểu"
+                : languageRedux === 2
+                  ? "Min salary"
+                  : '루옹 투이 티에우'
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}
             maxLength={12}
-            placeholder="Luong toi thieu"
+            placeholder={
+              languageRedux === 1
+                ? "Lương tối thiểu"
+                : languageRedux === 2
+                  ? "Min salary"
+                  : '루옹 투이 티에우'
+            }
             onChange={handleChangesalaryMin}
             value={new Intl.NumberFormat('en-US').format(
               Number(editDataPosted?.salaryMin?.toString().replace(',', ''))
@@ -126,14 +135,24 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              language?.post_page?.max_salary
+              languageRedux === 1
+                ? "Lương tối đa"
+                : languageRedux === 2
+                  ? "Max salary"
+                  : '루옹 터이 다'
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}
             maxLength={12}
-            placeholder="Luong toi da"
+            placeholder={
+              languageRedux === 1
+                ? "Lương tối đa"
+                : languageRedux === 2
+                  ? "Max salary"
+                  : '루옹 터이 다'
+            }
             onChange={handleChangesalaryMax}
             value={new Intl.NumberFormat('en-US').format(
               Number(editDataPosted?.salaryMax?.toString().replace(',', ''))

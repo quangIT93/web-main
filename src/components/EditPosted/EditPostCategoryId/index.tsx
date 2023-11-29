@@ -71,7 +71,11 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
     <div style={{ width: '520px' }} className="filter-loca-cate ">
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable ? language?.limit_2_cate : ''}
+        {disable ? languageRedux === 1
+          ? 'Chỉ có thể tối đa 2 danh mục'
+          : languageRedux === 2
+            ? 'Only up to 2 categories can be'
+            : '카테고리는 최대 2개까지만 가능합니다.' : ''}
       </Divider>
     </div>
   );
@@ -96,7 +100,7 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setDataCategories(result.data);
@@ -127,7 +131,13 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
         component="label"
         htmlFor="jobTitle"
       >
-        {language?.category} <span style={{ color: 'red' }}>*</span>
+        {
+          languageRedux === 1
+            ? "Danh mục nghề nghiệp"
+            : languageRedux === 2
+              ? "Category"
+              : '직업 디렉토리'
+        } <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Cascader
         defaultValue={dataPost?.map((cata: any) => [

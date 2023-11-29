@@ -31,8 +31,12 @@ interface ICardsAppliedPending {
 }
 
 const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const language = useSelector((state: RootState) => state.dataLanguage.languages);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   // const { activeChild } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [dataApplied, setDataApplied] = useState<any>(null);
@@ -68,7 +72,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
       lastPostId,
       11,
       1,
-      languageRedux === 1 ? "vi" : "en",
+      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
     if (result.data.length <= 10) {
       setIsVisible(false);
@@ -86,7 +90,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
         null,
         10,
         1,
-        languageRedux === 1 ? "vi" : "en",
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
@@ -125,7 +129,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
         lastPostId,
         10,
         1,
-        languageRedux === 1 ? "vi" : "en",
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
         setUploading(false);
@@ -133,7 +137,11 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content: language?.history_page.out_job,
+            content: languageRedux === 1
+              ? 'Đã hết công việc để hiển thị'
+              : languageRedux === 2
+                ? 'Out of job to display'
+                : '보여줄 일이 부족해',
           });
           return;
         }
@@ -194,7 +202,11 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
           <div className="history-post">
             <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
               {dataApplied?.map((posted: any, i: number) => (
-                <JobCardHistory item={posted} language={language} languageRedux={languageRedux} />
+                <JobCardHistory
+                  item={posted}
+                  language={language}
+                  languageRedux={languageRedux}
+                />
               ))}
             </Grid>
             <Box
@@ -218,7 +230,11 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                 loading={uploading}
                 onClick={handleClickAddItem}
               >
-                {language?.more}
+                {languageRedux === 1
+                  ? 'Xem thêm'
+                  : languageRedux === 2
+                    ? 'See more'
+                    : '더보기'}
               </Button>
             </Box>
           </div>

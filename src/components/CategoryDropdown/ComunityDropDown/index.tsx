@@ -27,7 +27,11 @@ const ComunityDropDown: React.FC<ICvDropDown> = (props) => {
       key: '1',
       label: (
         <a onClick={moveToWorkingStory}>
-          {languageRedux === 1 ? 'Câu chuyện làm việc' : 'Working story'}
+          {languageRedux === 1
+            ? 'Câu chuyện việc làm'
+            : languageRedux === 2
+              ? 'Working story'
+              : languageRedux === 3 && '워킹스토리'}
         </a>
       ),
     },
@@ -35,7 +39,11 @@ const ComunityDropDown: React.FC<ICvDropDown> = (props) => {
       key: '2',
       label: (
         <a onClick={moveToHijobNews}>
-          {languageRedux === 1 ? 'Tin tức' : 'News'}
+          {languageRedux === 1
+            ? 'Tin tức'
+            : languageRedux === 2
+              ? 'News'
+              : languageRedux === 3 && '뉴스'}
         </a>
       ),
     },
@@ -43,7 +51,11 @@ const ComunityDropDown: React.FC<ICvDropDown> = (props) => {
       key: '3',
       label: (
         <a onClick={moveToPostArticle}>
-          {languageRedux === 1 ? 'Đăng bài viết mới' : 'Post new articles'}
+          {languageRedux === 1
+            ? 'Đăng bài viết mới'
+            : languageRedux === 2
+              ? 'Post new articles'
+              : languageRedux === 3 && '새로운 글을 게시합니다'}
         </a>
       ),
     },
@@ -51,7 +63,11 @@ const ComunityDropDown: React.FC<ICvDropDown> = (props) => {
       key: '4',
       label: (
         <a onClick={moveToSavedArticle}>
-          {languageRedux === 1 ? 'Bài viết đã lưu' : 'Saved post'}
+          {languageRedux === 1
+            ? 'Bài viết đã lưu'
+            : languageRedux === 2
+              ? 'Saved post'
+              : languageRedux === 3 && '저장된게시물'}
         </a>
       ),
     },
@@ -63,7 +79,13 @@ const ComunityDropDown: React.FC<ICvDropDown> = (props) => {
       placement="bottomLeft"
       trigger={['hover']}
     >
-      <h3>{languageRedux === 1 ? 'Cộng đồng' : 'Community'}</h3>
+      <h3>
+        {languageRedux === 1
+          ? 'Cộng đồng'
+          : languageRedux === 2
+            ? 'Community'
+            : languageRedux === 3 && '공동체'}
+      </h3>
     </Dropdown>
   );
 };

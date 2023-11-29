@@ -13,12 +13,11 @@ import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
 import languageApi from 'api/languageApi';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref,
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  },
+);
 
 // interface IShowNotificativeSave {
 //   showNofySave: boolean;
@@ -40,7 +39,7 @@ const ShowCancleSave: React.FC = () => {
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? 'vi' : 'en',
+  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
   //     );
   //     if (result) {
   //       setLanguageState(result.data);
@@ -73,9 +72,17 @@ const ShowCancleSave: React.FC = () => {
           <Alert
             onClose={handleClose}
             severity="error"
-            sx={{ width: '100%', backgroundColor: '#000000', boxShadow: 'none' }}
+            sx={{
+              width: '100%',
+              backgroundColor: '#000000',
+              boxShadow: 'none',
+            }}
           >
-            {languageRedux === 1 ? 'Đã bỏ lưu thành công!' : 'Unsaved successfully'}
+            {languageRedux === 1
+              ? 'Đã bỏ lưu thành công!'
+              : languageRedux === 2
+                ? 'Unsaved successfully'
+                : languageRedux === 3 && '저장이 취소되었습니다.'}
           </Alert>
         </Snackbar>
       </Stack>

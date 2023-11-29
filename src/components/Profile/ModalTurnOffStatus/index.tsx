@@ -33,7 +33,7 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
       const result = await profileApi.putProfileJobV3(null, 0);
       if (result) {
         const resultProfileV3 = await profileApi.getProfileInformationV3(
-          languageRedux === 1 ? 'vi' : 'en',
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (resultProfileV3) {
           dispatch(setProfileMeInformationV3(resultProfileV3));
@@ -63,12 +63,16 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
             // fontWeight: '700',
             lineHeight: '24px',
             letterSpacing: '0em',
-            textAlign: 'left',
+            textAlign: 'center',
           }}
         >
           {languageRedux === 1
             ? 'Tắt trạng thái tìm việc'
-            : 'Turn off job search status'}
+            : languageRedux === 2
+              ? 'Turn off job search status'
+              : languageRedux === 3
+                ? '채용정보 검색 상태 끄기'
+                : 'Tắt trạng thái tìm việc'}
         </h3>
       }
       footer={null}
@@ -83,19 +87,35 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
           fontWeight: '400',
           lineHeight: '24px',
           letterSpacing: '0.5px',
-          textAlign: 'left',
+          textAlign: 'center',
         }}
       >
         {languageRedux === 1
           ? 'Sau khi tắt tìm kiếm việc làm, Nhà tuyển dụng có thể không tìm thấy bạn và cơ hội tìm được công việc phù hợp với bạn sẽ giảm đi.'
-          : 'After turning off job search, Recruiters may not be able to find you, and your chances of getting the right job for you are reduced.'}
+          : languageRedux === 2
+            ? 'After turning off job search, Recruiters may not be able to find you, and your chances of getting the right job for you are reduced.'
+            : languageRedux === 3
+              ? '구직 기능을 끄면 고용주가 귀하를 찾지 못할 수도 있고 귀하가 자신에게 적합한 일자리를 찾는 것이 어려울 수도 있습니다.'
+              : 'Sau khi tắt tìm kiếm việc làm, Nhà tuyển dụng có thể không tìm thấy bạn và cơ hội tìm được công việc phù hợp với bạn sẽ giảm đi.'}
       </p>
       <div className="buttons-turn-off-status-modal">
         <Button type="primary" shape="round" onClick={handleTurnOff}>
-          {languageRedux === 1 ? 'Tắt' : 'Turn off'}
+          {languageRedux === 1
+            ? 'Tắt'
+            : languageRedux === 2
+              ? 'Turn off'
+              : languageRedux === 3
+                ? '끄다'
+                : 'Tắt'}
         </Button>
         <Button type="text" shape="round" onClick={handleCancel}>
-          {languageRedux === 1 ? 'Hủy' : 'Cancel'}
+          {languageRedux === 1
+            ? 'Hủy'
+            : languageRedux === 2
+              ? 'Cancel'
+              : languageRedux === 3
+                ? '취소'
+                : 'Hủy'}
         </Button>
       </div>
     </Modal>

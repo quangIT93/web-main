@@ -85,7 +85,9 @@ const Policy: React.FC = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Chính sách công ty'
-        : 'HiJob - Company policy';
+        : languageRedux === 2
+          ? 'HiJob - Company policy'
+          : 'HiJob - 회사 정책';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_policy' as string,
