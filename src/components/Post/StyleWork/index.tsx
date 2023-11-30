@@ -11,7 +11,7 @@ interface IStyleWork {
   setIsRemotely: React.Dispatch<React.SetStateAction<number>>;
   language: any;
   setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
-  languageRedux: any
+  languageRedux: any;
 }
 
 const StyleWork: React.FC<IStyleWork> = (props) => {
@@ -22,19 +22,19 @@ const StyleWork: React.FC<IStyleWork> = (props) => {
     setIsRemotely,
     language,
     setIsValidSubmit,
-    languageRedux
+    languageRedux,
   } = props;
 
   const handleWeekendChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) return setIsWorkingWeekend(1);
     setIsWorkingWeekend(0);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   const handleRemoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) return setIsRemotely(1);
     setIsRemotely(0);
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
   return (
     <Box
@@ -44,12 +44,12 @@ const StyleWork: React.FC<IStyleWork> = (props) => {
       <FormControlLabel
         label={
           languageRedux === 1
-            ? "Làm việc cuối tuần"
+            ? 'Làm việc cuối tuần'
             : languageRedux === 2
-              ? "Working on the weekend"
+              ? 'Working on the weekend'
               : languageRedux === 3
                 ? '주말 근무'
-                : "Làm việc cuối tuần"
+                : 'Làm việc cuối tuần'
         }
         control={
           <Checkbox
@@ -61,12 +61,12 @@ const StyleWork: React.FC<IStyleWork> = (props) => {
       <FormControlLabel
         label={
           languageRedux === 1
-            ? "Làm việc từ xa"
+            ? 'Làm việc từ xa'
             : languageRedux === 2
-              ? "Remote work"
+              ? 'Remote work'
               : languageRedux === 3
-                ? '원격으로 작업'
-                : "Làm việc từ xa"
+                ? '원격 근무'
+                : 'Làm việc từ xa'
         }
         control={
           <Checkbox

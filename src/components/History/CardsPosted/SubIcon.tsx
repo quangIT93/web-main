@@ -33,7 +33,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
     //   console.log(error);
     // }
 
-    setOpenModalClosePost(true)
+    setOpenModalClosePost(true);
   };
 
   const handleClickEditPost = async () => {
@@ -58,36 +58,30 @@ const SubIcon: React.FC<ISubicon> = (props) => {
     <div className="subs-icon_moreOutlined">
       <div
         className="sub-icon_moreOutlined sub-edit_post"
-        onClick={status !== 3 ? handleClickEditPost : () => { }}
+        onClick={status !== 3 ? handleClickEditPost : () => {}}
         style={
           status === 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
         }
       >
         <EditOutlined />
-        {
-          languageRedux === 1
-            ? 'Sửa'
-            : languageRedux === 2
-              ? 'Edit'
-              : '고치다'
-        }
+        {languageRedux === 1 ? 'Sửa' : languageRedux === 2 ? 'Edit' : '수정'}
       </div>
 
       <div
         className="sub-icon_moreOutlined sub-close_post"
-        onClick={status !== 3 ? handleClickClosePost : () => { }}
+        onClick={status !== 3 ? handleClickClosePost : () => {}}
         style={
           status === 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
         }
       >
         <CloseSquareOutlined />
-        {status === 3 ?
-          languageRedux === 1
+        {status === 3
+          ? languageRedux === 1
             ? 'Bài tuyển dụng đã đóng'
             : languageRedux === 2
               ? 'The job posting is closed"'
-              : '채용 공고가 마감되었습니다' :
-          languageRedux === 1
+              : '채용공고가 마감되었습니다'
+          : languageRedux === 1
             ? 'Đóng bài tuyển dụng'
             : languageRedux === 2
               ? 'Close job posting"'

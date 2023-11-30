@@ -162,7 +162,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
             : languageRedux === 2
               ? 'Language names cannot exceed 255 characters'
               : languageRedux === 3 &&
-              '언어 이름은 255자를 초과할 수 없습니다.',
+                '언어 이름은 255자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -218,7 +218,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
             break;
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleClose = () => {
@@ -280,7 +280,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
                 ? 'Ngoại ngữ'
                 : languageRedux === 2
                   ? 'Languages'
-                  : languageRedux === 3 && '외국어'}{' '}
+                  : languageRedux === 3 && '언어'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -301,7 +301,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
                       ? '언어'
                       : 'Ngoại ngữ'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {language && language.length > 255 ? (
@@ -311,7 +311,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
                     : languageRedux === 2
                       ? 'Language names cannot exceed 255 characters'
                       : languageRedux === 3 &&
-                      '언어 이름은 255자를 초과할 수 없습니다.'}
+                        '언어 이름은 255자를 초과할 수 없습니다.'}
                 </span>
               ) : !language ? (
                 <span className="helper-text">
@@ -326,8 +326,9 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${language ? language.length : '0'
-                }/255`}</span>
+              <span className="number-text">{`${
+                language ? language.length : '0'
+              }/255`}</span>
             </div>
           </Box>
           <Box sx={{ marginBottom: '12px' }}>
@@ -369,7 +370,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
                   ? 'Sơ cấp'
                   : languageRedux === 2
                     ? 'Primary'
-                    : languageRedux === 3 && '주요한'}
+                    : languageRedux === 3 && '초보자'}
               </MenuItem>
               <MenuItem value={2}>
                 {languageRedux === 1
@@ -383,14 +384,14 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
                   ? 'Trình độ cao'
                   : languageRedux === 2
                     ? 'High level'
-                    : languageRedux === 3 && '높은 레벨'}
+                    : languageRedux === 3 && '고급'}
               </MenuItem>
               <MenuItem value={4}>
                 {languageRedux === 1
                   ? 'Thành thạo'
                   : languageRedux === 2
                     ? 'Competently'
-                    : languageRedux === 3 && '유능하게'}
+                    : languageRedux === 3 && '능통자'}
               </MenuItem>
             </TextField>
           </Box>
@@ -399,8 +400,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
               ? 'Lưu thông tin'
               : languageRedux === 2
                 ? 'Save information'
-                : languageRedux === 3 &&
-                '정보 저장'}
+                : languageRedux === 3 && '정보 저장'}
           </Button>
         </Box>
       </Modal>

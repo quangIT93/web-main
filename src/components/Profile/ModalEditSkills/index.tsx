@@ -271,7 +271,7 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
                 : languageRedux === 2
                   ? 'Skills'
                   : languageRedux === 3
-                    ? '기술'
+                    ? '기능'
                     : 'Kỹ năng'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
@@ -289,10 +289,10 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
                   : languageRedux === 2
                     ? 'Skills'
                     : languageRedux === 3
-                      ? '기술'
+                      ? '기능'
                       : 'Kỹ năng'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {skill && skill.length > 255 ? (
@@ -318,8 +318,9 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${skill ? skill.length : '0'
-                }/255`}</span>
+              <span className="number-text">{`${
+                skill ? skill.length : '0'
+              }/255`}</span>
             </div>
           </Box>
           <Box sx={{ marginBottom: '12px' }}>
@@ -361,28 +362,28 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
                   ? 'Tập sự'
                   : languageRedux === 2
                     ? 'Novice'
-                    : languageRedux === 3 && '초심자'}
+                    : languageRedux === 3 && '수습'}
               </MenuItem>
               <MenuItem value={2}>
                 {languageRedux === 1
                   ? 'Sơ cấp'
                   : languageRedux === 2
                     ? 'Primary'
-                    : languageRedux === 3 && '주요한'}
+                    : languageRedux === 3 && '초보자'}
               </MenuItem>
               <MenuItem value={3}>
                 {languageRedux === 1
                   ? 'Kinh nghiệm'
                   : languageRedux === 2
                     ? 'Experienced'
-                    : languageRedux === 3 && '경험이 풍부한'}
+                    : languageRedux === 3 && '경혐자'}
               </MenuItem>
               <MenuItem value={4}>
                 {languageRedux === 1
                   ? 'Thành thạo'
                   : languageRedux === 2
                     ? 'Competently'
-                    : languageRedux === 3 && '유능하게'}
+                    : languageRedux === 3 && '능통자'}
               </MenuItem>
               <MenuItem value={5}>
                 {languageRedux === 1
@@ -398,8 +399,7 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
               ? 'Lưu thông tin'
               : languageRedux === 2
                 ? 'Save information'
-                : languageRedux === 3 &&
-                '정보 저장'}
+                : languageRedux === 3 && '정보 저장'}
           </Button>
         </Box>
       </Modal>

@@ -32,7 +32,12 @@ interface IModalEditPost {
 }
 
 const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
-  const { openModalEditCompany, setOpenModalEditCompanySuccess, languageRedux, language } = props;
+  const {
+    openModalEditCompany,
+    setOpenModalEditCompanySuccess,
+    languageRedux,
+    language,
+  } = props;
 
   const handleClose = () => {
     setOpenModalEditCompanySuccess(false);
@@ -51,13 +56,11 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
           component="h2"
           sx={{ textAlign: 'center', color: '#0d99ff' }}
         >
-          {
-            languageRedux === 1
-              ? 'Đã chỉnh sửa thông tin công ty thành công!'
-              : languageRedux === 2
-                ? 'Company information edited successfully!'
-                : '회사 정보가 성공적으로 편집되었습니다!'
-          }
+          {languageRedux === 1
+            ? 'Đã chỉnh sửa thông tin công ty thành công!'
+            : languageRedux === 2
+              ? 'Company information edited successfully!'
+              : '회사 정보가 성공적으로 편집되었습니다!'}
         </Typography>
         <Typography
           id="modal-modal-title"
@@ -65,13 +68,11 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
           component="h4"
           sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
         >
-          {
-            languageRedux === 1
-              ? 'Bạn có muốn quay về trang thông tin cá nhân!'
-              : languageRedux === 2
-                ? 'Do you want to return to your profile page!'
-                : '개인정보 페이지로 돌아가시겠습니까?'
-          }
+          {languageRedux === 1
+            ? 'Bạn có muốn quay về trang thông tin cá nhân!'
+            : languageRedux === 2
+              ? 'Do you want to return to your profile page!'
+              : '개인정보 페이지로 돌아가시겠습니까?'}
         </Typography>
 
         <Box
@@ -91,13 +92,11 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
               width: '300px',
             }}
           >
-            {
-              languageRedux === 1
-                ? "Không"
-                : languageRedux === 2
-                  ? "No"
-                  : '아니요'
-            }
+            {languageRedux === 1
+              ? 'Không'
+              : languageRedux === 2
+                ? 'No'
+                : '아니요'}
           </Button>
           <Button
             type="primary"
@@ -109,13 +108,7 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
               width: '300px',
             }}
           >
-            {
-              languageRedux === 1
-                ? 'Có'
-                : languageRedux === 2
-                  ? 'Yes'
-                  : '가지다'
-            }
+            {languageRedux === 1 ? 'Có' : languageRedux === 2 ? 'Yes' : '확인'}
           </Button>
         </Box>
       </Box>

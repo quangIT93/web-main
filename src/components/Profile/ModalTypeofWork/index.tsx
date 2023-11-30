@@ -89,7 +89,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
         dispatch(setAlertEditInfo(true));
         setOpenModalTypeofWork(false);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
@@ -170,7 +170,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
             placeholder={'Loại công việc'}
             size="small"
             sx={{ width: '100%' }}
-          // error={!gender} // Đánh dấu lỗi
+            // error={!gender} // Đánh dấu lỗi
           >
             <MenuItem value={1}>
               {languageRedux === 1
@@ -208,7 +208,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
             ? 'Lưu'
             : languageRedux === 2
               ? 'Save'
-              : languageRedux === 3 && '구하다'}
+              : languageRedux === 3 && '저장'}
         </Button>
       </Box>
     </Modal>

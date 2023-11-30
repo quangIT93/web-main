@@ -101,7 +101,7 @@ const Comunity = () => {
       if (result.status === 200) {
         setDeleteCmt(!deleteCmt);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleGetDetailCommunityById = async () => {
@@ -146,8 +146,9 @@ const Comunity = () => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${size * rows
-        }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${
+        size * rows
+      }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
@@ -167,13 +168,13 @@ const Comunity = () => {
           : languageRedux === 2
             ? 'Once deleted, this comment will no longer appear'
             : languageRedux === 3 &&
-            '삭제되면 이 댓글은 더 이상 표시되지 않습니다.',
+              '삭제되면 이 댓글은 더 이상 표시되지 않습니다.',
       okText:
         languageRedux === 1
           ? 'Có'
           : languageRedux === 2
             ? 'Yes'
-            : languageRedux === 3 && '가지다',
+            : languageRedux === 3 && '확인',
       okType: 'danger',
       cancelText:
         languageRedux === 1
@@ -319,9 +320,9 @@ const Comunity = () => {
       : fromHistory === '30'
         ? window.open('/history?community_post=30', '_parent')
         : window.open(
-          detail?.type === 1 ? '/new-comunity' : '/news-comunity',
-          '_parent',
-        );
+            detail?.type === 1 ? '/new-comunity' : '/news-comunity',
+            '_parent',
+          );
   };
 
   const hanleClickComment = () => {
@@ -389,7 +390,7 @@ const Comunity = () => {
                   ? 'Lưu'
                   : languageRedux === 2
                     ? 'Save'
-                    : '구하다'}
+                    : '저장'}
               </span>
             </div>
           </div>
@@ -409,11 +410,13 @@ const Comunity = () => {
                 }}
               />
               <div className="info-actor_comunityDetail">
-                <p>{languageRedux === 1
-                  ? 'Tác giả'
-                  : languageRedux === 2
-                    ? 'Author'
-                    : '작가'}</p>
+                <p>
+                  {languageRedux === 1
+                    ? 'Tác giả'
+                    : languageRedux === 2
+                      ? 'Author'
+                      : '작가'}
+                </p>
                 <p>
                   {detail?.type === 1
                     ? detail?.profileData?.name.slice(0, 2) + '...'
@@ -429,7 +432,7 @@ const Comunity = () => {
               <TextArea
                 value={detail?.content}
                 autoSize
-              // showCount
+                // showCount
               />
             </div>
           </div>
@@ -529,7 +532,7 @@ const Comunity = () => {
                 // )}
                 src={item.image}
                 alt={item.image}
-              //loading="lazy"
+                //loading="lazy"
               />
             ))}
           </div>
@@ -606,7 +609,7 @@ const Comunity = () => {
                           : 'Nhập bình luận của bạn ...'
                   }
                   autoSize
-                // showCount
+                  // showCount
                 />
                 <div className="comment-interaction">
                   <div
@@ -658,7 +661,7 @@ const Comunity = () => {
                                 display:
                                   detail?.profileData?.id ===
                                     localStorage.getItem('accountId') ||
-                                    cmtData?.profile?.id ===
+                                  cmtData?.profile?.id ===
                                     localStorage.getItem('accountId')
                                     ? 'block'
                                     : 'none',
@@ -674,7 +677,7 @@ const Comunity = () => {
                             <TextArea
                               value={cmtData?.content}
                               autoSize
-                            // showCount
+                              // showCount
                             />
                             {/* <p>{cmtData?.content}</p> */}
                           </div>

@@ -49,15 +49,13 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          {
-            languageRedux === 1
-              ? 'Tên công việc'
-              : languageRedux === 2
-                ? 'Job Title'
-                : languageRedux === 3
-                  ? '직업 이름을'
-                  : 'Tên công việc'
-          }{' '}
+          {languageRedux === 1
+            ? 'Tên công việc'
+            : languageRedux === 2
+              ? 'Job Title'
+              : languageRedux === 3
+                ? '직업 이름을'
+                : 'Tên công việc'}{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
@@ -77,7 +75,7 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
                   ? '직업 이름을'
                   : 'Tên công việc'
           }
-        //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi
         />
       </div>
       <div className="edit-title_company edit-posted_title">
@@ -87,15 +85,14 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          {
-            languageRedux === 1
-              ? 'Tên công ty'
-              : languageRedux === 2
-                ? "Company's name"
-                : languageRedux === 3
-                  ? '회사명을'
-                  : 'Tên công ty'
-          }{' '}<span style={{ color: 'red' }}>*</span>
+          {languageRedux === 1
+            ? 'Tên công ty'
+            : languageRedux === 2
+              ? "Company's name"
+              : languageRedux === 3
+                ? '회사명'
+                : 'Tên công ty'}{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -111,10 +108,10 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
               : languageRedux === 2
                 ? "Company's name"
                 : languageRedux === 3
-                  ? '회사명을'
+                  ? '회사명'
                   : 'Tên công ty'
           }
-        //   error={titleError} // Đánh dấu lỗi akla
+          //   error={titleError} // Đánh dấu lỗi akla
         />
       </div>
     </div>

@@ -204,7 +204,7 @@ const HotJob: React.FC = () => {
                 languageRedux === 2 ?
                   "View all" :
                   languageRedux === 3 &&
-                  "다 보기"
+                  "모두보기"
             }</p>
           <ArrowrightIcon width={20} height={20} />
         </div> */}
@@ -240,11 +240,16 @@ const HotJob: React.FC = () => {
                   }}
                 >
                   <div className="div-img-themes-item">
-                    <img src={item?.image} alt={languageRedux === 1
-                      ? 'Hình ảnh bị lỗi'
-                      : languageRedux === 2
-                        ? 'Image is corrupted'
-                        : '이미지가 손상되었습니다'} />
+                    <img
+                      src={item?.image}
+                      alt={
+                        languageRedux === 1
+                          ? 'Hình ảnh bị lỗi'
+                          : languageRedux === 2
+                            ? 'Image is corrupted'
+                            : '이미지가 손상되었습니다'
+                      }
+                    />
                   </div>
                   <div className="div-info-themes-item">
                     <div className="div-info-themes-item_top">
@@ -271,7 +276,7 @@ const HotJob: React.FC = () => {
               ? 'Xem tất cả'
               : languageRedux === 2
                 ? 'View all'
-                : languageRedux === 3 && '다 보기'}
+                : languageRedux === 3 && '모두보기'}
           </p>
           <ArrowrightIcon width={20} height={20} />
         </div>

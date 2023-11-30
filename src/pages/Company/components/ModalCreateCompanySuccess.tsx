@@ -26,13 +26,22 @@ const style = {
 
 interface IModalCreateCompanySuccess {
   ShowModalFisnishCreateCompany: boolean;
-  setShowModalFisnishCreateCompany: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowModalFisnishCreateCompany: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
   languageRedux: any;
   language: any;
 }
 
-const ModalCreateCompanySuccess: React.FC<IModalCreateCompanySuccess> = (props) => {
-  const { ShowModalFisnishCreateCompany, setShowModalFisnishCreateCompany, languageRedux, language } = props;
+const ModalCreateCompanySuccess: React.FC<IModalCreateCompanySuccess> = (
+  props,
+) => {
+  const {
+    ShowModalFisnishCreateCompany,
+    setShowModalFisnishCreateCompany,
+    languageRedux,
+    language,
+  } = props;
 
   const handleClose = () => {
     setShowModalFisnishCreateCompany(false);
@@ -51,13 +60,11 @@ const ModalCreateCompanySuccess: React.FC<IModalCreateCompanySuccess> = (props) 
           component="h2"
           sx={{ textAlign: 'center', color: '#0d99ff' }}
         >
-          {
-            languageRedux === 1
-              ? 'Đã tạo thông tin công ty thành công!'
-              : languageRedux === 2
-                ? 'Company information created successfully!'
-                : '회사정보가 생성되었습니다!'
-          }
+          {languageRedux === 1
+            ? 'Đã tạo thông tin công ty thành công!'
+            : languageRedux === 2
+              ? 'Company information created successfully!'
+              : '회사정보가 생성되었습니다!'}
         </Typography>
         <Typography
           id="modal-modal-title"
@@ -65,13 +72,11 @@ const ModalCreateCompanySuccess: React.FC<IModalCreateCompanySuccess> = (props) 
           component="h4"
           sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
         >
-          {
-            languageRedux === 1
-              ? 'Bạn có muốn quay về trang thông tin cá nhân!'
-              : languageRedux === 2
-                ? 'Do you want to return to your profile page!'
-                : '개인정보 페이지로 돌아가시겠습니까?'
-          }
+          {languageRedux === 1
+            ? 'Bạn có muốn quay về trang thông tin cá nhân!'
+            : languageRedux === 2
+              ? 'Do you want to return to your profile page!'
+              : '개인정보 페이지로 돌아가시겠습니까?'}
         </Typography>
 
         <Box
@@ -91,13 +96,11 @@ const ModalCreateCompanySuccess: React.FC<IModalCreateCompanySuccess> = (props) 
               width: '300px',
             }}
           >
-            {
-              languageRedux === 1
-                ? "Không"
-                : languageRedux === 2
-                  ? "No"
-                  : '아니요'
-            }
+            {languageRedux === 1
+              ? 'Không'
+              : languageRedux === 2
+                ? 'No'
+                : '아니요'}
           </Button>
           <Button
             type="primary"
@@ -109,13 +112,7 @@ const ModalCreateCompanySuccess: React.FC<IModalCreateCompanySuccess> = (props) 
               width: '300px',
             }}
           >
-            {
-              languageRedux === 1
-                ? 'Có'
-                : languageRedux === 2
-                  ? 'Yes'
-                  : '가지다'
-            }
+            {languageRedux === 1 ? 'Có' : languageRedux === 2 ? 'Yes' : '확인'}
           </Button>
         </Box>
       </Box>

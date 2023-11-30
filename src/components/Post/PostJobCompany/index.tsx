@@ -56,15 +56,14 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           component="label"
           htmlFor="jobTitle"
         >
-          {
-            languageRedux === 1
-              ? 'Tên công việc'
-              : languageRedux === 2
-                ? 'Job Title'
-                : languageRedux === 3
-                  ? '직업 이름을'
-                  : 'Tên công việc'
-          } <span style={{ color: 'red' }}>*</span>
+          {languageRedux === 1
+            ? 'Tên công việc'
+            : languageRedux === 2
+              ? 'Job Title'
+              : languageRedux === 3
+                ? '직업 이름을'
+                : 'Tên công việc'}{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -106,8 +105,9 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${titleJob ? titleJob.length : '0'
-            }/255`}</span>
+          <span className="number-text">{`${
+            titleJob ? titleJob.length : '0'
+          }/255`}</span>
         </div>
       </div>
       <div className="post-titleCompany post-title">
@@ -117,15 +117,14 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           component="label"
           htmlFor="company"
         >
-          {
-            languageRedux === 1
-              ? 'Tên công ty'
-              : languageRedux === 2
-                ? "Company's name"
-                : languageRedux === 3
-                  ? '회사명을'
-                  : 'Tên công ty'
-          } <span style={{ color: 'red' }}>*</span>
+          {languageRedux === 1
+            ? 'Tên công ty'
+            : languageRedux === 2
+              ? "Company's name"
+              : languageRedux === 3
+                ? '회사명'
+                : 'Tên công ty'}{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -141,7 +140,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
               : languageRedux === 2
                 ? "Company's name"
                 : languageRedux === 3
-                  ? '회사명을'
+                  ? '회사명'
                   : 'Tên công ty'
           }
           // error={companyError} // Đánh dấu lỗi
@@ -155,7 +154,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
                 : languageRedux === 2
                   ? 'Company Name cannot exceed 255 characters'
                   : languageRedux === 3 &&
-                  '회사 이름은 255자를 초과할 수 없습니다.'}
+                    '회사 이름은 255자를 초과할 수 없습니다.'}
             </span>
           ) : !companyName ? (
             <span className="helper-text">
@@ -168,8 +167,9 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           ) : (
             <></>
           )}
-          <span className="number-text">{`${companyName ? companyName.length : '0'
-            }/255`}</span>
+          <span className="number-text">{`${
+            companyName ? companyName.length : '0'
+          }/255`}</span>
         </div>
       </div>
     </div>

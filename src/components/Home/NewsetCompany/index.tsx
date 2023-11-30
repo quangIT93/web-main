@@ -101,7 +101,7 @@ const NewestCompany = () => {
                         ? 'Xem tất cả'
                         : languageRedux === 2
                           ? 'View all'
-                          : languageRedux === 3 && '다 보기'}
+                          : languageRedux === 3 && '모두보기'}
                     </p>
                     <ArrowrightIcon width={20} height={20} />
                 </div> */}
@@ -136,7 +136,7 @@ const NewestCompany = () => {
             ? 'Xem tất cả'
             : languageRedux === 2
               ? 'View all'
-              : languageRedux === 3 && '다 보기'}
+              : languageRedux === 3 && '모두보기'}
         </p>
         <ArrowrightIcon width={20} height={20} />
       </div>

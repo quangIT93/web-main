@@ -154,11 +154,13 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
             <PencilIcon width={15} height={15} />
           </div>
 
-          <p style={{ color: '#0D99FF', fontSize: '14px' }}>{languageRedux === 1
-            ? 'Sửa'
-            : languageRedux === 2
-              ? 'Edit'
-              : '고치다'}</p>
+          <p style={{ color: '#0D99FF', fontSize: '14px' }}>
+            {languageRedux === 1
+              ? 'Sửa'
+              : languageRedux === 2
+                ? 'Edit'
+                : '수정'}
+          </p>
         </Space>
         <Space
           onClick={

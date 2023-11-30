@@ -225,24 +225,19 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
               ? 'List of companies'
               : '관심한 회사'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-            {
-              searchParams.get('c') === '5-0'
-                ?
-                languageRedux === 1
-                  ? ' > Công ty đã lưu'
+            {searchParams.get('c') === '5-0'
+              ? languageRedux === 1
+                ? ' > Công ty đã lưu'
+                : languageRedux === 2
+                  ? ' > Saved comopanies'
+                  : ' > 저장된 회사'
+              : searchParams.get('c') === '5-1'
+                ? languageRedux === 1
+                  ? ' > Nhà tuyển dụng xem hồ sơ'
                   : languageRedux === 2
-                    ? ' > Saved comopanies'
-                    : ' > 저장한 회사'
-                : searchParams.get('c') === '5-1'
-                  ?
-                  languageRedux === 1
-                    ?
-                    ' > Nhà tuyển dụng xem hồ sơ'
-                    : languageRedux === 2
-                      ? ' > Employers view resumes'
-                      : ' > 고용주는 이력서를 봅니다'
-                  : ''
-            }
+                    ? ' > Employers view resumes'
+                    : ' > 고용주는 이력서를 봅니다'
+                : ''}
           </span>
         </Typography>
         <TextField
@@ -259,16 +254,20 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
             // height: '48px',
           }}
         >
-          <MenuItem value={1}>{languageRedux === 1
-            ? 'Mới nhất'
-            : languageRedux === 2
-              ? 'Newest'
-              : languageRedux === 3 && '최신'}</MenuItem>
-          <MenuItem value={0}>{languageRedux === 1
-            ? 'Cũ nhất'
-            : languageRedux === 2
-              ? 'Oldest'
-              : languageRedux === 3 && '가장 오래된'}</MenuItem>
+          <MenuItem value={1}>
+            {languageRedux === 1
+              ? 'Mới nhất'
+              : languageRedux === 2
+                ? 'Newest'
+                : languageRedux === 3 && '최신'}
+          </MenuItem>
+          <MenuItem value={0}>
+            {languageRedux === 1
+              ? 'Cũ nhất'
+              : languageRedux === 2
+                ? 'Oldest'
+                : languageRedux === 3 && '가장 오래된'}
+          </MenuItem>
         </TextField>
       </Box>
       {activeChild === '5-0' && companyData?.length !== 0 ? (
@@ -362,7 +361,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
       )}
 
       {(activeChild === '5-1' && companyDataView?.length !== 0) ||
-        (activeChild === '5-1' && companyData?.length !== 0) ? (
+      (activeChild === '5-1' && companyData?.length !== 0) ? (
         <Backdrop
           sx={{
             color: '#0d99ff ',
@@ -370,7 +369,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={false}
-        // onClick={handleClose}
+          // onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>

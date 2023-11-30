@@ -182,7 +182,7 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
             ? 'Độ tuổi'
             : languageRedux === 2
               ? 'Age'
-              : languageRedux === 3 && '나이'
+              : languageRedux === 3 && '연령'
         }
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
         open={isSelectOpen}
@@ -195,7 +195,7 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
                   ? 'Độ tuổi'
                   : languageRedux === 2
                     ? 'Age'
-                    : languageRedux === 3 && '나이'}
+                    : languageRedux === 3 && '연령'}
               </h3>
             </div>
 

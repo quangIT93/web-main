@@ -416,15 +416,18 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       !profileV3.email
     ) {
       api.info({
-        message: languageRedux === 1 ?
-          "Cập nhật thông tin" :
-          languageRedux === 2 ?
-            "Update information" : "정보 업데이트",
-        description: languageRedux === 1 ?
-          "Vui lòng cập nhật thông tin để ứng tuyển công việc" :
-          languageRedux === 2 ?
-            "Please update your information to apply for the job" :
-            "해당 직무에 지원하려면 정보를 업데이트하세요.",
+        message:
+          languageRedux === 1
+            ? 'Cập nhật thông tin'
+            : languageRedux === 2
+              ? 'Update information'
+              : '정보 업데이트',
+        description:
+          languageRedux === 1
+            ? 'Vui lòng cập nhật thông tin để ứng tuyển công việc'
+            : languageRedux === 2
+              ? 'Please update your information to apply for the job'
+              : '해당 직무에 지원하려면 정보를 업데이트하세요.',
         placement: 'top',
         icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
       });
@@ -455,10 +458,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     return (
       <div
         // className="list-chat"
-        className={`list-chat ${props.openListChat === true && windowWidth
-          ? 'show-list-chat-responesive'
-          : ''
-          }`}
+        className={`list-chat ${
+          props.openListChat === true && windowWidth
+            ? 'show-list-chat-responesive'
+            : ''
+        }`}
       >
         {contextHolder}
         <Backdrop
@@ -468,7 +472,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             background: 'transparent',
           }}
           open={openBackdrop}
-        // onClick={handleClose}
+          // onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>
@@ -491,31 +495,28 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                 }}
               />
               <span
-                className={`user-chat_online ${userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
-                  }`}
+                className={`user-chat_online ${
+                  userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
+                }`}
               ></span>
             </div>
             <div className="wrap-infoUser_chat">
               <h4>{userInfoChat.name}</h4>
               {userInfoChat.isOnline ? (
                 <span>
-                  {
-                    languageRedux === 1
-                      ? 'Đang hoạt động'
-                      : languageRedux === 2
-                        ? 'Active'
-                        : '활동적인'
-                  }
+                  {languageRedux === 1
+                    ? 'Đang hoạt động'
+                    : languageRedux === 2
+                      ? 'Active'
+                      : '활동적인'}
                 </span>
               ) : (
                 <span>
-                  {
-                    languageRedux === 1
-                      ? 'Không hoạt động'
-                      : languageRedux === 2
-                        ? 'Inactive'
-                        : '비활성'
-                  }
+                  {languageRedux === 1
+                    ? 'Không hoạt động'
+                    : languageRedux === 2
+                      ? 'Inactive'
+                      : '비활성'}
                 </span>
               )}
             </div>
@@ -616,14 +617,14 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                       ? 'Closed'
                       : '닫은'
                   : userInfoChat.applied === false &&
-                    userInfoChat.post_status === 0
+                      userInfoChat.post_status === 0
                     ? languageRedux === 1
                       ? 'Chưa duyệt'
                       : languageRedux === 2
                         ? 'Not approved yet'
                         : '아직 승인되지 않음'
                     : userInfoChat.applied === false &&
-                      userInfoChat.post_status === 1
+                        userInfoChat.post_status === 1
                       ? languageRedux === 1
                         ? 'Ứng tuyển ngay'
                         : languageRedux === 2
@@ -654,8 +655,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             if (localStorage.getItem('accountId') === chat.sender_id) {
               return (
                 <div
-                  className={`content-chat ${index === allListChat.length - 1 ? 'lastChatRef' : null
-                    }`}
+                  className={`content-chat ${
+                    index === allListChat.length - 1 ? 'lastChatRef' : null
+                  }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -678,10 +680,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat">
                     <span
-                      className={`text-chat ${chat.message === null || chat.message === ''
-                        ? 'text-chat_hidden'
-                        : ''
-                        }`}
+                      className={`text-chat ${
+                        chat.message === null || chat.message === ''
+                          ? 'text-chat_hidden'
+                          : ''
+                      }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -708,10 +711,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             } else {
               return (
                 <div
-                  className={`content-chat2 ${index === allListChat.length - 1
-                    ? 'dddddddddddddddddddddddd'
-                    : null
-                    }`}
+                  className={`content-chat2 ${
+                    index === allListChat.length - 1
+                      ? 'dddddddddddddddddddddddd'
+                      : null
+                  }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -738,10 +742,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat2">
                     <span
-                      className={`text-chat ${chat.message === '' || chat.message === null
-                        ? 'text-chat_hidden'
-                        : ''
-                        }`}
+                      className={`text-chat ${
+                        chat.message === '' || chat.message === null
+                          ? 'text-chat_hidden'
+                          : ''
+                      }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -838,9 +843,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
               component="h4"
               sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
             >
-              {languageRedux === 1 ? 'Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Ứng tuyển cho công việc này?'
-                : languageRedux === 2 ? 'Your information will be sent to employers. Apply for this job?' :
-                  '귀하의 정보가 고용주에게 전송됩니다. 이 직업에 지원하시겠습니까?'}
+              {languageRedux === 1
+                ? 'Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Ứng tuyển cho công việc này?'
+                : languageRedux === 2
+                  ? 'Your information will be sent to employers. Apply for this job?'
+                  : '귀하의 정보가 고용주에게 전송됩니다. 이 직업에 지원하시겠습니까?'}
             </Typography>
 
             <Box
@@ -877,7 +884,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   ? 'Có'
                   : languageRedux === 2
                     ? 'Yes'
-                    : languageRedux === 3 && '가지다'}
+                    : languageRedux === 3 && '확인'}
               </Button>
             </Box>
           </Box>
@@ -890,13 +897,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         <div className="wrap-img_chat">
           <img src="./images/imageChatBegin.png" alt="" />
           <div>
-            {
-              languageRedux === 1 ?
-                "Chat giúp bạn thêm nhiều thông tin hiệu quả, nhanh chóng" :
-                languageRedux === 2 ?
-                  "Chat helps you to add more information effectively and quickly" :
-                  "채팅은 더 빠르고 효과적인 정보를 제공합니다."
-            }
+            {languageRedux === 1
+              ? 'Chat giúp bạn thêm nhiều thông tin hiệu quả, nhanh chóng'
+              : languageRedux === 2
+                ? 'Chat helps you to add more information effectively and quickly'
+                : '채팅은 더 빠르고 효과적인 정보를 제공합니다.'}
           </div>
         </div>
       </div>

@@ -93,7 +93,8 @@ const CardListBlogSave = () => {
   // commun
   const handleGetAllWorkingStory = async () => {
     try {
-      const result = await communityApi.getCommunityBookmarked(page,
+      const result = await communityApi.getCommunityBookmarked(
+        page,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
@@ -118,8 +119,9 @@ const CardListBlogSave = () => {
     try {
       setUploading(true);
       const nextPage = parseInt(page) + 1;
-      const result = await communityApi.getCommunityBookmarked(nextPage,
-        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi'
+      const result = await communityApi.getCommunityBookmarked(
+        nextPage,
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       //
@@ -226,7 +228,7 @@ const CardListBlogSave = () => {
             ? 'Lượt bình luận'
             : languageRedux === 2
               ? 'Comments"'
-              : '댓글 수'}</p>
+              : '댓글'}</p>
               </li>
             </ul> */}
         {/* </div> */}

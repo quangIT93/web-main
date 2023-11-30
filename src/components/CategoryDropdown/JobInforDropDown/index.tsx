@@ -79,12 +79,12 @@ const JobInfoDropDown: React.FC<IJobInfoDropDown> = (props) => {
               ? 'Công việc mới nhất'
               : languageRedux === 2
                 ? 'Newest jobs'
-                : languageRedux === 3 && '새 작업'
+                : languageRedux === 3 && '최신 작업'
             : languageRedux === 1
               ? 'Bài tuyển dụng đang mở'
               : languageRedux === 2
                 ? 'Job posting is opening'
-                : languageRedux === 3 && '마감되지 않은 채용정보'}
+                : languageRedux === 3 && '마감되지 않은 채용공고'}
         </a>
       ),
     },
@@ -102,7 +102,7 @@ const JobInfoDropDown: React.FC<IJobInfoDropDown> = (props) => {
               ? 'Bài tuyển dụng đã đóng'
               : languageRedux === 2
                 ? 'Job posting is closed'
-                : languageRedux === 3 && '채용이 마감되었습니다'}
+                : languageRedux === 3 && '채용공고가 마감되었습니다'}
         </a>
       ),
     },
@@ -161,7 +161,7 @@ const JobInfoDropDown: React.FC<IJobInfoDropDown> = (props) => {
             ? 'Thông tin tuyển dụng'
             : languageRedux === 2
               ? 'Employment information'
-              : languageRedux === 3 && '고용 정보'}
+              : languageRedux === 3 && '채용정보'}
       </h3>
     </Dropdown>
   );

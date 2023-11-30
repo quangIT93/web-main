@@ -81,7 +81,7 @@ const ShowNotificativeSave: React.FC = () => {
               ? 'Bạn đã lưu thành công'
               : languageRedux === 2
                 ? 'Saved successfully'
-                : languageRedux === 3 && '성공적으로 저장되었습니다.'}
+                : languageRedux === 3 && '저장됩니다.'}
           </Alert>
         </Snackbar>
       </Stack>

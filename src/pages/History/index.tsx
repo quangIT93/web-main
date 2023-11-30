@@ -255,7 +255,7 @@ const HistoryPost = () => {
           ? 'Danh sách ứng viên'
           : languageRedux === 2
             ? 'List of candidates'
-            : languageRedux === 3 && '후보자 리스트',
+            : languageRedux === 3 && '지원자 리스트',
       childs: [
         languageRedux === 1
           ? 'Tất cả'
@@ -281,11 +281,12 @@ const HistoryPost = () => {
           ? 'Công ty đã lưu'
           : languageRedux === 2
             ? 'Saved comopanies'
-            : languageRedux === 3 && '저장한 회사',
+            : languageRedux === 3 && '저장된 회사',
         languageRedux === 1
           ? 'Nhà tuyển dụng xem hồ sơ'
           : languageRedux === 2
-            ? 'Employers view resumes' : '고용주는 이력서를 봅니다.',
+            ? 'Employers view resumes'
+            : '고용주는 이력서를 봅니다.',
       ],
     },
   ];
@@ -358,16 +359,18 @@ const HistoryPost = () => {
             ? 'All'
             : languageRedux === 3 && '전부'
         : // : activeChild === '0-1'
-        // ? 'Đã được duyệt'
-        // : activeChild === '0-2'
-        // ? 'Đang chờ duyệt'
-        ''}
+          // ? 'Đã được duyệt'
+          // : activeChild === '0-2'
+          // ? 'Đang chờ duyệt'
+          ''}
 
-      {activeChild === '1-0' ? languageRedux === 1
-        ? 'Tất cả'
-        : languageRedux === 2
-          ? 'All'
-          : languageRedux === 3 && '전부' : ''}
+      {activeChild === '1-0'
+        ? languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부'
+        : ''}
 
       {activeChild === '2-0'
         ? languageRedux === 1
@@ -376,8 +379,7 @@ const HistoryPost = () => {
             ? 'All'
             : languageRedux === 3 && '전부'
         : activeChild === '2-1'
-          ?
-          languageRedux === 1
+          ? languageRedux === 1
             ? 'Các công việc chưa đóng'
             : languageRedux === 2
               ? 'Unclosed jobs'
@@ -403,11 +405,13 @@ const HistoryPost = () => {
               : languageRedux === 3 && '등록되기'
           : ''}
 
-      {activeChild === '4-0' ? languageRedux === 1
-        ? 'Tất cả'
-        : languageRedux === 2
-          ? 'All'
-          : languageRedux === 3 && '전부' : ''}
+      {activeChild === '4-0'
+        ? languageRedux === 1
+          ? 'Tất cả'
+          : languageRedux === 2
+            ? 'All'
+            : languageRedux === 3 && '전부'
+        : ''}
 
       {activeChild === '5-0'
         ? languageRedux === 1
@@ -623,8 +627,9 @@ const HistoryPost = () => {
                     header={
                       <div
                         onClick={() => handleClickSubTitle(index)}
-                        className={`${ItemLeft === index ? 'activeItem' : ''
-                          } panel-title_text`}
+                        className={`${
+                          ItemLeft === index ? 'activeItem' : ''
+                        } panel-title_text`}
                       >
                         <RightOutlined style={{ fontSize: '12px' }} />
                         <span style={{ marginLeft: '8px' }}>{item.title}</span>

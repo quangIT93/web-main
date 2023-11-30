@@ -297,7 +297,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
                       ? '수상명'
                       : 'Tiêu đề giải thưởng'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {award.title && award.title.length > 255 ? (
@@ -307,7 +307,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
                     : languageRedux === 2
                       ? 'Title cannot exceed 255 characters'
                       : languageRedux === 3 &&
-                      '제목은 255자를 초과할 수 없습니다.'}
+                        '제목은 255자를 초과할 수 없습니다.'}
                 </span>
               ) : !award.title ? (
                 <span className="helper-text">
@@ -320,8 +320,9 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${award.title ? award.title.length : '0'
-                }/255`}</span>
+              <span className="number-text">{`${
+                award.title ? award.title.length : '0'
+              }/255`}</span>
             </div>
           </Box>
           {/* <Box sx={{ marginBottom: '12px' }}>
@@ -363,7 +364,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
                 ? 'Mô tả'
                 : languageRedux === 2
                   ? 'Description'
-                  : languageRedux === 3 && '회사설명'}{' '}
+                  : languageRedux === 3 && '묘사'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -387,7 +388,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
                       ? '수상 경력을 설명하세요.'
                       : 'Mô tả giải thưởng của bạn'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <div className="wrap-noti_input">
@@ -406,7 +407,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
                   : languageRedux === 2
                     ? 'Additional information cannot exceed 1000 characters'
                     : languageRedux === 3 &&
-                    '추가 정보는 1000자를 초과할 수 없습니다.'}
+                      '추가 정보는 1000자를 초과할 수 없습니다.'}
               </span>
             ) : (
               <></>
@@ -418,8 +419,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
               ? 'Lưu thông tin'
               : languageRedux === 2
                 ? 'Save information'
-                : languageRedux === 3 &&
-                '정보 저장'}
+                : languageRedux === 3 && '정보 저장'}
           </Button>
         </Box>
       </Modal>

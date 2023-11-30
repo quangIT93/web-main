@@ -20,7 +20,7 @@ const Community = () => {
             ? 'Câu chuyện việc làm HiJob'
             : languageRedux === 2
               ? 'HiJob Community'
-              : languageRedux === 3 && '워킹스토리'}
+              : languageRedux === 3 && 'HiJob 커뮤니티'}
         </h3>
       </div>
       <div className="community-content">

@@ -104,7 +104,7 @@ const NewestGigWorker = () => {
               ? 'Ứng viên mới nhất'
               : languageRedux === 2
                 ? 'Newest workers'
-                : languageRedux === 3 && '최신 후보'}
+                : languageRedux === 3 && '최신 지원자'}
           </h2>
         </div>
         {/* {profileV3?.typeRoleData === 1 ? (
@@ -124,7 +124,7 @@ const NewestGigWorker = () => {
                         ? 'Xem tất cả'
                         : languageRedux === 2
                           ? 'View all'
-                          : languageRedux === 3 && '다 보기'}
+                          : languageRedux === 3 && '모두보기'}
             </p>
             <ArrowrightIcon width={20} height={20} />
           </div>
@@ -152,7 +152,7 @@ const NewestGigWorker = () => {
                 ? 'Xem tất cả'
                 : languageRedux === 2
                   ? 'View all'
-                  : languageRedux === 3 && '다 보기'}
+                  : languageRedux === 3 && '모두보기'}
             </p>
             <ArrowrightIcon width={20} height={20} />
           </div>

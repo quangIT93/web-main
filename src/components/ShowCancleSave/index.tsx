@@ -82,7 +82,7 @@ const ShowCancleSave: React.FC = () => {
               ? 'Đã bỏ lưu thành công!'
               : languageRedux === 2
                 ? 'Unsaved successfully'
-                : languageRedux === 3 && '저장이 취소되었습니다.'}
+                : languageRedux === 3 && '저장 취소됩니다.'}
           </Alert>
         </Snackbar>
       </Stack>

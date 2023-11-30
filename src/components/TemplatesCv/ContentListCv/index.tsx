@@ -68,7 +68,8 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     setValueNameCv(
-      `${profileV3.name} - Resume ${Number(localStorage.getItem('cv-id')) || 1
+      `${profileV3.name} - Resume ${
+        Number(localStorage.getItem('cv-id')) || 1
       }`,
     );
   }, [profileV3]);
@@ -224,7 +225,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     }
   }, [getThemeCv]);
 
-  const handleChangeCategory = async () => { };
+  const handleChangeCategory = async () => {};
 
   const handleSelectTemplate = (id: any, name: string) => {
     setSelectedThemeId(id);
@@ -239,7 +240,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       if (result) {
         setGetThemeCv(result.data);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // console.log('aaa');
@@ -295,20 +296,22 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
         </Box> */}
 
         <div className="list-template-title">
-          <h3>{languageRedux === 1
-            ? 'Chọn mẫu CV'
-            : languageRedux === 2
-              ? 'Choose CV template'
-              : '이력서 템플릿을 선택하세요'}</h3>
+          <h3>
+            {languageRedux === 1
+              ? 'Chọn mẫu CV'
+              : languageRedux === 2
+                ? 'Choose CV template'
+                : '이력서 템플릿을 선택하세요'}
+          </h3>
         </div>
         <div className="list-template">
           {getThemeCv.map((item: any, index: any) => (
             <div
               className={
                 item?.id ===
-                  (Number(localStorage.getItem('cv-id'))
-                    ? Number(localStorage.getItem('cv-id'))
-                    : 1)
+                (Number(localStorage.getItem('cv-id'))
+                  ? Number(localStorage.getItem('cv-id'))
+                  : 1)
                   ? 'template-item active'
                   : 'template-item'
               }
@@ -417,14 +420,14 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                 ? 'Xem tất cả'
                 : languageRedux === 2
                   ? 'View all'
-                  : languageRedux === 3 && '다 보기'}
+                  : languageRedux === 3 && '모두보기'}
             </p>
           </div>
         </div>
         <div
           className="contentCv-bottom-right_cv"
           id="page"
-        // dangerouslySetInnerHTML={{ __html: htmlCv }}
+          // dangerouslySetInnerHTML={{ __html: htmlCv }}
         >
           <>
             {/* <PreviewTheme1 /> */}

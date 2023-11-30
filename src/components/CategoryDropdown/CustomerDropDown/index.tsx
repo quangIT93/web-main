@@ -25,7 +25,7 @@ const CustomerDropDown: React.FC<ICvDropDown> = (props) => {
             ? 'Chính sách bảo mật'
             : languageRedux === 2
               ? 'Privacy Policy'
-              : languageRedux === 3 && '개인정보보호정책'}
+              : languageRedux === 3 && '개인 정보 정책'}
         </a>
       ),
     },

@@ -314,7 +314,7 @@ const NewJobs: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
 
   return (
     <>
@@ -339,7 +339,7 @@ const NewJobs: React.FC = () => {
                   : languageRedux === 2
                     ? 'Newest Jobs'
                     : languageRedux === 3
-                      ? '새 작업'
+                      ? '최신 작업'
                       : 'Công việc mới nhất'}
               </h2>
               <div className="help-search" onClick={handleClickHelpSearch}>
@@ -350,7 +350,8 @@ const NewJobs: React.FC = () => {
                       <p>
                         {languageRedux === 1
                           ? 'Công việc mới nhất sẽ xuất hiện dựa theo Lĩnh vực quan tâm của bạn trong phần thông tin cá nhân.'
-                          : languageRedux === 2 ? 'Newest Jobs will show jobs rely on your Career Objective in Profile.'
+                          : languageRedux === 2
+                            ? 'Newest Jobs will show jobs rely on your Career Objective in Profile.'
                             : '귀하의 개인적인 관심사에 따라 최신 채용 기회를 확인할 수 있습니다.'}
                       </p>
                     </div>
@@ -378,7 +379,7 @@ const NewJobs: React.FC = () => {
                 languageRedux === 2 ?
                   "View all" :
                   languageRedux === 3 &&
-                  "다 보기"
+                  "모두보기"
             }</p>
               <ArrowrightIcon width={20} height={20} />
             </div> */}
@@ -408,7 +409,7 @@ const NewJobs: React.FC = () => {
                   ? 'Xem tất cả'
                   : languageRedux === 2
                     ? 'View all'
-                    : languageRedux === 3 && '다 보기'}
+                    : languageRedux === 3 && '모두보기'}
               </p>
               <ArrowrightIcon width={20} height={20} />
             </div>

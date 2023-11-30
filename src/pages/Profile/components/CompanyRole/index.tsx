@@ -58,9 +58,9 @@ const CompanyRole: React.FC<ICompany> = (props) => {
       'image/*': [],
     },
     // maxFiles: 5,
-    onDragEnter: () => { },
-    onDragLeave: () => { },
-    onDrop: () => { },
+    onDragEnter: () => {},
+    onDragLeave: () => {},
+    onDrop: () => {},
   });
 
   const items: TabsProps['items'] = [
@@ -79,11 +79,15 @@ const CompanyRole: React.FC<ICompany> = (props) => {
     },
     {
       key: '2',
-      label: <p>{languageRedux === 1
-        ? 'Đánh giá'
-        : languageRedux === 2
-          ? "Review"
-          : '평가하다'}</p>,
+      label: (
+        <p>
+          {languageRedux === 1
+            ? 'Đánh giá'
+            : languageRedux === 2
+              ? 'Review'
+              : '리뷰'}
+        </p>
+      ),
       children: (
         <ReviewCompany company={companyData} companyId={companyData.id} />
       ),
@@ -138,7 +142,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                     ? 'Sửa'
                     : languageRedux === 2
                       ? 'Edit'
-                      : '고치다'}
+                      : '수정'}
                 </p>
               </Space>
             </div>
@@ -149,7 +153,8 @@ const CompanyRole: React.FC<ICompany> = (props) => {
               <p>
                 {languageRedux === 1
                   ? 'Bạn cần điền thông tin công ty của mình để đăng tin tuyển dụng, tìm kiếm ứng viên.'
-                  : languageRedux === 2 ? 'You need to fill in your company-role information to post job vacancies, search for candidates.'
+                  : languageRedux === 2
+                    ? 'You need to fill in your company-role information to post job vacancies, search for candidates.'
                     : '채용 공고 게시 및 후보자 검색을 위해서는 회사 정보를 입력해야 합니다.'}
               </p>
             </div>
@@ -174,7 +179,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                           : languageRedux === 2
                             ? 'Company information not updated yet'
                             : languageRedux === 3 &&
-                            '회사정보가 업데이트되지 않았습니다.'}
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </h3>
                   </div>
                 </div>
