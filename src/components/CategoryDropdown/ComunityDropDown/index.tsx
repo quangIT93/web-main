@@ -84,7 +84,7 @@ const ComunityDropDown: React.FC<ICvDropDown> = (props) => {
           ? 'Cộng đồng'
           : languageRedux === 2
             ? 'Community'
-            : languageRedux === 3 && '공동체'}
+            : languageRedux === 3 && '커뮤니티'}
       </h3>
     </Dropdown>
   );

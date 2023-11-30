@@ -201,13 +201,13 @@ const BreadcrumbMenuItems: React.FC = () => {
                 ? 'Tài xế'
                 : languageRedux === 2
                   ? 'Driver'
-                  : '운전사'
+                  : '운전기사'
               : searchParams.get('hotjob-id') === '2'
                 ? languageRedux === 1
                   ? 'Làm việc từ xa'
                   : languageRedux === 2
                     ? 'Remote work'
-                    : '원격으로 작업'
+                    : '원격 근무'
                 : searchParams.get('hotjob-id') === '5'
                   ? languageRedux === 1
                     ? 'Làm việc tự do'
@@ -219,7 +219,7 @@ const BreadcrumbMenuItems: React.FC = () => {
                       ? 'Influencer'
                       : languageRedux === 2
                         ? 'Influencer'
-                        : '영향력 있는 사람'
+                        : '인플루언서'
                     : searchParams.get('hotjob-id') === '3'
                       ? languageRedux === 1
                         ? 'Công việc ngắn hạn'
@@ -307,7 +307,7 @@ const BreadcrumbMenuItems: React.FC = () => {
                 ? 'Công việc mới nhất'
                 : languageRedux === 2
                   ? 'Newest jobs'
-                  : languageRedux === 3 && '새 작업'
+                  : languageRedux === 3 && '최신 작업'
               : localStorage.getItem('job-type') === 'suggested'
                 ? languageRedux === 1
                   ? 'Công việc gợi ý'
@@ -410,23 +410,23 @@ const BreadcrumbMenuItems: React.FC = () => {
                                           ? 'Translator'
                                           : languageRedux === 3 && '번역'
                                       : searchParams.get('categories-id') ===
-                                        '14'
+                                          '14'
                                         ? languageRedux === 1
                                           ? 'Khoa học - Kỹ thuật'
                                           : languageRedux === 2
                                             ? 'Science - Technology'
                                             : languageRedux === 3 && '과학-기술'
                                         : searchParams.get('categories-id') ===
-                                          '15'
+                                            '15'
                                           ? languageRedux === 1
                                             ? 'Chuyển nhà/Vệ sinh'
                                             : languageRedux === 2
                                               ? 'House moving/Cleaning'
                                               : languageRedux === 3 &&
-                                              '이사/ 청소 서비스'
+                                                '이사/ 청소 서비스'
                                           : searchParams.get(
-                                            'categories-id',
-                                          ) === '16'
+                                                'categories-id',
+                                              ) === '16'
                                             ? languageRedux === 1
                                               ? 'Ngành khác'
                                               : languageRedux === 2
@@ -486,7 +486,7 @@ const BreadcrumbMenuItems: React.FC = () => {
                       ? 'Danh sách ứng viên'
                       : languageRedux === 2
                         ? 'List of candidates'
-                        : languageRedux === 3 && '후보자 리스트'
+                        : languageRedux === 3 && '지원자 리스트'
                     : searchParams.get('p') === '5'
                       ? languageRedux === 1
                         ? 'Danh sách công ty'
@@ -505,10 +505,10 @@ const BreadcrumbMenuItems: React.FC = () => {
         {
           title:
             searchParams.get('c') === '1-0' ||
-              searchParams.get('c') === '2-0' ||
-              searchParams.get('c') === '2-0' ||
-              searchParams.get('c') === '0-0' ||
-              searchParams.get('c') === '4-0'
+            searchParams.get('c') === '2-0' ||
+            searchParams.get('c') === '2-0' ||
+            searchParams.get('c') === '0-0' ||
+            searchParams.get('c') === '4-0'
               ? languageRedux === 1
                 ? 'Tất cả'
                 : languageRedux === 2
@@ -543,7 +543,7 @@ const BreadcrumbMenuItems: React.FC = () => {
                           ? 'Công ty đã lưu'
                           : languageRedux === 2
                             ? 'Saved comopanies'
-                            : languageRedux === 3 && '저장한 회사'
+                            : languageRedux === 3 && '저장된 회사'
                         : searchParams.get('c') === '5-1'
                           ? languageRedux === 1
                             ? 'Nhà tuyển dụng xem hồ sơ'
@@ -661,7 +661,7 @@ const BreadcrumbMenuItems: React.FC = () => {
               ? 'Tạo bài viết mới'
               : languageRedux === 2
                 ? 'Creat new post'
-                : languageRedux === 3 && '새로운 채용 글를 만들다'
+                : languageRedux === 3 && '새 글을 만들기'
             : languageRedux === 1
               ? 'Chỉnh sửa bài đăng'
               : languageRedux === 2
@@ -749,11 +749,12 @@ const BreadcrumbMenuItems: React.FC = () => {
           href: '/',
         },
         {
-          title: languageRedux === 1
-            ? 'Trang cá nhân'
-            : languageRedux === 2
-              ? 'Profile'
-              : '개인 페이지',
+          title:
+            languageRedux === 1
+              ? 'Trang cá nhân'
+              : languageRedux === 2
+                ? 'Profile'
+                : '개인 페이지',
           href: '/profile',
         },
         {

@@ -183,7 +183,7 @@ const DetailCompany = () => {
             ? 'Đánh giá'
             : languageRedux === 2
               ? 'Review'
-              : languageRedux === 3 && '평가하다'}
+              : languageRedux === 3 && '리뷰'}
         </p>
       ),
       children: <ReviewCompany company={company} companyId={companyId} />,
@@ -221,7 +221,7 @@ const DetailCompany = () => {
                       : languageRedux === 2
                         ? 'Company information not updated yet'
                         : languageRedux === 3 &&
-                        '회사정보가 업데이트되지 않았습니다.'}
+                          '회사정보가 업데이트되지 않았습니다.'}
                 </h3>
                 <div
                   className={styles.company_bell}
@@ -243,7 +243,7 @@ const DetailCompany = () => {
                       ? 'Theo dõi'
                       : languageRedux === 2
                         ? 'Follow'
-                        : languageRedux === 3 && '좇다'}
+                        : languageRedux === 3 && '팔로우'}
                   </p>
                 </div>
               </div>
@@ -258,7 +258,7 @@ const DetailCompany = () => {
                         : languageRedux === 2
                           ? 'Company information not updated yet'
                           : languageRedux === 3 &&
-                          '회사정보가 업데이트되지 않았습니다.'}
+                            '회사정보가 업데이트되지 않았습니다.'}
                   </p>
                 </div>
                 <div className={styles.address_item}>

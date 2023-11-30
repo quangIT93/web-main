@@ -249,16 +249,16 @@ const ComunityNewPost = () => {
                         : '로드 중'
                     : languageRedux === 1
                       ? `${new Intl.NumberFormat('en-US').format(
-                        total,
-                      )} bài viết mới`
+                          total,
+                        )} bài viết mới`
                       : languageRedux === 2
                         ? `${new Intl.NumberFormat('en-US').format(
-                          total,
-                        )} new posts`
+                            total,
+                          )} new posts`
                         : languageRedux &&
-                        `${new Intl.NumberFormat('en-US').format(
-                          total,
-                        )} 새 게시물`
+                          `${new Intl.NumberFormat('en-US').format(
+                            total,
+                          )} 새 게시물`
 
                   // language?.community_page?.today_hijob_has +
                   //   ' ' +
@@ -288,11 +288,13 @@ const ComunityNewPost = () => {
                     }}
                   >
                     <NewestIcon />
-                    <p>{languageRedux === 1
-                      ? 'Mới nhất'
-                      : languageRedux === 2
-                        ? 'Newest'
-                        : languageRedux === 3 && '최신'}</p>
+                    <p>
+                      {languageRedux === 1
+                        ? 'Mới nhất'
+                        : languageRedux === 2
+                          ? 'Newest'
+                          : languageRedux === 3 && '최신'}
+                    </p>
                   </li>
                   <li
                     className={
@@ -306,11 +308,13 @@ const ComunityNewPost = () => {
                     }}
                   >
                     <LikeIcon />
-                    <p>{languageRedux === 1
-                      ? 'Lượt thích'
-                      : languageRedux === 2
-                        ? 'Likes"'
-                        : '좋아요'}</p>
+                    <p>
+                      {languageRedux === 1
+                        ? 'Lượt thích'
+                        : languageRedux === 2
+                          ? 'Likes"'
+                          : '좋아요'}
+                    </p>
                   </li>
                   <li
                     className={
@@ -324,11 +328,13 @@ const ComunityNewPost = () => {
                     }}
                   >
                     <EysIcon />
-                    <p>{languageRedux === 1
-                      ? 'Lượt xem'
-                      : languageRedux === 2
-                        ? 'Views"'
-                        : '보다'}</p>
+                    <p>
+                      {languageRedux === 1
+                        ? 'Lượt xem'
+                        : languageRedux === 2
+                          ? 'Views"'
+                          : '보다'}
+                    </p>
                   </li>
                   <li
                     className={
@@ -342,11 +348,13 @@ const ComunityNewPost = () => {
                     }}
                   >
                     <CommentIcon />
-                    <p>{languageRedux === 1
-                      ? 'Lượt bình luận'
-                      : languageRedux === 2
-                        ? 'Comments"'
-                        : '댓글 수'}</p>
+                    <p>
+                      {languageRedux === 1
+                        ? 'Lượt bình luận'
+                        : languageRedux === 2
+                          ? 'Comments"'
+                          : '댓글'}
+                    </p>
                   </li>
                 </ul>
               </div>

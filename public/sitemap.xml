@@ -18,6 +18,12 @@
   </url>
 
   <url>
+    <loc>https://hijob.site/page-cv</loc>
+   <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
     <loc>https://hijob.site/history</loc>
     <lastmod>2023-07-17T12:06:33+00:00</lastmod>
     <priority>0.5</priority>
@@ -26,6 +32,18 @@
   <url>
     <loc>https://hijob.site/post-detail</loc>
     <lastmod>2023-07-17T12:06:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hijob.site/hotjobs</loc>
+   <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hijob.site/more-jobs</loc>
+   <lastmod>2023-11-30T11:20:33+00:00</lastmod>
     <priority>0.5</priority>
   </url>
 
@@ -59,12 +77,108 @@
     <priority>0.5</priority>
   </url>
 
-
   <url>
     <loc>https://hijob.site/policy</loc>
     <lastmod>2023-07-17T12:06:33+00:00</lastmod>
-    <priority>1</priority>
+    <priority>0.8</priority>
   </url>
+
+  <url>
+    <loc>https://hijob.site/candidatesAll</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+   <url>
+    <loc>https://hijob.site/candidate-detail</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+   <url>
+    <loc>https://hijob.site/candidate-new-detail</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hijob.site/company-infor</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+   <url>
+    <loc>https://hijob.site/companyAll</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+   <url>
+    <loc>https://hijob.site/comunity_create_post</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hijob.site/comunity-create-success-content</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hijob.site/new-comunity</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+   <url>
+    <loc>https://hijob.site/news-comunity</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hijob.site/detail-company</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hijob.site/detail-comunity</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hijob.site/intructionsCv</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hijob.site/landing-hijob</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+   <url>
+    <loc>https://hijob.site/pdfview</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+   <url>
+    <loc>https://hijob.site/profile-cv</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hijob.site/templates-cv</loc>
+    <lastmod>2023-11-30T11:20:33+00:00</lastmod>
+    <priority>0.5</priority>
+  </url>
+
 
 
   </urlset>

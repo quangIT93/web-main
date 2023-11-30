@@ -146,7 +146,7 @@ const CandidateNewDetail = () => {
           dispatch<any>(setAlertSuccess(true));
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -166,7 +166,7 @@ const CandidateNewDetail = () => {
       if (resultBookmark) {
         setBookmarkCandidate(resultBookmark.data.total);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -235,12 +235,14 @@ const CandidateNewDetail = () => {
                   style={{
                     height: '70px',
                     width: '70px',
-                    filter: `${candidate?.isUnlocked === false ? 'blur(3px)' : ''
-                      }`,
-                    cursor: `${candidate?.isUnlocked === true && candidate?.avatarPath
-                      ? 'pointer'
-                      : ''
-                      }`,
+                    filter: `${
+                      candidate?.isUnlocked === false ? 'blur(3px)' : ''
+                    }`,
+                    cursor: `${
+                      candidate?.isUnlocked === true && candidate?.avatarPath
+                        ? 'pointer'
+                        : ''
+                    }`,
                   }}
                   alt={candidate?.avatarPath}
                   src={candidate?.avatarPath ? candidate?.avatarPath : ''}
@@ -248,11 +250,13 @@ const CandidateNewDetail = () => {
               </Badge>
               <div style={{ marginLeft: '10px' }}>
                 <h2>
-                  {candidate?.name ? candidate?.name : languageRedux === 1
-                    ? 'Chưa cập nhật'
-                    : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                  {candidate?.name
+                    ? candidate?.name
+                    : languageRedux === 1
+                      ? 'Chưa cập nhật'
+                      : languageRedux === 2
+                        ? 'Not updated yet'
+                        : languageRedux === 3 && '업데이트하지 않음'}
                 </h2>
                 <p style={{ lineHeight: '30px' }}>
                   {candidate?.jobTypeName !== null
@@ -495,28 +499,34 @@ const CandidateNewDetail = () => {
           </div>
           <div className="info-detail">
             <div className="div-detail-row left">
-              <p>{languageRedux === 1
-                ? 'Ngày sinh'
-                : languageRedux === 2
-                  ? 'Date of birth'
-                  : '생년월일'}</p>
-              <p>{languageRedux === 1
-                ? 'Giới tính'
-                : languageRedux === 2
-                  ? 'Gender'
-                  : '성별'}</p>
-              <p>{languageRedux === 1
-                ? 'Địa chỉ'
-                : languageRedux === 2
-                  ? 'Location'
-                  : '위치'}</p>
+              <p>
+                {languageRedux === 1
+                  ? 'Ngày sinh'
+                  : languageRedux === 2
+                    ? 'Date of birth'
+                    : '생년월일'}
+              </p>
+              <p>
+                {languageRedux === 1
+                  ? 'Giới tính'
+                  : languageRedux === 2
+                    ? 'Gender'
+                    : '성별'}
+              </p>
+              <p>
+                {languageRedux === 1
+                  ? 'Địa chỉ'
+                  : languageRedux === 2
+                    ? 'Location'
+                    : '위치'}
+              </p>
             </div>
             <div className="div-detail-row right">
               <p>
                 {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
-                    .format('DD/MM/YYYY')
-                    .replace(/\d{2}$/, 'xx')
+                      .format('DD/MM/YYYY')
+                      .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
                     ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
                     : languageRedux === 1
@@ -555,38 +565,48 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1
-              ? 'Thông tin liên hệ'
-              : languageRedux === 2
-                ? 'Contact information'
-                : languageRedux === 3
-                  ? '연락처'
-                  : 'Thông tin liên hệ'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Thông tin liên hệ'
+                : languageRedux === 2
+                  ? 'Contact information'
+                  : languageRedux === 3
+                    ? '연락처'
+                    : 'Thông tin liên hệ'}
+            </h3>
           </div>
           <div className="info-detail">
             <div className="div-detail-row left">
-              <p>{languageRedux === 1
-                ? 'Số điện thoại'
-                : languageRedux === 2
-                  ? 'Phone number'
-                  : '전화 번호'}</p>
-              <p>{languageRedux === 1
-                ? 'Email'
-                : languageRedux === 2
+              <p>
+                {languageRedux === 1
+                  ? 'Số điện thoại'
+                  : languageRedux === 2
+                    ? 'Phone number'
+                    : '전화 번호'}
+              </p>
+              <p>
+                {languageRedux === 1
                   ? 'Email'
-                  : '이메일'}</p>
+                  : languageRedux === 2
+                    ? 'Email'
+                    : '이메일'}
+              </p>
 
-              <p>{languageRedux === 1
-                ? 'Facebook'
-                : languageRedux === 2
+              <p>
+                {languageRedux === 1
                   ? 'Facebook'
-                  : '페이스북'}</p>
+                  : languageRedux === 2
+                    ? 'Facebook'
+                    : '페이스북'}
+              </p>
 
-              <p>{languageRedux === 1
-                ? 'LinkedIn'
-                : languageRedux === 2
+              <p>
+                {languageRedux === 1
                   ? 'LinkedIn'
-                  : '링크드인'}</p>
+                  : languageRedux === 2
+                    ? 'LinkedIn'
+                    : '링크드인'}
+              </p>
             </div>
             <div className="div-detail-row right">
               <p>
@@ -668,23 +688,25 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1
-              ? 'Lĩnh vực quan tâm'
-              : languageRedux === 2
-                ? 'Career objective'
-                : '관심 분야'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Lĩnh vực quan tâm'
+                : languageRedux === 2
+                  ? 'Career objective'
+                  : '관심 분야'}
+            </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
               ? candidate?.profileCategories?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item.parentCategory.fullName}
-                    {'/ '}
-                    {item.fullName}
-                  </Button>
-                ),
-              )
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item.parentCategory.fullName}
+                      {'/ '}
+                      {item.fullName}
+                    </Button>
+                  ),
+                )
               : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
@@ -700,22 +722,23 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1
-              ? 'Khu vực làm việc'
-              : languageRedux === 2
-                ? 'Working location'
-                : languageRedux === 3 &&
-                '근무 위치'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Khu vực làm việc'
+                : languageRedux === 2
+                  ? 'Working location'
+                  : languageRedux === 3 && '근무 위치'}
+            </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
               ? candidate?.profileLocations?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  {item?.fullName}
-                  {', '}
-                  {item.province.fullName}
-                </Button>
-              ))
+                  <Button key={index} className="btn" type="text">
+                    {item?.fullName}
+                    {', '}
+                    {item.province.fullName}
+                  </Button>
+                ))
               : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
@@ -732,11 +755,13 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1
-              ? 'Trình độ học vấn'
-              : languageRedux === 2
-                ? 'Education'
-                : languageRedux === 3 && '최종학력'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Trình độ học vấn'
+                : languageRedux === 2
+                  ? 'Education'
+                  : languageRedux === 3 && '최종학력'}
+            </h3>
           </div>
           {candidate?.profilesEducations?.length !== 0 ? (
             candidate?.profilesEducations?.map(
@@ -772,11 +797,13 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1
-              ? 'Kinh nghiệm làm việc'
-              : languageRedux === 2
-                ? 'Working experience'
-                : '업무 경험'}</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Kinh nghiệm làm việc'
+                : languageRedux === 2
+                  ? 'Working experience'
+                  : '업무 경험'}
+            </h3>
           </div>
           {candidate?.profilesExperiences?.length !== 0 ? (
             candidate?.profilesExperiences?.map((item: any, index: number) => (
@@ -816,18 +843,18 @@ const CandidateNewDetail = () => {
                 : languageRedux === 2
                   ? 'Skills'
                   : languageRedux === 3
-                    ? '기술'
+                    ? '기능'
                     : 'Kỹ năng'}
             </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
               ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  <span>{item.skillName}</span>
-                  <span>{item.dataLevel.data}</span>
-                </Button>
-              ))
+                  <Button key={index} className="btn" type="text">
+                    <span>{item.skillName}</span>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ))
               : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
@@ -850,19 +877,19 @@ const CandidateNewDetail = () => {
                 ? 'Ngoại ngữ'
                 : languageRedux === 2
                   ? 'Languages'
-                  : languageRedux === 3 && '외국어'}
+                  : languageRedux === 3 && '언어'}
             </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0
               ? candidate?.profilesLanguages?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <h3>{item.languageName}</h3>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ),
-              )
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      <h3>{item.languageName}</h3>
+                      <span>{item.dataLevel.data}</span>
+                    </Button>
+                  ),
+                )
               : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
@@ -925,19 +952,19 @@ const CandidateNewDetail = () => {
                 ? 'Người giới thiệu'
                 : languageRedux === 2
                   ? 'References'
-                  : languageRedux === 3 && '참고자료'}
+                  : languageRedux === 3 && '추천자'}
             </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesReferences?.length !== 0
               ? candidate?.profilesReferences?.map((item: any) => (
-                <Button key={item.id} className="btn" type="text">
-                  <h3>{item.fullName}</h3>
-                  <span>{item.phone}</span>
-                  <span>{item.email}</span>
-                  <span>{item.description}</span>
-                </Button>
-              ))
+                  <Button key={item.id} className="btn" type="text">
+                    <h3>{item.fullName}</h3>
+                    <span>{item.phone}</span>
+                    <span>{item.email}</span>
+                    <span>{item.description}</span>
+                  </Button>
+                ))
               : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
@@ -960,7 +987,7 @@ const CandidateNewDetail = () => {
                 ? 'Các giải thưởng'
                 : languageRedux === 2
                   ? 'Awards'
-                  : languageRedux === 3 && '수상 내역'}
+                  : languageRedux === 3 && '수상'}
             </h3>
           </div>
           {candidate?.profileAwards?.length !== 0 ? (
@@ -999,7 +1026,7 @@ const CandidateNewDetail = () => {
                 ? 'Sở thích'
                 : languageRedux === 2
                   ? 'Hobbies'
-                  : languageRedux === 3 && '관심'}
+                  : languageRedux === 3 && '취미'}
             </h3>
           </div>
           <Space
@@ -1012,12 +1039,12 @@ const CandidateNewDetail = () => {
               <p className="textArea">
                 {candidate?.profileHobbies.description}
               </p>
+            ) : languageRedux === 1 ? (
+              'Chưa cập nhật'
+            ) : languageRedux === 2 ? (
+              'Not updated yet'
             ) : (
-              languageRedux === 1
-                ? 'Chưa cập nhật'
-                : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'
+              languageRedux === 3 && '업데이트하지 않음'
             )}
           </Space>
         </div>
@@ -1065,7 +1092,7 @@ const CandidateNewDetail = () => {
               : languageRedux === 2
                 ? 'You have successfully unsaved the candidate!'
                 : languageRedux === 3 &&
-                '후보자 저장을 성공적으로 취소했습니다.'}
+                  '후보자 저장을 성공적으로 취소했습니다.'}
           </Alert>
         </Snackbar>
       </Stack>

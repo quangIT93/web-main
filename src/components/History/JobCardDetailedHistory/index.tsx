@@ -232,9 +232,10 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                   >
                     {props.item?.postCategories.map(
                       (cate: any, index: any) =>
-                        `${cate.parentCategory.fullName}${index < props.item.postCategories.length - 1
-                          ? ', '
-                          : ''
+                        `${cate.parentCategory.fullName}${
+                          index < props.item.postCategories.length - 1
+                            ? ', '
+                            : ''
                         }`,
                     )}
 
@@ -292,10 +293,11 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 ? 'Posted on:'
                 : languageRedux === 3 && '에 게시 됨:'}{' '}
             {props.item?.createdAt != null
-              ? `${moment(props.item?.createdAt).format('DD/MM/YYYY') +
-              ' ' +
-              moment(new Date(props.item?.createdAt)).format('HH:mm')
-              }`
+              ? `${
+                  moment(props.item?.createdAt).format('DD/MM/YYYY') +
+                  ' ' +
+                  moment(new Date(props.item?.createdAt)).format('HH:mm')
+                }`
               : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
@@ -313,19 +315,19 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
             }}
           >
             {`${props.dataCandidates?.applications.length}
-            ${props.dataCandidates?.applications.length <= 1
+            ${
+              props.dataCandidates?.applications.length <= 1
                 ? languageRedux === 1
                   ? 'đơn ứng tuyển'
                   : languageRedux === 2
                     ? 'application'
-                    : '단일 적용'
-                :
-                languageRedux === 1
+                    : '지원서'
+                : languageRedux === 1
                   ? 'đơn ứng tuyển'
                   : languageRedux === 2
                     ? 'applications'
-                    : '단일 적용'
-              }`}
+                    : '지원서'
+            }`}
           </p>
 
           {props.status === 1 ? (

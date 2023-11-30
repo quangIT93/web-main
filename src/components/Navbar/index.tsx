@@ -2469,7 +2469,7 @@ const Navbar: React.FC = () => {
                 ? 'Áp dụng'
                 : languageRedux === 2
                   ? 'Apply'
-                  : languageRedux === 3 && '지원하기'}
+                  : languageRedux === 3 && '적용'}
             </Button>
           </div>
         </Collapse>

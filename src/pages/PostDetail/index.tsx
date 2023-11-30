@@ -1113,7 +1113,7 @@ const Detail = () => {
                       ? 'Làm việc từ xa'
                       : languageRedux === 2
                         ? 'Remote work'
-                        : '원격으로 작업'}
+                        : '원격 근무'}
                   </p>
                 </div>
                 <div className="div-detail-row-titleItem">
@@ -1128,7 +1128,7 @@ const Detail = () => {
                         ? 'Làm việc từ xa'
                         : languageRedux === 2
                           ? 'Remote work is available'
-                          : '원격으로 작업'}
+                          : '원격 근무'}
                   </h5>
                 </div>
               </div>
@@ -1328,7 +1328,7 @@ const Detail = () => {
                     ? 'Mô tả'
                     : languageRedux === 2
                       ? 'Describe'
-                      : '설명'}
+                      : '묘사'}
                 </h3>
                 <div className="div-detail_descCompany">
                   <p>
@@ -1594,7 +1594,7 @@ const Detail = () => {
                         ? 'Xem tất cả'
                         : languageRedux === 2
                           ? 'View all'
-                          : languageRedux === 3 && '다 보기'}
+                          : languageRedux === 3 && '모두보기'}
                     </h3>
                   </div>
                   <div className="mid-title_companyAddress">
@@ -1676,7 +1676,7 @@ const Detail = () => {
                           ? 'Lưu'
                           : languageRedux === 2
                             ? 'Save'
-                            : '구하다'}
+                            : '저장'}
                       </h3>
                     </div>
                   </div>
@@ -2217,7 +2217,7 @@ const Detail = () => {
                       ? 'Có'
                       : languageRedux === 2
                         ? 'Yes'
-                        : '가지다'}
+                        : '확인'}
                 </Button>
               </Box>
             </Box>

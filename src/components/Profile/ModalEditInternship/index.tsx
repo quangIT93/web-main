@@ -206,7 +206,7 @@ const ModalEditInternship: React.FC<IModalInternship> = (props) => {
                     ? '직업 제목'
                     : 'Tiêu đề công việc'
             }
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
@@ -242,14 +242,14 @@ const ModalEditInternship: React.FC<IModalInternship> = (props) => {
                     ? '고용주'
                     : 'Nhà tuyển dụng'
             }
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DemoContainer
               components={['DatePicker']}
-            //   sx={{ display: 'flex' }}
+              //   sx={{ display: 'flex' }}
             >
               <div className="internship-time-wraper">
                 <Typography
@@ -280,7 +280,7 @@ const ModalEditInternship: React.FC<IModalInternship> = (props) => {
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DemoContainer
               components={['DatePicker']}
-            //   sx={{ display: 'flex' }}
+              //   sx={{ display: 'flex' }}
             >
               <div className="internship-time-wraper">
                 <Typography
@@ -318,7 +318,7 @@ const ModalEditInternship: React.FC<IModalInternship> = (props) => {
               ? 'Mô tả'
               : languageRedux === 2
                 ? 'Describe'
-                : languageRedux === 3 && '설명'}{' '}
+                : languageRedux === 3 && '묘사'}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
           <TextField
@@ -342,7 +342,7 @@ const ModalEditInternship: React.FC<IModalInternship> = (props) => {
                     ? '당신의 활동을 설명하십시오'
                     : 'Mô tả quá trình thực tập của bạn'
             }
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
@@ -350,8 +350,7 @@ const ModalEditInternship: React.FC<IModalInternship> = (props) => {
             ? 'Lưu thông tin'
             : languageRedux === 2
               ? 'Save information'
-              : languageRedux === 3 &&
-              '정보 저장'}
+              : languageRedux === 3 && '정보 저장'}
         </Button>
       </Box>
     </Modal>

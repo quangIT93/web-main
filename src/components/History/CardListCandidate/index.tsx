@@ -91,7 +91,8 @@ const CardListCandidate: React.FC = () => {
         message.error(
           languageRedux === 1
             ? 'Không còn ứng cử viên để xem.'
-            : languageRedux === 2 ? 'No more candidates to see.'
+            : languageRedux === 2
+              ? 'No more candidates to see.'
               : '더 이상 지켜볼 후보자가 없습니다.',
         );
       }
@@ -137,7 +138,7 @@ const CardListCandidate: React.FC = () => {
             ? 'Danh sách ứng viên'
             : languageRedux === 2
               ? 'List of candidates'
-              : '후보자 리스트'}
+              : ' 지원자 리스트'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '4-0' && languageRedux === 1
               ? ' > ất cả'
@@ -154,7 +155,7 @@ const CardListCandidate: React.FC = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-      // onClick={handleClose}
+        // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -166,7 +167,7 @@ const CardListCandidate: React.FC = () => {
                 // <Skeleton loading={loading} active>
                 <ListCardSaveCandidate
                   item={dataBookmark}
-                  handleDeleteBookmark={() => { }}
+                  handleDeleteBookmark={() => {}}
                   index={i}
                   key={i}
                   language={[]}

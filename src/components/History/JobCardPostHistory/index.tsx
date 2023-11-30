@@ -271,8 +271,8 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                   : languageRedux === 3 && '에 게시 됨:'}{' '}
               {props.item?.created_at != null
                 ? moment(props.item?.created_at).format('DD/MM/YYYY') +
-                ' ' +
-                moment(new Date(props.item?.created_at)).format('HH:mm')
+                  ' ' +
+                  moment(new Date(props.item?.created_at)).format('HH:mm')
                 : languageRedux === 1
                   ? 'Chưa cập nhật'
                   : languageRedux === 2
@@ -297,14 +297,12 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                   ? 'đơn ứng tuyển'
                   : languageRedux === 2
                     ? 'application'
-                    : '단일 적용'
-                :
-                languageRedux === 1
+                    : '지원서'
+                : languageRedux === 1
                   ? 'đơn ứng tuyển'
                   : languageRedux === 2
                     ? 'applications'
-                    : '단일 적용'
-              }
+                    : '지원서'}
             </p>
             {props.item.status === 1 ? (
               <p

@@ -48,14 +48,17 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
     if (company?.address) {
       window.open(
         'https://www.google.com/maps/place/' +
-        `${company?.address}, ${company?.companyLocation ? company?.companyLocation.fullName : ''
-        }, ${company?.companyLocation?.district
-          ? company?.companyLocation?.district?.fullName
-          : ''
-        }, ${company?.companyLocation?.district?.province
-          ? company?.companyLocation?.district?.province?.fullName
-          : ''
-        }`,
+          `${company?.address}, ${
+            company?.companyLocation ? company?.companyLocation.fullName : ''
+          }, ${
+            company?.companyLocation?.district
+              ? company?.companyLocation?.district?.fullName
+              : ''
+          }, ${
+            company?.companyLocation?.district?.province
+              ? company?.companyLocation?.district?.province?.fullName
+              : ''
+          }`,
       );
     }
   };
@@ -93,7 +96,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   ? 'Mô tả'
                   : languageRedux === 2
                     ? 'Describe'
-                    : languageRedux === 3 && '설명'}
+                    : languageRedux === 3 && '묘사'}
               </h3>
               <TextArea
                 value={
@@ -104,10 +107,10 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       : languageRedux === 2
                         ? 'Company information not updated yet'
                         : languageRedux === 3 &&
-                        '회사정보가 업데이트되지 않았습니다.'
+                          '회사정보가 업데이트되지 않았습니다.'
                 }
                 autoSize
-              // showCount
+                // showCount
               />
             </div>
             <div className={styles.company_information_basic}>
@@ -135,7 +138,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                           : languageRedux === 2
                             ? 'Company information not updated yet'
                             : languageRedux === 3 &&
-                            '회사정보가 업데이트되지 않았습니다.'}
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
@@ -162,7 +165,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                           : languageRedux === 2
                             ? 'Company information not updated yet'
                             : languageRedux === 3 &&
-                            '회사정보가 업데이트되지 않았습니다.'}
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
@@ -189,7 +192,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                           : languageRedux === 2
                             ? 'Company information not updated yet'
                             : languageRedux === 3 &&
-                            '회사정보가 업데이트되지 않았습니다.'}
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
@@ -209,7 +212,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                           : languageRedux === 2
                             ? 'Company information not updated yet'
                             : languageRedux === 3 &&
-                            '회사정보가 업데이트되지 않았습니다.'}
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
@@ -243,7 +246,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                             : languageRedux === 2
                               ? 'Company information not updated yet'
                               : languageRedux === 3 &&
-                              '회사정보가 업데이트되지 않았습니다.'}
+                                '회사정보가 업데이트되지 않았습니다.'}
                       </a>
                       {/* {company?.website
                         ? company.website
@@ -272,7 +275,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                           : languageRedux === 2
                             ? 'Company information not updated yet'
                             : languageRedux === 3 &&
-                            '회사정보가 업데이트되지 않았습니다.'}
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
@@ -292,7 +295,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                           : languageRedux === 2
                             ? 'Company information not updated yet'
                             : languageRedux === 3 &&
-                            '회사정보가 업데이트되지 않았습니다.'}
+                              '회사정보가 업데이트되지 않았습니다.'}
                     </span>
                   </p>
                 </li>
@@ -301,11 +304,11 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
           </div>
           <div
             className={styles.company_information_right}
-          // style={{
-          //   display:
-          //     location?.pathname === '/detail-company' ? 'block' : 'none',
-          // }}
-          // style={{ display: 'none' }}
+            // style={{
+            //   display:
+            //     location?.pathname === '/detail-company' ? 'block' : 'none',
+            // }}
+            // style={{ display: 'none' }}
           >
             {company?.latitude && company?.longitude ? (
               <>
@@ -374,7 +377,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   <div
                     // {...getRootProps({
                     className={styles.dropzone}
-                  // })}
+                    // })}
                   >
                     {/* <input {...getInputProps()} /> */}
                     <div
@@ -383,8 +386,8 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                         display:
                           // company !== undefined ||
                           company &&
-                            company?.images &&
-                            company?.images?.length !== 0
+                          company?.images &&
+                          company?.images?.length !== 0
                             ? 'none'
                             : 'flex',
                       }}
@@ -402,7 +405,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                             : languageRedux === 2
                               ? 'No image of the company yet'
                               : languageRedux === 3 &&
-                              '아직 회사 이미지가 없습니다.'}
+                                '회사 이미지가 업데이트되지 않음'}
                         </p>
                       </div>
                     </div>
@@ -415,11 +418,13 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                         <img
                           key={index}
                           src={item?.imagePath}
-                          alt={languageRedux === 1
-                            ? 'Hình ảnh bị lỗi'
-                            : languageRedux === 2
-                              ? 'Image is corrupted'
-                              : '이미지가 손상되었습니다'}
+                          alt={
+                            languageRedux === 1
+                              ? 'Hình ảnh bị lỗi'
+                              : languageRedux === 2
+                                ? 'Image is corrupted'
+                                : '이미지가 손상되었습니다'
+                          }
                         />
                       </div>
                     ))}
@@ -436,7 +441,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   ? 'Chưa có hình ảnh về công ty'
                   : languageRedux === 2
                     ? 'No image of the company yet'
-                    : languageRedux === 3 && '아직 회사 이미지가 없습니다.'}
+                    : languageRedux === 3 && '회사 이미지가 업데이트되지 않음'}
               </p>
             </div>
           ) : (
@@ -446,7 +451,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                 : languageRedux === 2
                   ? 'Company information not updated yet'
                   : languageRedux === 3 &&
-                  '회사정보가 업데이트되지 않았습니다.'}
+                    '회사정보가 업데이트되지 않았습니다.'}
             </p>
           )}
         </div>

@@ -123,7 +123,7 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
               ? 'Sửa'
               : languageRedux === 2
                 ? 'Edit'
-                : '고치다'}
+                : '수정'}
           </p>
         </Space>
         <Space

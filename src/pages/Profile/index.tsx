@@ -734,7 +734,7 @@ const Profile: React.FC = () => {
                     ? 'Sửa'
                     : languageRedux === 2
                       ? 'Edit'
-                      : '고치다'}
+                      : '수정'}
                 </p>
               </Space>
             </div>
@@ -853,7 +853,7 @@ const Profile: React.FC = () => {
                     ? 'Sửa'
                     : languageRedux === 2
                       ? 'Edit'
-                      : '고치다'}
+                      : '수정'}
                 </p>
               </Space>
             </div>

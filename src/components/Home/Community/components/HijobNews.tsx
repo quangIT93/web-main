@@ -92,7 +92,7 @@ const HijobNews = () => {
             ? 'Xem tất cả'
             : languageRedux === 2
               ? 'View all'
-              : languageRedux === 3 && '다 보기'}
+              : languageRedux === 3 && '모두보기'}
         </p>
       </div>
       <div className="community-content-body">

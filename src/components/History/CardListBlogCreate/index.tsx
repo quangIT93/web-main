@@ -280,7 +280,7 @@ const CardListBlogCreate = () => {
                     ? 'Lượt bình luận'
                     : languageRedux === 2
                       ? 'Comments"'
-                      : '댓글 수'}
+                      : '댓글'}
                 </p>
               </li>
             </ul>
