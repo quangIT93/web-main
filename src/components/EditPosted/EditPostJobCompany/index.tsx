@@ -54,7 +54,7 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
             : languageRedux === 2
               ? 'Job Title'
               : languageRedux === 3
-                ? '직업 이름을'
+                ? '직업 이름'
                 : 'Tên công việc'}{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
@@ -72,7 +72,7 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
               : languageRedux === 2
                 ? 'Job Title'
                 : languageRedux === 3
-                  ? '직업 이름을'
+                  ? '직업 이름'
                   : 'Tên công việc'
           }
           //   error={titleError} // Đánh dấu lỗi

@@ -589,7 +589,7 @@ const HotJobpage: React.FC = () => {
                                         ? 'Làm đẹp'
                                         : languageRedux === 2
                                           ? 'Beauty'
-                                          : '아름다움'
+                                          : '뷰티'
                                       : languageRedux === 1
                                         ? 'Đang tải'
                                         : languageRedux === 2

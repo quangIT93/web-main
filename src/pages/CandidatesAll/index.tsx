@@ -241,7 +241,7 @@ const CandidatesAll = () => {
           setHasMore(true);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   console.log('totle', total);
@@ -355,7 +355,7 @@ const CandidatesAll = () => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   const analytics: any = getAnalytics();
   React.useEffect(() => {
@@ -365,8 +365,8 @@ const CandidatesAll = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Tìm kiếm ứng viên'
-        : languageRedux === 2 ?
-          'HiJob - Search for talent'
+        : languageRedux === 2
+          ? 'HiJob - Search for talent'
           : 'HiJob - 후보자 검색';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
@@ -457,7 +457,7 @@ const CandidatesAll = () => {
                   ? 'Xác nhận'
                   : languageRedux === 2
                     ? 'Confirm'
-                    : languageRedux === 3 && '확인하다'}
+                    : languageRedux === 3 && '확인'}
               </div>
 
               <div

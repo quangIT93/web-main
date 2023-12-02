@@ -69,7 +69,7 @@ const ModalUnlockCandidate = () => {
             ? 'Xác nhận'
             : languageRedux === 2
               ? 'Confirm'
-              : languageRedux === 3 && '확인하다'}
+              : languageRedux === 3 && '확인'}
         </Button>
         <Button type="text" shape="round" onClick={handleCancel}>
           {languageRedux === 1

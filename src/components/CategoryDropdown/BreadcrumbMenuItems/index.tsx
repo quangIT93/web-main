@@ -255,7 +255,7 @@ const BreadcrumbMenuItems: React.FC = () => {
                                   ? 'Làm đẹp'
                                   : languageRedux === 2
                                     ? 'Beauty'
-                                    : '아름다움'
+                                    : '뷰티'
                                 : '',
         },
       ],
@@ -639,7 +639,7 @@ const BreadcrumbMenuItems: React.FC = () => {
               ? 'Chi tiết bài viết'
               : languageRedux === 2
                 ? 'Article details'
-                : languageRedux === 3 && '기사 세부정보',
+                : languageRedux === 3 && '자세한 게시물',
         },
       ],
     },

@@ -5,147 +5,17 @@
   top: 200px;
   transition: all 400ms;
   padding: 16px 0px 8px 0px !important;
-  margin: 0 auto;
+  
+  @media screen  and (min-width: 451px) {
+    margin: 0 auto;
+  }
+
 
   @media screen and (max-width: 1280px) {
     padding: 16px 24px 8px !important;
   }
 
-  // @media screen and (min-width: 2561px) {
-  //   top: -45px;
-  // }
 
-  // @media screen and (max-width: 2560px) and (min-width: 2244px) {
-  //   top: -45px;
-  //   padding: 16px 0px 8px 0px !important;
-  // }
-
-  // @media screen and (max-width: 2243px) and (min-width: 2115px) {
-  //   top: -45px;
-  //   padding: 16px 0px 8px 0px !important;
-  // }
-
-  // @media screen and (max-width: 1919px) and (min-width: 1503px) {
-  //   top: -45px;
-  //   padding: 16px 0px 8px 0px !important;
-  // }
-
-  // @media screen and (max-width: 1502px) {
-  //   top: -45px;
-  //   padding: 16px 0px 8px 0px !important;
-  // }
-
-  // @media screen and (max-width: 1499px) {
-  //   top: -45px;
-  //   padding: 16px 0px 8px 0px !important;
-  // }
-
-  // @media screen and (max-width: 1487px) {
-  //   top: -45px;
-  //   padding: 16px 0px 8px 0px !important;
-  // }
-
-  // @media screen and (max-width: 1439px) {
-  //   top: -45px;
-  //   padding: 16px 0px 8px 0px !important;
-  // }
-
-  // @media screen and (max-width: 1356px) {
-  //   top: -45px;
-  //   padding: 16px 0px 8px 0px !important;
-  // }
-
-  // @media screen and (max-width: 1293px) {
-  //   top: -45px;
-  //   padding: 16px 0px 8px 0px !important;
-  // }
-
-  // @media screen and (max-width: 1292px) {
-  //   top: -45px;
-  //   padding: 16px 0px 8px 0px !important;
-
-  // }
-
-  // @media screen and (max-width: 1280px) {
-  //   top: -45px;
-  //   padding: 16px 24px 8px 24px !important;
-  // }
-
-  // @media screen and (max-width: 1255px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 1187px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 1167px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 1055px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 1036px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 1023px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 962px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 936px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 916px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 786px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 767px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 639px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 530px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 426px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 407px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 397px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 396px) and (min-width: 388px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 375px) {
-  //   top: -45px;
-  // }
-
-  // @media screen and (max-width: 324px) {
-  //   top: -45px;
-  // }
 
   .MuiCollapse-root {
     margin-top: 0 !important;
