@@ -320,7 +320,7 @@ const CompanyAll = () => {
                   ? 'Xác nhận'
                   : languageRedux === 2
                     ? 'Confirm'
-                    : languageRedux === 3 && '확인하다'}
+                    : languageRedux === 3 && '확인'}
               </div>
 
               <div

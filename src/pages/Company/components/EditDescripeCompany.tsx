@@ -82,7 +82,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
             ? 'Mô tả công ty'
             : languageRedux === 2
               ? "Company's description"
-              : '회사 설명'}{' '}
+              : '회사소개'}{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
@@ -95,12 +95,14 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           value={dataCompany?.description}
           onChange={handleEditCompanyDes}
           sx={{ width: '100%', marginTop: '8px', fontSize: '14px' }}
-          placeholder={languageRedux === 1
-            ? 'Mô tả công ty'
-            : languageRedux === 2
-              ? "Company's description"
-              : '회사 설명'}
-        //   error={titleError} // Đánh dấu lỗi
+          placeholder={
+            languageRedux === 1
+              ? 'Mô tả công ty'
+              : languageRedux === 2
+                ? "Company's description"
+                : '회사소개'
+          }
+          //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.description?.length === 0 ? (
@@ -118,7 +120,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
                 : languageRedux === 2
                   ? 'Additional information cannot exceed 1000 characters'
                   : languageRedux === 3 &&
-                  '추가 정보는 1000자를 초과할 수 없습니다.'}
+                    '추가 정보는 1000자를 초과할 수 없습니다.'}
             </span>
           ) : (
             <></>

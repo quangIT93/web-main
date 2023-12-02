@@ -148,7 +148,7 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
                     ? 'Ứng viên'
                     : languageRedux === 2
                       ? 'Candidate'
-                      : languageRedux === 3 && '후보자'}
+                      : languageRedux === 3 && '모집 위치'}
                 </Radio>
               </Space>
             </Space>
@@ -159,7 +159,7 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
             ? 'Xác nhận'
             : languageRedux === 2
               ? 'Confirm'
-              : languageRedux === 3 && '확인하다'}
+              : languageRedux === 3 && '확인'}
         </Button>
       </div>
     </Modal>

@@ -90,7 +90,7 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
               ? 'Ứng viên'
               : languageRedux === 2
                 ? 'Candidate'
-                : languageRedux === 3 && '후보자'
+                : languageRedux === 3 && '모집 위치'
           }
           className="btn-color-mode-switch-inner"
         ></label>

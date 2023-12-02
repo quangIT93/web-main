@@ -332,12 +332,12 @@ const BreadcrumbsCpn: React.FC = () => {
                 ? 'All'
                 : '전부'
             : arrayChild?.map(
-              (value: { id: number; name: string }, index: number) => (
-                <div key={index}>
-                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                </div>
-              ),
-            )}
+                (value: { id: number; name: string }, index: number) => (
+                  <div key={index}>
+                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                  </div>
+                ),
+              )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -347,6 +347,17 @@ const BreadcrumbsCpn: React.FC = () => {
       </div>
     ),
   ];
+
+  console.log(
+    " location.pathname === '/more-jobs'",
+    location.pathname === '/more-jobs',
+  );
+  console.log(
+    " localStorage.getItem('job-type')",
+    localStorage.getItem('job-type'),
+  );
+
+  console.log('  window.innerWidth', window.innerWidth);
 
   return (
     <Stack
@@ -358,8 +369,8 @@ const BreadcrumbsCpn: React.FC = () => {
         // position: 'relative',
         marginTop:
           location.pathname === '/more-jobs' &&
-            localStorage.getItem('job-type') === 'new' &&
-            window.innerWidth <= 450
+          localStorage.getItem('job-type') === 'new' &&
+          window.innerWidth <= 450
             ? '20px'
             : '0px',
         maxWidth: '1080px',
@@ -396,13 +407,11 @@ const BreadcrumbsCpn: React.FC = () => {
         className="collapse-breadcrumbs"
       >
         <Typography className="header-breabcrumb_text">
-          {
-            languageRedux === 1
-              ? 'Danh sách'
-              : languageRedux === 2
-                ? 'List'
-                : '목록'
-          }
+          {languageRedux === 1
+            ? 'Danh sách'
+            : languageRedux === 2
+              ? 'List'
+              : '목록'}
         </Typography>
         <Box padding={0} className="box-breadcrumbs">
           <FormGroup>
@@ -426,7 +435,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                        checkItemsCount >= MAX_CHECKED_ITEMS
+                          checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />
@@ -442,13 +451,11 @@ const BreadcrumbsCpn: React.FC = () => {
             className="btn-breadcrumb_nav"
             onClick={handleClickChoose}
           >
-            {
-              languageRedux === 1
-                ? 'Chọn'
-                : languageRedux === 2
-                  ? 'Select'
-                  : '선택하다'
-            }
+            {languageRedux === 1
+              ? 'Chọn'
+              : languageRedux === 2
+                ? 'Select'
+                : '선택하다'}
           </button>
         </div>
       </Collapse>

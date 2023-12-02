@@ -97,7 +97,7 @@ const ProfileCv: React.FC = () => {
       if (result) {
         dispatch(setProfileMeInformationMoreV3(result));
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -119,7 +119,7 @@ const ProfileCv: React.FC = () => {
         );
         dispatch(setProfileMeInformationMoreV3(resultProfileV3));
       }
-    } catch (error) { }
+    } catch (error) {}
 
     // setSelectedId(id);
   };
@@ -182,7 +182,7 @@ const ProfileCv: React.FC = () => {
                 ? 'Số CV của bạn: '
                 : languageRedux === 2
                   ? 'Your CV number:'
-                  : '귀하의 이력서 번호:'}
+                  : '귀하의 이력서 수량:'}
             </p>
             {profileMoreV3.profilesCvs ? (
               <h3>{profileMoreV3.profilesCvs.length}</h3>
@@ -198,9 +198,11 @@ const ProfileCv: React.FC = () => {
               }}
             >
               {/* <UserLineOutCVIcon /> */}
-              {languageRedux === 1 ? 'Tạo mới CV'
-                : languageRedux === 2 ? 'Create a new CV' :
-                  '새 이력서 만들기'}
+              {languageRedux === 1
+                ? 'Tạo mới CV'
+                : languageRedux === 2
+                  ? 'Create a new CV'
+                  : '새 이력서 만들기'}
             </Button>
             <Button
               type="primary"
@@ -211,8 +213,9 @@ const ProfileCv: React.FC = () => {
               <UserLineOutCVIcon />
               {languageRedux === 1
                 ? 'Cập nhật thông tin của bạn'
-                : languageRedux === 2 ?
-                  'Update your profile' : '정보 업데이트'}
+                : languageRedux === 2
+                  ? 'Update your profile'
+                  : '정보 업데이트'}
             </Button>
           </div>
         </div>
@@ -259,14 +262,6 @@ const ProfileCv: React.FC = () => {
                           <p>
                             {languageRedux === 1
                               ? 'Ngày tạo: ' +
-                              moment(new Date(item?.createdAt)).format(
-                                'HH:mm',
-                              ) +
-                              ', ' +
-                              moment(new Date(item?.createdAt)).format(
-                                'DD/MM/YYYY',
-                              )
-                              : languageRedux === 2 ? 'Created at: ' +
                                 moment(new Date(item?.createdAt)).format(
                                   'HH:mm',
                                 ) +
@@ -274,15 +269,23 @@ const ProfileCv: React.FC = () => {
                                 moment(new Date(item?.createdAt)).format(
                                   'DD/MM/YYYY',
                                 )
+                              : languageRedux === 2
+                                ? 'Created at: ' +
+                                  moment(new Date(item?.createdAt)).format(
+                                    'HH:mm',
+                                  ) +
+                                  ', ' +
+                                  moment(new Date(item?.createdAt)).format(
+                                    'DD/MM/YYYY',
+                                  )
                                 : '생성 일자: ' +
-                                moment(new Date(item?.createdAt)).format(
-                                  'HH:mm',
-                                ) +
-                                ', ' +
-                                moment(new Date(item?.createdAt)).format(
-                                  'DD/MM/YYYY',
-                                )
-                            }
+                                  moment(new Date(item?.createdAt)).format(
+                                    'HH:mm',
+                                  ) +
+                                  ', ' +
+                                  moment(new Date(item?.createdAt)).format(
+                                    'DD/MM/YYYY',
+                                  )}
                           </p>
                         </div>
                         <div className="cv-item_right__actions">
@@ -302,7 +305,8 @@ const ProfileCv: React.FC = () => {
                             <p>
                               {languageRedux === 1
                                 ? 'Chọn CV để ứng tuyển'
-                                : languageRedux === 2 ? 'Select CV to apply'
+                                : languageRedux === 2
+                                  ? 'Select CV to apply'
                                   : '지원할 이력서를 선택하세요'}
                             </p>
                             {/* <QuestionMarkIcon width={16} height={16} /> */}
@@ -334,8 +338,13 @@ const ProfileCv: React.FC = () => {
                             <div className="action-icon">
                               <DownloadCVIcon width={24} height={24} />
                             </div>
-                            <p>{languageRedux === 1 ? 'Tải CV'
-                              : languageRedux === 2 ? 'Download' : '다운로드'}</p>
+                            <p>
+                              {languageRedux === 1
+                                ? 'Tải CV'
+                                : languageRedux === 2
+                                  ? 'Download'
+                                  : '다운로드'}
+                            </p>
                           </div>
                           <div
                             className="action-item"
@@ -346,8 +355,13 @@ const ProfileCv: React.FC = () => {
                             <div className="action-icon">
                               <SectionDeleteIcon width={24} height={24} />
                             </div>
-                            <p>{languageRedux === 1 ? 'Xóa CV'
-                              : languageRedux === 2 ? 'Delete' : '이력서 삭제'}</p>
+                            <p>
+                              {languageRedux === 1
+                                ? 'Xóa CV'
+                                : languageRedux === 2
+                                  ? 'Delete'
+                                  : '이력서 삭제'}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -362,7 +376,7 @@ const ProfileCv: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -380,8 +394,8 @@ const ProfileCv: React.FC = () => {
               <div className="banner-contents_title">
                 {languageRedux === 1
                   ? 'Thiết kế CV trên HiJob, bạn có thể:'
-                  : languageRedux === 2 ?
-                    'Designing your CV on HiJob, you can:'
+                  : languageRedux === 2
+                    ? 'Designing your CV on HiJob, you can:'
                     : 'HiJob에서 이력서를 디자인하면 다음을 수행할 수 있습니다.'}
               </div>
               <div className="banner-content_detail">
@@ -393,7 +407,8 @@ const ProfileCv: React.FC = () => {
                     <p>
                       {languageRedux === 1
                         ? 'Tạo bản CV chuyên nghiệp và hấp dẫn (tối đa đến 10 bản).'
-                        : languageRedux === 2 ? 'Create a professional and attractive CV (up to 10 copies).'
+                        : languageRedux === 2
+                          ? 'Create a professional and attractive CV (up to 10 copies).'
                           : '전문적이고 매력적인 이력서를 작성하세요(최대 10개).'}
                     </p>
                   </div>
@@ -404,7 +419,8 @@ const ProfileCv: React.FC = () => {
                     <p>
                       {languageRedux === 1
                         ? 'Khả năng thu hút sự chú ý của nhà tuyển dụng.'
-                        : languageRedux === 2 ? 'Ability to attract employer attention.'
+                        : languageRedux === 2
+                          ? 'Ability to attract employer attention.'
                           : '고용주의 관심을 끄는 능력.'}
                     </p>
                   </div>
@@ -417,7 +433,8 @@ const ProfileCv: React.FC = () => {
                     <p>
                       {languageRedux === 1
                         ? 'Tiết kiệm thời gian.'
-                        : languageRedux === 2 ? 'Save time.'
+                        : languageRedux === 2
+                          ? 'Save time.'
                           : '시간을 절약.'}
                     </p>
                   </div>
@@ -428,7 +445,8 @@ const ProfileCv: React.FC = () => {
                     <p>
                       {languageRedux === 1
                         ? 'Cập nhật và chỉnh sửa dễ dàng.'
-                        : languageRedux === 2 ? 'Update and edit easily.'
+                        : languageRedux === 2
+                          ? 'Update and edit easily.'
                           : '쉽게 업데이트하고 편집하세요.'}
                     </p>
                   </div>

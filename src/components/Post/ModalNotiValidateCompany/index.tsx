@@ -135,7 +135,7 @@ const ModalNotiValidateCompany: React.FC<IPropModalNotiValidateCompany> = (
                 ? 'Xác nhận'
                 : languageRedux === 2
                   ? 'Confirm'
-                  : languageRedux === 3 && '확인하다'}
+                  : languageRedux === 3 && '확인'}
             </Button>
 
             <Button
@@ -150,7 +150,7 @@ const ModalNotiValidateCompany: React.FC<IPropModalNotiValidateCompany> = (
                 ? 'Đóng'
                 : languageRedux === 2
                   ? 'Close'
-                  : languageRedux === 3 && '닫다'}
+                  : languageRedux === 3 && '닫기'}
             </Button>
           </div>
         </Box>
