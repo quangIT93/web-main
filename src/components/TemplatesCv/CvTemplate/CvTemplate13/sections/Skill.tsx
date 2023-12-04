@@ -13,18 +13,6 @@ const Skill: React.FC<ICvSkill> = (props) => {
     container: {
       marginRight: -25,
     },
-    divTitle: {
-      backgroundColor:
-        color === 1
-          ? '#c5dff8'
-          : color === 2
-          ? '#5DADE2'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-    },
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
@@ -32,14 +20,14 @@ const Skill: React.FC<ICvSkill> = (props) => {
       width: '137pt',
       color:
         color === 1
-          ? '#000000'
+          ? '#377a40'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#000000'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       letterSpacing: '4pt',
       fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',
@@ -57,14 +45,14 @@ const Skill: React.FC<ICvSkill> = (props) => {
       fontFamily: 'Fahkwang Medium',
       color:
         color === 1
-          ? '#004080'
+          ? '#377a40'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     textDes: {
       fontSize: '9pt',
@@ -78,20 +66,20 @@ const Skill: React.FC<ICvSkill> = (props) => {
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#8dc5fe'
+          ? '#f0f8eb'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#D9EFFE'
+            : color === 3
+              ? '#FBF2DA'
+              : color === 4
+                ? '#E2FFE5'
+                : '#FEE1E1',
       margin: '7pt 0 4pt 20pt',
     },
   });
   return (
     <View style={styles.container}>
-      <View style={styles.divTitle}>
+      <View>
         <Text style={styles.title}>Skill</Text>
       </View>
       {profileMore?.profilesSkills?.map((skill: any) => (

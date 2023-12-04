@@ -5,10 +5,9 @@ interface ICvProfile {
   color: any;
   profile: any;
   fontSize: any;
-  profileMore: any;
 }
 const Profile: React.FC<ICvProfile> = (props) => {
-  const { color, profile, fontSize, profileMore } = props;
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
@@ -16,9 +15,9 @@ const Profile: React.FC<ICvProfile> = (props) => {
     divTitle: {
       backgroundColor:
         color === 1
-          ? '#c5dff8'
+          ? '#e5f6fe'
           : color === 2
-          ? '#5DADE2'
+          ? '#D6EAF8'
           : color === 3
           ? '#FCF3CF'
           : color === 4
@@ -32,15 +31,15 @@ const Profile: React.FC<ICvProfile> = (props) => {
       width: '137pt',
       color:
         color === 1
-          ? '#000000'
+          ? '#037385'
           : color === 2
-          ? '#000000'
+          ? '#0D99FF'
           : color === 3
-          ? '#000000'
+          ? '#FBBC04'
           : color === 4
-          ? '#000000'
+          ? '#5CB265'
           : '#D80000',
-      fontFamily: 'Fahkwang Bold',
+      fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
     },
@@ -54,7 +53,7 @@ const Profile: React.FC<ICvProfile> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+      fontFamily: 'Petrona Bold',
     },
   });
   return (

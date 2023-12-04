@@ -10,6 +10,7 @@ import phone from '../../images/phone.png';
 import home from '../../images/home.png';
 import fb from '../../images/fb.png';
 import linkedin from '../../images/in.png';
+import { backgroundClip } from 'html2canvas/dist/types/css/property-descriptors/background-clip';
 interface ICvHeader {
   color: any;
   profile: any;
@@ -48,12 +49,12 @@ const Header: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#112D4E'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       // marginTop: '12.404px',
       flexDirection: 'column',
       alignItems: 'center',
@@ -116,22 +117,22 @@ const Header: React.FC<ICvHeader> = (props) => {
       // border: '1px solid blue',
       width: '100%',
     },
-    lineRight: {
-      position: 'absolute',
-      top: '107.31pt',
-      right: -30,
-      width: '46pt',
-      height: '9pt',
-      backgroundColor: '#F9F7F7',
-    },
-    lineLeft: {
-      position: 'absolute',
-      top: '107.31pt',
-      left: -30,
-      width: '108pt',
-      height: '9pt',
-      backgroundColor: '#F9F7F7',
-    },
+    // lineRight: {
+    //   position: 'absolute',
+    //   top: '107.31pt',
+    //   right: -30,
+    //   width: '46pt',
+    //   height: '9pt',
+    //   backgroundColor: '#F9F7F7',
+    // },
+    // lineLeft: {
+    //   position: 'absolute',
+    //   top: '107.31pt',
+    //   left: -30,
+    //   width: '108pt',
+    //   height: '9pt',
+    //   backgroundColor: '#F9F7F7',
+    // },
     contact: {
       display: 'flex',
       flexDirection: 'column',
@@ -145,12 +146,14 @@ const Header: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#112D4E'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+
+      // border: '1px solid #000',
     },
     contactTitle: {
       fontSize: fontSize - 11,
@@ -162,12 +165,12 @@ const Header: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#112D4E'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       textTransform: 'uppercase',
       // border: '1px solid red',
     },
@@ -254,12 +257,12 @@ const Header: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#112D4E'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       marginTop: '6.745pt',
     },
     icon1: {
@@ -277,14 +280,14 @@ const Header: React.FC<ICvHeader> = (props) => {
     icon4: {
       height: '10.664pt',
       objectFit: 'contained',
-      marginLeft: '4pt',
-      marginRight: '1pt',
+      // marginLeft: '4pt',
+      // marginRight: '1pt',
     },
     icon5: {
       height: '12.751pt',
       objectFit: 'contained',
-      marginLeft: '5pt',
-      marginRight: '5pt',
+      // marginLeft: '5pt',
+      // marginRight: '5pt',
     },
     item: {
       display: 'flex',
@@ -294,7 +297,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       gap: 8,
       width: '149.407pt',
       color: '#777878',
-      // border: '1px solid red'
+      border: '1px solid #ffffff',
     },
   });
 

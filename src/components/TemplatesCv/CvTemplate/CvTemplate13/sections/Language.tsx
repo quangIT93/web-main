@@ -13,18 +13,7 @@ const Language: React.FC<ICvLanguage> = (props) => {
     container: {
       marginRight: -25,
     },
-    divTitle: {
-      backgroundColor:
-        color === 1
-          ? '#c5dff8'
-          : color === 2
-          ? '#5DADE2'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-    },
+
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
@@ -32,14 +21,14 @@ const Language: React.FC<ICvLanguage> = (props) => {
       width: '180pt',
       color:
         color === 1
-          ? '#000000'
+          ? '#377a40'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#000000'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Fahkwang Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
@@ -53,14 +42,14 @@ const Language: React.FC<ICvLanguage> = (props) => {
       width: 'auto',
       color:
         color === 1
-          ? '#004080'
+          ? '#377a40'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',
     },
@@ -76,20 +65,20 @@ const Language: React.FC<ICvLanguage> = (props) => {
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#8dc5fe'
+          ? '#f0f8eb'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#D9EFFE'
+            : color === 3
+              ? '#FBF2DA'
+              : color === 4
+                ? '#E2FFE5'
+                : '#FEE1E1',
       margin: '7pt 0',
     },
   });
   return (
     <View style={styles.container}>
-      <View style={styles.divTitle}>
+      <View>
         <Text style={styles.title}>Languages</Text>
       </View>
       {profileMore?.profilesLanguages?.map((language: any) => (
