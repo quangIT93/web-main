@@ -5,10 +5,9 @@ interface ICvSkill {
   color: any;
   profile: any;
   fontSize: any;
-  profileMore: any;
 }
 const Skill: React.FC<ICvSkill> = (props) => {
-  const { color, profile, fontSize, profileMore } = props;
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
@@ -16,9 +15,9 @@ const Skill: React.FC<ICvSkill> = (props) => {
     divTitle: {
       backgroundColor:
         color === 1
-          ? '#c5dff8'
+          ? '#e5f6fe'
           : color === 2
-          ? '#5DADE2'
+          ? '#D6EAF8'
           : color === 3
           ? '#FCF3CF'
           : color === 4
@@ -32,16 +31,16 @@ const Skill: React.FC<ICvSkill> = (props) => {
       width: '137pt',
       color:
         color === 1
-          ? '#000000'
+          ? '#037385'
           : color === 2
-          ? '#000000'
+          ? '#0D99FF'
           : color === 3
-          ? '#000000'
+          ? '#FBBC04'
           : color === 4
-          ? '#000000'
+          ? '#5CB265'
           : '#D80000',
       letterSpacing: '4pt',
-      fontFamily: 'Fahkwang Bold',
+      fontFamily: 'Petrona Bold',
       fontWeight: 'extrabold',
     },
     divDes: {
@@ -49,15 +48,15 @@ const Skill: React.FC<ICvSkill> = (props) => {
       marginTop: '9.338pt',
       width: '137pt',
     },
-    TextTitleDes: {
+    textTitleDes: {
       fontSize: '11pt',
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+      fontFamily: 'Petrona Bold',
       color:
         color === 1
-          ? '#004080'
+          ? '#037385'
           : color === 2
           ? '#0D99FF'
           : color === 3
@@ -71,21 +70,21 @@ const Skill: React.FC<ICvSkill> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+      fontFamily: 'Petrona Bold',
     },
     BorderLine: {
       width: '80px',
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#8dc5fe'
+          ? '#e5f6fe'
           : color === 2
-          ? '#0D99FF'
+          ? '#D6EAF8'
           : color === 3
-          ? '#FBBC04'
+          ? '#FCF3CF'
           : color === 4
-          ? '#5CB265'
-          : '#D80000',
+          ? '#D5F5E3'
+          : '#FADBD8',
       margin: '7pt 0 4pt 20pt',
     },
   });
@@ -94,10 +93,10 @@ const Skill: React.FC<ICvSkill> = (props) => {
       <View style={styles.divTitle}>
         <Text style={styles.title}>Skill</Text>
       </View>
-      {profileMore?.profilesSkills?.map((skill: any) => (
+      {profile?.profilesSkills?.map((skill: any) => (
         <View>
           <View style={styles.divDes}>
-            <Text style={styles.TextTitleDes}>{skill?.skillName}</Text>
+            <Text style={styles.textTitleDes}>{skill?.skillName}</Text>
           </View>
           <View style={styles.divDes}>
             <Text style={styles.textDes}>{skill?.dataLevel?.data}</Text>

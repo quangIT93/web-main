@@ -11,17 +11,24 @@ interface ICvActivities {
   color: any;
   profile: any;
   fontSize: any;
-  profileMore: any;
 }
 const Activities: React.FC<ICvActivities> = (props) => {
-  const { color, profile, fontSize, profileMore } = props;
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginLeft: -25,
     },
     divTitle: {
-      marginRight: '20pt',
-      width: '280pt',
+      backgroundColor:
+        color === 1
+          ? '#e5f6fe'
+          : color === 2
+          ? '#D6EAF8'
+          : color === 3
+          ? '#FCF3CF'
+          : color === 4
+          ? '#D5F5E3'
+          : '#FADBD8',
     },
     title: {
       marginLeft: '45.839pt',
@@ -29,37 +36,23 @@ const Activities: React.FC<ICvActivities> = (props) => {
       fontSize: '16pt',
       color:
         color === 1
-          ? '#000000'
+          ? '#037385'
           : color === 2
-          ? '#000000'
+          ? '#0D99FF'
           : color === 3
-          ? '#000000'
+          ? '#FBBC04'
           : color === 4
-          ? '#000000'
+          ? '#5CB265'
           : '#D80000',
-      fontFamily: 'Fahkwang Bold',
+      fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
-      // backgroundColor: '#8dc5ff',
-      backgroundColor:
-        color === 1
-          ? '#c5dff8'
-          : color === 2
-          ? '#5DADE2'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-
-      width: '100%',
     },
     divInfo: {
       marginLeft: '45.839pt',
       marginTop: '10.17pt',
       display: 'flex',
       flexDirection: 'row',
-      gap: '10pt',
     },
     leftInfo: {
       width: '40%',
@@ -77,7 +70,7 @@ const Activities: React.FC<ICvActivities> = (props) => {
       fontSize: '11pt',
       color:
         color === 1
-          ? '#252525'
+          ? '#037385'
           : color === 2
           ? '#0D99FF'
           : color === 3
@@ -85,15 +78,16 @@ const Activities: React.FC<ICvActivities> = (props) => {
           : color === 4
           ? '#5CB265'
           : '#D80000',
-      fontFamily: 'Fahkwang Bold',
       wordwrap: 'break-word',
       textAlign: 'justify',
+      fontFamily: 'Petrona Bold',
+      marginRight: '10pt',
     },
     textTitleRight: {
       fontSize: '11pt',
       color:
         color === 1
-          ? '#252525'
+          ? '#037385'
           : color === 2
           ? '#0D99FF'
           : color === 3
@@ -101,7 +95,7 @@ const Activities: React.FC<ICvActivities> = (props) => {
           : color === 4
           ? '#5CB265'
           : '#D80000',
-      fontFamily: 'Fahkwang Bold',
+      fontFamily: 'Petrona Bold',
     },
     divTextTitleRight: {
       maxWidth: '180pt',
@@ -114,10 +108,10 @@ const Activities: React.FC<ICvActivities> = (props) => {
     },
     textRight: {
       fontSize: '9pt',
-      wordwrap: 'break-all',
+      wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+      fontFamily: 'Petrona Bold',
     },
   });
   return (
@@ -125,10 +119,11 @@ const Activities: React.FC<ICvActivities> = (props) => {
       <View style={styles.divTitle}>
         <Text style={styles.title}>Activities</Text>
       </View>
-      {profileMore?.profileActivities?.map((activities: any) => (
+      {profile?.profileActivities?.map((activities: any) => (
         <View style={styles.divInfo}>
           <View style={styles.leftInfo}>
             <Text style={styles.textLeft}>
+              {' '}
               {moment(activities?.startDate).format('YYYY')}
               {'-'}
               {moment(activities?.endDate).format('YYYY')}

@@ -6,17 +6,15 @@ import {
   Image,
   Polygon,
   Svg,
-  Rect,
 } from '@react-pdf/renderer';
 import null_avatar from '../../images/null_avatar.png';
 interface ICvHeader {
   color: any;
   profile: any;
   fontSize: any;
-  profileMore: any;
 }
 const Header: React.FC<ICvHeader> = (props) => {
-  const { profile, fontSize, color, profileMore } = props;
+  const { profile, fontSize, color } = props;
   const styles = StyleSheet.create({
     container: {
       // width: '100%',
@@ -28,7 +26,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       display: 'flex',
       flexDirection: 'row',
       // backgroundColor: '#cee8ff',
-      // backgroundColor: '#cee8ff',
+
       justifyContent: 'space-between',
       position: 'relative',
       zIndex: '0',
@@ -39,81 +37,42 @@ const Header: React.FC<ICvHeader> = (props) => {
       justifyContent: 'center',
       marginLeft: '47.137pt',
     },
-
-    divTextName: {
-      maxWidth: '310pt',
-    },
     textName: {
-      fontSize: '42pt',
+      fontSize: '46pt',
       color:
         color === 1
-          ? '#004080'
+          ? '#037385'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      fontFamily: 'Petrona Bold',
       fontWeight: 'extrabold',
-      fontFamily: 'Montserrat SemiBold',
-    },
-    divTextJobTypeName: {
-      height: '35.786pt',
-      backgroundColor:
-        color === 1
-          ? '#c5dff8'
-          : color === 2
-          ? '#5DADE2'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-      display: 'flex',
-      justifyContent: 'center',
-      marginLeft: '-47.137pt',
-      marginTop: '12pt',
-      paddingLeft: '61.137pt',
     },
     textPosition: {
-      fontSize: '18pt',
+      fontSize: '20pt',
       letterSpacing: '4pt',
-      // marginTop: '20pt',
+      marginTop: '20pt',
       color:
         color === 1
-          ? '#004080'
+          ? '#037385'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
-      fontFamily: 'Montserrat SemiBold',
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      fontFamily: 'Petrona Bold',
     },
     divImage: {
-      position: 'absolute',
-      backgroundColor: 'transparent',
-      height: '195.489pt',
-      width: '168.594pt',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      right: '47.936pt',
-      top: '47.936pt',
-      border: `2px solid ${
-        color === 1
-          ? '#8dc5fe'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000'
-      }`,
-      padding: '11.844pt',
+      minHeight: '168pt',
+      minWidth: '174pt',
+      margin: '43.762pt 48.768pt 43pt 0',
+      backgroundColor: '#fff',
     },
     image: {
       width: '100%',
@@ -123,169 +82,39 @@ const Header: React.FC<ICvHeader> = (props) => {
   });
   return (
     <View style={styles.container}>
-      {/* <Svg style={{ position: 'absolute', width: 400, height: 400, left: '0' }}>
+      {/* <Svg style={{ position: 'absolute', width: 400, height: 400 }}>
         <Polygon
-          points="0,0 0,70 30,110 120,110 180,30 160,0"
-          fill={
-            color === 1
-              ? '#8dc5fe'
-              : color === 2
-              ? '#0D99FF'
-              : color === 3
-              ? '#FBBC04'
-              : color === 4
-              ? '#5CB265'
-              : '#D80000'
-          }
-          stroke={
-            color === 1
-              ? '#8dc5fe'
-              : color === 2
-              ? '#0D99FF'
-              : color === 3
-              ? '#FBBC04'
-              : color === 4
-              ? '#5CB265'
-              : '#D80000'
-          }
-          strokeWidth={1}
-        />
-      </Svg>
-
-      <Svg
-        style={{
-          position: 'absolute',
-          width: '200',
-          height: '100%',
-          right: '0',
-          top: '0',
-        }}
-      >
-        <Polygon
-          points="100,0 0,200 200,200 200,0"
-          fill={
-            color === 1
-              ? '#8dc5fe'
-              : color === 2
-              ? '#0D99FF'
-              : color === 3
-              ? '#FBBC04'
-              : color === 4
-              ? '#5CB265'
-              : '#D80000'
-          }
-          stroke={
-            color === 1
-              ? '#8dc5fe'
-              : color === 2
-              ? '#0D99FF'
-              : color === 3
-              ? '#FBBC04'
-              : color === 4
-              ? '#5CB265'
-              : '#D80000'
-          }
-          strokeWidth={1}
-        />
-      </Svg>
-
-      <Svg
-        style={{
-          position: 'absolute',
-          width: '300',
-          height: '100%',
-          right: '0',
-          top: '0',
-        }}
-      >
-        <Polygon
-          points="0,200 50,250 120,250 120,100 50,100 "
-          fill={
-            color === 1
-              ? '#e1f1ff'
-              : color === 2
-              ? '#85C1E9'
-              : color === 3
-              ? '#F7DC6F'
-              : color === 4
-              ? '#ABEBC6'
-              : '#EC7063'
-          }
-          stroke={
-            color === 1
-              ? '#e1f1ff'
-              : color === 2
-              ? '#85C1E9'
-              : color === 3
-              ? '#F7DC6F'
-              : color === 4
-              ? '#ABEBC6'
-              : '#EC7063'
-          }
+          points="0,0 0,70 40,120 125,120 160,50 120,0"
+          fill="#0d99ff"
+          stroke="blue"
           strokeWidth={1}
         />
       </Svg> */}
 
-      <Svg
-        viewBox="0 0 220 100"
-        style={{
-          position: 'absolute',
-          width: '500',
-          height: '160',
-          right: '-188',
-          top: '-22',
-        }}
-      >
-        <Rect
-          width="146"
-          height="100"
-          fill={
-            color === 1
-              ? '#c5dff8'
-              : color === 2
-              ? '#5DADE2'
-              : color === 3
-              ? '#FCF3CF'
-              : color === 4
-              ? '#D5F5E3'
-              : '#FADBD8'
-          }
-        />
-      </Svg>
-
       <View style={styles.divInfo}>
         <View style={{ display: 'flex', justifyContent: 'center' }}>
-          <View style={styles.divTextName}>
+          <View>
             <Text style={styles.textName}>
-              {' '}
               {profile?.name?.split(' ').length > 2
                 ? profile?.name?.split(' ').slice(0, -2).join(' ')
                 : profile?.name?.split(' ').slice(0, -1).join(' ')}
             </Text>
           </View>
-          <View style={styles.divTextName}>
+          <View>
             <Text style={styles.textName}>
-              {' '}
               {profile?.name?.split(' ').length > 2
                 ? profile?.name?.split(' ').slice(-2).join(' ')
                 : profile?.name?.split(' ').slice(-1).join(' ')}
             </Text>
           </View>
         </View>
-        <View style={styles.divTextJobTypeName}>
+        <View>
           <Text style={styles.textPosition}>{profile?.jobTypeName}</Text>
         </View>
       </View>
 
       <View style={styles.divImage}>
-        <View
-          style={{
-            // padding: '9.955pt',
-            backgroundColor: '#ccc',
-            height: '175.489pt',
-            width: '148.594pt',
-          }}
-        >
+        <View style={{ padding: '9.955pt' }}>
           <Image
             src={{
               uri:

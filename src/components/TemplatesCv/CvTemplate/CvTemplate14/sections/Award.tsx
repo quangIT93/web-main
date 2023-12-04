@@ -1,14 +1,13 @@
 import React from 'react';
-import { View, StyleSheet, Text } from '@react-pdf/renderer';
+import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
 import null_avatar from '../../images/null_avatar.png';
 interface ICvAward {
   color: any;
   profile: any;
   fontSize: any;
-  profileMore: any;
 }
 const Award: React.FC<ICvAward> = (props) => {
-  const { color, profile, fontSize, profileMore } = props;
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
@@ -16,9 +15,9 @@ const Award: React.FC<ICvAward> = (props) => {
     divTitle: {
       backgroundColor:
         color === 1
-          ? '#c5dff8'
+          ? '#e5f6fe'
           : color === 2
-          ? '#5DADE2'
+          ? '#D6EAF8'
           : color === 3
           ? '#FCF3CF'
           : color === 4
@@ -32,16 +31,16 @@ const Award: React.FC<ICvAward> = (props) => {
       width: '137pt',
       color:
         color === 1
-          ? '#000000'
+          ? '#037385'
           : color === 2
-          ? '#000000'
+          ? '#0D99FF'
           : color === 3
-          ? '#000000'
+          ? '#FBBC04'
           : color === 4
-          ? '#000000'
+          ? '#5CB265'
           : '#D80000',
+      fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
-      fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',
     },
     divDes: {
@@ -49,15 +48,15 @@ const Award: React.FC<ICvAward> = (props) => {
       marginTop: '9.338pt',
       width: '137pt',
     },
-    TextTitleDes: {
+    textTitleDes: {
       fontSize: '11pt',
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+      fontFamily: 'Petrona Bold',
       color:
         color === 1
-          ? '#004080'
+          ? '#037385'
           : color === 2
           ? '#0D99FF'
           : color === 3
@@ -71,7 +70,7 @@ const Award: React.FC<ICvAward> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+      fontFamily: 'Petrona Bold',
     },
   });
   return (
@@ -79,10 +78,10 @@ const Award: React.FC<ICvAward> = (props) => {
       <View style={styles.divTitle}>
         <Text style={styles.title}>Award</Text>
       </View>
-      {profileMore?.profileAwards?.map((ward: any) => (
+      {profile?.profileAwards?.map((ward: any) => (
         <View>
           <View style={styles.divDes}>
-            <Text style={styles.TextTitleDes}>{ward?.title}</Text>
+            <Text style={styles.textTitleDes}>{ward?.title}</Text>
           </View>
           <View style={styles.divDes}>
             <Text style={styles.textDes}>{ward?.description}</Text>

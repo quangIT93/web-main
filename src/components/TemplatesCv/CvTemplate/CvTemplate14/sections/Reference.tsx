@@ -5,11 +5,9 @@ interface ICvReference {
   color: any;
   profile: any;
   fontSize: any;
-  profileMore: any;
 }
 const Reference: React.FC<ICvReference> = (props) => {
-  const { color, profile, fontSize, profileMore } = props;
-
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
@@ -17,9 +15,9 @@ const Reference: React.FC<ICvReference> = (props) => {
     divTitle: {
       backgroundColor:
         color === 1
-          ? '#c5dff8'
+          ? '#e5f6fe'
           : color === 2
-          ? '#5DADE2'
+          ? '#D6EAF8'
           : color === 3
           ? '#FCF3CF'
           : color === 4
@@ -33,16 +31,16 @@ const Reference: React.FC<ICvReference> = (props) => {
       width: '137pt',
       color:
         color === 1
-          ? '#000000'
+          ? '#037385'
           : color === 2
-          ? '#000000'
+          ? '#0D99FF'
           : color === 3
-          ? '#000000'
+          ? '#FBBC04'
           : color === 4
-          ? '#000000'
+          ? '#5CB265'
           : '#D80000',
+      fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
-      fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',
     },
     divDes: {
@@ -65,7 +63,7 @@ const Reference: React.FC<ICvReference> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+      fontFamily: 'Petrona Bold',
     },
     divWrapItem: {
       display: 'flex',
@@ -79,7 +77,7 @@ const Reference: React.FC<ICvReference> = (props) => {
         <Text style={styles.title}>Reference</Text>
       </View>
       <View style={styles.divWrapItem}>
-        {profileMore?.profilesReferences?.map((reference: any) => (
+        {profile?.profilesReferences?.map((reference: any) => (
           <View>
             <View style={styles.divName}>
               <Text style={styles.textDes}>{reference?.fullName}</Text>
@@ -100,14 +98,14 @@ const Reference: React.FC<ICvReference> = (props) => {
             alignItems: 'center',
             backgroundColor:
               color === 1
-                ? '#8dc5fe'
+                ? '#e5f6fe'
                 : color === 2
-                ? '#0D99FF'
+                ? '#D6EAF8'
                 : color === 3
-                ? '#FBBC04'
+                ? '#FCF3CF'
                 : color === 4
-                ? '#5CB265'
-                : '#D80000',
+                ? '#D5F5E3'
+                : '#FADBD8',
           }}
         ></View>
       </View>

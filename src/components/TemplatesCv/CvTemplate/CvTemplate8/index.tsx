@@ -64,12 +64,12 @@ const CvTemplate8: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#404BA0'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       zIndex: 1,
     },
     line: {
@@ -79,12 +79,12 @@ const CvTemplate8: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#8090C8'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       borderBottomStyle: 'dotted',
       borderBottomWidth: '2px',
       // backgroundColor: '#8090C8',
@@ -108,12 +108,12 @@ const CvTemplate8: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#404BA0'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     leftColumnContent: {
       width: '100%',
