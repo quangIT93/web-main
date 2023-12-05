@@ -25,8 +25,11 @@ const NewestCompany = () => {
   );
   const [loading, setLoading] = React.useState<any>(false);
   const [checkBookMark, setCheckBookMark] = React.useState(true);
-  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
+
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
+  // const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const getNewestCompany = async () => {
     try {
       setLoading(true);
@@ -62,6 +65,7 @@ const NewestCompany = () => {
         bgcolor: 'background.paper',
         position: 'relative',
         paddingBottom: '28px',
+        marginTop: `${profileV3?.typeRoleData === 0 ? '42px' : 'blue'}`,
       }}
       className="list-company-container"
     >
@@ -80,8 +84,8 @@ const NewestCompany = () => {
             {languageRedux === 1
               ? 'Công ty mới nhất'
               : languageRedux === 2
-                ? 'Newest company'
-                : languageRedux === 3 && '최신 회사'}
+              ? 'Newest company'
+              : languageRedux === 3 && '최신 회사'}
           </h2>
         </div>
         {/* {profileV3?.typeRoleData === 1 ? ( */}
@@ -109,7 +113,6 @@ const NewestCompany = () => {
                     <></>
                 )} */}
       </div>
-
       <Skeleton loading={loading} active>
         <div className="list-company-home">
           {listData?.companies?.map((item: any, index: number) => {
@@ -135,8 +138,8 @@ const NewestCompany = () => {
           {languageRedux === 1
             ? 'Xem tất cả'
             : languageRedux === 2
-              ? 'View all'
-              : languageRedux === 3 && '모두보기'}
+            ? 'View all'
+            : languageRedux === 3 && '모두보기'}
         </p>
         <ArrowrightIcon width={20} height={20} />
       </div>

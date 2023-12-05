@@ -17,7 +17,7 @@ import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationRed
 import { RootState } from 'store';
 // import GoogleButton from 'react-google-button'
 declare global {
-  interface Window { }
+  interface Window {}
 }
 const Login = () => {
   const dispatch = useDispatch();

@@ -339,17 +339,19 @@
           position: relative;
           height: 630px;
 
-
+          
           .div-job-img-swipper {
             height: 100%;
             border-radius: 8px;
 
             .div-job-img-swipper_item {
               height: 100%;
-
+              display: flex;
+              align-items: center;
+              justify-content: center;
               img {
-                height: 100% !important;
-                width: 100% !important;
+                height: 60% !important;
+                width: 60% !important;
                 object-fit: contain !important;
               }
             }
@@ -863,9 +865,6 @@
                           .leaf_let_map {
                             height: 430px;
                             z-index: 1;
-
-
-                        
                             .leaflet-control-attribution {
                                 display: none;
                             }
@@ -1444,6 +1443,17 @@
           .div-suggest__map {
             h3 {
               margin-bottom: 20px;
+            }
+
+            .leaf_let_map {
+              height: 430px;
+              z-index: 1;
+              @media screen and (max-width: 430px) {
+                  height: 350px;
+                }
+              .leaflet-control-attribution {
+                  display: none;
+              }
             }
           }
 
