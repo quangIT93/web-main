@@ -227,7 +227,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                 : '게시된 작업'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
               {searchParams.get('c') === '2-0' && languageRedux === 1
-                ? ' > ất cả'
+                ? ' > tất cả'
                 : languageRedux === 2
                   ? ' > All'
                   : ' > 전부'}

@@ -229,7 +229,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           }
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '1-0' && languageRedux === 1
-              ? ' > ất cả'
+              ? ' > tất cả'
               : languageRedux === 2
                 ? ' > All'
                 : ' > 전부'}
