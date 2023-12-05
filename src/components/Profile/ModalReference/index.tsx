@@ -215,7 +215,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             : languageRedux === 2
               ? 'Additional information cannot exceed 1000 characters'
               : languageRedux === 3 &&
-              '추가 정보는 1000자를 초과할 수 없습니다.',
+                '추가 정보는 1000자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 4,
       };
@@ -294,7 +294,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             break;
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleClose = () => {
@@ -370,10 +370,10 @@ const ModalReference: React.FC<IModalReference> = (props) => {
                   : languageRedux === 2
                     ? 'Full name'
                     : languageRedux === 3
-                      ? '이름과 성'
+                      ? '성명'
                       : 'Họ và tên'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {fullName && fullName.length > 255 ? (
@@ -399,8 +399,9 @@ const ModalReference: React.FC<IModalReference> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${fullName ? fullName.length : '0'
-                }/255`}</span>
+              <span className="number-text">{`${
+                fullName ? fullName.length : '0'
+              }/255`}</span>
             </div>
           </Box>
           <Box sx={{ marginBottom: '12px' }}>
@@ -436,7 +437,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
                       ? '전화 번호'
                       : 'Số điện thoại'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {regexCheckPhone.test(phone) === false ? (
@@ -446,7 +447,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
                     : languageRedux === 2
                       ? 'The phone number is not in the correct format'
                       : languageRedux === 3 &&
-                      '전화 번호의 형식이 올바르지 않습니다.'}
+                        '전화 번호의 형식이 올바르지 않습니다.'}
                 </span>
               ) : phone.length === 0 ? (
                 <span className="helper-text">
@@ -487,7 +488,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="example@gmail.com"
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {regexCheckEmail.test(mail) === false ? (
@@ -497,7 +498,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
                     : languageRedux === 2
                       ? 'The Email is not in the correct format'
                       : languageRedux === 3 &&
-                      '이메일의 형식이 올바르지 않습니다.'}
+                        '이메일의 형식이 올바르지 않습니다.'}
                 </span>
               ) : mail.length === 0 ? (
                 <span className="helper-text">
@@ -536,11 +537,13 @@ const ModalReference: React.FC<IModalReference> = (props) => {
               rows={4}
               id="profile_reference_additional_information"
               // label="Một số đặc điểm nhận diện công ty"
-              placeholder={languageRedux === 1
-                ? 'Thông tin bổ sung'
-                : languageRedux === 2
-                  ? 'Additional information'
-                  : '추가 정보'}
+              placeholder={
+                languageRedux === 1
+                  ? 'Thông tin bổ sung'
+                  : languageRedux === 2
+                    ? 'Additional information'
+                    : '추가 정보'
+              }
             />
             <div className="wrap-noti_input">
               {description.length === 0 ? (
@@ -550,7 +553,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
                     : languageRedux === 2
                       ? 'Additional information cannot be empty'
                       : languageRedux === 3 &&
-                      '추가 정보는 비워둘 수 없습니다.'}
+                        '추가 정보는 비워둘 수 없습니다.'}
                 </span>
               ) : description.length > 1000 ? (
                 <span className="helper-text">
@@ -559,7 +562,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
                     : languageRedux === 2
                       ? 'Additional information cannot exceed 1000 characters'
                       : languageRedux === 3 &&
-                      '추가 정보는 1000자를 초과할 수 없습니다.'}
+                        '추가 정보는 1000자를 초과할 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -572,8 +575,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
               ? 'Lưu thông tin'
               : languageRedux === 2
                 ? 'Save information'
-                : languageRedux === 3 &&
-                '정보 저장'}
+                : languageRedux === 3 && '정보 저장'}
           </Button>
         </Box>
       </Modal>

@@ -480,7 +480,7 @@ const BreadcrumbMenuItems: React.FC = () => {
                     ? 'Danh sách bài viết'
                     : languageRedux === 2
                       ? 'List of articles'
-                      : languageRedux === 3 && '글 목록'
+                      : languageRedux === 3 && '커뮤니티'
                   : searchParams.get('p') === '4'
                     ? languageRedux === 1
                       ? 'Danh sách ứng viên'
@@ -492,7 +492,7 @@ const BreadcrumbMenuItems: React.FC = () => {
                         ? 'Danh sách công ty'
                         : languageRedux === 2
                           ? 'List of companies'
-                          : languageRedux === 3 && '관심한 회사'
+                          : languageRedux === 3 && '회사  리스트'
                       : searchParams.get('p') === '0'
                         ? languageRedux === 1
                           ? 'Các công việc đã ứng tuyển'

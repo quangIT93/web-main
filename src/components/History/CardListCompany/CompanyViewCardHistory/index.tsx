@@ -204,8 +204,9 @@ const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
                     title={
                       languageRedux === 1
                         ? `${inforCompany?.amountPost} vị trí tuyển dụng`
-                        : languageRedux === 2 ? `${inforCompany?.amountPost} recruitment position`
-                          : `${inforCompany?.amountPost} 모집 위치`
+                        : languageRedux === 2
+                          ? `${inforCompany?.amountPost} recruitment position`
+                          : `${inforCompany?.amountPost} 개인 사용자`
                     }
                   >
                     <Typography
@@ -223,8 +224,9 @@ const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
                     >
                       {languageRedux === 1
                         ? `${inforCompany?.amountPost} vị trí tuyển dụng`
-                        : languageRedux === 2 ? `${inforCompany?.amountPost} recruitment position`
-                          : `${inforCompany?.amountPost} 모집 위치`}
+                        : languageRedux === 2
+                          ? `${inforCompany?.amountPost} recruitment position`
+                          : `${inforCompany?.amountPost} 개인 사용자`}
                     </Typography>
                   </Tooltip>
                 </div>

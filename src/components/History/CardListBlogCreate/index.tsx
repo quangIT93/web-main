@@ -187,7 +187,7 @@ const CardListBlogCreate = () => {
               ? 'Danh sách bài viết'
               : languageRedux === 2
                 ? 'List of articles'
-                : languageRedux === 3 && '글 목록'}
+                : languageRedux === 3 && '커뮤니티'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
               {searchParams.get('c') === '3-1' && languageRedux === 1
                 ? ' > Bài viết bạn đã tạo'

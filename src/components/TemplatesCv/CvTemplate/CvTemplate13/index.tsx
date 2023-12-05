@@ -48,7 +48,7 @@ interface CvTemplate {
   profile: any;
   profileMore: any;
 }
-const CvTemplate11: React.FC<CvTemplate> = (props) => {
+const CvTemplate13: React.FC<CvTemplate> = (props) => {
   const { color, fontSize, profile, profileMore } = props;
   const styles = StyleSheet.create({
     page: {
@@ -70,14 +70,26 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
       flexDirection: 'column',
       width: '65%',
       // paddingRight: 10,
-      backgroundColor: '#f4f4f4',
+      // backgroundColor: '#f4f4f4',
       gap: '20.495pt',
       marginLeft: '-30',
+      paddingRight: '20',
+      borderRight: `1px solid ${
+        color === 1
+          ? '#377a40'
+          : color === 2
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000'
+      }`,
     },
     rightColumn: {
       flexDirection: 'column',
       width: '45%',
-      backgroundColor: '#f4f4f4',
+      // backgroundColor: '#f4f4f4',
       // paddingTop: '1.094cm',
       // marginTop: '1cm',
       // paddingLeft: '24.809pt',
@@ -109,6 +121,44 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
       zIndex: 2,
       // textAlign: 'center',
       // color: 'grey',
+    },
+    circleHeader1: {
+      position: 'absolute',
+      zIndex: 10,
+      bottom: '-200',
+      right: '-200',
+      backgroundColor:
+        color === 1
+          ? '#f0f8eb'
+          : color === 2
+            ? '#D9EFFE'
+            : color === 3
+              ? '#FBF2DA'
+              : color === 4
+                ? '#E2FFE5'
+                : '#FEE1E1',
+      width: '500pt',
+      height: '500pt',
+      borderRadius: '50%',
+    },
+    circleHeader2: {
+      position: 'absolute',
+      zIndex: 10,
+      top: '-180pt',
+      left: '-180pt',
+      backgroundColor:
+        color === 1
+          ? '#f0f8eb'
+          : color === 2
+            ? '#D9EFFE'
+            : color === 3
+              ? '#FBF2DA'
+              : color === 4
+                ? '#E2FFE5'
+                : '#FEE1E1',
+      width: '500pt',
+      height: '500pt',
+      borderRadius: '50%',
     },
   });
   Font.register({
@@ -282,80 +332,9 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
         render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
         fixed
       />
-      {/* <View fixed style={styles.fixedBackroundLeft}>
-        <Svg
-          style={{
-            width: 100,
-            height: 50,
-            left: '0',
-          }}
-        >
-          <Polygon
-            points="0,0 0,70 30,70 50,40 30,0 "
-            fill={
-              color === 1
-                ? '#e1f1ff'
-                : color === 2
-                ? '#85C1E9'
-                : color === 3
-                ? '#F7DC6F'
-                : color === 4
-                ? '#ABEBC6'
-                : '#EC7063'
-            }
-            stroke={
-              color === 1
-                ? '#e1f1ff'
-                : color === 2
-                ? '#85C1E9'
-                : color === 3
-                ? '#F7DC6F'
-                : color === 4
-                ? '#ABEBC6'
-                : '#EC7063'
-            }
-            strokeWidth={1}
-          />
-        </Svg>
-      </View>
+      <View style={styles.circleHeader1} fixed></View>
 
-      <View fixed style={styles.fixedBackroundRight}>
-        <Svg
-          style={{
-            width: 100,
-            height: 70,
-            left: '0',
-            backgroundColor: 'transparent',
-          }}
-        >
-          <Polygon
-            points="30,50 100,200 400,200 400,0 50,0 "
-            fill={
-              color === 1
-                ? '#8dc5fe'
-                : color === 2
-                ? '#0D99FF'
-                : color === 3
-                ? '#FBBC04'
-                : color === 4
-                ? '#5CB265'
-                : '#D80000'
-            }
-            stroke={
-              color === 1
-                ? '#8dc5fe'
-                : color === 2
-                ? '#0D99FF'
-                : color === 3
-                ? '#FBBC04'
-                : color === 4
-                ? '#5CB265'
-                : '#D80000'
-            }
-            strokeWidth={1}
-          />
-        </Svg>
-      </View> */}
+      <View style={styles.circleHeader2} fixed></View>
     </Page>
   );
 
@@ -380,4 +359,4 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
   );
 };
 
-export default memo(CvTemplate11);
+export default memo(CvTemplate13);

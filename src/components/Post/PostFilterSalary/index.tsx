@@ -138,13 +138,11 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              languageRedux === 1
-                ? "Lương tối thiểu"
-                : languageRedux === 2
-                  ? "Min salary"
-                  : '루옹 투이 티에우'
-            }{' '}
+            {languageRedux === 1
+              ? 'Lương tối thiểu'
+              : languageRedux === 2
+                ? 'Min salary'
+                : '섹션 추가'}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
@@ -152,10 +150,10 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             maxLength={15}
             placeholder={
               languageRedux === 1
-                ? "Lương tối thiểu"
+                ? 'Lương tối thiểu'
                 : languageRedux === 2
-                  ? "Min salary"
-                  : '루옹 투이 티에우'
+                  ? 'Min salary'
+                  : '섹션 추가'
             }
             onChange={handleChangesalaryMin}
             value={new Intl.NumberFormat('en-US').format(
@@ -166,7 +164,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
           />
           <div
             className="wrap-noti_input"
-          // style={{ position: 'absolute', bottom: '-15px' }}
+            // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {salaryMin === 0 ? (
               <span className="helper-text">
@@ -192,13 +190,11 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              languageRedux === 1
-                ? "Lương tối đa"
-                : languageRedux === 2
-                  ? "Max salary"
-                  : '루옹 터이 다'
-            }{' '}
+            {languageRedux === 1
+              ? 'Lương tối đa'
+              : languageRedux === 2
+                ? 'Max salary'
+                : '최대 급여.'}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
@@ -206,10 +202,10 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             maxLength={15}
             placeholder={
               languageRedux === 1
-                ? "Lương tối đa"
+                ? 'Lương tối đa'
                 : languageRedux === 2
-                  ? "Max salary"
-                  : '루옹 터이 다'
+                  ? 'Max salary'
+                  : '최대 급여.'
             }
             onChange={handleChangesalaryMax}
             value={new Intl.NumberFormat('en-US').format(
@@ -220,7 +216,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
           />
           <div
             className="wrap-noti_input"
-          // style={{ position: 'absolute', bottom: '-15px' }}
+            // style={{ position: 'absolute', bottom: '-15px' }}
           >
             {salaryMin === 0 ? (
               <span className="helper-text">

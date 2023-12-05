@@ -15,7 +15,6 @@ import {
 } from '@react-pdf/renderer';
 import Petrona from '../Fonts/Petrona-Bold.ttf';
 import Fahkwang from '../Fonts/Fahkwang-medium.ttf';
-import FahkwangBold from '../Fonts/Fahkwang-bold.ttf';
 import AbhayaLibreExtraBold from '../Fonts/AbhayaLibreExtraBold.ttf';
 import MontserratRegular from '../Fonts/MontserratRegular.ttf';
 import MontserratBold from '../Fonts/MontserratBold.ttf';
@@ -48,39 +47,37 @@ interface CvTemplate {
   profile: any;
   profileMore: any;
 }
-const CvTemplate11: React.FC<CvTemplate> = (props) => {
+const CvTemplate9: React.FC<CvTemplate> = (props) => {
   const { color, fontSize, profile, profileMore } = props;
   const styles = StyleSheet.create({
     page: {
       padding: 30,
       position: 'relative',
-      backgroundColor: '#fff',
+      zIndex: 1,
     },
     container: {
       flex: 1,
       flexDirection: 'row',
-      backgroundColor: 'transparent',
-      zIndex: 0,
       //   paddingLeft: '14.279pt',
       //   paddingRight: '14.279pt',
       //   paddingTop: '68.34pt',
       //   gap: '48.781pt',
+      // position: 'absolute',
     },
     leftColumn: {
       flexDirection: 'column',
       width: '65%',
       // paddingRight: 10,
-      backgroundColor: 'transparent',
       borderRight: `1px solid ${
         color === 1
-          ? '#8dc5fe'
+          ? '#cee8ff'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000'
+            ? '#AED6F1'
+            : color === 3
+              ? '#F9E79F'
+              : color === 4
+                ? '#ABEBC6'
+                : '#F1948A'
       }`,
       gap: '20.495pt',
     },
@@ -90,7 +87,6 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
       // paddingTop: '1.094cm',
       // marginTop: '1cm',
       // paddingLeft: '24.809pt',
-      backgroundColor: 'transparent',
       gap: '20.495pt',
     },
     pageNumber: {
@@ -102,22 +98,110 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
       textAlign: 'center',
       color: 'grey',
     },
-    fixedBackroundLeft: {
+    heart1: {
+      width: 130,
+      height: 130,
+      right: '50%',
+      top: 0,
+      position: 'absolute',
+      backgroundColor:
+        color === 1
+          ? '#f7b3cc'
+          : color === 2
+            ? '#AED6F1'
+            : color === 3
+              ? '#F9E79F'
+              : color === 4
+                ? '#ABEBC6'
+                : '#F1948A',
+      borderTopLeftRadius: '50%',
+      borderBottomLeftRadius: '50%',
+      zIndex: -1,
+    },
+    heart2: {
+      width: 130,
+      height: 130,
+      right: 0,
+      top: '50%',
+      position: 'absolute',
+      backgroundColor:
+        color === 1
+          ? '#f7b3cc'
+          : color === 2
+            ? '#AED6F1'
+            : color === 3
+              ? '#F9E79F'
+              : color === 4
+                ? '#ABEBC6'
+                : '#F1948A',
+      transform: 'rotate(-90deg)',
+      borderTopLeftRadius: '60%',
+      borderBottomLeftRadius: '30%',
+    },
+    heart3: {
+      width: 130,
+      height: 130,
+      right: 1,
+      top: 1,
+      position: 'absolute',
+      backgroundColor:
+        color === 1
+          ? '#f7b3cc'
+          : color === 2
+            ? '#AED6F1'
+            : color === 3
+              ? '#F9E79F'
+              : color === 4
+                ? '#ABEBC6'
+                : '#F1948A',
+    },
+    heart11: {
+      width: 130,
+      height: 130,
+      right: '50%',
+      top: 0,
+      position: 'absolute',
+      backgroundColor: '#f0e3d0',
+      borderTopLeftRadius: '50%',
+      borderBottomLeftRadius: '50%',
+      zIndex: -1,
+    },
+    heart22: {
+      width: 130,
+      height: 130,
+      right: 0,
+      top: '50%',
+      position: 'absolute',
+      backgroundColor: '#f0e3d0',
+      transform: 'rotate(-90deg)',
+      borderTopLeftRadius: '60%',
+      borderBottomLeftRadius: '30%',
+    },
+    heart33: {
+      width: 130,
+      height: 130,
+      right: 1,
+      top: 1,
+      position: 'absolute',
+      backgroundColor: '#f0e3d0',
+    },
+    wrapHeart1: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      width: 260,
+      height: 260,
+      zIndex: 0,
+    },
+
+    wrapHeart2: {
       position: 'absolute',
       bottom: 0,
       left: 0,
-      backgroundColor: 'transparent',
-      // textAlign: 'center',
-      // color: 'grey',
-    },
-    fixedBackroundRight: {
-      position: 'absolute',
-      bottom: 0,
-      right: 0,
-      backgroundColor: 'transparent',
-      zIndex: 2,
-      // textAlign: 'center',
-      // color: 'grey',
+      width: 260,
+      height: 260,
+      transform: 'rotate(-180deg)',
+      zIndex: 0,
     },
   });
   Font.register({
@@ -133,41 +217,35 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
   });
 
   Font.register({
-    family: 'Fahkwang Bold',
-    src: FahkwangBold,
-    fontWeight: 'bold',
-  });
-
-  Font.register({
     family: 'Fahkwang Medium',
     src: Fahkwang,
     fontWeight: 'bold',
   });
 
-  Font.register({
-    family: 'Montserrat SemiBold',
-    src: MontserratSemiBold,
-    fontWeight: 'bold',
-  });
-
   const Resume = (props: any) => (
     <Page {...props} style={styles.page}>
-      <Header
-        profile={profile}
-        fontSize={fontSize}
-        color={color}
-        profileMore={profileMore}
-      />
+      <View style={styles.wrapHeart1} fixed>
+        <View style={styles.heart1}></View>
+        <View style={styles.heart2}></View>
+        <View style={styles.heart3}></View>
+      </View>
+
+      <View style={styles.wrapHeart2} fixed>
+        <View style={styles.heart11}></View>
+        <View style={styles.heart22}></View>
+        <View style={styles.heart33}></View>
+      </View>
+
+      <Header profile={profile} fontSize={fontSize} color={color} />
       <View style={styles.container}>
         <View style={styles.leftColumn}>
           {profileMore?.profilesEducations &&
           profileMore.profilesEducations?.length !== 0 ? (
             <View>
               <Education
-                profile={profile}
+                profile={profileMore}
                 fontSize={fontSize}
                 color={color}
-                profileMore={profileMore}
               />
             </View>
           ) : (
@@ -181,7 +259,6 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
                 profile={profileMore}
                 fontSize={fontSize}
                 color={color}
-                profileMore={profileMore}
               />
             </View>
           ) : (
@@ -195,7 +272,6 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
                 profile={profileMore}
                 fontSize={fontSize}
                 color={color}
-                profileMore={profileMore}
               />
             </View>
           ) : (
@@ -204,12 +280,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
         </View>
         <View style={styles.rightColumn}>
           <View>
-            <Profile
-              profile={profile}
-              fontSize={fontSize}
-              color={color}
-              profileMore={profileMore}
-            />
+            <Profile profile={profile} fontSize={fontSize} color={color} />
           </View>
           {profileMore?.profilesLanguages &&
           profileMore.profilesLanguages?.length !== 0 ? (
@@ -218,7 +289,6 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
                 profile={profileMore}
                 fontSize={fontSize}
                 color={color}
-                profileMore={profileMore}
               />
             </View>
           ) : (
@@ -227,12 +297,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
           {profileMore?.profileHobbies &&
           profileMore.profileHobbies?.length !== 0 ? (
             <View>
-              <Hobies
-                profile={profileMore}
-                fontSize={fontSize}
-                color={color}
-                profileMore={profileMore}
-              />
+              <Hobies profile={profileMore} fontSize={fontSize} color={color} />
             </View>
           ) : (
             <></>
@@ -240,12 +305,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
           {profileMore?.profilesSkills &&
           profileMore.profilesSkills?.length !== 0 ? (
             <View>
-              <Skill
-                profile={profileMore}
-                fontSize={fontSize}
-                color={color}
-                profileMore={profileMore}
-              />
+              <Skill profile={profileMore} fontSize={fontSize} color={color} />
             </View>
           ) : (
             <></>
@@ -257,7 +317,6 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
                 profile={profileMore}
                 fontSize={fontSize}
                 color={color}
-                profileMore={profileMore}
               />
             </View>
           ) : (
@@ -267,23 +326,13 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
           {profileMore?.profileAwards &&
           profileMore.profileAwards?.length !== 0 ? (
             <View>
-              <Award
-                profile={profileMore}
-                fontSize={fontSize}
-                color={color}
-                profileMore={profileMore}
-              />
+              <Award profile={profileMore} fontSize={fontSize} color={color} />
             </View>
           ) : (
             <></>
           )}
 
-          <Contact
-            profile={profile}
-            fontSize={fontSize}
-            color={color}
-            profileMore={profileMore}
-          />
+          <Contact profile={profile} fontSize={fontSize} color={color} />
         </View>
       </View>
       <Text
@@ -291,80 +340,6 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
         render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
         fixed
       />
-      {/* <View fixed style={styles.fixedBackroundLeft}>
-        <Svg
-          style={{
-            width: 100,
-            height: 50,
-            left: '0',
-          }}
-        >
-          <Polygon
-            points="0,0 0,70 30,70 50,40 30,0 "
-            fill={
-              color === 1
-                ? '#e1f1ff'
-                : color === 2
-                ? '#85C1E9'
-                : color === 3
-                ? '#F7DC6F'
-                : color === 4
-                ? '#ABEBC6'
-                : '#EC7063'
-            }
-            stroke={
-              color === 1
-                ? '#e1f1ff'
-                : color === 2
-                ? '#85C1E9'
-                : color === 3
-                ? '#F7DC6F'
-                : color === 4
-                ? '#ABEBC6'
-                : '#EC7063'
-            }
-            strokeWidth={1}
-          />
-        </Svg>
-      </View>
-
-      <View fixed style={styles.fixedBackroundRight}>
-        <Svg
-          style={{
-            width: 100,
-            height: 70,
-            left: '0',
-            backgroundColor: 'transparent',
-          }}
-        >
-          <Polygon
-            points="30,50 100,200 400,200 400,0 50,0 "
-            fill={
-              color === 1
-                ? '#8dc5fe'
-                : color === 2
-                ? '#0D99FF'
-                : color === 3
-                ? '#FBBC04'
-                : color === 4
-                ? '#5CB265'
-                : '#D80000'
-            }
-            stroke={
-              color === 1
-                ? '#8dc5fe'
-                : color === 2
-                ? '#0D99FF'
-                : color === 3
-                ? '#FBBC04'
-                : color === 4
-                ? '#5CB265'
-                : '#D80000'
-            }
-            strokeWidth={1}
-          />
-        </Svg>
-      </View> */}
     </Page>
   );
 
@@ -389,4 +364,4 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
   );
 };
 
-export default memo(CvTemplate11);
+export default memo(CvTemplate9);

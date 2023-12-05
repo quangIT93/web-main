@@ -5,26 +5,14 @@ interface ICvSkill {
   color: any;
   profile: any;
   fontSize: any;
-  profileMore: any;
 }
 const Skill: React.FC<ICvSkill> = (props) => {
-  const { color, profile, fontSize, profileMore } = props;
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
     },
-    divTitle: {
-      backgroundColor:
-        color === 1
-          ? '#c5dff8'
-          : color === 2
-          ? '#5DADE2'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-    },
+    divTitle: {},
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
@@ -34,14 +22,14 @@ const Skill: React.FC<ICvSkill> = (props) => {
         color === 1
           ? '#000000'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#000000'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       letterSpacing: '4pt',
-      fontFamily: 'Fahkwang Bold',
+      fontFamily: 'Petrona Bold',
       fontWeight: 'extrabold',
     },
     divDes: {
@@ -49,43 +37,43 @@ const Skill: React.FC<ICvSkill> = (props) => {
       marginTop: '9.338pt',
       width: '137pt',
     },
-    TextTitleDes: {
+    textTitleDes: {
       fontSize: '11pt',
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+      fontFamily: 'Petrona Bold',
       color:
         color === 1
-          ? '#004080'
+          ? '#000000'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#000000'
+            : color === 3
+              ? '#000000'
+              : color === 4
+                ? '#000000'
+                : '#000000',
     },
     textDes: {
       fontSize: '9pt',
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+      fontFamily: 'Petrona Bold',
     },
     BorderLine: {
       width: '80px',
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#8dc5fe'
+          ? '#000000'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#D6EAF8'
+            : color === 3
+              ? '#FCF3CF'
+              : color === 4
+                ? '#D5F5E3'
+                : '#FADBD8',
       margin: '7pt 0 4pt 20pt',
     },
   });
@@ -94,10 +82,10 @@ const Skill: React.FC<ICvSkill> = (props) => {
       <View style={styles.divTitle}>
         <Text style={styles.title}>Skill</Text>
       </View>
-      {profileMore?.profilesSkills?.map((skill: any) => (
+      {profile?.profilesSkills?.map((skill: any) => (
         <View>
           <View style={styles.divDes}>
-            <Text style={styles.TextTitleDes}>{skill?.skillName}</Text>
+            <Text style={styles.textTitleDes}>{skill?.skillName}</Text>
           </View>
           <View style={styles.divDes}>
             <Text style={styles.textDes}>{skill?.dataLevel?.data}</Text>

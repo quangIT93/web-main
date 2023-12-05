@@ -518,7 +518,7 @@ const CandidateNewDetail = () => {
                   ? 'Địa chỉ'
                   : languageRedux === 2
                     ? 'Location'
-                    : '위치'}
+                    : '주소'}
               </p>
             </div>
             <div className="div-detail-row right">
@@ -802,7 +802,7 @@ const CandidateNewDetail = () => {
                 ? 'Kinh nghiệm làm việc'
                 : languageRedux === 2
                   ? 'Working experience'
-                  : '업무 경험'}
+                  : '경력'}
             </h3>
           </div>
           {candidate?.profilesExperiences?.length !== 0 ? (

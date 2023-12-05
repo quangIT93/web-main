@@ -7,8 +7,10 @@ import {
   Polygon,
   Svg,
   Rect,
+  Circle,
 } from '@react-pdf/renderer';
 import null_avatar from '../../images/null_avatar.png';
+
 interface ICvHeader {
   color: any;
   profile: any;
@@ -19,85 +21,112 @@ const Header: React.FC<ICvHeader> = (props) => {
   const { profile, fontSize, color, profileMore } = props;
   const styles = StyleSheet.create({
     container: {
-      // width: '100%',
+      //
+      width: '100%',
       height: '269.934',
       marginTop: -30,
       // marginBottom: '32.041pt',
-      marginRight: -30,
-      marginLeft: -30,
+      marginRight: -10,
+      marginLeft: -10,
       display: 'flex',
       flexDirection: 'row',
       // backgroundColor: '#cee8ff',
       // backgroundColor: '#cee8ff',
       justifyContent: 'space-between',
       position: 'relative',
-      zIndex: '0',
-    },
-    divInfo: {
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-      marginLeft: '47.137pt',
+      zIndex: 2,
     },
 
-    divTextName: {
-      maxWidth: '300pt',
-    },
-    textName: {
-      fontSize: '42pt',
-      color:
-        color === 1
-          ? '#004080'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
-      fontWeight: 'extrabold',
-      fontFamily: 'Montserrat SemiBold',
-    },
     divTextJobTypeName: {
       display: 'flex',
       justifyContent: 'center',
       marginTop: '12pt',
       flexWrap: 'wrap',
     },
-    textPosition: {
-      fontSize: '16pt',
-      letterSpacing: '4pt',
-      // marginTop: '20pt',
-      whiteSpace: 'wrap',
-      width: '300pt',
-      color:
-        color === 1
-          ? '#004080'
-          : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
-      fontFamily: 'Montserrat SemiBold',
-    },
+
     divImage: {
-      position: 'absolute',
-      backgroundColor: 'transparent',
-      height: '100%',
-      width: '212pt',
+      width: '40%',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      right: '5.5pt',
-      top: '0',
-      paddingBottom: '10pt',
+      margin: '0pt 10pt 0 45pt',
+    },
+    wrapImage: {
+      height: '180pt',
+      width: '180pt',
+      borderRadius: '50%',
+      backgroundColor:
+        color === 1
+          ? '#b4d9a1'
+          : color === 2
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     image: {
-      width: '100%',
-      height: '100%',
       objectFit: 'cover',
+      border: '1px solid black',
+      borderRadius: '50%',
+      height: '170pt',
+      width: '170pt',
+    },
+
+    divInfo: {
+      height: '100%',
+      width: '60%',
+      justifyContent: 'center',
+      marginLeft: '20pt',
+    },
+    divTextName: {
+      maxWidth: '300pt',
+    },
+    textName: {
+      fontSize: '32pt',
+      color:
+        color === 1
+          ? '#377a40'
+          : color === 2
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      fontWeight: 'extrabold',
+      fontFamily: 'Montserrat SemiBold',
+    },
+    divPosition: {
+      backgroundColor:
+        color === 1
+          ? '#b4d9a1'
+          : color === 2
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      borderRadius: '15px',
+      padding: '9pt 11pt',
+      marginTop: '18pt',
+    },
+    textPosition: {
+      color:
+        color === 1
+          ? '#377a40'
+          : color === 2
+            ? '#ffffff'
+            : color === 3
+              ? '#ffffff'
+              : color === 4
+                ? '#ffffff'
+                : '#ffffff',
     },
   });
   return (
@@ -205,38 +234,8 @@ const Header: React.FC<ICvHeader> = (props) => {
         />
       </Svg> */}
 
-      <View style={styles.divInfo}>
-        <View style={{ display: 'flex', justifyContent: 'center' }}>
-          {/* <View style={styles.divTextName}>
-            <Text style={styles.textName}>
-              {profile?.name?.split(' ').length > 2
-                ? profile?.name?.split(' ').slice(0, -2).join(' ')
-                : profile?.name?.split(' ').slice(0, -1).join(' ')}
-            </Text>
-          </View> */}
-          <View style={styles.divTextName}>
-            {/* <Text style={styles.textName}>
-              {profile?.name?.split(' ').length > 2
-                ? profile?.name?.split(' ').slice(-2).join(' ')
-                : profile?.name?.split(' ').slice(-1).join(' ')}
-            </Text> */}
-            <Text style={styles.textName}>{profile?.name}</Text>
-          </View>
-        </View>
-        <View style={styles.divTextJobTypeName}>
-          <Text style={styles.textPosition}>{profile?.jobTypeName}</Text>
-        </View>
-      </View>
-
       <View style={styles.divImage}>
-        <View
-          style={{
-            // padding: '9.955pt',
-            backgroundColor: '#ccc',
-            height: '100%',
-            width: '212pt',
-          }}
-        >
+        <View style={styles.wrapImage}>
           <Image
             src={{
               uri:
@@ -252,6 +251,23 @@ const Header: React.FC<ICvHeader> = (props) => {
             }}
             style={styles.image}
           />
+        </View>
+      </View>
+      <View style={styles.divInfo}>
+        <View style={styles.divTextName}>
+          <Text style={styles.textName}>
+            {profile?.name?.split(' ').length > 2
+              ? profile?.name?.split(' ').slice(0, -2).join(' ')
+              : profile?.name?.split(' ').slice(0, -1).join(' ')}
+          </Text>
+          <Text style={styles.textName}>
+            {profile?.name?.split(' ').length > 2
+              ? profile?.name?.split(' ').slice(-2).join(' ')
+              : profile?.name?.split(' ').slice(-1).join(' ')}
+          </Text>
+        </View>
+        <View style={styles.divPosition}>
+          <Text style={styles.textPosition}>Software engineer</Text>
         </View>
       </View>
     </View>

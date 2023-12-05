@@ -141,7 +141,7 @@ const CardListCandidate: React.FC = () => {
               : ' 지원자 리스트'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '4-0' && languageRedux === 1
-              ? ' > tất cả'
+              ? ' > Tất cả'
               : languageRedux === 2
                 ? ' > All'
                 : ' > 전부'}

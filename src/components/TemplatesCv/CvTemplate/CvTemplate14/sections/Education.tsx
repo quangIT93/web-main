@@ -6,18 +6,14 @@ interface ICvHeader {
   color: any;
   profile: any;
   fontSize: any;
-  profileMore: any;
 }
 const Education: React.FC<ICvHeader> = (props) => {
-  const { color, profile, fontSize, profileMore } = props;
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginLeft: -25,
     },
-    divTitle: {
-      marginRight: '20pt',
-      width: '280pt',
-    },
+    divTitle: {},
     title: {
       marginLeft: '45.839pt',
       padding: '9.209pt 0',
@@ -26,35 +22,21 @@ const Education: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#000000'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#000000'
-          : '#D80000',
-      fontFamily: 'Fahkwang Bold',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
-      // backgroundColor: '#8dc5ff',
-      backgroundColor:
-        color === 1
-          ? '#c5dff8'
-          : color === 2
-          ? '#5DADE2'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-
-      width: '100%',
     },
     divInfo: {
       marginLeft: '45.839pt',
       marginTop: '10.17pt',
       display: 'flex',
       flexDirection: 'row',
-      gap: '10pt',
     },
     leftInfo: {
       width: '40%',
@@ -72,31 +54,32 @@ const Education: React.FC<ICvHeader> = (props) => {
       fontSize: '11pt',
       color:
         color === 1
-          ? '#252525'
+          ? '#000000'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
-      fontFamily: 'Fahkwang Bold',
+            ? '#000000'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       wordwrap: 'break-word',
       textAlign: 'justify',
+      fontFamily: 'Petrona Bold',
+      marginRight: '10pt',
     },
     textTitleRight: {
       fontSize: '11pt',
       color:
         color === 1
-          ? '#252525'
+          ? '#000000'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
-      fontFamily: 'Fahkwang Bold',
+            ? '#000000'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      fontFamily: 'Petrona Bold',
     },
     divTextTitleRight: {
       maxWidth: '180pt',
@@ -109,10 +92,10 @@ const Education: React.FC<ICvHeader> = (props) => {
     },
     textRight: {
       fontSize: '9pt',
-      // wordwrap: 'break-all',
+      wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+      fontFamily: 'Petrona Bold',
     },
   });
 
@@ -120,33 +103,30 @@ const Education: React.FC<ICvHeader> = (props) => {
     <View style={styles.container}>
       <View>
         <View style={styles.divTitle}>
-          <Text style={styles.title}>Educations</Text>
+          <Text style={styles.title}>Education</Text>
         </View>
-
-        {profileMore?.profilesEducations?.map((education: any) => {
-          return (
-            <View style={styles.divInfo}>
-              <View style={styles.leftInfo}>
-                <Text style={styles.textLeft}>
-                  {moment(education?.startDate).format('YYYY')}
-                  {'-'}
-                  {moment(education?.endDate).format('YYYY')}
-                </Text>
-                <Text style={styles.textLeft}>{education?.major}</Text>
+        {profile?.profilesEducations?.map((education: any) => (
+          <View style={styles.divInfo}>
+            <View style={styles.leftInfo}>
+              <Text style={styles.textLeft}>
+                {moment(education?.startDate).format('YYYY')}
+                {'-'}
+                {moment(education?.endDate).format('YYYY')}
+              </Text>
+              <Text style={styles.textLeft}>{education?.major}</Text>
+            </View>
+            <View style={styles.rightInfo}>
+              <View style={styles.divTextTitleRight}>
+                <Text style={styles.textLeft}>{education?.companyName}</Text>
               </View>
-              <View style={styles.rightInfo}>
-                <View style={styles.divTextTitleRight}>
-                  <Text style={styles.textLeft}>{education?.companyName}</Text>
-                </View>
-                <View style={styles.divTextRight}>
-                  <Text style={styles.textRight}>
-                    {education?.extraInformation}
-                  </Text>
-                </View>
+              <View style={styles.divTextRight}>
+                <Text style={styles.textRight}>
+                  {education?.extraInformation}
+                </Text>
               </View>
             </View>
-          );
-        })}
+          </View>
+        ))}
       </View>
     </View>
   );

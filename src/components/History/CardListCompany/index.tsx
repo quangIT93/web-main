@@ -223,7 +223,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
             ? 'Danh sách công ty'
             : languageRedux === 2
               ? 'List of companies'
-              : '관심한 회사'}
+              : '회사  리스트'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '5-0'
               ? languageRedux === 1

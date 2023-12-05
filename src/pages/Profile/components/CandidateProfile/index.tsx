@@ -453,7 +453,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 ? 'Loại hình công việc'
                 : languageRedux === 2
                   ? 'Type of work'
-                  : languageRedux === 3 && '일의 종류'}
+                  : languageRedux === 3 && '직업종류'}
             </h3>
             <Space
               style={{ cursor: 'pointer' }}
@@ -819,7 +819,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 ? 'Kinh nghiệm làm việc'
                 : languageRedux === 2
                   ? 'Working experience'
-                  : '업무 경험'}
+                  : '경력'}
             </h3>
           </div>
           {profileMore?.profilesExperiences?.length !== 0 ? (

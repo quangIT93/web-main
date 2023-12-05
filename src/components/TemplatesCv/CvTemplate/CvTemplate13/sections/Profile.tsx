@@ -14,18 +14,7 @@ const Profile: React.FC<ICvProfile> = (props) => {
       marginRight: -35,
       // backgroundColor: '#f4f4f4',
     },
-    divTitle: {
-      backgroundColor:
-        color === 1
-          ? '#c5dff8'
-          : color === 2
-          ? '#5DADE2'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-    },
+
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
@@ -33,14 +22,14 @@ const Profile: React.FC<ICvProfile> = (props) => {
       // width: '137pt',
       color:
         color === 1
-          ? '#000000'
+          ? '#377a40'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#000000'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Fahkwang Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
@@ -60,7 +49,7 @@ const Profile: React.FC<ICvProfile> = (props) => {
   });
   return (
     <View style={styles.container}>
-      <View style={styles.divTitle}>
+      <View>
         <Text style={styles.title}>Profile</Text>
       </View>
       <View style={styles.divDes}>

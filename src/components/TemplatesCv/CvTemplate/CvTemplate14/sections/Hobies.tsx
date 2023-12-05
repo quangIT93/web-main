@@ -5,26 +5,14 @@ interface ICvHobies {
   color: any;
   profile: any;
   fontSize: any;
-  profileMore: any;
 }
 const Hobies: React.FC<ICvHobies> = (props) => {
-  const { color, profile, fontSize, profileMore } = props;
+  const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
       marginRight: -25,
     },
-    divTitle: {
-      backgroundColor:
-        color === 1
-          ? '#c5dff8'
-          : color === 2
-          ? '#5DADE2'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-    },
+    divTitle: {},
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
@@ -34,13 +22,13 @@ const Hobies: React.FC<ICvHobies> = (props) => {
         color === 1
           ? '#000000'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#000000'
-          : '#D80000',
-      fontFamily: 'Fahkwang Bold',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
     },
@@ -54,7 +42,7 @@ const Hobies: React.FC<ICvHobies> = (props) => {
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
-      fontFamily: 'Fahkwang Medium',
+      fontFamily: 'Petrona Bold',
     },
   });
   return (
@@ -62,10 +50,9 @@ const Hobies: React.FC<ICvHobies> = (props) => {
       <View style={styles.divTitle}>
         <Text style={styles.title}>Hobies</Text>
       </View>
-
       <View style={styles.divDes}>
         <Text style={styles.textDes}>
-          {profileMore?.profileHobbies?.description}
+          {profile?.profileHobbies?.description}
         </Text>
       </View>
     </View>
