@@ -314,7 +314,7 @@ const Detail = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -406,7 +406,7 @@ const Detail = () => {
             );
           }
           result?.data?.companyResourceData?.name === 'HIJOB' &&
-          profileV3.typeRoleData === 1
+            profileV3.typeRoleData === 1
             ? setBackgroundButton('gray')
             : setBackgroundButton('#0D99FF');
           // setCheckPostUser(true);
@@ -811,17 +811,14 @@ const Detail = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-        `${post?.data.address}, ${
-          post?.data.location ? post?.data.location.fullName : ''
-        }, ${
-          post?.data?.location?.district
-            ? post?.data?.location?.district?.fullName
-            : ''
-        }, ${
-          post?.data?.location?.district?.province
-            ? post?.data.district?.province?.fullName
-            : ''
-        }`,
+      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
+      }, ${post?.data?.location?.district
+        ? post?.data?.location?.district?.fullName
+        : ''
+      }, ${post?.data?.location?.district?.province
+        ? post?.data.district?.province?.fullName
+        : ''
+      }`,
     );
   };
 
@@ -954,22 +951,19 @@ const Detail = () => {
   const handleClickMapCompany = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-        `${post?.data?.postCompanyInformation?.address}, ${
-          post?.data?.postCompanyInformation?.companyLocation
-            ? post?.data?.postCompanyInformation?.companyLocation.fullName
-            : ''
-        }, ${
-          post?.data?.postCompanyInformation?.companyLocation?.district
-            ? post?.data?.postCompanyInformation?.companyLocation?.district
-                ?.fullName
-            : ''
-        }, ${
-          post?.data?.postCompanyInformation?.companyLocation?.district
-            ?.province
-            ? post?.data?.postCompanyInformation?.companyLocation?.district
-                ?.province?.fullName
-            : ''
-        }`,
+      `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation
+        ? post?.data?.postCompanyInformation?.companyLocation.fullName
+        : ''
+      }, ${post?.data?.postCompanyInformation?.companyLocation?.district
+        ? post?.data?.postCompanyInformation?.companyLocation?.district
+          ?.fullName
+        : ''
+      }, ${post?.data?.postCompanyInformation?.companyLocation?.district
+        ?.province
+        ? post?.data?.postCompanyInformation?.companyLocation?.district
+          ?.province?.fullName
+        : ''
+      }`,
     );
   };
 
@@ -1201,8 +1195,8 @@ const Detail = () => {
                   <h5>
                     {post?.data.expiredDate
                       ? `${new Date(post?.data.expiredDate).toLocaleDateString(
-                          'en-GB',
-                        )}`
+                        'en-GB',
+                      )}`
                       : languageRedux === 1
                         ? 'Vô thời hạn'
                         : languageRedux === 2
@@ -1241,9 +1235,9 @@ const Detail = () => {
                   '_parent',
                 );
               }}
-              // onClick={() => {
-              //   console.log(post?.data);
-              // }}
+            // onClick={() => {
+            //   console.log(post?.data);
+            // }}
             ></Button>
             <Button
               onClick={onclick}
@@ -1257,7 +1251,7 @@ const Detail = () => {
                 fontWeight: 'normal',
                 cursor:
                   post?.data?.companyResourceData?.name === 'HIJOB' &&
-                  profileV3.typeRoleData === 1
+                    profileV3.typeRoleData === 1
                     ? 'no-drop'
                     : 'pointer',
                 // position: 'absolute',
@@ -1391,8 +1385,8 @@ const Detail = () => {
                     >
                       {post?.data?.postCompanyInformation
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
-                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
-                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
                         : languageRedux === 1
                           ? 'Chưa cập nhật'
                           : languageRedux === 2
@@ -1475,7 +1469,7 @@ const Detail = () => {
                       }
                     >
                       {post?.data?.postCompanyInformation &&
-                      post?.data?.postCompanyInformation?.website
+                        post?.data?.postCompanyInformation?.website
                         ? post?.data?.postCompanyInformation?.website
                         : languageRedux === 1
                           ? 'Chưa cập nhật'
@@ -1599,17 +1593,14 @@ const Detail = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${
-                      post?.data?.location ? post?.data?.location?.fullName : ''
-                    }, ${
-                      post?.data?.location?.district
+                    <h3>{`${post?.data.address}, ${post?.data?.location ? post?.data?.location?.fullName : ''
+                      }, ${post?.data?.location?.district
                         ? post?.data?.location?.district?.fullName
                         : ''
-                    }, ${
-                      post?.data?.location?.district?.province
+                      }, ${post?.data?.location?.district?.province
                         ? post?.data?.location?.district?.province?.fullName
                         : ''
-                    }`}</h3>
+                      }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -1847,7 +1838,7 @@ const Detail = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                          // onClick={handlePreviousPost}
+                        // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -1918,7 +1909,7 @@ const Detail = () => {
                 <div className="div-suggest">
                   <div className="div-suggest__map">
                     {post?.data?.postCompanyInformation?.latitude &&
-                    post?.data?.postCompanyInformation?.longitude ? (
+                      post?.data?.postCompanyInformation?.longitude ? (
                       <>
                         <h3>
                           {languageRedux === 1
@@ -1949,7 +1940,7 @@ const Detail = () => {
                               click: () => {
                                 window.open(
                                   'https://www.google.com/maps/place/' +
-                                    `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`,
+                                  `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`,
                                 );
                               },
                             }}
@@ -1967,8 +1958,8 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Việc làm tương tự'
                         : languageRedux === 2
-                          ? 'Same job'
-                          : '같은 직업'}
+                          ? 'Similar job'
+                          : '비슷한 직업'}
                     </h3>
                     <div className="item">
                       {postNewest?.data?.posts.map(
@@ -2037,19 +2028,16 @@ const Detail = () => {
                     <Typography sx={{ ml: 2 }}>
                       <AddressDetailPostIcon width={16} height={16} />
                       <span style={{ marginLeft: '8px' }}>
-                        {`${post?.data.address}, ${
-                          post?.data?.location
+                        {`${post?.data.address}, ${post?.data?.location
                             ? post?.data?.location?.fullName
                             : ''
-                        }, ${
-                          post?.data?.location?.district
+                          }, ${post?.data?.location?.district
                             ? post?.data?.location?.district?.fullName
                             : ''
-                        }, ${
-                          post?.data?.location?.district?.province
+                          }, ${post?.data?.location?.district?.province
                             ? post?.data?.location?.district?.province?.fullName
                             : ''
-                        }`}
+                          }`}
                       </span>
                     </Typography>
                     {/* <div className="mid-title_companyName">
