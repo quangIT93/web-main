@@ -190,9 +190,7 @@ const BreadcrumbMenuItems: React.FC = () => {
               : languageRedux === 2
               ? 'Hot jobs'
               : languageRedux === 3 && '핫잡스',
-          href: `/hotjobs?hotjob-id=${searchParams.get(
-            'hotjob-id',
-          )}&hotjob-type=${searchParams.get('hotjob-id')}`,
+          href: `/more-jobs`,
         },
         {
           title:
