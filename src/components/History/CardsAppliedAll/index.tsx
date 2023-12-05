@@ -142,11 +142,12 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content: languageRedux === 1
-              ? 'Đã hết công việc để hiển thị'
-              : languageRedux === 2
-                ? 'Out of job to display'
-                : '보여줄 일이 부족해',
+            content:
+              languageRedux === 1
+                ? 'Đã hết công việc để hiển thị'
+                : languageRedux === 2
+                  ? 'Out of job to display'
+                  : '보여줄 일이 부족해',
           });
           return;
         }
@@ -156,7 +157,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // click card
@@ -198,7 +199,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
               : '지원한 직업들'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '0-0' && languageRedux === 1
-              ? ' > ất cả'
+              ? ' > Tất cả'
               : languageRedux === 2
                 ? ' > All'
                 : ' > 전부'}
@@ -214,16 +215,20 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">{languageRedux === 1
-            ? 'Mới nhất'
-            : languageRedux === 2
-              ? 'Newest'
-              : languageRedux === 3 && '최신'}</MenuItem>
-          <MenuItem value="Cũ nhất">{languageRedux === 1
-            ? 'Cũ nhất'
-            : languageRedux === 2
-              ? 'Oldest'
-              : languageRedux === 3 && '가장 오래된'}</MenuItem>
+          <MenuItem value="Mới nhất">
+            {languageRedux === 1
+              ? 'Mới nhất'
+              : languageRedux === 2
+                ? 'Newest'
+                : languageRedux === 3 && '최신'}
+          </MenuItem>
+          <MenuItem value="Cũ nhất">
+            {languageRedux === 1
+              ? 'Cũ nhất'
+              : languageRedux === 2
+                ? 'Oldest'
+                : languageRedux === 3 && '가장 오래된'}
+          </MenuItem>
         </TextField>
       </Box>
       {/* <Skeleton loading={loading} active> */}
@@ -234,7 +239,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={loading}
-      // onClick={handleClose}
+        // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
