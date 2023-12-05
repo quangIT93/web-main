@@ -267,9 +267,12 @@ const MoreJobsPage: React.FC = () => {
       breadCrumb !== null
     ) {
       if (
-        location.pathname === '/more-jobs' &&
-        localStorage.getItem('job-type') === 'new' &&
-        window.innerWidth <= 450
+        (location.pathname === '/more-jobs' &&
+          localStorage.getItem('job-type') === 'new' &&
+          window.innerWidth <= 450) ||
+        (location.pathname === '/more-jobs' &&
+          localStorage.getItem('job-type') === 'hot-job' &&
+          window.innerWidth <= 450)
       ) {
         tabs.style.top = '-155px';
         breadCrumb.style.marginTop = '-203px';
@@ -277,6 +280,7 @@ const MoreJobsPage: React.FC = () => {
         tabs.style.top = '-115px';
         breadCrumb.style.marginTop = '-203px';
       }
+
       // setTimeout(() => {
       //   currentHeight = 0;
       //   tabs.style.top = '70px';
@@ -284,17 +288,24 @@ const MoreJobsPage: React.FC = () => {
       // }, 500);
     } else if (currentHeight === 0) {
       if (
-        location.pathname === '/more-jobs' &&
-        localStorage.getItem('job-type') === 'new' &&
-        window.innerWidth <= 450
+        (location.pathname === '/more-jobs' &&
+          localStorage.getItem('job-type') === 'new' &&
+          window.innerWidth <= 450) ||
+        (location.pathname === '/more-jobs' &&
+          localStorage.getItem('job-type') === 'hot-job' &&
+          window.innerWidth <= 450)
       ) {
         tabs.style.top = '155px';
         breadCrumb.style.marginTop = '20px';
       } else if (
-        location.pathname === '/more-jobs' &&
-        localStorage.getItem('job-type') === 'new' &&
-        450 < window.innerWidth &&
-        window.innerWidth <= 768
+        (location.pathname === '/more-jobs' &&
+          localStorage.getItem('job-type') === 'new' &&
+          450 < window.innerWidth &&
+          window.innerWidth <= 768) ||
+        (location.pathname === '/more-jobs' &&
+          localStorage.getItem('job-type') === 'hot-job' &&
+          450 < window.innerWidth &&
+          window.innerWidth <= 768)
       ) {
         tabs.style.top = '115px';
         breadCrumb.style.marginTop = '-10px';
@@ -305,17 +316,24 @@ const MoreJobsPage: React.FC = () => {
     } else {
       if (tabs !== null && breadCrumb !== null) {
         if (
-          location.pathname === '/more-jobs' &&
-          localStorage.getItem('job-type') === 'new' &&
-          window.innerWidth <= 450
+          (location.pathname === '/more-jobs' &&
+            localStorage.getItem('job-type') === 'new' &&
+            window.innerWidth <= 450) ||
+          (location.pathname === '/more-jobs' &&
+            localStorage.getItem('job-type') === 'hot-job' &&
+            window.innerWidth <= 450)
         ) {
           tabs.style.top = '155px';
           breadCrumb.style.marginTop = '20px';
         } else if (
-          location.pathname === '/more-jobs' &&
-          localStorage.getItem('job-type') === 'new' &&
-          450 < window.innerWidth &&
-          window.innerWidth <= 768
+          (location.pathname === '/more-jobs' &&
+            localStorage.getItem('job-type') === 'new' &&
+            450 < window.innerWidth &&
+            window.innerWidth <= 768) ||
+          (location.pathname === '/more-jobs' &&
+            localStorage.getItem('job-type') === 'hot-job' &&
+            450 < window.innerWidth &&
+            window.innerWidth <= 768)
         ) {
           tabs.style.top = '115px';
           breadCrumb.style.marginTop = '-10px';
