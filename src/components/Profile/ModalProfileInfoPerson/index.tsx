@@ -140,9 +140,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [selectedProvince, setSelectedProvince] = useState<any>(
     profile?.addressText
       ? {
-          province_id: profile?.addressText?.id,
-          province_fullName: profile?.addressText.fullName,
-        }
+        province_id: profile?.addressText?.id,
+        province_fullName: profile?.addressText.fullName,
+      }
       : null,
   );
 
@@ -285,7 +285,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             : languageRedux === 2
               ? 'Year of birth cannot exceed the current year'
               : languageRedux === 3 &&
-                '출생 연도는 현재 연도를 초과할 수 없습니다.',
+              '출생 연도는 현재 연도를 초과할 수 없습니다.',
         checkForm: false,
         idError: 5,
       };
@@ -519,7 +519,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       ? 'Full name'
                       : '성명'
                 }
-                // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
               />
               <div className="wrap-noti_input">
                 {name?.length > 90 ? (
@@ -529,7 +529,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       : languageRedux === 2
                         ? 'Full name cannot exceed 90 characters'
                         : languageRedux === 3 &&
-                          '이름은 90자를 초과할 수 없습니다.'}
+                        '이름은 90자를 초과할 수 없습니다.'}
                   </span>
                 ) : name?.length === 0 ? (
                   <span className="helper-text">
@@ -618,9 +618,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                         id: 'peronal_info_date',
                       },
                     }}
-                    // open={openDatePicker}
-                    // onAccept={() => setOpenDatePicker(false)}
-                    // format="DD/MM/YYYY"
+                  // open={openDatePicker}
+                  // onAccept={() => setOpenDatePicker(false)}
+                  // format="DD/MM/YYYY"
                   />
                 </div>
                 <div className="wrap-noti_input">
@@ -631,7 +631,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                         : languageRedux === 2
                           ? 'Year of birth cannot exceed the current year'
                           : languageRedux === 3 &&
-                            '출생 연도는 현재 연도를 초과할 수 없습니다.'}
+                          '출생 연도는 현재 연도를 초과할 수 없습니다.'}
                     </span>
                   ) : !new Date(day).getFullYear() ? (
                     <span className="helper-text">
@@ -648,7 +648,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                         : languageRedux === 2
                           ? 'Year of birth cannot be less than 1900'
                           : languageRedux === 3 &&
-                            '생년월일은 1900년 이상이어야 합니다.'}
+                          '생년월일은 1900년 이상이어야 합니다.'}
                     </span>
                   ) : (
                     ''
@@ -678,9 +678,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 value={
                   selectedProvince && dataProvinces?.length > 0
                     ? dataProvinces?.find(
-                        (province: any) =>
-                          province.province_id === selectedProvince.province_id,
-                      )
+                      (province: any) =>
+                        province.province_id === selectedProvince.province_id,
+                    )
                     : null
                 }
                 defaultValue={selectedProvince}
@@ -697,7 +697,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                           : '주소'
                     }
                     size="small"
-                    // error={!selectedProvince}
+                  // error={!selectedProvince}
                   />
                 )}
               />
@@ -713,7 +713,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   ? 'Vị trí ứng tuyển'
                   : languageRedux === 2
                     ? 'Position'
-                    : languageRedux === 3 && '개인 사용자'}{' '}
+                    : languageRedux === 3 && '희망 직업'}{' '}
                 <span className="color-asterisk">*</span>
               </Typography>
               <TextField
@@ -730,10 +730,10 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                     : languageRedux === 2
                       ? 'Position'
                       : languageRedux === 3
-                        ? '개인 사용자'
+                        ? '희망 직업'
                         : 'Vị trí ứng tuyển'
                 }
-                // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
               />
               <div className="wrap-noti_input">
                 {jobTypeName?.length > 100 ? (
@@ -743,7 +743,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       : languageRedux === 2
                         ? 'Position cannot exceed 100 characters'
                         : languageRedux === 3 &&
-                          '위치는 100자를 초과할 수 없습니다.'}
+                        '위치는 100자를 초과할 수 없습니다.'}
                   </span>
                 ) : jobTypeName?.length === 0 ? (
                   <span className="helper-text">
@@ -752,7 +752,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       : languageRedux === 2
                         ? 'The position cannot be left blank'
                         : languageRedux === 3 &&
-                          '해당 위치는 비워둘 수 없습니다.'}
+                        '해당 위치는 비워둘 수 없습니다.'}
                   </span>
                 ) : (
                   <></>
@@ -796,12 +796,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                     input.focus();
                   }
                 }}
-                // onKeyDown={(event) => {
-                //   // if (event.key === 'Enter') {
-                //   //   event.preventDefault();
-                //   // }
-                //   console.log(event.target);
-                // }}
+              // onKeyDown={(event) => {
+              //   // if (event.key === 'Enter') {
+              //   //   event.preventDefault();
+              //   // }
+              //   console.log(event.target);
+              // }}
               />
               <div className="wrap-noti_input">
                 {introduction?.length === 0 ? (
@@ -811,7 +811,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       : languageRedux === 2
                         ? 'Career goals cannot be empty'
                         : languageRedux === 3 &&
-                          '경력 목표는 비워둘 수 없습니다.'}
+                        '경력 목표는 비워둘 수 없습니다.'}
                   </span>
                 ) : introduction?.length > 500 ? (
                   <span className="helper-text">

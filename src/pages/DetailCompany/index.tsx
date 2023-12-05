@@ -92,7 +92,7 @@ const DetailCompany = () => {
         setPostOfCompany(result.data.posts);
         setPage('0');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleFollowCompany = async () => {
@@ -140,7 +140,7 @@ const DetailCompany = () => {
             ? 'Thông tin liên hệ'
             : languageRedux === 2
               ? 'Contact Info'
-              : languageRedux === 3 && '연락처 정보'}
+              : languageRedux === 3 && '회사 정보'}
         </p>
       ),
       children: <ContactInfo company={company} />,
@@ -150,10 +150,10 @@ const DetailCompany = () => {
       label: (
         <p>
           {languageRedux === 1
-            ? 'Vị trí ứng tuyển'
+            ? 'Tin tuyển dụng'
             : languageRedux === 2
-              ? 'Application positions'
-              : languageRedux === 3 && '개인 사용자'}
+              ? 'Opening Jobs'
+              : languageRedux === 3 && '등록 채용공고'}
           <span style={{ color: '#0D99FF' }}>
             {' '}
             {'('}
@@ -221,7 +221,7 @@ const DetailCompany = () => {
                       : languageRedux === 2
                         ? 'Company information not updated yet'
                         : languageRedux === 3 &&
-                          '회사정보가 업데이트되지 않았습니다.'}
+                        '회사정보가 업데이트되지 않았습니다.'}
                 </h3>
                 <div
                   className={styles.company_bell}
@@ -258,18 +258,18 @@ const DetailCompany = () => {
                         : languageRedux === 2
                           ? 'Company information not updated yet'
                           : languageRedux === 3 &&
-                            '회사정보가 업데이트되지 않았습니다.'}
+                          '회사정보가 업데이트되지 않았습니다.'}
                   </p>
                 </div>
                 <div className={styles.address_item}>
                   <CateIcon />
                   <p>
                     {languageRedux === 1
-                      ? `${applyPostitions} vị trí ứng tuyển`
+                      ? `${applyPostitions} tin tuyển dụng`
                       : languageRedux === 2
-                        ? `${applyPostitions} application positions`
+                        ? `${applyPostitions} opening jobs`
                         : languageRedux === 3 &&
-                          `${applyPostitions} 개인 사용자`}
+                        `${applyPostitions} 등록 채용공고`}
                   </p>
                 </div>
               </div>

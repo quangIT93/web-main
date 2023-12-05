@@ -399,7 +399,7 @@ const CategoryDropdown: React.FC = () => {
         setOpenModalTurnOffStatus(true);
         setSearchJob(false);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -440,8 +440,8 @@ const CategoryDropdown: React.FC = () => {
                 {languageRedux === 1
                   ? 'DANH MỤC'
                   : languageRedux === 2
-                    ? 'Category'
-                    : languageRedux === 3 && '카테고리'}
+                    ? 'MENU'
+                    : languageRedux === 3 && '메뉴'}
               </h3>
             </div>
             <BreadcrumbMenuItems />
@@ -473,18 +473,16 @@ const CategoryDropdown: React.FC = () => {
                       //     "Trạng thái tìm việc đang bật:" :
                       //     "Job search status is on:" :
                       languageRedux === 1
-                        ? `Trạng thái tìm việc đang ${
-                            profileV3.isSearch === 1 ? 'bật' : 'tắt'
-                          }:`
+                        ? `Trạng thái tìm việc đang ${profileV3.isSearch === 1 ? 'bật' : 'tắt'
+                        }:`
                         : languageRedux === 2
-                          ? `Job search status is ${
-                              profileV3.isSearch === 1 ? 'on' : 'off'
-                            }:`
+                          ? `Job search status is ${profileV3.isSearch === 1 ? 'on' : 'off'
+                          }:`
                           : languageRedux === 3 && profileV3.isSearch === 1
                             ? '구직 상태가 켜져 있습니다.'
                             : languageRedux === 3 &&
-                              profileV3.isSearch !== 1 &&
-                              '구직 상태가 꺼져 있습니다.'
+                            profileV3.isSearch !== 1 &&
+                            '구직 상태가 꺼져 있습니다.'
                     }
                   </p>
                   <Switch
@@ -501,7 +499,7 @@ const CategoryDropdown: React.FC = () => {
                             : languageRedux === 2
                               ? `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`
                               : languageRedux === 3 &&
-                                '고용주가 귀하를 쉽게 찾을 수 있도록 귀하의 구직 상태가 켜져 있으므로 귀하가 적합한 일자리를 찾을 가능성이 더 높아집니다.'}
+                              '고용주가 귀하를 쉽게 찾을 수 있도록 귀하의 구직 상태가 켜져 있으므로 귀하가 적합한 일자리를 찾을 가능성이 더 높아집니다.'}
                         </p>
                       </div>
                     </div>
@@ -758,7 +756,7 @@ const CategoryDropdown: React.FC = () => {
             </div>
             <div
               className="category-dropdown-item"
-              // style={{ display: profileV3.typeRoleData === 0 ? 'block' : 'none' }}
+            // style={{ display: profileV3.typeRoleData === 0 ? 'block' : 'none' }}
             >
               <div className="top-item" onClick={() => handleExpand(2)}>
                 <h3>

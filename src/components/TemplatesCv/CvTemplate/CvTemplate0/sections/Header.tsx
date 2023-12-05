@@ -28,12 +28,12 @@ const Header: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       // marginTop: '12.404px',
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -184,7 +184,7 @@ const Header: React.FC<ICvHeader> = (props) => {
         <View style={styles.leftDiv}>
           <View style={styles.topLeftDiv}>
             <Text style={styles.bigTitle}>
-              HELLO! I'M ddddddddddddddddddddddddddddddddd
+              HELLO! I'M
             </Text>
             <View style={styles.name}>
               <Text style={styles.lastName}>
@@ -217,7 +217,7 @@ const Header: React.FC<ICvHeader> = (props) => {
               )}
               {profile?.facebook ? (
                 <Link style={styles.subtitle} src={profile?.facebook}>
-                  Facebook 0000000000000000000000000000000000000000
+                  Facebook
                 </Link>
               ) : (
                 <></>
@@ -246,7 +246,7 @@ const Header: React.FC<ICvHeader> = (props) => {
                 'Cache-Control': 'no-cache',
               },
             }}
-            // cache={true}
+          // cache={true}
           />
         </View>
         {/* <View style={styles.language}>

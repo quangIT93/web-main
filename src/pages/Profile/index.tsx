@@ -766,9 +766,9 @@ const Profile: React.FC = () => {
                   {languageRedux === 1
                     ? 'Vị trí ứng tuyển'
                     : languageRedux === 2
-                    ? 'Applying position'
+                    ? 'Position'
                     : languageRedux === 3
-                    ? '개인 사용자'
+                    ? '희망 직업'
                     : 'Vị trí ứng tuyển'}
                 </p>
               </div>

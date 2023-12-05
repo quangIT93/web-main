@@ -155,7 +155,7 @@ const CardListCandidate: React.FC = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -167,7 +167,7 @@ const CardListCandidate: React.FC = () => {
                 // <Skeleton loading={loading} active>
                 <ListCardSaveCandidate
                   item={dataBookmark}
-                  handleDeleteBookmark={() => {}}
+                  handleDeleteBookmark={() => { }}
                   index={i}
                   key={i}
                   language={[]}

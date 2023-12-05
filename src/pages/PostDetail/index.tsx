@@ -25,7 +25,7 @@ import ItemSuggest from './components/ItemSuggest';
 import ShowCancleSave from '#components/ShowCancleSave';
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
 
-import noImage from '../../img/noImage.jpg';
+import noImage from '../../img/noImage.png';
 // @ts-ignore
 import { Button, notification } from 'antd';
 
@@ -1803,7 +1803,7 @@ const Detail = () => {
                       <SwiperSlide className="div-job-img-swipper_item">
                         <img
                           // src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png"
-                          src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/default-post-image/khach-san-nha-hang.png?w=164&h=164&fit=crop&auto=format"
+                          src={noImage}
                           alt={
                             languageRedux === 1
                               ? 'Hình ảnh bị lỗi'
@@ -2009,8 +2009,8 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Việc làm tương tự'
                         : languageRedux === 2
-                        ? 'Same job'
-                        : '같은 직업'}
+                        ? 'Similar job'
+                        : '비슷한 직업'}
                     </h3>
                     <div className="item">
                       {postNewest?.data?.posts.map(
