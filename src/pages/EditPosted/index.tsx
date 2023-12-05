@@ -162,9 +162,9 @@ const EditPosted = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - HiJob - Chi tiết bài tuyển dụng'
-        : languageRedux === 2 ?
-          'HiJob - Job Post Details' :
-          'HiJob - 모집 내용';
+        : languageRedux === 2
+          ? 'HiJob - Job Post Details'
+          : 'HiJob - 모집 내용';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_editPost' as string,
@@ -369,57 +369,60 @@ const EditPosted = () => {
   const validValue = () => {
     if (editDataPosted?.title === '') {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng nhập tên công việc'
-          : languageRedux === 2
-            ? 'Please enter job name'
-            : languageRedux === 3 &&
-            '직업 이름을 입력해주세요',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập tên công việc'
+            : languageRedux === 2
+              ? 'Please enter job name'
+              : languageRedux === 3 && '직업 이름을 입력해주세요',
         checkForm: false,
         idError: 1,
       };
     }
     if (editDataPosted?.company_name === '') {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng nhập tên công ty'
-          : languageRedux === 2
-            ? 'Please enter company name'
-            : languageRedux === 3 &&
-            '회사명을 입력해주세요',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập tên công ty'
+            : languageRedux === 2
+              ? 'Please enter company name'
+              : languageRedux === 3 && '회사명을 입력해주세요',
         checkForm: false,
         idError: 2,
       };
     }
     if (fillProvince === null) {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng chọn tỉnh thành phố'
-          : languageRedux === 2
-            ? 'Please select a city'
-            : '시와 도를 선택해주세요.',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng chọn tỉnh thành phố'
+            : languageRedux === 2
+              ? 'Please select a city'
+              : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 3,
       };
     }
     if (fillDistrict === null) {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng chọn tỉnh thành phố'
-          : languageRedux === 2
-            ? 'Please select a city'
-            : '시와 도를 선택해주세요.',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng chọn tỉnh thành phố'
+            : languageRedux === 2
+              ? 'Please select a city'
+              : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 4,
       };
     }
     if (fillWard === null) {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng chọn tỉnh thành phố'
-          : languageRedux === 2
-            ? 'Please select a city'
-            : '시와 도를 선택해주세요.',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng chọn tỉnh thành phố'
+            : languageRedux === 2
+              ? 'Please select a city'
+              : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
@@ -432,22 +435,24 @@ const EditPosted = () => {
     // }
     if (editDataPosted?.ward_id === '') {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng chọn tỉnh thành phố'
-          : languageRedux === 2
-            ? 'Please select a city'
-            : '시와 도를 선택해주세요.',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng chọn tỉnh thành phố'
+            : languageRedux === 2
+              ? 'Please select a city'
+              : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
     }
     if (editDataPosted?.address === '') {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng nhập địa chỉ'
-          : languageRedux === 2
-            ? 'Please enter your address'
-            : '주소를 입력해주세요',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập địa chỉ'
+            : languageRedux === 2
+              ? 'Please enter your address'
+              : '주소를 입력해주세요',
         checkForm: false,
         idError: 6,
       };
@@ -465,11 +470,12 @@ const EditPosted = () => {
       editDataPosted?.categoryIds?.length <= 0
     ) {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng chọn danh mục nghề nghiệp'
-          : languageRedux === 2
-            ? 'Please select a career category'
-            : '직업 카테고리를 선택해주세요.',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng chọn danh mục nghề nghiệp'
+            : languageRedux === 2
+              ? 'Please select a career category'
+              : '직업 카테고리를 선택해주세요.',
         checkForm: false,
         idError: 7,
       };
@@ -491,11 +497,12 @@ const EditPosted = () => {
       editDataPosted?.salaryType !== 6
     ) {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng nhập mức lương'
-          : languageRedux === 2
-            ? 'Please enter salary'
-            : '급여를 입력해주세요',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập mức lương'
+            : languageRedux === 2
+              ? 'Please enter salary'
+              : '급여를 입력해주세요',
         checkForm: false,
         idError: 8,
       };
@@ -505,22 +512,24 @@ const EditPosted = () => {
       editDataPosted?.salaryType !== 6
     ) {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng nhập mức lương'
-          : languageRedux === 2
-            ? 'Please enter salary'
-            : '급여를 입력해주세요',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập mức lương'
+            : languageRedux === 2
+              ? 'Please enter salary'
+              : '급여를 입력해주세요',
         checkForm: false,
         idError: 9,
       };
     }
     if (Number(editDataPosted?.salaryMax) < Number(editDataPosted?.salaryMin)) {
       return {
-        message: languageRedux === 1 ?
-          "Lương tối thiểu không được lớn hơn lương tối đa" :
-          languageRedux === 2 ?
-            "Minimum cannot be greater than maximum" :
-            "최소 금액은 최대 금액보다 클 수 없습니다.",
+        message:
+          languageRedux === 1
+            ? 'Lương tối thiểu không được lớn hơn lương tối đa'
+            : languageRedux === 2
+              ? 'Minimum cannot be greater than maximum'
+              : '최소 금액은 최대 금액보다 클 수 없습니다.',
         checkForm: false,
         idError: 9,
       };
@@ -538,7 +547,7 @@ const EditPosted = () => {
             : languageRedux === 2
               ? 'Phone number cannot be blank and must be less than 10 characters.'
               : languageRedux === 3 &&
-              '전화번호는 비워둘 수 없으며 10자 미만이어야 합니다.',
+                '전화번호는 비워둘 수 없으며 10자 미만이어야 합니다.',
         checkForm: false,
         idError: 10,
       };
@@ -567,7 +576,7 @@ const EditPosted = () => {
             : languageRedux === 2
               ? 'The start date cannot exceed the end date'
               : languageRedux === 3 &&
-              '시작 날짜는 종료 날짜를 초과할 수 없습니다.',
+                '시작 날짜는 종료 날짜를 초과할 수 없습니다.',
         checkForm: false,
         idError: 12,
       };
@@ -684,11 +693,12 @@ const EditPosted = () => {
       if (error?.response?.data?.message === 'Invalid date value') {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1
-            ? 'Vui lòng nhập lại ngày làm việc'
-            : languageRedux === 2
-              ? 'Please enter a business date again'
-              : '근무일을 다시 입력해주세요.',
+          content:
+            languageRedux === 1
+              ? 'Vui lòng nhập lại ngày làm việc'
+              : languageRedux === 2
+                ? 'Please enter a business date again'
+                : '근무일을 다시 입력해주세요.',
         });
       }
     }
@@ -705,13 +715,11 @@ const EditPosted = () => {
         <div className="edit-posted_main">
           <div className="edit-title_post">
             <h1>
-              {
-                languageRedux === 1
-                  ? "Chỉnh sửa bài đăng tuyển dụng"
-                  : languageRedux === 2
-                    ? "Edit job posting"
-                    : languageRedux === 3 && "채용 공고 편집"
-              }
+              {languageRedux === 1
+                ? 'Chỉnh sửa bài đăng tuyển dụng'
+                : languageRedux === 2
+                  ? 'Edit job posting'
+                  : languageRedux === 3 && '채용 공고 편집'}
             </h1>
           </div>
           <Skeleton loading={loading} active>
@@ -835,13 +843,11 @@ const EditPosted = () => {
                 onClick={handleSubmit}
                 className="btn-edit_submitForm"
               >
-                {
-                  languageRedux === 1
-                    ? "Lưu chỉnh sửa"
-                    : languageRedux === 2
-                      ? "Save edits"
-                      : '수정사항 저장'
-                }
+                {languageRedux === 1
+                  ? 'Lưu chỉnh sửa'
+                  : languageRedux === 2
+                    ? 'Save edits'
+                    : '수정사항 저장'}
               </button>
             </form>
           </Skeleton>

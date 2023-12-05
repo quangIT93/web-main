@@ -53,23 +53,21 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
     page: {
       padding: 30,
       position: 'relative',
-      backgroundColor: '#fff',
+      zIndex: 1,
     },
     container: {
       flex: 1,
       flexDirection: 'row',
-      backgroundColor: '#FFFFFF',
-      zIndex: 2,
       //   paddingLeft: '14.279pt',
       //   paddingRight: '14.279pt',
       //   paddingTop: '68.34pt',
       //   gap: '48.781pt',
+      // position: 'absolute',
     },
     leftColumn: {
       flexDirection: 'column',
       width: '65%',
       // paddingRight: 10,
-      backgroundColor: '#fff',
       borderRight: `1px solid ${
         color === 1
           ? '#cee8ff'
@@ -89,7 +87,6 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       // paddingTop: '1.094cm',
       // marginTop: '1cm',
       // paddingLeft: '24.809pt',
-      backgroundColor: '#fff',
       gap: '20.495pt',
     },
     pageNumber: {
@@ -102,29 +99,109 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       color: 'grey',
     },
     heart1: {
-      borderRadius: 5,
-      width: 240,
-      height: 100,
-      right: -30,
+      width: 130,
+      height: 130,
+      right: '50%',
       top: 0,
       position: 'absolute',
-      backgroundColor: 'red',
-      transform: 'rotate(-2deg)',
-      borderTopLeftRadius: '80%',
-      borderBottomLeftRadius: '80%',
+      backgroundColor:
+        color === 1
+          ? '#f7b3cc'
+          : color === 2
+            ? '#AED6F1'
+            : color === 3
+              ? '#F9E79F'
+              : color === 4
+                ? '#ABEBC6'
+                : '#F1948A',
+      borderTopLeftRadius: '50%',
+      borderBottomLeftRadius: '50%',
       zIndex: -1,
     },
     heart2: {
-      borderRadius: 5,
-      width: 300,
-      height: 100,
-      right: -100,
-      top: 0,
+      width: 130,
+      height: 130,
+      right: 0,
+      top: '50%',
       position: 'absolute',
-      backgroundColor: 'red',
+      backgroundColor:
+        color === 1
+          ? '#f7b3cc'
+          : color === 2
+            ? '#AED6F1'
+            : color === 3
+              ? '#F9E79F'
+              : color === 4
+                ? '#ABEBC6'
+                : '#F1948A',
       transform: 'rotate(-90deg)',
       borderTopLeftRadius: '60%',
       borderBottomLeftRadius: '30%',
+    },
+    heart3: {
+      width: 130,
+      height: 130,
+      right: 1,
+      top: 1,
+      position: 'absolute',
+      backgroundColor:
+        color === 1
+          ? '#f7b3cc'
+          : color === 2
+            ? '#AED6F1'
+            : color === 3
+              ? '#F9E79F'
+              : color === 4
+                ? '#ABEBC6'
+                : '#F1948A',
+    },
+    heart11: {
+      width: 130,
+      height: 130,
+      right: '50%',
+      top: 0,
+      position: 'absolute',
+      backgroundColor: '#f0e3d0',
+      borderTopLeftRadius: '50%',
+      borderBottomLeftRadius: '50%',
+      zIndex: -1,
+    },
+    heart22: {
+      width: 130,
+      height: 130,
+      right: 0,
+      top: '50%',
+      position: 'absolute',
+      backgroundColor: '#f0e3d0',
+      transform: 'rotate(-90deg)',
+      borderTopLeftRadius: '60%',
+      borderBottomLeftRadius: '30%',
+    },
+    heart33: {
+      width: 130,
+      height: 130,
+      right: 1,
+      top: 1,
+      position: 'absolute',
+      backgroundColor: '#f0e3d0',
+    },
+    wrapHeart1: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      width: 260,
+      height: 260,
+      zIndex: 0,
+    },
+
+    wrapHeart2: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      width: 260,
+      height: 260,
+      transform: 'rotate(-180deg)',
+      zIndex: 0,
     },
   });
   Font.register({
@@ -147,8 +224,18 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
 
   const Resume = (props: any) => (
     <Page {...props} style={styles.page}>
-      <View style={styles.heart1} fixed></View>
-      <View style={styles.heart2} fixed></View>
+      <View style={styles.wrapHeart1} fixed>
+        <View style={styles.heart1}></View>
+        <View style={styles.heart2}></View>
+        <View style={styles.heart3}></View>
+      </View>
+
+      <View style={styles.wrapHeart2} fixed>
+        <View style={styles.heart11}></View>
+        <View style={styles.heart22}></View>
+        <View style={styles.heart33}></View>
+      </View>
+
       <Header profile={profile} fontSize={fontSize} color={color} />
       <View style={styles.container}>
         <View style={styles.leftColumn}>

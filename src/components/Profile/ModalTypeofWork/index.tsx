@@ -131,7 +131,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
             ? 'Loại hình công việc'
             : languageRedux === 2
               ? 'Type of work'
-              : languageRedux === 3 && '일의 종류'}
+              : languageRedux === 3 && '직업종류'}
         </Typography>
 
         {/* <Box sx={styleChildBox}>

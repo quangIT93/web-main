@@ -94,7 +94,7 @@ const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
             ? 'Đặt cv này thành mặc định'
             : languageRedux === 2
               ? 'Set as default'
-              : languageRedux === 3 && '이 CV를 기본값으로 설정하세요'}
+              : languageRedux === 3 && '대표 이력서로 설정'}
         </label>
       </div>
       <div className="share-buttons-choose-cv-modal">

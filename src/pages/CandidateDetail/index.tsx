@@ -120,9 +120,9 @@ const CandidateDetail: React.FC = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Chi tiết ứng viên'
-        : languageRedux === 2 ?
-          'HiJob - Candidate Details' :
-          'HiJob - 후보자 세부정보';
+        : languageRedux === 2
+          ? 'HiJob - Candidate Details'
+          : 'HiJob - 후보자 세부정보';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_candidate_detail' as string,
@@ -490,11 +490,13 @@ const CandidateDetail: React.FC = () => {
                         // 'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697190564373-1b072f22-916b-49f4-8ab8-fd37e3f3b6a4.jpg'
                       }
                       style={{ height: '70px', width: '70px' }}
-                      alt={languageRedux === 1
-                        ? 'Hình ảnh bị lỗi'
-                        : languageRedux === 2
-                          ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'}
+                      alt={
+                        languageRedux === 1
+                          ? 'Hình ảnh bị lỗi'
+                          : languageRedux === 2
+                            ? 'Image is corrupted'
+                            : '이미지가 손상되었습니다'
+                      }
                     />
                   </Badge>
                   <div style={{ marginLeft: '10px' }}>
@@ -530,7 +532,8 @@ const CandidateDetail: React.FC = () => {
                         window.open(
                           `/message?post_id=${searchParams.get(
                             'post-id',
-                          )}&user_id=${dataCandidate.applicationProfile.account_id
+                          )}&user_id=${
+                            dataCandidate.applicationProfile.account_id
                           }&application_id=${searchParams.get(
                             'application_id',
                           )} `,
@@ -571,38 +574,44 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>{
-                  languageRedux === 1
+                <h3>
+                  {languageRedux === 1
                     ? 'Thông tin cá nhân'
                     : languageRedux === 2
                       ? 'Personal Information'
-                      : '개인 정보'
-                }</h3>
+                      : '개인 정보'}
+                </h3>
               </div>
               <div className="info-detail">
                 <div className="div-detail-row left">
-                  <p>{languageRedux === 1
-                    ? 'Ngày sinh'
-                    : languageRedux === 2
-                      ? 'Date of birth'
-                      : '생년월일'}</p>
-                  <p>{languageRedux === 1
-                    ? 'Giới tính'
-                    : languageRedux === 2
-                      ? 'Gender'
-                      : '성별'}</p>
-                  <p>{languageRedux === 1
-                    ? 'Địa chỉ'
-                    : languageRedux === 2
-                      ? 'Location'
-                      : '위치'}</p>
+                  <p>
+                    {languageRedux === 1
+                      ? 'Ngày sinh'
+                      : languageRedux === 2
+                        ? 'Date of birth'
+                        : '생년월일'}
+                  </p>
+                  <p>
+                    {languageRedux === 1
+                      ? 'Giới tính'
+                      : languageRedux === 2
+                        ? 'Gender'
+                        : '성별'}
+                  </p>
+                  <p>
+                    {languageRedux === 1
+                      ? 'Địa chỉ'
+                      : languageRedux === 2
+                        ? 'Location'
+                        : '주소'}
+                  </p>
                 </div>
                 <div className="div-detail-row right">
                   <p>
                     {dataCandidate?.applicationProfile?.birthday
                       ? moment(
-                        new Date(dataCandidate?.applicationProfile?.birthday),
-                      ).format('DD/MM/yyyy')
+                          new Date(dataCandidate?.applicationProfile?.birthday),
+                        ).format('DD/MM/yyyy')
                       : languageRedux === 1
                         ? 'Chưa cập nhật'
                         : languageRedux === 2
@@ -612,25 +621,21 @@ const CandidateDetail: React.FC = () => {
                   <p>
                     {dataCandidate?.applicationProfile?.gender
                       ? dataCandidate?.applicationProfile?.gender === 1
-                        ?
-                        languageRedux === 1
+                        ? languageRedux === 1
                           ? 'Nam'
                           : languageRedux === 2
                             ? 'Male'
                             : '남성'
-                        :
-                        languageRedux === 1
+                        : languageRedux === 1
                           ? 'Nữ'
                           : languageRedux === 2
                             ? 'Female'
                             : '여성'
-                      :
-                      languageRedux === 1
+                      : languageRedux === 1
                         ? 'Nam'
                         : languageRedux === 2
                           ? 'Male'
-                          : '남성'
-                    }
+                          : '남성'}
                   </p>
                   <p>
                     {dataCandidate?.applicationProfile?.address?.name
@@ -653,40 +658,48 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>{languageRedux === 1
-                  ? 'Thông tin liên hệ'
-                  : languageRedux === 2
-                    ? 'Contact information'
-                    : languageRedux === 3
-                      ? '연락처'
-                      : 'Thông tin liên hệ'}</h3>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Thông tin liên hệ'
+                    : languageRedux === 2
+                      ? 'Contact information'
+                      : languageRedux === 3
+                        ? '연락처'
+                        : 'Thông tin liên hệ'}
+                </h3>
               </div>
               <div className="info-detail">
                 <div className="div-detail-row left">
-                  <p>{languageRedux === 1
-                    ? 'Số điện thoại'
-                    : languageRedux === 2
-                      ? 'Phone number'
-                      : '전화 번호'}</p>
-                  <p>{
-                    languageRedux === 1
+                  <p>
+                    {languageRedux === 1
+                      ? 'Số điện thoại'
+                      : languageRedux === 2
+                        ? 'Phone number'
+                        : '전화 번호'}
+                  </p>
+                  <p>
+                    {languageRedux === 1
                       ? 'Email'
                       : languageRedux === 2
                         ? 'Email'
-                        : '이메일'
-                  }</p>
+                        : '이메일'}
+                  </p>
 
-                  <p>{languageRedux === 1
-                    ? 'Facebook'
-                    : languageRedux === 2
+                  <p>
+                    {languageRedux === 1
                       ? 'Facebook'
-                      : '페이스북'}</p>
+                      : languageRedux === 2
+                        ? 'Facebook'
+                        : '페이스북'}
+                  </p>
 
-                  <p>{languageRedux === 1
-                    ? 'LinkedIn'
-                    : languageRedux === 2
+                  <p>
+                    {languageRedux === 1
                       ? 'LinkedIn'
-                      : '링크드인'}</p>
+                      : languageRedux === 2
+                        ? 'LinkedIn'
+                        : '링크드인'}
+                  </p>
                 </div>
                 <div className="div-detail-row right">
                   <p>
@@ -739,13 +752,13 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>{
-                  languageRedux === 1
+                <h3>
+                  {languageRedux === 1
                     ? 'CV/ Sơ yếu lý lịch'
                     : languageRedux === 2
                       ? 'CV/ Resume'
-                      : languageRedux === 3 && '이력서/이력서'
-                }</h3>
+                      : languageRedux === 3 && '이력서/이력서'}
+                </h3>
               </div>
               <Space wrap className="item-info-work">
                 {dataCandidate?.applicationProfile?.cv_url ? (
@@ -757,11 +770,13 @@ const CandidateDetail: React.FC = () => {
                     language={language}
                   />
                 ) : (
-                  <>{languageRedux === 1
-                    ? 'Chưa cập nhật'
-                    : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}</>
+                  <>
+                    {languageRedux === 1
+                      ? 'Chưa cập nhật'
+                      : languageRedux === 2
+                        ? 'Not updated yet'
+                        : languageRedux === 3 && '업데이트하지 않음'}
+                  </>
                 )}
               </Space>
             </div>
@@ -774,21 +789,23 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>{languageRedux === 1
-                  ? 'Lĩnh vực quan tâm'
-                  : languageRedux === 2
-                    ? 'Career objective'
-                    : '관심 분야'}</h3>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Lĩnh vực quan tâm'
+                    : languageRedux === 2
+                      ? 'Career objective'
+                      : '관심 분야'}
+                </h3>
               </div>
               <Space wrap className="item-info-work">
                 {dataCandidate?.categories?.length !== 0
                   ? dataCandidate?.categories?.map(
-                    (item: ICategories, index: number) => (
-                      <Button key={index} className="btn" type="text">
-                        {item.child_category}
-                      </Button>
-                    ),
-                  )
+                      (item: ICategories, index: number) => (
+                        <Button key={index} className="btn" type="text">
+                          {item.child_category}
+                        </Button>
+                      ),
+                    )
                   : languageRedux === 1
                     ? 'Chưa cập nhật'
                     : languageRedux === 2
@@ -804,22 +821,23 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>{languageRedux === 1
-                  ? 'Khu vực làm việc'
-                  : languageRedux === 2
-                    ? 'Working location'
-                    : languageRedux === 3 &&
-                    '근무 위치'}</h3>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Khu vực làm việc'
+                    : languageRedux === 2
+                      ? 'Working location'
+                      : languageRedux === 3 && '근무 위치'}
+                </h3>
               </div>
               <Space wrap className="item-info-work">
                 {dataCandidate?.locations?.length !== 0
                   ? dataCandidate?.locations?.map(
-                    (item: any, index: number) => (
-                      <Button key={index} className="btn" type="text">
-                        {item?.district}
-                      </Button>
-                    ),
-                  )
+                      (item: any, index: number) => (
+                        <Button key={index} className="btn" type="text">
+                          {item?.district}
+                        </Button>
+                      ),
+                    )
                   : languageRedux === 1
                     ? 'Chưa cập nhật'
                     : languageRedux === 2
@@ -836,11 +854,13 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>{languageRedux === 1
-                  ? 'Trình độ học vấn'
-                  : languageRedux === 2
-                    ? 'Education'
-                    : languageRedux === 3 && '최종학력'}</h3>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Trình độ học vấn'
+                    : languageRedux === 2
+                      ? 'Education'
+                      : languageRedux === 3 && '최종학력'}
+                </h3>
               </div>
               {dataCandidate?.educations?.length !== 0 ? (
                 dataCandidate?.educations?.map(
@@ -849,11 +869,13 @@ const CandidateDetail: React.FC = () => {
                   ),
                 )
               ) : (
-                <div style={{ marginTop: '16px' }}>{languageRedux === 1
-                  ? 'Chưa cập nhật'
-                  : languageRedux === 2
-                    ? 'Not updated yet'
-                    : languageRedux === 3 && '업데이트하지 않음'}</div>
+                <div style={{ marginTop: '16px' }}>
+                  {languageRedux === 1
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
+                </div>
               )}
 
               <div
@@ -873,24 +895,26 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>{
-                  languageRedux === 1
+                <h3>
+                  {languageRedux === 1
                     ? 'Kinh nghiệm làm việc'
                     : languageRedux === 2
                       ? 'Working experience'
-                      : '업무 경험'
-                }</h3>
+                      : '경력'}
+                </h3>
               </div>
               {dataCandidate?.experiences?.length !== 0 ? (
                 dataCandidate?.experiences?.map((item: any, index: number) => (
                   <ItemApply typeItem="experiences" key={index} item={item} />
                 ))
               ) : (
-                <div style={{ marginTop: '16px' }}>{languageRedux === 1
-                  ? 'Chưa cập nhật'
-                  : languageRedux === 2
-                    ? 'Not updated yet'
-                    : languageRedux === 3 && '업데이트하지 않음'}</div>
+                <div style={{ marginTop: '16px' }}>
+                  {languageRedux === 1
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
+                </div>
               )}
 
               <div

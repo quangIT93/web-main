@@ -53,15 +53,14 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
       className="post-jobType"
     >
       <FormLabel id="demo-row-radio-buttons-group-label" sx={styleLabel}>
-        {
-          languageRedux === 1
-            ? "Loại công việc"
-            : languageRedux === 2
-              ? "Job types"
-              : languageRedux === 3
-                ? '일의 종류'
-                : "Loại công việc"
-        } <span style={{ color: 'red' }}>*</span>
+        {languageRedux === 1
+          ? 'Loại công việc'
+          : languageRedux === 2
+            ? 'Job types'
+            : languageRedux === 3
+              ? '직업종류'
+              : 'Loại công việc'}{' '}
+        <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row

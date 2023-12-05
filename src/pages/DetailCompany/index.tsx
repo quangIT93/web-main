@@ -153,7 +153,7 @@ const DetailCompany = () => {
             ? 'Vị trí ứng tuyển'
             : languageRedux === 2
               ? 'Application positions'
-              : languageRedux === 3 && '모집 위치'}
+              : languageRedux === 3 && '개인 사용자'}
           <span style={{ color: '#0D99FF' }}>
             {' '}
             {'('}
@@ -268,7 +268,8 @@ const DetailCompany = () => {
                       ? `${applyPostitions} vị trí ứng tuyển`
                       : languageRedux === 2
                         ? `${applyPostitions} application positions`
-                        : languageRedux === 3 && `${applyPostitions} 모집 위치`}
+                        : languageRedux === 3 &&
+                          `${applyPostitions} 개인 사용자`}
                   </p>
                 </div>
               </div>

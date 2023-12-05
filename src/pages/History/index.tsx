@@ -231,7 +231,7 @@ const HistoryPost = () => {
           ? 'Danh sách bài viết'
           : languageRedux === 2
             ? 'List of articles'
-            : languageRedux === 3 && '글 목록',
+            : languageRedux === 3 && '커뮤니티',
       childs: [
         languageRedux === 1
           ? 'Đã lưu'
@@ -275,7 +275,7 @@ const HistoryPost = () => {
           ? 'Danh sách công ty'
           : languageRedux === 2
             ? 'List of companies'
-            : languageRedux === 3 && '관심한 회사',
+            : languageRedux === 3 && '회사  리스트',
       childs: [
         languageRedux === 1
           ? 'Công ty đã lưu'

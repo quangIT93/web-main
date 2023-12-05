@@ -45,7 +45,9 @@ const ModalUpdateInfo: React.FC<IModalSelectRole> = (props) => {
           {roleRedux === 0
             ? languageRedux === 1
               ? 'Vui lòng cập nhật hồ sơ của bạn!'
-              : 'Please update your profile!'
+              : languageRedux === 2
+                ? 'Please update your profile!'
+                : languageRedux === 3 && '프로필을 업데이트하십시오!'
             : languageRedux === 1
               ? 'Vui lòng cập nhật thông tin công ty của bạn!'
               : languageRedux === 2

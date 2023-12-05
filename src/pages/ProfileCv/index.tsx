@@ -307,7 +307,7 @@ const ProfileCv: React.FC = () => {
                                 ? 'Chọn CV để ứng tuyển'
                                 : languageRedux === 2
                                   ? 'Select CV to apply'
-                                  : '지원할 이력서를 선택하세요'}
+                                  : '대표 이력서로 선택'}
                             </p>
                             {/* <QuestionMarkIcon width={16} height={16} /> */}
                           </div>

@@ -119,7 +119,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                   ? 'Thông tin cơ bản'
                   : languageRedux === 2
                     ? 'Basic information'
-                    : languageRedux === 3 && '기준 정부·'}
+                    : languageRedux === 3 && '기본 정보·'}
               </h3>
               <ul>
                 <li>

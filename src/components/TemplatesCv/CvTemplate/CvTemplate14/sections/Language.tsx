@@ -12,18 +12,7 @@ const Language: React.FC<ICvLanguage> = (props) => {
     container: {
       marginRight: -25,
     },
-    divTitle: {
-      backgroundColor:
-        color === 1
-          ? '#e5f6fe'
-          : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-    },
+    divTitle: {},
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
@@ -31,14 +20,14 @@ const Language: React.FC<ICvLanguage> = (props) => {
       width: '137pt',
       color:
         color === 1
-          ? '#037385'
+          ? '#000000'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
@@ -52,14 +41,14 @@ const Language: React.FC<ICvLanguage> = (props) => {
       width: 'auto',
       color:
         color === 1
-          ? '#037385'
+          ? '#000000'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#000000'
+            : color === 3
+              ? '#000000'
+              : color === 4
+                ? '#000000'
+                : '#000000',
       fontFamily: 'Petrona Bold',
       fontWeight: 'extrabold',
     },
@@ -75,14 +64,14 @@ const Language: React.FC<ICvLanguage> = (props) => {
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#e5f6fe'
+          ? '#000000'
           : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
+            ? '#D6EAF8'
+            : color === 3
+              ? '#FCF3CF'
+              : color === 4
+                ? '#D5F5E3'
+                : '#FADBD8',
       margin: '7pt 0',
     },
   });
