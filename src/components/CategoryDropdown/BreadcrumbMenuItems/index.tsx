@@ -410,23 +410,23 @@ const BreadcrumbMenuItems: React.FC = () => {
                                           ? 'Translator'
                                           : languageRedux === 3 && '번역'
                                       : searchParams.get('categories-id') ===
-                                          '14'
+                                        '14'
                                         ? languageRedux === 1
                                           ? 'Khoa học - Kỹ thuật'
                                           : languageRedux === 2
                                             ? 'Science - Technology'
                                             : languageRedux === 3 && '과학-기술'
                                         : searchParams.get('categories-id') ===
-                                            '15'
+                                          '15'
                                           ? languageRedux === 1
                                             ? 'Chuyển nhà/Vệ sinh'
                                             : languageRedux === 2
                                               ? 'House moving/Cleaning'
                                               : languageRedux === 3 &&
-                                                '이사/ 청소 서비스'
+                                              '이사/ 청소 서비스'
                                           : searchParams.get(
-                                                'categories-id',
-                                              ) === '16'
+                                            'categories-id',
+                                          ) === '16'
                                             ? languageRedux === 1
                                               ? 'Ngành khác'
                                               : languageRedux === 2
@@ -505,10 +505,10 @@ const BreadcrumbMenuItems: React.FC = () => {
         {
           title:
             searchParams.get('c') === '1-0' ||
-            searchParams.get('c') === '2-0' ||
-            searchParams.get('c') === '2-0' ||
-            searchParams.get('c') === '0-0' ||
-            searchParams.get('c') === '4-0'
+              searchParams.get('c') === '2-0' ||
+              searchParams.get('c') === '2-0' ||
+              searchParams.get('c') === '0-0' ||
+              searchParams.get('c') === '4-0'
               ? languageRedux === 1
                 ? 'Tất cả'
                 : languageRedux === 2
@@ -710,7 +710,7 @@ const BreadcrumbMenuItems: React.FC = () => {
               ? 'Tạo CV'
               : languageRedux === 2
                 ? 'Create CV'
-                : languageRedux === 3 && '이려서 작성',
+                : languageRedux === 3 && '이력서 작성',
         },
       ],
     },
