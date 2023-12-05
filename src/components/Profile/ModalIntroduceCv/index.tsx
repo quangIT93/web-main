@@ -131,13 +131,13 @@ const ModalIntroduceCv: React.FC<any> = () => {
               ? 'Not updated information"'
               : languageRedux === 3 && '정보 업데이트를 아직 하지 않음'}
         </Button>
-        <Button type="primary" shape="round" onClick={handleSubmit}>
+        {/* <Button type="primary" shape="round" onClick={handleSubmit}>
           {languageRedux === 1
             ? 'Tạo CV ngay'
             : languageRedux === 2
               ? 'Create your CV now'
               : languageRedux === 3 && '지금 이력서를 작성하세요'}
-        </Button>
+        </Button> */}
       </div>
     </Modal>
   );

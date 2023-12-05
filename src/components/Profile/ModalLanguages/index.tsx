@@ -142,7 +142,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
             : languageRedux === 2
               ? 'Language names cannot exceed 255 characters'
               : languageRedux === 3 &&
-                '언어 이름은 255자를 초과할 수 없습니다.',
+              '언어 이름은 255자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -250,7 +250,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
               ? 'Thêm ngoại ngữ'
               : languageRedux === 2 && searchParams.get('type') === 'create'
                 ? 'Add Languages'
-                : languageRedux === 3 && '외국어 추가'}
+                : languageRedux === 3 && '언어 추가'}
           </Typography>
           <Box sx={{ marginBottom: '12px' }}>
             <Typography
@@ -283,7 +283,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
                       ? '언어'
                       : 'Ngoại ngữ'
               }
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {language.length > 255 ? (
@@ -293,7 +293,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
                     : languageRedux === 2
                       ? 'Language names cannot exceed 255 characters'
                       : languageRedux === 3 &&
-                        '언어 이름은 255자를 초과할 수 없습니다.'}
+                      '언어 이름은 255자를 초과할 수 없습니다.'}
                 </span>
               ) : language.length === 0 ? (
                 <span className="helper-text">
@@ -350,7 +350,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
                   ? 'Sơ cấp'
                   : languageRedux === 2
                     ? 'Primary'
-                    : languageRedux === 3 && '초보자'}
+                    : languageRedux === 3 && '초급'}
               </MenuItem>
               <MenuItem value={2}>
                 {languageRedux === 1
@@ -371,7 +371,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
                   ? 'Thành thạo'
                   : languageRedux === 2
                     ? 'Competently'
-                    : languageRedux === 3 && '능통자'}
+                    : languageRedux === 3 && '능통'}
               </MenuItem>
             </TextField>
           </Box>

@@ -190,10 +190,10 @@ const CompanyCardHistory: React.FC<Iprops> = (props) => {
                     placement="top"
                     title={
                       languageRedux === 1
-                        ? `${inforCompany?.amountPost} vị trí tuyển dụng`
+                        ? `${inforCompany?.amountPost} tin tuyển dụng`
                         : languageRedux === 2
-                          ? `${inforCompany?.amountPost} recruitment position`
-                          : `${inforCompany?.amountPost} 개인 사용자`
+                          ? `${inforCompany?.amountPost} opening jobs`
+                          : `${inforCompany?.amountPost} 등록 채용공고`
                     }
                   >
                     <Typography

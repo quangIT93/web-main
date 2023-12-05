@@ -106,11 +106,12 @@ import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformatio
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 import { color } from 'html2canvas/dist/types/css/types/color';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  },
-);
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 interface ItemAppy {
   id?: number | null;
@@ -414,7 +415,7 @@ const Profile: React.FC = () => {
               : '이력서를 삭제했습니다.',
         );
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -765,9 +766,9 @@ const Profile: React.FC = () => {
                   {languageRedux === 1
                     ? 'Vị trí ứng tuyển'
                     : languageRedux === 2
-                      ? 'Applying position'
+                      ? 'Position'
                       : languageRedux === 3
-                        ? '개인 사용자'
+                        ? '희망 직업'
                         : 'Vị trí ứng tuyển'}
                 </p>
               </div>
@@ -1066,7 +1067,7 @@ const Profile: React.FC = () => {
           </Snackbar>
         </Stack>
         {profileV3.typeRoleData === 0 &&
-        profileMorev3?.profilesCvs?.length === 0 ? (
+          profileMorev3?.profilesCvs?.length === 0 ? (
           <ModalIntroduceCv />
         ) : (
           <></>

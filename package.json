@@ -42,6 +42,7 @@
     "dotenv": "^10.0.0",
     "dotenv-expand": "^5.1.0",
     "draftjs-to-html": "^0.9.1",
+    "echarts": "^5.4.3",
     "embla-carousel-autoplay": "^7.1.0",
     "embla-carousel-react": "^7.1.0",
     "env-cmd": "^10.1.0",

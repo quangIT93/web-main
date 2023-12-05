@@ -346,6 +346,9 @@
 
             .div-job-img-swipper_item {
               height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
 
               img {
                 height: 100% !important;
@@ -652,8 +655,8 @@
           background-color: #f3f8fb;
           padding: 20px 20px;
           border-radius: 10px;
-          
-          @media screen and (min-width: 1023px){
+
+          @media screen and (min-width: 1023px) {
             height: 630px;
           }
 
@@ -754,6 +757,28 @@
                         display: flex;
                         align-items: center;
                         gap: 8px;
+
+                        .item-info-work {
+                          margin-top: 10px;
+                          margin-left: 28px;
+                          .btn {
+                            border: 0.5px solid #001424;
+                            border-radius: 10px;
+                            height: auto;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            padding: 4px 12px;
+                            font-size: 12px;
+
+
+                            span {
+                              word-break: break-all;
+                              text-align: left;
+                              white-space: wrap;
+                            }
+                          }
+                        }
                       }
 
                       p {
@@ -860,14 +885,13 @@
                           display: flex;
                           align-items: center;
                           gap: 8px;
+
                           .leaf_let_map {
                             height: 430px;
                             z-index: 1;
 
-
-                        
                             .leaflet-control-attribution {
-                                display: none;
+                              display: none;
                             }
                           }
                         }
@@ -1444,6 +1468,19 @@
           .div-suggest__map {
             h3 {
               margin-bottom: 20px;
+            }
+
+            .leaf_let_map {
+              height: 430px;
+              z-index: 1;
+
+              @media screen and (max-width: 430px) {
+                height: 350px;
+              }
+
+              .leaflet-control-attribution {
+                display: none;
+              }
             }
           }
 

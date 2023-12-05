@@ -150,7 +150,7 @@ const CompanyCard: React.FC<Iprops> = (props) => {
                   style={{
                     display:
                       localStorage.getItem('accountId') ===
-                      props?.item?.accountId
+                        props?.item?.accountId
                         ? 'none'
                         : 'flex',
                   }}
@@ -219,10 +219,10 @@ const CompanyCard: React.FC<Iprops> = (props) => {
                       }}
                     >
                       {languageRedux === 1
-                        ? `${props.item.amountPost} vị trí tuyển dụng`
+                        ? `${props.item.amountPost} tin tuyển dụng`
                         : languageRedux === 2
-                          ? `${props.item.amountPost} recruitment position`
-                          : `${props.item.amountPost} 개인 사용자`}
+                          ? `${props.item.amountPost} opening jobs`
+                          : `${props.item.amountPost} 등록 채용공고`}
                     </Typography>
                   </Tooltip>
                 </div>

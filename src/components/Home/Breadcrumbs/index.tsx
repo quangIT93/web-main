@@ -329,8 +329,8 @@ const BreadcrumbsCpn: React.FC = () => {
             ? languageRedux === 1
               ? 'Tất cả'
               : languageRedux === 2
-                ? 'All'
-                : '전부'
+              ? 'All'
+              : '전부'
             : arrayChild?.map(
                 (value: { id: number; name: string }, index: number) => (
                   <div key={index}>
@@ -347,17 +347,6 @@ const BreadcrumbsCpn: React.FC = () => {
       </div>
     ),
   ];
-
-  console.log(
-    " location.pathname === '/more-jobs'",
-    location.pathname === '/more-jobs',
-  );
-  console.log(
-    " localStorage.getItem('job-type')",
-    localStorage.getItem('job-type'),
-  );
-
-  console.log('  window.innerWidth', window.innerWidth);
 
   return (
     <Stack
@@ -410,8 +399,8 @@ const BreadcrumbsCpn: React.FC = () => {
           {languageRedux === 1
             ? 'Danh sách'
             : languageRedux === 2
-              ? 'List'
-              : '목록'}
+            ? 'List'
+            : '목록'}
         </Typography>
         <Box padding={0} className="box-breadcrumbs">
           <FormGroup>
@@ -454,8 +443,8 @@ const BreadcrumbsCpn: React.FC = () => {
             {languageRedux === 1
               ? 'Chọn'
               : languageRedux === 2
-                ? 'Select'
-                : '선택하다'}
+              ? 'Select'
+              : '선택하다'}
           </button>
         </div>
       </Collapse>

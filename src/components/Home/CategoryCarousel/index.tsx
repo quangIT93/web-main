@@ -155,9 +155,6 @@ const CategoryCarousel: React.FC = () => {
     let breadCrumb = document.querySelector(
       '.bread-crumb-container',
     ) as HTMLElement;
-    console.log(' location.pathname', location.pathname);
-    console.log('  searchParams.get job-type', searchParams.get('job-type'));
-    console.log('  window.innerWidth', window.innerWidth);
 
     // tabs.style.top = '70px';
     // breadCrumb.style.marginTop = '192px';
@@ -658,8 +655,8 @@ const CategoryCarousel: React.FC = () => {
                           languageRedux === 1
                           ? 'Công việc gợi ý'
                           : languageRedux === 2
-                            ? 'Suggested'
-                            : languageRedux === 3 && '추천 직업'
+                          ? 'Suggested'
+                          : languageRedux === 3 && '추천 직업'
                         : item.name}
                     </span>
                   </div>
