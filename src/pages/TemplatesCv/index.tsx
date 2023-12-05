@@ -392,7 +392,7 @@ const TemplatesCv: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="button-cv" onClick={handleClickSaveCv}>
+          <div className="button-cv">
             {/* <PDFDownloadLink
               className="download-cv-btn"
               document={
@@ -404,7 +404,7 @@ const TemplatesCv: React.FC = () => {
             >
               {languageRedux === 1 ? 'Lưu và tải PDF' : 'Save & Download PDF'}
             </PDFDownloadLink> */}
-            <p className="download-cv-btn">
+            <p className="download-cv-btn" onClick={handleClickSaveCv}>
               {languageRedux === 1
                 ? 'Lưu PDF'
                 : languageRedux === 2

@@ -760,6 +760,7 @@
 
                         .item-info-work {
                           margin-top: 10px;
+                          margin-left: 28px;
 
                           .btn {
                             border: 0.5px solid #001424;
@@ -768,7 +769,8 @@
                             display: flex;
                             flex-direction: column;
                             align-items: flex-start;
-                            padding: 12px;
+                            padding: 4px 12px;
+                            font-size: 12px;
 
                             span {
                               word-break: break-all;
