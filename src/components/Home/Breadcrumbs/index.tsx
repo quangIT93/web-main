@@ -357,9 +357,12 @@ const BreadcrumbsCpn: React.FC = () => {
         // marginTop: navTouchCatelory ? '170px' : '24px',
         // position: 'relative',
         marginTop:
-          location.pathname === '/more-jobs' &&
-          localStorage.getItem('job-type') === 'new' &&
-          window.innerWidth <= 450
+          (location.pathname === '/more-jobs' &&
+            localStorage.getItem('job-type') === 'new' &&
+            window.innerWidth <= 450) ||
+          (location.pathname === '/more-jobs' &&
+            localStorage.getItem('job-type') === 'hot-job' &&
+            window.innerWidth <= 450)
             ? '20px'
             : '0px',
         maxWidth: '1080px',
