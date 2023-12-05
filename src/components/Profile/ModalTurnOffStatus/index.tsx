@@ -42,7 +42,7 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
           setLoadingSwitch(false);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleCancel = () => {
@@ -71,7 +71,7 @@ const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
             : languageRedux === 2
               ? 'Turn off job search status'
               : languageRedux === 3
-                ? '채용정보 검색 상태 끄기'
+                ? '구직 상태를 끄기'
                 : 'Tắt trạng thái tìm việc'}
         </h3>
       }

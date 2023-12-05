@@ -1,34 +1,35 @@
-import React, { useState, memo } from 'react'
-import { Box } from '@mui/material'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import FormControlLabel from '@mui/material/FormControlLabel'
+import React, { useState, memo } from 'react';
+import { Box } from '@mui/material';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 // import Typography from '@mui/material/Typography'
 
-import { styleLabel } from '../CssEditPost'
+import { styleLabel } from '../CssEditPost';
 
-import './style.scss'
+import './style.scss';
 
 interface IEditPostTypeSalary {
-  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
-  editDataPosted: any
-  salaryType?: number
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
+  editDataPosted: any;
+  salaryType?: number;
   language: any;
   languageRedux: any;
 }
 
 const EditPostTypeSalary: React.FC<IEditPostTypeSalary> = (props) => {
-  const { editDataPosted, setEditDataPosted, salaryType, languageRedux } = props
+  const { editDataPosted, setEditDataPosted, salaryType, languageRedux } =
+    props;
 
   const handleChangeMoneyType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       moneyType: Number(e.target.value),
-    }))
-  }
+    }));
+  };
   return (
     <Box
       sx={{
@@ -48,13 +49,11 @@ const EditPostTypeSalary: React.FC<IEditPostTypeSalary> = (props) => {
           }}
           color="warning"
         >
-          {
-            languageRedux === 1
-              ? "Mức lương"
-              : languageRedux === 2
-                ? "Salary"
-                : '목르엉'
-          }{' '}
+          {languageRedux === 1
+            ? 'Mức lương'
+            : languageRedux === 2
+              ? 'Salary'
+              : '샐러리/급여'}{' '}
           <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
@@ -91,7 +90,7 @@ const EditPostTypeSalary: React.FC<IEditPostTypeSalary> = (props) => {
         </RadioGroup>
       </FormControl>
     </Box>
-  )
-}
+  );
+};
 
-export default memo(EditPostTypeSalary)
+export default memo(EditPostTypeSalary);

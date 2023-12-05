@@ -101,9 +101,11 @@ const ModalNotiValidateCompany: React.FC<IPropModalNotiValidateCompany> = (
             <CloseIcon />
           </IconButton>
           <h2 className="title-post_guide">
-            {languageRedux
+            {languageRedux === 1
               ? 'Đăng bài tuyển dụng không thành công'
-              : 'Job posting failed'}
+              : languageRedux === 2
+                ? 'Job posting failed'
+                : languageRedux === 3 && '채용공고 게시 실패'}
           </h2>
           <div className="wrap-imagePost_guide">
             <img

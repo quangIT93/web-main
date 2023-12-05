@@ -12,18 +12,7 @@ const Skill: React.FC<ICvSkill> = (props) => {
     container: {
       marginRight: -25,
     },
-    divTitle: {
-      backgroundColor:
-        color === 1
-          ? '#e5f6fe'
-          : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
-    },
+    divTitle: {},
     title: {
       marginLeft: '20pt',
       padding: '9.209pt 0',
@@ -31,14 +20,14 @@ const Skill: React.FC<ICvSkill> = (props) => {
       width: '137pt',
       color:
         color === 1
-          ? '#037385'
+          ? '#000000'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       letterSpacing: '4pt',
       fontFamily: 'Petrona Bold',
       fontWeight: 'extrabold',
@@ -56,14 +45,14 @@ const Skill: React.FC<ICvSkill> = (props) => {
       fontFamily: 'Petrona Bold',
       color:
         color === 1
-          ? '#037385'
+          ? '#000000'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#000000'
+            : color === 3
+              ? '#000000'
+              : color === 4
+                ? '#000000'
+                : '#000000',
     },
     textDes: {
       fontSize: '9pt',
@@ -77,14 +66,14 @@ const Skill: React.FC<ICvSkill> = (props) => {
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#e5f6fe'
+          ? '#000000'
           : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
+            ? '#D6EAF8'
+            : color === 3
+              ? '#FCF3CF'
+              : color === 4
+                ? '#D5F5E3'
+                : '#FADBD8',
       margin: '7pt 0 4pt 20pt',
     },
   });

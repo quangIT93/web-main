@@ -52,7 +52,7 @@ const SearchLocationCompany: React.FC<ISearchLocation> = (props) => {
           ? 'Địa điểm'
           : languageRedux === 2
             ? 'Location'
-            : languageRedux === 3 && '위치'}
+            : languageRedux === 3 && '주소'}
       </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
@@ -134,7 +134,7 @@ const SearchLocationCompany: React.FC<ISearchLocation> = (props) => {
             ? 'Địa điểm'
             : languageRedux === 2
               ? 'Location'
-              : languageRedux === 3 && '위치'
+              : languageRedux === 3 && '주소'
         }
       />
     </div>

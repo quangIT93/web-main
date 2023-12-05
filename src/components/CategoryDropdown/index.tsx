@@ -480,10 +480,11 @@ const CategoryDropdown: React.FC = () => {
                           ? `Job search status is ${
                               profileV3.isSearch === 1 ? 'on' : 'off'
                             }:`
-                          : languageRedux === 3 &&
-                            `채용정보 검색 상태가 꺼져 ${
-                              profileV3.isSearch === 1 ? '있습니다' : '있습니다'
-                            }:`
+                          : languageRedux === 3 && profileV3.isSearch === 1
+                            ? '구직 상태가 켜져 있습니다.'
+                            : languageRedux === 3 &&
+                              profileV3.isSearch !== 1 &&
+                              '구직 상태가 꺼져 있습니다.'
                     }
                   </p>
                   <Switch

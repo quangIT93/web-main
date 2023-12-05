@@ -1,64 +1,71 @@
-import React, { useState, useEffect, memo } from 'react'
-import { Box } from '@mui/material'
+import React, { useState, useEffect, memo } from 'react';
+import { Box } from '@mui/material';
 // import Radio from '@mui/material/Radio'
 // import RadioGroup from '@mui/material/RadioGroup'
 // import FormControl from '@mui/material/FormControl'
 // import FormLabel from '@mui/material/FormLabel'
 // import FormControlLabel from '@mui/material/FormControlLabel'
-import { Input, Space } from 'antd'
-import Typography from '@mui/material/Typography'
+import { Input, Space } from 'antd';
+import Typography from '@mui/material/Typography';
 
 //@ts-ignore
-import 'intl'
-import 'intl/locale-data/jsonp/en'
-import { styleLabel } from '../CssEditPost'
-import { post } from 'validations/lang/vi/post'
-import { postEn } from 'validations/lang/en/post'
+import 'intl';
+import 'intl/locale-data/jsonp/en';
+import { styleLabel } from '../CssEditPost';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 interface IEditPostFilterSalary {
-  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
-  editDataPosted: any
-  salaryType?: number
-  dataOld: any
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
+  editDataPosted: any;
+  salaryType?: number;
+  dataOld: any;
   language: any;
   languageRedux: any;
 }
 
 const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
-  const { setEditDataPosted, editDataPosted, salaryType, dataOld, language, languageRedux } = props
+  const {
+    setEditDataPosted,
+    editDataPosted,
+    salaryType,
+    dataOld,
+    language,
+    languageRedux,
+  } = props;
 
-  const [valueSalaryMax, setValueSalaryMax] = useState(dataOld?.salary_max)
-  const [valueSalaryMin, setValueSalaryMin] = useState(dataOld?.salary_min)
+  const [valueSalaryMax, setValueSalaryMax] = useState(dataOld?.salary_max);
+  const [valueSalaryMin, setValueSalaryMin] = useState(dataOld?.salary_min);
 
   const handleChangesalaryMin = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setValueSalaryMin(e.target.value.replace(',', ''))
+    setValueSalaryMin(e.target.value.replace(',', ''));
 
-    const inputValue = e.target.value.replace(',', '')
-    const reg = /[0-9]+$/
+    const inputValue = e.target.value.replace(',', '');
+    const reg = /[0-9]+$/;
 
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       setEditDataPosted((preValue: any) => ({
         ...preValue,
         salaryMin: inputValue.replace(',', ''),
-      }))
+      }));
     }
-  }
+  };
   const handleChangesalaryMax = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setValueSalaryMax(e.target.value.replace(',', ''))
+    setValueSalaryMax(e.target.value.replace(',', ''));
 
-    const inputValue = e.target.value.replace(',', '')
-    const reg = /[0-9]+$/
+    const inputValue = e.target.value.replace(',', '');
+    const reg = /[0-9]+$/;
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       setEditDataPosted((preValue: any) => ({
         ...preValue,
         salaryMax: inputValue.replace(',', ''),
-      }))
+      }));
     }
-  }
+  };
 
   useEffect(() => {
     if (salaryType === 6) {
@@ -66,15 +73,15 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
         ...preValue,
         salaryMax: 0,
         salaryMin: 0,
-      }))
+      }));
     } else {
       setEditDataPosted((preValue: any) => ({
         ...preValue,
         salaryMax: valueSalaryMax?.toString()?.replace(',', ''),
         salaryMin: valueSalaryMin?.toString()?.replace(',', ''),
-      }))
+      }));
     }
-  }, [salaryType])
+  }, [salaryType]);
 
   return (
     <Box
@@ -96,13 +103,11 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              languageRedux === 1
-                ? "Lương tối thiểu"
-                : languageRedux === 2
-                  ? "Min salary"
-                  : '루옹 투이 티에우'
-            }{' '}
+            {languageRedux === 1
+              ? 'Lương tối thiểu'
+              : languageRedux === 2
+                ? 'Min salary'
+                : '섹션 추가'}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
@@ -110,14 +115,14 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             maxLength={12}
             placeholder={
               languageRedux === 1
-                ? "Lương tối thiểu"
+                ? 'Lương tối thiểu'
                 : languageRedux === 2
-                  ? "Min salary"
-                  : '루옹 투이 티에우'
+                  ? 'Min salary'
+                  : '섹션 추가'
             }
             onChange={handleChangesalaryMin}
             value={new Intl.NumberFormat('en-US').format(
-              Number(editDataPosted?.salaryMin?.toString().replace(',', ''))
+              Number(editDataPosted?.salaryMin?.toString().replace(',', '')),
             )}
             disabled={salaryType === 6}
             id="edit_post_salaryMin"
@@ -134,13 +139,11 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              languageRedux === 1
-                ? "Lương tối đa"
-                : languageRedux === 2
-                  ? "Max salary"
-                  : '루옹 터이 다'
-            }{' '}
+            {languageRedux === 1
+              ? 'Lương tối đa'
+              : languageRedux === 2
+                ? 'Max salary'
+                : '최대 급여.'}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
@@ -148,14 +151,14 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             maxLength={12}
             placeholder={
               languageRedux === 1
-                ? "Lương tối đa"
+                ? 'Lương tối đa'
                 : languageRedux === 2
-                  ? "Max salary"
-                  : '루옹 터이 다'
+                  ? 'Max salary'
+                  : '최대 급여.'
             }
             onChange={handleChangesalaryMax}
             value={new Intl.NumberFormat('en-US').format(
-              Number(editDataPosted?.salaryMax?.toString().replace(',', ''))
+              Number(editDataPosted?.salaryMax?.toString().replace(',', '')),
             )}
             disabled={salaryType === 6}
             id="edit_post_salaryMax"
@@ -163,7 +166,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
         </Space>
       </Space>
     </Box>
-  )
-}
+  );
+};
 
-export default memo(EditPostFilterSalary)
+export default memo(EditPostFilterSalary);

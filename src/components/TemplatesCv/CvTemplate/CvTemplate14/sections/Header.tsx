@@ -41,7 +41,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontSize: '46pt',
       color:
         color === 1
-          ? '#037385'
+          ? '#000000'
           : color === 2
             ? '#0D99FF'
             : color === 3
@@ -58,7 +58,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       marginTop: '20pt',
       color:
         color === 1
-          ? '#037385'
+          ? '#000000'
           : color === 2
             ? '#0D99FF'
             : color === 3

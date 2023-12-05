@@ -19,11 +19,18 @@ interface IPostSalaryType {
 }
 
 const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
-  const { moneyType, setMoneyType, salaryType, language, setIsValidSubmit, languageRedux } = props;
+  const {
+    moneyType,
+    setMoneyType,
+    salaryType,
+    language,
+    setIsValidSubmit,
+    languageRedux,
+  } = props;
 
   const handleChangeMoneyType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMoneyType(Number(e.target.value));
-    setIsValidSubmit(false)
+    setIsValidSubmit(false);
   };
 
   return (
@@ -44,13 +51,11 @@ const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
             opacity: salaryType === 6 ? 0.5 : 1, // Thiết lập opacity thành 0.5 nếu salaryType === 6
           }}
         >
-          {
-            languageRedux === 1
-              ? "Mức lương"
-              : languageRedux === 2
-                ? "Salary"
-                : '목르엉'
-          }{' '}
+          {languageRedux === 1
+            ? 'Mức lương'
+            : languageRedux === 2
+              ? 'Salary'
+              : '샐러리/급여'}{' '}
           <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup

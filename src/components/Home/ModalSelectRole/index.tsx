@@ -148,7 +148,7 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
                     ? 'Ứng viên'
                     : languageRedux === 2
                       ? 'Candidate'
-                      : languageRedux === 3 && '모집 위치'}
+                      : languageRedux === 3 && '개인 사용자'}
                 </Radio>
               </Space>
             </Space>

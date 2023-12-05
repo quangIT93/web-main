@@ -3,7 +3,7 @@ import { Button, Modal } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import postApi from 'api/postApi';
-import styles from './style.module.scss'
+import styles from './style.module.scss';
 interface IModalShare {
   openModalClosePost: boolean;
   setOpenModalClosePost: React.Dispatch<React.SetStateAction<boolean>>;
@@ -73,8 +73,8 @@ const ModalClosePost: React.FC<IModalShare> = (props) => {
       >
         {languageRedux === 1
           ? 'Bạn có chắc chắn muốn đóng bài tuyển dụng này không? Bài tuyển dụng không thể được khôi phục sau khi đóng. Hãy quyết định cận thận'
-          : languageRedux === 2 ?
-            'Are you sure you want to close this job posting? Job postings cannot be restored once closed. Please decide carefully'
+          : languageRedux === 2
+            ? 'Are you sure you want to close this job posting? Job postings cannot be restored once closed. Please decide carefully'
             : '이 채용 공고를 닫으시겠습니까? 채용 공고가 종료되면 복원할 수 없습니다. 신중하게 결정해주세요'}
       </p>
       <div className={styles.buttons_close_post_modal}>

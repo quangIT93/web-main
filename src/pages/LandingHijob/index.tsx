@@ -57,8 +57,9 @@ const LandingHijob = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Landing HiJob'
-        : languageRedux === 2 ? "HiJob - Landing HiJob"
-          : "HiJob - HiJob 착륙";
+        : languageRedux === 2
+          ? 'HiJob - Landing HiJob'
+          : 'HiJob - HiJob 착륙';
     logEvent(analytics, 'screen_view' as string, {
       page_title: '/landing-hijob' as string,
     });
@@ -204,7 +205,7 @@ const LandingHijob = () => {
             break;
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   // console.log(profileV3);
 
@@ -271,7 +272,7 @@ const LandingHijob = () => {
                 : languageRedux === 2
                   ? 'Community services post job postings, search for candidates effectively.'
                   : languageRedux === 3 &&
-                  '채용 공고를 게시하고 효과적으로 후보자를 검색할 수 있는 커뮤니티 서비스입니다.'}
+                    '채용 공고를 게시하고 효과적으로 후보자를 검색할 수 있는 커뮤니티 서비스입니다.'}
             </h3>
             <Button type="primary" shape="round" onClick={handleMoveToPost}>
               {languageRedux === 1
@@ -298,7 +299,7 @@ const LandingHijob = () => {
                 : languageRedux === 2
                   ? 'HiJob brings comprehensive solutions to help businesses simultaneously solve problems around recruitment, from finding CVs, screening candidate profiles to evaluating candidates and measuring effectiveness.'
                   : languageRedux === 3 &&
-                  'HiJob은 기업이 이력서 검색, 후보자 프로필 심사, 후보자 평가 및 효율성 측정에 이르기까지 채용 문제와 관련된 문제를 동시에 해결할 수 있도록 지원하는 포괄적인 솔루션을 제공합니다.'}
+                    'HiJob은 기업이 이력서 검색, 후보자 프로필 심사, 후보자 평가 및 효율성 측정에 이르기까지 채용 문제와 관련된 문제를 동시에 해결할 수 있도록 지원하는 포괄적인 솔루션을 제공합니다.'}
             </p>
             <Button type="primary" shape="round" onClick={handleMoveToRegister}>
               {languageRedux === 1
@@ -317,7 +318,7 @@ const LandingHijob = () => {
               : languageRedux === 2
                 ? 'New job posting technology. New feature. New experience.'
                 : languageRedux === 3 &&
-                '새로운 채용 공고 기술. 새로운 기능. 새로운 경험.'}
+                  '새로운 채용 공고 기술. 새로운 기능. 새로운 경험.'}
           </h3>
           <div className={styles.landing_propose_content}>
             <img src={hijobPropose} alt="hijobPropose" />
@@ -335,7 +336,7 @@ const LandingHijob = () => {
                   : languageRedux === 2
                     ? 'HiJob has the ability to analyze the requirements, habits, and behaviors of employers and candidates, and make the most of large amounts of data, thereby making judgments and recommendations on what can be done to Recruit more effectively, connecting the right recruitment needs of the business with the right candidates.'
                     : languageRedux === 3 &&
-                    'HiJob은 고용주와 후보자의 요구 사항, 습관, 행동을 분석하고 방대한 양의 데이터를 최대한 활용하여 Recruit을 보다 효과적으로 수행할 수 있는 방법에 대한 판단과 제안을 제공하고, 적합한 후보자와 비즈니스를 하세요.'}
+                      'HiJob은 고용주와 후보자의 요구 사항, 습관, 행동을 분석하고 방대한 양의 데이터를 최대한 활용하여 Recruit을 보다 효과적으로 수행할 수 있는 방법에 대한 판단과 제안을 제공하고, 적합한 후보자와 비즈니스를 하세요.'}
               </p>
               <Button
                 type="primary"
@@ -359,7 +360,7 @@ const LandingHijob = () => {
                 : languageRedux === 2
                   ? 'Advantages available on HiJob Recruitment.'
                   : languageRedux === 3 &&
-                  'HiJob Recruitment에서 제공되는 이점'}
+                    'HiJob Recruitment에서 제공되는 이점'}
             </h3>
             <p>
               {languageRedux === 1
@@ -367,7 +368,7 @@ const LandingHijob = () => {
                 : languageRedux === 2
                   ? 'With new technology, HiJob Recruitment inherits current advantages and brings a completely different experience, helping businesses recruit effectively in the digital age.'
                   : languageRedux === 3 &&
-                  '새로운 기술을 통해 HiJob Recruitment는 현재의 장점을 계승하고 완전히 다른 경험을 제공하여 기업이 디지털 시대에 효과적으로 채용할 수 있도록 돕습니다.'}
+                    '새로운 기술을 통해 HiJob Recruitment는 현재의 장점을 계승하고 완전히 다른 경험을 제공하여 기업이 디지털 시대에 효과적으로 채용할 수 있도록 돕습니다.'}
             </p>
           </div>
           <div className={styles.advantages_content}>
@@ -388,7 +389,7 @@ const LandingHijob = () => {
                       : languageRedux === 2
                         ? 'HiJob helps employers post free ads quickly and easily thanks to tools created specifically for you by HiJob.'
                         : languageRedux === 3 &&
-                        'HiJob은 HiJob이 귀하를 위해 특별히 제작한 도구 덕분에 고용주가 무료 광고를 빠르고 쉽게 게시할 수 있도록 도와줍니다.'}
+                          'HiJob은 HiJob이 귀하를 위해 특별히 제작한 도구 덕분에 고용주가 무료 광고를 빠르고 쉽게 게시할 수 있도록 도와줍니다.'}
                   </p>
                 </div>
               </div>
@@ -408,7 +409,7 @@ const LandingHijob = () => {
                       : languageRedux === 2
                         ? 'HiJob has a large number of candidates who are active regularly and for a long time. Thanks to the diverse number of jobs in professions, locations,...'
                         : languageRedux === 3 &&
-                        'HiJob에는 정기적으로, 오랫동안 활동하는 지원자가 많이 있습니다. 직업, 위치, 분야의 다양한 직업 덕분에...'}
+                          'HiJob에는 정기적으로, 오랫동안 활동하는 지원자가 많이 있습니다. 직업, 위치, 분야의 다양한 직업 덕분에...'}
                   </p>
                 </div>
               </div>
@@ -421,7 +422,7 @@ const LandingHijob = () => {
                       : languageRedux === 2
                         ? 'Features for managing recruitment news and candidate CVs'
                         : languageRedux === 3 &&
-                        '채용 소식 및 후보자 CV 관리 기능'}
+                          '채용 소식 및 후보자 CV 관리 기능'}
                   </h3>
                   <p>
                     {languageRedux === 1
@@ -429,7 +430,7 @@ const LandingHijob = () => {
                       : languageRedux === 2
                         ? 'Helps employers manage their warehouse of candidate CVs and job postings fully, systematically and without data loss.'
                         : languageRedux === 3 &&
-                        '고용주가 후보자 CV 및 채용 공고 창고를 데이터 손실 없이 완전하고 체계적으로 관리할 수 있도록 도와줍니다.'}
+                          '고용주가 후보자 CV 및 채용 공고 창고를 데이터 손실 없이 완전하고 체계적으로 관리할 수 있도록 도와줍니다.'}
                   </p>
                 </div>
               </div>
@@ -451,7 +452,7 @@ const LandingHijob = () => {
                       : languageRedux === 2
                         ? 'Helps employers know the exact number of candidate CVs through each round from receiving CVs to going to work.'
                         : languageRedux === 3 &&
-                        '고용주가 CV 수령부터 출근까지 각 라운드를 통해 후보자 CV의 정확한 수를 알 수 있도록 도와줍니다.'}
+                          '고용주가 CV 수령부터 출근까지 각 라운드를 통해 후보자 CV의 정확한 수를 알 수 있도록 도와줍니다.'}
                   </p>
                 </div>
               </div>
@@ -471,7 +472,7 @@ const LandingHijob = () => {
                       : languageRedux === 2
                         ? 'With smart, effective candidate sourcing methods, employers will easily find candidates for their recruitment campaigns.'
                         : languageRedux === 3 &&
-                        '현명하고 효과적인 후보자 소싱 방법을 통해 고용주는 채용 캠페인에 적합한 후보자를 쉽게 찾을 수 있습니다.'}
+                          '현명하고 효과적인 후보자 소싱 방법을 통해 고용주는 채용 캠페인에 적합한 후보자를 쉽게 찾을 수 있습니다.'}
                   </p>
                 </div>
               </div>
@@ -486,7 +487,7 @@ const LandingHijob = () => {
                 : languageRedux === 2
                   ? 'What is the right solution for your business?'
                   : languageRedux === 3 &&
-                  '귀하의 비즈니스에 적합한 솔루션은 무엇입니까?'}
+                    '귀하의 비즈니스에 적합한 솔루션은 무엇입니까?'}
             </h3>
             <p>
               {languageRedux === 1
@@ -494,7 +495,7 @@ const LandingHijob = () => {
                 : languageRedux === 2
                   ? "Please leave your recruitment information and HiJob's recruitment consultants will contact you immediately."
                   : languageRedux === 3 &&
-                  '채용정보를 남겨주시면 하이잡 채용 컨설턴트가 즉시 연락드리겠습니다.'}
+                    '채용정보를 남겨주시면 하이잡 채용 컨설턴트가 즉시 연락드리겠습니다.'}
             </p>
           </div>
           <div className={styles.register_content}>
@@ -522,7 +523,7 @@ const LandingHijob = () => {
                       : languageRedux === 2
                         ? 'Full name'
                         : languageRedux === 3
-                          ? '이름과 성'
+                          ? '성명'
                           : 'Họ và tên'}
                   </p>
                   <Input
@@ -532,7 +533,7 @@ const LandingHijob = () => {
                         : languageRedux === 2
                           ? 'Full name'
                           : languageRedux === 3
-                            ? '이름과 성'
+                            ? '성명'
                             : 'Họ và tên'
                     }
                     ref={inputNameRef}
@@ -543,11 +544,13 @@ const LandingHijob = () => {
                   />
                 </div>
                 <div className={styles.register_input}>
-                  <p>{languageRedux === 1
-                    ? 'Email: '
-                    : languageRedux === 2
+                  <p>
+                    {languageRedux === 1
                       ? 'Email: '
-                      : '이메일: '}</p>
+                      : languageRedux === 2
+                        ? 'Email: '
+                        : '이메일: '}
+                  </p>
                   <Input
                     placeholder="Example@gmail.com"
                     ref={inputEmailRef}
@@ -602,7 +605,7 @@ const LandingHijob = () => {
               : languageRedux === 2
                 ? 'Value when using HiJob Recruitment Platform'
                 : languageRedux === 3 &&
-                'HiJob Recruitment Platform를 사용할 때의 값'}
+                  'HiJob Recruitment Platform를 사용할 때의 값'}
           </h3>
           <div className={styles.platform_content}>
             <div className={styles.platform_item}>
@@ -614,7 +617,7 @@ const LandingHijob = () => {
                     : languageRedux === 2
                       ? 'Provide good job information'
                       : languageRedux === 3 &&
-                      '좋은 일자리 정보를 제공해주세요'}
+                        '좋은 일자리 정보를 제공해주세요'}
                 </h3>
                 <p>
                   {languageRedux === 1
@@ -622,7 +625,7 @@ const LandingHijob = () => {
                     : languageRedux === 2
                       ? 'HiJob helps employers post free ads quickly and easily thanks to tools created specifically for you by HiJob.'
                       : languageRedux === 3 &&
-                      'HiJob은 HiJob이 귀하를 위해 특별히 제작한 도구 덕분에 고용주가 무료 광고를 빠르고 쉽게 게시할 수 있도록 도와줍니다.'}
+                        'HiJob은 HiJob이 귀하를 위해 특별히 제작한 도구 덕분에 고용주가 무료 광고를 빠르고 쉽게 게시할 수 있도록 도와줍니다.'}
                 </p>
               </div>
             </div>
@@ -635,7 +638,7 @@ const LandingHijob = () => {
                     : languageRedux === 2
                       ? 'Creating your own CV is simple'
                       : languageRedux === 3 &&
-                      '나만의 CV를 만드는 것은 간단합니다'}
+                        '나만의 CV를 만드는 것은 간단합니다'}
                 </h3>
                 <p>
                   {languageRedux === 1
@@ -643,7 +646,7 @@ const LandingHijob = () => {
                     : languageRedux === 2
                       ? 'HiJob has a large number of candidates who are active regularly and for a long time. Thanks to the diverse number of jobs in professions, locations,...'
                       : languageRedux === 3 &&
-                      'HiJob에는 정기적이고 장기적인 활동을 하는 지원자가 많이 있습니다. 다양한 산업, 위치에 다양한 일자리를 제공합니다.'}
+                        'HiJob에는 정기적이고 장기적인 활동을 하는 지원자가 많이 있습니다. 다양한 산업, 위치에 다양한 일자리를 제공합니다.'}
                 </p>
               </div>
             </div>
@@ -656,7 +659,7 @@ const LandingHijob = () => {
                     : languageRedux === 2
                       ? 'The system of CV templates is diverse by industry'
                       : languageRedux === 3 &&
-                      'CV 템플릿 시스템은 산업별로 다양합니다.'}
+                        'CV 템플릿 시스템은 산업별로 다양합니다.'}
                 </h3>
                 <p>
                   {languageRedux === 1
@@ -664,7 +667,7 @@ const LandingHijob = () => {
                     : languageRedux === 2
                       ? 'Helps employers manage their warehouse of candidate CVs and job postings fully, systematically and without data loss.'
                       : languageRedux === 3 &&
-                      '고용주가 후보자 CV 및 채용 공고 창고를 데이터 손실 없이 완전하고 체계적으로 관리할 수 있도록 도와줍니다.'}
+                        '고용주가 후보자 CV 및 채용 공고 창고를 데이터 손실 없이 완전하고 체계적으로 관리할 수 있도록 도와줍니다.'}
                 </p>
               </div>
             </div>
@@ -685,7 +688,7 @@ const LandingHijob = () => {
                 : languageRedux === 2
                   ? 'HiJob has the ability to analyze the requirements, habits, and behaviors of employers and candidates, and make the most of large amounts of data, thereby making judgments and recommendations on what can be done to Recruit more effectively, connecting the right recruitment needs of the business with the right candidates.'
                   : languageRedux === 3 &&
-                  'HiJob은 고용주와 후보자의 요구 사항, 습관, 행동을 분석하고 방대한 양의 데이터를 최대한 활용하여 Recruit을 보다 효과적으로 수행할 수 있는 방법에 대한 판단과 제안을 제공하고, 적합한 후보자와 비즈니스를 하세요.'}
+                    'HiJob은 고용주와 후보자의 요구 사항, 습관, 행동을 분석하고 방대한 양의 데이터를 최대한 활용하여 Recruit을 보다 효과적으로 수행할 수 있는 방법에 대한 판단과 제안을 제공하고, 적합한 후보자와 비즈니스를 하세요.'}
             </p>
             {/* <Button
                             type="primary"
@@ -721,7 +724,7 @@ const LandingHijob = () => {
                       : languageRedux === 2
                         ? 'Ability to attract the attention of the right Candidate.'
                         : languageRedux === 3 &&
-                        '적합한 후보자의 관심을 끄는 능력.'}
+                          '적합한 후보자의 관심을 끄는 능력.'}
                   </p>
                 </div>
                 <div className={styles.content_item}>
@@ -734,7 +737,7 @@ const LandingHijob = () => {
                       : languageRedux === 2
                         ? 'Comprehensive solution helps businesses solve problems surrounding recruitment issues at the same time.'
                         : languageRedux === 3 &&
-                        '포괄적인 솔루션은 기업이 채용 문제와 관련된 문제를 동시에 해결할 수 있도록 도와줍니다.'}
+                          '포괄적인 솔루션은 기업이 채용 문제와 관련된 문제를 동시에 해결할 수 있도록 도와줍니다.'}
                   </p>
                 </div>
               </div>
@@ -778,7 +781,7 @@ const LandingHijob = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={openBackdrop}
-      //  onClick={handleClose}
+        //  onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -822,7 +825,7 @@ const LandingHijob = () => {
             : languageRedux === 2
               ? 'Your information has been sent to Hijob. We will contact you as quickly as possible!'
               : languageRedux === 3 &&
-              '귀하의 정보가 Hijob으로 전송되었습니다. 최대한 빠르게 연락드리겠습니다!'}
+                '귀하의 정보가 Hijob으로 전송되었습니다. 최대한 빠르게 연락드리겠습니다!'}
         </p>
         <div className={styles.button_send_request_success_modal}>
           <Button type="primary" shape="round" onClick={handleCancel}>
@@ -871,17 +874,15 @@ const LandingHijob = () => {
             : languageRedux === 2
               ? `Only the recruiter can perform the above operation`
               : languageRedux === 3 &&
-              '고용주만이 위의 작업을 수행할 수 있습니다!'}
+                '고용주만이 위의 작업을 수행할 수 있습니다!'}
         </p>
         <div className={styles.button_send_request_success_modal}>
           <Button type="primary" shape="round" onClick={handleCancelNoteWorker}>
-            {
-              languageRedux === 1 ?
-                "OK" :
-                languageRedux === 2 ?
-                  "OK" :
-                  "이해했다"
-            }
+            {languageRedux === 1
+              ? 'OK'
+              : languageRedux === 2
+                ? 'OK'
+                : '이해했다'}
           </Button>
         </div>
       </Modal>

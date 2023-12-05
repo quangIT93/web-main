@@ -13,25 +13,14 @@ const Education: React.FC<ICvHeader> = (props) => {
     container: {
       marginLeft: -25,
     },
-    divTitle: {
-      backgroundColor:
-        color === 1
-          ? '#e5f6fe'
-          : color === 2
-            ? '#D6EAF8'
-            : color === 3
-              ? '#FCF3CF'
-              : color === 4
-                ? '#D5F5E3'
-                : '#FADBD8',
-    },
+    divTitle: {},
     title: {
       marginLeft: '45.839pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       color:
         color === 1
-          ? '#037385'
+          ? '#000000'
           : color === 2
             ? '#0D99FF'
             : color === 3
@@ -65,9 +54,9 @@ const Education: React.FC<ICvHeader> = (props) => {
       fontSize: '11pt',
       color:
         color === 1
-          ? '#037385'
+          ? '#000000'
           : color === 2
-            ? '#0D99FF'
+            ? '#000000'
             : color === 3
               ? '#FBBC04'
               : color === 4
@@ -82,9 +71,9 @@ const Education: React.FC<ICvHeader> = (props) => {
       fontSize: '11pt',
       color:
         color === 1
-          ? '#037385'
+          ? '#000000'
           : color === 2
-            ? '#0D99FF'
+            ? '#000000'
             : color === 3
               ? '#FBBC04'
               : color === 4

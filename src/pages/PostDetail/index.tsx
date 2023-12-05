@@ -1024,7 +1024,7 @@ const Detail = () => {
                       ? 'Loại công việc'
                       : languageRedux === 2
                         ? 'Job types'
-                        : '일의 종류'}
+                        : '직업종류'}
                   </p>
                 </div>
                 <div className="div-detail-row-titleItem">
@@ -1140,7 +1140,7 @@ const Detail = () => {
                       ? 'Mức lương'
                       : languageRedux === 2
                         ? 'Salary'
-                        : '목르엉'}
+                        : '샐러리/급여'}
                   </p>
                 </div>
                 <div className="div-detail-row-titleItem">
