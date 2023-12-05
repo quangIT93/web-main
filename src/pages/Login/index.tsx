@@ -35,7 +35,7 @@ import { LineChart, LineSeriesOption } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 declare global {
-  interface Window { }
+  interface Window {}
 }
 const Login = () => {
   const dispatch = useDispatch();

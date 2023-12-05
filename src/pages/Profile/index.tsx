@@ -106,11 +106,12 @@ import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformatio
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 import { color } from 'html2canvas/dist/types/css/types/color';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  },
-);
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 interface ItemAppy {
   id?: number | null;

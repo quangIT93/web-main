@@ -81,7 +81,9 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
   );
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`, '_blank');
   };
@@ -132,7 +134,12 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
               sx={{ flex: 1, display: 'flex' }}
             >
               <img
-                src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
+                // src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
+                src={
+                  props.item.image
+                    ? `${props.item.image}?w=164&h=164&fit=crop&auto=format`
+                    : 'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/default-post-image/khach-san-nha-hang.png?w=164&h=164&fit=crop&auto=format'
+                }
                 srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 alt={props.item.title}
                 // //loading="lazy"
@@ -354,11 +361,13 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
                         ? props.item.companyResourceData.logo
                         : ''
                     }
-                    alt={languageRedux === 1
-                      ? 'Hình ảnh bị lỗi'
-                      : languageRedux === 2
+                    alt={
+                      languageRedux === 1
+                        ? 'Hình ảnh bị lỗi'
+                        : languageRedux === 2
                         ? 'Image is corrupted'
-                        : '이미지가 손상되었습니다'}
+                        : '이미지가 손상되었습니다'
+                    }
                   />
                 ) : (
                   <></>

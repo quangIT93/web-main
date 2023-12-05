@@ -24,8 +24,10 @@ import appplicationApi from 'api/appplication';
 import ItemSuggest from './components/ItemSuggest';
 import ShowCancleSave from '#components/ShowCancleSave';
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
+
+import noImage from '../../img/noImage.png';
 // @ts-ignore
-import { Button, notification } from 'antd';
+import { Button, Space, notification } from 'antd';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -998,7 +1000,8 @@ const Detail = () => {
             : '채용정보',
       children: (
         <>
-          <div className="job-title-container">
+          <div className="job-title-container  job-title-container__right"
+            style={{ overflowY: 'scroll' }}>
             <div className="job-title-details">
               {/* <div className="div-detail-row">
                               <EnvironmentOutlined
@@ -1168,13 +1171,28 @@ const Detail = () => {
                   className="div-detail-row-titleItem"
                   style={{ flexDirection: 'column', alignItems: 'flex-start' }}
                 >
-                  <h5>
+                  <Space wrap className="item-info-work">
                     {post?.data.postCategories.map(
-                      (item: any, index: null | number) => `
-                      ${item.parentCategory.fullName}/${item.fullName}/
-                      `,
+                      (item: any, index: number) => (
+                        <Button key={index} className="btn" type="text">
+                          {item.parentCategory.fullName}
+                          {'/ '}
+                          {item.fullName}
+                        </Button>
+                      ),
                     )}
-                  </h5>
+                  </Space>
+                  {/* <h5>
+                    {post?.data.postCategories.map(
+                      (item: any, index: null | number) => (
+                        <span>
+                          {
+                            `${item.parentCategory.fullName}/${item.fullName}`
+                          }
+                        </span>
+                      )
+                    )}
+                  </h5> */}
                 </div>
               </div>
               <div className="div-detail-row">
@@ -1229,9 +1247,8 @@ const Detail = () => {
                   return;
                 }
                 window.open(
-                  `/message?post_id=${searchParams.get(
-                    'post-id',
-                  )}&user_id=${post?.data?.accountId} `,
+                  `/message?post_id=${searchParams.get('post-id')}&user_id=${post?.data?.accountId
+                  } `,
                   '_parent',
                 );
               }}
@@ -1467,6 +1484,13 @@ const Detail = () => {
                           ? post?.data?.postCompanyInformation?.website
                           : '#'
                       }
+                      style={{
+                        color: `${post?.data?.postCompanyInformation?.website
+                          ? 'rgb(13, 153, 255)'
+                          : ''
+                          }`,
+                      }}
+                      target="_blank"
                     >
                       {post?.data?.postCompanyInformation &&
                         post?.data?.postCompanyInformation?.website
@@ -1478,6 +1502,32 @@ const Detail = () => {
                             : languageRedux === 3 && '업데이트하지 않음'}
                     </a>
                     {/* </h5> */}
+                  </div>
+                </div>
+
+                <div className="div-detail-items">
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      background: '#0d99ff',
+                      alignItems: 'center',
+                      borderRadius: '5px',
+                      color: '#fff',
+                      padding: '8px 0',
+                      margin: '12px 0',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      if (post) {
+                        window.open(
+                          `/detail-company?companyId=${post?.data?.postCompanyInformation.id}`,
+                          '_parent',
+                        );
+                      }
+                    }}
+                  >
+                    Xem chi tiết
                   </div>
                 </div>
                 {/* {Object.keys(positionMap).length !== 0 && (
@@ -1519,10 +1569,14 @@ const Detail = () => {
   ];
   // console.log('post?.data?', post?.data);
   // console.log('dispatch(setPostNewestApi(result));', postNewest);
+  console.log('latitude ', post);
+
+  console.log('latitude ', post?.data?.postCompanyInformation?.latitude);
+  console.log('longitude ', post?.data?.postCompanyInformation?.longitude);
 
   return (
     <>
-      {automatic && (
+      {automatic && post && (
         <div className="detail">
           <Helmet>
             <title>{`${post?.data.title}`}</title>
@@ -1754,7 +1808,8 @@ const Detail = () => {
                     ) : (
                       <SwiperSlide className="div-job-img-swipper_item">
                         <img
-                          src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png"
+                          // src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png"
+                          src={noImage}
                           alt={
                             languageRedux === 1
                               ? 'Hình ảnh bị lỗi'
@@ -1908,8 +1963,10 @@ const Detail = () => {
                 </div>
                 <div className="div-suggest">
                   <div className="div-suggest__map">
-                    {post?.data?.postCompanyInformation?.latitude &&
-                      post?.data?.postCompanyInformation?.longitude ? (
+                    {post &&
+                      post.data &&
+                      post.data.postCompanyInformation &&
+                      post.data.postCompanyInformation.longitude ? (
                       <>
                         <h3>
                           {languageRedux === 1
@@ -1945,12 +2002,12 @@ const Detail = () => {
                               },
                             }}
                           >
-                            <Popup>{`${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`}</Popup>
+                            <Popup></Popup>
                           </Marker>
                         </MapContainer>
                       </>
                     ) : (
-                      <></>
+                      <>sssssssssssssss</>
                     )}
                   </div>
                   <div className="div-suggest__job">
@@ -2029,8 +2086,8 @@ const Detail = () => {
                       <AddressDetailPostIcon width={16} height={16} />
                       <span style={{ marginLeft: '8px' }}>
                         {`${post?.data.address}, ${post?.data?.location
-                            ? post?.data?.location?.fullName
-                            : ''
+                          ? post?.data?.location?.fullName
+                          : ''
                           }, ${post?.data?.location?.district
                             ? post?.data?.location?.district?.fullName
                             : ''
