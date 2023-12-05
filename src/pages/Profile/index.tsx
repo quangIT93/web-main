@@ -763,12 +763,12 @@ const Profile: React.FC = () => {
                 </p>
                 <p>
                   {languageRedux === 1
-                    ? 'Tin tuyển dụng'
+                    ? 'Vị trí ứng tuyển'
                     : languageRedux === 2
-                      ? 'Opening Jobs'
+                      ? 'Position'
                       : languageRedux === 3
-                        ? '채용 공고'
-                        : 'Tin tuyển dụng'}
+                        ? '희망 직업'
+                        : 'Vị trí ứng tuyển'}
                 </p>
               </div>
               <div className="div-detail-row right">
