@@ -62,7 +62,6 @@ const CandidateNewDetail = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
   const [openModalNotRecruitment, setOpenModalNotRecruitment] = React.useState(false);
   const [modalShowCvPDF, setModalShowCvPdf] = React.useState<{
     open: boolean;
@@ -119,7 +118,7 @@ const CandidateNewDetail = () => {
       return;
     }
     if (profileV3.typeRoleData === 0) {
-      setOpenModalNoteWorker(true);
+      setOpenModalNotRecruitment(true);
       return;
     }
     try {
@@ -153,7 +152,7 @@ const CandidateNewDetail = () => {
       return;
     }
     if (profileV3.typeRoleData === 0) {
-      setOpenModalNoteWorker(true);
+      setOpenModalNotRecruitment(true);
       return;
     }
     try {
@@ -344,7 +343,7 @@ const CandidateNewDetail = () => {
                     return;
                   }
                   if (profileV3.typeRoleData === 0) {
-                    setOpenModalNoteWorker(true);
+                    setOpenModalNotRecruitment(true);
                     return;
                   }
                   if (candidate?.isUnlocked === false) {
@@ -1156,10 +1155,6 @@ const CandidateNewDetail = () => {
       <ModalNoteCreateCompany
         openModalNoteCreateCompany={openModalNoteCreateCompany}
         setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
-      />
-      <ModalNoteWorker
-        openModalNoteWorker={openModalNoteWorker}
-        setOpenModalNoteWorker={setOpenModalNoteWorker}
       />
       <ModalNotRecruitment
         openModalNotRecruitment={openModalNotRecruitment}
