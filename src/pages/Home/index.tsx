@@ -259,13 +259,39 @@ const Home: React.FC = () => {
         {/* <CategoryCarousel />
         <Breadcrumbs /> */}
         <AppliedPostedJob />
-        <HotJob />
-        <NewestGigWorker />
-        <NewestCompany />
-        <NewJobs />
-        <SuggestJob />
-        <ThemesJob />
-        <Community />
+        {
+          !localStorage.getItem('accessToken') ?
+            <>
+              <HotJob />
+              <NewestGigWorker />
+              <NewestCompany />
+              <NewJobs />
+              <SuggestJob />
+              <ThemesJob />
+              <Community />
+            </>
+            :
+            profileV3.typeRoleData === 0 ?
+              <>
+                <HotJob />
+                <NewJobs />
+                <SuggestJob />
+                <ThemesJob />
+                <NewestGigWorker />
+                <NewestCompany />
+                <Community />
+              </>
+              :
+              <>
+                <NewestGigWorker />
+                <HotJob />
+                <NewJobs />
+                <SuggestJob />
+                <ThemesJob />
+                <NewestCompany />
+                <Community />
+              </>
+        }
         <Advertise />
         {/* {reachedEndShowSubjectJob ? (
           <>

@@ -65,7 +65,7 @@ const NewestCompany = () => {
         bgcolor: 'background.paper',
         position: 'relative',
         paddingBottom: '28px',
-        marginTop: `${profileV3?.typeRoleData === 0 ? '42px' : 'blue'}`,
+        // marginTop: `${profileV3?.typeRoleData === 0 ? '42px' : 'blue'}`,
       }}
       className="list-company-container"
     >
@@ -84,8 +84,8 @@ const NewestCompany = () => {
             {languageRedux === 1
               ? 'Công ty mới nhất'
               : languageRedux === 2
-              ? 'Newest company'
-              : languageRedux === 3 && '최신 회사'}
+                ? 'Newest company'
+                : languageRedux === 3 && '최신 회사'}
           </h2>
         </div>
         {/* {profileV3?.typeRoleData === 1 ? ( */}
@@ -138,8 +138,8 @@ const NewestCompany = () => {
           {languageRedux === 1
             ? 'Xem tất cả'
             : languageRedux === 2
-            ? 'View all'
-            : languageRedux === 3 && '모두보기'}
+              ? 'View all'
+              : languageRedux === 3 && '모두보기'}
         </p>
         <ArrowrightIcon width={20} height={20} />
       </div>

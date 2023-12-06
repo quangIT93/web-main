@@ -26,6 +26,7 @@ import ModalLogin from '../../../components/Home/ModalLogin';
 import { CateIcon } from '#components/Icons/iconCandidate';
 import apiCompanyV3 from 'api/apiCompanyV3';
 import { RootState } from 'store';
+import ModalFollowSuccess from '#components/DetailCompany/ModalFollowSuccess';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
 interface Iprops {
   item: any;
@@ -43,6 +44,8 @@ const CompanyCard: React.FC<Iprops> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const [openModalFollowSuccess, setOpenModalFollowSuccess] =
+    React.useState<boolean>(false);
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/detail-company?companyId=${props.item.id}`, '_parent');
   };
@@ -71,6 +74,7 @@ const CompanyCard: React.FC<Iprops> = (props) => {
         props.item.isBookmarked = true;
         if (result) {
           dispatch<any>(setAlertSave(true));
+          setOpenModalFollowSuccess(true);
           setCheckBookMark(!checkBookMark);
         }
       }
@@ -234,6 +238,10 @@ const CompanyCard: React.FC<Iprops> = (props) => {
       <ModalLogin
         openModalLogin={openModalLogin}
         setOpenModalLogin={setOpenModalLogin}
+      />
+      <ModalFollowSuccess
+        openModalFollowSuccess={openModalFollowSuccess}
+        setOpenModalFollowSuccess={setOpenModalFollowSuccess}
       />
     </>
   );

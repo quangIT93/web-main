@@ -111,6 +111,7 @@ const DetailCompany = () => {
         const result = await apiCompanyV3.postBookmarkCompany(companyId);
         if (result) {
           dispatch<any>(setAlertSave(true));
+          setOpenModalFollowSuccess(true);
           setBookmarked(true);
         }
       }
@@ -125,7 +126,7 @@ const DetailCompany = () => {
 
   useEffect(() => {
     getCompanyInfo();
-  }, [languageRedux, openModalFollowSuccess]);
+  }, [languageRedux]);
 
   useEffect(() => {
     getApplicationPositionCount();

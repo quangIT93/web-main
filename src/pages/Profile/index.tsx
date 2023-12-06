@@ -552,6 +552,12 @@ const Profile: React.FC = () => {
     window.location.href = emailLink;
   };
 
+  const handleMoveToLink = (link: any) => {
+    if (link) {
+      window.open(link);
+    }
+  };
+
   return (
     <div className="profile">
       {/* <Navbar />s
@@ -917,7 +923,14 @@ const Profile: React.FC = () => {
                     ? 'Not updated yet'
                     : languageRedux === 3 && '업데이트하지 않음'}
                 </p>
-                <p>
+                <p
+                  onClick={() => handleMoveToLink(profileV3?.facebook)}
+                  style={
+                    profileV3?.facebook
+                      ? { color: '#0d99ff', cursor: 'pointer' }
+                      : {}
+                  }
+                >
                   {profileV3?.facebook
                     ? profileV3?.facebook
                     : languageRedux === 1
@@ -927,7 +940,14 @@ const Profile: React.FC = () => {
                     : languageRedux === 3 && '업데이트하지 않음'}
                 </p>
 
-                <p>
+                <p
+                  onClick={() => handleMoveToLink(profileV3?.linkedin)}
+                  style={
+                    profileV3?.linkedin
+                      ? { color: '#0d99ff', cursor: 'pointer' }
+                      : {}
+                  }
+                >
                   {profileV3?.linkedin
                     ? profileV3?.linkedin
                     : languageRedux === 1

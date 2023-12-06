@@ -15,7 +15,7 @@ import SeachEducation from '#components/Candidates/SeachEducation';
 import SeachGender from '#components/Candidates/SeachGender';
 import SeachAge from '#components/Candidates/SearchAge';
 import candidateSearch from 'api/apiCandidates';
-
+import ModalLogin from '#components/Home/ModalLogin';
 // import antIcon
 import { LoadingOutlined } from '@ant-design/icons';
 import { message } from 'antd';
@@ -24,6 +24,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
+import ModalNoteWorker from '#components/Home/NewestGigWorker/ModalNoteWorker';
 const CandidatesAll = () => {
   // const listData: any = {
   //   status: 200,
@@ -201,7 +202,8 @@ const CandidatesAll = () => {
   const [reset, setReset] = useState(false);
   const [open, setOpen] = useState(false);
   const [total, setTotal] = useState(0);
-
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -241,7 +243,7 @@ const CandidatesAll = () => {
           setHasMore(true);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   console.log('totle', total);
@@ -250,11 +252,11 @@ const CandidatesAll = () => {
     getAllCandidates();
   }, [languageRedux]);
 
-  React.useEffect(() => {
-    if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
-      window.open('/', '_parent');
-    }
-  }, [profileV3]);
+  // React.useEffect(() => {
+  //   if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
+  //     window.open('/', '_parent');
+  //   }
+  // }, [profileV3]);
 
   const [messageApi, contextHolder] = message.useMessage();
   const handleSubmitSearchCandidate = async () => {
@@ -355,7 +357,7 @@ const CandidatesAll = () => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   const analytics: any = getAnalytics();
   React.useEffect(() => {
@@ -396,7 +398,17 @@ const CandidatesAll = () => {
           </h3>
           <Button
             type="primary"
-            onClick={() => window.open(`/history?candidate=4`, '_parent')}
+            onClick={() => {
+              if (!localStorage.getItem('accessToken')) {
+                setOpenModalLogin(true);
+                return;
+              }
+              if (profileV3.typeRoleData === 0) {
+                setOpenModalNoteWorker(true);
+                return;
+              }
+              window.open(`/history?candidate=4`, '_parent')
+            }}
           >
             {languageRedux === 1
               ? 'Danh sách ứng viên đã lưu'
@@ -517,7 +529,14 @@ const CandidatesAll = () => {
           </InfiniteScroll>
         </div>
       </div>
-
+      <ModalNoteWorker
+        openModalNoteWorker={openModalNoteWorker}
+        setOpenModalNoteWorker={setOpenModalNoteWorker}
+      />
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
       {/* <Footer /> */}
     </div>
   );
