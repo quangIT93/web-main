@@ -30,7 +30,7 @@ import bookMarkApi from 'api/bookMarkApi';
 
 import { PostNewest, PostNewestV3 } from '../NewJobs';
 import { RootState } from 'store';
-
+import noImage from '../../../img/noImage.png';
 // import { HomeValueContext } from 'context/HomeValueContextProvider';
 
 // import ShowNotificativeSave from '../../ShowNotificativeSave';
@@ -138,7 +138,8 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
                 src={
                   props.item.image
                     ? `${props.item.image}?w=164&h=164&fit=crop&auto=format`
-                    : 'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/default-post-image/khach-san-nha-hang.png?w=164&h=164&fit=crop&auto=format'
+                    : // : 'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/default-post-image/khach-san-nha-hang.png?w=164&h=164&fit=crop&auto=format'
+                      `${noImage}`
                 }
                 srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 alt={props.item.title}

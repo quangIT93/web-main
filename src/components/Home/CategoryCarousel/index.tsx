@@ -155,9 +155,6 @@ const CategoryCarousel: React.FC = () => {
     let breadCrumb = document.querySelector(
       '.bread-crumb-container',
     ) as HTMLElement;
-    console.log(' location.pathname', location.pathname);
-    console.log('  searchParams.get job-type', searchParams.get('job-type'));
-    console.log('  window.innerWidth', window.innerWidth);
 
     // tabs.style.top = '70px';
     // breadCrumb.style.marginTop = '192px';
@@ -168,17 +165,24 @@ const CategoryCarousel: React.FC = () => {
         // tabs.style.top = '70px';
         // breadCrumb.style.marginTop = '192px';
         if (
-          location.pathname === '/more-jobs' &&
-          localStorage.getItem('job-type') === 'new' &&
-          window.innerWidth <= 450
+          (location.pathname === '/more-jobs' &&
+            localStorage.getItem('job-type') === 'new' &&
+            window.innerWidth <= 450) ||
+          (location.pathname === '/more-jobs' &&
+            localStorage.getItem('job-type') === 'hot-job' &&
+            window.innerWidth <= 450)
         ) {
           tabs.style.top = '155px';
           breadCrumb.style.marginTop = '20px';
         } else if (
-          location.pathname === '/more-jobs' &&
-          localStorage.getItem('job-type') === 'new' &&
-          450 < window.innerWidth &&
-          window.innerWidth <= 768
+          (location.pathname === '/more-jobs' &&
+            localStorage.getItem('job-type') === 'new' &&
+            450 < window.innerWidth &&
+            window.innerWidth <= 768) ||
+          (location.pathname === '/more-jobs' &&
+            localStorage.getItem('job-type') === 'hot-job' &&
+            450 < window.innerWidth &&
+            window.innerWidth <= 768)
         ) {
           tabs.style.top = '115px';
           breadCrumb.style.marginTop = '-10px';
@@ -658,8 +662,8 @@ const CategoryCarousel: React.FC = () => {
                           languageRedux === 1
                           ? 'Công việc gợi ý'
                           : languageRedux === 2
-                            ? 'Suggested'
-                            : languageRedux === 3 && '추천 직업'
+                          ? 'Suggested'
+                          : languageRedux === 3 && '추천 직업'
                         : item.name}
                     </span>
                   </div>
