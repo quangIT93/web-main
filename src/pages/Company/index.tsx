@@ -185,8 +185,8 @@ const Company: React.FC<ICompany> = (props) => {
       languageRedux === 1
         ? 'HiJob - Thông tin công ty'
         : languageRedux === 2
-          ? "HiJob - Company's Information"
-          : 'HiJob - 회사 정보';
+        ? "HiJob - Company's Information"
+        : 'HiJob - 회사 정보';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_company' as string,
@@ -232,6 +232,8 @@ const Company: React.FC<ICompany> = (props) => {
   useEffect(() => {
     if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
       window.open(`/`, '_parent');
+    } else if (!localStorage.getItem('accessToken')) {
+      window.open(`/`, '_parent');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -244,9 +246,9 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Dữ liệu của bạn chưa được gửi, bạn có chắc chắn muốn rời đi?'
             : languageRedux === 2
-              ? 'Your data has not been sent, you definitely want to leave?'
-              : languageRedux === 3 &&
-                '귀하의 데이터가 전송되지 않았습니다. 나가시겠습니까?';
+            ? 'Your data has not been sent, you definitely want to leave?'
+            : languageRedux === 3 &&
+              '귀하의 데이터가 전송되지 않았습니다. 나가시겠습니까?';
         event.preventDefault();
         event.returnValue = message || true;
         return message;
@@ -289,8 +291,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng chọn logo công ty'
             : languageRedux === 2
-              ? 'Please select company logo'
-              : '회사 로고를 선택해주세요',
+            ? 'Please select company logo'
+            : '회사 로고를 선택해주세요',
         checkForm: false,
         idError: 1,
       };
@@ -301,8 +303,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng nhập tên công ty'
             : languageRedux === 2
-              ? 'Please enter company name'
-              : '회사명을 입력해주세요',
+            ? 'Please enter company name'
+            : '회사명을 입력해주세요',
         checkForm: false,
         idError: 2,
       };
@@ -319,8 +321,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng chọn tỉnh thành phố'
             : languageRedux === 2
-              ? 'Please select a city'
-              : '시와 도를 선택해주세요.',
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 3,
       };
@@ -331,8 +333,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng chọn tỉnh thành phố'
             : languageRedux === 2
-              ? 'Please select a city'
-              : '시와 도를 선택해주세요.',
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 4,
       };
@@ -343,8 +345,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng chọn tỉnh thành phố'
             : languageRedux === 2
-              ? 'Please select a city'
-              : '시와 도를 선택해주세요.',
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
@@ -355,8 +357,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng chọn tỉnh thành phố'
             : languageRedux === 2
-              ? 'Please select a city'
-              : '시와 도를 선택해주세요.',
+            ? 'Please select a city'
+            : '시와 도를 선택해주세요.',
         checkForm: false,
         idError: 5,
       };
@@ -367,8 +369,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Địa chỉ phải dài hơn 10 ký tự'
             : languageRedux === 2
-              ? 'Address must be longer than 10 characters'
-              : '주소는 10자 이상이어야 합니다',
+            ? 'Address must be longer than 10 characters'
+            : '주소는 10자 이상이어야 합니다',
         checkForm: false,
         idError: 6,
       };
@@ -383,8 +385,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Số điện thoại sai định dạng'
             : languageRedux === 2
-              ? 'Invalid phone number format'
-              : '전화번호 형식이 잘못되었습니다.',
+            ? 'Invalid phone number format'
+            : '전화번호 형식이 잘못되었습니다.',
         checkForm: false,
         idError: 7,
       };
@@ -395,8 +397,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng nhập email công ty'
             : languageRedux === 2
-              ? 'Please enter company email'
-              : '회사 이메일을 입력해주세요',
+            ? 'Please enter company email'
+            : '회사 이메일을 입력해주세요',
         checkForm: false,
         idError: 8,
       };
@@ -407,8 +409,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Email không được vượt quá 50 ký tự'
             : languageRedux === 2
-              ? 'Email cannot exceed 50 characters'
-              : languageRedux === 3 && '이메일은 50자를 초과할 수 없습니다.',
+            ? 'Email cannot exceed 50 characters'
+            : languageRedux === 3 && '이메일은 50자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 8,
       };
@@ -419,8 +421,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Định dạng email không đúng'
             : languageRedux === 2
-              ? 'Incorrect email format'
-              : '이메일 형식이 잘못되었습니다.',
+            ? 'Incorrect email format'
+            : '이메일 형식이 잘못되었습니다.',
         checkForm: false,
         idError: 8,
       };
@@ -431,8 +433,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng chọn vai trò của bạn'
             : languageRedux === 2
-              ? 'Please select your role'
-              : '당신의 역할을 선택해주세요',
+            ? 'Please select your role'
+            : '당신의 역할을 선택해주세요',
         checkForm: false,
         idError: 9,
       };
@@ -443,8 +445,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng chọn vai trò của bạn'
             : languageRedux === 2
-              ? 'Please select your role'
-              : '당신의 역할을 선택해주세요',
+            ? 'Please select your role'
+            : '당신의 역할을 선택해주세요',
         checkForm: false,
         idError: 9,
       };
@@ -455,8 +457,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng nhập website công ty'
             : languageRedux === 2
-              ? 'Please enter company website'
-              : '회사 홈페이지를 입력해주세요',
+            ? 'Please enter company website'
+            : '회사 홈페이지를 입력해주세요',
         checkForm: false,
         idError: 10,
       };
@@ -467,8 +469,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Website không được vượt quá 100 ký tự.'
             : languageRedux === 2
-              ? 'Website must not exceed 100 characters.'
-              : languageRedux === 3 && '웹사이트는 100자를 초과할 수 없습니다.',
+            ? 'Website must not exceed 100 characters.'
+            : languageRedux === 3 && '웹사이트는 100자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 10,
       };
@@ -479,8 +481,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Định dạng website không chính xác'
             : languageRedux === 2
-              ? 'Incorrect website format'
-              : '웹사이트 형식이 잘못되었습니다.',
+            ? 'Incorrect website format'
+            : '웹사이트 형식이 잘못되었습니다.',
         checkForm: false,
         idError: 10,
       };
@@ -491,8 +493,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng chọn danh mục nghề nghiệp'
             : languageRedux === 2
-              ? 'Please select a career category'
-              : '직업 카테고리를 선택해주세요.',
+            ? 'Please select a career category'
+            : '직업 카테고리를 선택해주세요.',
         checkForm: false,
         idError: 11,
       };
@@ -503,8 +505,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng chọn danh mục nghề nghiệp'
             : languageRedux === 2
-              ? 'Please select a career category'
-              : '직업 카테고리를 선택해주세요.',
+            ? 'Please select a career category'
+            : '직업 카테고리를 선택해주세요.',
         checkForm: false,
         idError: 11,
       };
@@ -515,8 +517,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng chọn quy mô công ty'
             : languageRedux === 2
-              ? 'Please select company size'
-              : '회사규모를 선택해 주세요',
+            ? 'Please select company size'
+            : '회사규모를 선택해 주세요',
         checkForm: false,
         idError: 12,
       };
@@ -527,8 +529,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng chọn quy mô công ty'
             : languageRedux === 2
-              ? 'Please select company size'
-              : '회사규모를 선택해 주세요',
+            ? 'Please select company size'
+            : '회사규모를 선택해 주세요',
         checkForm: false,
         idError: 12,
       };
@@ -539,8 +541,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Vui lòng nhập mô tả công ty'
             : languageRedux === 2
-              ? 'Please enter company description'
-              : '회사 설명을 입력하세요.',
+            ? 'Please enter company description'
+            : '회사 설명을 입력하세요.',
         checkForm: false,
         idError: 13,
       };
@@ -551,8 +553,8 @@ const Company: React.FC<ICompany> = (props) => {
           languageRedux === 1
             ? 'Mô tả không được quá 1000 ký tự.'
             : languageRedux === 2
-              ? 'Description must not exceed 1000 characters.'
-              : languageRedux === 3 && '설명은 1,000자를 초과할 수 없습니다.',
+            ? 'Description must not exceed 1000 characters.'
+            : languageRedux === 3 && '설명은 1,000자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 13,
       };
@@ -582,8 +584,8 @@ const Company: React.FC<ICompany> = (props) => {
                 languageRedux === 1
                   ? 'Tạo công ty thành công'
                   : languageRedux === 2
-                    ? 'Create successful company'
-                    : '성공적인 회사 만들기',
+                  ? 'Create successful company'
+                  : '성공적인 회사 만들기',
             });
 
             const resultProfileV3 = await profileApi.getProfileInformationV3(
@@ -604,8 +606,8 @@ const Company: React.FC<ICompany> = (props) => {
                 languageRedux === 1
                   ? 'Tạo công ty không thành công'
                   : languageRedux === 2
-                    ? 'Create company failed'
-                    : '회사를 만드는 데 실패했습니다.',
+                  ? 'Create company failed'
+                  : '회사를 만드는 데 실패했습니다.',
             });
           }
         }
@@ -726,8 +728,8 @@ const Company: React.FC<ICompany> = (props) => {
                 languageRedux === 1
                   ? 'Cập nhật thông tin công ty thành công'
                   : languageRedux === 2
-                    ? 'Updating company information successfully'
-                    : '회사 정보가 업데이트되었습니다.',
+                  ? 'Updating company information successfully'
+                  : '회사 정보가 업데이트되었습니다.',
             });
 
             setDataCompany((pre: any) => ({ ...pre, images: [] }));
@@ -739,8 +741,8 @@ const Company: React.FC<ICompany> = (props) => {
                 languageRedux === 1
                   ? 'Lỗi cập nhật hình ảnh công ty'
                   : languageRedux === 2
-                    ? 'Error updating company image'
-                    : '회사 이미지를 업데이트하는 중에 오류가 발생했습니다.',
+                  ? 'Error updating company image'
+                  : '회사 이미지를 업데이트하는 중에 오류가 발생했습니다.',
             });
           }
         }
@@ -957,8 +959,8 @@ const Company: React.FC<ICompany> = (props) => {
               {languageRedux === 1
                 ? 'Thông tin công ty'
                 : languageRedux === 2
-                  ? "Company's information"
-                  : languageRedux === 3 && '회사 정보'}
+                ? "Company's information"
+                : languageRedux === 3 && '회사 정보'}
             </h1>
 
             <Space
@@ -976,8 +978,8 @@ const Company: React.FC<ICompany> = (props) => {
                 {languageRedux === 1
                   ? 'Sửa'
                   : languageRedux === 2
-                    ? 'Edit'
-                    : '수정'}
+                  ? 'Edit'
+                  : '수정'}
               </p>
             </Space>
           </div>
@@ -989,9 +991,9 @@ const Company: React.FC<ICompany> = (props) => {
               {languageRedux === 1
                 ? 'Bạn cần điền thông tin công ty của mình để đăng tin tuyển dụng, tìm kiếm ứng viên.'
                 : languageRedux === 2
-                  ? 'You need to fill in your company information to post job vacancies, search for candidates.'
-                  : languageRedux === 3 &&
-                    '채용 공고 게시 및 후보자 검색을 위해서는 회사 정보를 입력해야 합니다.'}
+                ? 'You need to fill in your company information to post job vacancies, search for candidates.'
+                : languageRedux === 3 &&
+                  '채용 공고 게시 및 후보자 검색을 위해서는 회사 정보를 입력해야 합니다.'}
             </p>
           </div>
         </div>
@@ -1074,8 +1076,8 @@ const Company: React.FC<ICompany> = (props) => {
               {languageRedux === 1
                 ? 'Lưu'
                 : languageRedux === 2
-                  ? 'Save'
-                  : '저장'}
+                ? 'Save'
+                : '저장'}
             </button>
           </form>
         </Skeleton>
