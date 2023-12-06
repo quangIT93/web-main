@@ -2007,7 +2007,7 @@ const Detail = () => {
                         </MapContainer>
                       </>
                     ) : (
-                      <>sssssssssssssss</>
+                      <></>
                     )}
                   </div>
                   <div className="div-suggest__job">
