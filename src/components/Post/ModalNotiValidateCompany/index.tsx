@@ -81,7 +81,6 @@ const ModalNotiValidateCompany: React.FC<IPropModalNotiValidateCompany> = (
   return (
     <div>
       <Modal
-        // open={openModalNoteCreateCompany}
         open={openModalNoteValidateCompany}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -102,10 +101,10 @@ const ModalNotiValidateCompany: React.FC<IPropModalNotiValidateCompany> = (
           </IconButton>
           <h2 className="title-post_guide">
             {languageRedux === 1
-              ? 'Đăng bài tuyển dụng không thành công'
+              ? 'Bạn không thể đăng bài tuyển dụng'
               : languageRedux === 2
-                ? 'Job posting failed'
-                : languageRedux === 3 && '채용공고 게시 실패'}
+              ? 'You cannot post a job advertisement'
+              : languageRedux === 3 && '채용공고 게시 실패'}
           </h2>
           <div className="wrap-imagePost_guide">
             <img
@@ -117,14 +116,23 @@ const ModalNotiValidateCompany: React.FC<IPropModalNotiValidateCompany> = (
           <div className="wrap-textPost_guide">
             <p>
               {languageRedux === 1
-                ? 'Thông tin công ty đăng kí của bạn đang được kiểm tra, xác minh. Bạn vui lòng kiểm tra thông báo để nhận phản hồi nhé!'
+                ? 'HiJob rất tiếc phải thông báo tài khoản nhà tuyển dụng của Quý khách hàng không thể đăng tin tuyển dụng. Lí do vì thông tin công tin bị thiếu hoặc nội dung chưa hợp lệ, Quý khách vui lòng liên hệ:'
                 : languageRedux === 2
-                  ? 'Your login information is being checked and authenticated. Please check your notification to receive feedback!'
-                  : languageRedux === 3 &&
-                    '귀하의 로그인 정보를 확인 및 인증 중입니다. 피드백을 받으려면 알림을 확인하세요!'}
+                ? 'HiJob regrets to inform you that your employer account cannot post job ads. If the information is missing or the content is invalid, please contact:'
+                : languageRedux === 3 &&
+                  'HiJob에서는 이 계정이 채용 광고를 게시할 수 없음을 알려드리게 되어 유감스럽습니다. 그 이유는 회사 정보가 누락되었거나 내용이 유효하지 않기 때문입니다. 문의하시기 바랍니다.'}
+            </p>
+            <p>
+              {' '}
+              {languageRedux === 1
+                ? 'Email CSKH: contact.hijob@gmail.com'
+                : languageRedux === 2
+                ? 'Customer care email: contact.hijob@gmail.com'
+                : languageRedux === 3 &&
+                  '고객 관리 이메일: contact.hijob@gmail.com'}
             </p>
           </div>
-          <div className="wrap-button_haveCompany">
+          {/* <div className="wrap-button_haveCompany">
             <Button
               block
               style={{ marginTop: '12px' }}
@@ -136,8 +144,8 @@ const ModalNotiValidateCompany: React.FC<IPropModalNotiValidateCompany> = (
               {languageRedux === 1
                 ? 'Xác nhận'
                 : languageRedux === 2
-                  ? 'Confirm'
-                  : languageRedux === 3 && '확인'}
+                ? 'Confirm'
+                : languageRedux === 3 && '확인'}
             </Button>
 
             <Button
@@ -151,10 +159,10 @@ const ModalNotiValidateCompany: React.FC<IPropModalNotiValidateCompany> = (
               {languageRedux === 1
                 ? 'Đóng'
                 : languageRedux === 2
-                  ? 'Close'
-                  : languageRedux === 3 && '닫기'}
+                ? 'Close'
+                : languageRedux === 3 && '닫기'}
             </Button>
-          </div>
+          </div> */}
         </Box>
       </Modal>
     </div>

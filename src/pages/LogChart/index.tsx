@@ -1,14 +1,18 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 
+import Chart from './chart';
+import ItemsChart from '#components/LogChart/ItemsChart/ItemsChart';
+
 const index = () => {
   return (
     <div>
-      <Row>
-        <Col span={8}>col-8</Col>
-        <Col span={8}>col-8</Col>
-        <Col span={8}>col-8</Col>
-      </Row>
+      <div>
+        <ItemsChart />
+      </div>
+      <div>
+        <Chart />
+      </div>
     </div>
   );
 };
