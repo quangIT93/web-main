@@ -18,16 +18,40 @@ import {
 } from '@react-oauth/google';
 import profileApi from 'api/profileApi';
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
+import { useLocation } from 'react-router-dom';
 interface Props {
   children: React.ReactNode;
 }
 
 const MainLayout = ({ children }: Props) => {
   const dispatch = useDispatch();
-
+  const location = useLocation();
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+
+  useEffect(() => {
+    if (
+      (!localStorage.getItem('accessToken') && location.pathname === '/post') ||
+      (!localStorage.getItem('accessToken') &&
+        location.pathname === '/candidate-detail') ||
+      (!localStorage.getItem('accessToken') &&
+        location.pathname === '/comunity-create-success-content') ||
+      (!localStorage.getItem('accessToken') &&
+        location.pathname === '/company-infor') ||
+      (!localStorage.getItem('accessToken') &&
+        location.pathname === '/news-comunity') ||
+      (!localStorage.getItem('accessToken') &&
+        location.pathname === '/candidate-new-detail') ||
+      (!localStorage.getItem('accessToken') &&
+        location.pathname === '/chart') ||
+      (!localStorage.getItem('accessToken') && location.pathname === '/pdfview')
+    ) {
+      window.open('/', '_parent');
+    } else {
+    }
+  }, []);
+
   const fetchDataProfile = async (auth: any, isVerifyOtp?: boolean) => {
     if (isVerifyOtp) {
       // console.log('Xác thực OTP thành công', authState);
@@ -48,10 +72,10 @@ const MainLayout = ({ children }: Props) => {
         languageRedux === 3
           ? 'ko'
           : languageRedux === 2
-            ? 'en'
-            : languageRedux === 1
-              ? 'vi'
-              : 'vi',
+          ? 'en'
+          : languageRedux === 1
+          ? 'vi'
+          : 'vi',
       );
       if (result) {
         await dispatch(setProfileMeInformationV3(result) as any);
