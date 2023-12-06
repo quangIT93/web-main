@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useContext, useRef, useMemo } from 'react';
 // @ts-ignore
 // import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
@@ -864,8 +864,9 @@ const Navbar: React.FC = () => {
       console.log(error);
     }
   };
-
+  let updateCountAppliedJobs = localStorage.getItem('updateCountAppliedJobs')
   const getAppliedPostedJobs = async () => {
+
     try {
       const result = await applitedPostedApi.getAllApplitedPostedApi(
         0,
@@ -876,6 +877,7 @@ const Navbar: React.FC = () => {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
 
         setAppliedPostedJob(result.data);
+        // console.log('modal', updateCountAppliedJobs);
       }
     } catch (error) {
       console.log(error);
@@ -906,7 +908,7 @@ const Navbar: React.FC = () => {
   const [pending, setPending] = useState(0);
   const [waiting, setWaiting] = useState(0);
 
-  useEffect(() => {
+  const changeCountAppliedJobs = () => {
     const countApproved = appliedPostedJob.reduce(
       (count: number, applicant: any) => {
         if (applicant.application_status === 2) {
@@ -943,7 +945,16 @@ const Navbar: React.FC = () => {
     setApproved(countApproved);
     setPending(countPending);
     setWaiting(countWaitng);
+  }
+
+  useEffect(() => {
+    changeCountAppliedJobs()
   }, [appliedPostedJob]);
+
+  useMemo(() => {
+    getAppliedPostedJobs();
+    changeCountAppliedJobs();
+  }, [updateCountAppliedJobs])
 
   const handleResetValue = () => {
     setJobType(null);

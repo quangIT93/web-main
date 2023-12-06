@@ -13,7 +13,7 @@ import { Box } from '@mui/material';
 import { Space, Popover, Button } from 'antd';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
-
+import ModalLogin from '#components/Home/ModalLogin';
 // @ts-ignore
 import profileApi from 'api/profileApi';
 import candidateSearch from 'api/apiCandidates';
@@ -40,6 +40,8 @@ import ModalNoneCV from './ModalNoneCv';
 import ModalNotiUnClock from './ModalNotiUnClock';
 import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 import { MessageOutlined } from '@ant-design/icons';
+import ModalNoteWorker from '#components/Home/NewestGigWorker/ModalNoteWorker';
+import ModalNotRecruitment from '#components/Candidates/ModalNotRecruitment';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   function Alert(props, ref) {
@@ -60,6 +62,8 @@ const CandidateNewDetail = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
+  const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
+  const [openModalNotRecruitment, setOpenModalNotRecruitment] = React.useState(false);
   const [modalShowCvPDF, setModalShowCvPdf] = React.useState<{
     open: boolean;
     urlPdf: string;
@@ -70,7 +74,7 @@ const CandidateNewDetail = () => {
   const alertSuccess = useSelector(
     (state: any) => state.alertProfile.alertSuccess,
   );
-
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const alert = useSelector((state: any) => state.alertProfile.alert);
   const profileV3 = useSelector(
     (state: RootState) => state.dataProfileInformationV3.data,
@@ -110,6 +114,14 @@ const CandidateNewDetail = () => {
 
   const handleUnLockCandidate = async (accountId: string) => {
     const id = localStorage.getItem('candidateId');
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
+      return;
+    }
+    if (profileV3.typeRoleData === 0) {
+      setOpenModalNoteWorker(true);
+      return;
+    }
     try {
       if (accountId && profileV3.companyInfo !== null) {
         const viewProfile: any =
@@ -136,6 +148,14 @@ const CandidateNewDetail = () => {
   };
 
   const handleClickBookmarkCandidate = async (accountId: string) => {
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
+      return;
+    }
+    if (profileV3.typeRoleData === 0) {
+      setOpenModalNoteWorker(true);
+      return;
+    }
     try {
       const result = await candidateSearch.postBookmarkCandidate(accountId);
       if (result) {
@@ -146,14 +166,14 @@ const CandidateNewDetail = () => {
           dispatch<any>(setAlertSuccess(true));
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
-  React.useEffect(() => {
-    if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
-      window.open('/', '_parent');
-    }
-  }, [profileV3]);
+  // React.useEffect(() => {
+  //   if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
+  //     window.open('/', '_parent');
+  //   }
+  // }, [profileV3]);
 
   const getBookMark = async () => {
     try {
@@ -166,7 +186,7 @@ const CandidateNewDetail = () => {
       if (resultBookmark) {
         setBookmarkCandidate(resultBookmark.data.total);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -174,6 +194,14 @@ const CandidateNewDetail = () => {
   }, []);
 
   const handleClickItemCv = async (urlPdf: string, id: string) => {
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
+      return;
+    }
+    if (profileV3.typeRoleData === 0) {
+      setOpenModalNotRecruitment(true);
+      return;
+    }
     if (candidate.isUnlocked === false) {
       setOpenModalNoneCv(true);
       return;
@@ -235,14 +263,12 @@ const CandidateNewDetail = () => {
                   style={{
                     height: '70px',
                     width: '70px',
-                    filter: `${
-                      candidate?.isUnlocked === false ? 'blur(3px)' : ''
-                    }`,
-                    cursor: `${
-                      candidate?.isUnlocked === true && candidate?.avatarPath
-                        ? 'pointer'
-                        : ''
-                    }`,
+                    filter: `${candidate?.isUnlocked === false ? 'blur(3px)' : ''
+                      }`,
+                    cursor: `${candidate?.isUnlocked === true && candidate?.avatarPath
+                      ? 'pointer'
+                      : ''
+                      }`,
                   }}
                   alt={candidate?.avatarPath}
                   src={candidate?.avatarPath ? candidate?.avatarPath : ''}
@@ -313,6 +339,14 @@ const CandidateNewDetail = () => {
                   justifyContent: 'center',
                 }}
                 onClick={() => {
+                  if (!localStorage.getItem('accessToken')) {
+                    setOpenModalLogin(true);
+                    return;
+                  }
+                  if (profileV3.typeRoleData === 0) {
+                    setOpenModalNoteWorker(true);
+                    return;
+                  }
                   if (candidate?.isUnlocked === false) {
                     setOpenModalNotiUnclock(true);
                   } else {
@@ -421,11 +455,11 @@ const CandidateNewDetail = () => {
                 type="primary"
                 onClick={(event) => {
                   handleClickItemCv(
-                    candidate?.profilesCvs.filter((value: any) => {
+                    candidate?.profilesCvs && candidate?.profilesCvs.filter((value: any) => {
                       if (value.status === 1) {
                         return value.pdfURL;
                       }
-                    })[0].pdfURL,
+                    })[0]?.pdfURL,
                     candidate?.accountId,
                   );
                 }}
@@ -525,8 +559,8 @@ const CandidateNewDetail = () => {
               <p>
                 {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
-                      .format('DD/MM/YYYY')
-                      .replace(/\d{2}$/, 'xx')
+                    .format('DD/MM/YYYY')
+                    .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
                     ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
                     : languageRedux === 1
@@ -699,14 +733,14 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
               ? candidate?.profileCategories?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.parentCategory.fullName}
-                      {'/ '}
-                      {item.fullName}
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    {item.parentCategory.fullName}
+                    {'/ '}
+                    {item.fullName}
+                  </Button>
+                ),
+              )
               : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
@@ -733,12 +767,12 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
               ? candidate?.profileLocations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.fullName}
-                    {', '}
-                    {item.province.fullName}
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  {item?.fullName}
+                  {', '}
+                  {item.province.fullName}
+                </Button>
+              ))
               : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
@@ -850,11 +884,11 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
               ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <span>{item.skillName}</span>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  <span>{item.skillName}</span>
+                  <span>{item.dataLevel.data}</span>
+                </Button>
+              ))
               : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
@@ -883,13 +917,13 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0
               ? candidate?.profilesLanguages?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      <h3>{item.languageName}</h3>
-                      <span>{item.dataLevel.data}</span>
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    <h3>{item.languageName}</h3>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ),
+              )
               : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
@@ -958,13 +992,13 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesReferences?.length !== 0
               ? candidate?.profilesReferences?.map((item: any) => (
-                  <Button key={item.id} className="btn" type="text">
-                    <h3>{item.fullName}</h3>
-                    <span>{item.phone}</span>
-                    <span>{item.email}</span>
-                    <span>{item.description}</span>
-                  </Button>
-                ))
+                <Button key={item.id} className="btn" type="text">
+                  <h3>{item.fullName}</h3>
+                  <span>{item.phone}</span>
+                  <span>{item.email}</span>
+                  <span>{item.description}</span>
+                </Button>
+              ))
               : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
@@ -1092,7 +1126,7 @@ const CandidateNewDetail = () => {
               : languageRedux === 2
                 ? 'You have successfully unsaved the candidate!'
                 : languageRedux === 3 &&
-                  '후보자 저장을 성공적으로 취소했습니다.'}
+                '후보자 저장을 성공적으로 취소했습니다.'}
           </Alert>
         </Snackbar>
       </Stack>
@@ -1122,6 +1156,18 @@ const CandidateNewDetail = () => {
       <ModalNoteCreateCompany
         openModalNoteCreateCompany={openModalNoteCreateCompany}
         setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
+      />
+      <ModalNoteWorker
+        openModalNoteWorker={openModalNoteWorker}
+        setOpenModalNoteWorker={setOpenModalNoteWorker}
+      />
+      <ModalNotRecruitment
+        openModalNotRecruitment={openModalNotRecruitment}
+        setOpenModalNotRecruitment={setOpenModalNotRecruitment}
+      />
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
       />
       {/* <ModalUnlockCandidate /> */}
     </div>

@@ -56,16 +56,16 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
 
       // if (result) {
       // }
-      if (profileV3.typeRoleData === 1) {
-        localStorage.setItem('candidateId', accountId);
-        window.open('/candidate-new-detail');
-      } else {
-        // console.log(profileV3);
-        // setOpenModalNoteWorker(true);
-        setOpenModalNotRecruitment(true);
-        // window.open('/page-cv');
-        return;
-      }
+      // if (profileV3.typeRoleData === 1) {
+      localStorage.setItem('candidateId', accountId);
+      window.open('/candidate-new-detail');
+      // } else {
+      //   // console.log(profileV3);
+      //   // setOpenModalNoteWorker(true);
+      //   setOpenModalNotRecruitment(true);
+      //   // window.open('/page-cv');
+      //   return;
+      // }
     } catch (error) {
       if (profileV3.typeRoleData === 0) {
         window.open('/', '_parent');
@@ -205,8 +205,8 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                   title={
                     item?.categoriesData?.length !== 0
                       ? item.categoriesData?.map((value: any) => {
-                          return `${value.fullName}, `;
-                        })
+                        return `${value.fullName}, `;
+                      })
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
                         : languageRedux === 2
@@ -217,8 +217,8 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                   <span className="text-info-candidate">
                     {item.categoriesData.length !== 0
                       ? item.categoriesData.map((value: any) => {
-                          return `${value.fullName}, `;
-                        })
+                        return `${value.fullName}, `;
+                      })
                       : languageRedux === 1
                         ? 'Thông tin chưa cập nhật'
                         : languageRedux === 2

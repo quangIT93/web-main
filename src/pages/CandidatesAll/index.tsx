@@ -241,7 +241,7 @@ const CandidatesAll = () => {
           setHasMore(true);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   console.log('totle', total);
@@ -250,11 +250,11 @@ const CandidatesAll = () => {
     getAllCandidates();
   }, [languageRedux]);
 
-  React.useEffect(() => {
-    if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
-      window.open('/', '_parent');
-    }
-  }, [profileV3]);
+  // React.useEffect(() => {
+  //   if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
+  //     window.open('/', '_parent');
+  //   }
+  // }, [profileV3]);
 
   const [messageApi, contextHolder] = message.useMessage();
   const handleSubmitSearchCandidate = async () => {
@@ -355,7 +355,7 @@ const CandidatesAll = () => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   const analytics: any = getAnalytics();
   React.useEffect(() => {

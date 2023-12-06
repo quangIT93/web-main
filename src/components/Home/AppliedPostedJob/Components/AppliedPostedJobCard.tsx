@@ -327,10 +327,10 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                       ? 'Rejected'
                       : languageRedux === 3 && '거부'
                   : languageRedux === 1
-                    ? 'Đã tuyển ứng viên này'
+                    ? 'Đã được tuyển'
                     : languageRedux === 2
-                      ? 'this candidate has been recruited'
-                      : languageRedux === 3 && '모집되었습니다'}
+                      ? 'Hired'
+                      : languageRedux === 3 && '고용됨'}
           </div>
           <div
             style={{ display: props.type === 'post' ? 'flex' : 'none' }}

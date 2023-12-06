@@ -39,7 +39,9 @@ const ModalFollowSuccess: React.FC<IModalPostReviewSuccess> = (props) => {
                 >
                     {languageRedux === 1
                         ? 'Theo dõi công ty thành công'
-                        : 'Follow the company successfully'}
+                        : languageRedux === 2 ?
+                            'Follow the company successfully'
+                            : '회사를 성공적으로 팔로우하셨습니다'}
                 </h3>
             }
             footer={null}
@@ -59,8 +61,10 @@ const ModalFollowSuccess: React.FC<IModalPostReviewSuccess> = (props) => {
             >
                 {
                     languageRedux === 1
-                        ? 'Bạn sẽ nhận được thông báo khi công ty có bài tuyển dụng mới.'
-                        : 'You will receive a notification when the company has a new job posting.'
+                        ? 'Cám ơn bạn đã theo dõi công ty. Bạn sẽ nhận được thông báo về công việc mới nhất từ công ty này.'
+                        : languageRedux === 2 ?
+                            'Thank you for following the company. You will receive notifications about the latest jobs from this company.'
+                            : '회사를 팔로우해주셔서 감사합니다. 이 회사의 최신 채용공고에 대한 알림을 받게 됩니다.'
                 }
             </p>
             <div className={styles.modal_follow_success_buttons}>

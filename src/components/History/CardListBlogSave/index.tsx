@@ -181,7 +181,7 @@ const CardListBlogSave = () => {
                 : languageRedux === 3 && '커뮤니티'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
               {searchParams.get('c') === '3-0' && languageRedux === 1
-                ? '  Đã lưu'
+                ? ' > Đã lưu'
                 : languageRedux === 2
                   ? ' > Saved articles'
                   : languageRedux === 3 && ' > 저정되기'}
