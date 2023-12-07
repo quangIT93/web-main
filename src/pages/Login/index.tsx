@@ -29,7 +29,7 @@ import {
   LegendComponent,
   LegendComponentOption,
   DataZoomComponent,
-  DataZoomComponentOption
+  DataZoomComponentOption,
 } from 'echarts/components';
 import { LineChart, LineSeriesOption } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
@@ -172,7 +172,7 @@ const Login = () => {
     LineChart,
     CanvasRenderer,
     UniversalTransition,
-    DataZoomComponent
+    DataZoomComponent,
   ]);
 
   type EChartsOption = echarts.ComposeOption<
@@ -198,29 +198,29 @@ const Login = () => {
       axisPointer: {
         type: 'cross',
         label: {
-          backgroundColor: '#6a7985'
-        }
-      }
+          backgroundColor: '#6a7985',
+        },
+      },
     },
     legend: {
       type: 'scroll',
       data:
-        profileV3.typeRoleDate === 0 ?
-          [
-            'Việc làm đã ứng tuyển',
-            'Việc làm đã xem qua',
-            'Việc làm đã tìm kiếm'
-          ] :
-          [
-            'Ứng viên đã tuyển dụng',
-            'Ứng viên đã xem qua',
-            'Ứng viên đã lưu lại'
-          ],
+        profileV3.typeRoleDate === 0
+          ? [
+              'Việc làm đã ứng tuyển',
+              'Việc làm đã xem qua',
+              'Việc làm đã tìm kiếm',
+            ]
+          : [
+              'Ứng viên đã tuyển dụng',
+              'Ứng viên đã xem qua',
+              'Ứng viên đã lưu lại',
+            ],
       // bottom: 0,
       icon: 'rect',
       itemWidth: 70,
       itemHeight: 10,
-      itemGap: 70
+      itemGap: 70,
     },
     // toolbox: {
     //   feature: {
@@ -231,21 +231,21 @@ const Login = () => {
       left: '3%',
       right: '4%',
       bottom: '15%',
-      containLabel: true
+      containLabel: true,
     },
     dataZoom: [
       {
         id: 'dataZoomX',
         type: 'slider',
         xAxisIndex: [0],
-        filterMode: 'filter'
+        filterMode: 'filter',
       },
       {
         id: 'dataZoomY',
         type: 'slider',
         yAxisIndex: [0],
-        filterMode: 'empty'
-      }
+        filterMode: 'empty',
+      },
     ],
     xAxis: [
       {
@@ -257,23 +257,28 @@ const Login = () => {
           'Tháng 02',
           'Tháng 03',
           'Tháng 04',
-          'Tháng 05', 'Tháng 06', 'Tháng 07',
-          'Tháng 08', 'Tháng 09', 'Tháng 10', 'Tháng 11', 'Tháng 12',
-        ]
-      }
+          'Tháng 05',
+          'Tháng 06',
+          'Tháng 07',
+          'Tháng 08',
+          'Tháng 09',
+          'Tháng 10',
+          'Tháng 11',
+          'Tháng 12',
+        ],
+      },
     ],
     yAxis: [
       {
-        type: 'value'
-      }
+        type: 'value',
+      },
     ],
     series: [
       {
-        name: profileV3.typeRoleDate === 0 ?
-          'Việc làm đã ứng tuyển'
-          :
-          'Ứng viên đã tuyển dụng'
-        ,
+        name:
+          profileV3 && profileV3.typeRoleDate === 0
+            ? 'Việc làm đã ứng tuyển'
+            : 'Ứng viên đã tuyển dụng',
         type: 'line',
         stack: 'Total',
         areaStyle: {
@@ -281,24 +286,24 @@ const Login = () => {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: 'rgba(13, 153, 255, 1)'
+              color: 'rgba(13, 153, 255, 1)',
             },
             {
               offset: 1,
-              color: '#FFFFFF'
-            }
-          ])
+              color: '#FFFFFF',
+            },
+          ]),
         },
         emphasis: {
-          focus: 'series'
+          focus: 'series',
         },
-        data: [120, 132, 101, 134, 90, 230, 210]
+        data: [120, 132, 101, 134, 90, 230, 210],
       },
       {
-        name: profileV3.typeRoleDate === 0 ?
-          'Việc làm đã xem qua'
-          :
-          'Ứng viên đã xem qua',
+        name:
+          profileV3.typeRoleDate === 0
+            ? 'Việc làm đã xem qua'
+            : 'Ứng viên đã xem qua',
         type: 'line',
         stack: 'Total',
         areaStyle: {
@@ -306,24 +311,24 @@ const Login = () => {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: 'rgba(52, 168, 83, 1)'
+              color: 'rgba(52, 168, 83, 1)',
             },
             {
               offset: 1,
-              color: '#FFFFFF'
-            }
-          ])
+              color: '#FFFFFF',
+            },
+          ]),
         },
         emphasis: {
-          focus: 'series'
+          focus: 'series',
         },
-        data: [120, 182, 191, 234, 190, 330, 110]
+        data: [120, 182, 191, 90, 120, 100, 110],
       },
       {
-        name: profileV3.typeRoleDate === 0 ?
-          'Việc làm đã tìm kiếm'
-          :
-          'Ứng viên đã lưu lại',
+        name:
+          profileV3.typeRoleDate === 0
+            ? 'Việc làm đã tìm kiếm'
+            : 'Ứng viên đã lưu lại',
         type: 'line',
         stack: 'Total',
         areaStyle: {
@@ -331,19 +336,19 @@ const Login = () => {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: 'rgba(251, 188, 4, 1)'
+              color: 'rgba(251, 188, 4, 1)',
             },
             {
               offset: 1,
-              color: '#FFFFFF'
-            }
-          ])
+              color: '#FFFFFF',
+            },
+          ]),
         },
         emphasis: {
-          focus: 'series'
+          focus: 'series',
         },
-        data: [150, 232, 201, 154, 190, 130, 110]
-      }
+        data: [150, 232, 201, 154, 190, 130, 110],
+      },
     ],
   };
 
@@ -363,10 +368,13 @@ const Login = () => {
         }}
       />
       <div id="google-login-button"></div>
-      <div id="main_echart" style={{
-        height: '400px',
-        width: '100%'
-      }}></div>
+      <div
+        id="main_echart"
+        style={{
+          height: '400px',
+          width: '100%',
+        }}
+      ></div>
     </>
   );
 };

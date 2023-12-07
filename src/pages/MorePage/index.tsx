@@ -722,6 +722,13 @@ const MoreJobsPage: React.FC = () => {
                               ? '지역내 모든 추천'
                               : 'Chọn địa chỉ'
                           }
+                          sx={{
+                            fontSize: '14px',
+                            height: '32px',
+                            minWidth: '85px',
+                            width: 'fit-content',
+                            borderRadius: '16px !important',
+                          }}
                         >
                           {optionsProvinces?.map((v: any) => {
                             return (
