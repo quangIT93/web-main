@@ -35,7 +35,7 @@ import { LineChart, LineSeriesOption } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 declare global {
-  interface Window {}
+  interface Window { }
 }
 const Login = () => {
   const dispatch = useDispatch();
@@ -185,7 +185,7 @@ const Login = () => {
     | DataZoomComponentOption
   >;
 
-  var chartDom = document.getElementById('main_echart')! as HTMLElement;
+  var chartDom = document.getElementById('main_echart') as HTMLElement;
   var myChart = chartDom && echarts.init(chartDom);
   var option: EChartsOption;
 
@@ -353,7 +353,7 @@ const Login = () => {
   };
 
   option && myChart && myChart.setOption(option);
-  window.onresize = function () {
+  (window as any).onresize = function () {
     myChart.resize();
   };
   return (

@@ -95,11 +95,11 @@ const ModalPost: React.FC<IModalPost> = (props) => {
             style={{ margin: '24px 0', fontSize: '15px' }}
           >
             {languageRedux === 1
-              ? 'Bạn có thể theo dõi bài đăng tuyển của mình thông qua:'
+              ? 'Tin tuyển dụng của bạn đã đăng thành công. Chúng tôi có nhiều ứng viên phù hợp với tin tuyển dụng của bạn. Bạn có muốn bắt đầu tìm kiếm ứng viên ngay không ?'
               : languageRedux === 2
-                ? 'You can track your job posting through:'
+                ? 'Your job posting has been successfully posted. We have many candidates who match your job posting. Do you want to start looking for candidates right away?'
                 : languageRedux === 3 &&
-                '다음을 통해 채용 공고를 추적할 수 있습니다.'}
+                '채용 공고가 성공적으로 게시되었습니다. 귀하의 채용 공고에 적합한 구직자가 많이 있습니다. 바로구직자 검색을 시작하시겠습니까?'}
           </h6>
 
           {/* <h4
@@ -190,8 +190,10 @@ const ModalPost: React.FC<IModalPost> = (props) => {
                   ? 'Go to history page'
                   : languageRedux === 3 && '기록 페이지로 이동'}
             </Button>
-            {/* <Button
-              onClick={onclick}
+            <Button
+              onClick={() => {
+                window.open(`/candidatesAll`, '_parent');
+              }}
               className="btn-apply"
               type={'primary'}
               style={{
@@ -202,8 +204,12 @@ const ModalPost: React.FC<IModalPost> = (props) => {
                 backgroundColor: '#0d99ff',
               }}
             >
-              Tiếp tục đăng bài
-            </Button> */}
+              {languageRedux === 1
+                ? 'Tìm kiếm ứng viên'
+                : languageRedux === 2
+                  ? 'Looking for candidates'
+                  : languageRedux === 3 && '구직자 검색'}
+            </Button>
           </div>
         </Box>
       </Modal>

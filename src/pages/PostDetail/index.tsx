@@ -1060,7 +1060,7 @@ const Detail = () => {
                       ? 'Giờ làm việc'
                       : languageRedux === 2
                         ? 'Working hours'
-                        : '노동시간'}
+                        : '근무시간'}
                   </p>
                 </div>
                 <div className="div-detail-row-titleItem">
@@ -1117,7 +1117,7 @@ const Detail = () => {
                         ? 'Không làm việc cuối tuần'
                         : languageRedux === 2
                           ? 'Do not work weekends'
-                          : '주말에는 일하지 마세요'
+                          : '주말 근무하지 않음'
                       : languageRedux === 1
                         ? 'Làm việc cuối tuần'
                         : languageRedux === 2
@@ -1188,7 +1188,7 @@ const Detail = () => {
                       ? 'Danh mục nghề nghiệp'
                       : languageRedux === 2
                         ? 'Category'
-                        : '직업 디렉토리'}
+                        : '직업 카테고리'}
                   </p>
                 </div>
                 <div
@@ -1227,7 +1227,7 @@ const Detail = () => {
                       ? 'Ngày hết hạn'
                       : languageRedux === 2
                         ? 'Expiration date'
-                        : '만료일'}
+                        : '마감일'}
                   </p>
                 </div>
                 <div
@@ -1243,7 +1243,7 @@ const Detail = () => {
                         ? 'Vô thời hạn'
                         : languageRedux === 2
                           ? 'Indefinitely'
-                          : '제한 없는'}
+                          : '무기한'}
                   </h5>
                 </div>
               </div>
@@ -1551,7 +1551,15 @@ const Detail = () => {
                       }
                     }}
                   >
-                    Xem chi tiết
+                    {
+                      languageRedux === 1
+                        ? 'Xem chi tiết'
+                        : languageRedux === 2
+                          ? 'View details'
+                          : languageRedux === 3 ?
+                            '자세히 보기 '
+                            : 'Xem chi tiết'
+                    }
                   </div>
                 </div>
                 {/* {Object.keys(positionMap).length !== 0 && (

@@ -136,7 +136,7 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
             ? "Danh mục nghề nghiệp"
             : languageRedux === 2
               ? "Category"
-              : '직업 디렉토리'
+              : '직업 카테고리'
         } <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Cascader

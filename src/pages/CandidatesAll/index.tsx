@@ -25,6 +25,7 @@ import { useSelector } from 'react-redux';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalNoteWorker from '#components/Home/NewestGigWorker/ModalNoteWorker';
+import ModalNotRecruitment from '#components/Candidates/ModalNotRecruitment';
 const CandidatesAll = () => {
   // const listData: any = {
   //   status: 200,
@@ -203,7 +204,7 @@ const CandidatesAll = () => {
   const [open, setOpen] = useState(false);
   const [total, setTotal] = useState(0);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-  const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
+  const [openModalNotRecruitment, setOpenModalNotRecruitment] = React.useState(false);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -404,7 +405,7 @@ const CandidatesAll = () => {
                 return;
               }
               if (profileV3.typeRoleData === 0) {
-                setOpenModalNoteWorker(true);
+                setOpenModalNotRecruitment(true);
                 return;
               }
               window.open(`/history?candidate=4`, '_parent')
@@ -529,9 +530,9 @@ const CandidatesAll = () => {
           </InfiniteScroll>
         </div>
       </div>
-      <ModalNoteWorker
-        openModalNoteWorker={openModalNoteWorker}
-        setOpenModalNoteWorker={setOpenModalNoteWorker}
+      <ModalNotRecruitment
+        openModalNotRecruitment={openModalNotRecruitment}
+        setOpenModalNotRecruitment={setOpenModalNotRecruitment}
       />
       <ModalLogin
         openModalLogin={openModalLogin}

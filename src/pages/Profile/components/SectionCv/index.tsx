@@ -1247,7 +1247,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 ? 'Thêm mục'
                 : languageRedux === 2
                   ? 'Add section'
-                  : '직업 이름을'}
+                  : '장점 추가'}
             </h3>
           </div>
           <Box sx={{ flexGrow: 1 }}>

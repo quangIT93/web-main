@@ -901,7 +901,7 @@ const Navbar: React.FC = () => {
   React.useEffect(() => {
     if (localStorage.getItem('accessToken')) getAppliedPostedJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [updateCountAppliedJobs]);
 
   const [approved, setApproved] = useState(0);
   const [pending, setPending] = useState(0);
@@ -951,7 +951,7 @@ const Navbar: React.FC = () => {
   }, [appliedPostedJob]);
 
   useMemo(() => {
-    getAppliedPostedJobs();
+    // getAppliedPostedJobs();
     changeCountAppliedJobs();
   }, [updateCountAppliedJobs]);
 
@@ -991,7 +991,7 @@ const Navbar: React.FC = () => {
           ? 'Trả lương theo'
           : languageRedux === 2
           ? 'Calculate salary:'
-          : languageRedux === 3 && '그에 따라 지불',
+          : languageRedux === 3 && '...에 따라 지불',
     };
     setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };
