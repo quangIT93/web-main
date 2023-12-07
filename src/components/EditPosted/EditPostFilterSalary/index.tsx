@@ -107,7 +107,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
               ? 'Lương tối thiểu'
               : languageRedux === 2
                 ? 'Min salary'
-                : '섹션 추가'}{' '}
+                : '최저 급여'}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
@@ -118,7 +118,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
                 ? 'Lương tối thiểu'
                 : languageRedux === 2
                   ? 'Min salary'
-                  : '섹션 추가'
+                  : '최저 급여'
             }
             onChange={handleChangesalaryMin}
             value={new Intl.NumberFormat('en-US').format(

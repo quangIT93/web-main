@@ -47,6 +47,7 @@ const CustomOption = ({
     // console.log('valueRender Loai cong viec', valueRender);
     // console.log('valueRender Loai cong viec value', value);
     const valueRender = sizeType.find((item: any) => item.id === value);
+    console.log(valueRender);
 
     setSize(value);
     if (valueRender) {
@@ -75,7 +76,7 @@ const CustomOption = ({
         name="radiogroup"
         onChange={onChange}
         value={typeSizeCompany && reset ? undefined : typeSizeCompany}
-        // defaultValue={jobType ? jobType : 5}
+      // defaultValue={jobType ? jobType : 5}
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           {sizeType?.map((value: any, index: number) => {
@@ -127,7 +128,7 @@ const SearchSizeCompany: React.FC<ISeachEducation> = (props) => {
     getSizeCompany();
   }, [languageRedux]);
 
-  const onChange = (value: string[][]) => {};
+  const onChange = (value: string[][]) => { };
   const handleChange = (value1: number) => {
     setReset(false);
   };
@@ -158,8 +159,8 @@ const SearchSizeCompany: React.FC<ISeachEducation> = (props) => {
               : languageRedux === 3 && '회사 규모'
         }
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
-        // open={true}
-        // onMouseLeave={set}
+      // open={true}
+      // onMouseLeave={set}
       >
         <Option className="type-salary" value={valueRender?.id} label="">
           <div className="sssssssssssssssssssssssssss">

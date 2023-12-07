@@ -81,7 +81,7 @@ import './style.scss';
 
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
 import ShowCancleSave from '#components/ShowCancleSave';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 import languageApi from 'api/languageApi';
 import locationApi from 'api/locationApi';
@@ -92,6 +92,10 @@ import { hotjobPageEn } from 'validations/lang/en/hotjobPage';
 import { getCookie } from 'cookies';
 import NoDataComponent from 'utils/NoDataPage';
 import HotJob from '#components/Home/HotJob';
+import FilterLocationHotJob from '#components/HotJobPage/FilterLocationHotJob';
+import FilterSalaryHotJob from '#components/HotJobPage/FilterSalaryHotJob';
+import FilterNewOldHotJob from '#components/HotJobPage/FilterNewOldHotJob';
+import { setLocationApi } from 'store/reducer/locationReducer';
 
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
@@ -171,7 +175,13 @@ const HotJobpage: React.FC = () => {
   const [page, setPage] = React.useState<any>('0');
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
+  const [salaryType, setSalaryType] = React.useState<any>();
+  const [addresses, setAddresses] = React.useState<any>([]);
+  const [typeMoney, setTypeMoney] = React.useState<number | null>(1);
+  const [salaryMin, setSalaryMin] = React.useState<number>(0);
+  const [salaryMax, setSalaryMax] = React.useState<number>(0);
+  const [newOld, setNewOld] = React.useState<any | null>(1);
+  const [reset, setReset] = React.useState<boolean>(false);
   // modal keyword
 
   // const [selectedProvince, setSelectedProvince] = React.useState<any>(null);
@@ -237,9 +247,9 @@ const HotJobpage: React.FC = () => {
       // const provinceId = localStorage.getItem('filterHotjobProvince');
 
       // const url = localStorage.getItem('hotjobApi');
-
+      setOpenBackdrop(true);
       let hotjob: any = await hotJobApi.getHotJobById(
-        `/v3/posts/topic/${searchParams.get('hotjob-id')}?a=394,370`,
+        `/v3/posts/topic/${searchParams.get('hotjob-id')}?`,
         pageNumber,
         searchParams.get('hotjob-type') === '1' ? 18 : 20,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
@@ -249,7 +259,11 @@ const HotJobpage: React.FC = () => {
         //   : idFilterProvinces
         //   ? idFilterProvinces
         //   : '0',
-        idFilterProvinces ? idFilterProvinces : '0',
+        addresses?.length !== 0 ? addresses[0] : '0',
+        newOld === 1 ? 'DESC' : 'ASC',
+        typeMoney,
+        salaryMin,
+        salaryMax
       );
 
       // console.log('hotjob.data.total', hotjob['total'] as any);
@@ -258,7 +272,9 @@ const HotJobpage: React.FC = () => {
       const hotjobtotal = getCookie('hotjobTotal');
 
       // hotjobtotal / 20
-
+      if (hotjob) {
+        setOpenBackdrop(false);
+      }
       setHotJobTotal(hotjob.total);
 
       setHasMore(true);
@@ -373,7 +389,7 @@ const HotJobpage: React.FC = () => {
       const result = await locationApi.getAllProvinces(
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
-      console.log('result', result.data);
+      // console.log('result', result.data);
 
       if (result) {
         const itemsAll = {
@@ -460,8 +476,8 @@ const HotJobpage: React.FC = () => {
       setOptionsProvinces(newOptionsProvinces);
     }
   }, [provincesData, languageRedux]);
-
-  const handleClickFilterHotjob = () => {};
+  const dispatch = useDispatch();
+  const handleClickFilterHotjob = () => { };
 
   const handleChangeFilterHotjob = (event: SelectChangeEvent) => {
     // localStorage.setItem('filterHotjobProvince', value);
@@ -477,7 +493,7 @@ const HotJobpage: React.FC = () => {
       // const url = localStorage.getItem('hotjobApi');
 
       let result: any = await hotJobApi.getHotJobById(
-        `/v3/posts/topic/${searchParams.get('hotjob-id')}?a=394,370`,
+        `/v3/posts/topic/${searchParams.get('hotjob-id')}?`,
         nextPage,
         searchParams.get('hotjob-type') === '1' ? 18 : 20,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
@@ -487,7 +503,11 @@ const HotJobpage: React.FC = () => {
         //   : idFilterProvinces
         //   ? [idFilterProvinces]
         //     : [idFilterProvinces],
-        idFilterProvinces ? idFilterProvinces : '0',
+        addresses?.length !== 0 ? addresses[0] : '0',
+        newOld === 1 ? 'DESC' : 'ASC',
+        typeMoney,
+        salaryMin,
+        salaryMax
       );
 
       if (result && result.data.length !== 0) {
@@ -501,7 +521,56 @@ const HotJobpage: React.FC = () => {
       console.log('error', error);
     }
   };
+
+  const getAllLocaitions = async () => {
+    try {
+      const result = await locationApi.getAllLocation(
+        languageRedux === 1
+          ? 'vi'
+          : languageRedux === 2
+            ? 'en'
+            : languageRedux === 3
+              ? 'ko'
+              : 'vi',
+      );
+      if (result) {
+        // setDataLocations(result.data);
+        dispatch(setLocationApi(result));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getAllLocaitions();
+  }, [languageRedux]);
   // console.log(profileV3);
+  const handleResetSearchCandidate = () => {
+    setAddresses([]);
+    setSalaryMin(0);
+    setSalaryMax(0);
+    setTypeMoney(1);
+    setNewOld(1);
+    setReset(true);
+  };
+
+  const handleSubmitSearchCompany = async () => {
+    if (salaryMin !== 0 && salaryMax !== 0 && salaryMin > salaryMax) {
+      message.error(languageRedux === 1 ?
+        "Lương tối thiểu không được lớn hơn lương tối đa" :
+        languageRedux === 2 ?
+          "Minimum cannot be greater than maximum" :
+          "최소 금액은 최대 금액보다 클 수 없습니다.")
+      return;
+    }
+    getHotJob()
+    // console.log('address', addresses);
+    // console.log('SalaryMin', salaryMin);
+    // console.log('SalaryMax', salaryMax);
+    // console.log('NewOld', newOld);
+    // console.log('TypeMoney', typeMoney);
+  }
   return (
     <>
       {contextHolder}
@@ -602,7 +671,7 @@ const HotJobpage: React.FC = () => {
                     : languageRedux === 3 && ':'}{' '}
                 {hotjob.length !== 0
                   ? // ? Number(hotJobTotal.toLocaleString())
-                    new Intl.NumberFormat('en-US').format(hotJobTotal)
+                  new Intl.NumberFormat('en-US').format(hotJobTotal)
                   : languageRedux === 1
                     ? '0 kết quả'
                     : languageRedux === 2
@@ -615,18 +684,18 @@ const HotJobpage: React.FC = () => {
                     languageRedux === 1 && hotjob.length !== 0
                       ? 'kết quả'
                       : languageRedux === 2 &&
-                          hotJobTotal >= 2 &&
-                          hotjob.length !== 0
+                        hotJobTotal >= 2 &&
+                        hotjob.length !== 0
                         ? 'results'
                         : languageRedux === 2 &&
-                            hotJobTotal < 2 &&
-                            hotjob.length !== 0
+                          hotJobTotal < 2 &&
+                          hotjob.length !== 0
                           ? 'result'
-                          : '건'
+                          : languageRedux === 3 ? '건' : ''
                   }
                 </span>
               </h3>
-              <div className="filter-hotjob">
+              {/* <div className="filter-hotjob">
                 <div className="filter-provinces">
                   {optionsProvinces.length !== 0 ? (
                     <Select
@@ -660,7 +729,7 @@ const HotJobpage: React.FC = () => {
                     <></>
                   )}
                 </div>
-              </div>
+              </div> */}
               {/* <h4>
                   {hotJobTotal ? hotJobTotal : 0}
                   <span>
@@ -672,7 +741,55 @@ const HotJobpage: React.FC = () => {
                 </h4> */}
             </div>
           </div>
+          <div className="list-search">
+            <div className="list-search-filter">
+              <FilterLocationHotJob
+                setAddresses={setAddresses}
+                setReset={setReset}
+                reset={reset}
+                addresses={addresses}
+              />
+              <FilterSalaryHotJob
+                salaryType={salaryType}
+                typeMoney={typeMoney}
+                setTypeMoney={setTypeMoney}
+                salaryMin={salaryMin}
+                salaryMax={salaryMax}
+                setSalaryMin={setSalaryMin}
+                setSalaryMax={setSalaryMax}
+                reset={reset}
+                setReset={setReset}
+              />
+              <FilterNewOldHotJob
+                setNewOld={setNewOld}
+                setReset={setReset}
+                reset={reset}
+              />
+            </div>
+            <div className="submit-search">
+              <div
+                className="submit-seach_button seach-button_Confirm"
+                onClick={handleSubmitSearchCompany}
+              >
+                {languageRedux === 1
+                  ? 'Xác nhận'
+                  : languageRedux === 2
+                    ? 'Confirm'
+                    : languageRedux === 3 && '확인'}
+              </div>
 
+              <div
+                className="submit-seach_button seach-button_Reset"
+                onClick={handleResetSearchCandidate}
+              >
+                {languageRedux === 1
+                  ? 'Đặt lại'
+                  : languageRedux === 2
+                    ? 'Reset'
+                    : languageRedux === 3 && '초기화'}
+              </div>
+            </div>
+          </div>
           {hotjob.length > 0 ? (
             // <>
             //   <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
@@ -760,7 +877,7 @@ const HotJobpage: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-            //  onClick={handleClose}
+          //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
