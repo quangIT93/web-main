@@ -884,6 +884,7 @@ const Navbar: React.FC = () => {
     }
   };
 
+
   // const getPropfileV3New = async () => {
   //   try {
   //     const result = await profileApi.getProfileV3(
@@ -902,7 +903,7 @@ const Navbar: React.FC = () => {
   React.useEffect(() => {
     if (localStorage.getItem('accessToken')) getAppliedPostedJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [updateCountAppliedJobs]);
 
   const [approved, setApproved] = useState(0);
   const [pending, setPending] = useState(0);
@@ -952,8 +953,9 @@ const Navbar: React.FC = () => {
   }, [appliedPostedJob]);
 
   useMemo(() => {
-    getAppliedPostedJobs();
+    // getAppliedPostedJobs();
     changeCountAppliedJobs();
+    console.log("updateCountAppliedJobs", updateCountAppliedJobs);
   }, [updateCountAppliedJobs])
 
   const handleResetValue = () => {
