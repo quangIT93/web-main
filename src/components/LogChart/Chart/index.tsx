@@ -148,24 +148,25 @@ const Chart = () => {
             ? 'Việc làm đã ứng tuyển'
             : 'Ứng viên đã tuyển dụng',
         type: 'line',
-        stack: 'Total',
-        areaStyle: {
-          opacity: 0.8,
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: 'rgba(13, 153, 255, 1)',
-            },
-            {
-              offset: 1,
-              color: '#FFFFFF',
-            },
-          ]),
-        },
+        smooth: true,
+        // stack: 'Total',
+        // areaStyle: {
+        //   opacity: 0.8,
+        //   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        //     {
+        //       offset: 0,
+        //       color: 'rgba(13, 153, 255, 1)',
+        //     },
+        //     {
+        //       offset: 1,
+        //       color: '#FFFFFF',
+        //     },
+        //   ]),
+        // },
         emphasis: {
           focus: 'series',
         },
-        data: [120, 132, 101, 134, 90, 230, 210],
+        data: [120, 132, 400, 134, 90, 230, 210],
       },
       {
         name:
@@ -173,20 +174,21 @@ const Chart = () => {
             ? 'Việc làm đã xem qua'
             : 'Ứng viên đã xem qua',
         type: 'line',
-        stack: 'Total',
-        areaStyle: {
-          opacity: 0.8,
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: 'rgba(52, 168, 83, 1)',
-            },
-            {
-              offset: 1,
-              color: '#FFFFFF',
-            },
-          ]),
-        },
+        smooth: true,
+        // stack: 'Total',
+        // areaStyle: {
+        //   opacity: 0.8,
+        //   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        //     {
+        //       offset: 0,
+        //       color: 'rgba(52, 168, 83, 1)',
+        //     },
+        //     {
+        //       offset: 1,
+        //       color: '#FFFFFF',
+        //     },
+        //   ]),
+        // },
         emphasis: {
           focus: 'series',
         },
@@ -198,20 +200,21 @@ const Chart = () => {
             ? 'Việc làm đã tìm kiếm'
             : 'Ứng viên đã lưu lại',
         type: 'line',
-        stack: 'Total',
-        areaStyle: {
-          opacity: 0.8,
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: 'rgba(251, 188, 4, 1)',
-            },
-            {
-              offset: 1,
-              color: '#FFFFFF',
-            },
-          ]),
-        },
+        smooth: true,
+        // stack: 'Total',
+        // areaStyle: {
+        //   opacity: 0.8,
+        //   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        //     {
+        //       offset: 0,
+        //       color: 'rgba(251, 188, 4, 1)',
+        //     },
+        //     {
+        //       offset: 1,
+        //       color: '#FFFFFF',
+        //     },
+        //   ]),
+        // },
         emphasis: {
           focus: 'series',
         },
