@@ -44,7 +44,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={SALARY_TYPE}
-      // defaultValue={SALARY_TYPE}
+    // defaultValue={SALARY_TYPE}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -160,7 +160,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
               ? 'Trả lương theo'
               : languageRedux === 2
                 ? 'Calculate salary:'
-                : languageRedux === 3 && '그에 따라 지불'
+                : languageRedux === 3 && '...에 따라 지불'
             : valueRender
               ? valueRender.value
               : undefined
@@ -172,7 +172,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
             ? 'Trả lương theo'
             : languageRedux === 2
               ? 'Calculate salary:'
-              : languageRedux === 3 && '그에 따라 지불'
+              : languageRedux === 3 && '...에 따라 지불'
         }
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
@@ -184,7 +184,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
               ? 'Trả lương theo'
               : languageRedux === 2
                 ? 'Calculate salary:'
-                : '그에 따라 지불'
+                : '...에 따라 지불'
           }
         >
           <div
@@ -202,7 +202,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
               ? 'Trả lương theo'
               : languageRedux === 2
                 ? 'Calculate salary:'
-                : languageRedux === 3 && '그에 따라 지불'}
+                : languageRedux === 3 && '...에 따라 지불'}
           </div>
           <CustomOption
             salaryType={SALARY_TYPE}

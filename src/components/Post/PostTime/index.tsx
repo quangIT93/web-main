@@ -74,7 +74,7 @@ const PostTime: React.FC<IPostTime> = (props) => {
                 : languageRedux === 2
                   ? "Working hours"
                   : languageRedux === 3
-                    ? '노동시간'
+                    ? '근무시간'
                     : "Giờ làm việc"
             }{' '}
             <span style={{ color: 'red' }}>*</span>

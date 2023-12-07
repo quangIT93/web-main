@@ -36,10 +36,10 @@ const ModalNotRecruitment: React.FC<IModalShare> = (props) => {
           }}
         >
           {languageRedux === 1
-            ? 'Không thể xem hồ sơ ứng viên'
+            ? 'Bạn không phải là nhà tuyển dụng!'
             : languageRedux === 2
-              ? 'Unable to view candidate profile'
-              : languageRedux === 3 && '후보자 프로필을 볼 수 없습니다'}
+              ? `You don't have to be a recruiter`
+              : languageRedux === 3 && '당신은 모집자가 아닙니다!'}
         </h3>
       }
       footer={null}
@@ -62,7 +62,7 @@ const ModalNotRecruitment: React.FC<IModalShare> = (props) => {
           : languageRedux === 2
             ? 'Only recruiters can open candidate profiles. For individual users, create a CV now to be quickly actively connected with you by employers!'
             : languageRedux === 3 &&
-              '고용주만 후보자 프로필을 열고 볼 수 있습니다. 개인 사용자의 경우 이력서를 즉시 작성하면 고용주가 적극적으로 신속하게 귀하와 연결할 수 있습니다.'}
+            '고용주만 후보자 프로필을 열고 볼 수 있습니다. 개인 사용자의 경우 이력서를 즉시 작성하면 고용주가 적극적으로 신속하게 귀하와 연결할 수 있습니다.'}
       </p>
       <div className="buttons-not-recruitment-modal">
         <Button
