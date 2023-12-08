@@ -1090,8 +1090,8 @@
       }
     }
 
-    // @include breakpoint(tablet) {
-    @media screen and (max-width: 480px) {
+    @include breakpoint(tablet) {
+    // @media screen and (max-width: 480px) {
 
       // }
       // display: flex;
@@ -1798,10 +1798,7 @@
       display: none;
     }
 
-    @include breakpoint(mobile) {
-
-
-
+    @media screen and (max-width: 480px){
       .notification {
         display: block;
         left: 24px;
@@ -1874,7 +1871,6 @@
 
         }
       }
-
     }
   }
 }
