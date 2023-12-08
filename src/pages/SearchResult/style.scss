@@ -29,6 +29,12 @@
     justify-content: space-between;
     padding-bottom: 8px;
 
+    .total-search {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+    }
+
     @media screen and (max-width: 370px) {
       display: block;
 
@@ -50,6 +56,7 @@
 
       .total-search {
         margin-bottom: 12px;
+        font-size: 20px;
       }
 
     }

@@ -2,7 +2,7 @@
 .new-job {
     .MuiGrid-item {
         @include breakpoint(mobile) {
-            height: 142px;
+            // height: 142px;
         }
     
         @media (max-width: 768px) {
@@ -115,10 +115,10 @@
             display: flex;
             align-items: flex-start !important;
             .MuiImageListItem-img {
-                width: 82px !important;
-                height: 82px !important;
-                min-width: 82px !important;
-                min-height: 82px !important;
+                width: 110px !important;
+                height: 110px !important;
+                min-width: 110px !important;
+                min-height: 110px !important;
             }
 
             .div-card-post-left_info {

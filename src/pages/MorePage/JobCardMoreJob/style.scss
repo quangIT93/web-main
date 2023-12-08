@@ -5,7 +5,7 @@
 
     .MuiGrid-item {
         @media (max-width: 425px) {
-            height: 122px;
+            // height: 122px;
             max-width: 100% !important;
         }
 
@@ -80,7 +80,7 @@
                 width: 60%;
 
                 div:last-child {
-                    margin: 0 !important;
+                    // margin: 0 !important;
                 }
             }
         }
