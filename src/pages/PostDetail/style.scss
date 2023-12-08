@@ -747,9 +747,9 @@
                     justify-content: space-around;
 
                     @include breakpoint(tablet) {
-                      height: 100%;
-                      justify-content: space-evenly;
-                      max-height: 600px;
+                      // height: 100%;
+                      // justify-content: space-evenly;
+                      // max-height: 600px;
                     }
 
                     @include breakpoint(mobile) {
