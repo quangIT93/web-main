@@ -28,6 +28,8 @@ import templatesCv from '../CvTemplate/ListTheme';
 import { template } from '@babel/core';
 import profileApi from 'api/profileApi';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
+// AnotherFile.js
+import { listTemplate } from './dataListTemplate';
 // const sharp = require('sharp');
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/legacy/build/pdf.worker.min.js',
@@ -204,7 +206,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   React.useEffect(() => {
     getDataParentCategory();
-    getTheme();
+    // getTheme();
     const cv_id =
       Number(localStorage.getItem('cv-id')) === 0
         ? 1
@@ -217,13 +219,13 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   React.useEffect(() => {
     if (!valueNameCv) {
       // setValueNameCv(localStorage.getItem('nameCv'));
-      getThemeCv.map((value: any) => {
+      listTemplate.map((value: any) => {
         if (Number(localStorage.getItem('cv-id')) === value.id) {
           setValueNameCv(`${profileV3.name} - ${value.name}`);
         }
       });
     }
-  }, [getThemeCv]);
+  }, [listTemplate]);
 
   const handleChangeCategory = async () => {};
 
@@ -234,14 +236,14 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     localStorage.setItem('nameCv', `${profileV3.name} - ${name}`);
   };
 
-  const getTheme = async () => {
-    try {
-      const result = await apiCv.getThemeCv();
-      if (result) {
-        setGetThemeCv(result.data);
-      }
-    } catch (error) {}
-  };
+  // const getTheme = async () => {
+  //   try {
+  //     const result = await apiCv.getThemeCv();
+  //     if (result) {
+  //       setGetThemeCv(result.data);
+  //     }
+  //   } catch (error) {}
+  // };
 
   // console.log('aaa');
   // const element = document.querySelector('.scalable-element') as any;
@@ -300,12 +302,12 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
             {languageRedux === 1
               ? 'Chọn mẫu CV'
               : languageRedux === 2
-                ? 'Choose CV template'
-                : '이력서 템플릿을 선택하세요'}
+              ? 'Choose CV template'
+              : '이력서 템플릿을 선택하세요'}
           </h3>
         </div>
         <div className="list-template">
-          {getThemeCv.map((item: any, index: any) => (
+          {listTemplate.map((item: any, index: any) => (
             <div
               className={
                 item?.id ===
@@ -337,7 +339,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           modules={[Mousewheel, Navigation, Pagination]}
           className="list-template-swiper"
         >
-          {getThemeCv.map((item: any, index: number) => {
+          {listTemplate.map((item: any, index: number) => {
             return (
               <SwiperSlide
                 key={index}
@@ -419,8 +421,8 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
               {languageRedux === 1
                 ? 'Xem tất cả'
                 : languageRedux === 2
-                  ? 'View all'
-                  : languageRedux === 3 && '모두보기'}
+                ? 'View all'
+                : languageRedux === 3 && '모두보기'}
             </p>
           </div>
         </div>

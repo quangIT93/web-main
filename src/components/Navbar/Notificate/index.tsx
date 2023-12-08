@@ -373,9 +373,6 @@ const Notificate = () => {
     setOpenModalDeleteKeyword(false);
   };
 
-  console.log('dataNotification', dataNotification);
-  console.log('dataNotificationKeyword', dataNotificationKeyword);
-
   const fetchMoreData = async () => {
     setHasMore(true);
     try {
@@ -423,8 +420,8 @@ const Notificate = () => {
           {languageRedux === 1
             ? 'Thông báo'
             : languageRedux === 2
-              ? 'Notification'
-              : languageRedux === 3 && '알림'}
+            ? 'Notification'
+            : languageRedux === 3 && '알림'}
         </div>
         <div
           className={`top-notificate_keyword ${
@@ -435,8 +432,8 @@ const Notificate = () => {
           {languageRedux === 1
             ? 'Từ khóa'
             : languageRedux === 2
-              ? 'Keyword'
-              : languageRedux === 3 && '키워드'}
+            ? 'Keyword'
+            : languageRedux === 3 && '키워드'}
         </div>
       </div>
       <div className="bottom-notificate" id="scrollableDiv">
@@ -483,8 +480,8 @@ const Notificate = () => {
                             languageRedux === 1
                               ? 'Hình ảnh bị lỗi'
                               : languageRedux === 2
-                                ? 'Image is corrupted'
-                                : '이미지가 손상되었습니다'
+                              ? 'Image is corrupted'
+                              : '이미지가 손상되었습니다'
                           }
                         />
                       </div>
@@ -565,9 +562,9 @@ const Notificate = () => {
                         !notificate?.data?.isRead
                           ? 'readed'
                           : notificate.data?.isRead !== undefined &&
-                              notificate.data?.isRead
-                            ? ''
-                            : ''
+                            notificate.data?.isRead
+                          ? ''
+                          : ''
                       }`}
                       onClick={() =>
                         handleClickNotiKey(
@@ -642,9 +639,9 @@ const Notificate = () => {
                         !notificate?.data?.isRead
                           ? 'readed'
                           : notificate.data?.isRead !== undefined &&
-                              notificate.data?.isRead
-                            ? ''
-                            : ''
+                            notificate.data?.isRead
+                          ? ''
+                          : ''
                       }`}
                       onClick={() =>
                         handleClickNoty(
@@ -691,9 +688,9 @@ const Notificate = () => {
               {languageRedux === 1
                 ? 'Bạn muốn nhận danh sách công việc theo từ khóa tìm kiếm nhanh chóng qua:'
                 : languageRedux === 2
-                  ? 'You want to get job listings by keyword quickly search via:'
-                  : languageRedux === 3 &&
-                    '다음을 통해 키워드별로 빠르게 검색하려는 작업 목록:'}
+                ? 'You want to get job listings by keyword quickly search via:'
+                : languageRedux === 3 &&
+                  '다음을 통해 키워드별로 빠르게 검색하려는 작업 목록:'}
             </p>
             <div className="wrap-checkbox_keyword">
               <div className="checkbox-keyword">
@@ -711,8 +708,8 @@ const Notificate = () => {
                   {languageRedux === 1
                     ? 'Ứng dụng'
                     : languageRedux === 2
-                      ? 'App'
-                      : languageRedux === 3 && '앱'}
+                    ? 'App'
+                    : languageRedux === 3 && '앱'}
                 </label>
               </div>
               <div className="checkbox-keyword">
@@ -728,8 +725,8 @@ const Notificate = () => {
                   {languageRedux === 1
                     ? 'Email'
                     : languageRedux === 2
-                      ? 'Email'
-                      : languageRedux === 3 && '이메일'}
+                    ? 'Email'
+                    : languageRedux === 3 && '이메일'}
                 </label>
               </div>
             </div>
@@ -738,8 +735,8 @@ const Notificate = () => {
                 {languageRedux === 1
                   ? 'Bạn đã lưu trữ được:'
                   : languageRedux === 2
-                    ? 'You have archived:'
-                    : languageRedux === 3 && '보관했습니다:'}
+                  ? 'You have archived:'
+                  : languageRedux === 3 && '보관했습니다:'}
                 <strong>{` ${
                   dataNotificationKeyword.keywords.length > 0
                     ? dataNotificationKeyword.keywords.length
@@ -748,8 +745,8 @@ const Notificate = () => {
                 {languageRedux === 1
                   ? 'gợi ý công việc'
                   : languageRedux === 2
-                    ? 'job suggestion'
-                    : languageRedux === 3 && '일자리 제안'}
+                  ? 'job suggestion'
+                  : languageRedux === 3 && '일자리 제안'}
               </p>
             </div>
             {dataNotificationKeyword ? (
@@ -878,15 +875,15 @@ const Notificate = () => {
             {languageRedux === 1
               ? 'Xóa gợi ý công việc'
               : languageRedux === 2
-                ? 'Delete job suggestion'
-                : '채용 제안 삭제'}
+              ? 'Delete job suggestion'
+              : '채용 제안 삭제'}
           </h4>
           <p>
             {languageRedux === 1
               ? 'Từ khoá sẽ không thể khôi phục sau khi xoá, bạn có chắc không?'
               : languageRedux === 2
-                ? 'Keywords will not be recoverable after deletion, are you sure?'
-                : '키워드를 삭제한 후에는 복구할 수 없습니다. 계속하시겠습니까?'}
+              ? 'Keywords will not be recoverable after deletion, are you sure?'
+              : '키워드를 삭제한 후에는 복구할 수 없습니다. 계속하시겠습니까?'}
           </p>
           <Button
             type="primary"
@@ -896,8 +893,8 @@ const Notificate = () => {
             {languageRedux === 1
               ? 'Đồng ý'
               : languageRedux === 2
-                ? 'OK'
-                : '동의하다'}
+              ? 'OK'
+              : '동의하다'}
           </Button>
           <IconButton
             aria-label="close"

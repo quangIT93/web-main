@@ -72,12 +72,12 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#cee8ff'
           : color === 2
-            ? '#AED6F1'
-            : color === 3
-              ? '#F9E79F'
-              : color === 4
-                ? '#ABEBC6'
-                : '#F1948A'
+          ? '#AED6F1'
+          : color === 3
+          ? '#F9E79F'
+          : color === 4
+          ? '#ABEBC6'
+          : '#F1948A'
       }`,
       gap: '20.495pt',
     },
@@ -108,12 +108,12 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#f7b3cc'
           : color === 2
-            ? '#AED6F1'
-            : color === 3
-              ? '#F9E79F'
-              : color === 4
-                ? '#ABEBC6'
-                : '#F1948A',
+          ? '#AED6F1'
+          : color === 3
+          ? '#F9E79F'
+          : color === 4
+          ? '#ABEBC6'
+          : '#F1948A',
       borderTopLeftRadius: '50%',
       borderBottomLeftRadius: '50%',
       zIndex: -1,
@@ -128,12 +128,12 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#f7b3cc'
           : color === 2
-            ? '#AED6F1'
-            : color === 3
-              ? '#F9E79F'
-              : color === 4
-                ? '#ABEBC6'
-                : '#F1948A',
+          ? '#AED6F1'
+          : color === 3
+          ? '#F9E79F'
+          : color === 4
+          ? '#ABEBC6'
+          : '#F1948A',
       transform: 'rotate(-90deg)',
       borderTopLeftRadius: '60%',
       borderBottomLeftRadius: '30%',
@@ -148,12 +148,12 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#f7b3cc'
           : color === 2
-            ? '#AED6F1'
-            : color === 3
-              ? '#F9E79F'
-              : color === 4
-                ? '#ABEBC6'
-                : '#F1948A',
+          ? '#AED6F1'
+          : color === 3
+          ? '#F9E79F'
+          : color === 4
+          ? '#ABEBC6'
+          : '#F1948A',
     },
     heart11: {
       width: 130,
@@ -202,6 +202,15 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       height: 260,
       transform: 'rotate(-180deg)',
       zIndex: 0,
+    },
+    hijob: {
+      position: 'absolute',
+      fontSize: fontSize - 12,
+      bottom: 10,
+      // left: 0,
+      right: 25,
+      textAlign: 'center',
+      color: '#000000',
     },
   });
   Font.register({
@@ -338,6 +347,11 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       <Text
         style={styles.pageNumber}
         render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+        fixed
+      />
+      <Text
+        style={styles.hijob}
+        render={({ pageNumber, totalPages }) => `hijob.site`}
         fixed
       />
     </Page>

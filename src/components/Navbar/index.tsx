@@ -2169,7 +2169,10 @@ const Navbar: React.FC = () => {
                     className="btn-notice"
                     name="btn-notice"
                     onClick={() => {
-                      if (profileV3 && localStorage.getItem('accessToken')) {
+                      if (
+                        profileV3.length !== 0 &&
+                        localStorage.getItem('accessToken')
+                      ) {
                         setOpenNotificate(!openNotificate);
                       } else {
                         setOpenModalLogin(true);
