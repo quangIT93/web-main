@@ -79,7 +79,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
     }
   };
 
-  React.useEffect(() => { }, [like]);
+  React.useEffect(() => {}, [like]);
 
   const handleClickSave = async (e: any) => {
     e.stopPropagation();
@@ -197,8 +197,9 @@ const HijobNewsCard: React.FC<any> = (props) => {
               <ul
                 className={`text-content_postNew ${showText}`}
                 ref={contentRef}
+                dangerouslySetInnerHTML={{ __html: item?.content }}
               >
-                {item?.content}
+                {/* {item?.content} */}
               </ul>
               {/* <TextArea
                 value={item?.content}
@@ -215,11 +216,15 @@ const HijobNewsCard: React.FC<any> = (props) => {
               /> */}
               {shouldShowMoreButton ? (
                 <span onClick={(e) => handleAddText(e)}>
-                  {!showText ? `${languageRedux === 1
-                    ? 'Xem thêm'
-                    : languageRedux === 2
-                      ? 'See more'
-                      : '더보기'}...` : 'Xem ít...'}
+                  {!showText
+                    ? `${
+                        languageRedux === 1
+                          ? 'Xem thêm'
+                          : languageRedux === 2
+                          ? 'See more'
+                          : '더보기'
+                      }...`
+                    : 'Xem ít...'}
                 </span>
               ) : (
                 <></>
@@ -240,8 +245,8 @@ const HijobNewsCard: React.FC<any> = (props) => {
                     {languageRedux === 1
                       ? 'Tác giả'
                       : languageRedux === 2
-                        ? 'Author'
-                        : '작가'}
+                      ? 'Author'
+                      : '작가'}
                   </p>
                   <p>Hijob</p>
                 </div>

@@ -169,13 +169,21 @@
           align-items: center;
           flex-wrap: nowrap;
           column-gap: 10px;
+          
+          @include breakpoint(tablet) {
+            justify-content: space-between;
+          }
+
+          @include breakpoint(mobile) {
+            justify-content: space-between;
+          }
 
           h2 {
             font-size: 24px;
             font-weight: 700;
 
             @include breakpoint(mobile) {
-              width: 200px;
+              width: 300px;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;

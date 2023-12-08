@@ -55,6 +55,7 @@
     "firebase": "^9.20.0",
     "fs-extra": "^10.0.0",
     "gatsby-plugin-react-helmet": "^6.12.0",
+    "html-react-parser": "^5.0.7",
     "html-to-draftjs": "^1.5.0",
     "html-webpack-plugin": "^5.5.0",
     "html2canvas": "^1.4.1",
