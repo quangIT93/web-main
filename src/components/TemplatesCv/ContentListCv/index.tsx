@@ -206,7 +206,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   React.useEffect(() => {
     getDataParentCategory();
-    getTheme();
+    // getTheme();
     const cv_id =
       Number(localStorage.getItem('cv-id')) === 0
         ? 1
@@ -219,13 +219,13 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   React.useEffect(() => {
     if (!valueNameCv) {
       // setValueNameCv(localStorage.getItem('nameCv'));
-      getThemeCv.map((value: any) => {
+      listTemplate.map((value: any) => {
         if (Number(localStorage.getItem('cv-id')) === value.id) {
           setValueNameCv(`${profileV3.name} - ${value.name}`);
         }
       });
     }
-  }, [getThemeCv]);
+  }, [listTemplate]);
 
   const handleChangeCategory = async () => {};
 
@@ -236,14 +236,14 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     localStorage.setItem('nameCv', `${profileV3.name} - ${name}`);
   };
 
-  const getTheme = async () => {
-    try {
-      const result = await apiCv.getThemeCv();
-      if (result) {
-        setGetThemeCv(result.data);
-      }
-    } catch (error) {}
-  };
+  // const getTheme = async () => {
+  //   try {
+  //     const result = await apiCv.getThemeCv();
+  //     if (result) {
+  //       setGetThemeCv(result.data);
+  //     }
+  //   } catch (error) {}
+  // };
 
   // console.log('aaa');
   // const element = document.querySelector('.scalable-element') as any;

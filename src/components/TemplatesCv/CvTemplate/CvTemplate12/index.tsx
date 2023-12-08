@@ -119,6 +119,15 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
       // textAlign: 'center',
       // color: 'grey',
     },
+    hijob: {
+      position: 'absolute',
+      fontSize: fontSize - 12,
+      bottom: 10,
+      // left: 0,
+      right: 25,
+      textAlign: 'center',
+      color: '#000000',
+    },
   });
   Font.register({
     family: 'Abhaya Libre ExtraBold',
@@ -365,6 +374,11 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
           />
         </Svg>
       </View> */}
+      <Text
+        style={styles.hijob}
+        render={({ pageNumber, totalPages }) => `hijob.site`}
+        fixed
+      />
     </Page>
   );
 
