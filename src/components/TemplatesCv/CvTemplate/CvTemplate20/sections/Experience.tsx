@@ -49,13 +49,13 @@ const Experience: React.FC<ICvHeader> = (props) => {
       gap: '10pt',
     },
     leftInfo: {
-      width: '40%',
+      width: '25%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
     },
     rightInfo: {
-      width: '60%',
+      width: '75%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
@@ -74,7 +74,7 @@ const Experience: React.FC<ICvHeader> = (props) => {
                 : '#D80000',
       fontFamily: 'Fahkwang Bold',
       wordwrap: 'break-word',
-      textAlign: 'justify',
+      // textAlign: 'justify',
     },
     textTitleRight: {
       fontSize: '11pt',
@@ -97,7 +97,7 @@ const Experience: React.FC<ICvHeader> = (props) => {
       display: 'flex',
       flexDirection: 'column',
       gap: '4.028pt',
-      maxWidth: '180pt',
+      width: '100%',
     },
     textRight: {
       fontSize: '9pt',

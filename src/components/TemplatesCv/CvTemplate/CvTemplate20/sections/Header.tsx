@@ -35,18 +35,18 @@ const Header: React.FC<ICvHeader> = (props) => {
     divInfo: {
       width: '80%',
       display: 'flex',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       flexDirection: 'column',
       gap: '7.017pt',
       border: `1px solid ${color === 1
-          ? '#437901'
-          : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000'
+        ? '#437901'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
         }`,
       borderRadius: '100px',
       height: '70%',
@@ -55,6 +55,11 @@ const Header: React.FC<ICvHeader> = (props) => {
       top: '70pt',
       left: '10%',
       zIndex: 3
+    },
+    name: {
+      display: 'flex',
+      justifyContent: 'flex-start',
+      border: '1px solid red'
     },
     textName: {
       fontSize: '42pt',
@@ -70,6 +75,8 @@ const Header: React.FC<ICvHeader> = (props) => {
                 : '#D80000',
       fontWeight: 'extrabold',
       fontFamily: 'Fahkwang Bold',
+      textAlign: 'left',
+      // border: '1px solid red'
     },
     textPosition: {
       fontSize: '18pt',
@@ -157,23 +164,21 @@ const Header: React.FC<ICvHeader> = (props) => {
         <View style={styles.halfCircle} />
       </View>
       <View style={styles.divInfo}>
-        <View style={{ display: 'flex', justifyContent: 'center' }}>
-          <View>
-            <Text style={styles.textName}>
-              {' '}
-              {profile?.name?.split(' ').length > 2
-                ? profile?.name?.split(' ').slice(0, -2).join(' ')
-                : profile?.name?.split(' ').slice(0, -1).join(' ')}
-            </Text>
-          </View>
-          <View>
-            <Text style={styles.textName}>
-              {' '}
-              {profile?.name?.split(' ').length > 2
-                ? profile?.name?.split(' ').slice(-2).join(' ')
-                : profile?.name?.split(' ').slice(-1).join(' ')}
-            </Text>
-          </View>
+        <View style={styles.name}>
+          {/* <View> */}
+          <Text style={styles.textName}>
+            {profile?.name?.split(' ').length > 2
+              ? profile?.name?.split(' ').slice(0, -2).join(' ')
+              : profile?.name?.split(' ').slice(0, -1).join(' ')}
+          </Text>
+          {/* </View> */}
+          {/* <View> */}
+          <Text style={styles.textName}>
+            {profile?.name?.split(' ').length > 2
+              ? profile?.name?.split(' ').slice(-2).join(' ')
+              : profile?.name?.split(' ').slice(-1).join(' ')}
+          </Text>
+          {/* </View> */}
         </View>
         <View>
           <Text style={styles.textPosition}>{profile?.jobTypeName}</Text>

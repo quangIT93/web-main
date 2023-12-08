@@ -83,7 +83,7 @@ const Education: React.FC<ICvHeader> = (props) => {
                 : '#D80000',
       fontFamily: 'Fahkwang Bold',
       wordwrap: 'break-word',
-      textAlign: 'justify',
+      // textAlign: 'justify',
     },
     textTitleRight: {
       fontSize: '11pt',
