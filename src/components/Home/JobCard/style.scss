@@ -2,7 +2,7 @@
 .new-job {
     .MuiGrid-item {
         @include breakpoint(mobile) {
-            height: 142px;
+            // height: 142px;
         }
     
         @media (max-width: 768px) {
@@ -113,16 +113,50 @@
         width: 70%;
         .MuiImageListItem-root {
             display: flex;
-            align-items: flex-start !important;
+            align-items: center !important;
             .MuiImageListItem-img {
-                width: 82px !important;
-                height: 82px !important;
-                min-width: 82px !important;
-                min-height: 82px !important;
+                width: 110px !important;
+                height: 110px !important;
+                min-width: 110px !important;
+                min-height: 110px !important;
             }
 
             .div-card-post-left_info {
-                justify-content: unset !important;
+                justify-content: center !important;
+                .MuiTypography-root:nth-child(2),
+                .MuiTypography-root:nth-child(1) {
+                    width: 85% !important;
+                }
+                .text-card-post-left_info {
+                        .MuiTypography-root {
+                            width: 77% !important;
+                            color: #575757;
+                        }
+                    
+                }
+
+                .MuiTypography-root:nth-child(2) {
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 400px){
+        width: 70%;
+        .MuiImageListItem-root {
+            display: flex;
+            align-items: center !important;
+            .MuiImageListItem-img {
+                width: 84px !important;
+                height: 84px !important;
+                min-width: 84px !important;
+                min-height: 84px !important;
+            }
+
+            .div-card-post-left_info {
+                justify-content: center !important;
                 .MuiTypography-root:nth-child(2),
                 .MuiTypography-root:nth-child(1) {
                     width: 85% !important;
@@ -161,7 +195,7 @@
         position: absolute;
         right: 12px;
         top: 12px;
-        height: 78%;
+        height: 74%;
         
     }
 

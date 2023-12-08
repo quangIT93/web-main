@@ -36,7 +36,9 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
   };
@@ -173,11 +175,13 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                           ? props.item?.companyResourceData?.logo
                           : ''
                       }
-                      alt={languageRedux === 1
-                        ? 'Hình ảnh bị lỗi'
-                        : languageRedux === 2
+                      alt={
+                        languageRedux === 1
+                          ? 'Hình ảnh bị lỗi'
+                          : languageRedux === 2
                           ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'}
+                          : '이미지가 손상되었습니다'
+                      }
                       onError={handleImageError}
                     />
                   )}
@@ -236,9 +240,10 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                     `/${props.item?.salaryType?.name}`}
                 </Typography>
               </div>
-              <div className="div-card-post-left_info__jobtype"
+              <div
+                className="div-card-post-left_info__jobtype"
                 style={{
-                  marginTop: 5,
+                  margin: '5px 0 0 0',
                 }}
               >
                 <p

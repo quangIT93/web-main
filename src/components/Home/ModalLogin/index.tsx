@@ -59,6 +59,7 @@ import { setIsNew } from 'store/reducer/isNewReducer';
 import './style.scss';
 import { signin } from 'validations/lang/vi/signin';
 import { signinEn } from 'validations/lang/en/signin';
+import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 
 //
 // import { google } from 'googleapis';
@@ -320,10 +321,24 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
         auth && auth.refreshToken ? auth.refreshToken : '',
       );
 
-      await dispatch(getProfile() as any);
+      const result = await profileApi.getProfileInformationV3(
+        languageRedux === 1
+          ? 'vi'
+          : languageRedux === 2
+          ? 'en'
+          : languageRedux === 3
+          ? 'ko'
+          : 'vi',
+      );
+
+      // await dispatch(getProfile() as any);
       // const result = await profileApi.getProfile('vi');
-      if (dataProfile) {
-        setProfileUser(dataProfile.data);
+      // if (dataProfile) {
+      //   setProfileUser(dataProfile.data);
+      // }
+
+      if (result) {
+        dispatch(setProfileMeInformationV3(result));
       }
       setOpenModalLogin(false);
       setOpenBackdrop(false);
@@ -442,8 +457,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           {languageRedux === 1
             ? 'Đăng nhập'
             : languageRedux === 2
-              ? 'Login'
-              : languageRedux === 3 && '로그인'}
+            ? 'Login'
+            : languageRedux === 3 && '로그인'}
           <IconButton
             aria-label="close"
             onClick={handleClose}
@@ -564,8 +579,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   {languageRedux === 1
                     ? 'Email'
                     : languageRedux === 2
-                      ? 'Email'
-                      : languageRedux === 3 && '이메일을'}
+                    ? 'Email'
+                    : languageRedux === 3 && '이메일을'}
                 </label>
                 <input
                   type="text"
@@ -578,28 +593,28 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                     languageRedux === 1
                       ? 'Nhập email của bạn...'
                       : languageRedux === 2
-                        ? 'Enter your email...'
-                        : languageRedux === 3
-                          ? '이메일을 입력하세요...'
-                          : ''
+                      ? 'Enter your email...'
+                      : languageRedux === 3
+                      ? '이메일을 입력하세요...'
+                      : ''
                   }
                 />
                 <small className={!invalid ? 'alert' : 'alert error'}>
                   {languageRedux === 1
                     ? 'Email không đúng cú pháp vui lòng nhập lại.'
                     : languageRedux === 2
-                      ? 'The email is not syntactically correct, please re-enter.'
-                      : languageRedux === 3 &&
-                        '이메일이 잘못되었습니다. 다시 입력해 주세요.'}
+                    ? 'The email is not syntactically correct, please re-enter.'
+                    : languageRedux === 3 &&
+                      '이메일이 잘못되었습니다. 다시 입력해 주세요.'}
                 </small>
               </div>
               <p className="text-sent_otp">
                 {languageRedux === 1
                   ? 'Mã xác nhận sẽ được gửi vào email bạn đăng nhập.'
                   : languageRedux === 2
-                    ? 'Confirmation code will be sent to your login email'
-                    : languageRedux === 3 &&
-                      '코드는 로그인하신 이메일로 보내드립니다 '}
+                  ? 'Confirmation code will be sent to your login email'
+                  : languageRedux === 3 &&
+                    '코드는 로그인하신 이메일로 보내드립니다 '}
               </p>
 
               <div className="line-with-text">
@@ -608,8 +623,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   {languageRedux === 1
                     ? 'Đăng nhập nhanh'
                     : languageRedux === 2
-                      ? 'Log in quickly'
-                      : languageRedux === 3 && '빠르게 로그인하세요'}
+                    ? 'Log in quickly'
+                    : languageRedux === 3 && '빠르게 로그인하세요'}
                 </span>
                 <span className="line"></span>
               </div>
@@ -635,8 +650,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                               languageRedux === 1
                                 ? 'Hình ảnh bị lỗi'
                                 : languageRedux === 2
-                                  ? 'Image is corrupted'
-                                  : '이미지가 손상되었습니다'
+                                ? 'Image is corrupted'
+                                : '이미지가 손상되었습니다'
                             }
                             width={29}
                             height={30}
@@ -689,8 +704,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 {languageRedux === 1
                   ? 'Đăng nhập'
                   : languageRedux === 2
-                    ? 'Login'
-                    : languageRedux === 3 && '로그인'}
+                  ? 'Login'
+                  : languageRedux === 3 && '로그인'}
               </button>
 
               {/* <div
@@ -729,18 +744,18 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               {languageRedux === 1
                 ? 'Bạn hãy nhập mã OTP được gửi đến email:'
                 : languageRedux === 2
-                  ? 'Please enter the OTP sent to email'
-                  : languageRedux === 3 &&
-                    '이메일에 발송된 OTP코드를 입력하십시오:'}
+                ? 'Please enter the OTP sent to email'
+                : languageRedux === 3 &&
+                  '이메일에 발송된 OTP코드를 입력하십시오:'}
             </p>
             <p className="textOpt-email">{loginData.email}</p>
             <p className="textOpt-notice">
               {languageRedux === 1
                 ? 'Nếu không nhận được mã OTP qua email, bạn vui lòng kiểm tra lại email đã nhập chính xác chưa hoặc kiểm tra trong thư mục spam.'
                 : languageRedux === 2
-                  ? 'If you do not receive the OTP by email, please check whether the email is entered correctly or check in the spam folder.'
-                  : languageRedux === 3 &&
-                    '이메일로 OTP 코드를 받지 못한 경우, 이메일이 올바르게 입력되었는지 확인하시거나 스팸메일함을 확인해 주세요.'}
+                ? 'If you do not receive the OTP by email, please check whether the email is entered correctly or check in the spam folder.'
+                : languageRedux === 3 &&
+                  '이메일로 OTP 코드를 받지 못한 경우, 이메일이 올바르게 입력되었는지 확인하시거나 스팸메일함을 확인해 주세요.'}
             </p>
             <div className="otp-inputs">
               <OtpInput
@@ -767,16 +782,16 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               {languageRedux === 1
                 ? 'Xác thực email'
                 : languageRedux === 2
-                  ? 'Verify email'
-                  : languageRedux === 3 && '이메일을 확인'}
+                ? 'Verify email'
+                : languageRedux === 3 && '이메일을 확인'}
             </button>
             <div className="wrap-countDown">
               <p className="resend-otp" onClick={handleResendCode}>
                 {languageRedux === 1
                   ? 'Gửi lại mã'
                   : languageRedux === 2
-                    ? 'Resend code'
-                    : languageRedux === 3 && '코드 다시 발송'}{' '}
+                  ? 'Resend code'
+                  : languageRedux === 3 && '코드 다시 발송'}{' '}
               </p>
               {!resendCode ? (
                 <p className="resend-otp_countDown"></p>

@@ -275,8 +275,8 @@
 
 .MuiImageListItem-img {
   @include breakpoint(mobile) {
-    max-height: 90px !important;
-    max-width: 90px;
+    max-height: 110px !important;
+    max-width: 110px;
   }
 }
 
