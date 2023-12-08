@@ -7,7 +7,7 @@ import React, { useState, FormEvent } from 'react';
 import './style.scss';
 import imageCompression from 'browser-image-compression';
 
-import { Button, Input, message, Upload, Modal } from 'antd';
+import { Button, Input, message, Upload, Modal, InputRef } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 
 // @ts-ignore
@@ -66,7 +66,8 @@ const ComunityCreatePost = () => {
       window.open('/', '_parent');
     }
   }, []);
-
+  const inputTitleRef = React.useRef<InputRef>(null);
+  const inputContentRef = React.useRef<InputRef>(null);
   // console.log('selectedFiles', selectedFiles);
   // console.log('selectedImages', selectedImages);
   // console.log('valueTitle', valueTitle);
@@ -381,6 +382,20 @@ const ComunityCreatePost = () => {
               ? 'Please enter the topic of the post'
               : languageRedux === 3 && '기사제목을 입력해주세요',
         checkForm: false,
+        idError: 1,
+      };
+    }
+    if (valueTitle.length > 500) {
+      return {
+        message:
+          languageRedux === 1
+            ? 'Chủ đề không được vượt quá 500 ký tự'
+            : languageRedux === 2
+              ? 'Topics cannot exceed 500 characters'
+              : languageRedux === 3 &&
+              '제목은 500자를 초과할 수 없습니다.',
+        checkForm: false,
+        idError: 1,
       };
     }
 
@@ -393,12 +408,27 @@ const ComunityCreatePost = () => {
               ? 'Please enter the content of the post'
               : languageRedux === 3 && '기사 내용을 입력해주세요',
         checkForm: false,
+        idError: 2,
+      };
+    }
+    if (valueContent.length > 1000) {
+      return {
+        message:
+          languageRedux === 1
+            ? 'Nội dung thêm không được vượt quá 1000 ký tự'
+            : languageRedux === 2
+              ? 'Content cannot exceed 1000 characters'
+              : languageRedux === 3 &&
+              '추가 콘텐츠는 1000자를 초과할 수 없습니다.',
+        checkForm: false,
+        idError: 2,
       };
     }
 
     return {
       message: '',
       checkForm: true,
+      idError: 0,
     };
   };
 
@@ -419,9 +449,9 @@ const ComunityCreatePost = () => {
         formData.append('deleteImages', id);
       });
 
-    for (const pair of formData.entries()) {
-      console.log(`${pair[0]}, ${pair[1]}`);
-    }
+    // for (const pair of formData.entries()) {
+    //   console.log(`${pair[0]}, ${pair[1]}`);
+    // }
 
     if (formData) {
       POST_COMMUNITY_ID ? updateCommunity(formData) : createCommunity(formData);
@@ -429,7 +459,7 @@ const ComunityCreatePost = () => {
   };
 
   const updateCommunity = async (formData: any) => {
-    const { message, checkForm } = validValue();
+    const { message, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         const result = await apiCommunity.putCommunityByAccount(
@@ -462,14 +492,32 @@ const ComunityCreatePost = () => {
           type: 'error',
           content: message,
         });
+        console.log('idError', idError);
+
+        switch (idError) {
+          case 1:
+            inputTitleRef.current!.focus({
+              cursor: 'end',
+            });
+            console.log(inputTitleRef);
+            break;
+          case 2:
+            inputContentRef.current!.focus({
+              cursor: 'end',
+            });
+            break;
+
+          default:
+            break;
+        }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const createCommunity = async (formData: any) => {
     // console.log('form saved', form);
 
-    const { message, checkForm } = validValue();
+    const { message, checkForm, idError } = validValue();
     try {
       if (checkForm) {
         const result = await apiCommunity.postCommunications(formData);
@@ -486,6 +534,22 @@ const ComunityCreatePost = () => {
           type: 'error',
           content: message,
         });
+        switch (idError) {
+          case 1:
+            inputTitleRef.current!.focus({
+              cursor: 'end',
+            });
+            console.log(inputTitleRef);
+            break;
+          case 2:
+            inputContentRef.current!.focus({
+              cursor: 'end',
+            });
+            break;
+
+          default:
+            break;
+        }
       }
     } catch (error) {
       console.log('Error', error);
@@ -534,10 +598,11 @@ const ComunityCreatePost = () => {
                       : languageRedux === 2
                         ? "Topics can't exceed 500 characters"
                         : languageRedux === 3 &&
-                          '제목은 500자를 초과할 수 없습니다.',
+                        '제목은 500자를 초과할 수 없습니다.',
                   );
                 }
               }}
+              ref={inputTitleRef}
               className="input-title"
               placeholder={
                 languageRedux === 1
@@ -565,7 +630,7 @@ const ComunityCreatePost = () => {
                     : languageRedux === 2
                       ? 'Topics cannot exceed 500 characters'
                       : languageRedux === 3 &&
-                        '제목은 500자를 초과할 수 없습니다.'}
+                      '제목은 500자를 초과할 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -593,10 +658,11 @@ const ComunityCreatePost = () => {
                       : languageRedux === 2
                         ? 'Post content should not exceed 1000 characters'
                         : languageRedux === 3 &&
-                          '기사 내용은 1000자를 초과할 수 없습니다.',
+                        '기사 내용은 1000자를 초과할 수 없습니다.',
                   );
                 }
               }}
+              ref={inputContentRef}
               className="input-content"
               placeholder={
                 languageRedux === 1
@@ -617,7 +683,7 @@ const ComunityCreatePost = () => {
                     : languageRedux === 2
                       ? 'Content cannot be empty'
                       : languageRedux === 3 &&
-                        '추가 콘텐츠는 비워둘 수 없습니다.'}
+                      '추가 콘텐츠는 비워둘 수 없습니다.'}
                 </span>
               ) : valueContent.length > 1000 ? (
                 <span className="helper-text">
@@ -626,7 +692,7 @@ const ComunityCreatePost = () => {
                     : languageRedux === 2
                       ? 'Content cannot exceed 1000 characters'
                       : languageRedux === 3 &&
-                        '추가 콘텐츠는 1000자를 초과할 수 없습니다.'}
+                      '추가 콘텐츠는 1000자를 초과할 수 없습니다.'}
                 </span>
               ) : (
                 <></>
@@ -697,7 +763,7 @@ const ComunityCreatePost = () => {
                         display:
                           (selectedImages.length === 0 &&
                             selectedFiles.length === 0) ||
-                          isDragActive
+                            isDragActive
                             ? 'flex'
                             : 'none',
                       }}
@@ -755,13 +821,13 @@ const ComunityCreatePost = () => {
               className={
                 valueTitle === '' || valueContent === ''
                   ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                    'submit'
+                  'submit'
                   : 'submit full-info'
               }
             >
               {valueTitle === '' || valueContent === ''
                 ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                  languageRedux === 1
+                languageRedux === 1
                   ? 'Lưu bài'
                   : languageRedux === 2
                     ? 'Save post'

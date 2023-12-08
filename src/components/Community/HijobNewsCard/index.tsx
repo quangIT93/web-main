@@ -79,7 +79,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
     }
   };
 
-  React.useEffect(() => {}, [like]);
+  React.useEffect(() => { }, [like]);
 
   const handleClickSave = async (e: any) => {
     e.stopPropagation();
@@ -176,7 +176,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
           ) : (
             <Avatar
               shape="square"
-              size={88}
+              // size={88}
               src="https://static.vecteezy.com/system/resources/thumbnails/005/720/387/small/newspaper-line-icon-on-white-background-outline-sign-of-newspaper-news-symbol-linear-pictogram-free-vector.jpg"
             />
           )}
@@ -217,13 +217,12 @@ const HijobNewsCard: React.FC<any> = (props) => {
               {shouldShowMoreButton ? (
                 <span onClick={(e) => handleAddText(e)}>
                   {!showText
-                    ? `${
-                        languageRedux === 1
-                          ? 'Xem thêm'
-                          : languageRedux === 2
-                          ? 'See more'
-                          : '더보기'
-                      }...`
+                    ? `${languageRedux === 1
+                      ? 'Xem thêm'
+                      : languageRedux === 2
+                        ? 'See more'
+                        : '더보기'
+                    }...`
                     : 'Xem ít...'}
                 </span>
               ) : (
@@ -245,8 +244,8 @@ const HijobNewsCard: React.FC<any> = (props) => {
                     {languageRedux === 1
                       ? 'Tác giả'
                       : languageRedux === 2
-                      ? 'Author'
-                      : '작가'}
+                        ? 'Author'
+                        : '작가'}
                   </p>
                   <p>Hijob</p>
                 </div>

@@ -110,7 +110,7 @@ const CvTemplate21: React.FC<CvTemplate> = (props) => {
         rightColumn: {
             flexDirection: 'column',
             width: '40%',
-            height: '90%',
+            // height: '90%',
             padding: '18.261pt',
             backgroundColor: 'transparent',
             gap: '14.945pt',
@@ -239,14 +239,12 @@ const CvTemplate21: React.FC<CvTemplate> = (props) => {
                         color={color}
                         profileMore={profileMore}
                     />
-                    <View>
-                        <Profile
-                            profile={profile}
-                            fontSize={fontSize}
-                            color={color}
-                            profileMore={profileMore}
-                        />
-                    </View>
+                    <Profile
+                        profile={profile}
+                        fontSize={fontSize}
+                        color={color}
+                        profileMore={profileMore}
+                    />
                     {profileMore?.profilesLanguages &&
                         profileMore.profilesLanguages?.length !== 0 ? (
                         <View>

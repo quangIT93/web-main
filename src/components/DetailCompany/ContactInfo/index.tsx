@@ -95,7 +95,19 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                     ? 'Describe'
                     : languageRedux === 3 && '묘사'}
               </h3>
-              <TextArea
+              <div>
+                {
+                  company?.description
+                    ? company.description
+                    : languageRedux === 1
+                      ? 'Thông tin công ty chưa cập nhật'
+                      : languageRedux === 2
+                        ? 'Company information not updated yet'
+                        : languageRedux === 3 &&
+                        '회사정보가 업데이트되지 않았습니다.'
+                }
+              </div>
+              {/* <TextArea
                 value={
                   company?.description
                     ? company.description
@@ -108,7 +120,7 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                 }
                 autoSize
               // showCount
-              />
+              /> */}
             </div>
             <div className={styles.company_information_basic}>
               <h3>
