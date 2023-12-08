@@ -641,7 +641,7 @@ const MoreJobsPage: React.FC = () => {
         style={{
           margin:
             typeJob === 'new' || typeJob === 'hot-job'
-              ? '300px auto 0px'
+              ? '290px auto 0px'
               : '0px auto 0px',
         }}
       >
