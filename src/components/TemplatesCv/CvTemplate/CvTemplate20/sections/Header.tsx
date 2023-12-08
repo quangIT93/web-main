@@ -59,7 +59,7 @@ const Header: React.FC<ICvHeader> = (props) => {
     name: {
       display: 'flex',
       justifyContent: 'flex-start',
-      border: '1px solid red'
+      // border: '1px solid red'
     },
     textName: {
       fontSize: '42pt',
