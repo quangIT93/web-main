@@ -15,7 +15,7 @@ import CvTemplate12 from '../CvTemplate12';
 import CvTemplate13 from '../CvTemplate13';
 import CvTemplate14 from '../CvTemplate14';
 import CvTemplate15 from '../CvTemplate15';
-import CvTemplate16 from '../CvTemplate15';
+import CvTemplate16 from '../CVTemplate16';
 import CvTemplate17 from '../CvTemplate15';
 import CvTemplate18 from '../CvTemplate15';
 import CvTemplate19 from '../CvTemplate19';
@@ -93,7 +93,7 @@ const templatesCv = [
   },
   {
     id: 17,
-    component: CvTemplate15,
+    component: CvTemplate7,
   },
   {
     id: 18,
@@ -110,6 +110,10 @@ const templatesCv = [
   {
     id: 21,
     component: CvTemplate21,
+  },
+  {
+    id: 22,
+    component: CvTemplate16,
   },
 ];
 

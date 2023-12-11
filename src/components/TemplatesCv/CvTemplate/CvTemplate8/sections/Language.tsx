@@ -43,12 +43,12 @@ const Languages: React.FC<ICvEducation> = (props) => {
         color === 1
           ? '#404BA0'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       borderRadius: '2px',
     },
     name: {
@@ -75,12 +75,12 @@ const Languages: React.FC<ICvEducation> = (props) => {
         color === 1
           ? '#505050'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     languageTop: {
       display: 'flex',
@@ -88,7 +88,7 @@ const Languages: React.FC<ICvEducation> = (props) => {
       alignItems: 'center',
       marginBottom: '9.702pt',
       gap: '14.426pt',
-      border: '1px solid #ccc',
+      // border: '1px solid #ccc',
     },
   });
 

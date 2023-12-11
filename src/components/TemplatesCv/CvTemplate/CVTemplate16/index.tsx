@@ -12,6 +12,7 @@ import {
     Svg,
     Circle,
     Polygon,
+    Ellipse,
 } from '@react-pdf/renderer';
 import Petrona from '../Fonts/Petrona-Bold.ttf';
 import Fahkwang from '../Fonts/Fahkwang-medium.ttf';
@@ -41,8 +42,6 @@ import Skill from './sections/Skill';
 import Reference from './sections/Reference';
 import Award from './sections/Award';
 import Contact from './sections/Contact';
-import NameUser from './sections/NameUser';
-import AvatarUser from './sections/AvatarUser';
 
 interface CvTemplate {
     color: any;
@@ -50,13 +49,13 @@ interface CvTemplate {
     profile: any;
     profileMore: any;
 }
-const CvTemplate21: React.FC<CvTemplate> = (props) => {
+const CvTemplate16: React.FC<CvTemplate> = (props) => {
     const { color, fontSize, profile, profileMore } = props;
     const styles = StyleSheet.create({
         page: {
-            padding: 30,
+            padding: '30 0 30 30',
             position: 'relative',
-            // backgroundColor: '#fff',
+            backgroundColor: '#fff',
         },
         container: {
             flex: 1,
@@ -68,83 +67,106 @@ const CvTemplate21: React.FC<CvTemplate> = (props) => {
             //   paddingTop: '68.34pt',
             //   gap: '48.781pt',
         },
-        squareTop: {
-            height: '26.936pt',
-            width: '175.748pt',
-            position: 'absolute',
-            top: 0,
-            left: '45.839pt',
-            backgroundColor: color === 1
-                ? '#09009B'
-                : color === 2
-                    ? '#0D99FF'
-                    : color === 3
-                        ? '#FBBC04'
-                        : color === 4
-                            ? '#5CB265'
-                            : '#D80000',
-        },
-        squareBot: {
-            height: '28.346pt',
-            width: '28.346pt',
-            position: 'absolute',
-            bottom: 0,
-            left: '45.839pt',
-            backgroundColor: color === 1
-                ? '#09009B'
-                : color === 2
-                    ? '#0D99FF'
-                    : color === 3
-                        ? '#FBBC04'
-                        : color === 4
-                            ? '#5CB265'
-                            : '#D80000',
-        },
         leftColumn: {
             flexDirection: 'column',
             width: '60%',
             paddingRight: 20,
             backgroundColor: 'transparent',
-            gap: '15.362pt',
+            gap: '20.495pt',
         },
         rightColumn: {
             flexDirection: 'column',
             width: '40%',
-            // height: '90%',
-            padding: '18.261pt',
-            backgroundColor: 'transparent',
-            gap: '14.945pt',
-            borderTopLeftRadius: '200px',
-            borderTopRightRadius: '200px',
-            border: `2px solid ${color === 1
-                ? '#09009B'
+            // paddingTop: '1.094cm',
+            // marginTop: '1cm',
+            // paddingLeft: '24.809pt',
+            backgroundColor: color === 1
+                ? '#fffdf2'
+                : color === 2
+                    ? '#EBF5FB'
+                    : color === 3
+                        ? '#FEF9E7'
+                        : color === 4
+                            ? '#EAFAF1'
+                            : '#F9EBEA',
+            gap: '20.495pt',
+            zIndex: 1,
+        },
+        pageNumber: {
+            position: 'absolute',
+            fontSize: fontSize - 8,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            textAlign: 'center',
+            color: 'grey',
+        },
+        lineFooter: {
+            position: 'absolute',
+            bottom: 20,
+            left: 0,
+            right: 0,
+            height: '2px',
+            backgroundColor: color === 1
+                ? '#ffcf00'
                 : color === 2
                     ? '#0D99FF'
                     : color === 3
                         ? '#FBBC04'
                         : color === 4
                             ? '#5CB265'
-                            : '#D80000'
-                }`,
-        },
-        pageNumber: {
-            position: 'absolute',
-            fontSize: fontSize - 12,
-            bottom: 10,
-            left: 0,
-            right: 0,
-            textAlign: 'center',
-            color: 'grey',
+                            : '#D80000',
             zIndex: 2,
+            // textAlign: 'center',
+            // color: 'grey',
+        },
+        squareTop: {
+            position: 'absolute',
+            top: 230,
+            right: 0,
+            height: 100,
+            width: '40%',
+            backgroundColor: color === 1
+                ? '#fffdf2'
+                : color === 2
+                    ? '#EBF5FB'
+                    : color === 3
+                        ? '#FEF9E7'
+                        : color === 4
+                            ? '#EAFAF1'
+                            : '#F9EBEA',
+            zIndex: 1,
+        },
+        squareBottom: {
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            height: 30,
+            width: '40%',
+            // paddingTop: '1.094cm',
+            // marginTop: '1cm',
+            // paddingLeft: '24.809pt',
+            // backgroundColor: '#fffdf2',
+            backgroundColor: color === 1
+                ? '#fffdf2'
+                : color === 2
+                    ? '#EBF5FB'
+                    : color === 3
+                        ? '#FEF9E7'
+                        : color === 4
+                            ? '#EAFAF1'
+                            : '#F9EBEA',
+            gap: '20.495pt',
+            zIndex: 1,
         },
         hijob: {
             position: 'absolute',
             fontSize: fontSize - 12,
-            bottom: 10,
+            bottom: 0,
             // left: 0,
             right: 25,
             textAlign: 'center',
-            color: '#000000',
+            color: 'grey',
         },
     });
     Font.register({
@@ -176,20 +198,20 @@ const CvTemplate21: React.FC<CvTemplate> = (props) => {
         src: MontserratSemiBold,
         fontWeight: 'bold',
     });
-
+    Font.register({
+        family: 'OpenSans-Regular',
+        src: OpenSansRegular,
+    });
     const Resume = (props: any) => (
         <Page {...props} style={styles.page}>
-
-            <View style={styles.squareTop}></View>
-            <View style={styles.squareBot}></View>
+            <Header
+                profile={profile}
+                fontSize={fontSize}
+                color={color}
+                profileMore={profileMore}
+            />
             <View style={styles.container}>
                 <View style={styles.leftColumn}>
-                    <NameUser
-                        profile={profile}
-                        fontSize={fontSize}
-                        color={color}
-                        profileMore={profileMore}
-                    />
                     {profileMore?.profilesEducations &&
                         profileMore.profilesEducations?.length !== 0 ? (
                         <View>
@@ -233,18 +255,14 @@ const CvTemplate21: React.FC<CvTemplate> = (props) => {
                     )}
                 </View>
                 <View style={styles.rightColumn}>
-                    <AvatarUser
-                        profile={profile}
-                        fontSize={fontSize}
-                        color={color}
-                        profileMore={profileMore}
-                    />
-                    <Profile
-                        profile={profile}
-                        fontSize={fontSize}
-                        color={color}
-                        profileMore={profileMore}
-                    />
+                    <View>
+                        <Profile
+                            profile={profile}
+                            fontSize={fontSize}
+                            color={color}
+                            profileMore={profileMore}
+                        />
+                    </View>
                     {profileMore?.profilesLanguages &&
                         profileMore.profilesLanguages?.length !== 0 ? (
                         <View>
@@ -258,12 +276,6 @@ const CvTemplate21: React.FC<CvTemplate> = (props) => {
                     ) : (
                         <></>
                     )}
-                    <Contact
-                        profile={profile}
-                        fontSize={fontSize}
-                        color={color}
-                        profileMore={profileMore}
-                    />
                     {profileMore?.profileHobbies &&
                         profileMore.profileHobbies?.length !== 0 ? (
                         <View>
@@ -317,8 +329,18 @@ const CvTemplate21: React.FC<CvTemplate> = (props) => {
                     ) : (
                         <></>
                     )}
+
+                    <Contact
+                        profile={profile}
+                        fontSize={fontSize}
+                        color={color}
+                        profileMore={profileMore}
+                    />
                 </View>
             </View>
+            <View fixed style={styles.lineFooter}></View>
+            <View fixed style={styles.squareBottom}></View>
+            <View fixed style={styles.squareTop}></View>
             <Text
                 style={styles.pageNumber}
                 render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
@@ -353,4 +375,4 @@ const CvTemplate21: React.FC<CvTemplate> = (props) => {
     );
 };
 
-export default memo(CvTemplate21);
+export default memo(CvTemplate16);
