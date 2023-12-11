@@ -97,7 +97,7 @@ const templatesCv = [
   },
   {
     id: 18,
-    component: CvTemplate15,
+    component: CvTemplate8,
   },
   {
     id: 19,

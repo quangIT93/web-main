@@ -68,7 +68,7 @@ const CvTemplate20: React.FC<CvTemplate> = (props) => {
         },
         leftColumn: {
             flexDirection: 'column',
-            width: '60%',
+            width: '65%',
             paddingRight: 10,
             backgroundColor: 'transparent',
             gap: '20.495pt',

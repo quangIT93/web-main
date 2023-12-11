@@ -44,13 +44,13 @@ const Activities: React.FC<ICvActivities> = (props) => {
       flexDirection: 'row',
     },
     leftInfo: {
-      width: '40%',
+      width: '25%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
     },
     rightInfo: {
-      width: '60%',
+      width: '75%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
@@ -93,7 +93,7 @@ const Activities: React.FC<ICvActivities> = (props) => {
       display: 'flex',
       flexDirection: 'column',
       gap: '4.028pt',
-      maxWidth: '180pt',
+      // maxWidth: '180pt',
     },
     textRight: {
       fontSize: '9pt',

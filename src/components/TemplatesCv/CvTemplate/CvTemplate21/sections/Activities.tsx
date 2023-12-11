@@ -65,13 +65,13 @@ const Activities: React.FC<ICvActivities> = (props) => {
       gap: '10pt',
     },
     leftInfo: {
-      width: '25%',
+      width: '30%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
     },
     rightInfo: {
-      width: '75%',
+      width: '70%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
