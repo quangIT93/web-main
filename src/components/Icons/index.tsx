@@ -3254,7 +3254,7 @@ export const LikeIcon = ({ width = 16, height = 17 }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="currentColor"
-      // fill="#0d99ff"
+        // fill="#0d99ff"
       />
     </svg>
   );
@@ -7154,8 +7154,8 @@ export const RightChart = () => {
       fill="none"
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M5.28052 3.25703C5.28052 3.54807 5.39118 3.8391 5.61324 4.06116L10.873 9.3202L5.61324 14.5792C5.16987 15.0234 5.16987 15.7434 5.61324 16.1875C6.05737 16.6309 6.77737 16.6309 7.22149 16.1875L13.2847 10.1243C13.728 9.6802 13.728 8.9602 13.2847 8.51607L7.22149 2.45291C6.77737 2.00954 6.05737 2.00954 5.61324 2.45291C5.39118 2.67497 5.28052 2.966 5.28052 3.25703Z"
         fill="#112432"
       />

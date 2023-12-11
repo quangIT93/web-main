@@ -241,6 +241,15 @@ const profileApi = {
       },
     })
   },
+
+  activityLog: () => {
+    const URL = `/v3/profiles/activity-logs`
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+  }
 }
 
 export default profileApi
