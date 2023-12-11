@@ -182,37 +182,40 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                                 : languageRedux === 3 &&
                                 'HiJob이 자동으로 정보를 검색하도록 하려는 채용 게시물'}
                     </p>
-                    <div className="post_items_old">
+                    <div className="template_list">
                         {dataPost ? (
                             dataPost?.map((itemPost: any, index: number) => (
-                                <div key={index} className="post_item_old">
+                                <div key={index} className="template_item">
                                     <h3>
                                         {index + 1}. {itemPost.title}
-                                        <span style={{
-                                            cursor: 'pointer',
-                                            color: '#0D99FF'
-                                        }}
-                                            onClick={() => {
-                                                setOpenModalPreviewDescriptTemplate(true);
-                                            }}
-                                        >
-                                            Preview
-                                        </span>
                                     </h3>
-                                    <ul className="wrap-items_postOld">
+                                    <ul className="template_description">
                                         <li>
-                                            <CompanyNameDetailPostIcon />
-                                            <span>{itemPost.company_name}</span>
+                                            <p>
+                                                {
+                                                    `Thúc đẩy hoạt động trao đổi hàng hóa giữa công ty và khách hàng-\nTư vấn, truyền đạt thông tin sản phẩm/ dịch vụ tới khách hàng\nPhát triển mạng lưới khách hàng tiềm năng sử dụng sản phẩm/ dịch vụ\nXây dựng niềm tin, uy tín với khách hàng\nSoạn thảo hợp đồng, thương thảo và ký kết với khách hàng\nGiải quyết vấn đề khiếu nại, phát sinh từ khách hàng\nDuy trì và chăm sóc khách hàng\n\nYêu cầu dành cho vị trí:\nTốt nghiệp đại học, cao đẳng chuyên ngành Quản trị Kinh doanh, Marketing, Kinh tế hoặc có bằng cấp tương đương\nCó X năm kinh nghiệm tại vị trí tương đương\nCó kỹ năng giao tiếp. Có ngoại ngữ là lợi thế\nThành thạo vi tính văn phòng, các phần mềm CRM là lợi thế\nNhiệt tình, năng động, kỹ năng phân tích và xử lý tình huống tốt\nCó phương tiện đi lại cá nhân\nQuyền lợi của vị trí: dựa theo chính sách phúc lợi của công ty`
+                                                }
+                                            </p>
                                         </li>
                                         <li>
-                                            <ClockDetailPostIcon />
-                                            <span>
-                                                {moment(new Date(itemPost.created_at)).format('HH:mm')}
-                                                <span>&nbsp;</span>
-                                                {new Date(itemPost.created_at).toLocaleDateString(
-                                                    'en-GB',
-                                                )}
-                                            </span>
+                                            <p style={{
+                                                cursor: 'pointer',
+                                                color: '#0D99FF'
+                                            }}
+                                                onClick={() => {
+                                                    setOpenModalPreviewDescriptTemplate(true);
+                                                }}
+                                            >
+                                                {
+                                                    languageRedux === 1
+                                                        ? 'Xem chi tiết'
+                                                        : languageRedux === 2
+                                                            ? 'View details'
+                                                            : languageRedux === 3 ?
+                                                                '자세히 보기 '
+                                                                : 'Xem chi tiết'
+                                                }
+                                            </p>
                                         </li>
                                     </ul>
 
@@ -232,7 +235,7 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                         )}
                     </div>
 
-                    <div className="wrap-button_filterPost">
+                    <div className="wrap-button_filterTemplate">
                         <Button type="primary" block onClick={handleSubmitValueFill}>
                             {languageRedux === 1
                                 ? 'Xác nhận'
