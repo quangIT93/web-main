@@ -78,12 +78,12 @@ const CvTemplate13: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#377a40'
           : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000'
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000'
       }`,
     },
     rightColumn: {
@@ -131,12 +131,12 @@ const CvTemplate13: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#f0f8eb'
           : color === 2
-            ? '#D9EFFE'
-            : color === 3
-              ? '#FBF2DA'
-              : color === 4
-                ? '#E2FFE5'
-                : '#FEE1E1',
+          ? '#D9EFFE'
+          : color === 3
+          ? '#FBF2DA'
+          : color === 4
+          ? '#E2FFE5'
+          : '#FEE1E1',
       width: '500pt',
       height: '500pt',
       borderRadius: '50%',
@@ -150,15 +150,24 @@ const CvTemplate13: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#f0f8eb'
           : color === 2
-            ? '#D9EFFE'
-            : color === 3
-              ? '#FBF2DA'
-              : color === 4
-                ? '#E2FFE5'
-                : '#FEE1E1',
+          ? '#D9EFFE'
+          : color === 3
+          ? '#FBF2DA'
+          : color === 4
+          ? '#E2FFE5'
+          : '#FEE1E1',
       width: '500pt',
       height: '500pt',
       borderRadius: '50%',
+    },
+    hijob: {
+      position: 'absolute',
+      fontSize: fontSize - 12,
+      bottom: 10,
+      // left: 0,
+      right: 25,
+      textAlign: 'center',
+      color: '#000000',
     },
   });
   Font.register({
@@ -335,6 +344,12 @@ const CvTemplate13: React.FC<CvTemplate> = (props) => {
       <View style={styles.circleHeader1} fixed></View>
 
       <View style={styles.circleHeader2} fixed></View>
+
+      <Text
+        style={styles.hijob}
+        render={({ pageNumber, totalPages }) => `hijob.site`}
+        fixed
+      />
     </Page>
   );
 

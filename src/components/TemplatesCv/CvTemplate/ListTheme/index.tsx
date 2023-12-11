@@ -45,47 +45,47 @@ const templatesCv = [
   },
   {
     id: 5,
-    component: CvTemplate5,
-  },
-  {
-    id: 6,
-    component: CvTemplate8,
-  },
-  {
-    id: 7,
     component: CvTemplate4,
   },
   {
-    id: 8,
-    component: CvTemplate9,
-  },
-  {
-    id: 9,
+    id: 6,
     component: CvTemplate5,
   },
   {
-    id: 10,
-    component: CvTemplate10,
-  },
-  {
-    id: 11,
-    component: CvTemplate11,
-  },
-  {
-    id: 12,
+    id: 7,
     component: CvTemplate12,
   },
   {
-    id: 13,
-    component: CvTemplate13,
+    id: 8,
+    component: CvTemplate11,
   },
   {
-    id: 14,
+    id: 9,
     component: CvTemplate14,
   },
   {
+    id: 10,
+    component: CvTemplate13,
+  },
+  {
+    id: 11,
+    component: CvTemplate21,
+  },
+  {
+    id: 12,
+    component: CvTemplate20,
+  },
+  {
+    id: 13,
+    component: CvTemplate19,
+  },
+  {
+    id: 14,
+    component: CvTemplate10,
+  },
+  {
     id: 15,
-    component: CvTemplate15,
+    component: CvTemplate9,
   },
   {
     id: 16,
