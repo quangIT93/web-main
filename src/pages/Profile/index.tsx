@@ -627,7 +627,7 @@ const Profile: React.FC = () => {
                           ? 'Not updated yet'
                           : languageRedux === 3 && '업데이트하지 않음'}
                   </h2>
-                  <ChangeRoleButton />
+                  {/* <ChangeRoleButton /> */}
                   {/* <div className="wrap-company">
                     <div className="wrap-company_info">
                       <h2
