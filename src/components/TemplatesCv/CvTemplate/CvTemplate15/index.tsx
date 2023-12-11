@@ -69,19 +69,18 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
     leftColumn: {
       flexDirection: 'column',
       width: '65%',
-      // paddingRight: 10,
+      paddingRight: 10,
       backgroundColor: 'transparent',
-      borderRight: `1px solid ${
-        color === 1
+      borderRight: `1px solid ${color === 1
           ? '#8dc5fe'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000'
-      }`,
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000'
+        }`,
       gap: '20.495pt',
     },
     rightColumn: {
@@ -161,7 +160,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
       <View style={styles.container}>
         <View style={styles.leftColumn}>
           {profileMore?.profilesEducations &&
-          profileMore.profilesEducations?.length !== 0 ? (
+            profileMore.profilesEducations?.length !== 0 ? (
             <View>
               <Education
                 profile={profile}
@@ -175,7 +174,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profilesExperiences &&
-          profileMore.profilesExperiences?.length !== 0 ? (
+            profileMore.profilesExperiences?.length !== 0 ? (
             <View>
               <Experience
                 profile={profileMore}
@@ -189,7 +188,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profileActivities &&
-          profileMore.profileActivities?.length !== 0 ? (
+            profileMore.profileActivities?.length !== 0 ? (
             <View>
               <Activities
                 profile={profileMore}
@@ -212,7 +211,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
             />
           </View>
           {profileMore?.profilesLanguages &&
-          profileMore.profilesLanguages?.length !== 0 ? (
+            profileMore.profilesLanguages?.length !== 0 ? (
             <View>
               <Language
                 profile={profileMore}
@@ -225,7 +224,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profileHobbies &&
-          profileMore.profileHobbies?.length !== 0 ? (
+            profileMore.profileHobbies?.length !== 0 ? (
             <View>
               <Hobies
                 profile={profileMore}
@@ -238,7 +237,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profilesSkills &&
-          profileMore.profilesSkills?.length !== 0 ? (
+            profileMore.profilesSkills?.length !== 0 ? (
             <View>
               <Skill
                 profile={profileMore}
@@ -251,7 +250,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profilesReferences &&
-          profileMore.profilesReferences?.length !== 0 ? (
+            profileMore.profilesReferences?.length !== 0 ? (
             <View>
               <Reference
                 profile={profileMore}
@@ -265,7 +264,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profileAwards &&
-          profileMore.profileAwards?.length !== 0 ? (
+            profileMore.profileAwards?.length !== 0 ? (
             <View>
               <Award
                 profile={profileMore}

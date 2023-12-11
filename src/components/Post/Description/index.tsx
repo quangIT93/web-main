@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -8,12 +8,16 @@ import { styleLabel } from '#components/Post/CssPost';
 import './style.scss';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
+import { FillDataPost } from '#components/Icons';
+import ModalFillDescriptTemplate from '../ModalFillDescriptTemplate';
+import ModalPreviewDescriptTemplate from '../ModalPreviewDescriptTemplate';
 interface IDescription {
   setDescription: React.Dispatch<React.SetStateAction<string>>;
   description: string;
   language: any;
   languageRedux: any;
   setIsValidSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+  oldDescription: any;
 }
 
 const Description: React.FC<IDescription> = (props) => {
@@ -23,29 +27,38 @@ const Description: React.FC<IDescription> = (props) => {
     language,
     languageRedux,
     setIsValidSubmit,
+    oldDescription
   } = props;
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
     setIsValidSubmit(false);
   };
-
+  const [openModalFillDescriptTemplate, setOpenModalFillDescriptTemplate] = useState<boolean>(false);
+  const [openModalPreviewDescriptTemplate, setOpenModalPreviewDescriptTemplate] = useState<boolean>(false);
   // const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return (
     <Box sx={{ marginTop: '24px' }} className="description-post modal-person">
-      <Typography
-        sx={styleLabel}
-        variant="body1"
-        component="label"
-        htmlFor="startTime"
-      >
-        {
-          languageRedux === 1
-            ? "Mô tả công việc"
-            : languageRedux === 2
-              ? "Job description"
-              : '업무 설명서'
-        } <span style={{ color: 'red' }}>*</span>
-      </Typography>
+      <div className="description-post-title">
+        <Typography
+          sx={styleLabel}
+          variant="body1"
+          component="label"
+          htmlFor="startTime"
+        >
+          {
+            languageRedux === 1
+              ? "Mô tả công việc"
+              : languageRedux === 2
+                ? "Job description"
+                : '업무 설명서'
+          } <span style={{ color: 'red' }}>*</span>
+        </Typography>
+        <div className='description_template' onClick={
+          () => setOpenModalFillDescriptTemplate(true)
+        }>
+          <FillDataPost />
+        </div>
+      </div>
       <TextField
         // className={classes.textarea}
         onChange={handleChangeDescription}
@@ -75,7 +88,7 @@ const Description: React.FC<IDescription> = (props) => {
         ) : description.length === 0 ? (
           <span className="helper-text">
             {languageRedux === 1
-              ? 'Mô tả được để trống'
+              ? 'Mô tả không được để trống'
               : languageRedux === 2
                 ? 'Description cannot be blank'
                 : languageRedux === 3 && '설명은 비워둘 수 없습니다.'}
@@ -85,6 +98,18 @@ const Description: React.FC<IDescription> = (props) => {
         )}
         <span className="number-text">{`${description.length}/4000`}</span>
       </div>
+      <ModalFillDescriptTemplate
+        openModalFillDescriptTemplate={openModalFillDescriptTemplate}
+        setOpenModalFillDescriptTemplate={setOpenModalFillDescriptTemplate}
+        setOpenModalPreviewDescriptTemplate={setOpenModalPreviewDescriptTemplate}
+        setDescription={setDescription}
+        oldDescription={oldDescription}
+        typeModal={1}
+      />
+      <ModalPreviewDescriptTemplate
+        openModalPreviewDescriptTemplate={openModalPreviewDescriptTemplate}
+        setOpenModalPreviewDescriptTemplate={setOpenModalPreviewDescriptTemplate}
+      />
     </Box>
   );
 };

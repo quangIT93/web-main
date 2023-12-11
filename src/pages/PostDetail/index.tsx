@@ -387,7 +387,7 @@ const Detail = () => {
                   ? 'Ứng tuyển ngay'
                   : languageRedux === 2
                     ? 'Apply now'
-                    : '지금 신청하세요',
+                    : '지원하기',
               );
             } else {
               setTextButton(
@@ -404,7 +404,7 @@ const Detail = () => {
                 ? 'Ứng tuyển ngay'
                 : languageRedux === 2
                   ? 'Apply now'
-                  : '지금 신청하세요',
+                  : '지원하기',
             );
           }
           result?.data?.companyResourceData?.name === 'HIJOB' &&
@@ -1144,7 +1144,7 @@ const Detail = () => {
                         ? 'Không làm việc từ xa'
                         : languageRedux === 2
                           ? 'Does not work remotely'
-                          : '원격으로 일하지 마세요'
+                          : '원격으로 일하지 않음'
                       : languageRedux === 1
                         ? 'Làm việc từ xa'
                         : languageRedux === 2

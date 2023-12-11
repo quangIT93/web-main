@@ -12,6 +12,7 @@ import {
     Svg,
     Circle,
     Polygon,
+    Ellipse,
 } from '@react-pdf/renderer';
 import Petrona from '../Fonts/Petrona-Bold.ttf';
 import Fahkwang from '../Fonts/Fahkwang-medium.ttf';
@@ -68,7 +69,7 @@ const CvTemplate19: React.FC<CvTemplate> = (props) => {
         },
         leftColumn: {
             flexDirection: 'column',
-            width: '60%',
+            width: '65%',
             paddingRight: 10,
             backgroundColor: 'transparent',
             borderRight: `1px solid ${color === 1
@@ -85,7 +86,7 @@ const CvTemplate19: React.FC<CvTemplate> = (props) => {
         },
         rightColumn: {
             flexDirection: 'column',
-            width: '30%',
+            width: '35%',
             // paddingTop: '1.094cm',
             // marginTop: '1cm',
             // paddingLeft: '24.809pt',
@@ -136,6 +137,97 @@ const CvTemplate19: React.FC<CvTemplate> = (props) => {
             textAlign: 'center',
             color: '#FFFFFF',
         },
+        aquare1: {
+            position: 'absolute',
+            bottom: -50,
+            left: -60,
+            borderRadius: '30pt',
+            backgroundColor: color === 1
+                ? '#E9F7EF'
+                : color === 2
+                    ? '#EBF5FB'
+                    : color === 3
+                        ? '#FEF9E7'
+                        : color === 4
+                            ? '#EAFAF1'
+                            : '#F9EBEA',
+            width: '250px',
+            height: '300px',
+            transform: 'rotate(-6deg)'
+        },
+        aquare2: {
+            position: 'absolute',
+            bottom: -50,
+            left: 0,
+            borderRadius: '30pt',
+            backgroundColor: color === 1
+                ? '#E9F7EF'
+                : color === 2
+                    ? '#EBF5FB'
+                    : color === 3
+                        ? '#FEF9E7'
+                        : color === 4
+                            ? '#EAFAF1'
+                            : '#F9EBEA',
+            width: '330px',
+            height: '180px',
+            transform: 'rotate(-2deg)'
+        },
+        aquare3: {
+            position: 'absolute',
+            bottom: 60,
+            left: -2,
+            backgroundColor: color === 1
+                ? '#E9F7EF'
+                : color === 2
+                    ? '#EBF5FB'
+                    : color === 3
+                        ? '#FEF9E7'
+                        : color === 4
+                            ? '#EAFAF1'
+                            : '#F9EBEA',
+            width: '100px',
+            height: '300px',
+            zIndex: 2,
+            transform: 'rotate(-30deg)'
+        },
+        aquare4: {
+            position: 'absolute',
+            bottom: 60,
+            left: 98,
+            backgroundColor: color === 1
+                ? '#E9F7EF'
+                : color === 2
+                    ? '#EBF5FB'
+                    : color === 3
+                        ? '#FEF9E7'
+                        : color === 4
+                            ? '#EAFAF1'
+                            : '#F9EBEA',
+            width: '100px',
+            height: '80px',
+            zIndex: 2,
+        },
+        circle1: {
+            position: 'absolute',
+            bottom: 131,
+            left: 185,
+            borderRadius: '50%',
+            backgroundColor: '#FFFFFF',
+            width: '30px',
+            height: '30px',
+            zIndex: 1,
+        },
+        circle2: {
+            position: 'absolute',
+            bottom: 251.5,
+            left: 54,
+            borderRadius: '50%',
+            backgroundColor: '#FFFFFF',
+            width: '41px',
+            height: '41px',
+            zIndex: 1,
+        },
     });
     Font.register({
         family: 'Abhaya Libre ExtraBold',
@@ -175,6 +267,51 @@ const CvTemplate19: React.FC<CvTemplate> = (props) => {
                 color={color}
                 profileMore={profileMore}
             />
+            <Svg viewBox="0 0 30 16"
+                style={{
+                    // border: '1px solid red',
+                    position: 'absolute',
+                    left: '-60%',
+                    top: '46%',
+                    transform: 'rotate(-30deg)'
+                }}
+                fixed
+            >
+                <Ellipse
+                    cx="15"
+                    cy="8"
+                    rx="8"
+                    ry="6"
+                    fill={
+                        color === 1
+                            ? '#E9F7EF'
+                            : color === 2
+                                ? '#EBF5FB'
+                                : color === 3
+                                    ? '#FEF9E7'
+                                    : color === 4
+                                        ? '#EAFAF1'
+                                        : '#F9EBEA'
+                    }
+                    stroke={
+                        color === 1
+                            ? '#E9F7EF'
+                            : color === 2
+                                ? '#EBF5FB'
+                                : color === 3
+                                    ? '#FEF9E7'
+                                    : color === 4
+                                        ? '#EAFAF1'
+                                        : '#F9EBEA'
+                    }
+                />
+            </Svg>
+            <View fixed style={styles.aquare1}></View>
+            <View fixed style={styles.aquare2}></View>
+            <View fixed style={styles.aquare3}></View>
+            <View fixed style={styles.aquare4}></View>
+            <View fixed style={styles.circle1}></View>
+            <View fixed style={styles.circle2}></View>
             <View style={styles.container}>
                 <View style={styles.leftColumn}>
                     {profileMore?.profilesEducations &&

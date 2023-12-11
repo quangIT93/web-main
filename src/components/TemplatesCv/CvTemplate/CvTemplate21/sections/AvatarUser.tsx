@@ -20,8 +20,8 @@ const AvatarUser: React.FC<ICvHeader> = (props) => {
     const styles = StyleSheet.create({
         container: {
             width: '100%',
-            height: '200pt',
-            marginBottom: '60.041pt',
+            height: '180pt',
+            marginBottom: '60pt',
             // marginTop: '20pt',
             display: 'flex',
             flexDirection: 'column',
@@ -34,7 +34,7 @@ const AvatarUser: React.FC<ICvHeader> = (props) => {
         divImage: {
             backgroundColor: '#fff',
             borderRadius: '50%',
-            height: '180pt',
+            minHeight: '180pt',
             minWidth: '180pt',
             display: 'flex',
             alignItems: 'center',

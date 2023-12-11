@@ -93,15 +93,15 @@ const templatesCv = [
   },
   {
     id: 17,
-    component: CvTemplate15,
-  },
-  {
-    id: 18,
     component: CvTemplate17,
   },
   {
+    id: 18,
+    component: CvTemplate7,
+  },
+  {
     id: 19,
-    component: CvTemplate19,
+    component: CvTemplate8,
   },
   {
     id: 20,

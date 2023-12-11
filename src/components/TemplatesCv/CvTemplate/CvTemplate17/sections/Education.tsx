@@ -14,16 +14,17 @@ const Education: React.FC<ICvHeader> = (props) => {
       marginLeft: -25,
     },
     divTitle: {
-      backgroundColor:
-        color === 1
-          ? '#e5f6fe'
-          : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
+      // backgroundColor:
+      //   color === 1
+      //     ? '#e5f6fe'
+      //     : color === 2
+      //     ? '#D6EAF8'
+      //     : color === 3
+      //     ? '#FCF3CF'
+      //     : color === 4
+      //     ? '#D5F5E3'
+      //     : '#FADBD8',
+      position: 'relative',
     },
     title: {
       marginLeft: '45.839pt',
@@ -31,17 +32,17 @@ const Education: React.FC<ICvHeader> = (props) => {
       fontSize: '16pt',
       color:
         color === 1
-          ? '#037385'
+          ? '#000000'
           : color === 2
-          ? '#0D99FF'
+          ? '#000000'
           : color === 3
-          ? '#FBBC04'
+          ? '#000000'
           : color === 4
-          ? '#5CB265'
-          : '#D80000',
+          ? '#000000'
+          : '#000000',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
-      fontWeight: 'extrabold',
+      fontWeight: 'bold',
     },
     divInfo: {
       marginLeft: '45.839pt',
@@ -63,16 +64,7 @@ const Education: React.FC<ICvHeader> = (props) => {
     },
     textLeft: {
       fontSize: '11pt',
-      color:
-        color === 1
-          ? '#037385'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+      color: '#000',
       wordwrap: 'break-word',
       textAlign: 'justify',
       fontFamily: 'Petrona Bold',
@@ -80,16 +72,7 @@ const Education: React.FC<ICvHeader> = (props) => {
     },
     textTitleRight: {
       fontSize: '11pt',
-      color:
-        color === 1
-          ? '#037385'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+      color: '#000',
       fontFamily: 'Petrona Bold',
     },
     divTextTitleRight: {
@@ -108,12 +91,30 @@ const Education: React.FC<ICvHeader> = (props) => {
       lineHeight: '1.2',
       fontFamily: 'Petrona Bold',
     },
+    lineTitle: {
+      position: 'absolute',
+      height: '15pt',
+      width: '200pt',
+      backgroundColor:
+        color === 1
+          ? '#ffcf00'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#D4AC0D'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
+      left: '40pt',
+      top: '5pt',
+    },
   });
 
   return (
     <View style={styles.container}>
       <View>
         <View style={styles.divTitle}>
+          <View style={styles.lineTitle}></View>
           <Text style={styles.title}>Education</Text>
         </View>
         {profile?.profilesEducations?.map((education: any) => (

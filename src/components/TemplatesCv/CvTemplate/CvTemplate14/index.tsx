@@ -67,18 +67,17 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
     leftColumn: {
       flexDirection: 'column',
       width: '65%',
-      // paddingRight: 10,
-      borderRight: `1px solid ${
-        color === 1
+      paddingRight: 10,
+      borderRight: `1px solid ${color === 1
           ? '#cee8ff'
           : color === 2
-          ? '#AED6F1'
-          : color === 3
-          ? '#F9E79F'
-          : color === 4
-          ? '#ABEBC6'
-          : '#F1948A'
-      }`,
+            ? '#AED6F1'
+            : color === 3
+              ? '#F9E79F'
+              : color === 4
+                ? '#ABEBC6'
+                : '#F1948A'
+        }`,
       gap: '20.495pt',
     },
     rightColumn: {
@@ -108,12 +107,12 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#f7b3cc'
           : color === 2
-          ? '#AED6F1'
-          : color === 3
-          ? '#F9E79F'
-          : color === 4
-          ? '#ABEBC6'
-          : '#F1948A',
+            ? '#AED6F1'
+            : color === 3
+              ? '#F9E79F'
+              : color === 4
+                ? '#ABEBC6'
+                : '#F1948A',
       borderTopLeftRadius: '50%',
       borderBottomLeftRadius: '50%',
       zIndex: -1,
@@ -128,12 +127,12 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#f7b3cc'
           : color === 2
-          ? '#AED6F1'
-          : color === 3
-          ? '#F9E79F'
-          : color === 4
-          ? '#ABEBC6'
-          : '#F1948A',
+            ? '#AED6F1'
+            : color === 3
+              ? '#F9E79F'
+              : color === 4
+                ? '#ABEBC6'
+                : '#F1948A',
       transform: 'rotate(-90deg)',
       borderTopLeftRadius: '60%',
       borderBottomLeftRadius: '30%',
@@ -148,12 +147,12 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#f7b3cc'
           : color === 2
-          ? '#AED6F1'
-          : color === 3
-          ? '#F9E79F'
-          : color === 4
-          ? '#ABEBC6'
-          : '#F1948A',
+            ? '#AED6F1'
+            : color === 3
+              ? '#F9E79F'
+              : color === 4
+                ? '#ABEBC6'
+                : '#F1948A',
     },
     heart11: {
       width: 130,
@@ -249,7 +248,7 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       <View style={styles.container}>
         <View style={styles.leftColumn}>
           {profileMore?.profilesEducations &&
-          profileMore.profilesEducations?.length !== 0 ? (
+            profileMore.profilesEducations?.length !== 0 ? (
             <View>
               <Education
                 profile={profileMore}
@@ -262,7 +261,7 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profilesExperiences &&
-          profileMore.profilesExperiences?.length !== 0 ? (
+            profileMore.profilesExperiences?.length !== 0 ? (
             <View>
               <Experience
                 profile={profileMore}
@@ -275,7 +274,7 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profileActivities &&
-          profileMore.profileActivities?.length !== 0 ? (
+            profileMore.profileActivities?.length !== 0 ? (
             <View>
               <Activities
                 profile={profileMore}
@@ -292,7 +291,7 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
             <Profile profile={profile} fontSize={fontSize} color={color} />
           </View>
           {profileMore?.profilesLanguages &&
-          profileMore.profilesLanguages?.length !== 0 ? (
+            profileMore.profilesLanguages?.length !== 0 ? (
             <View>
               <Language
                 profile={profileMore}
@@ -304,7 +303,7 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profileHobbies &&
-          profileMore.profileHobbies?.length !== 0 ? (
+            profileMore.profileHobbies?.length !== 0 ? (
             <View>
               <Hobies profile={profileMore} fontSize={fontSize} color={color} />
             </View>
@@ -312,7 +311,7 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profilesSkills &&
-          profileMore.profilesSkills?.length !== 0 ? (
+            profileMore.profilesSkills?.length !== 0 ? (
             <View>
               <Skill profile={profileMore} fontSize={fontSize} color={color} />
             </View>
@@ -320,7 +319,7 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profilesReferences &&
-          profileMore.profilesReferences?.length !== 0 ? (
+            profileMore.profilesReferences?.length !== 0 ? (
             <View>
               <Reference
                 profile={profileMore}
@@ -333,7 +332,7 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profileAwards &&
-          profileMore.profileAwards?.length !== 0 ? (
+            profileMore.profileAwards?.length !== 0 ? (
             <View>
               <Award profile={profileMore} fontSize={fontSize} color={color} />
             </View>

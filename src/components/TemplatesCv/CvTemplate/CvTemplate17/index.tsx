@@ -51,46 +51,54 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
   const { color, fontSize, profile, profileMore } = props;
   const styles = StyleSheet.create({
     page: {
-      padding: 30,
+      padding: '30 20 30 30',
       position: 'relative',
-      backgroundColor: '#fff',
+      backgroundColor: 'rgba(255,255,255,0.4)',
     },
     container: {
       flex: 1,
       flexDirection: 'row',
-      backgroundColor: '#FFFFFF',
       zIndex: 2,
       //   paddingLeft: '14.279pt',
       //   paddingRight: '14.279pt',
       //   paddingTop: '68.34pt',
       //   gap: '48.781pt',
+      position: 'relative',
+      gap: '9.2pt',
     },
     leftColumn: {
+      position: 'relative',
       flexDirection: 'column',
       width: '65%',
       // paddingRight: 10,
-      backgroundColor: '#fff',
-      borderRight: `1px solid ${
-        color === 1
-          ? '#cee8ff'
-          : color === 2
-          ? '#AED6F1'
-          : color === 3
-          ? '#F9E79F'
-          : color === 4
-          ? '#ABEBC6'
-          : '#F1948A'
-      }`,
+      backgroundColor: '#f4f4f4',
+      // borderRight: `1px solid ${
+      //   color === 1
+      //     ? '#cee8ff'
+      //     : color === 2
+      //     ? '#AED6F1'
+      //     : color === 3
+      //     ? '#F9E79F'
+      //     : color === 4
+      //     ? '#ABEBC6'
+      //     : '#F1948A'
+      // }`,
       gap: '20.495pt',
+      paddingTop: '20pt',
+      marginLeft: -30,
     },
     rightColumn: {
+      position: 'relative',
+      paddingTop: '20pt',
       flexDirection: 'column',
-      width: '35%',
+      display: 'flex',
+      width: '40%',
       // paddingTop: '1.094cm',
       // marginTop: '1cm',
       // paddingLeft: '24.809pt',
-      backgroundColor: '#fff',
-      gap: '20.495pt',
+      backgroundColor: '#f4f4f4',
+      gap: '35pt',
+      marginRight: -30,
     },
     pageNumber: {
       position: 'absolute',
@@ -109,6 +117,43 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       right: 25,
       textAlign: 'center',
       color: '#000000',
+    },
+    lineTopRight: {
+      position: 'absolute',
+      height: '9pt',
+      width: '100%',
+      backgroundColor:
+        color === 1
+          ? '#ffcf00'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#D4AC0D'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
+      zIndex: 3,
+      marginLeft: 0,
+      // marginRight: 1,
+    },
+    lineBottomRight: {
+      position: 'absolute',
+      height: '9pt',
+      width: '100%',
+      backgroundColor:
+        color === 1
+          ? '#ffcf00'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#D4AC0D'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
+      zIndex: 3,
+      marginLeft: 0,
+      bottom: 0,
+      // left: 0,
     },
   });
   Font.register({
@@ -134,6 +179,8 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       <Header profile={profile} fontSize={fontSize} color={color} />
       <View style={styles.container}>
         <View style={styles.leftColumn}>
+          <View style={styles.lineTopRight}></View>
+          <View style={styles.lineBottomRight} fixed></View>
           {profileMore?.profilesEducations &&
           profileMore.profilesEducations?.length !== 0 ? (
             <View>

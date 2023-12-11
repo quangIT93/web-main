@@ -25,17 +25,17 @@ const Header: React.FC<ICvHeader> = (props) => {
       marginLeft: -30,
       display: 'flex',
       flexDirection: 'row',
-      // backgroundColor: '#cee8ff',
-      backgroundColor:
-        color === 1
-          ? '#cee8ff'
-          : color === 2
-          ? '#AED6F1'
-          : color === 3
-          ? '#F9E79F'
-          : color === 4
-          ? '#ABEBC6'
-          : '#F1948A',
+      backgroundColor: '#fff',
+      // backgroundColor:
+      //   color === 1
+      //     ? '#cee8ff'
+      //     : color === 2
+      //     ? '#AED6F1'
+      //     : color === 3
+      //     ? '#F9E79F'
+      //     : color === 4
+      //     ? '#ABEBC6'
+      //     : '#F1948A',
       justifyContent: 'space-between',
       position: 'relative',
       zIndex: '0',
@@ -50,11 +50,11 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontSize: '46pt',
       color:
         color === 1
-          ? '#037385'
+          ? '#ffcf00'
           : color === 2
           ? '#0D99FF'
           : color === 3
-          ? '#FBBC04'
+          ? '#D4AC0D'
           : color === 4
           ? '#5CB265'
           : '#D80000',
@@ -67,7 +67,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       marginTop: '20pt',
       color:
         color === 1
-          ? '#037385'
+          ? '#ffcf00'
           : color === 2
           ? '#0D99FF'
           : color === 3
@@ -78,10 +78,11 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontFamily: 'Petrona Bold',
     },
     divImage: {
-      minHeight: '163.104pt',
-      minWidth: '205.915pt',
-      margin: '43.762pt 48.768pt 43pt 0',
-      backgroundColor: '#fff',
+      minHeight: '233.745pt',
+      minWidth: '210pt',
+      margin: '0pt 20pt 43pt 0',
+      // backgroundColor: '#fff',
+      backgroundColor: 'red',
     },
     image: {
       width: '100%',
@@ -123,7 +124,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       </View>
 
       <View style={styles.divImage}>
-        <View style={{ padding: '9.955pt' }}>
+        <View>
           <Image
             src={{
               uri:

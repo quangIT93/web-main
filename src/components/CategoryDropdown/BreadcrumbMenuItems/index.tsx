@@ -919,7 +919,7 @@ const BreadcrumbMenuItems: React.FC = () => {
               ? 'Tạo bài đăng tuyển dụng'
               : languageRedux === 2
                 ? 'Create job posting'
-                : languageRedux === 3 && '채용공고 등록',
+                : languageRedux === 3 && '글을 만들기',
         },
       ],
     },

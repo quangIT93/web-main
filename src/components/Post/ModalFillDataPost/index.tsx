@@ -77,6 +77,7 @@ interface IModalFillDataPost {
   setMoneyType: React.Dispatch<React.SetStateAction<number>>;
   language: any;
   languageRedux: any;
+  setOldDescription: React.Dispatch<React.SetStateAction<any>>;
 }
 const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
   const {
@@ -109,6 +110,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setMoneyType,
     language,
     languageRedux,
+    setOldDescription
   } = props;
 
   const [dataPost, setDataPost] = React.useState<any>([]);
@@ -200,7 +202,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
         setIsPeriodDate(result.data.is_date_period);
         console.log('result.data.start_date: ', result.data.start_date);
         console.log('result.data.end_date: ', result.data.end_date);
-
+        setOldDescription(result.data.description);
         setStartDate(result.data.start_date);
         setEndDate(result.data.end_date);
         setIsWorkingWeekend(result.data.is_working_weekend);
@@ -229,7 +231,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
         setSalaryType(result.data.salary_type_id);
         setMoneyType(result.data.money_type);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleSubmitValueFill = () => {
@@ -255,13 +257,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setPhoneNumber(null);
     setSalaryMax(12000000);
     setSalaryMin(0);
-    setDescription(
-      languageRedux === 1
-        ? 'Chưa cập nhật'
-        : languageRedux === 2
-          ? 'Not updated yet'
-          : '업데이트하지 않음',
-    );
+    setDescription('');
     setSelectedValue(-1);
     setSelectedImages([]);
     setSelectedFillImages([]);
@@ -269,6 +265,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setFillCate([]);
     setSalaryType(1);
     setMoneyType(1);
+    setOldDescription('');
   };
 
   return (
@@ -297,7 +294,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
               : languageRedux === 2
                 ? 'HiJob will automatically fill all your previous job information!'
                 : languageRedux === 3 &&
-                  'HiJob이 자동으로 귀하의 이전 직업 정보를 전부 채워드립니다!'}
+                'HiJob이 자동으로 귀하의 이전 직업 정보를 전부 채워드립니다!'}
             {/* <IconButton
               aria-label="close"
               sx={{
@@ -322,7 +319,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
               : languageRedux === 2
                 ? 'Select job post that you want HiJob to get information automatically'
                 : languageRedux === 3 &&
-                  'HiJob이 자동으로 정보를 검색하도록 하려는 채용 게시물'}
+                'HiJob이 자동으로 정보를 검색하도록 하려는 채용 게시물'}
           </p>
           <div className="post_items_old">
             {dataPost ? (
