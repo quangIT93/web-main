@@ -14,9 +14,12 @@ import historyRecruiter from 'api/historyRecruiter';
 import postApi from 'api/postApi';
 
 import './style.scss';
-import { Button } from 'antd';
+import { Button, Skeleton, Spin } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { LoadingOutlined } from '@ant-design/icons';
+import { CircularProgress } from '@mui/material';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -61,34 +64,85 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
         oldDescription,
     } = props;
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
-
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
     const [dataPost, setDataPost] = React.useState<any>([]);
-
+    const [hasMore, setHasMore] = React.useState(true);
+    const [page, setPage] = React.useState<any>('0');
+    const [isLoading, setIsLoading] = React.useState(false);
     const handleClose = () => {
         setOpenModalFillDescriptTemplate(false);
     };
 
     const allPost = async () => {
         try {
+            setIsLoading(true)
             // const result = await applitedPostedApi.getAllApplitedPostedApi(0);
             const result = await historyRecruiter.getAllPosted(
                 0,
-                20,
+                5,
                 null,
                 languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             );
-            if (result) {
+            setHasMore(true);
+            if (result.data.length === 6) {
                 setDataPost(result.data);
+                setIsLoading(false)
+            } else if (result.data.length < 6) {
+                setDataPost(result.data);
+                setIsLoading(false)
+                setHasMore(false);
+            } else {
+                setDataPost(result.data);
+                setIsLoading(false)
+                setHasMore(false);
+                setPage('0');
+                return;
             }
         } catch (error) {
             console.log('error', error);
         }
     };
 
+    const fetchMoreData = async () => {
+        setHasMore(true);
+        try {
+            // const nextPage = (parseInt(page) + 1).toString();
+            const nextPage = dataPost[dataPost.length - 1].id
+            console.log('nextPage', nextPage);
+
+            const result = await historyRecruiter.getAllPosted(
+                nextPage,
+                5,
+                null,
+                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+            );
+
+            if (result && result.data.length >= 6) {
+                setPage(nextPage);
+                setDataPost((prev: any) => [
+                    ...prev,
+                    ...result?.data,
+                ]);
+            } else if (result && result.data.length < 6) {
+                setDataPost((prev: any) => [
+                    ...prev,
+                    ...result?.data,
+                ]);
+                setHasMore(false);
+            } else {
+                setHasMore(false);
+            }
+        } catch (error) {
+            setHasMore(false);
+            setPage('0');
+        }
+    };
+
     React.useEffect(() => {
-        allPost();
+        openModalFillDescriptTemplate &&
+            allPost();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [languageRedux]);
+    }, [languageRedux, openModalFillDescriptTemplate]);
 
     const [selectedValue, setSelectedValue] = React.useState<number>(0);
 
@@ -101,7 +155,7 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                 languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             );
             if (result) {
-                console.log('reuslt', result.data.description);
+                // console.log('reuslt', result.data.description);
                 typeModal === 1 ?
                     setDescription(result.data.description) :
                     setDescription((preValue: any) => ({
@@ -118,7 +172,7 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
     };
     const handleCancleFillData = () => {
         setOpenModalFillDescriptTemplate(false);
-        console.log(oldDescription);
+        // console.log(oldDescription);
         typeModal === 1 ?
             setDescription(oldDescription) :
             setDescription((preValue: any) => ({
@@ -151,7 +205,8 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                     >
                         {languageRedux === 1
                             ? `HiJob sẽ tự động điền mẫu mổ tả ${typeModal === 1 ? 'công việc' : 'công ty'
-                            } theo thông tin bài post của bạn!`
+                            } theo thông tin ${typeModal === 1 ? 'bài đăng' : 'công ty'
+                            } của bạn!`
                             : languageRedux === 2
                                 ? 'HiJob will automatically fill all your previous job information!'
                                 : languageRedux === 3 &&
@@ -182,57 +237,72 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                                 : languageRedux === 3 &&
                                 'HiJob이 자동으로 정보를 검색하도록 하려는 채용 게시물'}
                     </p>
-                    <div className="template_list">
-                        {dataPost ? (
-                            dataPost?.map((itemPost: any, index: number) => (
-                                <div key={index} className="template_item">
-                                    <h3>
-                                        {index + 1}. {itemPost.title}
-                                    </h3>
-                                    <ul className="template_description">
-                                        <li>
-                                            <p>
-                                                {
-                                                    `Thúc đẩy hoạt động trao đổi hàng hóa giữa công ty và khách hàng-\nTư vấn, truyền đạt thông tin sản phẩm/ dịch vụ tới khách hàng\nPhát triển mạng lưới khách hàng tiềm năng sử dụng sản phẩm/ dịch vụ\nXây dựng niềm tin, uy tín với khách hàng\nSoạn thảo hợp đồng, thương thảo và ký kết với khách hàng\nGiải quyết vấn đề khiếu nại, phát sinh từ khách hàng\nDuy trì và chăm sóc khách hàng\n\nYêu cầu dành cho vị trí:\nTốt nghiệp đại học, cao đẳng chuyên ngành Quản trị Kinh doanh, Marketing, Kinh tế hoặc có bằng cấp tương đương\nCó X năm kinh nghiệm tại vị trí tương đương\nCó kỹ năng giao tiếp. Có ngoại ngữ là lợi thế\nThành thạo vi tính văn phòng, các phần mềm CRM là lợi thế\nNhiệt tình, năng động, kỹ năng phân tích và xử lý tình huống tốt\nCó phương tiện đi lại cá nhân\nQuyền lợi của vị trí: dựa theo chính sách phúc lợi của công ty`
-                                                }
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p style={{
-                                                cursor: 'pointer',
-                                                color: '#0D99FF'
-                                            }}
-                                                onClick={() => {
-                                                    setOpenModalPreviewDescriptTemplate(true);
-                                                }}
-                                            >
-                                                {
-                                                    languageRedux === 1
-                                                        ? 'Xem chi tiết'
-                                                        : languageRedux === 2
-                                                            ? 'View details'
-                                                            : languageRedux === 3 ?
-                                                                '자세히 보기 '
-                                                                : 'Xem chi tiết'
-                                                }
-                                            </p>
-                                        </li>
-                                    </ul>
+                    <div className="template_list" id="template_list_scrollable">
+                        {
+                            dataPost.length > 0 ?
+                                (
+                                    <InfiniteScroll
+                                        dataLength={dataPost?.length}
+                                        next={fetchMoreData}
+                                        hasMore={hasMore}
+                                        loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
+                                        style={{ overflow: 'unset' }}
+                                        scrollableTarget="template_list_scrollable"
+                                    >
+                                        {
+                                            dataPost.map((itemPost: any, index: number) => (
+                                                <Skeleton loading={isLoading} active key={index}>
+                                                    <div key={index} className="template_item">
+                                                        <h3>
+                                                            {index + 1}. {itemPost.title}
+                                                        </h3>
+                                                        <ul className="template_description">
+                                                            <li>
+                                                                <p>
+                                                                    {
+                                                                        `Thúc đẩy hoạt động trao đổi hàng hóa giữa công ty và khách hàng-\nTư vấn, truyền đạt thông tin sản phẩm/ dịch vụ tới khách hàng\nPhát triển mạng lưới khách hàng tiềm năng sử dụng sản phẩm/ dịch vụ\nXây dựng niềm tin, uy tín với khách hàng\nSoạn thảo hợp đồng, thương thảo và ký kết với khách hàng\nGiải quyết vấn đề khiếu nại, phát sinh từ khách hàng\nDuy trì và chăm sóc khách hàng\n\nYêu cầu dành cho vị trí:\nTốt nghiệp đại học, cao đẳng chuyên ngành Quản trị Kinh doanh, Marketing, Kinh tế hoặc có bằng cấp tương đương\nCó X năm kinh nghiệm tại vị trí tương đương\nCó kỹ năng giao tiếp. Có ngoại ngữ là lợi thế\nThành thạo vi tính văn phòng, các phần mềm CRM là lợi thế\nNhiệt tình, năng động, kỹ năng phân tích và xử lý tình huống tốt\nCó phương tiện đi lại cá nhân\nQuyền lợi của vị trí: dựa theo chính sách phúc lợi của công ty`
+                                                                    }
+                                                                </p>
+                                                            </li>
+                                                            <li>
+                                                                <p style={{
+                                                                    cursor: 'pointer',
+                                                                    color: '#0D99FF'
+                                                                }}
+                                                                    onClick={() => {
+                                                                        setOpenModalPreviewDescriptTemplate(true);
+                                                                    }}
+                                                                >
+                                                                    {
+                                                                        languageRedux === 1
+                                                                            ? 'Xem chi tiết'
+                                                                            : languageRedux === 2
+                                                                                ? 'View details'
+                                                                                : languageRedux === 3 ?
+                                                                                    '자세히 보기 '
+                                                                                    : 'Xem chi tiết'
+                                                                    }
+                                                                </p>
+                                                            </li>
+                                                        </ul>
 
-                                    <input
-                                        type="radio"
-                                        // id={`option-${option.id}`}
-                                        name="options"
-                                        value={itemPost?.post_id}
-                                        checked={selectedValue === itemPost?.post_id ? true : false}
-                                        onChange={(e) => handleRadioChange(e, itemPost)}
-                                        defaultValue={undefined}
-                                    />
-                                </div>
-                            ))
-                        ) : (
-                            <></>
-                        )}
+                                                        <input
+                                                            type="radio"
+                                                            // id={`option-${option.id}`}
+                                                            name="options"
+                                                            value={itemPost?.post_id}
+                                                            checked={selectedValue === itemPost?.post_id ? true : false}
+                                                            onChange={(e) => handleRadioChange(e, itemPost)}
+                                                            defaultValue={undefined}
+                                                        />
+                                                    </div>
+                                                </Skeleton>
+                                            ))
+                                        }
+                                    </InfiniteScroll>
+                                ) : <></>
+                        }
+
                     </div>
 
                     <div className="wrap-button_filterTemplate">
