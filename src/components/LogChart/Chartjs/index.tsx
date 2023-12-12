@@ -2,11 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 // npm chart
 import Chart from 'chart.js/auto';
 import { DataLog } from 'pages/LogChart/typeChart';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
+import { getAnalytics, logEvent } from '@firebase/analytics';
 interface Dataset {
   label: string;
   data: number[];
   fill: boolean;
   borderColor?: string; // Tuỳ chọn
+  backgroundColor?: string; // Tuỳ chọn
   tension: number;
   borderWidth?: number; // Tuỳ chọn
   hoverBackgroundColor?: string; // Tuỳ chọn
@@ -20,9 +24,26 @@ interface Datasets {
 const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
   const { dataLog } = props;
   console.log('dataLog', dataLog);
-
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data);
   const chartRef = useRef<HTMLCanvasElement | null>(null);
   const [selectedYear, setSelectedYear] = useState<number>(2023);
+  const analytics: any = getAnalytics();
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Tổng quan hoạt động'
+        : languageRedux === 2
+          ? 'HiJob - Activity overview'
+          : 'HiJob - 활동 대시보드';
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_hotJob' as string,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
   useEffect(() => {
     if (!chartRef.current || !dataLog) return;
     chartRef.current.width = 600; // Set the desired width
@@ -31,37 +52,86 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
     const context = chartRef.current.getContext('2d');
     if (!context) return;
 
+    const month = [
+      languageRedux === 1 ? 'Tháng 1' : languageRedux === 2 ? 'January' : '1 월',
+      languageRedux === 1 ? 'Tháng 2' : languageRedux === 2 ? 'February' : '2 월',
+      languageRedux === 1 ? 'Tháng 3' : languageRedux === 2 ? 'March' : '3 월',
+      languageRedux === 1 ? 'Tháng 4' : languageRedux === 2 ? 'April' : '4 월',
+      languageRedux === 1 ? 'Tháng 5' : languageRedux === 2 ? 'May' : '5 월',
+      languageRedux === 1 ? 'Tháng 6' : languageRedux === 2 ? 'June' : '6 월',
+      languageRedux === 1 ? 'Tháng 7' : languageRedux === 2 ? 'July' : '7 월',
+      languageRedux === 1 ? 'Tháng 8' : languageRedux === 2 ? 'August' : '8 월',
+      languageRedux === 1 ? 'Tháng 9' : languageRedux === 2 ? 'September' : '9 월',
+      languageRedux === 1 ? 'Tháng 10' : languageRedux === 2 ? 'October' : '10 월',
+      languageRedux === 1 ? 'Tháng 11' : languageRedux === 2 ? 'November' : '11 월',
+      languageRedux === 1 ? 'Tháng 12' : languageRedux === 2 ? 'December' : '12 월',
+    ];
+
     const datasets: Datasets = {
       2023: [
         {
-          label: 'Việc làm đã ứng tuyển',
+          label: profileV3.typeRoleData === 0 ?
+            languageRedux === 1 ?
+              "Việc làm đã ứng tuyển" :
+              languageRedux === 2 ?
+                "Applied job" :
+                "지원한 채용공고" :
+            languageRedux === 1 ?
+              "Ứng viên đã tuyển dụng" :
+              languageRedux === 2 ?
+                "Recruited candidates" :
+                "지원한 구직자",
           data: dataLog.applyLogs.activities
             .reverse()
             .map((applyLog: any) => applyLog.count),
           fill: false,
           borderColor: 'rgba(13, 153, 255, 1)',
+          backgroundColor: 'rgba(13, 153, 255, 1)',
           tension: 0.5,
           borderWidth: 1,
           hoverBackgroundColor: 'rgba(13, 153, 255, 1)', // Màu fill khi hover
         },
         {
-          label: 'Việc làm đã xem qua',
+          label: profileV3.typeRoleData === 0 ?
+            languageRedux === 1 ?
+              "Việc làm đã xem qua" :
+              languageRedux === 2 ?
+                "Viewed job" :
+                "본 채용공고" :
+            languageRedux === 1 ?
+              "Ứng viên đã xem qua" :
+              languageRedux === 2 ?
+                "Viewed candidates" :
+                "본 구지자",
           data: dataLog.viewPostLogs.activities
             .reverse()
             .map((applyLog: any) => applyLog.count),
           fill: false,
           borderColor: 'rgba(52, 168, 83, 1)',
+          backgroundColor: 'rgba(52, 168, 83, 1)',
           tension: 0.5,
           borderWidth: 1,
           hoverBackgroundColor: 'rgba(52, 168, 83, 1)', // Màu fill khi hover
         },
         {
-          label: 'Việc làm đã tìm kiếm',
+          label: profileV3.typeRoleData === 0 ?
+            languageRedux === 1 ?
+              "Việc làm đã tìm kiếm" :
+              languageRedux === 2 ?
+                "Searched job" :
+                "검색한 채용공고"
+            :
+            languageRedux === 1 ?
+              "Ứng viên đã lưu lại" :
+              languageRedux === 2 ?
+                "Saved candidates" :
+                "저장한 구직자",
           data: dataLog.searchLogs.activities
             .reverse()
             .map((applyLog: any) => applyLog.count),
           fill: false,
           borderColor: 'rgba(251, 188, 4, 1)',
+          backgroundColor: 'rgba(251, 188, 4, 1)',
           tension: 0.5,
           borderWidth: 1,
           // pointBackgroundColor: 'rgb(75, 192, 192)',
@@ -83,6 +153,7 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
           fill: false,
           hoverBackgroundColor: 'rgba(13, 153, 255, 1)',
           borderColor: 'rgba(13, 153, 255, 1)',
+          backgroundColor: 'rgba(13, 153, 255, 1)',
           borderWidth: 1,
           tension: 0.5,
         },
@@ -92,6 +163,7 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
           fill: false,
           hoverBackgroundColor: 'rgba(52, 168, 83, 1)',
           borderColor: 'rgba(52, 168, 83, 1)',
+          backgroundColor: 'rgba(52, 168, 83, 1)',
           borderWidth: 1,
           tension: 0.5,
         },
@@ -101,6 +173,7 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
           fill: false,
           hoverBackgroundColor: 'rgba(251, 188, 4, 1)',
           borderColor: 'rgba(251, 188, 4, 1)',
+          backgroundColor: 'rgba(251, 188, 4, 1)',
           borderWidth: 1,
           tension: 0.5,
         },
@@ -112,6 +185,7 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
           fill: false,
           hoverBackgroundColor: 'rgba(13, 153, 255, 1)',
           borderColor: 'rgba(13, 153, 255, 1)',
+          backgroundColor: 'rgba(13, 153, 255, 1)',
           borderWidth: 1,
           tension: 0.5,
         },
@@ -121,6 +195,7 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
           fill: false,
           hoverBackgroundColor: 'rgba(52, 168, 83, 1)',
           borderColor: 'rgba(52, 168, 83, 1)',
+          backgroundColor: 'rgba(52, 168, 83, 1)',
           borderWidth: 1,
           tension: 0.5,
         },
@@ -131,20 +206,7 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
       type: 'line',
       data: {
         datasets: datasets[selectedYear],
-        labels: [
-          'Tháng 01',
-          'Tháng 02',
-          'Tháng 03',
-          'Tháng 04',
-          'Tháng 05',
-          'Tháng 06',
-          'Tháng 07',
-          'Tháng 08',
-          'Tháng 09',
-          'Tháng 10',
-          'Tháng 11',
-          'Tháng 12',
-        ],
+        labels: month,
       },
       options: {
         maintainAspectRatio: false, // Tắt tự động duy trì tỷ lệ khung hình
@@ -168,21 +230,28 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
                 return '';
               },
               title: (tooltipItems) => {
-                return `Kết quả ${tooltipItems[0].label}`;
+                return `${languageRedux === 1 ?
+                  "Kết quả" :
+                  languageRedux === 2 ?
+                    "Result" :
+                    "결과"
+                  } ${tooltipItems[0].label}`;
               },
             },
-            // titleAlign: 'left',
+            titleAlign: 'center',
           },
           legend: {
             display: true,
             labels: {
               // Thay đổi biểu tượng (icon) thành hình tròn
               usePointStyle: true,
-              pointStyle: 'line',
-              pointStyleWidth: 80,
+              pointStyle: 'rect',
+              pointStyleWidth: 68,
             },
+            position: 'bottom'
             // fullSize: true,
           },
+
         },
         hover: {
           mode: 'index',
@@ -195,10 +264,13 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
       // Cleanup to avoid memory leaks when the component unmounts
       mixedChart.destroy();
     };
-  }, [selectedYear, dataLog]);
+  }, [selectedYear, dataLog, languageRedux]);
   return (
     <>
-      <canvas ref={chartRef} style={{ maxHeight: '400px' }}></canvas>;
+      <canvas ref={chartRef} style={{ maxHeight: '400px' }}></canvas>
+      {/* <button onClick={() => setSelectedYear(2022)}>2022</button>
+      <button onClick={() => setSelectedYear(2023)}>2023</button>
+      <button onClick={() => setSelectedYear(2024)}>2024</button> */}
     </>
   );
 };

@@ -12,10 +12,13 @@ import styles from './style.module.scss';
 
 import { DataLog } from './typeChart';
 import Chartjs from '#components/LogChart/Chartjs';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const LogChart = () => {
   const [dataLog, setDataLog] = useState<DataLog | undefined>(undefined);
-
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data);
   const dataChart = async () => {
     const result = await profileApi.activityLog();
     if (result) {
@@ -31,7 +34,15 @@ const LogChart = () => {
     <div className={styles.container_chart}>
       <div className={styles.chart}>
         <div className={styles.chart_itemsChart}>
-          <h3 className={styles.title_chart}>Tổng quan công việc</h3>
+          <h3 className={styles.title_chart}>
+            {
+              languageRedux === 1 ?
+                "Tổng quan hoạt động" :
+                languageRedux === 2 ?
+                  "Activity overview" :
+                  "활동 대시보드"
+            }
+          </h3>
           <ItemsChart dataLog={dataLog} />
         </div>
         <div className={styles.chart}>
@@ -41,7 +52,22 @@ const LogChart = () => {
           )}
         </div>
         <div className={styles.chart_itemsCompanyCareChart}>
-          <h3 className={styles.title_chart}>Công ty quan tâm đến bạn</h3>
+          <h3 className={styles.title_chart}>
+            {
+              profileV3.typeRoleData === 0 ?
+                languageRedux === 1 ?
+                  "Công ty quan tâm đến bạn" :
+                  languageRedux === 2 ?
+                    "The company cares about you" :
+                    "나를 관심하는 회사"
+                :
+                languageRedux === 1 ?
+                  "Ứng viên theo dõi công ty của bạn" :
+                  languageRedux === 2 ?
+                    "Candidates follow your company" :
+                    "내 회사를 관심하는 구직자"
+            }
+          </h3>
           <ItemsCompanyCareChart />
         </div>
       </div>
