@@ -40,8 +40,6 @@ const MainLayout = ({ children }: Props) => {
       (!localStorage.getItem('accessToken') &&
         location.pathname === '/company-infor') ||
       (!localStorage.getItem('accessToken') &&
-        location.pathname === '/news-comunity') ||
-      (!localStorage.getItem('accessToken') &&
         location.pathname === '/candidate-new-detail') ||
       (!localStorage.getItem('accessToken') &&
         location.pathname === '/chart') ||

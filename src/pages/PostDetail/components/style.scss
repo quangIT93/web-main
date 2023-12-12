@@ -8,7 +8,7 @@
   cursor: pointer;
   width: 100%;
   background: none !important;
-
+  
   &:hover {
     background-color: #cccccc;
   }
@@ -106,6 +106,12 @@
 
     @include breakpoint(largeTablet) {
       width: 30%;
+    }
+  }
+
+  .MuiCard-root {
+    @media screen and (max-width: 426px) {
+      height: 142px;
     }
   }
 }
