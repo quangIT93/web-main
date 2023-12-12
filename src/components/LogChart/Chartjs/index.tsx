@@ -34,34 +34,34 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
     const datasets: Datasets = {
       2023: [
         {
-          label: 'Công việc đã ứng tuyển',
+          label: 'Việc làm đã ứng tuyển',
           data: dataLog.applyLogs.activities
             .reverse()
             .map((applyLog: any) => applyLog.count),
           fill: false,
-          borderColor: 'red',
+          borderColor: 'rgba(13, 153, 255, 1)',
           tension: 0.5,
           borderWidth: 1,
-          hoverBackgroundColor: 'red', // Màu fill khi hover
+          hoverBackgroundColor: 'rgba(13, 153, 255, 1)', // Màu fill khi hover
         },
         {
-          label: 'Công việc đã xem',
+          label: 'Việc làm đã xem qua',
           data: dataLog.viewPostLogs.activities
             .reverse()
             .map((applyLog: any) => applyLog.count),
           fill: false,
-          borderColor: 'blue',
+          borderColor: 'rgba(52, 168, 83, 1)',
           tension: 0.5,
           borderWidth: 1,
-          hoverBackgroundColor: 'blue', // Màu fill khi hover
+          hoverBackgroundColor: 'rgba(52, 168, 83, 1)', // Màu fill khi hover
         },
         {
-          label: 'Công việc đã tìm kiếm',
+          label: 'Việc làm đã tìm kiếm',
           data: dataLog.searchLogs.activities
             .reverse()
             .map((applyLog: any) => applyLog.count),
           fill: false,
-          borderColor: 'green',
+          borderColor: 'rgba(251, 188, 4, 1)',
           tension: 0.5,
           borderWidth: 1,
           // pointBackgroundColor: 'rgb(75, 192, 192)',
@@ -72,7 +72,7 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
           // pointHoverBorderColor: 'rgb(75, 192, 192)',
           // pointHitRadius: 10,
           // pointBorderWidth: 2,
-          hoverBackgroundColor: 'green', // Màu fill khi hover
+          hoverBackgroundColor: 'rgba(251, 188, 4, 1)', // Màu fill khi hover
           // hoverBorderColor: 'rgb(75, 192, 192)',
         },
       ],
@@ -81,8 +81,8 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
           label: 'Dataset 2022',
           data: [30, 45, 20, 60, 40, 35, 80],
           fill: false,
-          hoverBackgroundColor: 'red',
-          borderColor: 'red',
+          hoverBackgroundColor: 'rgba(13, 153, 255, 1)',
+          borderColor: 'rgba(13, 153, 255, 1)',
           borderWidth: 1,
           tension: 0.5,
         },
@@ -90,8 +90,8 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
           label: 'Dataset 2022',
           data: [23, 31, 41, 15, 51, 23, 12],
           fill: false,
-          hoverBackgroundColor: 'blue',
-          borderColor: 'blue',
+          hoverBackgroundColor: 'rgba(52, 168, 83, 1)',
+          borderColor: 'rgba(52, 168, 83, 1)',
           borderWidth: 1,
           tension: 0.5,
         },
@@ -99,8 +99,8 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
           label: 'Dataset 2022',
           data: [12, 32, 43, 21, 22, 23, 11],
           fill: false,
-          hoverBackgroundColor: 'green',
-          borderColor: 'green',
+          hoverBackgroundColor: 'rgba(251, 188, 4, 1)',
+          borderColor: 'rgba(251, 188, 4, 1)',
           borderWidth: 1,
           tension: 0.5,
         },
@@ -110,8 +110,8 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
           label: 'Dataset 2023',
           data: [32, 32, 11, 33, 61, 23, 12],
           fill: false,
-          hoverBackgroundColor: 'red',
-          borderColor: 'red',
+          hoverBackgroundColor: 'rgba(13, 153, 255, 1)',
+          borderColor: 'rgba(13, 153, 255, 1)',
           borderWidth: 1,
           tension: 0.5,
         },
@@ -119,8 +119,8 @@ const Chartjs: React.FC<{ dataLog: DataLog | undefined }> = ({ ...props }) => {
           label: 'Dataset 2023',
           data: [32, 43, 23, 33, 21, 32, 32],
           fill: false,
-          hoverBackgroundColor: 'blue',
-          borderColor: 'blue',
+          hoverBackgroundColor: 'rgba(52, 168, 83, 1)',
+          borderColor: 'rgba(52, 168, 83, 1)',
           borderWidth: 1,
           tension: 0.5,
         },

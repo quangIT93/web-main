@@ -23,7 +23,7 @@ const ModalUpdateInfo: React.FC<IModalSelectRole> = (props) => {
   };
 
   const handleConfirm = () => {
-    window.open(roleRedux === 0 ? `/profile/` : '/company-infor', '_parent');
+    window.open(roleRedux === 0 ? `/profile` : '/company-infor', '_parent');
     handleCancel();
   };
 
@@ -76,13 +76,13 @@ const ModalUpdateInfo: React.FC<IModalSelectRole> = (props) => {
             : languageRedux === 2
               ? 'Updating your personal information, work location, industry,... will help employers find you more easily and HiJob will introduce more suitable jobs!'
               : languageRedux === 3 &&
-                '귀하의 개인 정보, 직장 위치, 업종 등을 업데이트하면 고용주가 귀하를 더 쉽게 찾을 수 있으며 HiJob은 귀하에게 더 적합한 일자리를 소개할 것입니다.'
+              '귀하의 개인 정보, 직장 위치, 업종 등을 업데이트하면 고용주가 귀하를 더 쉽게 찾을 수 있으며 HiJob은 귀하에게 더 적합한 일자리를 소개할 것입니다.'
           : languageRedux === 1
             ? 'Bạn cần cập nhật thông tin công ty để có thể đăng tin tuyển dụng tìm kiếm ứng viên tiềm năng.'
             : languageRedux === 2
               ? 'You need to update your company information to be able to post job vacancies looking for potential candidates.'
               : languageRedux === 3 &&
-                '잠재적인 후보자를 찾는 채용 공고를 게시하려면 회사 정보를 업데이트해야 합니다.'}
+              '잠재적인 후보자를 찾는 채용 공고를 게시하려면 회사 정보를 업데이트해야 합니다.'}
       </p>
       <div className="update-info-buttons">
         <Button type="primary" shape="round" onClick={handleConfirm}>

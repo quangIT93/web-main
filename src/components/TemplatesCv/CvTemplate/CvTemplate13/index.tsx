@@ -75,19 +75,19 @@ const CvTemplate13: React.FC<CvTemplate> = (props) => {
       marginLeft: '-30',
       paddingRight: '20',
       borderRight: `1px solid ${color === 1
-          ? '#377a40'
-          : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000'
+        ? '#377a40'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
         }`,
     },
     rightColumn: {
       flexDirection: 'column',
-      width: '45%',
+      width: '35%',
       // backgroundColor: '#f4f4f4',
       // paddingTop: '1.094cm',
       // marginTop: '1cm',

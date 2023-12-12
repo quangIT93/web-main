@@ -32,8 +32,8 @@ const Box: React.FC<{
               ItemValue.id === 3
                 ? styles.col_right__topValue3
                 : ItemValue.id === 2
-                ? styles.col_right__topValue2
-                : styles.col_right__topValue1
+                  ? styles.col_right__topValue2
+                  : styles.col_right__topValue1
             }
           >
             {ItemValue ? ItemValue?.total : 0}
@@ -63,35 +63,35 @@ const ItemsChart: React.FC<{ dataLog: DataLog | undefined }> = (data) => {
     id: number;
     total: number | undefined;
   }[] = [
-    {
-      id: 1,
-      title: 'Việc làm đã ứng tuyển việc làm',
-      icon: <BagChart />,
-      total: dataLog?.applyLogs.total,
-    },
-    {
-      id: 2,
-      title: 'Việc làm đã xem qua',
-      icon: <EyeChart />,
-      total: dataLog?.viewPostLogs.total,
-    },
-    {
-      id: 3,
-      title: 'Việc làm đã tìm kiếm',
-      icon: <SearchedChart />,
-      total: dataLog?.searchLogs.total,
-    },
-  ];
+      {
+        id: 1,
+        title: 'Việc làm đã ứng tuyển',
+        icon: <BagChart />,
+        total: dataLog?.applyLogs.total,
+      },
+      {
+        id: 2,
+        title: 'Việc làm đã xem qua',
+        icon: <EyeChart />,
+        total: dataLog?.viewPostLogs.total,
+      },
+      {
+        id: 3,
+        title: 'Việc làm đã tìm kiếm',
+        icon: <SearchedChart />,
+        total: dataLog?.searchLogs.total,
+      },
+    ];
 
   return (
     <Row className={styles.row} align="top">
       {dataLog
         ? ItemValue.map((value, index) => {
-            return <Box key={index} ItemValue={value} />;
-          })
+          return <Box key={index} ItemValue={value} />;
+        })
         : elements.map((value, index: number) => (
-            <CustomSkeleton key={index} />
-          ))}
+          <CustomSkeleton key={index} />
+        ))}
     </Row>
   );
 };

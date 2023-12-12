@@ -17,53 +17,27 @@ const Experience: React.FC<ICvHeader> = (props) => {
     },
     divTitle: {
       marginRight: '20pt',
-      width: '280pt',
+      width: '250pt',
+      marginLeft: '45.839pt',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      gap: '5pt',
     },
     title: {
-      marginLeft: '45.839pt',
-      padding: '9.209pt 0',
+      // padding: '9.209pt 0',
       fontSize: '16pt',
-      color:
-        color === 1
-          ? '#377a40'
-          : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000',
+      color: '#000000',
       fontFamily: 'Fahkwang Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
-      // backgroundColor: '#8dc5ff',
-
-      width: '100%',
-    },
-    lineTitle: {
-      position: 'absolute',
-      backgroundColor:
-        color === 1
-          ? '#c5dff8'
-          : color === 2
-            ? '#5DADE2'
-            : color === 3
-              ? '#FCF3CF'
-              : color === 4
-                ? '#D5F5E3'
-                : '#FADBD8',
-      height: '10.977pt',
-      width: '160.595pt',
-      left: '40',
-      top: '18',
-      zIndex: '1',
     },
     divInfo: {
       marginLeft: '45.839pt',
       marginTop: '10.17pt',
       display: 'flex',
       flexDirection: 'row',
-      gap: 10,
+      gap: '10pt',
     },
     leftInfo: {
       width: '25%',
@@ -79,32 +53,14 @@ const Experience: React.FC<ICvHeader> = (props) => {
     },
     textLeft: {
       fontSize: '11pt',
-      color:
-        color === 1
-          ? '#252525'
-          : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000',
+      color: '#000000',
       fontFamily: 'Fahkwang Bold',
       wordwrap: 'break-word',
       // textAlign: 'justify',
     },
     textTitleRight: {
       fontSize: '11pt',
-      color:
-        color === 1
-          ? '#252525'
-          : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000',
+      color: '#000000',
       fontFamily: 'Fahkwang Bold',
     },
     divTextTitleRight: {
@@ -114,22 +70,37 @@ const Experience: React.FC<ICvHeader> = (props) => {
       display: 'flex',
       flexDirection: 'column',
       gap: '4.028pt',
-      // maxWidth: '180pt',
+      width: '100%',
     },
     textRight: {
       fontSize: '9pt',
       // wordwrap: 'break-all',
+      color: '#252525',
       textAlign: 'justify',
       lineHeight: '1.2',
       fontFamily: 'Fahkwang Medium',
     },
+    square: {
+      width: '5px',
+      height: '25px',
+      backgroundColor: color === 1
+        ? '#ffcf00'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
+    }
   });
 
   return (
     <View style={styles.container}>
       <View>
         <View style={styles.divTitle}>
-          <Text style={styles.title}>Experiences</Text>
+          <View style={styles.square} />
+          <Text style={styles.title}>EXPERIENCES</Text>
         </View>
 
         {profileMore?.profilesExperiences?.map((Experience: any) => (

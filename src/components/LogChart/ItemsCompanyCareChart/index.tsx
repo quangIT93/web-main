@@ -39,7 +39,7 @@ const ItemsCompanyCareChart = () => {
           </div>
           <div className={styles.col_right}>
             <div className={styles.col_right__top}>
-              <span className={styles.col_right__topValue2}>15</span>
+              <span className={styles.col_right__topValue1}>15</span>
               <div className={styles.border_button__right}>
                 <RightChart />
               </div>
@@ -75,7 +75,7 @@ const ItemsCompanyCareChart = () => {
           </div>
           <div className={styles.col_right}>
             <div className={styles.col_right__top}>
-              <span className={styles.col_right__topValue2}>15</span>
+              <span className={styles.col_right__topValue1}>15</span>
               <div className={styles.border_button__right}>
                 <RightChart />
               </div>

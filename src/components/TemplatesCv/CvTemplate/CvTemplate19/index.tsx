@@ -70,7 +70,7 @@ const CvTemplate19: React.FC<CvTemplate> = (props) => {
         leftColumn: {
             flexDirection: 'column',
             width: '65%',
-            paddingRight: 10,
+            paddingRight: 20,
             backgroundColor: 'transparent',
             borderRight: `1px solid ${color === 1
                 ? '#437901'

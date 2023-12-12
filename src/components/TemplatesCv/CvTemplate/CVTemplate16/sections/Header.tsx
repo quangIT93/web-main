@@ -22,7 +22,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       height: '269.934',
       marginTop: -30,
       marginBottom: '60.041pt',
-      marginRight: -30,
+      marginRight: 0,
       marginLeft: -30,
       display: 'flex',
       flexDirection: 'row',
@@ -40,29 +40,35 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     textName: {
       fontSize: '42pt',
-      color:
-        color === 1
-          ? '#437901'
-          : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000',
-      fontWeight: 'extrabold',
-      fontFamily: 'Petrona Bold',
+      color: '#000000',
+      fontFamily: 'OpenSans-Regular',
+    },
+    line: {
+      marginTop: '10pt',
+      height: '5px',
+      width: '250px',
+      borderRadius: '3px',
+      backgroundColor: color === 1
+        ? '#ffcf00'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
+      ,
     },
     textPosition: {
       fontSize: '18pt',
       letterSpacing: '4pt',
-      marginTop: '20pt',
-      color: '#FE6829',
-      fontFamily: 'Petrona Bold',
+      marginTop: '10pt',
+      color: '#000000',
+      fontFamily: 'OpenSans-Regular',
     },
     divImage: {
-      margin: '43.762pt 48.768pt 43pt 0',
-      backgroundColor: '#fff',
+      margin: '60pt 48.768pt 43pt 0',
+      backgroundColor: 'transparent',
       borderRadius: '50%',
       height: '205pt',
       minWidth: '205pt',
@@ -71,55 +77,45 @@ const Header: React.FC<ICvHeader> = (props) => {
       justifyContent: 'center',
       position: 'relative',
     },
+    borderImage: {
+      backgroundColor: 'transparent',
+      borderRadius: '50%',
+      height: '205pt',
+      minWidth: '205pt',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      border: '5px solid #FFFFFF',
+    },
     image: {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
       borderRadius: '50%',
     },
-    halfCircle: {
-      position: 'absolute',
-      bottom: '-15pt',
-      left: '-15pt',
-      width: '235pt',
-      height: '235pt',
-      border: '2pt solid #FFFFFF',
-      borderBottomColor: '#FE6829',
-      borderRightColor: '#FE6829',
-      borderTopColor: 'transparent',
-      borderLeftColor: 'transparent',
-      borderTopWidth: 0,
-      borderLeftWidth: 0,
-      borderRadius: '50%',
-      transform: 'rotate(100deg)',
-    },
     topRightView1: {
       position: 'absolute',
       width: '400px',
       height: '200px',
-      right: -170,
-      top: -50,
-      transform: 'rotate(30deg)',
-      backgroundColor: color === 1
-        ? '#437901'
-        : color === 2
-          ? '#0D99FF'
-          : color === 3
-            ? '#FBBC04'
-            : color === 4
-              ? '#5CB265'
-              : '#D80000',
-      borderRadius: '30px'
+      right: 32,
+      top: -59,
+      transform: 'rotate(-45deg)',
+      backgroundColor: '#FFFFFF',
+      borderRadius: '30px',
+      zIndex: '2',
     },
     topRightView2: {
       position: 'absolute',
-      width: '200px',
-      height: '80px',
-      right: -20,
-      top: 100,
-      transform: 'rotate(90deg)',
+      width: '400px',
+      height: '200px',
+      right: -210,
+      top: -20,
+      transform: 'rotate(-45deg)',
       backgroundColor: color === 1
-        ? '#437901'
+        ? '#ffcf00'
         : color === 2
           ? '#0D99FF'
           : color === 3
@@ -127,63 +123,101 @@ const Header: React.FC<ICvHeader> = (props) => {
             : color === 4
               ? '#5CB265'
               : '#D80000',
-      borderRadius: '40px',
+      borderRadius: '30px',
+      zIndex: '1'
     },
     topRightView3: {
       position: 'absolute',
-      width: '30px',
-      height: '30px',
-      right: 11,
-      top: 170,
-      transform: 'rotate(90deg)',
-      backgroundColor: '#FFFFFF',
-      borderRadius: '50%',
+      width: '80%',
+      height: '40px',
+      right: '10%',
+      top: 240,
+      backgroundColor: color === 1
+        ? '#ffcf00'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000',
+      // borderRadius: '50%',
+      zIndex: '2'
+    },
+    topRightView4: {
+      position: 'absolute',
+      width: '150px',
+      height: '70px',
+      right: 155,
+      top: 171,
+      backgroundColor: color === 1
+        ? '#ffcf00'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000',
+      zIndex: '3'
+    },
+    topRightView5: {
+      position: 'absolute',
+      width: '150px',
+      height: '40px',
+      left: -55,
+      top: 279,
+      backgroundColor: color === 1
+        ? '#ffcf00'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000',
+      transform: 'rotate(-45deg)',
+      borderRadius: '30px',
       zIndex: '1'
     },
+    topRightView6: {
+      position: 'absolute',
+      width: '150px',
+      height: '40px',
+      left: -40,
+      top: 319,
+      backgroundColor: '#FFFFFF',
+      transform: 'rotate(-45deg)',
+      borderRadius: '30px',
+      zIndex: '1',
+    },
+    topRightView7: {
+      position: 'absolute',
+      width: '40px',
+      height: '40px',
+      left: 33,
+      top: 280,
+      backgroundColor: color === 1
+        ? '#ffcf00'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000',
+      zIndex: '3'
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.topRightView1} />
-      <View style={styles.topRightView3} />
       <View style={styles.topRightView2} />
-      <Svg
-        style={{
-          position: 'absolute',
-          width: '500',
-          height: '100',
-          right: '-180',
-          top: '100',
-          transform: 'rotate(-45deg)',
-          zIndex: '2'
-        }}
-      >
-        <Polygon
-          points="250,0 500,500 160,200"
-          fill={
-            color === 1
-              ? '#437901'
-              : color === 2
-                ? '#0D99FF'
-                : color === 3
-                  ? '#FBBC04'
-                  : color === 4
-                    ? '#5CB265'
-                    : '#D80000'
-          }
-          stroke={
-            color === 1
-              ? '#437901'
-              : color === 2
-                ? '#0D99FF'
-                : color === 3
-                  ? '#FBBC04'
-                  : color === 4
-                    ? '#5CB265'
-                    : '#D80000'
-          }
-          strokeWidth={1}
-        />
-      </Svg>
+      <View style={styles.topRightView3} />
+      <View style={styles.topRightView4} />
+      <View style={styles.topRightView5} />
+      <View style={styles.topRightView6} />
+      <View style={styles.topRightView7} />
 
       <View style={styles.divInfo}>
         <View style={{ display: 'flex', justifyContent: 'center' }}>
@@ -202,6 +236,7 @@ const Header: React.FC<ICvHeader> = (props) => {
             </Text>
           </View>
         </View>
+        <View style={styles.line}></View>
         <View>
           <Text style={styles.textPosition}>{profile?.jobTypeName}</Text>
         </View>
@@ -213,8 +248,8 @@ const Header: React.FC<ICvHeader> = (props) => {
             // padding: '9.955pt',
             borderRadius: '50%',
             backgroundColor: '#ccc',
-            height: '205pt',
-            width: '205pt',
+            height: '185pt',
+            width: '185pt',
           }}
         >
           <Image
@@ -233,7 +268,7 @@ const Header: React.FC<ICvHeader> = (props) => {
             style={styles.image}
           />
         </View>
-        <View style={styles.halfCircle} />
+        <View style={styles.borderImage}></View>
       </View>
     </View>
   );
