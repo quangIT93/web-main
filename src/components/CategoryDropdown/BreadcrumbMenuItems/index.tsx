@@ -998,6 +998,37 @@ const BreadcrumbMenuItems: React.FC = () => {
         },
       ],
     },
+    {
+      location: '/chart',
+      menu: [
+        {
+          title:
+            languageRedux === 1
+              ? 'Trang chủ'
+              : languageRedux === 2
+                ? 'Home'
+                : languageRedux === 3 && '홈',
+          href: '/',
+        },
+        {
+          title:
+            languageRedux === 1
+              ? 'Trang cá nhân'
+              : languageRedux === 2
+                ? 'Profile'
+                : '개인 페이지',
+          href: '/profile',
+        },
+        {
+          title:
+            languageRedux === 1 ?
+              "Tổng quan hoạt động" :
+              languageRedux === 2 ?
+                "Activity overview" :
+                "활동 대시보드",
+        },
+      ],
+    },
   ];
 
   const menuItems = locations

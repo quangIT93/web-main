@@ -10,6 +10,8 @@ import {
 } from '#components/Icons';
 import { DataLog } from 'pages/LogChart/typeChart';
 import CustomSkeleton from '#components/CustomSkeleton';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const Box: React.FC<{
   ItemValue: {
@@ -52,11 +54,11 @@ const Box: React.FC<{
 
 const ItemsChart: React.FC<{ dataLog: DataLog | undefined }> = (data) => {
   const { dataLog } = data;
-
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const elements: React.ReactNode[] = Array.from({ length: 3 }, (_, index) => (
     <React.Fragment key={index} />
   ));
-
+  const profileV3 = useSelector((state: RootState) => state.dataProfileInformationV3.data)
   const ItemValue: {
     title: string;
     icon: JSX.Element;
@@ -65,19 +67,50 @@ const ItemsChart: React.FC<{ dataLog: DataLog | undefined }> = (data) => {
   }[] = [
       {
         id: 1,
-        title: 'Việc làm đã ứng tuyển',
+        title: profileV3.typeRoleData === 0 ?
+          languageRedux === 1 ?
+            "Việc làm đã ứng tuyển" :
+            languageRedux === 2 ?
+              "Applied job" :
+              "지원한 채용공고" :
+          languageRedux === 1 ?
+            "Ứng viên đã tuyển dụng" :
+            languageRedux === 2 ?
+              "Recruited candidates" :
+              "지원한 구직자",
         icon: <BagChart />,
         total: dataLog?.applyLogs.total,
       },
       {
         id: 2,
-        title: 'Việc làm đã xem qua',
+        title: profileV3.typeRoleData === 0 ?
+          languageRedux === 1 ?
+            "Việc làm đã xem qua" :
+            languageRedux === 2 ?
+              "Viewed job" :
+              "본 채용공고" :
+          languageRedux === 1 ?
+            "Ứng viên đã xem qua" :
+            languageRedux === 2 ?
+              "Viewed candidates" :
+              "본 구지자",
         icon: <EyeChart />,
         total: dataLog?.viewPostLogs.total,
       },
       {
         id: 3,
-        title: 'Việc làm đã tìm kiếm',
+        title: profileV3.typeRoleData === 0 ?
+          languageRedux === 1 ?
+            "Việc làm đã tìm kiếm" :
+            languageRedux === 2 ?
+              "Searched job" :
+              "검색한 채용공고"
+          :
+          languageRedux === 1 ?
+            "Ứng viên đã lưu lại" :
+            languageRedux === 2 ?
+              "Saved candidates" :
+              "저장한 구직자",
         icon: <SearchedChart />,
         total: dataLog?.searchLogs.total,
       },
