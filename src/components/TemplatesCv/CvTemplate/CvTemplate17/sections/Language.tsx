@@ -30,7 +30,16 @@ const Language: React.FC<ICvLanguage> = (props) => {
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
-      color: '#000',
+      color:
+        color === 1
+          ? '#000000'
+          : color === 2
+          ? '#ffffff'
+          : color === 3
+          ? '#000000'
+          : color === 4
+          ? '#ffffff'
+          : '#ffffff',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
@@ -65,7 +74,7 @@ const Language: React.FC<ICvLanguage> = (props) => {
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#e5f6fe'
+          ? '#F8DE72'
           : color === 2
           ? '#D6EAF8'
           : color === 3
@@ -90,7 +99,7 @@ const Language: React.FC<ICvLanguage> = (props) => {
           ? '#5CB265'
           : '#D80000',
       left: '15pt',
-      top: '5pt',
+      top: '10pt',
     },
   });
   return (

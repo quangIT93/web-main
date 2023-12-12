@@ -16,14 +16,6 @@ import {
 import Petrona from '../Fonts/Petrona-Bold.ttf';
 import Fahkwang from '../Fonts/Fahkwang-medium.ttf';
 import AbhayaLibreExtraBold from '../Fonts/AbhayaLibreExtraBold.ttf';
-import MontserratRegular from '../Fonts/MontserratRegular.ttf';
-import MontserratBold from '../Fonts/MontserratBold.ttf';
-import Archivo from '../Fonts/Archivo_Condensed-Regular.ttf';
-import OpenSansBold from '../Fonts/OpenSans-Bold.ttf';
-import OpenSansRegular from '../Fonts/OpenSans-Regular.ttf';
-import OpenSansSemiBold from '../Fonts/OpenSans-SemiBold.ttf';
-import MontserratSemiBold from '../Fonts/Montserrat-SemiBold.ttf';
-import MontserratSemiBoldItalic from '../Fonts/Montserrat-SemiBoldItalic.ttf';
 
 import { Provider, useSelector } from 'react-redux';
 import { RootState, store } from 'store';
@@ -47,7 +39,7 @@ interface CvTemplate {
   profile: any;
   profileMore: any;
 }
-const CvTemplate9: React.FC<CvTemplate> = (props) => {
+const CvTemplate17: React.FC<CvTemplate> = (props) => {
   const { color, fontSize, profile, profileMore } = props;
   const styles = StyleSheet.create({
     page: {
@@ -71,7 +63,16 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       flexDirection: 'column',
       width: '65%',
       // paddingRight: 10,
-      backgroundColor: '#f4f4f4',
+      backgroundColor:
+        color === 1
+          ? '#f4f4f4'
+          : color === 2
+          ? '#E9F5FE'
+          : color === 3
+          ? '#FDF9E7'
+          : color === 4
+          ? '#F1FDF2'
+          : '#FDE9E9',
       // borderRight: `1px solid ${
       //   color === 1
       //     ? '#cee8ff'
@@ -96,7 +97,16 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       // paddingTop: '1.094cm',
       // marginTop: '1cm',
       // paddingLeft: '24.809pt',
-      backgroundColor: '#f4f4f4',
+      backgroundColor:
+        color === 1
+          ? '#f4f4f4'
+          : color === 2
+          ? '#E9F5FE'
+          : color === 3
+          ? '#FDF9E7'
+          : color === 4
+          ? '#F1FDF2'
+          : '#FDE9E9',
       gap: '35pt',
       marginRight: -30,
     },
@@ -311,4 +321,4 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
   );
 };
 
-export default memo(CvTemplate9);
+export default memo(CvTemplate17);

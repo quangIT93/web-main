@@ -30,7 +30,16 @@ const Award: React.FC<ICvAward> = (props) => {
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
-      color: '#000',
+      color:
+        color === 1
+          ? '#000000'
+          : color === 2
+          ? '#ffffff'
+          : color === 3
+          ? '#000000'
+          : color === 4
+          ? '#ffffff'
+          : '#ffffff',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',

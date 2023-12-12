@@ -91,6 +91,7 @@ const Header: React.FC<ICvHeader> = (props) => {
           ? '#5CB265'
           : '#D80000',
       fontFamily: 'Montserrat SemiBold',
+      maxWidth: '310pt',
     },
     divImage: {
       position: 'absolute',
