@@ -284,7 +284,7 @@ const HistoryPost = () => {
           : languageRedux === 3 && '지원자 리스트',
       childs: [
         languageRedux === 1
-          ? 'Ứng viên đã lưu lại'
+          ? 'Ứng viên đã lưu'
           : languageRedux === 2
           ? 'Saved candidates'
           : languageRedux === 3 && '저장한 구직자.',
@@ -331,7 +331,7 @@ const HistoryPost = () => {
     //       ? 'Recruited candidates'
     //       : languageRedux === 3 && '지원한 구직자.',
     //     languageRedux === 1
-    //       ? 'Ứng viên đã xem qua'
+    //       ? 'Ứng viên đã xem'
     //       : languageRedux === 2
     //       ? 'Viewed candidates'
     //       : languageRedux === 3 && '본 구지자.',
@@ -348,7 +348,7 @@ const HistoryPost = () => {
     //       : languageRedux === 3 && '귀하의 활동',
     //   childs: [
     //     languageRedux === 1
-    //       ? 'Việc làm đã xem qua'
+    //       ? 'Việc làm đã xem'
     //       : languageRedux === 2
     //       ? 'Viewed job'
     //       : languageRedux === 3 && '본 채용공고.',

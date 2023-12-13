@@ -137,12 +137,12 @@ const Chartjs: React.FC<{
           label:
             profileV3.typeRoleData === 0
               ? languageRedux === 1
-                ? 'Việc làm đã xem qua'
+                ? 'Việc làm đã xem'
                 : languageRedux === 2
                 ? 'Viewed job'
                 : '본 채용공고'
               : languageRedux === 1
-              ? 'Ứng viên đã xem qua'
+              ? 'Ứng viên đã xem'
               : languageRedux === 2
               ? 'Viewed candidates'
               : '본 구지자',
@@ -172,13 +172,13 @@ const Chartjs: React.FC<{
                 ? 'Number of companies that viewed the profile'
                 : '내 이력서를 본 회사 조회 수'
               : languageRedux === 1
-              ? 'Ứng viên đã lưu lại'
+              ? 'Ứng viên đã lưu'
               : languageRedux === 2
               ? 'Saved candidates'
               : '저장한 구직자',
           data:
             dataLog.type === 'Normal' && dataLog
-              ? dataLog.viewProfileLogs.activities.map(
+              ? dataLog.savePostLogs.activities.map(
                   (applyLog: any) => applyLog.count,
                 )
               : dataLog.type === 'Recuiter' && dataLog

@@ -13,7 +13,8 @@ export interface DataLog {
   type: 'Normal';
   viewPostLogs: LogData;
   applyLogs: LogData;
-  viewProfileLogs: LogData;
+  savePostLogs: LogData;
+  viewProfileLogs: number;
   searchLogs: number;
   saveYourProfileLogs: number;
   saveCommunityLogs: number;

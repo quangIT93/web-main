@@ -22,7 +22,6 @@
                 margin-bottom: 20px;
                 
             }
-
             .row {
                 @include breakpoint(largeTablet){
                     justify-content: space-evenly;

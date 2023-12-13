@@ -148,13 +148,13 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = () => {
                 : ' > 지원한 구직자.'
               : searchParams.get('c') === '6-1'
               ? languageRedux === 1
-                ? ' > Ứng viên đã xem qua.'
+                ? ' > Ứng viên đã xem.'
                 : languageRedux === 2
                 ? ' > Viewed candidates'
                 : ' > 본 구지자.'
               : searchParams.get('c') === '6-2'
               ? languageRedux === 1
-                ? ' > Ứng viên đã lưu lại.'
+                ? ' > Ứng viên đã lưu.'
                 : languageRedux === 2
                 ? ' > Saved candidates'
                 : ' > 저장한 구직자.'
