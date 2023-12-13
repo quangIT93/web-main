@@ -21,7 +21,7 @@ const NameUser: React.FC<ICvHeader> = (props) => {
             // width: '100%',
             height: '269.934',
             marginTop: 20,
-            marginBottom: '15.362pt',
+            // marginBottom: '15.362pt',
             marginLeft: -30,
             display: 'flex',
             flexDirection: 'row',
