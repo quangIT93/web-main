@@ -189,7 +189,6 @@ const Header: React.FC<ICvHeader> = (props) => {
         <View style={{ display: 'flex', justifyContent: 'center' }}>
           <View>
             <Text style={styles.textName}>
-              {' '}
               {profile?.name?.split(' ').length > 2
                 ? profile?.name?.split(' ').slice(0, -2).join(' ')
                 : profile?.name?.split(' ').slice(0, -1).join(' ')}
@@ -197,7 +196,6 @@ const Header: React.FC<ICvHeader> = (props) => {
           </View>
           <View>
             <Text style={styles.textName}>
-              {' '}
               {profile?.name?.split(' ').length > 2
                 ? profile?.name?.split(' ').slice(-2).join(' ')
                 : profile?.name?.split(' ').slice(-1).join(' ')}

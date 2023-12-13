@@ -72,7 +72,9 @@ const Comunity = () => {
   const languageRedux = useSelector((state: RootState) => {
     return state.changeLaguage.language;
   });
-  const dataProfile = useSelector((state: RootState) => state.profile.profile);
+  const dataProfile = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const [detail, setDetail] = React.useState<any>();
   const [searchParams, setSearchParams] = useSearchParams();
   const POST_COMMUNITY_ID = searchParams.get('post-community');
@@ -430,12 +432,17 @@ const Comunity = () => {
           </div>
           <div className="comunityDetail-wrap_content">
             <div className="comunityDetail-content">
-              <div dangerouslySetInnerHTML={{ __html: detail?.content }}></div>
-              {/* <TextArea
-                value={detail?.content}
-                autoSize
-                // showCount
-              /> */}
+              {detail?.type === 0 ? (
+                <div
+                  dangerouslySetInnerHTML={{ __html: detail?.content }}
+                ></div>
+              ) : (
+                <TextArea
+                  value={detail?.content}
+                  autoSize
+                  // showCount
+                />
+              )}
             </div>
           </div>
           {/* <ImageList
@@ -584,7 +591,7 @@ const Comunity = () => {
               /> */}
               <Avatar
                 size={50}
-                src={dataProfile?.avatar}
+                src={dataProfile?.avatarPath}
                 icon={<UserOutlined />}
               />
               {/* <textarea name="Text" rows={5}></textarea> */}
@@ -676,12 +683,12 @@ const Comunity = () => {
                             </div>
                           </div>
                           <div className="comunityDetail-comment_bottom">
-                            <TextArea
+                            {/* <TextArea
                               value={cmtData?.content}
                               autoSize
                               // showCount
-                            />
-                            {/* <p>{cmtData?.content}</p> */}
+                            /> */}
+                            <p>{cmtData?.content}</p>
                           </div>
                         </div>
                       </div>

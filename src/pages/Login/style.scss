@@ -1,0 +1,11 @@
+@media only screen and (max-width: 600px) {
+    .chart-legend {
+      text-align: center; /* Căn giữa các hộp màu */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .chart-legend li {
+      flex: 0 0 50%; /* Hiển thị 2 hộp màu trên mỗi dòng */
+    }
+  }

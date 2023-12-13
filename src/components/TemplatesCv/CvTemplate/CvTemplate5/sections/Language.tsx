@@ -29,7 +29,7 @@ const Languages: React.FC<ICvEducation> = (props) => {
     language: {
       display: 'flex',
       flexDirection: 'column',
-      marginBottom: '15.263pt',
+      marginBottom: 5,
       marginLeft: '9.141pt',
 
       // border: '1px solid red'
@@ -37,12 +37,12 @@ const Languages: React.FC<ICvEducation> = (props) => {
     top: {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+      justifyContent: 'center',
       // border: '1px solid red'
       marginBottom: '8.17pt',
       width: '100%',
-      gap: '5mm',
+      gap: '5px',
     },
     bot: {
       display: 'flex',
@@ -61,12 +61,12 @@ const Languages: React.FC<ICvEducation> = (props) => {
         color === 1
           ? '#112D4E'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     name: {
       fontFamily: 'Montserrat Regular',
@@ -95,12 +95,12 @@ const Languages: React.FC<ICvEducation> = (props) => {
         color === 1
           ? '#112D4E'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     borderBot: {
       width: '159.407pt',
@@ -109,12 +109,12 @@ const Languages: React.FC<ICvEducation> = (props) => {
         color === 1
           ? '#112D4E'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       marginTop: '6.745pt',
       marginBottom: '0.476cm',
     },
@@ -131,9 +131,7 @@ const Languages: React.FC<ICvEducation> = (props) => {
               <View style={styles.top}>
                 <Text style={styles.name}>
                   {item?.languageName}
-                  {/* {' - '} */}
                 </Text>
-                {'-'}
                 <Text style={styles.detail}>{item?.dataLevel?.data}</Text>
               </View>
               {/* <View style={styles.bot}>

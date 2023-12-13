@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 // import component UI
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -8,6 +8,9 @@ import { RootState } from '../../../store/reducer';
 import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
 import languageApi from 'api/languageApi';
+import { FillDataPost } from '#components/Icons';
+import ModalFillDescriptTemplate from '#components/Post/ModalFillDescriptTemplate';
+import ModalPreviewDescriptTemplate from '#components/Post/ModalPreviewDescriptTemplate';
 
 const styleLabel = {
   fontWeight: 700,
@@ -16,7 +19,7 @@ const styleLabel = {
 };
 
 interface IEditDescripeCompany {
-  setDataCompany: any;
+  setDataCompany: React.Dispatch<React.SetStateAction<any>>;
   dataCompany: any;
   is_profile: boolean;
   setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
@@ -56,7 +59,11 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
   // React.useEffect(() => {
   //   getlanguageApi();
   // }, [languageRedux]);
-
+  const profileCompanyV3 = useSelector(
+    (state: RootState) => state.dataProfileCompanyV3.data,
+  );
+  const [openModalFillDescriptTemplate, setOpenModalFillDescriptTemplate] = useState<boolean>(false);
+  const [openModalPreviewDescriptTemplate, setOpenModalPreviewDescriptTemplate] = useState<boolean>(false);
   const handleEditCompanyDes = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -68,23 +75,29 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
     }));
     setIsValid(false);
   };
-
   return (
     <div className="edit-des-company-container modal-person editCompany">
       <div className="edit-des-company">
-        <Typography
-          sx={styleLabel}
-          variant="body1"
-          component="label"
-          htmlFor="editCompany"
-        >
-          {languageRedux === 1
-            ? 'Mô tả công ty'
-            : languageRedux === 2
-              ? "Company's description"
-              : '회사소개'}{' '}
-          <span style={{ color: 'red' }}>*</span>
-        </Typography>
+        <div className="description-company-title">
+          <Typography
+            sx={styleLabel}
+            variant="body1"
+            component="label"
+            htmlFor="editCompany"
+          >
+            {languageRedux === 1
+              ? 'Mô tả công ty'
+              : languageRedux === 2
+                ? "Company's description"
+                : '회사소개'}{' '}
+            <span style={{ color: 'red' }}>*</span>
+          </Typography>
+          {/* <div className='description_template' onClick={
+            () => setOpenModalFillDescriptTemplate(true)
+          }>
+            <FillDataPost />
+          </div> */}
+        </div>
         <TextField
           disabled={is_profile ? true : false}
           type="text"
@@ -102,7 +115,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
                 ? "Company's description"
                 : '회사소개'
           }
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.description?.length === 0 ? (
@@ -120,7 +133,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
                 : languageRedux === 2
                   ? 'Additional information cannot exceed 1000 characters'
                   : languageRedux === 3 &&
-                    '추가 정보는 1000자를 초과할 수 없습니다.'}
+                  '추가 정보는 1000자를 초과할 수 없습니다.'}
             </span>
           ) : (
             <></>
@@ -128,6 +141,18 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           <span className="number-text">{`${dataCompany?.description?.length}/1000`}</span>
         </div>
       </div>
+      <ModalFillDescriptTemplate
+        openModalFillDescriptTemplate={openModalFillDescriptTemplate}
+        setOpenModalFillDescriptTemplate={setOpenModalFillDescriptTemplate}
+        setOpenModalPreviewDescriptTemplate={setOpenModalPreviewDescriptTemplate}
+        setDescription={setDataCompany}
+        oldDescription={profileCompanyV3.description}
+        typeModal={2}
+      />
+      <ModalPreviewDescriptTemplate
+        openModalPreviewDescriptTemplate={openModalPreviewDescriptTemplate}
+        setOpenModalPreviewDescriptTemplate={setOpenModalPreviewDescriptTemplate}
+      />
     </div>
   );
 };

@@ -17,35 +17,39 @@ const Education: React.FC<ICvHeader> = (props) => {
     divTitle: {
       marginRight: '20pt',
       width: '280pt',
+      marginLeft: '45.839pt',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
+      backgroundColor:
+        color === 1
+          ? '#8dc5fe'
+          : color === 2
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     title: {
-      marginLeft: '45.839pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       color:
         color === 1
           ? '#000000'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#ffffff'
-          : color === 4
-          ? '#000000'
-          : '#ffffff',
+            ? '#000000'
+            : color === 3
+              ? '#ffffff'
+              : color === 4
+                ? '#000000'
+                : '#ffffff',
       fontFamily: 'Fahkwang Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
       // backgroundColor: '#8dc5ff',
-      backgroundColor:
-        color === 1
-          ? '#8dc5fe'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
 
       width: '100%',
     },
@@ -57,13 +61,13 @@ const Education: React.FC<ICvHeader> = (props) => {
       gap: '10pt',
     },
     leftInfo: {
-      width: '40%',
+      width: '25%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
     },
     rightInfo: {
-      width: '60%',
+      width: '75%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
@@ -72,14 +76,14 @@ const Education: React.FC<ICvHeader> = (props) => {
       fontSize: '11pt',
       color:
         color === 1
-          ? '#252525'
+          ? '#004080'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Fahkwang Bold',
       wordwrap: 'break-word',
       textAlign: 'justify',
@@ -90,12 +94,12 @@ const Education: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Fahkwang Bold',
     },
     divTextTitleRight: {
@@ -105,7 +109,7 @@ const Education: React.FC<ICvHeader> = (props) => {
       display: 'flex',
       flexDirection: 'column',
       gap: '4.028pt',
-      maxWidth: '180pt',
+      // maxWidth: '180pt',
     },
     textRight: {
       fontSize: '9pt',
@@ -114,12 +118,26 @@ const Education: React.FC<ICvHeader> = (props) => {
       lineHeight: '1.2',
       fontFamily: 'Fahkwang Medium',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#000000'
+        : color === 2
+          ? '#000000'
+          : color === 3
+            ? '#ffffff'
+            : color === 4
+              ? '#000000'
+              : '#ffffff'
+    }
   });
 
   return (
     <View style={styles.container}>
       <View>
         <View style={styles.divTitle}>
+          <View style={styles.square} />
           <Text style={styles.title}>Educations</Text>
         </View>
 

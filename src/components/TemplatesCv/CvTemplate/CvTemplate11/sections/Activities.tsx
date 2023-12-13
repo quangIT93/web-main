@@ -22,36 +22,38 @@ const Activities: React.FC<ICvActivities> = (props) => {
     divTitle: {
       marginRight: '20pt',
       width: '280pt',
+      marginLeft: '45.839pt',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
+      backgroundColor:
+        color === 1
+          ? '#8dc5fe'
+          : color === 2
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     title: {
-      marginLeft: '45.839pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       color:
         color === 1
           ? '#000000'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#ffffff'
-          : color === 4
-          ? '#000000'
-          : '#ffffff',
+            ? '#000000'
+            : color === 3
+              ? '#ffffff'
+              : color === 4
+                ? '#000000'
+                : '#ffffff',
       fontFamily: 'Fahkwang Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
-      // backgroundColor: '#8dc5ff',
-      backgroundColor:
-        color === 1
-          ? '#8dc5fe'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
-
       width: '100%',
     },
     divInfo: {
@@ -62,13 +64,13 @@ const Activities: React.FC<ICvActivities> = (props) => {
       gap: '10pt',
     },
     leftInfo: {
-      width: '40%',
+      width: '25%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
     },
     rightInfo: {
-      width: '60%',
+      width: '75%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
@@ -77,14 +79,14 @@ const Activities: React.FC<ICvActivities> = (props) => {
       fontSize: '11pt',
       color:
         color === 1
-          ? '#252525'
+          ? '#004080'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Fahkwang Bold',
       wordwrap: 'break-word',
       textAlign: 'justify',
@@ -95,12 +97,12 @@ const Activities: React.FC<ICvActivities> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Fahkwang Bold',
     },
     divTextTitleRight: {
@@ -110,7 +112,7 @@ const Activities: React.FC<ICvActivities> = (props) => {
       display: 'flex',
       flexDirection: 'column',
       gap: '4.028pt',
-      maxWidth: '180pt',
+      // maxWidth: '180pt',
     },
     textRight: {
       fontSize: '9pt',
@@ -119,10 +121,24 @@ const Activities: React.FC<ICvActivities> = (props) => {
       lineHeight: '1.2',
       fontFamily: 'Fahkwang Medium',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#000000'
+        : color === 2
+          ? '#000000'
+          : color === 3
+            ? '#ffffff'
+            : color === 4
+              ? '#000000'
+              : '#ffffff'
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Activities</Text>
       </View>
       {profileMore?.profileActivities?.map((activities: any) => (

@@ -10,11 +10,17 @@ const Reference: React.FC<ICvReference> = (props) => {
   const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
-      marginRight: -25,
+      // marginRight: -25,
     },
-    divTitle: {},
+    divTitle: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
+      // marginLeft: '20pt',
+      borderTop: '1px solid #000000',
+    },
     title: {
-      marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
@@ -33,19 +39,16 @@ const Reference: React.FC<ICvReference> = (props) => {
       fontWeight: 'extrabold',
     },
     divDes: {
-      marginLeft: '20pt',
       marginTop: '9.338pt',
-      width: '137pt',
+      width: '100%',
     },
     divName: {
-      marginLeft: '20pt',
       marginTop: '9.338pt',
-      width: '137pt',
+      width: '100%',
     },
     divPhone: {
-      marginLeft: '20pt',
       marginTop: '9.338pt',
-      width: '137pt',
+      width: '100%',
     },
     textDes: {
       fontSize: '9pt',
@@ -59,10 +62,24 @@ const Reference: React.FC<ICvReference> = (props) => {
       flexDirection: 'column',
       gap: '12pt',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#f078a4'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000',
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Reference</Text>
       </View>
       <View style={styles.divWrapItem}>
@@ -79,7 +96,7 @@ const Reference: React.FC<ICvReference> = (props) => {
             </View>
           </View>
         ))}
-        <View
+        {/* <View
           style={{
             height: '12pt',
             width: '60pt',
@@ -96,7 +113,7 @@ const Reference: React.FC<ICvReference> = (props) => {
                       ? '#D5F5E3'
                       : '#FADBD8',
           }}
-        ></View>
+        ></View> */}
       </View>
     </View>
   );

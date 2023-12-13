@@ -47,14 +47,14 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontSize: '42pt',
       color:
         color === 1
-          ? '#004080'
+          ? '#4A55A2'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontWeight: 'extrabold',
       fontFamily: 'Montserrat SemiBold',
     },
@@ -64,12 +64,12 @@ const Header: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#c5dff8'
           : color === 2
-          ? '#5DADE2'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
+            ? '#D6EAF8'
+            : color === 3
+              ? '#FCF3CF'
+              : color === 4
+                ? '#D5F5E3'
+                : '#FADBD8',
       display: 'flex',
       justifyContent: 'center',
       marginLeft: '-47.137pt',
@@ -82,15 +82,16 @@ const Header: React.FC<ICvHeader> = (props) => {
       // marginTop: '20pt',
       color:
         color === 1
-          ? '#004080'
+          ? '#4A55A2'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Montserrat SemiBold',
+      maxWidth: '310pt',
     },
     divImage: {
       position: 'absolute',
@@ -102,23 +103,54 @@ const Header: React.FC<ICvHeader> = (props) => {
       justifyContent: 'center',
       right: '47.936pt',
       top: '47.936pt',
-      border: `2px solid ${
-        color === 1
-          ? '#8dc5fe'
-          : color === 2
+      border: `2px solid ${color === 1
+        ? '#4A55A2'
+        : color === 2
           ? '#0D99FF'
           : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000'
-      }`,
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
+        }`,
       padding: '11.844pt',
     },
     image: {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
+    },
+    line1: {
+      position: 'absolute',
+      left: 0,
+      top: 165,
+      width: '63.8%',
+      height: '1px',
+      backgroundColor: color === 1
+        ? '#4A55A2'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000',
+    },
+    line2: {
+      position: 'absolute',
+      right: 0,
+      top: 220,
+      width: '8.3%',
+      height: '1px',
+      backgroundColor: color === 1
+        ? '#4A55A2'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000',
     },
   });
   return (
@@ -243,15 +275,17 @@ const Header: React.FC<ICvHeader> = (props) => {
             color === 1
               ? '#c5dff8'
               : color === 2
-              ? '#5DADE2'
-              : color === 3
-              ? '#FCF3CF'
-              : color === 4
-              ? '#D5F5E3'
-              : '#FADBD8'
+                ? '#D6EAF8'
+                : color === 3
+                  ? '#FCF3CF'
+                  : color === 4
+                    ? '#D5F5E3'
+                    : '#FADBD8'
           }
         />
       </Svg>
+      <View style={styles.line1}></View>
+      <View style={styles.line2}></View>
 
       <View style={styles.divInfo}>
         <View style={{ display: 'flex', justifyContent: 'center' }}>

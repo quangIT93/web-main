@@ -69,19 +69,18 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
     leftColumn: {
       flexDirection: 'column',
       width: '65%',
-      // paddingRight: 10,
+      paddingRight: 20,
       backgroundColor: 'transparent',
-      borderRight: `1px solid ${
-        color === 1
-          ? '#8dc5fe'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000'
-      }`,
+      // borderRight: `1px solid ${color === 1
+      //     ? '#8dc5fe'
+      //     : color === 2
+      //       ? '#0D99FF'
+      //       : color === 3
+      //         ? '#FBBC04'
+      //         : color === 4
+      //           ? '#5CB265'
+      //           : '#D80000'
+      //   }`,
       gap: '20.495pt',
     },
     rightColumn: {
@@ -96,11 +95,21 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
     pageNumber: {
       position: 'absolute',
       fontSize: fontSize - 8,
-      bottom: 10,
+      bottom: 0,
       left: 0,
       right: 0,
       textAlign: 'center',
       color: 'grey',
+      height: 20,
+      backgroundColor: color === 1
+        ? '#c5dff8'
+        : color === 2
+          ? '#D6EAF8'
+          : color === 3
+            ? '#FCF3CF'
+            : color === 4
+              ? '#D5F5E3'
+              : '#FADBD8'
     },
     fixedBackroundLeft: {
       position: 'absolute',
@@ -122,11 +131,29 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
     hijob: {
       position: 'absolute',
       fontSize: fontSize - 12,
-      bottom: 10,
+      bottom: 5,
       // left: 0,
       right: 25,
       textAlign: 'center',
       color: '#000000',
+    },
+    lineBot: {
+      position: 'absolute',
+      bottom: 24,
+      left: 0,
+      right: 0,
+      textAlign: 'center',
+      color: 'grey',
+      height: 2,
+      backgroundColor: color === 1
+        ? '#4A55A2'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
     },
   });
   Font.register({
@@ -170,7 +197,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
       <View style={styles.container}>
         <View style={styles.leftColumn}>
           {profileMore?.profilesEducations &&
-          profileMore.profilesEducations?.length !== 0 ? (
+            profileMore.profilesEducations?.length !== 0 ? (
             <View>
               <Education
                 profile={profile}
@@ -184,7 +211,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profilesExperiences &&
-          profileMore.profilesExperiences?.length !== 0 ? (
+            profileMore.profilesExperiences?.length !== 0 ? (
             <View>
               <Experience
                 profile={profileMore}
@@ -198,7 +225,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profileActivities &&
-          profileMore.profileActivities?.length !== 0 ? (
+            profileMore.profileActivities?.length !== 0 ? (
             <View>
               <Activities
                 profile={profileMore}
@@ -221,7 +248,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
             />
           </View>
           {profileMore?.profilesLanguages &&
-          profileMore.profilesLanguages?.length !== 0 ? (
+            profileMore.profilesLanguages?.length !== 0 ? (
             <View>
               <Language
                 profile={profileMore}
@@ -234,7 +261,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profileHobbies &&
-          profileMore.profileHobbies?.length !== 0 ? (
+            profileMore.profileHobbies?.length !== 0 ? (
             <View>
               <Hobies
                 profile={profileMore}
@@ -247,7 +274,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profilesSkills &&
-          profileMore.profilesSkills?.length !== 0 ? (
+            profileMore.profilesSkills?.length !== 0 ? (
             <View>
               <Skill
                 profile={profileMore}
@@ -260,7 +287,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profilesReferences &&
-          profileMore.profilesReferences?.length !== 0 ? (
+            profileMore.profilesReferences?.length !== 0 ? (
             <View>
               <Reference
                 profile={profileMore}
@@ -274,7 +301,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profileAwards &&
-          profileMore.profileAwards?.length !== 0 ? (
+            profileMore.profileAwards?.length !== 0 ? (
             <View>
               <Award
                 profile={profileMore}
@@ -379,6 +406,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
         render={({ pageNumber, totalPages }) => `hijob.site`}
         fixed
       />
+      <View style={styles.lineBot} fixed></View>
     </Page>
   );
 

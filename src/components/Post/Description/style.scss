@@ -2,11 +2,22 @@
     .MuiInputBase-root {
         font-weight: 300;
     }
+
+    .description-post-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .description_template {
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+        }
+    }
 }
 
 .description-post.modal-person {
     .wrap-noti_input {
-        margin-top:4px
-        
+        margin-top: 4px
     }
 }

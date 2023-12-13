@@ -868,7 +868,7 @@ const NewJobs: React.FC = () => {
   React.useEffect(() => {
     getPostSearch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataProfile, search, languageRedux]);
+  }, [search, languageRedux]);
   // title
 
   // const [titleFirebase, setTitleFirebase] = React.useState<string>('');

@@ -60,7 +60,7 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
       width: '49%',
       paddingTop: '1.094cm',
       marginTop: '1cm',
-      paddingRight: '0.905cm',
+      paddingRight: '10pt',
       // '@media max-width: 400': {
       //     width: '100%',
       //     paddingRight: 0,
@@ -151,7 +151,7 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
           <Education color={color} profile={profileMore} fontSize={fontSize} />
           <Profile color={color} profile={profile} fontSize={fontSize} />
           {profile?.profilesLanguages &&
-          profile?.profilesLanguages?.length > 0 ? (
+            profile?.profilesLanguages?.length > 0 ? (
             <Languages
               color={color}
               profile={profileMore}
@@ -161,13 +161,13 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profilesSkills &&
-          profileMore?.profilesSkills?.length > 0 ? (
+            profileMore?.profilesSkills?.length > 0 ? (
             <Skills color={color} profile={profileMore} fontSize={fontSize} />
           ) : (
             <></>
           )}
           {profileMore?.profileAwards &&
-          profileMore?.profileAwards?.length > 0 ? (
+            profileMore?.profileAwards?.length > 0 ? (
             <Awards color={color} profile={profileMore} fontSize={fontSize} />
           ) : (
             <></>
@@ -177,7 +177,7 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
         <View style={styles.rightColumn}>
           <Experience color={color} profile={profileMore} fontSize={fontSize} />
           {profileMore?.profileActivities &&
-          profileMore?.profileActivities?.length > 0 ? (
+            profileMore?.profileActivities?.length > 0 ? (
             <Activities
               color={color}
               profile={profileMore}
@@ -192,7 +192,7 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profilesReferences &&
-          profileMore?.profilesReferences?.length > 0 ? (
+            profileMore?.profilesReferences?.length > 0 ? (
             <References
               color={color}
               profile={profileMore}

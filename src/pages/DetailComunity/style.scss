@@ -152,6 +152,7 @@
 
                     div {
                         word-break: break-word;
+                        white-space: pre-wrap;
                         // li {
                         //     margin-left: 16px;
                         // }
@@ -617,6 +618,7 @@
 
                                 p {
                                     word-break: break-word;
+                                    white-space: pre-wrap;
                                 }
                             }
                         }

@@ -51,7 +51,7 @@ const Skills: React.FC<ICvEducation> = (props) => {
     },
     right: {
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       // flexDirection: 'row',
       //   width: '100%',
       // border: '1px solid blue',
@@ -71,7 +71,7 @@ const Skills: React.FC<ICvEducation> = (props) => {
     school: {
       fontFamily: 'Montserrat Regular',
       fontSize: fontSize - 11,
-      textAlign: 'center',
+      textAlign: 'left',
       color: '#112D4E',
     },
     detail: {
@@ -79,7 +79,7 @@ const Skills: React.FC<ICvEducation> = (props) => {
       fontSize: fontSize - 15,
       // wordBreak: "break-word",
       // width: '100%',
-      textAlign: 'justify',
+      textAlign: 'left',
       color: '#112D4E',
       // border: '1px solid red'
     },
@@ -100,12 +100,12 @@ const Skills: React.FC<ICvEducation> = (props) => {
         color === 1
           ? '#112D4E'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     borderBot: {
       width: '159.407pt',
@@ -114,12 +114,12 @@ const Skills: React.FC<ICvEducation> = (props) => {
         color === 1
           ? '#112D4E'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       marginTop: '6.745pt',
       marginBottom: '0.476cm',
     },
@@ -137,9 +137,7 @@ const Skills: React.FC<ICvEducation> = (props) => {
                 <View style={styles.right}>
                   <Text style={styles.school}>
                     {education?.skillName}
-                    {/* {' -'} */}
                   </Text>
-                  {/* {'-'} */}
                   <Text style={styles.detail}>
                     {education?.dataLevel?.data}
                   </Text>

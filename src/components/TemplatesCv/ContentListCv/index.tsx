@@ -25,7 +25,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import apiCv from 'api/apiCv';
 
 import templatesCv from '../CvTemplate/ListTheme';
-import { template } from '@babel/core';
+// import { template } from '@babel/core';
 import profileApi from 'api/profileApi';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 // AnotherFile.js

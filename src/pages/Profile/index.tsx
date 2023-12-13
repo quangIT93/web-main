@@ -105,6 +105,7 @@ import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 import { color } from 'html2canvas/dist/types/css/types/color';
+import Overview from './components/Overview';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -628,6 +629,8 @@ const Profile: React.FC = () => {
                       : languageRedux === 3 && '업데이트하지 않음'}
                   </h2>
                   {/* <ChangeRoleButton /> */}
+                  <Overview />
+
                   {/* <div className="wrap-company">
                     <div className="wrap-company_info">
                       <h2

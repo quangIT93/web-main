@@ -115,7 +115,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
     },
     leftColumn: {
       flexDirection: 'column',
-      width: '30%',
+      width: '35%',
       // paddingRight: '0.905cm',
       borderRight: '0.5px solid #282828',
     },
@@ -129,7 +129,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
     },
     rightColumn: {
       flexDirection: 'column',
-      width: '70%',
+      width: '65%',
       // paddingTop: '1.094cm',
       // marginTop: '1cm',
       // paddingRight: '0.905cm',
@@ -209,7 +209,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
           <View style={styles.leftColumnContent}>
             <Profile color={color} profile={profile} fontSize={fontSize} />
             {profileMore?.profilesLanguages &&
-            profileMore?.profilesLanguages?.length > 0 ? (
+              profileMore?.profilesLanguages?.length > 0 ? (
               <Languages
                 color={color}
                 profile={profileMore}
@@ -220,7 +220,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
             )}
             <View style={styles.borderBot}></View>
             {profileMore?.profilesEducations &&
-            profileMore?.profilesEducations?.length !== 0 ? (
+              profileMore?.profilesEducations?.length !== 0 ? (
               <Education
                 color={color}
                 profile={profileMore}
@@ -231,7 +231,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
             )}
             <View style={styles.borderBot}></View>
             {profileMore?.profilesSkills &&
-            profileMore?.profilesSkills?.length > 0 ? (
+              profileMore?.profilesSkills?.length > 0 ? (
               <>
                 <Skills
                   color={color}
@@ -244,7 +244,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
               <></>
             )}
             {profileMore?.profileAwards &&
-            profileMore?.profileAwards?.length > 0 ? (
+              profileMore?.profileAwards?.length > 0 ? (
               <>
                 <Awards
                   color={color}
@@ -268,7 +268,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
             />
             <View style={styles.borderBot}></View>
             {profileMore?.profileActivities &&
-            profileMore?.profileActivities?.length > 0 ? (
+              profileMore?.profileActivities?.length > 0 ? (
               <>
                 <Activities
                   color={color}
@@ -281,7 +281,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
               <></>
             )}
             {profileMore?.profileHobbies &&
-            profileMore?.profileHobbies?.length !== 0 ? (
+              profileMore?.profileHobbies?.length !== 0 ? (
               <>
                 <Hobbies
                   color={color}
@@ -294,7 +294,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
               <></>
             )}
             {profileMore?.profilesReferences &&
-            profileMore?.profilesReferences?.length > 0 ? (
+              profileMore?.profilesReferences?.length > 0 ? (
               <>
                 <References
                   color={color}

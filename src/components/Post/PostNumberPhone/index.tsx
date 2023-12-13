@@ -133,7 +133,7 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
           <></>
         )}
         <span className="number-text">{`${phone ? phone.length : '0'
-          }/11`}</span>
+          }/10`}</span>
       </div>
       {/* <Input
         value={`${phone}d`}

@@ -80,17 +80,17 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
             languageRedux === 1
               ? 'Nhà tuyển dụng'
               : languageRedux === 2
-                ? 'Employer'
-                : languageRedux === 3
-                  ? '고용주'
-                  : 'Nhà tuyển dụng'
+              ? 'Employer'
+              : languageRedux === 3
+              ? '고용주'
+              : 'Nhà tuyển dụng'
           }
           data-off={
             languageRedux === 1
               ? 'Ứng viên'
               : languageRedux === 2
-                ? 'Candidate'
-                : languageRedux === 3 && '개인 사용자'
+              ? 'Candidate'
+              : languageRedux === 3 && '개인 사용자'
           }
           className="btn-color-mode-switch-inner"
         ></label>

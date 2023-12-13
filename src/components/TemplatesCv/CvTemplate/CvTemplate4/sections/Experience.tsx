@@ -25,24 +25,25 @@ const Experience: React.FC<ICvExperience> = (props) => {
       display: 'flex',
       flexDirection: 'row',
       marginBottom: '15.263pt',
+      gap: '10pt'
       // border: '1px solid red'
     },
     left: {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'flex-start',
+      // alignItems: 'flex-start',
       justifyContent: 'flex-start',
-      width: '40%',
+      width: '30%',
       // border: '1px solid red'
     },
     right: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-start',
-      width: '90%',
+      width: '70%',
       // marginLeft: '0.671cm',
       // marginBottom: 5,
-      marginLeft: '34.638pt',
+      // marginLeft: '34.638pt',
       // border: '1px solid red',
       position: 'relative',
     },
@@ -51,7 +52,7 @@ const Experience: React.FC<ICvExperience> = (props) => {
       fontSize: fontSize - 13,
       letterSpacing: '2px',
       marginBottom: '2px',
-      textAlign: 'justify',
+      textAlign: 'left',
     },
     school: {
       fontFamily: 'Montserrat Bold',
@@ -73,12 +74,12 @@ const Experience: React.FC<ICvExperience> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     detail: {
       fontFamily: 'Montserrat Regular',
@@ -106,12 +107,12 @@ const Experience: React.FC<ICvExperience> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
   });
 

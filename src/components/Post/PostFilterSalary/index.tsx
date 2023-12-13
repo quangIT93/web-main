@@ -166,7 +166,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             className="wrap-noti_input"
           // style={{ position: 'absolute', bottom: '-15px' }}
           >
-            {salaryMin === 0 ? (
+            {salaryType !== 6 && salaryMin === 0 ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập mức lương'
@@ -218,7 +218,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             className="wrap-noti_input"
           // style={{ position: 'absolute', bottom: '-15px' }}
           >
-            {salaryMin === 0 ? (
+            {salaryType !== 6 && salaryMin === 0 ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập mức lương'

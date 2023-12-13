@@ -1,9 +1,9 @@
-import MainLayout from 'layouts/MainLayout';
+import React, { lazy } from 'react';
 import RouteProps from '../routes';
-import { lazy } from 'react';
+import MainLayout from 'layouts/MainLayout';
 const LogChart = lazy(() => import('.'));
 const route: RouteProps = {
-  path: '/chart',
+  path: 'profile-chart',
   component: (
     <MainLayout>
       <LogChart />

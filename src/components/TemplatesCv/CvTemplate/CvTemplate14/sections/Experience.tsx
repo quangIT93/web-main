@@ -13,9 +13,15 @@ const Experience: React.FC<ICvHeader> = (props) => {
     container: {
       marginLeft: -25,
     },
-    divTitle: {},
-    title: {
+    divTitle: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
       marginLeft: '45.839pt',
+      borderTop: '1px solid #000000',
+    },
+    title: {
       padding: '9.209pt 0',
       fontSize: '16pt',
       color:
@@ -39,13 +45,13 @@ const Experience: React.FC<ICvHeader> = (props) => {
       flexDirection: 'row',
     },
     leftInfo: {
-      width: '40%',
+      width: '25%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
     },
     rightInfo: {
-      width: '60%',
+      width: '75%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
@@ -88,7 +94,7 @@ const Experience: React.FC<ICvHeader> = (props) => {
       display: 'flex',
       flexDirection: 'column',
       gap: '4.028pt',
-      maxWidth: '180pt',
+      // maxWidth: '180pt',
     },
     textRight: {
       fontSize: '9pt',
@@ -97,12 +103,26 @@ const Experience: React.FC<ICvHeader> = (props) => {
       lineHeight: '1.2',
       fontFamily: 'Petrona Bold',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#f078a4'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000',
+    }
   });
 
   return (
     <View style={styles.container}>
       <View>
         <View style={styles.divTitle}>
+          <View style={styles.square} />
           <Text style={styles.title}>Experience</Text>
         </View>
         {profile?.profilesExperiences?.map((Experience: any) => (

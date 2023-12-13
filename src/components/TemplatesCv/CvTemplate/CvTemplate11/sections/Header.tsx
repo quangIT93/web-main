@@ -77,23 +77,23 @@ const Header: React.FC<ICvHeader> = (props) => {
             color === 1
               ? '#8dc5fe'
               : color === 2
-              ? '#0D99FF'
-              : color === 3
-              ? '#FBBC04'
-              : color === 4
-              ? '#5CB265'
-              : '#D80000'
+                ? '#0D99FF'
+                : color === 3
+                  ? '#FBBC04'
+                  : color === 4
+                    ? '#5CB265'
+                    : '#D80000'
           }
           stroke={
             color === 1
               ? '#8dc5fe'
               : color === 2
-              ? '#0D99FF'
-              : color === 3
-              ? '#FBBC04'
-              : color === 4
-              ? '#5CB265'
-              : '#D80000'
+                ? '#0D99FF'
+                : color === 3
+                  ? '#FBBC04'
+                  : color === 4
+                    ? '#5CB265'
+                    : '#D80000'
           }
           strokeWidth={1}
         />
@@ -114,23 +114,23 @@ const Header: React.FC<ICvHeader> = (props) => {
             color === 1
               ? '#8dc5fe'
               : color === 2
-              ? '#0D99FF'
-              : color === 3
-              ? '#FBBC04'
-              : color === 4
-              ? '#5CB265'
-              : '#D80000'
+                ? '#0D99FF'
+                : color === 3
+                  ? '#FBBC04'
+                  : color === 4
+                    ? '#5CB265'
+                    : '#D80000'
           }
           stroke={
             color === 1
               ? '#8dc5fe'
               : color === 2
-              ? '#0D99FF'
-              : color === 3
-              ? '#FBBC04'
-              : color === 4
-              ? '#5CB265'
-              : '#D80000'
+                ? '#0D99FF'
+                : color === 3
+                  ? '#FBBC04'
+                  : color === 4
+                    ? '#5CB265'
+                    : '#D80000'
           }
           strokeWidth={1}
         />
@@ -151,23 +151,23 @@ const Header: React.FC<ICvHeader> = (props) => {
             color === 1
               ? '#e1f1ff'
               : color === 2
-              ? '#85C1E9'
-              : color === 3
-              ? '#F7DC6F'
-              : color === 4
-              ? '#ABEBC6'
-              : '#EC7063'
+                ? '#85C1E9'
+                : color === 3
+                  ? '#F7DC6F'
+                  : color === 4
+                    ? '#ABEBC6'
+                    : '#EC7063'
           }
           stroke={
             color === 1
               ? '#e1f1ff'
               : color === 2
-              ? '#85C1E9'
-              : color === 3
-              ? '#F7DC6F'
-              : color === 4
-              ? '#ABEBC6'
-              : '#EC7063'
+                ? '#85C1E9'
+                : color === 3
+                  ? '#F7DC6F'
+                  : color === 4
+                    ? '#ABEBC6'
+                    : '#EC7063'
           }
           strokeWidth={1}
         />
@@ -177,7 +177,6 @@ const Header: React.FC<ICvHeader> = (props) => {
         <View style={{ display: 'flex', justifyContent: 'center' }}>
           <View>
             <Text style={styles.textName}>
-              {' '}
               {profile?.name?.split(' ').length > 2
                 ? profile?.name?.split(' ').slice(0, -2).join(' ')
                 : profile?.name?.split(' ').slice(0, -1).join(' ')}
@@ -185,7 +184,6 @@ const Header: React.FC<ICvHeader> = (props) => {
           </View>
           <View>
             <Text style={styles.textName}>
-              {' '}
               {profile?.name?.split(' ').length > 2
                 ? profile?.name?.split(' ').slice(-2).join(' ')
                 : profile?.name?.split(' ').slice(-1).join(' ')}

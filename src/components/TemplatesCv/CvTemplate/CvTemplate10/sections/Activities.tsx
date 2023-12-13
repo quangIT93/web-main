@@ -16,34 +16,38 @@ const Activities: React.FC<ICvActivities> = (props) => {
   const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
-      marginLeft: -25,
+      marginLeft: -30,
     },
     divTitle: {
       backgroundColor:
         color === 1
           ? '#e5f6fe'
           : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
+            ? '#D6EAF8'
+            : color === 3
+              ? '#FCF3CF'
+              : color === 4
+                ? '#D5F5E3'
+                : '#FADBD8',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
+      marginRight: -10
     },
     title: {
-      marginLeft: '45.839pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       color:
         color === 1
           ? '#037385'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
@@ -55,13 +59,13 @@ const Activities: React.FC<ICvActivities> = (props) => {
       flexDirection: 'row',
     },
     leftInfo: {
-      width: '40%',
+      width: '25%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
     },
     rightInfo: {
-      width: '60%',
+      width: '75%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
@@ -72,12 +76,12 @@ const Activities: React.FC<ICvActivities> = (props) => {
         color === 1
           ? '#037385'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       wordwrap: 'break-word',
       textAlign: 'justify',
       fontFamily: 'Petrona Bold',
@@ -89,12 +93,12 @@ const Activities: React.FC<ICvActivities> = (props) => {
         color === 1
           ? '#037385'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Petrona Bold',
     },
     divTextTitleRight: {
@@ -104,7 +108,7 @@ const Activities: React.FC<ICvActivities> = (props) => {
       display: 'flex',
       flexDirection: 'column',
       gap: '4.028pt',
-      maxWidth: '180pt',
+      // maxWidth: '180pt',
     },
     textRight: {
       fontSize: '9pt',
@@ -113,10 +117,25 @@ const Activities: React.FC<ICvActivities> = (props) => {
       lineHeight: '1.2',
       fontFamily: 'Petrona Bold',
     },
+    square: {
+      marginLeft: '45.839pt',
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#037385'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Activities</Text>
       </View>
       {profile?.profileActivities?.map((activities: any) => (

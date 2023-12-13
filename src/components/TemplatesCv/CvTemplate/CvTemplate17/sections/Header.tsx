@@ -1,0 +1,149 @@
+import React from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  Polygon,
+  Svg,
+} from '@react-pdf/renderer';
+import null_avatar from '../../images/null_avatar.png';
+interface ICvHeader {
+  color: any;
+  profile: any;
+  fontSize: any;
+}
+const Header: React.FC<ICvHeader> = (props) => {
+  const { profile, fontSize, color } = props;
+  const styles = StyleSheet.create({
+    container: {
+      // width: '100%',
+      height: '269.934',
+      marginTop: -30,
+      // marginBottom: '32.041pt',
+      marginRight: -30,
+      marginLeft: -30,
+      display: 'flex',
+      flexDirection: 'row',
+      backgroundColor: '#fff',
+      // backgroundColor:
+      //   color === 1
+      //     ? '#cee8ff'
+      //     : color === 2
+      //     ? '#AED6F1'
+      //     : color === 3
+      //     ? '#F9E79F'
+      //     : color === 4
+      //     ? '#ABEBC6'
+      //     : '#F1948A',
+      justifyContent: 'space-between',
+      position: 'relative',
+      zIndex: '0',
+    },
+    divInfo: {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      marginLeft: '47.137pt',
+    },
+    textName: {
+      fontSize: '46pt',
+      color:
+        color === 1
+          ? '#000000'
+          : color === 2
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      fontFamily: 'Petrona Bold',
+      fontWeight: 'extrabold',
+    },
+    textPosition: {
+      fontSize: '20pt',
+      letterSpacing: '4pt',
+      marginTop: '20pt',
+      color:
+        color === 1
+          ? '#000000'
+          : color === 2
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      fontFamily: 'Petrona Bold',
+    },
+    divImage: {
+      minHeight: '233.745pt',
+      minWidth: '210pt',
+      margin: '0pt 20pt 43pt 0',
+      // backgroundColor: '#fff',
+      backgroundColor: 'red',
+    },
+    image: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    },
+  });
+  return (
+    <View style={styles.container}>
+      {/* <Svg style={{ position: 'absolute', width: 400, height: 400 }}>
+        <Polygon
+          points="0,0 0,70 40,120 125,120 160,50 120,0"
+          fill="#0d99ff"
+          stroke="blue"
+          strokeWidth={1}
+        />
+      </Svg> */}
+
+      <View style={styles.divInfo}>
+        <View style={{ display: 'flex', justifyContent: 'center' }}>
+          <View>
+            <Text style={styles.textName}>
+              {profile?.name?.split(' ').length > 2
+                ? profile?.name?.split(' ').slice(0, -2).join(' ')
+                : profile?.name?.split(' ').slice(0, -1).join(' ')}
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.textName}>
+              {profile?.name?.split(' ').length > 2
+                ? profile?.name?.split(' ').slice(-2).join(' ')
+                : profile?.name?.split(' ').slice(-1).join(' ')}
+            </Text>
+          </View>
+        </View>
+        <View>
+          <Text style={styles.textPosition}>{profile?.jobTypeName}</Text>
+        </View>
+      </View>
+
+      <View style={styles.divImage}>
+        <View>
+          <Image
+            src={{
+              uri:
+                profile.avatarPath !== null ? profile.avatarPath : null_avatar,
+              method: 'GET',
+              body: '',
+              headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Cache-Control': 'no-cache',
+                // 'Access-Control-Allow-Methods': '*',
+                // 'Access-Control-Allow-Headers': '*',
+              },
+            }}
+            style={styles.image}
+          />
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default Header;

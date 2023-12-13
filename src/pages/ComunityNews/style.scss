@@ -6,12 +6,13 @@
         // padding: 24px 0px;
         max-width: 1080px;
         margin: 0 auto;
-        transition: all l;
+        transition: all linear 0.2s;
         margin-bottom: 36px;
         // 
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
         // .comunityNew {
 
         // }
@@ -41,6 +42,8 @@
 
         .comunityPostNews {
             // width: 70%;
+            width: 100% !important;
+            max-width: 1080px;
 
             @media screen and (max-width: 1024px) {
                 width: 100%;

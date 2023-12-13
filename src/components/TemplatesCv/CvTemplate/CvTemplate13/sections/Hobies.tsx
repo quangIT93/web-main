@@ -13,9 +13,15 @@ const Hobies: React.FC<ICvHobies> = (props) => {
     container: {
       marginRight: -25,
     },
-
-    title: {
+    divTitle: {
+      width: '280pt',
       marginLeft: '20pt',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt'
+    },
+    title: {
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '180pt',
@@ -36,7 +42,7 @@ const Hobies: React.FC<ICvHobies> = (props) => {
     divDes: {
       marginLeft: '20pt',
       marginTop: '9.338pt',
-      width: '137pt',
+      width: '180pt',
     },
     textDes: {
       fontSize: '9pt',
@@ -45,10 +51,29 @@ const Hobies: React.FC<ICvHobies> = (props) => {
       lineHeight: '1.2',
       fontFamily: 'Fahkwang Medium',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      borderRadius: '50%',
+      border: `2px solid ${color === 1
+        ? '#377a40'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
+        }`,
+      backgroundColor: color === 1
+        ? '#b4d9a1'
+        : '#ffffff',
+    }
   });
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Hobies</Text>
       </View>
 
