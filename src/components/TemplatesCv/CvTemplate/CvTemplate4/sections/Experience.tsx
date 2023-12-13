@@ -33,14 +33,14 @@ const Experience: React.FC<ICvExperience> = (props) => {
       flexDirection: 'column',
       // alignItems: 'flex-start',
       justifyContent: 'flex-start',
-      width: '25%',
+      width: '30%',
       // border: '1px solid red'
     },
     right: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-start',
-      width: '75%',
+      width: '70%',
       // marginLeft: '0.671cm',
       // marginBottom: 5,
       // marginLeft: '34.638pt',
@@ -52,7 +52,7 @@ const Experience: React.FC<ICvExperience> = (props) => {
       fontSize: fontSize - 13,
       letterSpacing: '2px',
       marginBottom: '2px',
-      textAlign: 'justify',
+      textAlign: 'left',
     },
     school: {
       fontFamily: 'Montserrat Bold',

@@ -12,6 +12,8 @@ import tl11 from "../../../img/template/11.jpg"
 import tl12 from "../../../img/template/12.jpg"
 import tl13 from "../../../img/template/13.jpg"
 import tl14 from "../../../img/template/14.jpg"
+import tl15 from "../../../img/template/15.png"
+import tl16 from "../../../img/template/16.png"
 
 
 
@@ -113,5 +115,19 @@ export const listTemplate = [
         image: tl14,
         status: 1,
         parentCategoryId: 2
-    }
+    },
+    {
+        id: 16,
+        name: "Resume 15",
+        image: tl15,
+        status: 1,
+        parentCategoryId: 2
+    },
+    {
+        id: 17,
+        name: "Resume 16",
+        image: tl16,
+        status: 1,
+        parentCategoryId: 2
+    },
 ]
