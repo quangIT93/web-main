@@ -230,9 +230,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   const validValue = () => {
     if (education?.companyName === '') {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng nhập tên trường/tổ chức'
-          : languageRedux === 2
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập tên trường/tổ chức'
+            : languageRedux === 2
             ? 'Please enter school/institution name'
             : '학교/기관명을 입력해주세요',
         checkForm: false,
@@ -246,8 +247,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           languageRedux === 1
             ? 'Trường học/Tổ chức không được vượt quá 50 ký tự'
             : languageRedux === 2
-              ? 'School/Organization cannot exceed 50 characters'
-              : languageRedux === 3 && '학교/조직은 50자를 초과할 수 없습니다.',
+            ? 'School/Organization cannot exceed 50 characters'
+            : languageRedux === 3 && '학교/조직은 50자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 1,
       };
@@ -255,9 +256,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
 
     if (education?.major === '') {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng nhập tên chuyên ngành'
-          : languageRedux === 2
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập tên chuyên ngành'
+            : languageRedux === 2
             ? 'Please enter a major name'
             : '주요 이름을 입력하세요.',
         checkForm: false,
@@ -270,8 +272,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           languageRedux === 1
             ? 'Tên ngành không được vượt quá 50 ký tự'
             : languageRedux === 2
-              ? 'Major cannot exceed 50 characters'
-              : languageRedux === 3 && '업계 이름은 50자를 초과할 수 없습니다.',
+            ? 'Major cannot exceed 50 characters'
+            : languageRedux === 3 && '업계 이름은 50자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 2,
       };
@@ -280,9 +282,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
 
     if (!education?.startDate) {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng nhập ngày bắt đầu'
-          : languageRedux === 2
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập ngày bắt đầu'
+            : languageRedux === 2
             ? 'Please enter a start date'
             : '시작일을 입력하세요.',
         checkForm: false,
@@ -297,10 +300,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           languageRedux === 1
             ? 'Năm bắt đầu không được vượt quá năm hiện tại'
             : languageRedux === 2
-              ? 'The starting year cannot exceed the current year'
-              : languageRedux === 3
-                ? '시작 연도는 현재 연도를 초과할 수 없습니다.'
-                : 'Năm bắt đầu không được vượt quá năm hiện tại',
+            ? 'The starting year cannot exceed the current year'
+            : languageRedux === 3
+            ? '시작 연도는 현재 연도를 초과할 수 없습니다.'
+            : 'Năm bắt đầu không được vượt quá năm hiện tại',
         checkForm: false,
         idError: 3,
       };
@@ -308,9 +311,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
 
     if (!education?.endDate) {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng nhập Ngày kết thúc'
-          : languageRedux === 2
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập Ngày kết thúc'
+            : languageRedux === 2
             ? 'Please enter an End Date'
             : '종료일을 입력하세요.',
         checkForm: false,
@@ -318,18 +322,18 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       };
     }
 
-    if (new Date(education?.endDate).getFullYear() > new Date().getFullYear()) {
-      return {
-        message:
-          languageRedux === 1
-            ? 'Năm kết thúc không được vượt quá năm hiện tại'
-            : languageRedux === 2
-              ? 'The final year cannot exceed the current year'
-              : '종료 연도는 현재 연도를 초과할 수 없습니다.',
-        checkForm: false,
-        idError: 4,
-      };
-    }
+    // if (new Date(education?.endDate).getFullYear() > new Date().getFullYear()) {
+    //   return {
+    //     message:
+    //       languageRedux === 1
+    //         ? 'Năm kết thúc không được vượt quá năm hiện tại'
+    //         : languageRedux === 2
+    //         ? 'The final year cannot exceed the current year'
+    //         : '종료 연도는 현재 연도를 초과할 수 없습니다.',
+    //     checkForm: false,
+    //     idError: 4,
+    //   };
+    // }
 
     if (
       new Date(education?.startDate).getFullYear() >
@@ -340,10 +344,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           languageRedux === 1
             ? 'Năm bắt đầu không được vượt quá năm kết thúc'
             : languageRedux === 2
-              ? 'The starting year cannot exceed the final year'
-              : languageRedux === 3
-                ? '시작 연도는 종료 연도를 초과할 수 없습니다.'
-                : 'Năm bắt đầu không được vượt quá năm kết thúc',
+            ? 'The starting year cannot exceed the final year'
+            : languageRedux === 3
+            ? '시작 연도는 종료 연도를 초과할 수 없습니다.'
+            : 'Năm bắt đầu không được vượt quá năm kết thúc',
         checkForm: false,
         idError: 4,
       };
@@ -351,9 +355,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
 
     if (education?.extraInformation === '') {
       return {
-        message: languageRedux === 1
-          ? 'Vui lòng nhập thông tin bổ sung'
-          : languageRedux === 2
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập thông tin bổ sung'
+            : languageRedux === 2
             ? 'Please enter additional information'
             : '추가 정보를 입력해주세요',
         checkForm: false,
@@ -367,9 +372,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           languageRedux === 1
             ? 'Thông tin thêm không được vượt quá 500 ký tự'
             : languageRedux === 2
-              ? 'Additional information cannot exceed 500 characters'
-              : languageRedux === 3 &&
-              '추가 정보는 500자를 초과할 수 없습니다.',
+            ? 'Additional information cannot exceed 500 characters'
+            : languageRedux === 3 && '추가 정보는 500자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 5,
       };
@@ -452,9 +456,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       console.log('error', error);
       messageApi.open({
         type: 'error',
-        content: languageRedux === 1
-          ? 'Vui lòng kiểm tra lại thông tin đã nhập'
-          : languageRedux === 2
+        content:
+          languageRedux === 1
+            ? 'Vui lòng kiểm tra lại thông tin đã nhập'
+            : languageRedux === 2
             ? 'Please check the information entered again'
             : '입력한 정보를 다시 확인해 주세요.',
       });
@@ -519,13 +524,11 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             align="center"
             sx={{ marginBottom: '12px' }}
           >
-            {
-              languageRedux === 1
-                ? 'Chỉnh sửa trình độ học vấn'
-                : languageRedux === 2
-                  ? 'Edit education level'
-                  : '교육 수준 편집'
-            }
+            {languageRedux === 1
+              ? 'Chỉnh sửa trình độ học vấn'
+              : languageRedux === 2
+              ? 'Edit education level'
+              : '교육 수준 편집'}
           </Typography>
           <Box sx={styleChildBox}>
             <Typography
@@ -537,8 +540,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               {languageRedux === 1
                 ? 'Trường/Tổ chức'
                 : languageRedux === 2
-                  ? 'School/Organization'
-                  : '학교/단체'}{' '}
+                ? 'School/Organization'
+                : '학교/단체'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -549,12 +552,14 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               onChange={handleChangeSchool}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={languageRedux === 1
-                ? 'Trường/Tổ chức'
-                : languageRedux === 2
+              placeholder={
+                languageRedux === 1
+                  ? 'Trường/Tổ chức'
+                  : languageRedux === 2
                   ? 'School/Organization'
-                  : '학교/단체'}
-            // error={titleError} // Đánh dấu lỗi
+                  : '학교/단체'
+              }
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {education?.companyName && education?.companyName?.length > 50 ? (
@@ -562,22 +567,23 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   {languageRedux === 1
                     ? 'Bạn đã nhập quá 50 ký tự.'
                     : languageRedux === 2
-                      ? 'You have entered more than 50 characters.'
-                      : languageRedux === 3 && '50자를 초과하여 입력했습니다.'}
+                    ? 'You have entered more than 50 characters.'
+                    : languageRedux === 3 && '50자를 초과하여 입력했습니다.'}
                 </span>
               ) : !education?.companyName ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vui lòng nhập tên trường/tổ chức.'
                     : languageRedux === 2
-                      ? 'Please enter school/organization.'
-                      : languageRedux === 3 && '학교/기관명을 입력해주세요.'}
+                    ? 'Please enter school/organization.'
+                    : languageRedux === 3 && '학교/기관명을 입력해주세요.'}
                 </span>
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${education?.companyName ? education?.companyName?.length : '0'
-                }/50`}</span>
+              <span className="number-text">{`${
+                education?.companyName ? education?.companyName?.length : '0'
+              }/50`}</span>
             </div>
           </Box>
 
@@ -591,8 +597,9 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               {languageRedux === 1
                 ? 'Chuyên ngành'
                 : languageRedux === 2
-                  ? 'Major'
-                  : '전문화'} <span className="color-asterisk">*</span>
+                ? 'Major'
+                : '전문화'}{' '}
+              <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               type="text"
@@ -602,12 +609,14 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               onChange={handleChangeMajor}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={languageRedux === 1
-                ? 'Chuyên ngành'
-                : languageRedux === 2
+              placeholder={
+                languageRedux === 1
+                  ? 'Chuyên ngành'
+                  : languageRedux === 2
                   ? 'Major'
-                  : '전문화'}
-            // error={titleError} // Đánh dấu lỗi
+                  : '전문화'
+              }
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {education?.major && education?.major?.length > 50 ? (
@@ -615,23 +624,23 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   {languageRedux === 1
                     ? 'Bạn đã nhập quá 50 ký tự.'
                     : languageRedux === 2
-                      ? 'You have entered more than 50 characters.'
-                      : languageRedux === 3 && '50자를 초과하여 입력했습니다.'}
+                    ? 'You have entered more than 50 characters.'
+                    : languageRedux === 3 && '50자를 초과하여 입력했습니다.'}
                 </span>
               ) : !education?.major ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vui lòng nhập tên chuyên ngành.'
                     : languageRedux === 2
-                      ? 'Please enter a major name.'
-                      : languageRedux === 3 &&
-                      '전문 분야의 이름을 입력하십시오'}
+                    ? 'Please enter a major name.'
+                    : languageRedux === 3 && '전문 분야의 이름을 입력하십시오'}
                 </span>
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${education?.major ? education?.major?.length : '0'
-                }/50`}</span>
+              <span className="number-text">{`${
+                education?.major ? education?.major?.length : '0'
+              }/50`}</span>
             </div>
           </Box>
           <Box sx={styleChildBox}>
@@ -650,8 +659,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                     {languageRedux === 1
                       ? 'Thời gian bắt đầu'
                       : languageRedux === 2
-                        ? 'Start time'
-                        : '시작 시간'}{' '}
+                      ? 'Start time'
+                      : '시작 시간'}{' '}
                     <span className="color-asterisk">*</span>
                   </Typography>
                   <DatePicker
@@ -678,14 +687,14 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   />
                   <div className="wrap-noti_input">
                     {education?.startDate &&
-                      new Date(education?.startDate).getFullYear() >
+                    new Date(education?.startDate).getFullYear() >
                       new Date().getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Thời gian bắt đầu không thể lớn hơn thời gian hiện tại.'
                           : languageRedux === 2
-                            ? 'The start time cannot be greater than the current time.'
-                            : languageRedux === 3 &&
+                          ? 'The start time cannot be greater than the current time.'
+                          : languageRedux === 3 &&
                             '시작 시간은 현재 시간보다 클 수 없습니다.'}
                       </span>
                     ) : !new Date(education?.startDate).getFullYear() ? (
@@ -693,16 +702,16 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                         {languageRedux === 1
                           ? 'Vui lòng nhập thời gian bắt đầu'
                           : languageRedux === 2
-                            ? 'Please enter start date'
-                            : languageRedux === 3 && '시작일을 입력해 주세요'}
+                          ? 'Please enter start date'
+                          : languageRedux === 3 && '시작일을 입력해 주세요'}
                       </span>
                     ) : new Date(education?.startDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Thời gian bắt đầu không thể nhỏ hơn 1900.'
                           : languageRedux === 2
-                            ? 'The start time cannot be less than 1900.'
-                            : languageRedux === 3 &&
+                          ? 'The start time cannot be less than 1900.'
+                          : languageRedux === 3 &&
                             '시작 시간은 1900보다 작을 수 없습니다.'}
                       </span>
                     ) : (
@@ -720,8 +729,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                     {languageRedux === 1
                       ? 'Thời gian kết thúc'
                       : languageRedux === 2
-                        ? 'End time'
-                        : '종료 시간'}{' '}
+                      ? 'End time'
+                      : '종료 시간'}{' '}
                     <span className="color-asterisk">*</span>
                   </Typography>
                   <DatePicker
@@ -746,31 +755,21 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   />
                   <div className="wrap-noti_input">
                     {education?.endDate &&
-                      new Date(education?.endDate).getFullYear() >
-                      new Date().getFullYear() ? (
-                      <span className="helper-text">
-                        {languageRedux === 1
-                          ? 'Thời gian kết thúc không thể lớn hơn thời gian hiện tại.'
-                          : languageRedux === 2
-                            ? 'The end time cannot be greater than the current time.'
-                            : languageRedux === 3 &&
-                            '종료 시간은 현재 시간보다 클 수 없습니다.'}
-                      </span>
-                    ) : !new Date(education?.endDate).getFullYear() ? (
+                    !new Date(education?.endDate).getFullYear() ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Vui lòng nhập Thời gian kết thúc.'
                           : languageRedux === 2
-                            ? 'Please enter End date.'
-                            : languageRedux === 3 && '종료 시간을 입력하세요.'}
+                          ? 'Please enter End date.'
+                          : languageRedux === 3 && '종료 시간을 입력하세요.'}
                       </span>
                     ) : new Date(education?.endDate).getFullYear() < 1900 ? (
                       <span className="helper-text">
                         {languageRedux === 1
                           ? 'Thời gian kết thúc không thể nhỏ hơn 1900.'
                           : languageRedux === 2
-                            ? 'The end time cannot be less than 1900.'
-                            : languageRedux === 3 &&
+                          ? 'The end time cannot be less than 1900.'
+                          : languageRedux === 3 &&
                             '종료 시간은 1900보다 작을 수 없습니다.'}
                       </span>
                     ) : (
@@ -791,8 +790,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               {languageRedux === 1
                 ? 'Trình độ học vấn '
                 : languageRedux === 2
-                  ? 'Education '
-                  : languageRedux === 3 && '최종학력 '}
+                ? 'Education '
+                : languageRedux === 3 && '최종학력 '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -802,14 +801,16 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               defaultValue={education?.academicTypeId && 8}
               onChange={handleChangeAcademic}
               variant="outlined"
-              placeholder={languageRedux === 1
-                ? 'Trình độ học vấn '
-                : languageRedux === 2
+              placeholder={
+                languageRedux === 1
+                  ? 'Trình độ học vấn '
+                  : languageRedux === 2
                   ? 'Education '
-                  : '최종학력 '}
+                  : '최종학력 '
+              }
               size="small"
               sx={{ width: '100%' }}
-            // error={!gender} // Đánh dấu lỗi
+              // error={!gender} // Đánh dấu lỗi
             >
               {typeAcademic?.map((value: any, index: number) => {
                 return <MenuItem value={index + 1}>{value.data}</MenuItem>;
@@ -838,8 +839,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               {languageRedux === 1
                 ? 'Thông tin bổ sung'
                 : languageRedux === 2
-                  ? 'Additional information'
-                  : '추가 정보'}{' '}
+                ? 'Additional information'
+                : '추가 정보'}{' '}
               <span className="color-asterisk">*</span>
             </Typography>
             <TextField
@@ -851,37 +852,40 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
               rows={4}
               id="profile_education_edit_additional_information"
               // label="Một số đặc điểm nhận diện công ty"
-              placeholder={languageRedux === 1
-                ? 'Thông tin bổ sung'
-                : languageRedux === 2
+              placeholder={
+                languageRedux === 1
+                  ? 'Thông tin bổ sung'
+                  : languageRedux === 2
                   ? 'Additional information'
-                  : '추가 정보'}
+                  : '추가 정보'
+              }
             />
             <div className="wrap-noti_input">
               {education?.extraInformation &&
-                education?.extraInformation?.length > 500 ? (
+              education?.extraInformation?.length > 500 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Bạn đã nhập quá 500 ký tự.'
                     : languageRedux === 2
-                      ? 'You have entered more than 500 characters.'
-                      : languageRedux === 3 && '500자를 초과하여 입력했습니다.'}
+                    ? 'You have entered more than 500 characters.'
+                    : languageRedux === 3 && '500자를 초과하여 입력했습니다.'}
                 </span>
               ) : education?.extraInformation?.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vui lòng nhập thông tin bổ sung.'
                     : languageRedux === 2
-                      ? 'Please enter additional information.'
-                      : languageRedux === 3 && '추가 정보를 입력해주세요'}
+                    ? 'Please enter additional information.'
+                    : languageRedux === 3 && '추가 정보를 입력해주세요'}
                 </span>
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${education?.extraInformation
-                ? education?.extraInformation?.length
-                : '0'
-                }/500`}</span>
+              <span className="number-text">{`${
+                education?.extraInformation
+                  ? education?.extraInformation?.length
+                  : '0'
+              }/500`}</span>
             </div>
           </Box>
 
@@ -889,9 +893,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             {languageRedux === 1
               ? 'Lưu thông tin'
               : languageRedux === 2
-                ? 'Save information'
-                : languageRedux === 3 &&
-                '정보 저장'}
+              ? 'Save information'
+              : languageRedux === 3 && '정보 저장'}
           </Button>
         </Box>
       </Modal>

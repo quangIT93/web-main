@@ -34,12 +34,12 @@ const Education: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#000000'
           : color === 2
-          ? '#000000'
+          ? '#ffffff'
           : color === 3
           ? '#000000'
           : color === 4
-          ? '#000000'
-          : '#000000',
+          ? '#ffffff'
+          : '#ffffff',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'bold',
@@ -106,7 +106,7 @@ const Education: React.FC<ICvHeader> = (props) => {
           ? '#5CB265'
           : '#D80000',
       left: '40pt',
-      top: '5pt',
+      top: '10pt',
     },
   });
 

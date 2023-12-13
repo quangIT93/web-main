@@ -18,12 +18,15 @@ import { RootState } from 'store';
 // import GoogleButton from 'react-google-button'
 import './style.scss';
 import profileApi from 'api/profileApi';
-import { DataLog } from 'pages/LogChart/typeChart';
+import { DataLog, DataLogRecuiter } from 'pages/LogChart/typeChart';
 declare global {
   interface Window {}
 }
 const Login = () => {
   const [dataLog, setDataLog] = useState<DataLog | undefined>(undefined);
+  const [dataLogRecruiter, setDataLogRecruiter] = useState<
+    DataLogRecuiter | undefined
+  >(undefined);
   // useEffect(() => {
   //   // Load the Google API client library
   //   window.gapi.load('auth2', () => {
@@ -162,7 +165,7 @@ const Login = () => {
         // width={1000}
         // height={1000}
       ></canvas> */}
-      <Chartjs dataLog={dataLog} />
+      <Chartjs dataLog={dataLog} dataLogRecruiter={dataLogRecruiter} />
     </>
   );
 };
