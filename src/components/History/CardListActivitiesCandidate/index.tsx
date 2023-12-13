@@ -36,7 +36,7 @@ interface ICardsApplied {
   activeChild: string;
 }
 
-const CardListCandidate: React.FC = () => {
+const CardListActivitiesCandidate: React.FC<ICardsApplied> = () => {
   const [candidateData, setCandidateData] = useState<any>();
   const [uploading, setUploading] = useState(false);
   const [pageNumber, setPageNumber] = React.useState(0);
@@ -135,16 +135,30 @@ const CardListCandidate: React.FC = () => {
           }}
         >
           {languageRedux === 1
-            ? 'Danh sách ứng viên'
+            ? 'Hoạt động của bạn'
             : languageRedux === 2
-            ? 'List of candidates'
-            : ' 지원자 리스트'}
+            ? 'Your activities'
+            : ' 귀하의 활동'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-            {searchParams.get('c') === '4-0' && languageRedux === 1
-              ? ' > Ứng viên đã lưu lại.'
-              : languageRedux === 2
-              ? ' > Saved candidates'
-              : ' > 저장한 구직자.'}
+            {searchParams.get('c') === '7-0'
+              ? languageRedux === 1
+                ? ' > Việc làm đã xem qua'
+                : languageRedux === 2
+                ? ' > Viewed job'
+                : ' > 본 채용공고.'
+              : searchParams.get('c') === '7-1'
+              ? languageRedux === 1
+                ? ' > Lượt công ty xem hồ sơ'
+                : languageRedux === 2
+                ? ' > Number of companies that viewed the profile'
+                : ' > 내 이력서를 본 회사 조회 수.'
+              : searchParams.get('c') === '7-2'
+              ? languageRedux === 1
+                ? ' > Lượt công ty lưu hồ sơ'
+                : languageRedux === 2
+                ? ' > Number of companies saved the profile'
+                : ' > 내 이력서를 저장한 회사 조회 수.'
+              : ''}
           </span>
         </Typography>
       </Box>
@@ -217,4 +231,4 @@ const CardListCandidate: React.FC = () => {
   );
 };
 
-export default CardListCandidate;
+export default CardListActivitiesCandidate;

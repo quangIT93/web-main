@@ -3,7 +3,7 @@ import RouteProps from '../routes';
 import MainLayout from 'layouts/MainLayout';
 const LogChart = lazy(() => import('.'));
 const route: RouteProps = {
-  path: 'chart',
+  path: 'profile-chart',
   component: (
     <MainLayout>
       <LogChart />
