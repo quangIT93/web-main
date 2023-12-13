@@ -10,11 +10,17 @@ const Skill: React.FC<ICvSkill> = (props) => {
   const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
-      marginRight: -25,
+      // marginRight: -25,
     },
-    divTitle: {},
+    divTitle: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
+      // marginLeft: '20pt',
+      borderTop: '1px solid #000000',
+    },
     title: {
-      marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
@@ -32,10 +38,9 @@ const Skill: React.FC<ICvSkill> = (props) => {
       fontFamily: 'Petrona Bold',
       fontWeight: 'extrabold',
     },
-    divDes: {
-      marginLeft: '20pt',
-      marginTop: '9.338pt',
-      width: '137pt',
+    divInfo: {
+      marginTop: '10.408pt',
+      width: '100%',
     },
     textTitleDes: {
       fontSize: '11pt',
@@ -74,23 +79,37 @@ const Skill: React.FC<ICvSkill> = (props) => {
               : color === 4
                 ? '#D5F5E3'
                 : '#FADBD8',
-      margin: '7pt 0 4pt 20pt',
+      margin: '7pt 0',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#f7b3cc'
+        : color === 2
+          ? '#AED6F1'
+          : color === 3
+            ? '#F9E79F'
+            : color === 4
+              ? '#ABEBC6'
+              : '#F1948A'
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Skill</Text>
       </View>
       {profile?.profilesSkills?.map((skill: any) => (
-        <View>
-          <View style={styles.divDes}>
+        <View style={styles.divInfo}>
+          <View>
             <Text style={styles.textTitleDes}>{skill?.skillName}</Text>
           </View>
-          <View style={styles.divDes}>
+          <View style={styles.BorderLine}></View>
+          <View>
             <Text style={styles.textDes}>{skill?.dataLevel?.data}</Text>
           </View>
-          <View style={styles.BorderLine}></View>
         </View>
       ))}
     </View>

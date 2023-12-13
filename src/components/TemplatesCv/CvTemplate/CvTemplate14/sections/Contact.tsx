@@ -10,11 +10,10 @@ const Contact: React.FC<ICvContact> = (props) => {
   const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
-      marginRight: -25,
+      // marginRight: -25,
     },
     divWrapInfo: {
-      border: `1px solid ${
-        color === 1
+      border: `1px solid ${color === 1
           ? '#000000'
           : color === 2
             ? '#D6EAF8'
@@ -23,13 +22,13 @@ const Contact: React.FC<ICvContact> = (props) => {
               : color === 4
                 ? '#D5F5E3'
                 : '#FADBD8'
-      }`,
-      marginLeft: '20pt',
-      maxWidth: '137pt',
+        }`,
+      maxWidth: '100%',
       padding: '13.021pt',
       display: 'flex',
       flexDirection: 'column',
       gap: '6.762pt',
+      borderRadius: '8px'
     },
     divInfo: {
       fontSize: '11pt',

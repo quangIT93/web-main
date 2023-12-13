@@ -18,15 +18,18 @@ const Skill: React.FC<ICvSkill> = (props) => {
         color === 1
           ? '#8dc5fe'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
     },
     title: {
-      marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
@@ -34,37 +37,26 @@ const Skill: React.FC<ICvSkill> = (props) => {
         color === 1
           ? '#000000'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#ffffff'
-          : color === 4
-          ? '#000000'
-          : '#ffffff',
+            ? '#000000'
+            : color === 3
+              ? '#ffffff'
+              : color === 4
+                ? '#000000'
+                : '#ffffff',
       letterSpacing: '4pt',
       fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',
     },
-    divDes: {
-      marginLeft: '20pt',
-      marginTop: '9.338pt',
-      width: '137pt',
+    divInfo: {
+      marginTop: '10.408pt',
     },
     TextTitleDes: {
-      fontSize: '11pt',
+      fontSize: '13pt',
       wordwrap: 'break-word',
       textAlign: 'justify',
       lineHeight: '1.2',
       fontFamily: 'Fahkwang Medium',
-      color:
-        color === 1
-          ? '#004080'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+      color: '#000000',
     },
     textDes: {
       fontSize: '9pt',
@@ -78,31 +70,45 @@ const Skill: React.FC<ICvSkill> = (props) => {
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#8dc5fe'
+          ? '#004080'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
-      margin: '7pt 0 4pt 20pt',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      margin: '7pt 0',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#000000'
+        : color === 2
+          ? '#000000'
+          : color === 3
+            ? '#ffffff'
+            : color === 4
+              ? '#000000'
+              : '#ffffff'
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Skill</Text>
       </View>
       {profileMore?.profilesSkills?.map((skill: any) => (
-        <View>
-          <View style={styles.divDes}>
+        <View style={styles.divInfo}>
+          <View>
             <Text style={styles.TextTitleDes}>{skill?.skillName}</Text>
           </View>
-          <View style={styles.divDes}>
+          <View style={styles.BorderLine}></View>
+          <View>
             <Text style={styles.textDes}>{skill?.dataLevel?.data}</Text>
           </View>
-          <View style={styles.BorderLine}></View>
         </View>
       ))}
     </View>

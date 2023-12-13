@@ -10,11 +10,16 @@ const Profile: React.FC<ICvProfile> = (props) => {
   const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
-      marginRight: -25,
+      // marginRight: -25,
     },
-    divTitle: {},
+    divTitle: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
+      // marginLeft: '20pt',
+    },
     title: {
-      marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
@@ -33,9 +38,9 @@ const Profile: React.FC<ICvProfile> = (props) => {
       fontWeight: 'extrabold',
     },
     divDes: {
-      marginLeft: '20pt',
+      // marginLeft: '20pt',
       marginTop: '9.338pt',
-      width: '137pt',
+      width: '100%',
     },
     textDes: {
       fontSize: '9pt',
@@ -44,10 +49,24 @@ const Profile: React.FC<ICvProfile> = (props) => {
       lineHeight: '1.2',
       fontFamily: 'Petrona Bold',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#f7b3cc'
+        : color === 2
+          ? '#AED6F1'
+          : color === 3
+            ? '#F9E79F'
+            : color === 4
+              ? '#ABEBC6'
+              : '#F1948A'
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Profile</Text>
       </View>
       <View style={styles.divDes}>

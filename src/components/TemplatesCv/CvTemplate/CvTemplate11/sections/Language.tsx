@@ -18,15 +18,18 @@ const Language: React.FC<ICvLanguage> = (props) => {
         color === 1
           ? '#8dc5fe'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
     },
     title: {
-      marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
@@ -34,33 +37,23 @@ const Language: React.FC<ICvLanguage> = (props) => {
         color === 1
           ? '#000000'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#ffffff'
-          : color === 4
-          ? '#000000'
-          : '#ffffff',
+            ? '#000000'
+            : color === 3
+              ? '#ffffff'
+              : color === 4
+                ? '#000000'
+                : '#ffffff',
       fontFamily: 'Fahkwang Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
     },
     divInfo: {
       marginTop: '10.408pt',
-      marginLeft: '20pt',
     },
     TextTitleInfo: {
-      fontSize: '16pt',
+      fontSize: '13pt',
       width: 'auto',
-      color:
-        color === 1
-          ? '#004080'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+      color: '#000000',
       fontFamily: 'Fahkwang Bold',
       fontWeight: 'extrabold',
     },
@@ -76,20 +69,34 @@ const Language: React.FC<ICvLanguage> = (props) => {
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#8dc5fe'
+          ? '#004080'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       margin: '7pt 0',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#000000'
+        : color === 2
+          ? '#000000'
+          : color === 3
+            ? '#ffffff'
+            : color === 4
+              ? '#000000'
+              : '#ffffff'
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Languages</Text>
       </View>
       {profileMore?.profilesLanguages?.map((language: any) => (

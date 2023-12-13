@@ -10,11 +10,17 @@ const Language: React.FC<ICvLanguage> = (props) => {
   const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
-      marginRight: -25,
+      // marginRight: -25,
     },
-    divTitle: {},
+    divTitle: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
+      // marginLeft: '20pt',
+      borderTop: '1px solid #000000',
+    },
     title: {
-      marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
@@ -34,7 +40,7 @@ const Language: React.FC<ICvLanguage> = (props) => {
     },
     divInfo: {
       marginTop: '10.408pt',
-      marginLeft: '20pt',
+      width: '100%',
     },
     TextTitleInfo: {
       fontSize: '16pt',
@@ -74,10 +80,24 @@ const Language: React.FC<ICvLanguage> = (props) => {
                 : '#FADBD8',
       margin: '7pt 0',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#f7b3cc'
+        : color === 2
+          ? '#AED6F1'
+          : color === 3
+            ? '#F9E79F'
+            : color === 4
+              ? '#ABEBC6'
+              : '#F1948A'
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Languages</Text>
       </View>
       {profile?.profilesLanguages?.map((language: any) => (
