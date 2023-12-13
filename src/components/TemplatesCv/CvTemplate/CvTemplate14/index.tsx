@@ -67,17 +67,7 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
     leftColumn: {
       flexDirection: 'column',
       width: '65%',
-      paddingRight: 10,
-      borderRight: `1px solid ${color === 1
-          ? '#cee8ff'
-          : color === 2
-            ? '#AED6F1'
-            : color === 3
-              ? '#F9E79F'
-              : color === 4
-                ? '#ABEBC6'
-                : '#F1948A'
-        }`,
+      paddingRight: 20,
       gap: '20.495pt',
     },
     rightColumn: {
@@ -87,6 +77,9 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
       // marginTop: '1cm',
       // paddingLeft: '24.809pt',
       gap: '20.495pt',
+      borderRadius: '8px',
+      border: '1px solid #000000',
+      padding: '0 20pt'
     },
     pageNumber: {
       position: 'absolute',

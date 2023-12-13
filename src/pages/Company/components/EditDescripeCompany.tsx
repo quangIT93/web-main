@@ -92,11 +92,11 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
                 : '회사소개'}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
-          <div className='description_template' onClick={
+          {/* <div className='description_template' onClick={
             () => setOpenModalFillDescriptTemplate(true)
           }>
             <FillDataPost />
-          </div>
+          </div> */}
         </div>
         <TextField
           disabled={is_profile ? true : false}

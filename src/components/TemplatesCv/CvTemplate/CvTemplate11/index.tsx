@@ -69,18 +69,8 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
     leftColumn: {
       flexDirection: 'column',
       width: '65%',
-      paddingRight: 10,
+      paddingRight: 20,
       backgroundColor: 'transparent',
-      borderRight: `1px solid ${color === 1
-          ? '#8dc5fe'
-          : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000'
-        }`,
       gap: '20.495pt',
     },
     rightColumn: {

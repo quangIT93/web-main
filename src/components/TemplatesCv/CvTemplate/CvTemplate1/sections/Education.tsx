@@ -14,13 +14,12 @@ const Education: React.FC<ICvEducation> = (props) => {
   const styles = StyleSheet.create({
     container: {
       marginBottom: 10,
-      marginLeft: '1.583cm',
+      marginLeft: '30pt',
     },
     education: {
       display: 'flex',
       flexDirection: 'row',
       marginBottom: 5,
-      // border: '1px solid red'
     },
     not: {
       // display: 'flex',
@@ -43,12 +42,12 @@ const Education: React.FC<ICvEducation> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       marginRight: '0.671cm',
     },
     lineWhite: {
@@ -89,7 +88,7 @@ const Education: React.FC<ICvEducation> = (props) => {
       fontFamily: 'Montserrat Regular',
       fontSize: fontSize - 15,
       wordBreak: 'break-word',
-      width: '100%',
+      // width: '100%',
       textAlign: 'justify',
       // border: '1px solid red'
     },
@@ -110,12 +109,12 @@ const Education: React.FC<ICvEducation> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
   });
 
@@ -156,12 +155,12 @@ const Education: React.FC<ICvEducation> = (props) => {
                       color === 1
                         ? '#252525'
                         : color === 2
-                        ? '#0D99FF'
-                        : color === 3
-                        ? '#FBBC04'
-                        : color === 4
-                        ? '#5CB265'
-                        : '#D80000'
+                          ? '#0D99FF'
+                          : color === 3
+                            ? '#FBBC04'
+                            : color === 4
+                              ? '#5CB265'
+                              : '#D80000'
                     }
                     stroke="none"
                   />
@@ -173,7 +172,12 @@ const Education: React.FC<ICvEducation> = (props) => {
                       : styles.line
                   }
                 ></View>
-                <View>
+                <View style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4.028pt',
+                  width: '100%',
+                }}>
                   <Text style={styles.time}>
                     {moment(education?.startDate).format('YYYY')}
                     {' - '}

@@ -18,9 +18,15 @@ const Activities: React.FC<ICvActivities> = (props) => {
     container: {
       marginLeft: -25,
     },
-    divTitle: {},
-    title: {
+    divTitle: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
       marginLeft: '45.839pt',
+      borderTop: '1px solid #000000',
+    },
+    title: {
       padding: '9.209pt 0',
       fontSize: '16pt',
       color:
@@ -102,17 +108,30 @@ const Activities: React.FC<ICvActivities> = (props) => {
       lineHeight: '1.2',
       fontFamily: 'Petrona Bold',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#f078a4'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000',
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Activities</Text>
       </View>
       {profile?.profileActivities?.map((activities: any) => (
         <View style={styles.divInfo}>
           <View style={styles.leftInfo}>
             <Text style={styles.textLeft}>
-              {' '}
               {moment(activities?.startDate).format('YYYY')}
               {'-'}
               {moment(activities?.endDate).format('YYYY')}

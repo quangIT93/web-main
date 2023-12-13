@@ -35,7 +35,7 @@ const Header: React.FC<ICvHeader> = (props) => {
     divInfo: {
       width: '80%',
       display: 'flex',
-      justifyContent: 'flex-start',
+      justifyContent: 'center',
       flexDirection: 'column',
       gap: '7.017pt',
       border: `1px solid ${color === 1

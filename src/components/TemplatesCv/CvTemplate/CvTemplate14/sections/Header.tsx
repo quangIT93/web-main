@@ -69,15 +69,17 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontFamily: 'Petrona Bold',
     },
     divImage: {
-      minHeight: '168pt',
-      minWidth: '174pt',
-      margin: '43.762pt 48.768pt 43pt 0',
+      minHeight: '170pt',
+      minWidth: '190pt',
+      margin: '43.762pt 28pt 43pt 0',
       backgroundColor: '#fff',
+      borderRadius: '8px'
     },
     image: {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
+      borderRadius: '8px'
     },
   });
   return (
@@ -114,7 +116,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       </View>
 
       <View style={styles.divImage}>
-        <View style={{ padding: '9.955pt' }}>
+        <View>
           <Image
             src={{
               uri:

@@ -72,7 +72,7 @@ const Activities: React.FC<ICvExperience> = (props) => {
         detail: {
             fontFamily: "OpenSans-Semi-Bold",
             fontSize: 10,
-            width: '100%',
+            // width: '100%',
             textAlign: 'justify',
             color: '#4A4747',
             marginLeft: '8.261pt',
@@ -103,9 +103,8 @@ const Activities: React.FC<ICvExperience> = (props) => {
         botInfo: {
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'flex-start',
-            width: '100%',
-            paddingLeft: '30pt',
+            marginLeft: '30pt',
+            gap: '10pt'
             // border: '1px solid red',
         },
         topInfo: {
@@ -119,6 +118,15 @@ const Activities: React.FC<ICvExperience> = (props) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            width: '10%',
+            gap: '5pt',
+        },
+        detailContainer: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '90%',
+            gap: '5pt',
         },
         not: {
             width: 15,
@@ -172,7 +180,9 @@ const Activities: React.FC<ICvExperience> = (props) => {
                                             {moment(item?.endDate).format('YYYY')}
                                         </Text>
                                     </View>
-                                    <Text style={styles.detail}>{item?.description}</Text>
+                                    <View style={styles.detailContainer}>
+                                        <Text style={styles.detail}>{item?.description}</Text>
+                                    </View>
                                 </View>
                             </View>
                         </View>

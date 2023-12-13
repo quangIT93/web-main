@@ -13,18 +13,16 @@ const Contact: React.FC<ICvContact> = (props) => {
       marginRight: -25,
     },
     divWrapInfo: {
-      border: `1px solid ${
-        color === 1
-          ? '#8dc5fe'
-          : color === 2
+      border: `1px solid ${color === 1
+        ? '#004080'
+        : color === 2
           ? '#0D99FF'
           : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000'
-      }`,
-      marginLeft: '20pt',
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
+        }`,
       width: '137pt',
       padding: '13.021pt',
       display: 'flex',

@@ -69,18 +69,18 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
     leftColumn: {
       flexDirection: 'column',
       width: '65%',
-      paddingRight: 10,
+      paddingRight: 20,
       backgroundColor: 'transparent',
-      borderRight: `1px solid ${color === 1
-          ? '#8dc5fe'
-          : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000'
-        }`,
+      // borderRight: `1px solid ${color === 1
+      //     ? '#8dc5fe'
+      //     : color === 2
+      //       ? '#0D99FF'
+      //       : color === 3
+      //         ? '#FBBC04'
+      //         : color === 4
+      //           ? '#5CB265'
+      //           : '#D80000'
+      //   }`,
       gap: '20.495pt',
     },
     rightColumn: {
@@ -95,11 +95,21 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
     pageNumber: {
       position: 'absolute',
       fontSize: fontSize - 8,
-      bottom: 10,
+      bottom: 0,
       left: 0,
       right: 0,
       textAlign: 'center',
       color: 'grey',
+      height: 20,
+      backgroundColor: color === 1
+        ? '#c5dff8'
+        : color === 2
+          ? '#D6EAF8'
+          : color === 3
+            ? '#FCF3CF'
+            : color === 4
+              ? '#D5F5E3'
+              : '#FADBD8'
     },
     fixedBackroundLeft: {
       position: 'absolute',
@@ -121,11 +131,29 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
     hijob: {
       position: 'absolute',
       fontSize: fontSize - 12,
-      bottom: 10,
+      bottom: 5,
       // left: 0,
       right: 25,
       textAlign: 'center',
       color: '#000000',
+    },
+    lineBot: {
+      position: 'absolute',
+      bottom: 24,
+      left: 0,
+      right: 0,
+      textAlign: 'center',
+      color: 'grey',
+      height: 2,
+      backgroundColor: color === 1
+        ? '#4A55A2'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
     },
   });
   Font.register({
@@ -378,6 +406,7 @@ const CvTemplate11: React.FC<CvTemplate> = (props) => {
         render={({ pageNumber, totalPages }) => `hijob.site`}
         fixed
       />
+      <View style={styles.lineBot} fixed></View>
     </Page>
   );
 
