@@ -17,7 +17,7 @@ const Profile: React.FC<ICvSkills> = (props) => {
   const styles = StyleSheet.create({
     container: {
       marginBottom: '1.452cm',
-      marginLeft: '1.583cm',
+      marginLeft: '30pt'
       // border: '1px solid red'
     },
     title: {
@@ -30,12 +30,12 @@ const Profile: React.FC<ICvSkills> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     profile: {
       fontFamily: 'Montserrat Regular',

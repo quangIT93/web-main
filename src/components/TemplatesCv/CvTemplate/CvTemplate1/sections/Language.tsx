@@ -14,7 +14,7 @@ const Languages: React.FC<ICvEducation> = (props) => {
   const styles = StyleSheet.create({
     container: {
       marginBottom: 10,
-      marginLeft: '1.583cm',
+      marginLeft: '30pt',
     },
     language: {
       display: 'flex',
@@ -79,12 +79,12 @@ const Languages: React.FC<ICvEducation> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
   });
 
@@ -106,12 +106,12 @@ const Languages: React.FC<ICvEducation> = (props) => {
                       color === 1
                         ? '#252525'
                         : color === 2
-                        ? '#0D99FF'
-                        : color === 3
-                        ? '#FBBC04'
-                        : color === 4
-                        ? '#5CB265'
-                        : '#D80000'
+                          ? '#0D99FF'
+                          : color === 3
+                            ? '#FBBC04'
+                            : color === 4
+                              ? '#5CB265'
+                              : '#D80000'
                     }
                     stroke="none"
                   />

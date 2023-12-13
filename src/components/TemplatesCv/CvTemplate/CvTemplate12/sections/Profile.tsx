@@ -18,34 +18,37 @@ const Profile: React.FC<ICvProfile> = (props) => {
         color === 1
           ? '#c5dff8'
           : color === 2
-          ? '#5DADE2'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
+            ? '#D6EAF8'
+            : color === 3
+              ? '#FCF3CF'
+              : color === 4
+                ? '#D5F5E3'
+                : '#FADBD8',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
     },
     title: {
-      marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
       color:
         color === 1
-          ? '#000000'
+          ? '#4A55A2'
           : color === 2
-          ? '#000000'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#000000'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Fahkwang Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
     },
     divDes: {
-      marginLeft: '20pt',
+      // marginLeft: '20pt',
       marginTop: '9.338pt',
       width: '137pt',
     },
@@ -56,10 +59,24 @@ const Profile: React.FC<ICvProfile> = (props) => {
       lineHeight: '1.2',
       fontFamily: 'Fahkwang Medium',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#4A55A2'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Profile</Text>
       </View>
       <View style={styles.divDes}>
