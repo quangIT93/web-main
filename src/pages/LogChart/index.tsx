@@ -50,23 +50,13 @@ const LogChart = () => {
     }
   };
 
-  const [test, setTest] = useState(false);
-
   useEffect(() => {
-    if (
-      profileV3 &&
-      test === true
-      // profileV3.typeRoleData !== 0
-    ) {
+    if (profileV3 && profileV3.typeRoleData === 0) {
       dataChart();
-      console.log('ung vien');
     } else {
-      console.log('nha tuyen dung');
-
       dataChartRecruiter();
     }
-  }, [test]);
-  console.log('loggggggggggggggggggggggggggggggggggggg', dataLog);
+  }, []);
 
   return (
     <div className={styles.container_chart}>
@@ -79,7 +69,7 @@ const LogChart = () => {
               ? 'Activity overview'
               : '활동 대시보드'}
           </h3>
-          <p onClick={() => setTest(!test)}>Click</p>
+
           {dataLog ? (
             <ItemsChart dataLog={dataLog} dataLogRecruiter={dataLogRecruiter} />
           ) : dataLogRecruiter ? (

@@ -13,12 +13,15 @@ import { CustomSkeleton } from '#components/CustomSkeleton';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 
-type PropItemValue = {
-  id: number;
-  title: string;
-  icon: JSX.Element;
-  total: number | undefined;
-};
+import { PropItemValue } from '../typeChart';
+import { Link } from 'react-router-dom';
+
+// type PropItemValue = {
+//   id: number;
+//   title: string;
+//   icon: JSX.Element;
+//   total: number | undefined;
+// };
 
 const Box: React.FC<{
   ItemValue: PropItemValue;
@@ -42,9 +45,13 @@ const Box: React.FC<{
           >
             {ItemValue ? ItemValue?.total : 0}
           </span>
-          <div className={styles.border_button__right}>
+          <Link
+            className={styles.border_button__right}
+            to={ItemValue.path}
+            target={`${ItemValue.path === '' ? '_self' : '_blank'}`}
+          >
             <RightChart />
-          </div>
+          </Link>
         </div>
         <div className={styles.col_right__bottom}>
           <p className={styles.col_right__bottomText}>{ItemValue.title}</p>
@@ -84,6 +91,10 @@ const ItemsChart: React.FC<{
       total: dataLog
         ? dataLog?.applyLogs.total
         : dataLogRecruiter?.applyLogs.total,
+      path: dataLog
+        ? '/history'
+        : // '/history?activitiesEmployer=60'
+          '',
     },
     {
       id: 2,
@@ -102,6 +113,11 @@ const ItemsChart: React.FC<{
       total: dataLog
         ? dataLog?.viewPostLogs.total
         : dataLogRecruiter?.viewCandidateLogs.total,
+      path: dataLog
+        ? // '/history?activitiesCandidate=70'
+          ''
+        : // '/history?activitiesEmployer=61'
+          '',
     },
     {
       id: 3,
@@ -120,6 +136,10 @@ const ItemsChart: React.FC<{
       total: dataLog
         ? dataLog?.viewProfileLogs.total
         : dataLogRecruiter?.saveCandidateLogs.total,
+      path: dataLog
+        ? // '/history?activitiesCandidate=71'
+          ''
+        : '/history?candidate=4',
     },
   ];
 

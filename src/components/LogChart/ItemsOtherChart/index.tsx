@@ -16,10 +16,7 @@ import { RootState } from 'store';
 import { DataLog, DataLogRecuiter } from 'pages/LogChart/typeChart';
 import { PropItemOther, PropItemValue } from '../typeChart';
 import { Link } from 'react-router-dom';
-import {
-  CustomSkeleton,
-  ImageChangeSkeleton,
-} from '#components/CustomSkeleton';
+import { CustomSkeleton } from '#components/CustomSkeleton';
 
 const ItemsCompanyCareChart: React.FC<{
   dataLog: DataLog | undefined;
@@ -45,15 +42,15 @@ const ItemsCompanyCareChart: React.FC<{
             ? 'Number of companies saved the profile'
             : '내 이력서를 저장한 회사 조회 수'
           : languageRedux === 1
-          ? 'Lượt ứng viên lưu công ty'
+          ? 'Lượt ứng viên xem công ty'
           : languageRedux === 2
-          ? 'Number of candidates saved the company'
-          : '지원자가 회사를 저장한 횟수',
+          ? 'Number of candidates viewed the company'
+          : '내 회사정보를 본 구직자 조회 수',
         icon: <ChartCompanyView />,
         total: dataLog
           ? dataLog?.saveYourProfileLogs
-          : dataLogRecruiter?.saveYourCompanyLogs,
-        path: dataLog ? '/history?companyView=50' : '/',
+          : dataLogRecruiter?.viewYourCompanyLogs,
+        path: dataLog ? '' : '',
       },
       {
         id: 2,
@@ -71,8 +68,8 @@ const ItemsCompanyCareChart: React.FC<{
         icon: <ChartCompanySave />,
         total: dataLog
           ? dataLog?.searchLogs
-          : dataLogRecruiter?.viewYourCompanyLogs,
-        path: dataLog ? '/chart' : '/chart',
+          : dataLogRecruiter?.saveYourCompanyLogs,
+        path: dataLog ? '' : '',
       },
     ],
     otherBottom: [
@@ -138,6 +135,7 @@ const ItemsCompanyCareChart: React.FC<{
                     <Link
                       className={styles.border_button__right}
                       to={other.path}
+                      target={`${other.path === '' ? '_self' : '_blank'}`}
                     >
                       <RightChart />
                     </Link>
@@ -169,6 +167,7 @@ const ItemsCompanyCareChart: React.FC<{
                     <Link
                       className={styles.border_button__right}
                       to={other.path}
+                      target={`${other.path === '' ? '_self' : '_blank'}`}
                     >
                       <RightChart />
                     </Link>
