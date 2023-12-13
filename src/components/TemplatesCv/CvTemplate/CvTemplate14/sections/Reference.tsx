@@ -66,14 +66,14 @@ const Reference: React.FC<ICvReference> = (props) => {
       width: '10px',
       height: '10px',
       backgroundColor: color === 1
-        ? '#f7b3cc'
+        ? '#f078a4'
         : color === 2
-          ? '#AED6F1'
+          ? '#0D99FF'
           : color === 3
-            ? '#F9E79F'
+            ? '#FBBC04'
             : color === 4
-              ? '#ABEBC6'
-              : '#F1948A'
+              ? '#5CB265'
+              : '#D80000',
     }
   });
   return (

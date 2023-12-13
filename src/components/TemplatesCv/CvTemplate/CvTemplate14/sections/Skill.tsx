@@ -73,26 +73,26 @@ const Skill: React.FC<ICvSkill> = (props) => {
         color === 1
           ? '#000000'
           : color === 2
-            ? '#D6EAF8'
+            ? '#0D99FF'
             : color === 3
-              ? '#FCF3CF'
+              ? '#FBBC04'
               : color === 4
-                ? '#D5F5E3'
-                : '#FADBD8',
+                ? '#5CB265'
+                : '#D80000',
       margin: '7pt 0',
     },
     square: {
       width: '10px',
       height: '10px',
       backgroundColor: color === 1
-        ? '#f7b3cc'
+        ? '#f078a4'
         : color === 2
-          ? '#AED6F1'
+          ? '#0D99FF'
           : color === 3
-            ? '#F9E79F'
+            ? '#FBBC04'
             : color === 4
-              ? '#ABEBC6'
-              : '#F1948A'
+              ? '#5CB265'
+              : '#D80000',
     }
   });
   return (
