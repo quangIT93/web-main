@@ -72,7 +72,9 @@ const Comunity = () => {
   const languageRedux = useSelector((state: RootState) => {
     return state.changeLaguage.language;
   });
-  const dataProfile = useSelector((state: RootState) => state.dataProfileInformationV3.data);
+  const dataProfile = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
   const [detail, setDetail] = React.useState<any>();
   const [searchParams, setSearchParams] = useSearchParams();
   const POST_COMMUNITY_ID = searchParams.get('post-community');
@@ -102,7 +104,7 @@ const Comunity = () => {
       if (result.status === 200) {
         setDeleteCmt(!deleteCmt);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleGetDetailCommunityById = async () => {
@@ -147,8 +149,9 @@ const Comunity = () => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${size * rows
-        }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${
+        size * rows
+      }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
@@ -160,28 +163,28 @@ const Comunity = () => {
         languageRedux === 1
           ? 'Bạn có chắc muốn xóa bình luận này'
           : languageRedux === 2
-            ? 'Are you sure delete this comment'
-            : languageRedux === 3 && '이 댓글을 삭제하시겠습니까?',
+          ? 'Are you sure delete this comment'
+          : languageRedux === 3 && '이 댓글을 삭제하시겠습니까?',
       content:
         languageRedux === 1
           ? 'Sau khi xóa, bình luận này sẽ không còn xuất hiện nữa'
           : languageRedux === 2
-            ? 'Once deleted, this comment will no longer appear'
-            : languageRedux === 3 &&
+          ? 'Once deleted, this comment will no longer appear'
+          : languageRedux === 3 &&
             '삭제되면 이 댓글은 더 이상 표시되지 않습니다.',
       okText:
         languageRedux === 1
           ? 'Có'
           : languageRedux === 2
-            ? 'Yes'
-            : languageRedux === 3 && '확인',
+          ? 'Yes'
+          : languageRedux === 3 && '확인',
       okType: 'danger',
       cancelText:
         languageRedux === 1
           ? 'Không'
           : languageRedux === 2
-            ? 'No'
-            : languageRedux === 3 && '아니요',
+          ? 'No'
+          : languageRedux === 3 && '아니요',
       onOk() {
         handleDeleteCmt(postId, cmtId);
       },
@@ -258,8 +261,8 @@ const Comunity = () => {
         languageRedux === 1
           ? 'Bạn chưa nhập bình luận'
           : languageRedux === 2
-            ? 'You have not entered a comment'
-            : languageRedux === 3 && '아직 댓글을 입력하지 않았습니다.',
+          ? 'You have not entered a comment'
+          : languageRedux === 3 && '아직 댓글을 입력하지 않았습니다.',
       );
       setCmtContent('');
       return;
@@ -319,8 +322,8 @@ const Comunity = () => {
     fromHistory === '31'
       ? window.open('/history?community_post=31', '_parent')
       : fromHistory === '30'
-        ? window.open('/history?community_post=30', '_parent')
-        : window.open(
+      ? window.open('/history?community_post=30', '_parent')
+      : window.open(
           detail?.type === 1 ? '/new-comunity' : '/news-comunity',
           '_parent',
         );
@@ -348,19 +351,19 @@ const Comunity = () => {
                 ? languageRedux === 1
                   ? 'Lịch sử'
                   : languageRedux === 2
-                    ? 'History'
-                    : '기록'
+                  ? 'History'
+                  : '기록'
                 : detail?.type === 1
-                  ? languageRedux === 1
-                    ? 'Câu chuyện việc làm'
-                    : languageRedux === 2
-                      ? 'Working story'
-                      : languageRedux === 3 && '워킹스토리'
-                  : languageRedux === 1
-                    ? 'Tin tức'
-                    : languageRedux === 2
-                      ? 'Recruitment news'
-                      : languageRedux === 3 && '뉴스'}
+                ? languageRedux === 1
+                  ? 'Câu chuyện việc làm'
+                  : languageRedux === 2
+                  ? 'Working story'
+                  : languageRedux === 3 && '워킹스토리'
+                : languageRedux === 1
+                ? 'Tin tức'
+                : languageRedux === 2
+                ? 'Recruitment news'
+                : languageRedux === 3 && '뉴스'}
             </h3>
           </div>
           <div className="title-comunity">
@@ -390,8 +393,8 @@ const Comunity = () => {
                 {languageRedux === 1
                   ? 'Lưu'
                   : languageRedux === 2
-                    ? 'Save'
-                    : '저장'}
+                  ? 'Save'
+                  : '저장'}
               </span>
             </div>
           </div>
@@ -415,8 +418,8 @@ const Comunity = () => {
                   {languageRedux === 1
                     ? 'Tác giả'
                     : languageRedux === 2
-                      ? 'Author'
-                      : '작가'}
+                    ? 'Author'
+                    : '작가'}
                 </p>
                 <p>
                   {detail?.type === 1
@@ -429,12 +432,17 @@ const Comunity = () => {
           </div>
           <div className="comunityDetail-wrap_content">
             <div className="comunityDetail-content">
-              <div dangerouslySetInnerHTML={{ __html: detail?.content }}></div>
-              {/* <TextArea
-                value={detail?.content}
-                autoSize
-                // showCount
-              /> */}
+              {detail?.type === 0 ? (
+                <div
+                  dangerouslySetInnerHTML={{ __html: detail?.content }}
+                ></div>
+              ) : (
+                <TextArea
+                  value={detail?.content}
+                  autoSize
+                  // showCount
+                />
+              )}
             </div>
           </div>
           {/* <ImageList
@@ -533,7 +541,7 @@ const Comunity = () => {
                 // )}
                 src={item.image}
                 alt={item.image}
-              //loading="lazy"
+                //loading="lazy"
               />
             ))}
           </div>
@@ -604,13 +612,13 @@ const Comunity = () => {
                     languageRedux === 1
                       ? 'Nhập bình luận của bạn ...'
                       : languageRedux === 2
-                        ? 'Enter your comment ...'
-                        : languageRedux === 3
-                          ? '댓글을 입력하세요...'
-                          : 'Nhập bình luận của bạn ...'
+                      ? 'Enter your comment ...'
+                      : languageRedux === 3
+                      ? '댓글을 입력하세요...'
+                      : 'Nhập bình luận của bạn ...'
                   }
                   autoSize
-                // showCount
+                  // showCount
                 />
                 <div className="comment-interaction">
                   <div
@@ -662,7 +670,7 @@ const Comunity = () => {
                                 display:
                                   detail?.profileData?.id ===
                                     localStorage.getItem('accountId') ||
-                                    cmtData?.profile?.id ===
+                                  cmtData?.profile?.id ===
                                     localStorage.getItem('accountId')
                                     ? 'block'
                                     : 'none',
