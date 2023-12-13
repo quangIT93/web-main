@@ -34,12 +34,12 @@ const Education: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#000000'
           : color === 2
-          ? '#ffffff'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#ffffff'
-          : '#ffffff',
+            ? '#ffffff'
+            : color === 3
+              ? '#000000'
+              : color === 4
+                ? '#ffffff'
+                : '#ffffff',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'bold',
@@ -51,13 +51,13 @@ const Education: React.FC<ICvHeader> = (props) => {
       flexDirection: 'row',
     },
     leftInfo: {
-      width: '40%',
+      width: '25%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
     },
     rightInfo: {
-      width: '60%',
+      width: '75%',
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
@@ -82,7 +82,7 @@ const Education: React.FC<ICvHeader> = (props) => {
       display: 'flex',
       flexDirection: 'column',
       gap: '4.028pt',
-      maxWidth: '180pt',
+      // maxWidth: '180pt',
     },
     textRight: {
       fontSize: '9pt',
@@ -99,12 +99,12 @@ const Education: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#ffcf00'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#D4AC0D'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       left: '40pt',
       top: '10pt',
     },
