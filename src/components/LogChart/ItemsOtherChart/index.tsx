@@ -9,6 +9,8 @@ import {
   ChartCompanySave,
   ChartPostSave,
   ChartPostCreate,
+  SearchedChart,
+  ChartPerson,
 } from '#components/Icons';
 import styles from './style.module.scss';
 import { useSelector } from 'react-redux';
@@ -46,7 +48,7 @@ const ItemsCompanyCareChart: React.FC<{
           : languageRedux === 2
           ? 'Number of candidates viewed the company'
           : '내 회사정보를 본 구직자 조회 수',
-        icon: <ChartCompanyView />,
+        icon: dataLog ? <ChartCompanyView /> : <ChartPerson />,
         total: dataLog
           ? dataLog?.saveYourProfileLogs
           : dataLogRecruiter?.viewYourCompanyLogs,
@@ -65,7 +67,7 @@ const ItemsCompanyCareChart: React.FC<{
           : languageRedux === 2
           ? 'Number of candidates following the company'
           : '내 회사 관심하는 구직자 조회 수',
-        icon: <ChartCompanySave />,
+        icon: dataLog ? <SearchedChart /> : <ChartCompanySave />,
         total: dataLog
           ? dataLog?.searchLogs
           : dataLogRecruiter?.saveYourCompanyLogs,

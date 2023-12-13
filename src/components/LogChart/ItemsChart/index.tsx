@@ -7,6 +7,9 @@ import {
   BagChart,
   SearchedChart,
   RightChart,
+  ChartCompanySave,
+  ChartCompanyView,
+  ChartStar,
 } from '#components/Icons';
 import { DataLog, DataLogRecuiter } from 'pages/LogChart/typeChart';
 import { CustomSkeleton } from '#components/CustomSkeleton';
@@ -132,7 +135,7 @@ const ItemsChart: React.FC<{
         : languageRedux === 2
         ? 'Saved candidates'
         : '저장한 구직자',
-      icon: <SearchedChart />,
+      icon: dataLog ? <ChartCompanySave /> : <ChartStar />,
       total: dataLog
         ? dataLog?.viewProfileLogs.total
         : dataLogRecruiter?.saveCandidateLogs.total,
