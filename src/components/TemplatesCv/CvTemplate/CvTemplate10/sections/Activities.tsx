@@ -16,7 +16,7 @@ const Activities: React.FC<ICvActivities> = (props) => {
   const { color, profile, fontSize } = props;
   const styles = StyleSheet.create({
     container: {
-      marginLeft: -25,
+      marginLeft: -30,
     },
     divTitle: {
       backgroundColor:
@@ -29,9 +29,13 @@ const Activities: React.FC<ICvActivities> = (props) => {
               : color === 4
                 ? '#D5F5E3'
                 : '#FADBD8',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
+      marginRight: -10
     },
     title: {
-      marginLeft: '45.839pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       color:
@@ -113,10 +117,25 @@ const Activities: React.FC<ICvActivities> = (props) => {
       lineHeight: '1.2',
       fontFamily: 'Petrona Bold',
     },
+    square: {
+      marginLeft: '45.839pt',
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#037385'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Activities</Text>
       </View>
       {profile?.profileActivities?.map((activities: any) => (
