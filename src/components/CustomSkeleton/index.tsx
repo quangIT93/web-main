@@ -2,8 +2,9 @@ import React from 'react';
 
 import { Skeleton, Space } from 'antd';
 import './style.scss';
+import { LineChartOutlined } from '@ant-design/icons';
 
-const CustomSkeleton: React.FC = () => {
+export const CustomSkeleton: React.FC = () => {
   return (
     <div
       style={{
@@ -53,4 +54,12 @@ const CustomSkeleton: React.FC = () => {
   );
 };
 
-export default CustomSkeleton;
+export const ImageChangeSkeleton: React.FC = () => {
+  return (
+    <Skeleton.Node active={true}>
+      <LineChartOutlined style={{ fontSize: 50, color: '#000' }} />
+    </Skeleton.Node>
+  );
+};
+
+// export default CustomSkeleton;
