@@ -13,8 +13,15 @@ const Skill: React.FC<ICvSkill> = (props) => {
     container: {
       marginRight: -25,
     },
-    title: {
+    divTitle: {
+      width: '280pt',
       marginLeft: '20pt',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt'
+    },
+    title: {
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
@@ -66,20 +73,39 @@ const Skill: React.FC<ICvSkill> = (props) => {
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#f0f8eb'
+          ? '#377a40'
           : color === 2
-            ? '#D9EFFE'
+            ? '#0D99FF'
             : color === 3
-              ? '#FBF2DA'
+              ? '#FBBC04'
               : color === 4
-                ? '#E2FFE5'
-                : '#FEE1E1',
+                ? '#5CB265'
+                : '#D80000',
       margin: '7pt 0 4pt 20pt',
     },
+    square: {
+      width: '10px',
+      height: '10px',
+      borderRadius: '50%',
+      border: `2px solid ${color === 1
+        ? '#377a40'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
+        }`,
+      backgroundColor: color === 1
+        ? '#b4d9a1'
+        : '#ffffff',
+    }
   });
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Skill</Text>
       </View>
       {profileMore?.profilesSkills?.map((skill: any) => (
@@ -87,10 +113,10 @@ const Skill: React.FC<ICvSkill> = (props) => {
           <View style={styles.divDes}>
             <Text style={styles.TextTitleDes}>{skill?.skillName}</Text>
           </View>
+          <View style={styles.BorderLine}></View>
           <View style={styles.divDes}>
             <Text style={styles.textDes}>{skill?.dataLevel?.data}</Text>
           </View>
-          <View style={styles.BorderLine}></View>
         </View>
       ))}
     </View>

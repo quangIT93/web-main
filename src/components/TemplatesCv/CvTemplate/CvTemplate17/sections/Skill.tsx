@@ -34,12 +34,12 @@ const Skill: React.FC<ICvSkill> = (props) => {
         color === 1
           ? '#000000'
           : color === 2
-          ? '#ffffff'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#ffffff'
-          : '#ffffff',
+            ? '#ffffff'
+            : color === 3
+              ? '#000000'
+              : color === 4
+                ? '#ffffff'
+                : '#ffffff',
       letterSpacing: '4pt',
       fontFamily: 'Petrona Bold',
       fontWeight: 'extrabold',
@@ -69,14 +69,14 @@ const Skill: React.FC<ICvSkill> = (props) => {
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#F8DE72'
+          ? '#000000'
           : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       margin: '7pt 0 4pt 20pt',
     },
     lineTitle: {
@@ -87,12 +87,12 @@ const Skill: React.FC<ICvSkill> = (props) => {
         color === 1
           ? '#ffcf00'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#D4AC0D'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       left: '15pt',
       top: '10pt',
     },
@@ -108,10 +108,10 @@ const Skill: React.FC<ICvSkill> = (props) => {
           <View style={styles.divDes}>
             <Text style={styles.textTitleDes}>{skill?.skillName}</Text>
           </View>
+          <View style={styles.BorderLine}></View>
           <View style={styles.divDes}>
             <Text style={styles.textDes}>{skill?.dataLevel?.data}</Text>
           </View>
-          <View style={styles.BorderLine}></View>
         </View>
       ))}
     </View>

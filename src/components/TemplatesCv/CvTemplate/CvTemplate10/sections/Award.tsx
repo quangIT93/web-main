@@ -17,15 +17,18 @@ const Award: React.FC<ICvAward> = (props) => {
         color === 1
           ? '#e5f6fe'
           : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
+            ? '#D6EAF8'
+            : color === 3
+              ? '#FCF3CF'
+              : color === 4
+                ? '#D5F5E3'
+                : '#FADBD8',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '5pt',
     },
     title: {
-      marginLeft: '20pt',
       padding: '9.209pt 0',
       fontSize: '16pt',
       width: '137pt',
@@ -33,12 +36,12 @@ const Award: React.FC<ICvAward> = (props) => {
         color === 1
           ? '#037385'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
@@ -58,12 +61,12 @@ const Award: React.FC<ICvAward> = (props) => {
         color === 1
           ? '#037385'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     textDes: {
       fontSize: '9pt',
@@ -72,10 +75,25 @@ const Award: React.FC<ICvAward> = (props) => {
       lineHeight: '1.2',
       fontFamily: 'Petrona Bold',
     },
+    square: {
+      marginLeft: '20pt',
+      width: '10px',
+      height: '10px',
+      backgroundColor: color === 1
+        ? '#037385'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000'
+    }
   });
   return (
     <View style={styles.container}>
       <View style={styles.divTitle}>
+        <View style={styles.square} />
         <Text style={styles.title}>Award</Text>
       </View>
       {profile?.profileAwards?.map((ward: any) => (

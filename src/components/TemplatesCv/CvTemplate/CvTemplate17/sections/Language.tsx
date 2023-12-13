@@ -34,12 +34,12 @@ const Language: React.FC<ICvLanguage> = (props) => {
         color === 1
           ? '#000000'
           : color === 2
-          ? '#ffffff'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#ffffff'
-          : '#ffffff',
+            ? '#ffffff'
+            : color === 3
+              ? '#000000'
+              : color === 4
+                ? '#ffffff'
+                : '#ffffff',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
@@ -74,14 +74,14 @@ const Language: React.FC<ICvLanguage> = (props) => {
       height: '4pt',
       backgroundColor:
         color === 1
-          ? '#F8DE72'
+          ? '#000000'
           : color === 2
-          ? '#D6EAF8'
-          : color === 3
-          ? '#FCF3CF'
-          : color === 4
-          ? '#D5F5E3'
-          : '#FADBD8',
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       margin: '7pt 0',
     },
     lineTitle: {
@@ -92,12 +92,12 @@ const Language: React.FC<ICvLanguage> = (props) => {
         color === 1
           ? '#ffcf00'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#D4AC0D'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       left: '15pt',
       top: '10pt',
     },

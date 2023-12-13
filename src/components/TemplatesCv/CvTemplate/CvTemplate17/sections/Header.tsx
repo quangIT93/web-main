@@ -50,14 +50,14 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontSize: '46pt',
       color:
         color === 1
-          ? '#ffcf00'
+          ? '#000000'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#D4AC0D'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Petrona Bold',
       fontWeight: 'extrabold',
     },
@@ -67,14 +67,14 @@ const Header: React.FC<ICvHeader> = (props) => {
       marginTop: '20pt',
       color:
         color === 1
-          ? '#ffcf00'
+          ? '#000000'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#D4AC0D'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       fontFamily: 'Petrona Bold',
     },
     divImage: {

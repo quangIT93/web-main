@@ -34,12 +34,12 @@ const Reference: React.FC<ICvReference> = (props) => {
         color === 1
           ? '#000000'
           : color === 2
-          ? '#ffffff'
-          : color === 3
-          ? '#000000'
-          : color === 4
-          ? '#ffffff'
-          : '#ffffff',
+            ? '#ffffff'
+            : color === 3
+              ? '#000000'
+              : color === 4
+                ? '#ffffff'
+                : '#ffffff',
       fontFamily: 'Petrona Bold',
       letterSpacing: '4pt',
       fontWeight: 'extrabold',
@@ -79,12 +79,12 @@ const Reference: React.FC<ICvReference> = (props) => {
         color === 1
           ? '#ffcf00'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#D4AC0D'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       left: '15pt',
       top: '10pt',
     },
@@ -109,7 +109,7 @@ const Reference: React.FC<ICvReference> = (props) => {
             </View>
           </View>
         ))}
-        <View
+        {/* <View
           style={{
             height: '12pt',
             width: '60pt',
@@ -126,7 +126,7 @@ const Reference: React.FC<ICvReference> = (props) => {
                 ? '#D5F5E3'
                 : '#FADBD8',
           }}
-        ></View>
+        ></View> */}
       </View>
     </View>
   );

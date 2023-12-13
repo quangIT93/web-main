@@ -67,12 +67,12 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#f4f4f4'
           : color === 2
-          ? '#E9F5FE'
-          : color === 3
-          ? '#FDF9E7'
-          : color === 4
-          ? '#F1FDF2'
-          : '#FDE9E9',
+            ? '#E9F5FE'
+            : color === 3
+              ? '#FDF9E7'
+              : color === 4
+                ? '#F1FDF2'
+                : '#FDE9E9',
       // borderRight: `1px solid ${
       //   color === 1
       //     ? '#cee8ff'
@@ -101,12 +101,12 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#f4f4f4'
           : color === 2
-          ? '#E9F5FE'
-          : color === 3
-          ? '#FDF9E7'
-          : color === 4
-          ? '#F1FDF2'
-          : '#FDE9E9',
+            ? '#E9F5FE'
+            : color === 3
+              ? '#FDF9E7'
+              : color === 4
+                ? '#F1FDF2'
+                : '#FDE9E9',
       gap: '35pt',
       marginRight: -30,
     },
@@ -121,12 +121,33 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
     },
     hijob: {
       position: 'absolute',
-      fontSize: fontSize - 12,
-      bottom: 10,
+      bottom: 0,
       // left: 0,
-      right: 25,
-      textAlign: 'center',
+      right: 0,
+      // textAlign: 'center',
+      height: 25,
+      paddingRight: 25,
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      backgroundColor: color === 1
+        ? '#ffcf00'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#D4AC0D'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000',
+      width: '42%',
+    },
+    hijobText: {
       color: '#000000',
+      fontSize: fontSize - 12,
+      height: 17,
+      textAlign: 'right',
+      // border: '1px solid red'
     },
     lineTopRight: {
       position: 'absolute',
@@ -136,12 +157,12 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#ffcf00'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#D4AC0D'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       zIndex: 3,
       marginLeft: 0,
       // marginRight: 1,
@@ -154,12 +175,12 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
         color === 1
           ? '#ffcf00'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#D4AC0D'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#D4AC0D'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       zIndex: 3,
       marginLeft: 0,
       bottom: 0,
@@ -192,7 +213,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
           <View style={styles.lineTopRight}></View>
           <View style={styles.lineBottomRight} fixed></View>
           {profileMore?.profilesEducations &&
-          profileMore.profilesEducations?.length !== 0 ? (
+            profileMore.profilesEducations?.length !== 0 ? (
             <View>
               <Education
                 profile={profileMore}
@@ -205,7 +226,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profilesExperiences &&
-          profileMore.profilesExperiences?.length !== 0 ? (
+            profileMore.profilesExperiences?.length !== 0 ? (
             <View>
               <Experience
                 profile={profileMore}
@@ -218,7 +239,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profileActivities &&
-          profileMore.profileActivities?.length !== 0 ? (
+            profileMore.profileActivities?.length !== 0 ? (
             <View>
               <Activities
                 profile={profileMore}
@@ -235,7 +256,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
             <Profile profile={profile} fontSize={fontSize} color={color} />
           </View>
           {profileMore?.profilesLanguages &&
-          profileMore.profilesLanguages?.length !== 0 ? (
+            profileMore.profilesLanguages?.length !== 0 ? (
             <View>
               <Language
                 profile={profileMore}
@@ -247,7 +268,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profileHobbies &&
-          profileMore.profileHobbies?.length !== 0 ? (
+            profileMore.profileHobbies?.length !== 0 ? (
             <View>
               <Hobies profile={profileMore} fontSize={fontSize} color={color} />
             </View>
@@ -255,7 +276,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profilesSkills &&
-          profileMore.profilesSkills?.length !== 0 ? (
+            profileMore.profilesSkills?.length !== 0 ? (
             <View>
               <Skill profile={profileMore} fontSize={fontSize} color={color} />
             </View>
@@ -263,7 +284,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
             <></>
           )}
           {profileMore?.profilesReferences &&
-          profileMore.profilesReferences?.length !== 0 ? (
+            profileMore.profilesReferences?.length !== 0 ? (
             <View>
               <Reference
                 profile={profileMore}
@@ -276,7 +297,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
           )}
 
           {profileMore?.profileAwards &&
-          profileMore.profileAwards?.length !== 0 ? (
+            profileMore.profileAwards?.length !== 0 ? (
             <View>
               <Award profile={profileMore} fontSize={fontSize} color={color} />
             </View>
@@ -292,11 +313,14 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
         render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
         fixed
       />
-      <Text
+      <View
         style={styles.hijob}
-        render={({ pageNumber, totalPages }) => `hijob.site`}
-        fixed
-      />
+        fixed>
+        <Text
+          style={styles.hijobText}
+          render={({ pageNumber, totalPages }) => `hijob.site`}
+        />
+      </View>
     </Page>
   );
 
