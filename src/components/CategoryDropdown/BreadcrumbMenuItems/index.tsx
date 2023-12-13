@@ -565,25 +565,25 @@ const BreadcrumbMenuItems: React.FC = () => {
                 : languageRedux === 3 && '지원한 구직자.'
               : searchParams.get('c') === '6-1'
               ? languageRedux === 1
-                ? 'Ứng viên đã xem qua'
+                ? 'Ứng viên đã xem'
                 : languageRedux === 2
                 ? 'Viewed candidates'
                 : languageRedux === 3 && '본 구지자.'
               : searchParams.get('c') === '6-2'
               ? languageRedux === 1
-                ? 'Ứng viên đã lưu lại'
+                ? 'Ứng viên đã lưu'
                 : languageRedux === 2
                 ? 'Saved candidates'
                 : languageRedux === 3 && '저장한 구직자.'
               : searchParams.get('c') === '4-0'
               ? languageRedux === 1
-                ? 'Ứng viên đã lưu lại'
+                ? 'Ứng viên đã lưu'
                 : languageRedux === 2
                 ? 'Saved candidates'
                 : languageRedux === 3 && '저장한 구직자'
               : searchParams.get('c') === '7-0'
               ? languageRedux === 1
-                ? 'Việc làm đã xem qua'
+                ? 'Việc làm đã xem'
                 : languageRedux === 2
                 ? 'Viewed job'
                 : languageRedux === 3 && '본 채용공고.'

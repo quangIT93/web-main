@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'antd';
 
 import ItemsChart from '#components/LogChart/ItemsChart';
+//@ts-ignore
 import ItemsOtherChart from '#components/LogChart/ItemsOtherChart';
 
 import profileApi from 'api/profileApi';
@@ -104,19 +105,6 @@ const LogChart = () => {
           )}
         </div>
         <div className={styles.chart_itemsCompanyCareChart}>
-          <h3 className={styles.title_chart}>
-            {profileV3.typeRoleData === 0
-              ? languageRedux === 1
-                ? 'Công ty quan tâm đến bạn'
-                : languageRedux === 2
-                ? 'The company cares about you'
-                : '나를 관심하는 회사'
-              : languageRedux === 1
-              ? 'Ứng viên theo dõi công ty của bạn'
-              : languageRedux === 2
-              ? 'Candidates follow your company'
-              : '내 회사를 관심하는 구직자'}
-          </h3>
           <ItemsOtherChart
             dataLog={dataLog}
             dataLogRecruiter={dataLogRecruiter}

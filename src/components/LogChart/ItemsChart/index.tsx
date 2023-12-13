@@ -7,6 +7,9 @@ import {
   BagChart,
   SearchedChart,
   RightChart,
+  ChartCompanySave,
+  ChartCompanyView,
+  ChartStar,
 } from '#components/Icons';
 import { DataLog, DataLogRecuiter } from 'pages/LogChart/typeChart';
 import { CustomSkeleton } from '#components/CustomSkeleton';
@@ -45,13 +48,17 @@ const Box: React.FC<{
           >
             {ItemValue ? ItemValue?.total : 0}
           </span>
-          <Link
-            className={styles.border_button__right}
-            to={ItemValue.path}
-            target={`${ItemValue.path === '' ? '_self' : '_blank'}`}
-          >
-            <RightChart />
-          </Link>
+          {ItemValue.path !== '' ? (
+            <Link
+              className={styles.border_button__right}
+              to={ItemValue.path}
+              target={`${ItemValue.path === '' ? '_self' : '_blank'}`}
+            >
+              <RightChart />
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
         <div className={styles.col_right__bottom}>
           <p className={styles.col_right__bottomText}>{ItemValue.title}</p>
@@ -100,12 +107,12 @@ const ItemsChart: React.FC<{
       id: 2,
       title: dataLog
         ? languageRedux === 1
-          ? 'Việc làm đã xem qua'
+          ? 'Việc làm đã xem'
           : languageRedux === 2
           ? 'Viewed job'
           : '본 채용공고'
         : languageRedux === 1
-        ? 'Ứng viên đã xem qua'
+        ? 'Ứng viên đã xem'
         : languageRedux === 2
         ? 'Viewed candidates'
         : '본 구지자',
@@ -123,22 +130,22 @@ const ItemsChart: React.FC<{
       id: 3,
       title: dataLog
         ? languageRedux === 1
-          ? 'Lượt công ty xem hồ sơ'
+          ? 'Việc làm đã lưu'
           : languageRedux === 2
-          ? 'Number of companies that viewed the profile'
-          : '내 이력서를 본 회사 조회 수'
+          ? 'Saved jobs'
+          : '저장된 작업'
         : languageRedux === 1
-        ? 'Ứng viên đã lưu lại'
+        ? 'Ứng viên đã lưu'
         : languageRedux === 2
         ? 'Saved candidates'
         : '저장한 구직자',
-      icon: <SearchedChart />,
+      icon: dataLog ? <ChartCompanySave /> : <ChartStar />,
       total: dataLog
-        ? dataLog?.viewProfileLogs.total
+        ? dataLog?.savePostLogs.total
         : dataLogRecruiter?.saveCandidateLogs.total,
       path: dataLog
         ? // '/history?activitiesCandidate=71'
-          ''
+          '/history?saved_jobs=1'
         : '/history?candidate=4',
     },
   ];

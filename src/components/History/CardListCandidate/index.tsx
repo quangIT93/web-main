@@ -141,7 +141,7 @@ const CardListCandidate: React.FC = () => {
             : ' 지원자 리스트'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '4-0' && languageRedux === 1
-              ? ' > Ứng viên đã lưu lại.'
+              ? ' > Ứng viên đã lưu.'
               : languageRedux === 2
               ? ' > Saved candidates'
               : ' > 저장한 구직자.'}

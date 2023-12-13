@@ -142,7 +142,7 @@ const CardListActivitiesCandidate: React.FC<ICardsApplied> = () => {
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '7-0'
               ? languageRedux === 1
-                ? ' > Việc làm đã xem qua'
+                ? ' > Việc làm đã xem'
                 : languageRedux === 2
                 ? ' > Viewed job'
                 : ' > 본 채용공고.'

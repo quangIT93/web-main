@@ -9,4 +9,5 @@ export type PropItemValue = {
 export type PropItemOther = {
   otherTop: PropItemValue[];
   otherBottom: PropItemValue[];
+  otherMid: PropItemValue[];
 };
