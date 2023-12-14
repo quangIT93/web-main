@@ -66,6 +66,7 @@ const Activities: React.FC<ICvActivities> = (props) => {
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
+      marginRight: 20
     },
     textLeft: {
       fontSize: '11pt',

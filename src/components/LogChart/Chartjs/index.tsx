@@ -44,8 +44,8 @@ const Chartjs: React.FC<{
       languageRedux === 1
         ? 'HiJob - Tổng quan hoạt động'
         : languageRedux === 2
-        ? 'HiJob - Activity overview'
-        : 'HiJob - 활동 대시보드';
+          ? 'HiJob - Activity overview'
+          : 'HiJob - 활동 대시보드';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
@@ -66,13 +66,13 @@ const Chartjs: React.FC<{
       languageRedux === 1
         ? 'Tháng 1'
         : languageRedux === 2
-        ? 'January'
-        : '1 월',
+          ? 'January'
+          : '1 월',
       languageRedux === 1
         ? 'Tháng 2'
         : languageRedux === 2
-        ? 'February'
-        : '2 월',
+          ? 'February'
+          : '2 월',
       languageRedux === 1 ? 'Tháng 3' : languageRedux === 2 ? 'March' : '3 월',
       languageRedux === 1 ? 'Tháng 4' : languageRedux === 2 ? 'April' : '4 월',
       languageRedux === 1 ? 'Tháng 5' : languageRedux === 2 ? 'May' : '5 월',
@@ -82,23 +82,23 @@ const Chartjs: React.FC<{
       languageRedux === 1
         ? 'Tháng 9'
         : languageRedux === 2
-        ? 'September'
-        : '9 월',
+          ? 'September'
+          : '9 월',
       languageRedux === 1
         ? 'Tháng 10'
         : languageRedux === 2
-        ? 'October'
-        : '10 월',
+          ? 'October'
+          : '10 월',
       languageRedux === 1
         ? 'Tháng 11'
         : languageRedux === 2
-        ? 'November'
-        : '11 월',
+          ? 'November'
+          : '11 월',
       languageRedux === 1
         ? 'Tháng 12'
         : languageRedux === 2
-        ? 'December'
-        : '12 월',
+          ? 'December'
+          : '12 월',
     ];
 
     const datasets: Datasets = {
@@ -109,23 +109,23 @@ const Chartjs: React.FC<{
               ? languageRedux === 1
                 ? 'Việc làm đã ứng tuyển'
                 : languageRedux === 2
-                ? 'Applied job'
-                : '지원한 채용공고'
+                  ? 'Applied job'
+                  : '지원한 채용공고'
               : languageRedux === 1
-              ? 'Ứng viên đã tuyển dụng'
-              : languageRedux === 2
-              ? 'Recruited candidates'
-              : '지원한 구직자',
+                ? 'Ứng viên đã tuyển dụng'
+                : languageRedux === 2
+                  ? 'Recruited candidates'
+                  : '지원한 구직자',
           data:
             dataLog.type === 'Normal' && dataLog
               ? dataLog.applyLogs.activities.map(
-                  (applyLog: any) => applyLog.count,
-                )
+                (applyLog: any) => applyLog.count,
+              )
               : dataLog.type === 'Recuiter' && dataLog
-              ? dataLog.applyLogs.activities.map(
+                ? dataLog.applyLogs.activities.map(
                   (applyLog: any) => applyLog.count,
                 )
-              : [],
+                : [],
           fill: false,
           borderColor: 'rgba(13, 153, 255, 1)',
           backgroundColor: 'rgba(13, 153, 255, 1)',
@@ -139,23 +139,23 @@ const Chartjs: React.FC<{
               ? languageRedux === 1
                 ? 'Việc làm đã xem'
                 : languageRedux === 2
-                ? 'Viewed job'
-                : '본 채용공고'
+                  ? 'Viewed job'
+                  : '본 채용공고'
               : languageRedux === 1
-              ? 'Ứng viên đã xem'
-              : languageRedux === 2
-              ? 'Viewed candidates'
-              : '본 구지자',
+                ? 'Ứng viên đã xem'
+                : languageRedux === 2
+                  ? 'Viewed candidates'
+                  : '본 구지자',
           data:
             dataLog.type === 'Normal' && dataLog
               ? dataLog.viewPostLogs.activities.map(
-                  (applyLog: any) => applyLog.count,
-                )
+                (applyLog: any) => applyLog.count,
+              )
               : dataLog.type === 'Recuiter' && dataLog
-              ? dataLog.viewCandidateLogs.activities.map(
+                ? dataLog.viewCandidateLogs.activities.map(
                   (applyLog: any) => applyLog.count,
                 )
-              : [],
+                : [],
           fill: false,
           borderColor: 'rgba(52, 168, 83, 1)',
           backgroundColor: 'rgba(52, 168, 83, 1)',
@@ -167,25 +167,25 @@ const Chartjs: React.FC<{
           label:
             profileV3.typeRoleData === 0
               ? languageRedux === 1
-                ? 'Lượt công ty xem hồ sơ'
+                ? 'Việc làm đã lưu'
                 : languageRedux === 2
-                ? 'Number of companies that viewed the profile'
-                : '내 이력서를 본 회사 조회 수'
+                  ? 'Saved jobs'
+                  : '저장된 작업'
               : languageRedux === 1
-              ? 'Ứng viên đã lưu'
-              : languageRedux === 2
-              ? 'Saved candidates'
-              : '저장한 구직자',
+                ? 'Ứng viên đã lưu'
+                : languageRedux === 2
+                  ? 'Saved candidates'
+                  : '저장한 구직자',
           data:
             dataLog.type === 'Normal' && dataLog
               ? dataLog.savePostLogs.activities.map(
-                  (applyLog: any) => applyLog.count,
-                )
+                (applyLog: any) => applyLog.count,
+              )
               : dataLog.type === 'Recuiter' && dataLog
-              ? dataLog.saveCandidateLogs.activities.map(
+                ? dataLog.saveCandidateLogs.activities.map(
                   (applyLog: any) => applyLog.count,
                 )
-              : [],
+                : [],
           fill: false,
           borderColor: 'rgba(251, 188, 4, 1)',
           backgroundColor: 'rgba(251, 188, 4, 1)',
@@ -287,13 +287,12 @@ const Chartjs: React.FC<{
                 return '';
               },
               title: (tooltipItems) => {
-                return `${
-                  languageRedux === 1
+                return `${languageRedux === 1
                     ? 'Kết quả'
                     : languageRedux === 2
-                    ? 'Result'
-                    : '결과'
-                } ${tooltipItems[0].label}`;
+                      ? 'Result'
+                      : '결과'
+                  } ${tooltipItems[0].label}`;
               },
             },
             titleAlign: 'center',
