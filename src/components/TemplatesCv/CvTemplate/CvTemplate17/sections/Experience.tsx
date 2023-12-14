@@ -61,6 +61,7 @@ const Experience: React.FC<ICvHeader> = (props) => {
       display: 'flex',
       flexDirection: 'column',
       gap: '5pt',
+      marginRight: 20
     },
     textLeft: {
       fontSize: '11pt',

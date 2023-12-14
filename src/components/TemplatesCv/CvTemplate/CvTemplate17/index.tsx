@@ -43,7 +43,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
   const { color, fontSize, profile, profileMore } = props;
   const styles = StyleSheet.create({
     page: {
-      padding: '30 20 30 30',
+      padding: '30 0',
       position: 'relative',
       backgroundColor: 'rgba(255,255,255,0.4)',
     },
@@ -86,7 +86,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
       // }`,
       gap: '20.495pt',
       paddingTop: '20pt',
-      marginLeft: -30,
+      // marginLeft: -30,
     },
     rightColumn: {
       position: 'relative',
@@ -108,7 +108,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
                 ? '#F1FDF2'
                 : '#FDE9E9',
       gap: '35pt',
-      marginRight: -30,
+      // marginRight: -30,
     },
     pageNumber: {
       position: 'absolute',
@@ -140,7 +140,7 @@ const CvTemplate17: React.FC<CvTemplate> = (props) => {
             : color === 4
               ? '#5CB265'
               : '#D80000',
-      width: '42%',
+      width: '37.5%',
     },
     hijobText: {
       color: '#000000',

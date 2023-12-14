@@ -79,7 +79,7 @@ const Header: React.FC<ICvHeader> = (props) => {
     },
     divImage: {
       minHeight: '233.745pt',
-      minWidth: '210pt',
+      minWidth: '233pt',
       margin: '0pt 20pt 43pt 0',
       // backgroundColor: '#fff',
       backgroundColor: 'red',
