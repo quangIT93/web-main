@@ -39,8 +39,8 @@ const ModalCheckInfo: React.FC<IModalCheckInfo> = (props) => {
           {languageRedux === 1
             ? 'Cập nhật thông tin'
             : languageRedux === 2
-              ? 'Update information'
-              : languageRedux === 3 && '정보를 업데이트하세요'}
+            ? 'Update information'
+            : languageRedux === 3 && '정보를 업데이트하세요'}
         </h3>
       }
       footer={null}
@@ -60,25 +60,25 @@ const ModalCheckInfo: React.FC<IModalCheckInfo> = (props) => {
       >
         {type === 'upInfo'
           ? languageRedux === 1
-            ? 'CV cơ bản cần có thông tin cá nhân, giới thiệu bản thân và vị trí ứng tuyển. Hãy điền đầy đủ thông tin để có thể tạo được các mẫu CV.'
+            ? 'CV cơ bản cần có hình ảnh, thông tin cá nhân, giới thiệu bản thân và vị trí ứng tuyển. Hãy điền đầy đủ thông tin để có thể tạo được các mẫu CV.'
             : languageRedux === 2
-              ? 'A basic CV needs to have personal information, introduce yourself and the position you are applying for. Please fill in all information to be able to create CV templates.'
-              : languageRedux === 3 &&
+            ? 'A basic CV needs to have image, personal information, introduce yourself and the position you are applying for. Please fill in all information to be able to create CV templates.'
+            : languageRedux === 3 &&
               '기본 CV에는 개인 정보, 소개, 지원하는 직업에 대한 정보가 포함되어야 합니다. CV 템플릿을 생성하려면 전체 정보를 입력하세요.'
           : languageRedux === 1
-            ? 'Hãy bổ sung thêm các thông tin: trình độ học vấn, kinh nghiệm làm việc, kỹ năng,... giúp CV của bạn chuyên nghiệp hơn để thu hút nhà tuyển dụng.'
-            : languageRedux === 2
-              ? 'Add additional information: education level, work experience, skills, etc. to make your CV more professional to attract employers.'
-              : languageRedux === 3 &&
-              '교육 수준, 업무 경험, 기술 등 추가 정보를 추가하여 CV를 더욱 전문적으로 만들어 고용주를 유치하세요.'}
+          ? 'Hãy bổ sung thêm các thông tin: Hình ảnh, trình độ học vấn, kinh nghiệm làm việc, kỹ năng,... giúp CV của bạn chuyên nghiệp hơn để thu hút nhà tuyển dụng.'
+          : languageRedux === 2
+          ? 'Add additional information: image, education level, work experience, skills, etc. to make your CV more professional to attract employers.'
+          : languageRedux === 3 &&
+            '교육 수준, 업무 경험, 기술 등 추가 정보를 추가하여 CV를 더욱 전문적으로 만들어 고용주를 유치하세요.'}
       </p>
       <div className={styles.button_check_info_modal}>
         <Button type="primary" shape="round" onClick={handleCancel}>
           {languageRedux === 1
             ? 'Cập nhật hồ sơ'
             : languageRedux === 2
-              ? 'Update profile'
-              : languageRedux === 3 && '프로필 업데이트'}
+            ? 'Update profile'
+            : languageRedux === 3 && '프로필 업데이트'}
         </Button>
         <Button
           type="text"
@@ -91,8 +91,8 @@ const ModalCheckInfo: React.FC<IModalCheckInfo> = (props) => {
           {languageRedux === 1
             ? 'Tiếp tục tạo CV'
             : languageRedux === 2
-              ? 'Continue creating CV'
-              : languageRedux === 3 && '바로 이력서 만들기'}
+            ? 'Continue creating CV'
+            : languageRedux === 3 && '바로 이력서 만들기'}
         </Button>
       </div>
     </Modal>
