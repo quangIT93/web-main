@@ -969,10 +969,10 @@ const CategoryDropdown: React.FC = () => {
                 {profileV3.typeRoleData === 0 && (
                   <h3 onClick={moveToHistoryCompany}>
                     {languageRedux === 1
-                      ? 'Nhà tuyển dụng xem hồ sơ'
+                      ? 'Lượt công ty lưu hồ sơ'
                       : languageRedux === 2
-                        ? 'Employers view resumes'
-                        : languageRedux === 3 && '이력서 열람 회사'}
+                        ? 'Number of companies saved the profile'
+                        : '내 이력서를 저장한 회사 조회 수'}
                   </h3>
                 )}
               </div>

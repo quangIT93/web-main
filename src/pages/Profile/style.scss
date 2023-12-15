@@ -63,6 +63,7 @@
       align-items: center;
       width: 100%;
       justify-content: space-between;
+      text-align: justify;
 
       .div-avatar_profile {
         display: flex;
@@ -601,6 +602,7 @@
           display: flex;
           flex-direction: column;
           gap: 4px;
+
           .helper-text {
             color: red;
             font-size: 12px;
@@ -626,6 +628,12 @@
         align-items: center;
         gap: 16px;
         cursor: pointer;
+
+        .section_icon {
+          min-width: 40px;
+          display: grid;
+          place-items: center;
+        }
 
         svg {
           color: #0D99FF;
