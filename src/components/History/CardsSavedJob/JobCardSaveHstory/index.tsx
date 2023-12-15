@@ -339,7 +339,7 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
             >
               <SaveIconFill width={24} height={24} />
             </div>
-            <div style={{ backgroundColor: 'red' }}>
+            <div>
               {!error && (
                 <img
                   className="img-resource-company"
