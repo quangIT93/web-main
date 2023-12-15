@@ -437,7 +437,7 @@ const Comunity = () => {
                   <div
                     style={{
                       clear: "both",
-                      fontSize: '12px !important',
+                      // fontSize: '12px !important',
                       // textAlign: 'justify !important'
                     }}
                     dangerouslySetInnerHTML={{ __html: detail?.content }}
@@ -448,9 +448,10 @@ const Comunity = () => {
                 </div>
               ) : (
                 <div
-                // value={detail?.content}
-                // autoSize
-                // showCount
+                  // value={detail?.content}
+                  // autoSize
+                  // showCount
+                  className="user_content"
                 >
                   {detail?.content}
                 </div>

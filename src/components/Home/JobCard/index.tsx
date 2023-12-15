@@ -77,7 +77,9 @@ const JobCard: React.FC<Iprops> = (props) => {
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const location = useLocation();
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -123,6 +125,7 @@ const JobCard: React.FC<Iprops> = (props) => {
           onClick={(e) => {
             handleClickItem(e, props.item.id);
           }}
+          className="JobCard"
         >
           <ul className="div-card-post-left">
             <ImageListItem
@@ -359,11 +362,13 @@ const JobCard: React.FC<Iprops> = (props) => {
                         ? props.item.resource.company_icon
                         : ''
                     }
-                    alt={languageRedux === 1
-                      ? 'Hình ảnh bị lỗi'
-                      : languageRedux === 2
+                    alt={
+                      languageRedux === 1
+                        ? 'Hình ảnh bị lỗi'
+                        : languageRedux === 2
                         ? 'Image is corrupted'
-                        : '이미지가 손상되었습니다'}
+                        : '이미지가 손상되었습니다'
+                    }
                   />
                 ) : (
                   <></>

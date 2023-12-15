@@ -83,23 +83,10 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
   return (
     <>
       <Card
-        sx={{
-          minWidth: '100%',
-          display: 'flex',
-          padding: '12px',
-          cursor: 'pointer',
-          margin: '10px 0',
-          '&:hover': {
-            background: '#E7E7ED',
-            transition: 'all 0.3s linear',
-          },
-          boxShadow: 'none',
-          borderRadius: '5px',
-          justifyContent: 'space-between',
-        }}
         onClick={(e) => {
           handleClickItem(e, props.item.id);
         }}
+        className="JobCardSaveHstory"
       >
         <ul className="div-card-post-left">
           <ImageListItem
@@ -242,6 +229,7 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
               alignItems: 'center',
               marginTop: '12px',
             }}
+            className="box_history__job"
           >
             <p
               style={{
@@ -249,20 +237,21 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                 fontSize: 12,
                 fontStyle: 'italic',
               }}
-            >{languageRedux === 1
-              ? 'Đã đăng vào lúc:'
-              : languageRedux === 2
+            >
+              {languageRedux === 1
+                ? 'Đã đăng vào lúc:'
+                : languageRedux === 2
                 ? 'Posted on:'
                 : languageRedux === 3 && '에 게시 됨:'}{' '}
               {props.item?.created_at != null
                 ? moment(props.item?.created_at).format('DD/MM/YYYY') +
-                ' ' +
-                moment(new Date(props.item?.created_at)).format('HH:mm')
+                  ' ' +
+                  moment(new Date(props.item?.created_at)).format('HH:mm')
                 : languageRedux === 1
-                  ? 'Chưa cập nhật'
-                  : languageRedux === 2
-                    ? 'Not updated yet'
-                    : languageRedux === 3 && '업데이트하지 않음'}
+                ? 'Chưa cập nhật'
+                : languageRedux === 2
+                ? 'Not updated yet'
+                : languageRedux === 3 && '업데이트하지 않음'}
             </p>
             {props.item?.status === 1 ? (
               <p
@@ -279,8 +268,8 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Đang tuyển'
                   : languageRedux === 2
-                    ? 'Recruiting'
-                    : '현재 모집 중'}
+                  ? 'Recruiting'
+                  : '현재 모집 중'}
               </p>
             ) : props.item?.status === 3 ? (
               <p
@@ -297,8 +286,8 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Đã đóng'
                   : languageRedux === 2
-                    ? 'Closed'
-                    : '닫은'}
+                  ? 'Closed'
+                  : '닫은'}
               </p>
             ) : (
               <p
@@ -315,10 +304,16 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Không chấp nhận'
                   : languageRedux === 2
-                    ? 'Does not accept'
-                    : '수락하지 않음'}
+                  ? 'Does not accept'
+                  : '수락하지 않음'}
               </p>
             )}
+            <p
+              style={{ fontSize: '12px', color: '#0d99ff', fontWeight: 500 }}
+              className="history_jobTypeName"
+            >
+              {props.item.job_type.job_type_name}{' '}
+            </p>
           </Box>
         </ul>
 
@@ -326,7 +321,7 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
           style={{ justifyContent: 'space-between' }}
           direction="vertical"
           align="center"
-          className="div-card-post-right"
+          // className="div-card-post-right"
         >
           <div
             style={{
@@ -353,19 +348,21 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                       ? props.item.resource.company_icon
                       : ''
                   }
-                  alt={languageRedux === 1
-                    ? 'Hình ảnh bị lỗi'
-                    : languageRedux === 2
+                  alt={
+                    languageRedux === 1
+                      ? 'Hình ảnh bị lỗi'
+                      : languageRedux === 2
                       ? 'Image is corrupted'
-                      : '이미지가 손상되었습니다'}
+                      : '이미지가 손상되었습니다'
+                  }
                   onError={handleImageError}
                 />
               )}
             </div>
           </div>
-          <p style={{ fontSize: 12, color: '#0d99ff', fontWeight: 500 }}>
+          {/* <p style={{ fontSize: 12, color: '#0d99ff', fontWeight: 500 }}>
             {props.item.job_type.job_type_name}
-          </p>
+          </p> */}
         </Space>
       </Card>
     </>
