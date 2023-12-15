@@ -1,1 +1,1 @@
-export { ScrollContext } from './ScrollObserver'
+export { ScrollContext } from './ScrollObserver';
