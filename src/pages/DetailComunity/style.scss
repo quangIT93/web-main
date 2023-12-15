@@ -151,7 +151,7 @@
                         text-indent: 12px;
                     }
 
-                    div {
+                    .user_content {
                         word-break: break-word;
                         white-space: pre-wrap;
                         // li {
@@ -173,14 +173,14 @@
                 .fix {
 
                     img {
-                        height: auto !important;
+                        // height: auto !important;
                     }
 
                     div,
                     p {
-                        text-align: justify !important;
-                        white-space: pre-wrap !important;
-                        word-break: break-word !important;
+                        // text-align: justify !important;
+                        // white-space: pre-wrap !important;
+                        // word-break: break-word !important;
                     }
                 }
 
