@@ -222,16 +222,24 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           }}
         >
           {languageRedux === 1
-            ? 'Các công việc đã lưu'
+            ? 'Công việc của tôi'
             : languageRedux === 2
-              ? 'Saved jobs'
-              : languageRedux === 3 && '저장된 작업'}
+              ? 'My jobs'
+              : languageRedux === 3 && '내 일'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-            {searchParams.get('c') === '1-0' && languageRedux === 1
-              ? ' > Tất cả'
-              : languageRedux === 2
-                ? ' > All'
-                : ' > 전부'}
+            {searchParams.get('c') === '1-0' ?
+              languageRedux === 1
+                ? ' > Tất cả'
+                : languageRedux === 2
+                  ? ' > All'
+                  : ' > 전부'
+              :
+              languageRedux === 1
+                ? ' > Việc làm đã xem'
+                : languageRedux === 2
+                  ? ' > Viewed job'
+                  : languageRedux === 3 && ' > 본 채용공고.'
+            }
           </span>
         </Typography>
         <TextField

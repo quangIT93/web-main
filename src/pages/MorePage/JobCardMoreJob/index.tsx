@@ -210,20 +210,20 @@ const JobCardMoreJob: React.FC<any> = (props) => {
                   </Typography>
                 </Tooltip>
                 <div>
-                  {props.item?.companyResourceData?.logo && (
+                  {props.item?.resource?.company_icon && (
                     <img
                       className="img-resource-company"
                       src={
-                        props.item?.companyResourceData?.logo
-                          ? props.item?.companyResourceData?.logo
+                        props.item?.resource?.company_icon
+                          ? props.item?.resource?.company_icon
                           : ''
                       }
                       alt={
                         languageRedux === 1
                           ? 'Hình ảnh bị lỗi'
                           : languageRedux === 2
-                          ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'
+                            ? 'Image is corrupted'
+                            : '이미지가 손상되었습니다'
                       }
                       onError={handleImageError}
                     />

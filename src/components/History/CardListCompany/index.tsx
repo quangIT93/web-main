@@ -233,11 +233,17 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
                   : ' > 저장된 회사'
               : searchParams.get('c') === '5-1'
                 ? languageRedux === 1
-                  ? ' > Nhà tuyển dụng xem hồ sơ'
+                  ? ' > Lượt công ty lưu hồ sơ'
                   : languageRedux === 2
-                    ? ' > Employers view resumes'
-                    : ' > 고용주는 이력서를 봅니다'
-                : ''}
+                    ? ' > Number of companies saved the profile'
+                    : ' > 내 이력서를 저장한 회사 조회 수'
+                : searchParams.get('c') === '5-2'
+                  ? languageRedux === 1
+                    ? ' > Nhà tuyển dụng xem hồ sơ'
+                    : languageRedux === 2
+                      ? ' > Employers view resumes'
+                      : ' > 고용주는 이력서를 봅니다.'
+                  : ''}
           </span>
         </Typography>
         <TextField
@@ -361,7 +367,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
       )}
 
       {(activeChild === '5-1' && companyDataView?.length !== 0) ||
-      (activeChild === '5-1' && companyData?.length !== 0) ? (
+        (activeChild === '5-1' && companyData?.length !== 0) ? (
         <Backdrop
           sx={{
             color: '#0d99ff ',
@@ -369,7 +375,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={false}
-          // onClick={handleClose}
+        // onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>
