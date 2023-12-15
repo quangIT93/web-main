@@ -308,11 +308,11 @@ const HistoryPost = () => {
           : languageRedux === 2
           ? 'Saved comopanies'
           : languageRedux === 3 && '저장된 회사',
-        languageRedux === 1
-          ? 'Nhà tuyển dụng xem hồ sơ'
-          : languageRedux === 2
-          ? 'Employers view resumes'
-          : '고용주는 이력서를 봅니다.',
+        // languageRedux === 1
+        //   ? 'Nhà tuyển dụng xem hồ sơ'
+        //   : languageRedux === 2
+        //   ? 'Employers view resumes'
+        //   : '고용주는 이력서를 봅니다.',
       ],
     },
     // {
