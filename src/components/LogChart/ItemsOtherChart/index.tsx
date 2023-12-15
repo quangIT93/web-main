@@ -52,8 +52,13 @@ const ItemsOtherChart: React.FC<{
         total: dataLog
           ? dataLog?.saveYourProfileLogs
           : dataLogRecruiter?.viewYourCompanyLogs,
-        path: dataLog ? '/history?companyView=51' :
-          '/history?activitiesEmployer=60',
+        path: dataLog ?
+          // '/history?companyView=51' 
+          ''
+          :
+          // '/history?activitiesEmployer=60'
+          ''
+        ,
       },
       {
         id: 2,
@@ -72,8 +77,12 @@ const ItemsOtherChart: React.FC<{
         total: dataLog
           ? dataLog?.viewProfileLogs
           : dataLogRecruiter?.saveYourCompanyLogs,
-        path: dataLog ? '/history?companyView=52' :
-          '/history?activitiesEmployer=61',
+        path: dataLog ?
+          // '/history?companyView=52' 
+          ''
+          :
+          // '/history?activitiesEmployer=61'
+          '',
       },
     ],
     otherMid: [
@@ -165,13 +174,13 @@ const ItemsOtherChart: React.FC<{
                     <span className={styles.col_right__topValue1}>
                       {other.total}
                     </span>
-                    <Link
+                    {/* <Link
                       className={styles.border_button__right}
                       to={other.path}
                       target={`${other.path === '' ? '_self' : '_blank'}`}
                     >
                       <RightChart />
-                    </Link>
+                    </Link> */}
                   </div>
                   <div className={styles.col_right__bottom}>
                     <p className={styles.col_right__bottomText}>
