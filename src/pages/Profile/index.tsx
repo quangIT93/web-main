@@ -252,8 +252,8 @@ const Profile: React.FC = () => {
       languageRedux === 1
         ? 'HiJob - Tìm việc làm, tuyển dụng'
         : languageRedux === 2
-          ? 'HiJob - Find a job, recruit'
-          : 'HiJob - 일자리 찾기, 채용';
+        ? 'HiJob - Find a job, recruit'
+        : 'HiJob - 일자리 찾기, 채용';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
@@ -412,11 +412,11 @@ const Profile: React.FC = () => {
           languageRedux === 1
             ? 'Xóa CV thành công'
             : languageRedux === 2
-              ? 'Successfully deleted CV'
-              : '이력서를 삭제했습니다.',
+            ? 'Successfully deleted CV'
+            : '이력서를 삭제했습니다.',
         );
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // cancel delete cv
@@ -442,16 +442,16 @@ const Profile: React.FC = () => {
           languageRedux === 1
             ? 'Cập nhật CV thành công'
             : languageRedux === 2
-              ? 'Successfully updated CV'
-              : '이력서가 업데이트되었습니다.';
+            ? 'Successfully updated CV'
+            : '이력서가 업데이트되었습니다.';
       } else {
         result = await profileApi.createCV(formData);
         mess =
           languageRedux === 1
             ? 'Thêm CV thành công'
             : languageRedux === 2
-              ? 'Added CV successfully'
-              : '이력서를 성공적으로 추가했습니다.';
+            ? 'Added CV successfully'
+            : '이력서를 성공적으로 추가했습니다.';
       }
 
       if (result) {
@@ -623,10 +623,10 @@ const Profile: React.FC = () => {
                     {profileV3?.name
                       ? profileV3?.name
                       : languageRedux === 1
-                        ? 'Chưa cập nhật'
-                        : languageRedux === 2
-                          ? 'Not updated yet'
-                          : languageRedux === 3 && '업데이트하지 않음'}
+                      ? 'Chưa cập nhật'
+                      : languageRedux === 2
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
                   </h2>
                   {/* <ChangeRoleButton /> */}
                   <Overview />
@@ -703,10 +703,10 @@ const Profile: React.FC = () => {
               {profileV3?.introduction
                 ? profileV3?.introduction
                 : languageRedux === 1
-                  ? 'Chưa cập nhật'
-                  : languageRedux === 2
-                    ? 'Not updated yet'
-                    : languageRedux === 3 && '업데이트하지 않음'}
+                ? 'Chưa cập nhật'
+                : languageRedux === 2
+                ? 'Not updated yet'
+                : languageRedux === 3 && '업데이트하지 않음'}
             </div>
           </div>
         </Skeleton>
@@ -724,8 +724,8 @@ const Profile: React.FC = () => {
                 {languageRedux === 1
                   ? 'Thông tin cá nhân'
                   : languageRedux === 2
-                    ? 'Personal Information'
-                    : '개인 정보'}
+                  ? 'Personal Information'
+                  : '개인 정보'}
               </h3>
               <Space
                 style={{ cursor: 'pointer' }}
@@ -743,8 +743,8 @@ const Profile: React.FC = () => {
                   {languageRedux === 1
                     ? 'Sửa'
                     : languageRedux === 2
-                      ? 'Edit'
-                      : '수정'}
+                    ? 'Edit'
+                    : '수정'}
                 </p>
               </Space>
             </div>
@@ -754,31 +754,31 @@ const Profile: React.FC = () => {
                   {languageRedux === 1
                     ? 'Ngày sinh'
                     : languageRedux === 2
-                      ? 'Date of birth'
-                      : '생년월일'}
+                    ? 'Date of birth'
+                    : '생년월일'}
                 </p>
                 <p>
                   {languageRedux === 1
                     ? 'Giới tính'
                     : languageRedux === 2
-                      ? 'Gender'
-                      : '성별'}
+                    ? 'Gender'
+                    : '성별'}
                 </p>
                 <p>
                   {languageRedux === 1
                     ? 'Địa chỉ'
                     : languageRedux === 2
-                      ? 'Location'
-                      : '주소'}
+                    ? 'Location'
+                    : '주소'}
                 </p>
                 <p>
                   {languageRedux === 1
                     ? 'Vị trí ứng tuyển'
                     : languageRedux === 2
-                      ? 'Position'
-                      : languageRedux === 3
-                        ? '희망 직업'
-                        : 'Vị trí ứng tuyển'}
+                    ? 'Position'
+                    : languageRedux === 3
+                    ? '희망 직업'
+                    : 'Vị trí ứng tuyển'}
                 </p>
               </div>
               <div className="div-detail-row right">
@@ -786,37 +786,37 @@ const Profile: React.FC = () => {
                   {profileV3?.birthday
                     ? moment(new Date(profileV3?.birthday)).format('DD/MM/yyyy')
                     : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
                 </p>
                 <p>
                   {profileV3?.genderText
                     ? profileV3?.genderText
                     : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
                 </p>
                 <p>
                   {profileV3?.addressText?.fullName
                     ? profileV3?.addressText?.fullName
                     : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
                 </p>
                 <p>
                   {profileV3?.jobTypeName
                     ? profileV3?.jobTypeName
                     : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
                 </p>
               </div>
             </div>
@@ -845,10 +845,10 @@ const Profile: React.FC = () => {
                 {languageRedux === 1
                   ? 'Thông tin liên hệ'
                   : languageRedux === 2
-                    ? 'Contact information'
-                    : languageRedux === 3
-                      ? '연락처'
-                      : 'Thông tin liên hệ'}
+                  ? 'Contact information'
+                  : languageRedux === 3
+                  ? '연락처'
+                  : 'Thông tin liên hệ'}
               </h3>
               <Space
                 style={{ cursor: 'pointer' }}
@@ -862,8 +862,8 @@ const Profile: React.FC = () => {
                   {languageRedux === 1
                     ? 'Sửa'
                     : languageRedux === 2
-                      ? 'Edit'
-                      : '수정'}
+                    ? 'Edit'
+                    : '수정'}
                 </p>
               </Space>
             </div>
@@ -873,31 +873,31 @@ const Profile: React.FC = () => {
                   {languageRedux === 1
                     ? 'Số điện thoại'
                     : languageRedux === 2
-                      ? 'Phone number'
-                      : '전화 번호'}
+                    ? 'Phone number'
+                    : '전화 번호'}
                 </p>
                 <p>
                   {languageRedux === 1
                     ? 'Email'
                     : languageRedux === 2
-                      ? 'Email'
-                      : '이메일'}
+                    ? 'Email'
+                    : '이메일'}
                 </p>
 
                 <p>
                   {languageRedux === 1
                     ? 'Facebook'
                     : languageRedux === 2
-                      ? 'Facebook'
-                      : '페이스북'}
+                    ? 'Facebook'
+                    : '페이스북'}
                 </p>
 
                 <p>
                   {languageRedux === 1
                     ? 'LinkedIn'
                     : languageRedux === 2
-                      ? 'LinkedIn'
-                      : '링크드인'}
+                    ? 'LinkedIn'
+                    : '링크드인'}
                 </p>
               </div>
               <div className="div-detail-row right">
@@ -905,10 +905,10 @@ const Profile: React.FC = () => {
                   {profileV3?.phone
                     ? profileV3?.phone
                     : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
                 </p>
                 <p
                   onClick={() => handleSendMail(profileV3?.email)}
@@ -921,10 +921,10 @@ const Profile: React.FC = () => {
                   {profileV3?.email
                     ? profileV3?.email
                     : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
                 </p>
                 <p
                   onClick={() => handleMoveToLink(profileV3?.facebook)}
@@ -937,10 +937,10 @@ const Profile: React.FC = () => {
                   {profileV3?.facebook
                     ? profileV3?.facebook
                     : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
                 </p>
 
                 <p
@@ -954,10 +954,10 @@ const Profile: React.FC = () => {
                   {profileV3?.linkedin
                     ? profileV3?.linkedin
                     : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
                 </p>
               </div>
             </div>
@@ -1021,8 +1021,8 @@ const Profile: React.FC = () => {
               {languageRedux === 1
                 ? 'Bạn đã xóa thông tin thành công !'
                 : languageRedux === 2
-                  ? 'You have successfully deleted the information!'
-                  : '정보를 성공적으로 삭제했습니다!'}
+                ? 'You have successfully deleted the information!'
+                : '정보를 성공적으로 삭제했습니다!'}
             </Alert>
           </Snackbar>
         </Stack>
@@ -1042,8 +1042,8 @@ const Profile: React.FC = () => {
               {languageRedux === 1
                 ? 'Bạn đã thêm thông tin thành công !'
                 : languageRedux === 2
-                  ? 'You have saved the information successfully !'
-                  : '정보를 성공적으로 추가했습니다!'}
+                ? 'You have saved the information successfully !'
+                : '정보를 성공적으로 추가했습니다!'}
             </Alert>
           </Snackbar>
         </Stack>
@@ -1063,8 +1063,8 @@ const Profile: React.FC = () => {
               {languageRedux === 1
                 ? 'Vui lòng nhập đầy đủ thông tin !'
                 : languageRedux === 2
-                  ? 'Please enter complete information !'
-                  : '완전한 정보를 입력해주세요!'}
+                ? 'Please enter complete information !'
+                : '완전한 정보를 입력해주세요!'}
             </Alert>
           </Snackbar>
         </Stack>
@@ -1084,13 +1084,13 @@ const Profile: React.FC = () => {
               {languageRedux === 1
                 ? 'Cập nhật thông tin thành công !'
                 : languageRedux === 2
-                  ? 'Update information successfully !'
-                  : '성공적으로 업데이트되었습니다!'}
+                ? 'Update information successfully !'
+                : '성공적으로 업데이트되었습니다!'}
             </Alert>
           </Snackbar>
         </Stack>
         {profileV3.typeRoleData === 0 &&
-          profileMorev3?.profilesCvs?.length === 0 ? (
+        profileMorev3?.profilesCvs?.length === 0 ? (
           <ModalIntroduceCv />
         ) : (
           <></>

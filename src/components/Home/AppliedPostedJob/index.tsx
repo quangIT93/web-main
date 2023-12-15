@@ -57,6 +57,8 @@ import historyApplicator from 'api/historyApplicator';
 import historyRecruiter from 'api/historyRecruiter';
 import { Avatar } from '@mui/material';
 import bannersApi from 'api/apiBanner';
+import ModalNotiValidateCompany from '#components/Post/ModalNotiValidateCompany';
+import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 
 // interface ItemTheme {
 //   id: number;
@@ -81,7 +83,10 @@ const AppliedPostedJob: React.FC = () => {
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [cvHijob, setCvHijob] = React.useState<any>([1]);
   const [banner, setBanner] = React.useState<any>([]);
-
+  const [openModalNoteValidateCompany, setOpenModalNoteValidateCompany] =
+    React.useState<any>(false);
+  const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
+    React.useState(false);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -346,10 +351,25 @@ const AppliedPostedJob: React.FC = () => {
                           <SwiperSlide key={index}>
                             <img
                               onClick={() => {
-                                window.open(value?.redirect_url, '_parent');
+                                if (
+                                  profile?.companyInfo &&
+                                  profile?.companyInfo?.status === 0 &&
+                                  value?.redirect_url ===
+                                    'https://hijob.site/post'
+                                ) {
+                                  setOpenModalNoteValidateCompany(true);
+                                } else if (
+                                  profile?.companyInfo === null &&
+                                  value?.redirect_url ===
+                                    'https://hijob.site/post'
+                                ) {
+                                  setOpenModalNoteCreateCompany(true);
+                                } else {
+                                  window.open(value?.redirect_url, '_parent');
+                                }
                               }}
                               src={value?.image}
-                              alt=""
+                              alt="errorimg"
                             />
                           </SwiperSlide>
                         );
@@ -384,13 +404,13 @@ const AppliedPostedJob: React.FC = () => {
                     ? languageRedux === 1
                       ? 'Việc làm đã ứng tuyển'
                       : languageRedux === 2
-                        ? 'Apllied Jobs'
-                        : languageRedux === 3 && '어플라이드 잡스'
+                      ? 'Apllied Jobs'
+                      : languageRedux === 3 && '어플라이드 잡스'
                     : languageRedux === 1
-                      ? 'Đã đăng tuyển'
-                      : languageRedux === 2
-                        ? 'Posted job'
-                        : languageRedux === 3 && '등록되기'}
+                    ? 'Đã đăng tuyển'
+                    : languageRedux === 2
+                    ? 'Posted job'
+                    : languageRedux === 3 && '등록되기'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -403,9 +423,9 @@ const AppliedPostedJob: React.FC = () => {
                         trong vòng 30 ngày, sau 30 ngày bạn có thể kiểm tra các
                         công việc đã Ứng tuyển/Đăng tuyển trong lịch sử.`
                             : languageRedux === 2
-                              ? `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`
-                              : languageRedux === 3 &&
-                                '지원/게시된 채용공고는 30일 이내에 현황이 표시되며, 30일 이후에는 지원/게시된 채용공고 현황을 히스토리에서 확인할 수 있습니다.'}
+                            ? `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`
+                            : languageRedux === 3 &&
+                              '지원/게시된 채용공고는 30일 이내에 현황이 표시되며, 30일 이후에는 지원/게시된 채용공고 현황을 히스토리에서 확인할 수 있습니다.'}
                         </p>
                       </div>
                       {/* <Button
@@ -544,21 +564,30 @@ const AppliedPostedJob: React.FC = () => {
             setOpenModalLogin={setOpenModalLogin}
           />
         </Box>
+        <ModalNotiValidateCompany
+          openModalNoteValidateCompany={openModalNoteValidateCompany}
+          setOpenModalNoteValidateCompany={setOpenModalNoteValidateCompany}
+        />
+        <ModalNoteCreateCompany
+          openModalNoteCreateCompany={openModalNoteCreateCompany}
+          setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
+        />
       </>
     );
   } else {
     return (
-      <Box
-        sx={{
-          maxWidth: { xs: 320, sm: 480 },
-          bgcolor: 'background.paper',
-          position: 'relative',
-          paddingBottom: '24px',
-          flexDirection: 'column',
-        }}
-        className="applied-posted-jobs-container"
-      >
-        {/* <div
+      <>
+        <Box
+          sx={{
+            maxWidth: { xs: 320, sm: 480 },
+            bgcolor: 'background.paper',
+            position: 'relative',
+            paddingBottom: '24px',
+            flexDirection: 'column',
+          }}
+          className="applied-posted-jobs-container"
+        >
+          {/* <div
           className="advertisement-job-not-loging"
           style={{ display: !isLogined ? 'flex' : 'none' }}
         >
@@ -585,7 +614,7 @@ const AppliedPostedJob: React.FC = () => {
           </Button>
         </div> */}
 
-        {/* <Avatar
+          {/* <Avatar
           sx={{
             width: '100%',
             maxHeight: '301px',
@@ -601,42 +630,43 @@ const AppliedPostedJob: React.FC = () => {
         >
           Banner1
         </Avatar> */}
-        <Swiper
-          spaceBetween={30}
-          centeredSlides={true}
-          autoplay={{
-            delay: 3500,
-            disableOnInteraction: false,
-          }}
-          // navigation={true}
-          pagination={true}
-          modules={[Autoplay, Pagination]}
-          className="banner-rescruit-swiper"
-          loop={true}
-        >
-          {banner?.map((value: any, index: number) => {
-            if (value?.order === 1) {
-              return (
-                <SwiperSlide key={index}>
-                  <img
-                    onClick={() => {
-                      window.open(value?.redirect_url, '_parent');
-                    }}
-                    src={value?.image}
-                    alt=""
-                  />
-                </SwiperSlide>
-              );
-            } else {
-              return <React.Fragment key={index}></React.Fragment>;
-            }
-          })}
-        </Swiper>
-        <ModalLogin
-          openModalLogin={openModalLogin}
-          setOpenModalLogin={setOpenModalLogin}
-        />
-      </Box>
+          <Swiper
+            spaceBetween={30}
+            centeredSlides={true}
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
+            }}
+            // navigation={true}
+            pagination={true}
+            modules={[Autoplay, Pagination]}
+            className="banner-rescruit-swiper"
+            loop={true}
+          >
+            {banner?.map((value: any, index: number) => {
+              if (value?.order === 1) {
+                return (
+                  <SwiperSlide key={index}>
+                    <img
+                      onClick={() => {
+                        window.open(value?.redirect_url, '_parent');
+                      }}
+                      src={value?.image}
+                      alt=""
+                    />
+                  </SwiperSlide>
+                );
+              } else {
+                return <React.Fragment key={index}></React.Fragment>;
+              }
+            })}
+          </Swiper>
+          <ModalLogin
+            openModalLogin={openModalLogin}
+            setOpenModalLogin={setOpenModalLogin}
+          />
+        </Box>
+      </>
     );
   }
 };
