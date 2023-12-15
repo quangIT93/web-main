@@ -334,7 +334,10 @@ const Chartjs: React.FC<{
   }, [selectedYear, dataLog, languageRedux, dataLogRecruiter]);
   return (
     <>
-      <canvas ref={chartRef} style={{ maxHeight: '400px' }}></canvas>
+      <canvas
+        ref={chartRef}
+        style={{ maxHeight: '400px', minHeight: '400px' }}
+      ></canvas>
       {/* <button onClick={() => setSelectedYear(2022)}>2022</button>
       <button onClick={() => setSelectedYear(2023)}>2023</button>
       <button onClick={() => setSelectedYear(2024)}>2024</button> */}
