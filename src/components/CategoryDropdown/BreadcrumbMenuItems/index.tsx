@@ -461,10 +461,10 @@ const BreadcrumbMenuItems: React.FC = () => {
           title:
             searchParams.get('p') === '1'
               ? languageRedux === 1
-                ? 'Các công việc đã lưu'
+                ? 'Công việc của tôi'
                 : languageRedux === 2
-                ? 'Saved jobs'
-                : languageRedux === 3 && '저장된 작업'
+                ? 'My jobs'
+                : languageRedux === 3 && '내 일'
               : searchParams.get('p') === '2'
               ? languageRedux === 1
                 ? 'Các công việc đã đăng tuyển'
@@ -491,10 +491,10 @@ const BreadcrumbMenuItems: React.FC = () => {
                 : languageRedux === 3 && '회사  리스트'
               : searchParams.get('p') === '6'
               ? languageRedux === 1
-                ? 'Hoạt động của bạn'
+                ? 'Lượt quan tâm công ty của bạn'
                 : languageRedux === 2
-                ? 'Your activities'
-                : languageRedux === 3 && '귀하의 활동'
+                ? 'Number of visits to your company'
+                : languageRedux === 3 && '회사 방문 횟수'
               : searchParams.get('p') === '7'
               ? languageRedux === 1
                 ? 'Hoạt động của bạn'
@@ -512,7 +512,6 @@ const BreadcrumbMenuItems: React.FC = () => {
         },
         {
           title:
-            searchParams.get('c') === '1-0' ||
             searchParams.get('c') === '2-0' ||
             searchParams.get('c') === '2-0' ||
             searchParams.get('c') === '0-0'
@@ -521,6 +520,18 @@ const BreadcrumbMenuItems: React.FC = () => {
                 : languageRedux === 2
                 ? 'All'
                 : languageRedux === 3 && '전부'
+              : searchParams.get('c') === '1-1'
+              ? languageRedux === 1
+                ? 'Việc làm đã xem'
+                : languageRedux === 2
+                ? 'Viewed job'
+                : languageRedux === 3 && '본 채용공고.'
+              : searchParams.get('c') === '1-0'
+              ? languageRedux === 1
+                ? 'Việc làm đã lưu'
+                : languageRedux === 2
+                ? 'Saved jobs'
+                : languageRedux === 3 && '저장된 작업.'
               : searchParams.get('c') === '2-1'
               ? languageRedux === 1
                 ? 'Các công việc chưa đóng'
@@ -553,34 +564,46 @@ const BreadcrumbMenuItems: React.FC = () => {
                 : languageRedux === 3 && '저장된 회사'
               : searchParams.get('c') === '5-1'
               ? languageRedux === 1
+                ? 'Lượt công ty lưu hồ sơ'
+                : languageRedux === 2
+                ? 'Number of companies saved the profile'
+                : '내 이력서를 저장한 회사 조회 수'
+              : searchParams.get('c') === '5-2'
+              ? languageRedux === 1
                 ? 'Nhà tuyển dụng xem hồ sơ'
                 : languageRedux === 2
                 ? 'Employers view resumes'
-                : languageRedux === 3 && '이력서 열람 회사'
+                : '고용주는 이력서를 봅니다.'
               : searchParams.get('c') === '6-0'
               ? languageRedux === 1
-                ? 'Ứng viên đã tuyển dụng'
+                ? 'Lượt ứng viên xem công ty'
                 : languageRedux === 2
-                ? 'Recruited candidates'
-                : languageRedux === 3 && '지원한 구직자.'
+                ? 'Number of candidates viewed the company'
+                : '내 회사정보를 본 구직자 조회 수'
               : searchParams.get('c') === '6-1'
               ? languageRedux === 1
-                ? 'Ứng viên đã xem'
+                ? 'Lượt ứng viên theo dõi công ty'
                 : languageRedux === 2
-                ? 'Viewed candidates'
-                : languageRedux === 3 && '본 구지자.'
-              : searchParams.get('c') === '6-2'
-              ? languageRedux === 1
-                ? 'Ứng viên đã lưu'
-                : languageRedux === 2
-                ? 'Saved candidates'
-                : languageRedux === 3 && '저장한 구직자.'
-              : searchParams.get('c') === '4-0'
+                ? 'Number of candidates following the company'
+                : '내 회사 관심하는 구직자 조회 수'
+              : // : searchParams.get('c') === '6-2'
+              //   ? languageRedux === 1
+              //     ? 'Ứng viên đã lưu'
+              //     : languageRedux === 2
+              //       ? 'Saved candidates'
+              //       : languageRedux === 3 && '저장한 구직자.'
+              searchParams.get('c') === '4-0'
               ? languageRedux === 1
                 ? 'Ứng viên đã lưu'
                 : languageRedux === 2
                 ? 'Saved candidates'
                 : languageRedux === 3 && '저장한 구직자'
+              : searchParams.get('c') === '4-1'
+              ? languageRedux === 1
+                ? 'Ứng viên đã xem'
+                : languageRedux === 2
+                ? 'Viewed candidates'
+                : languageRedux === 3 && '본 구지자.'
               : searchParams.get('c') === '7-0'
               ? languageRedux === 1
                 ? 'Việc làm đã xem'
@@ -1049,7 +1072,7 @@ const BreadcrumbMenuItems: React.FC = () => {
       ],
     },
     {
-      location: '/chart',
+      location: '/profile-chart',
       menu: [
         {
           title:

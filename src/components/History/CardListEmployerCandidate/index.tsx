@@ -92,8 +92,8 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = () => {
           languageRedux === 1
             ? 'Không còn ứng cử viên để xem.'
             : languageRedux === 2
-            ? 'No more candidates to see.'
-            : '더 이상 지켜볼 후보자가 없습니다.',
+              ? 'No more candidates to see.'
+              : '더 이상 지켜볼 후보자가 없습니다.',
         );
       }
     } catch (error) {
@@ -135,30 +135,24 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = () => {
           }}
         >
           {languageRedux === 1
-            ? 'Hoạt động của bạn'
+            ? 'Lượt quan tâm công ty của bạn'
             : languageRedux === 2
-            ? 'Your activities'
-            : ' 지원자 리스트'}
+              ? 'Number of visits to your company'
+              : languageRedux === 3 && '회사 방문 횟수'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '6-0'
               ? languageRedux === 1
-                ? ' > Ứng viên đã tuyển dụng.'
+                ? ' > Lượt ứng viên xem công ty'
                 : languageRedux === 2
-                ? ' > Recruited candidates'
-                : ' > 지원한 구직자.'
+                  ? ' > Number of candidates viewed the company'
+                  : ' > 내 회사정보를 본 구직자 조회 수'
               : searchParams.get('c') === '6-1'
-              ? languageRedux === 1
-                ? ' > Ứng viên đã xem.'
-                : languageRedux === 2
-                ? ' > Viewed candidates'
-                : ' > 본 구지자.'
-              : searchParams.get('c') === '6-2'
-              ? languageRedux === 1
-                ? ' > Ứng viên đã lưu.'
-                : languageRedux === 2
-                ? ' > Saved candidates'
-                : ' > 저장한 구직자.'
-              : ''}
+                ? languageRedux === 1
+                  ? ' > Lượt ứng viên theo dõi công ty'
+                  : languageRedux === 2
+                    ? ' > Number of candidates following the company'
+                    : ' > 내 회사 관심하는 구직자 조회 수'
+                : ''}
           </span>
         </Typography>
       </Box>
@@ -169,7 +163,7 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -181,7 +175,7 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = () => {
                 // <Skeleton loading={loading} active>
                 <ListCardSaveCandidate
                   item={dataBookmark}
-                  handleDeleteBookmark={() => {}}
+                  handleDeleteBookmark={() => { }}
                   index={i}
                   key={i}
                   language={[]}
@@ -218,8 +212,8 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = () => {
               {languageRedux === 1
                 ? 'Xem thêm'
                 : languageRedux === 2
-                ? 'See more'
-                : '더보기'}
+                  ? 'See more'
+                  : '더보기'}
               {/* Xem thêm */}
             </Button>
           </Box>

@@ -67,6 +67,8 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
         setCompanyData(result.data.bookmarkedCompany);
         if (result.data.bookmarkedCompany.length < 20) {
           setIsVisible(false);
+        } else {
+          setIsVisible(true);
         }
       }
     } catch (error) {
@@ -83,18 +85,17 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
       );
 
       if (result) {
-        console.log('result', result);
         setCompanyDataView(result.data.companies);
         if (result.data.companies.length < 20) {
           setIsVisible(false);
+        } else {
+          setIsVisible(true);
         }
       }
     } catch (error) {
       console.log('error', error);
     }
   };
-
-  // console.log('activeChild', activeChild);
 
   const handleGetmoreCompany = async () => {
     try {
@@ -133,11 +134,11 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
     try {
       setUploading(true);
       const nextPage = pageNumber + 1;
-      const result = await apiCompanyV3.getBookmarkCompany(
+      const result = await apiCompanyV3.getCompanyView(
         nextPage,
         20,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-        newOld === 1 ? 'DESC' : 'ASC',
+        // newOld === 1 ? 'DESC' : 'ASC',
       );
 
       if (result && result.data.bookmarkedCompany.length !== 0) {
@@ -163,7 +164,6 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
   };
 
   useEffect(() => {
-    console.log('activeChild', activeChild);
     switch (activeChild) {
       case '5-0':
         handleGetCompany();
@@ -222,22 +222,28 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
           {languageRedux === 1
             ? 'Danh sách công ty'
             : languageRedux === 2
-              ? 'List of companies'
-              : '회사  리스트'}
+            ? 'List of companies'
+            : '회사  리스트'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '5-0'
               ? languageRedux === 1
                 ? ' > Công ty đã lưu'
                 : languageRedux === 2
-                  ? ' > Saved comopanies'
-                  : ' > 저장된 회사'
+                ? ' > Saved comopanies'
+                : ' > 저장된 회사'
               : searchParams.get('c') === '5-1'
-                ? languageRedux === 1
-                  ? ' > Nhà tuyển dụng xem hồ sơ'
-                  : languageRedux === 2
-                    ? ' > Employers view resumes'
-                    : ' > 고용주는 이력서를 봅니다'
-                : ''}
+              ? languageRedux === 1
+                ? ' > Nhà tuyển dụng xem hồ sơ'
+                : languageRedux === 2
+                ? ' > Employers view resumes'
+                : ' > 고용주는 이력서를 봅니다.'
+              : searchParams.get('c') === '5-2'
+              ? languageRedux === 1
+                ? ' > Lượt công ty lưu hồ sơ'
+                : languageRedux === 2
+                ? ' > Number of companies saved the profile'
+                : ' > 내 이력서를 저장한 회사 조회 수'
+              : ''}
           </span>
         </Typography>
         <TextField
@@ -258,15 +264,15 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
             {languageRedux === 1
               ? 'Mới nhất'
               : languageRedux === 2
-                ? 'Newest'
-                : languageRedux === 3 && '최신'}
+              ? 'Newest'
+              : languageRedux === 3 && '최신'}
           </MenuItem>
           <MenuItem value={0}>
             {languageRedux === 1
               ? 'Cũ nhất'
               : languageRedux === 2
-                ? 'Oldest'
-                : languageRedux === 3 && '가장 오래된'}
+              ? 'Oldest'
+              : languageRedux === 3 && '가장 오래된'}
           </MenuItem>
         </TextField>
       </Box>
@@ -302,12 +308,14 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
                 fontWeight: 'bold',
                 display: isVisible ? 'block' : 'none',
               }}
+              loading={uploading}
+              onClick={handleGetmoreCompany}
             >
               {languageRedux === 1
                 ? 'Xem thêm'
                 : languageRedux === 2
-                  ? 'See more'
-                  : '더보기'}
+                ? 'See more'
+                : '더보기'}
               {/* Xem thêm */}
             </Button>
           </Box>
@@ -350,8 +358,8 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
               {languageRedux === 1
                 ? 'Xem thêm'
                 : languageRedux === 2
-                  ? 'See more'
-                  : '더보기'}
+                ? 'See more'
+                : '더보기'}
               {/* Xem thêm */}
             </Button>
           </Box>
@@ -361,7 +369,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
       )}
 
       {(activeChild === '5-1' && companyDataView?.length !== 0) ||
-      (activeChild === '5-1' && companyData?.length !== 0) ? (
+      (activeChild === '5-0' && companyData?.length !== 0) ? (
         <Backdrop
           sx={{
             color: '#0d99ff ',

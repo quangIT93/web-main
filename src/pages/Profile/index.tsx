@@ -45,39 +45,39 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
 import { RootState } from '../../store/reducer/index';
-import ItemApply from './components/Item';
+// import ItemApply from './components/Item';
 
-import apiCompany from 'api/apiCompany';
+// import apiCompany from 'api/apiCompany';
 
 // Import Swiper
-import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 // import required modules
-import { Navigation, Mousewheel, Pagination } from 'swiper';
+// import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 import ModalProfileInfoPerson from '#components/Profile/ModalProfileInfoPerson';
-import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerObjectice';
+// import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerObjectice';
 import ModalProfileContact from '#components/Profile/ModalProfileContact';
-import ModalProfileEducationCreate from '#components/Profile/ModalProfileEducationCreate';
-import ModalProfileLocation from '#components/Profile/ModalProfileLocation';
+// import ModalProfileEducationCreate from '#components/Profile/ModalProfileEducationCreate';
+// import ModalProfileLocation from '#components/Profile/ModalProfileLocation';
 // import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate';
-import ModalProfileExperienceCreate from '#components/Profile/ModalProfileExperienceCreate';
+// import ModalProfileExperienceCreate from '#components/Profile/ModalProfileExperienceCreate';
 
 // import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate';
-import CVItem from '#components/Profile/CV';
+// import CVItem from '#components/Profile/CV';
 
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
 // import data
-import {
-  getProfile,
-  // resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer';
+// import {
+// getProfile,
+// resetProfileState,
+// } from 'store/reducer/profileReducer/getProfileReducer';
 import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
@@ -90,16 +90,16 @@ import {
   setAlertLackInfo,
   setAlertEditInfo,
 } from 'store/reducer/profileReducer/alertProfileReducer';
-import languageApi from 'api/languageApi';
-import { profileEn } from 'validations/lang/en/profile';
-import { profileVi } from 'validations/lang/vi/profile';
-import SectionCv from './components/SectionCv';
+// import languageApi from 'api/languageApi';
+// import { profileEn } from 'validations/lang/en/profile';
+// import { profileVi } from 'validations/lang/vi/profile';
+// import SectionCv from './components/SectionCv';
 import CreateCv from '#components/Profile/CreateCv';
 import ChangeRoleButton from './components/ChangeRoleButton';
 import CandidateProfile from './components/CandidateProfile';
-import Company from 'pages/Company';
+// import Company from 'pages/Company';
 import ModalIntroduceCv from '#components/Profile/ModalIntroduceCv';
-import { prototype } from 'module';
+// import { prototype } from 'module';
 import CompanyRole from './components/CompanyRole';
 import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';

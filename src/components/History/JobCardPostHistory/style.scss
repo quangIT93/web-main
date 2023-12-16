@@ -115,14 +115,14 @@
 }
 
 .div-card-post-right {
-    width: 100px;
+    // width: 100px;
     align-items: flex-end;
 
     @include breakpoint(mobile) {
-        width: 30%;
+        // width: 30%;
     }
 
     @include breakpoint(largeTablet) {
-        width: 30%;
+        // width: 30%;
     }
 }

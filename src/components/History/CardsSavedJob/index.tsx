@@ -24,6 +24,7 @@ import { useDispatch } from 'react-redux';
 import { setAlertCancleSave } from 'store/reducer/alertReducer';
 
 import JobCardSaveHistory from './JobCardSaveHstory';
+import JobCardViewPost from './JobCardViewPost';
 import languageApi from 'api/languageApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
@@ -36,6 +37,7 @@ interface ICardsApplied {
 }
 
 const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
+  const { activeChild } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -44,7 +46,9 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   );
   // const { activeChild } = props;
   const [loading, setLoading] = useState<boolean>(true);
+  const [page, setPage] = useState<number>(0);
   const [dataBookmarks, setDataBookmarks] = useState<any>(null);
+  const [dataViewPost, setDataViewPost] = useState<any>(null);
   const [newOld, setnewOld] = React.useState('Mới nhất');
   // const [count, setCount] = useState(5);
   const [uploading, setUploading] = useState(false);
@@ -56,6 +60,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   // const [clicked, setClicked] = useState(false);
   // const [language, setLanguage] = React.useState<any>();
   const [searchParams, setSearchParams] = useSearchParams('');
+  // console.log('activeChild', activeChild);
+
   // const getlanguageApi = async () => {
   //   try {
   //     const result = await languageApi.getLanguage(
@@ -74,21 +80,6 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   //   getlanguageApi();
   // }, [languageRedux]);
   //get post to check if length <= 10
-  const getAllPostToCheck = async () => {
-    const result = await historyBookmark.getAllBookmark(
-      lastPostId,
-      11,
-      languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-    );
-    if (result.data.length <= 10) {
-      setIsVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    getAllPostToCheck();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
 
   const getAllPosted = async (newCount: number) => {
     try {
@@ -101,6 +92,28 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
       if (result) {
         setLastPostId(result.data[result.data.length - 1].bookmark_id);
         setDataBookmarks(sortData.sortDataByDate(newOld, result.data));
+        if (result.data.length < 10) {
+          setIsVisible(false);
+        }
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const getViewPost = async () => {
+    try {
+      const result = await historyBookmark.getViewPost(
+        page,
+        20,
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+      );
+
+      if (result) {
+        setPage(page + 1);
+        setDataViewPost(result.data);
+        // setDataViewPost(sortData.sortDataByDate(newOld, result.data));
+        setLoading(false);
       }
     } catch (error) {
       console.log('error', error);
@@ -108,65 +121,129 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   };
 
   useEffect(() => {
+    if (activeChild === '1-1') getViewPost();
+  }, [languageRedux, activeChild]);
+
+  useEffect(() => {
     let isMounted = true;
     setLoading(true);
-    getAllPosted(0).then(() => {
-      if (isMounted) {
-        setTimeout(() => {
-          setLoading(false);
-        }, 300);
-      }
-    });
+    if (activeChild === '1-0')
+      getAllPosted(0).then(() => {
+        if (isMounted) {
+          setTimeout(() => {
+            setLoading(false);
+          }, 300);
+        }
+      });
 
     return () => {
       isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataBookmarks?.length, languageRedux]);
+  }, [languageRedux, activeChild]);
 
   const handleChange = (event: any) => {
     setnewOld(event.target.value);
 
-    setDataBookmarks(
-      sortData.sortDataByDate(event.target.value, dataBookmarks),
-    );
+    if (activeChild === '1-0') {
+      setDataBookmarks(
+        sortData.sortDataByDate(event.target.value, dataBookmarks),
+      );
+    }
+    // else {
+    //   setDataViewPost(
+    //     sortData.sortDataByDate(event.target.value, dataViewPost),
+    //   );
+    // }
   };
 
   // click button
   const handleClickAddItem = async () => {
     try {
       setUploading(true);
-      const result = await historyBookmark.getAllBookmark(
-        lastPostId,
-        10,
-        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-      );
+      console.log('lastPostId', lastPostId);
+      if (activeChild === '1-0') {
+        const result = await historyBookmark.getAllBookmark(
+          lastPostId,
+          10,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        );
+        if (result) {
+          // if (result?.data?.is_over === true) {
+          // setIsVisible(false);
+          // return;
+          // }
 
-      if (result) {
-        // if (result?.data?.is_over === true) {
-        // setIsVisible(false);
-        // return;
-        // }
-
-        setUploading(false);
-        if (result.data.length === 0) {
-          setIsVisible(false);
-          messageApi.open({
-            type: 'error',
-            content:
-              languageRedux === 1
-                ? 'Đã hết công việc để hiển thị'
-                : languageRedux === 2
+          setUploading(false);
+          if (result.data.length === 0) {
+            setIsVisible(false);
+            messageApi.open({
+              type: 'error',
+              content:
+                languageRedux === 1
+                  ? 'Đã hết công việc để hiển thị'
+                  : languageRedux === 2
                   ? 'Out of job to display'
                   : '보여줄 일이 부족해',
-          });
-          return;
+            });
+            return;
+          }
+
+          if (result.data.length < 10) {
+            setIsVisible(false);
+            setDataBookmarks((prev: any) => {
+              const array = [...prev, ...result.data];
+              return sortData.sortDataByDate(newOld, array);
+            });
+          } else if (result.data.length === 10) {
+            setIsVisible(true);
+            setLastPostId(result.data[result.data.length - 1].bookmark_id);
+            setDataBookmarks((prev: any) => {
+              const array = [...prev, ...result.data];
+              return sortData.sortDataByDate(newOld, array);
+            });
+          }
         }
-        setLastPostId(result.data[result.data.length - 1].bookmark_id);
-        setDataBookmarks((prev: any) => {
-          const array = [...prev, ...result.data];
-          return sortData.sortDataByDate(newOld, array);
-        });
+      } else {
+        const result = await historyBookmark.getViewPost(
+          page,
+          20,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        );
+        if (result) {
+          // if (result?.data?.is_over === true) {
+          // setIsVisible(false);
+          // return;
+          // }
+
+          // setUploading(false);
+          if (result.data.length === 0) {
+            setPage(0);
+            setIsVisible(false);
+            messageApi.open({
+              type: 'error',
+              content:
+                languageRedux === 1
+                  ? 'Đã hết công việc để hiển thị'
+                  : languageRedux === 2
+                  ? 'Out of job to display'
+                  : '보여줄 일이 부족해',
+            });
+            return;
+          }
+
+          if (result.data.length < 20) {
+            setPage(0);
+            setIsVisible(false);
+            setDataViewPost([...result.data, ...dataViewPost]);
+            setUploading(false);
+          } else if (result.data.length >= 20) {
+            setPage(page + 1);
+            setIsVisible(true);
+            setDataViewPost([...result.data, ...dataViewPost]);
+            setUploading(false);
+          }
+        }
       }
     } catch (error) {
       console.log(error);
@@ -222,43 +299,53 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           }}
         >
           {languageRedux === 1
-            ? 'Các công việc đã lưu'
+            ? 'Công việc của tôi'
             : languageRedux === 2
-              ? 'Saved jobs'
-              : languageRedux === 3 && '저장된 작업'}
+            ? 'My jobs'
+            : languageRedux === 3 && '내 일'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-            {searchParams.get('c') === '1-0' && languageRedux === 1
-              ? ' > Tất cả'
+            {searchParams.get('c') === '1-0'
+              ? languageRedux === 1
+                ? ' > Việc làm đã lưu'
+                : languageRedux === 2
+                ? ' > Saved jobs'
+                : languageRedux === 3 && ' > 저장된 작업'
+              : languageRedux === 1
+              ? ' > Việc làm đã xem'
               : languageRedux === 2
-                ? ' > All'
-                : ' > 전부'}
+              ? ' > Viewed job'
+              : languageRedux === 3 && ' > 본 채용공고.'}
           </span>
         </Typography>
-        <TextField
-          select
-          id="sex"
-          value={newOld}
-          onChange={handleChange}
-          variant="outlined"
-          placeholder="Giới tính"
-          size="small"
-          sx={{ width: '120px' }}
-        >
-          <MenuItem value="Mới nhất">
-            {languageRedux === 1
-              ? 'Mới nhất'
-              : languageRedux === 2
+        {activeChild === '1-0' ? (
+          <TextField
+            select
+            id="sex"
+            value={newOld}
+            onChange={handleChange}
+            variant="outlined"
+            placeholder="Giới tính"
+            size="small"
+            sx={{ width: '120px' }}
+          >
+            <MenuItem value="Mới nhất">
+              {languageRedux === 1
+                ? 'Mới nhất'
+                : languageRedux === 2
                 ? 'Newest'
                 : languageRedux === 3 && '최신'}
-          </MenuItem>
-          <MenuItem value="Cũ nhất">
-            {languageRedux === 1
-              ? 'Cũ nhất'
-              : languageRedux === 2
+            </MenuItem>
+            <MenuItem value="Cũ nhất">
+              {languageRedux === 1
+                ? 'Cũ nhất'
+                : languageRedux === 2
                 ? 'Oldest'
                 : languageRedux === 3 && '가장 오래된'}
-          </MenuItem>
-        </TextField>
+            </MenuItem>
+          </TextField>
+        ) : (
+          <></>
+        )}
       </Box>
       <Backdrop
         sx={{
@@ -267,11 +354,11 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={loading}
-      // onClick={handleClose}
+        // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      {dataBookmarks?.length > 0 ? (
+      {dataBookmarks?.length > 0 && activeChild === '1-0' ? (
         <div className="history-post">
           <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
             {dataBookmarks?.map((dataBookmark: any, i: number) => (
@@ -311,10 +398,54 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
               {languageRedux === 1
                 ? 'Xem thêm'
                 : languageRedux === 2
-                  ? 'See more'
-                  : '더보기'}
+                ? 'See more'
+                : '더보기'}
             </Button>
           </Box>
+        </div>
+      ) : dataViewPost?.length > 0 && activeChild === '1-1' ? (
+        <div className="history-post">
+          <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
+            {dataViewPost?.map((dataView: any, i: number) => (
+              // <Skeleton loading={loading} active>
+              <JobCardViewPost
+                item={dataView}
+                index={i}
+                key={i}
+                language={language}
+                languageRedux={languageRedux}
+              />
+              //</Skeleton>
+            ))}
+          </Grid>
+          {/* <Box
+            sx={{
+              margin: '12px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Button
+              style={{
+                width: 130,
+                height: 40,
+                marginBottom: '2rem',
+                backgroundColor: `#0D99FF`,
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                display: isVisible ? 'block' : 'none',
+              }}
+              loading={uploading}
+              onClick={handleClickAddItem}
+            >
+              {languageRedux === 1
+                ? 'Xem thêm'
+                : languageRedux === 2
+                ? 'See more'
+                : '더보기'}
+            </Button>
+          </Box> */}
         </div>
       ) : (
         <Nodata />

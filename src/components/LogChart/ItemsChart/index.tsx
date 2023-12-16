@@ -101,7 +101,7 @@ const ItemsChart: React.FC<{
       path: dataLog
         ? '/history'
         : // '/history?activitiesEmployer=60'
-          '',
+          '/history',
     },
     {
       id: 2,
@@ -121,9 +121,8 @@ const ItemsChart: React.FC<{
         ? dataLog?.viewPostLogs.total
         : dataLogRecruiter?.viewCandidateLogs.total,
       path: dataLog
-        ? // '/history?activitiesCandidate=70'
-          ''
-        : // '/history?activitiesEmployer=61'
+        ? '/history?viewedJob=11'
+        : //'/history?viewedCandidate=41'
           '',
     },
     {

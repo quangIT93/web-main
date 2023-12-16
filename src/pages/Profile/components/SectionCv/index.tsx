@@ -1261,6 +1261,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   md: 'unset',
                 },
               }}
+              columns={{ xs: 4, sm: 6, md: 12 }}
             >
               <Grid item xs={2} sm={3} md={3}>
                 <div
@@ -1272,7 +1273,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   }
                   onClick={() => handleSection(1)}
                 >
-                  <SectionLanguageIcon />
+                  <div className="section_icon">
+                    <SectionLanguageIcon />
+                  </div>
                   <h3>
                     {languageRedux === 1
                       ? 'Ngoại ngữ'
@@ -1294,7 +1297,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   }
                   onClick={() => handleSection(2)}
                 >
-                  <SectionHobbiesIcon />
+                  <div className="section_icon">
+                    <SectionHobbiesIcon />
+                  </div>
                   <h3>
                     {languageRedux === 1
                       ? 'Sở thích'
@@ -1314,7 +1319,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   }
                   onClick={() => handleSection(3)}
                 >
-                  <SectionReferencesIcon />
+                  <div className="section_icon">
+                    <SectionReferencesIcon />
+                  </div>
                   <h3>
                     {languageRedux === 1
                       ? 'Người giới thiệu'
@@ -1347,7 +1354,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   }
                   onClick={() => handleSection(5)}
                 >
-                  <SectionActivitiesIcon />
+                  <div className="section_icon">
+                    <SectionActivitiesIcon />
+                  </div>
                   <h3>
                     {languageRedux === 1
                       ? 'Các hoạt động'
@@ -1380,7 +1389,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   }
                   onClick={() => handleSection(7)}
                 >
-                  <SectionAwardsIcon />
+                  <div className="section_icon">
+                    <SectionAwardsIcon />
+                  </div>
                   <h3>
                     {languageRedux === 1
                       ? 'Các giải thưởng'

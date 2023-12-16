@@ -87,18 +87,24 @@ const HistoryPost = () => {
   const companyView = Number(queryParams['companyView']);
   const activitiesCandidate = Number(queryParams['activitiesCandidate']);
   const activitiesEmployer = Number(queryParams['activitiesEmployer']);
-
-  console.log('queryParams', queryParams);
+  const viewedCandidate = Number(queryParams['viewedCandidate']);
+  const viewedJob = Number(queryParams['viewedJob']);
 
   const [activeChild, setActiveChild] = React.useState(
     hotjobtype === 2
       ? '2-1'
+      : viewedJob === 11
+      ? '1-1'
       : candidate === 4
       ? '4-0'
+      : viewedCandidate === 41
+      ? '4-1'
       : companyView === 50
       ? '5-0'
       : companyView === 51
       ? '5-1'
+      : companyView === 52
+      ? '5-2'
       : community_post === 31
       ? '3-1'
       : community_post === 30
@@ -124,15 +130,21 @@ const HistoryPost = () => {
   const [ItemLeft, setItemLeft] = React.useState<null | number>(
     hotjobtype === 2
       ? 2
+      : viewedJob === 11
+      ? 1
       : community_post === 31
       ? 3
       : community_post === 30
       ? 3
       : candidate === 4
       ? 4
+      : viewedCandidate === 41
+      ? 4
       : companyView === 50
       ? 5
       : companyView === 51
+      ? 5
+      : companyView === 52
       ? 5
       : activitiesEmployer === 60
       ? 6
@@ -206,16 +218,21 @@ const HistoryPost = () => {
       // childs: [language?.all],
       title:
         languageRedux === 1
-          ? 'Các công việc đã lưu'
+          ? 'Công việc của tôi'
+          : languageRedux === 2
+          ? 'My jobs'
+          : languageRedux === 3 && '내 일',
+      childs: [
+        languageRedux === 1
+          ? 'Việc làm đã lưu'
           : languageRedux === 2
           ? 'Saved jobs'
           : languageRedux === 3 && '저장된 작업',
-      childs: [
         languageRedux === 1
-          ? 'Tất cả'
+          ? 'Việc làm đã xem'
           : languageRedux === 2
-          ? 'All'
-          : languageRedux === 3 && '전부',
+          ? 'Viewed job'
+          : languageRedux === 3 && '본 채용공고.',
       ],
     },
     {
@@ -288,6 +305,11 @@ const HistoryPost = () => {
           : languageRedux === 2
           ? 'Saved candidates'
           : languageRedux === 3 && '저장한 구직자.',
+        // languageRedux === 1
+        //   ? 'Ứng viên đã xem'
+        //   : languageRedux === 2
+        //     ? 'Viewed candidates'
+        //     : languageRedux === 3 && '본 구지자.',
         // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
         // language?.history_page?.saved,
         // language?.history_page?.posts_created,
@@ -308,11 +330,16 @@ const HistoryPost = () => {
           : languageRedux === 2
           ? 'Saved comopanies'
           : languageRedux === 3 && '저장된 회사',
+        languageRedux === 1
+          ? 'Nhà tuyển dụng xem hồ sơ'
+          : languageRedux === 2
+          ? 'Employers view resumes'
+          : '고용주는 이력서를 봅니다.',
         // languageRedux === 1
-        //   ? 'Nhà tuyển dụng xem hồ sơ'
+        //   ? 'Lượt công ty lưu hồ sơ'
         //   : languageRedux === 2
-        //   ? 'Employers view resumes'
-        //   : '고용주는 이력서를 봅니다.',
+        //   ? 'Number of companies saved the profile'
+        //   : languageRedux === 3 && '내 이력서를 저장한 회사 조회 수.',
       ],
     },
     // {
@@ -320,21 +347,21 @@ const HistoryPost = () => {
     //   // title: language?.history_page?.list_of_articles,
     //   title:
     //     languageRedux === 1
-    //       ? 'Hoạt động của bạn'
+    //       ? 'Lượt quan tâm công ty của bạn'
     //       : languageRedux === 2
-    //       ? 'Your activities'
-    //       : languageRedux === 3 && '귀하의 활동',
+    //         ? 'Number of visits to your company'
+    //         : languageRedux === 3 && '회사 방문 횟수',
     //   childs: [
     //     languageRedux === 1
-    //       ? 'Ứng viên đã tuyển dụng'
+    //       ? 'Lượt ứng viên xem công ty'
     //       : languageRedux === 2
-    //       ? 'Recruited candidates'
-    //       : languageRedux === 3 && '지원한 구직자.',
+    //         ? 'Number of candidates viewed the company'
+    //         : '내 회사정보를 본 구직자 조회 수',
     //     languageRedux === 1
-    //       ? 'Ứng viên đã xem'
+    //       ? 'Lượt ứng viên theo dõi công ty'
     //       : languageRedux === 2
-    //       ? 'Viewed candidates'
-    //       : languageRedux === 3 && '본 구지자.',
+    //         ? 'Number of candidates following the company'
+    //         : '내 회사 관심하는 구직자 조회 수',
     //   ],
     // },
     // {
@@ -382,171 +409,6 @@ const HistoryPost = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux, language]);
 
-  const breadcrumbs = [
-    <Link
-      underline="hover"
-      key="1"
-      color="#0d99ff "
-      href="/"
-      onClick={handleClick}
-      target="_parent"
-      style={{ fontSize: '12px' }}
-    >
-      {languageRedux === 1
-        ? 'Trang chủ'
-        : languageRedux === 2
-        ? 'Home'
-        : languageRedux === 3 && '홈'}
-    </Link>,
-    <Link
-      underline="hover"
-      key="2"
-      color="#0d99ff "
-      href="/history"
-      onClick={handleClick}
-      target="_parent"
-      style={{ fontSize: '12px' }}
-    >
-      {languageRedux === 1
-        ? 'Lịch sử'
-        : languageRedux === 2
-        ? 'History'
-        : languageRedux === 3 && '기록'}
-    </Link>,
-    <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
-      {ItemLeft === dataItem[0].id
-        ? dataItem[0].title
-        : ItemLeft === dataItem[1].id
-        ? dataItem[1].title
-        : ItemLeft === dataItem[2].id
-        ? dataItem[2].title
-        : ItemLeft === dataItem[3].id
-        ? dataItem[3].title
-        : ItemLeft === dataItem[4].id
-        ? dataItem[4].title
-        : ItemLeft === dataItem[5].id
-        ? dataItem[5].title
-        : ItemLeft === dataItem[6].id
-        ? dataItem[6].title
-        : dataItem[7].title}
-    </Typography>,
-    <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
-      {activeChild === '0-0'
-        ? languageRedux === 1
-          ? 'Tất cả'
-          : languageRedux === 2
-          ? 'All'
-          : languageRedux === 3 && '전부'
-        : // : activeChild === '0-1'
-          // ? 'Đã được duyệt'
-          // : activeChild === '0-2'
-          // ? 'Đang chờ duyệt'
-          ''}
-
-      {activeChild === '1-0'
-        ? languageRedux === 1
-          ? 'Tất cả'
-          : languageRedux === 2
-          ? 'All'
-          : languageRedux === 3 && '전부'
-        : ''}
-
-      {activeChild === '2-0'
-        ? languageRedux === 1
-          ? 'Tất cả'
-          : languageRedux === 2
-          ? 'All'
-          : languageRedux === 3 && '전부'
-        : activeChild === '2-1'
-        ? languageRedux === 1
-          ? 'Các công việc chưa đóng'
-          : languageRedux === 2
-          ? 'Unclosed jobs'
-          : languageRedux === 3 && '마감되지 않은 채용정보'
-        : activeChild === '2-2'
-        ? languageRedux === 1
-          ? 'Đã đóng'
-          : languageRedux === 2
-          ? 'Closed'
-          : '닫은'
-        : ''}
-      {activeChild === '3-0'
-        ? languageRedux === 1
-          ? 'Đã lưu'
-          : languageRedux === 2
-          ? 'Saved articles'
-          : languageRedux === 3 && '저정되기'
-        : activeChild === '3-1'
-        ? languageRedux === 1
-          ? 'Bài viết bạn đã tạo'
-          : languageRedux === 2
-          ? 'Posted articles'
-          : languageRedux === 3 && '등록되기'
-        : ''}
-
-      {activeChild === '4-0'
-        ? languageRedux === 1
-          ? 'Tất cả'
-          : languageRedux === 2
-          ? 'All'
-          : languageRedux === 3 && '전부'
-        : ''}
-
-      {activeChild === '5-0'
-        ? languageRedux === 1
-          ? 'Tất cả'
-          : languageRedux === 2
-          ? 'All'
-          : languageRedux === 3 && '전부'
-        : activeChild === '5-1'
-        ? languageRedux === 1
-          ? 'Đã được tạo'
-          : languageRedux === 2
-          ? 'Already created'
-          : languageRedux === 3 && '생성되었습니다'
-        : ''}
-
-      {activeChild === '6-0'
-        ? languageRedux === 1
-          ? 'Tất cả'
-          : languageRedux === 2
-          ? 'All'
-          : languageRedux === 3 && '전부'
-        : activeChild === '6-1'
-        ? languageRedux === 1
-          ? 'Đã được tạo'
-          : languageRedux === 2
-          ? 'Already created'
-          : languageRedux === 3 && '생성되었습니다'
-        : activeChild === '6-2'
-        ? languageRedux === 1
-          ? 'Đã được tạo'
-          : languageRedux === 2
-          ? 'Already created'
-          : languageRedux === 3 && '생성되었습니다'
-        : ''}
-
-      {activeChild === '7-0'
-        ? languageRedux === 1
-          ? 'Tất cả'
-          : languageRedux === 2
-          ? 'All'
-          : languageRedux === 3 && '전부'
-        : activeChild === '7-1'
-        ? languageRedux === 1
-          ? 'Đã được tạo'
-          : languageRedux === 2
-          ? 'Already created'
-          : languageRedux === 3 && '생성되었습니다'
-        : activeChild === '7-2'
-        ? languageRedux === 1
-          ? 'Đã được tạo'
-          : languageRedux === 2
-          ? 'Already created'
-          : languageRedux === 3 && '생성되었습니다'
-        : ''}
-    </Typography>,
-  ];
   const CardsPost = useMemo(() => {
     if (ItemLeft === 2) {
       return (
@@ -645,6 +507,11 @@ const HistoryPost = () => {
       setActiveChild('2-1');
       return;
     }
+    if (viewedJob === 11) {
+      setItemLeft(1);
+      setActiveChild('1-1');
+      return;
+    }
     if (community_post === 31) {
       setItemLeft(3);
       setActiveChild('3-1');
@@ -675,6 +542,11 @@ const HistoryPost = () => {
       setActiveChild('4-0');
       return;
     }
+    if (viewedCandidate === 41) {
+      setItemLeft(4);
+      setActiveChild('4-1');
+      return;
+    }
 
     if (companyView === 50) {
       setItemLeft(5);
@@ -685,6 +557,12 @@ const HistoryPost = () => {
     if (companyView === 51) {
       setItemLeft(5);
       setActiveChild('5-1');
+      return;
+    }
+
+    if (companyView === 52) {
+      setItemLeft(5);
+      setActiveChild('5-2');
       return;
     }
 
@@ -760,18 +638,24 @@ const HistoryPost = () => {
               defaultActiveKey={
                 hotjobtype && hotjobtype === 2
                   ? ['2', '1']
+                  : viewedJob && viewedJob === 11
+                  ? ['1', '1']
                   : community_post && community_post === 31
                   ? ['3', '1']
                   : companyView && companyView === 50
                   ? ['5', '1']
                   : companyView && companyView === 51
                   ? ['5', '1']
+                  : companyView && companyView === 52
+                  ? ['5', '2']
                   : community_post && community_post === 30
                   ? ['3', '0']
                   : saved_jobs === 1
                   ? ['1', '0']
                   : candidate === 4
                   ? ['4', '0']
+                  : viewedCandidate === 41
+                  ? ['4', '1']
                   : activitiesEmployer === 60
                   ? ['6', '0']
                   : activitiesEmployer === 61
