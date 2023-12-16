@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 //import scss
 import './style.scss';
 
@@ -8,60 +8,40 @@ import './style.scss';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+
 import ImageListItem from '@mui/material/ImageListItem';
 
-import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
+//ANT
 
 import {
   LocationHomeIcon,
   DolaIcon,
-  SaveIconOutline,
   SaveIconFill,
+  SaveIconOutline,
 } from '#components/Icons';
 
 import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
 import bookMarkApi from 'api/bookMarkApi';
-import { historyVi } from 'validations/lang/vi/history';
-import { historyEn } from 'validations/lang/en/history';
+
+import { PropsTypePostNew } from '../JobCardSaveHstory/interfacePostNew';
+// import { historyVi } from 'validations/lang/vi/history';
+// import { historyEn } from 'validations/lang/en/history';
+// import bookMarkApi from 'api/bookMarkApi';
 
 // import HomeValueContextProvider, {
 //   HomeValueContext,
 // } from 'context/HomeValueContextProvider';
 
 interface IitemNewJob {
-  item: {
-    id: number;
-    post_id: number;
-    title: string;
-    company_name: string;
-    image: string;
-    ward: string;
-    district: string;
-    province: string;
-    end_time: number;
-    start_time: number;
-    salary_max: number;
-    salary_min: number;
-    salary_type: string;
-    resource: {
-      company_icon: string;
-    };
-    job_type: {
-      job_type_name: string;
-    };
-    created_at_text: string;
-    created_at: number;
-    status: number;
-    bookmarked: boolean;
-    money_type_text: string;
-  };
+  item: PropsTypePostNew;
+  index: number;
   language: any;
   languageRedux: any;
 }
 
-const JobCardHistory: React.FC<IitemNewJob> = (props) => {
+const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
   // const {
   //   setOpenNotificate,
   //   openNotificate,
@@ -69,42 +49,48 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
   //   setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
   //   openNotificate: boolean;
   // } = React.useContext(HomeValueContext);
+  // const dispatch = useDispatch();
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const { language, languageRedux } = props;
-  const dispatch = useDispatch();
   const [checkBookMark, setCheckBookMark] = React.useState(
-    props.item.bookmarked,
+    props.item?.bookmarked,
   );
   const [error, setError] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`);
+    window.open(`/post-detail?post-id=${id}`, '_parent');
   };
 
   const handleImageError = () => {
     setError(true);
   };
 
+  const handleBookmark = async (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    e.stopPropagation();
+    if (props.item?.bookmarked) {
+      const result = await bookMarkApi.deleteBookMark(props.item?.id);
+      if (result) {
+        setCheckBookMark(!checkBookMark);
+        props.item.bookmarked = false;
+      }
+    } else {
+      const result = await bookMarkApi.createBookMark(props.item?.id);
+      if (result) {
+        setCheckBookMark(!checkBookMark);
+        props.item.bookmarked = true;
+      }
+    }
+  };
+
   return (
     <>
       <Card
-        sx={{
-          minWidth: '100%',
-          display: 'flex',
-          padding: '12px',
-          cursor: 'pointer',
-          margin: '10px 0',
-          '&:hover': {
-            background: '#E7E7ED',
-            transition: 'all 0.3s linear',
-          },
-          boxShadow: 'none',
-          borderRadius: '5px',
-          justifyContent: 'space-between',
-        }}
         onClick={(e) => {
-          handleClickItem(e, props.item.post_id);
+          handleClickItem(e, props.item.id);
         }}
-        className="JobCardHistory"
+        className="JobCardSaveHstory"
       >
         <ul className="div-card-post-left">
           <ImageListItem
@@ -112,21 +98,18 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
             sx={{ flex: 1, display: 'flex' }}
           >
             <img
-              src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={props.item.title}
+              src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              alt={props.item?.title}
               //loading="lazy"
               style={{
                 width: '120px',
                 height: '120px',
-                minWidth: '120px',
-                minHeight: '120px',
                 borderRadius: 10,
               }}
             />
             <div className="div-card-post-left_info">
-              {' '}
-              <Tooltip placement="top" title={props.item.title}>
+              <Tooltip placement="top" title={props.item?.title}>
                 <Typography
                   gutterBottom
                   variant="h6"
@@ -144,12 +127,12 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                   }}
                 >
                   {/* {props?.item?.title?.length > 50
-                    ? `${props.item.title.substring(0, 50)} ...`
-                    : props.item.title} */}
+                    ? `${props.item?.title.substring(0, 50)} ...`
+                    : props.item?.title} */}
                   {props?.item?.title}
                 </Typography>
               </Tooltip>
-              <Tooltip placement="top" title={props.item.company_name}>
+              <Tooltip placement="top" title={props.item?.companyName}>
                 <Typography
                   gutterBottom
                   variant="h6"
@@ -166,9 +149,9 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                   }}
                 >
                   {/* {props?.item?.company_name?.length > 50
-                    ? `${props.item.company_name.substring(0, 50)} ...`
-                    : props.item.company_name} */}
-                  {props?.item?.company_name}
+                    ? `${props.item?.company_name.substring(0, 50)} ...`
+                    : props.item?.company_name} */}
+                  {props?.item?.companyName}
                 </Typography>
               </Tooltip>
               <div
@@ -192,7 +175,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                     fontWeight: '400',
                   }}
                 >
-                  {`${props.item.district}, ${props.item.province}`}
+                  {`${props.item?.location?.district.fullName}, ${props.item?.location?.province.fullName}`}
                 </Typography>
               </div>
               <div
@@ -216,13 +199,13 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                     fontWeight: '400',
                   }}
                 >
-                  {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
-                  {props.item?.money_type_text} -{' '}
+                  {new Intl.NumberFormat('en-US').format(props.item?.salaryMin)}{' '}
+                  {props?.item?.moneyType}-{' '}
                   {new Intl.NumberFormat('en-US').format(
-                    props.item.salary_max,
+                    props.item?.salaryMin,
                   ) +
-                    ` ${props.item?.money_type_text}` +
-                    `/${props.item.salary_type}`}
+                    ` ${props?.item?.moneyType}` +
+                    `/${props.item?.salaryType?.name}`}
                 </Typography>
               </div>
               <div
@@ -233,12 +216,12 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                 <p
                   style={{
                     color: '#AAAAAA',
-                    fontSize: '12px',
+                    fontSize: 12,
                     fontStyle: 'italic',
                     fontWeight: '400',
                   }}
                 >
-                  {props.item.created_at_text}
+                  {props.item?.createdAtText}
                 </p>
               </div>
             </div>
@@ -248,16 +231,14 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               display: 'flex',
               alignItems: 'center',
               marginTop: '12px',
-              // justifyContent: 'space-between',
             }}
             className="box_history__job"
           >
             <p
               style={{
                 color: '#001424',
-                fontSize: '12px',
+                fontSize: 12,
                 fontStyle: 'italic',
-                fontWeight: '400',
               }}
             >
               {languageRedux === 1
@@ -265,17 +246,15 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                 : languageRedux === 2
                 ? 'Posted on:'
                 : languageRedux === 3 && '에 게시 됨:'}{' '}
-              {props.item?.created_at != null
-                ? moment(props.item?.created_at).format('DD/MM/YYYY') +
-                  ' ' +
-                  moment(new Date(props.item?.created_at)).format('HH:mm')
+              {props.item?.createdAtText != null
+                ? props.item?.createdAtText
                 : languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
                 ? 'Not updated yet'
                 : languageRedux === 3 && '업데이트하지 않음'}
             </p>
-            {props.item?.status === 1 ? (
+            {/* {props.item?.status === 1 ? (
               <p
                 style={{
                   background: '#0D99FF',
@@ -329,12 +308,12 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                   ? 'Does not accept'
                   : '수락하지 않음'}
               </p>
-            )}
+            )} */}
             <p
               style={{ fontSize: '12px', color: '#0d99ff', fontWeight: 500 }}
               className="history_jobTypeName"
             >
-              {props.item.job_type.job_type_name}
+              {props.item.jobType?.name}{' '}
             </p>
           </Box>
         </ul>
@@ -353,36 +332,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               flexDirection: 'column',
             }}
           >
-            <div
-              onClick={async (e) => {
-                try {
-                  e.stopPropagation();
-                  // console.log('props.item ', props.item);
-
-                  if (props.item.bookmarked) {
-                    const result = await bookMarkApi.deleteBookMark(
-                      props.item.post_id,
-                    );
-                    props.item.bookmarked = false;
-                    if (result) {
-                      setCheckBookMark(!checkBookMark);
-                      dispatch<any>(setAlertCancleSave(true));
-                    }
-                  } else {
-                    const result = await bookMarkApi.createBookMark(
-                      props.item.post_id,
-                    );
-                    props.item.bookmarked = true;
-                    if (result) {
-                      dispatch<any>(setAlertSave(true));
-                      setCheckBookMark(!checkBookMark);
-                    }
-                  }
-                } catch (error) {
-                  console.log(error);
-                }
-              }}
-            >
+            <div onClick={(e) => handleBookmark(e)}>
               {checkBookMark ? (
                 <SaveIconFill width={24} height={24} />
               ) : (
@@ -394,8 +344,8 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                 <img
                   className="img-resource-company"
                   src={
-                    props.item.resource.company_icon
-                      ? props.item.resource.company_icon
+                    props.item.companyResourceData?.logo
+                      ? props.item.companyResourceData?.logo
                       : ''
                   }
                   alt={
@@ -410,7 +360,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               )}
             </div>
           </div>
-          {/* <p style={{ fontSize: '12px', color: '#0d99ff', fontWeight: 500 }}>
+          {/* <p style={{ fontSize: 12, color: '#0d99ff', fontWeight: 500 }}>
             {props.item.job_type.job_type_name}
           </p> */}
         </Space>
@@ -419,4 +369,4 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
   );
 };
 
-export default JobCardHistory;
+export default JobCardViewPost;

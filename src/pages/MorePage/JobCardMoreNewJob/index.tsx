@@ -77,7 +77,9 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [infor, setInfor] = React.useState<any>();
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   React.useEffect(() => {
     setInfor(props.item);
   }, [props.item]);
@@ -220,11 +222,13 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                           ? infor?.resource?.company_icon
                           : ''
                       }
-                      alt={languageRedux === 1
-                        ? 'Hình ảnh bị lỗi'
-                        : languageRedux === 2
+                      alt={
+                        languageRedux === 1
+                          ? 'Hình ảnh bị lỗi'
+                          : languageRedux === 2
                           ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'}
+                          : '이미지가 손상되었습니다'
+                      }
                       onError={() =>
                         handleImageError(infor?.resource?.company_icon)
                       }

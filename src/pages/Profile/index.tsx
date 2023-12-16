@@ -95,7 +95,7 @@ import {
 // import { profileVi } from 'validations/lang/vi/profile';
 // import SectionCv from './components/SectionCv';
 import CreateCv from '#components/Profile/CreateCv';
-// import ChangeRoleButton from './components/ChangeRoleButton';
+import ChangeRoleButton from './components/ChangeRoleButton';
 import CandidateProfile from './components/CandidateProfile';
 // import Company from 'pages/Company';
 import ModalIntroduceCv from '#components/Profile/ModalIntroduceCv';
@@ -628,7 +628,7 @@ const Profile: React.FC = () => {
                       ? 'Not updated yet'
                       : languageRedux === 3 && '업데이트하지 않음'}
                   </h2>
-                  <ChangeRoleButton />
+                  {/* <ChangeRoleButton /> */}
                   <Overview />
 
                   {/* <div className="wrap-company">

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 //import scss
 import './style.scss';
 
@@ -8,23 +8,19 @@ import './style.scss';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+
 import ImageListItem from '@mui/material/ImageListItem';
 
-import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
+//ANT
 
-import {
-  LocationHomeIcon,
-  DolaIcon,
-  SaveIconOutline,
-  SaveIconFill,
-} from '#components/Icons';
+import { LocationHomeIcon, DolaIcon, SaveIconFill } from '#components/Icons';
 
 import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
-import bookMarkApi from 'api/bookMarkApi';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
+// import bookMarkApi from 'api/bookMarkApi';
 
 // import HomeValueContextProvider, {
 //   HomeValueContext,
@@ -33,7 +29,7 @@ import { historyEn } from 'validations/lang/en/history';
 interface IitemNewJob {
   item: {
     id: number;
-    post_id: number;
+    post_id: Number;
     title: string;
     company_name: string;
     image: string;
@@ -57,11 +53,13 @@ interface IitemNewJob {
     bookmarked: boolean;
     money_type_text: string;
   };
+  handleDeleteBookmark: (event: any, index: number, bookmarkId: number) => any;
+  index: number;
   language: any;
   languageRedux: any;
 }
 
-const JobCardHistory: React.FC<IitemNewJob> = (props) => {
+const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
   // const {
   //   setOpenNotificate,
   //   openNotificate,
@@ -69,15 +67,13 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
   //   setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
   //   openNotificate: boolean;
   // } = React.useContext(HomeValueContext);
+  // const dispatch = useDispatch();
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const { language, languageRedux } = props;
-  const dispatch = useDispatch();
-  const [checkBookMark, setCheckBookMark] = React.useState(
-    props.item.bookmarked,
-  );
   const [error, setError] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`);
+    window.open(`/post-detail?post-id=${id}`, '_parent');
   };
 
   const handleImageError = () => {
@@ -87,24 +83,10 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
   return (
     <>
       <Card
-        sx={{
-          minWidth: '100%',
-          display: 'flex',
-          padding: '12px',
-          cursor: 'pointer',
-          margin: '10px 0',
-          '&:hover': {
-            background: '#E7E7ED',
-            transition: 'all 0.3s linear',
-          },
-          boxShadow: 'none',
-          borderRadius: '5px',
-          justifyContent: 'space-between',
-        }}
         onClick={(e) => {
-          handleClickItem(e, props.item.post_id);
+          handleClickItem(e, props.item.id);
         }}
-        className="JobCardHistory"
+        className="JobCardSaveHstory"
       >
         <ul className="div-card-post-left">
           <ImageListItem
@@ -119,8 +101,6 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               style={{
                 width: '120px',
                 height: '120px',
-                minWidth: '120px',
-                minHeight: '120px',
                 borderRadius: 10,
               }}
             />
@@ -217,11 +197,11 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
-                  {props.item?.money_type_text} -{' '}
+                  {props?.item?.money_type_text}-{' '}
                   {new Intl.NumberFormat('en-US').format(
                     props.item.salary_max,
                   ) +
-                    ` ${props.item?.money_type_text}` +
+                    ` ${props?.item?.money_type_text}` +
                     `/${props.item.salary_type}`}
                 </Typography>
               </div>
@@ -233,7 +213,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                 <p
                   style={{
                     color: '#AAAAAA',
-                    fontSize: '12px',
+                    fontSize: 12,
                     fontStyle: 'italic',
                     fontWeight: '400',
                   }}
@@ -248,16 +228,14 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               display: 'flex',
               alignItems: 'center',
               marginTop: '12px',
-              // justifyContent: 'space-between',
             }}
             className="box_history__job"
           >
             <p
               style={{
                 color: '#001424',
-                fontSize: '12px',
+                fontSize: 12,
                 fontStyle: 'italic',
-                fontWeight: '400',
               }}
             >
               {languageRedux === 1
@@ -334,7 +312,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               style={{ fontSize: '12px', color: '#0d99ff', fontWeight: 500 }}
               className="history_jobTypeName"
             >
-              {props.item.job_type.job_type_name}
+              {props.item.job_type.job_type_name}{' '}
             </p>
           </Box>
         </ul>
@@ -355,39 +333,11 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
           >
             <div
               onClick={async (e) => {
-                try {
-                  e.stopPropagation();
-                  // console.log('props.item ', props.item);
-
-                  if (props.item.bookmarked) {
-                    const result = await bookMarkApi.deleteBookMark(
-                      props.item.post_id,
-                    );
-                    props.item.bookmarked = false;
-                    if (result) {
-                      setCheckBookMark(!checkBookMark);
-                      dispatch<any>(setAlertCancleSave(true));
-                    }
-                  } else {
-                    const result = await bookMarkApi.createBookMark(
-                      props.item.post_id,
-                    );
-                    props.item.bookmarked = true;
-                    if (result) {
-                      dispatch<any>(setAlertSave(true));
-                      setCheckBookMark(!checkBookMark);
-                    }
-                  }
-                } catch (error) {
-                  console.log(error);
-                }
+                e.stopPropagation();
+                props.handleDeleteBookmark(e, props.index, props.item.id);
               }}
             >
-              {checkBookMark ? (
-                <SaveIconFill width={24} height={24} />
-              ) : (
-                <SaveIconOutline width={24} height={24} />
-              )}
+              <SaveIconFill width={24} height={24} />
             </div>
             <div>
               {!error && (
@@ -410,7 +360,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               )}
             </div>
           </div>
-          {/* <p style={{ fontSize: '12px', color: '#0d99ff', fontWeight: 500 }}>
+          {/* <p style={{ fontSize: 12, color: '#0d99ff', fontWeight: 500 }}>
             {props.item.job_type.job_type_name}
           </p> */}
         </Space>
@@ -419,4 +369,4 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
   );
 };
 
-export default JobCardHistory;
+export default JobCardSaveHistory;

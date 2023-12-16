@@ -43,7 +43,10 @@ const MainLayout = ({ children }: Props) => {
         location.pathname === '/candidate-new-detail') ||
       (!localStorage.getItem('accessToken') &&
         location.pathname === '/chart') ||
-      (!localStorage.getItem('accessToken') && location.pathname === '/pdfview')
+      (!localStorage.getItem('accessToken') &&
+        location.pathname === '/pdfview') ||
+      (!localStorage.getItem('accessToken') &&
+        location.pathname === '/profile-chart')
     ) {
       window.open('/', '_parent');
     } else {
