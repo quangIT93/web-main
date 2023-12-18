@@ -84,8 +84,8 @@ const Message = () => {
       languageRedux === 1
         ? 'HiJob - Nhắn tin'
         : languageRedux === 2
-          ? 'HiJob - Messaging'
-          : 'HiJob - 문자 메시지';
+        ? 'HiJob - Messaging'
+        : 'HiJob - 문자 메시지';
     logEvent(analytics, 'screen_view' as string, {
       page_title: '/web_message ',
     });
@@ -115,6 +115,10 @@ const Message = () => {
   }, []);
 
   React.useEffect(() => {
+    if (!localStorage.getItem('accessToken')) {
+      window.open('/', '_parent');
+    }
+
     if (searchParams.get('post_id') && windowWidth < 555) {
       setOpenListChat(true);
     } else {

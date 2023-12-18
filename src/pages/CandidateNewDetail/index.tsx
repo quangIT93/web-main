@@ -43,11 +43,12 @@ import { MessageOutlined } from '@ant-design/icons';
 import ModalNoteWorker from '#components/Home/NewestGigWorker/ModalNoteWorker';
 import ModalNotRecruitment from '#components/Candidates/ModalNotRecruitment';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  },
-);
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const CandidateNewDetail = () => {
   const [candidate, setCandidate] = useState<any>([]);
@@ -62,7 +63,8 @@ const CandidateNewDetail = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const [openModalNotRecruitment, setOpenModalNotRecruitment] = React.useState(false);
+  const [openModalNotRecruitment, setOpenModalNotRecruitment] =
+    React.useState(false);
   const [modalShowCvPDF, setModalShowCvPdf] = React.useState<{
     open: boolean;
     urlPdf: string;
@@ -123,8 +125,9 @@ const CandidateNewDetail = () => {
     }
     try {
       if (accountId && profileV3.companyInfo !== null) {
-        const viewProfile: any =
-          await candidateSearch.postCountShowCandidate(accountId);
+        const viewProfile: any = await candidateSearch.postCountShowCandidate(
+          accountId,
+        );
         if (viewProfile.status === 200) {
           setTotal(viewProfile.total);
           const result = await profileApi.getProfileByAccountId(
@@ -165,7 +168,7 @@ const CandidateNewDetail = () => {
           dispatch<any>(setAlertSuccess(true));
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // React.useEffect(() => {
@@ -185,7 +188,7 @@ const CandidateNewDetail = () => {
       if (resultBookmark) {
         setBookmarkCandidate(resultBookmark.data.total);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -262,12 +265,14 @@ const CandidateNewDetail = () => {
                   style={{
                     height: '70px',
                     width: '70px',
-                    filter: `${candidate?.isUnlocked === false ? 'blur(3px)' : ''
-                      }`,
-                    cursor: `${candidate?.isUnlocked === true && candidate?.avatarPath
-                      ? 'pointer'
-                      : ''
-                      }`,
+                    filter: `${
+                      candidate?.isUnlocked === false ? 'blur(3px)' : ''
+                    }`,
+                    cursor: `${
+                      candidate?.isUnlocked === true && candidate?.avatarPath
+                        ? 'pointer'
+                        : ''
+                    }`,
                   }}
                   alt={candidate?.avatarPath}
                   src={candidate?.avatarPath ? candidate?.avatarPath : ''}
@@ -278,19 +283,19 @@ const CandidateNewDetail = () => {
                   {candidate?.name
                     ? candidate?.name
                     : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
                 </h2>
                 <p style={{ lineHeight: '30px' }}>
                   {candidate?.jobTypeName !== null
                     ? candidate?.jobTypeName
                     : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
                 </p>
               </div>
             </div>
@@ -350,7 +355,9 @@ const CandidateNewDetail = () => {
                     setOpenModalNotiUnclock(true);
                   } else {
                     window.open(
-                      `/message?post_id=${null}&user_id=${candidate.accountId} `,
+                      `/message?post_id=${null}&user_id=${
+                        candidate.accountId
+                      } `,
                       '_parent',
                     );
                   }
@@ -405,10 +412,10 @@ const CandidateNewDetail = () => {
                         {languageRedux === 1
                           ? 'Mở khóa ứng viên'
                           : languageRedux === 2
-                            ? 'Unlock Candidates'
-                            : languageRedux === 3
-                              ? '후보자 잠금 해제'
-                              : 'Mở khóa ứng viên'}
+                          ? 'Unlock Candidates'
+                          : languageRedux === 3
+                          ? '후보자 잠금 해제'
+                          : 'Mở khóa ứng viên'}
                       </div>
                     </div>
                   </Button>
@@ -441,10 +448,10 @@ const CandidateNewDetail = () => {
                       {languageRedux === 1
                         ? 'Mở khóa ứng viên'
                         : languageRedux === 2
-                          ? 'Unlock Candidates'
-                          : languageRedux === 3
-                            ? '후보자 잠금 해제'
-                            : 'Mở khóa ứng viên'}
+                        ? 'Unlock Candidates'
+                        : languageRedux === 3
+                        ? '후보자 잠금 해제'
+                        : 'Mở khóa ứng viên'}
                     </div>
                   </div>
                 </Button>
@@ -454,11 +461,12 @@ const CandidateNewDetail = () => {
                 type="primary"
                 onClick={(event) => {
                   handleClickItemCv(
-                    candidate?.profilesCvs && candidate?.profilesCvs.filter((value: any) => {
-                      if (value.status === 1) {
-                        return value.pdfURL;
-                      }
-                    })[0]?.pdfURL,
+                    candidate?.profilesCvs &&
+                      candidate?.profilesCvs.filter((value: any) => {
+                        if (value.status === 1) {
+                          return value.pdfURL;
+                        }
+                      })[0]?.pdfURL,
                     candidate?.accountId,
                   );
                 }}
@@ -468,18 +476,18 @@ const CandidateNewDetail = () => {
                     ? languageRedux === 1
                       ? 'Xem hồ sơ'
                       : languageRedux === 2
-                        ? 'Have a resume'
-                        : languageRedux === 3 && '프로필보기'
-                    : languageRedux === 1
-                      ? 'Không có hồ sơ'
-                      : languageRedux === 2
-                        ? 'Not have a resume'
-                        : languageRedux === 3 && '프로필 없음'
-                  : languageRedux === 1
-                    ? 'Xem hồ sơ'
-                    : languageRedux === 2
                       ? 'Have a resume'
-                      : languageRedux === 3 && '프로필보기'}
+                      : languageRedux === 3 && '프로필보기'
+                    : languageRedux === 1
+                    ? 'Không có hồ sơ'
+                    : languageRedux === 2
+                    ? 'Not have a resume'
+                    : languageRedux === 3 && '프로필 없음'
+                  : languageRedux === 1
+                  ? 'Xem hồ sơ'
+                  : languageRedux === 2
+                  ? 'Have a resume'
+                  : languageRedux === 3 && '프로필보기'}
               </Button>
 
               <div
@@ -508,10 +516,10 @@ const CandidateNewDetail = () => {
             {candidate?.introduction
               ? candidate?.introduction
               : languageRedux === 1
-                ? 'Chưa cập nhật'
-                : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+              ? 'Chưa cập nhật'
+              : languageRedux === 2
+              ? 'Not updated yet'
+              : languageRedux === 3 && '업데이트하지 않음'}
           </div>
         </div>
         <div className="candidate-profile-info">
@@ -526,8 +534,8 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Thông tin ứng viên'
                 : languageRedux === 2
-                  ? 'Candidate information'
-                  : languageRedux === 3 && '후보자 정보'}
+                ? 'Candidate information'
+                : languageRedux === 3 && '후보자 정보'}
             </h3>
           </div>
           <div className="info-detail">
@@ -536,55 +544,55 @@ const CandidateNewDetail = () => {
                 {languageRedux === 1
                   ? 'Ngày sinh'
                   : languageRedux === 2
-                    ? 'Date of birth'
-                    : '생년월일'}
+                  ? 'Date of birth'
+                  : '생년월일'}
               </p>
               <p>
                 {languageRedux === 1
                   ? 'Giới tính'
                   : languageRedux === 2
-                    ? 'Gender'
-                    : '성별'}
+                  ? 'Gender'
+                  : '성별'}
               </p>
               <p>
                 {languageRedux === 1
                   ? 'Địa chỉ'
                   : languageRedux === 2
-                    ? 'Location'
-                    : '주소'}
+                  ? 'Location'
+                  : '주소'}
               </p>
             </div>
             <div className="div-detail-row right">
               <p>
                 {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
-                    .format('DD/MM/YYYY')
-                    .replace(/\d{2}$/, 'xx')
+                      .format('DD/MM/YYYY')
+                      .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
-                    ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
-                    : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                  ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
+                  : languageRedux === 1
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}
               </p>
               <p>
                 {candidate?.genderText
                   ? candidate?.genderText
                   : languageRedux === 1
-                    ? 'Chưa cập nhật'
-                    : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}
               </p>
               <p>
                 {candidate?.addressText
                   ? candidate?.addressText.fullName
                   : languageRedux === 1
-                    ? 'Chưa cập nhật'
-                    : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}
               </p>
             </div>
           </div>
@@ -602,10 +610,10 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Thông tin liên hệ'
                 : languageRedux === 2
-                  ? 'Contact information'
-                  : languageRedux === 3
-                    ? '연락처'
-                    : 'Thông tin liên hệ'}
+                ? 'Contact information'
+                : languageRedux === 3
+                ? '연락처'
+                : 'Thông tin liên hệ'}
             </h3>
           </div>
           <div className="info-detail">
@@ -614,31 +622,31 @@ const CandidateNewDetail = () => {
                 {languageRedux === 1
                   ? 'Số điện thoại'
                   : languageRedux === 2
-                    ? 'Phone number'
-                    : '전화 번호'}
+                  ? 'Phone number'
+                  : '전화 번호'}
               </p>
               <p>
                 {languageRedux === 1
                   ? 'Email'
                   : languageRedux === 2
-                    ? 'Email'
-                    : '이메일'}
+                  ? 'Email'
+                  : '이메일'}
               </p>
 
               <p>
                 {languageRedux === 1
                   ? 'Facebook'
                   : languageRedux === 2
-                    ? 'Facebook'
-                    : '페이스북'}
+                  ? 'Facebook'
+                  : '페이스북'}
               </p>
 
               <p>
                 {languageRedux === 1
                   ? 'LinkedIn'
                   : languageRedux === 2
-                    ? 'LinkedIn'
-                    : '링크드인'}
+                  ? 'LinkedIn'
+                  : '링크드인'}
               </p>
             </div>
             <div className="div-detail-row right">
@@ -646,39 +654,39 @@ const CandidateNewDetail = () => {
                 {candidate?.phoneData
                   ? candidate?.phoneData
                   : languageRedux === 1
-                    ? 'Chưa cập nhật'
-                    : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}
               </p>
               <p>
                 {candidate?.emailData
                   ? candidate?.emailData
                   : languageRedux === 1
-                    ? 'Chưa cập nhật'
-                    : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}
               </p>
 
               <p>
                 {candidate?.facebookData
                   ? candidate?.facebookData
                   : languageRedux === 1
-                    ? 'Chưa cập nhật'
-                    : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}
               </p>
 
               <p>
                 {candidate?.linkedinData
                   ? candidate?.linkedinData
                   : languageRedux === 1
-                    ? 'Chưa cập nhật'
-                    : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                  ? 'Not updated yet'
+                  : languageRedux === 3 && '업데이트하지 않음'}
               </p>
             </div>
           </div>
@@ -725,26 +733,26 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Lĩnh vực quan tâm'
                 : languageRedux === 2
-                  ? 'Career objective'
-                  : '관심 분야'}
+                ? 'Career objective'
+                : '관심 분야'}
             </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
               ? candidate?.profileCategories?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item.parentCategory.fullName}
-                    {'/ '}
-                    {item.fullName}
-                  </Button>
-                ),
-              )
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item.parentCategory.fullName}
+                      {'/ '}
+                      {item.fullName}
+                    </Button>
+                  ),
+                )
               : languageRedux === 1
-                ? 'Chưa cập nhật'
-                : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+              ? 'Chưa cập nhật'
+              : languageRedux === 2
+              ? 'Not updated yet'
+              : languageRedux === 3 && '업데이트하지 않음'}
           </Space>
         </div>
         <div className="candidate-profile-info">
@@ -759,24 +767,24 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Khu vực làm việc'
                 : languageRedux === 2
-                  ? 'Working location'
-                  : languageRedux === 3 && '근무 위치'}
+                ? 'Working location'
+                : languageRedux === 3 && '근무 위치'}
             </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
               ? candidate?.profileLocations?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  {item?.fullName}
-                  {', '}
-                  {item.province.fullName}
-                </Button>
-              ))
+                  <Button key={index} className="btn" type="text">
+                    {item?.fullName}
+                    {', '}
+                    {item.province.fullName}
+                  </Button>
+                ))
               : languageRedux === 1
-                ? 'Chưa cập nhật'
-                : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+              ? 'Chưa cập nhật'
+              : languageRedux === 2
+              ? 'Not updated yet'
+              : languageRedux === 3 && '업데이트하지 않음'}
           </Space>
         </div>
 
@@ -792,8 +800,8 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Trình độ học vấn'
                 : languageRedux === 2
-                  ? 'Education'
-                  : languageRedux === 3 && '최종학력'}
+                ? 'Education'
+                : languageRedux === 3 && '최종학력'}
             </h3>
           </div>
           {candidate?.profilesEducations?.length !== 0 ? (
@@ -807,8 +815,8 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+                ? 'Not updated yet'
+                : languageRedux === 3 && '업데이트하지 않음'}
             </div>
           )}
 
@@ -834,8 +842,8 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Kinh nghiệm làm việc'
                 : languageRedux === 2
-                  ? 'Working experience'
-                  : '경력'}
+                ? 'Working experience'
+                : '경력'}
             </h3>
           </div>
           {candidate?.profilesExperiences?.length !== 0 ? (
@@ -847,8 +855,8 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+                ? 'Not updated yet'
+                : languageRedux === 3 && '업데이트하지 않음'}
             </div>
           )}
 
@@ -874,25 +882,25 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Kỹ năng'
                 : languageRedux === 2
-                  ? 'Skills'
-                  : languageRedux === 3
-                    ? '기능'
-                    : 'Kỹ năng'}
+                ? 'Skills'
+                : languageRedux === 3
+                ? '기능'
+                : 'Kỹ năng'}
             </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
               ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  <span>{item.skillName}</span>
-                  <span>{item.dataLevel.data}</span>
-                </Button>
-              ))
+                  <Button key={index} className="btn" type="text">
+                    <span>{item.skillName}</span>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ))
               : languageRedux === 1
-                ? 'Chưa cập nhật'
-                : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+              ? 'Chưa cập nhật'
+              : languageRedux === 2
+              ? 'Not updated yet'
+              : languageRedux === 3 && '업데이트하지 않음'}
           </Space>
         </div>
 
@@ -909,25 +917,25 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Ngoại ngữ'
                 : languageRedux === 2
-                  ? 'Languages'
-                  : languageRedux === 3 && '언어'}
+                ? 'Languages'
+                : languageRedux === 3 && '언어'}
             </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0
               ? candidate?.profilesLanguages?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <h3>{item.languageName}</h3>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ),
-              )
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      <h3>{item.languageName}</h3>
+                      <span>{item.dataLevel.data}</span>
+                    </Button>
+                  ),
+                )
               : languageRedux === 1
-                ? 'Chưa cập nhật'
-                : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+              ? 'Chưa cập nhật'
+              : languageRedux === 2
+              ? 'Not updated yet'
+              : languageRedux === 3 && '업데이트하지 않음'}
           </Space>
         </div>
 
@@ -944,8 +952,8 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Các hoạt động'
                 : languageRedux === 2
-                  ? 'Activities'
-                  : languageRedux === 3 && '활동'}
+                ? 'Activities'
+                : languageRedux === 3 && '활동'}
             </h3>
           </div>
           {candidate?.profileActivities?.length !== 0 ? (
@@ -957,8 +965,8 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+                ? 'Not updated yet'
+                : languageRedux === 3 && '업데이트하지 않음'}
             </div>
           )}
 
@@ -984,25 +992,25 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Người giới thiệu'
                 : languageRedux === 2
-                  ? 'References'
-                  : languageRedux === 3 && '추천자'}
+                ? 'References'
+                : languageRedux === 3 && '추천자'}
             </h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesReferences?.length !== 0
               ? candidate?.profilesReferences?.map((item: any) => (
-                <Button key={item.id} className="btn" type="text">
-                  <h3>{item.fullName}</h3>
-                  <span>{item.phone}</span>
-                  <span>{item.email}</span>
-                  <span>{item.description}</span>
-                </Button>
-              ))
+                  <Button key={item.id} className="btn" type="text">
+                    <h3>{item.fullName}</h3>
+                    <span>{item.phone}</span>
+                    <span>{item.email}</span>
+                    <span>{item.description}</span>
+                  </Button>
+                ))
               : languageRedux === 1
-                ? 'Chưa cập nhật'
-                : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+              ? 'Chưa cập nhật'
+              : languageRedux === 2
+              ? 'Not updated yet'
+              : languageRedux === 3 && '업데이트하지 않음'}
           </Space>
         </div>
 
@@ -1019,8 +1027,8 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Các giải thưởng'
                 : languageRedux === 2
-                  ? 'Awards'
-                  : languageRedux === 3 && '수상'}
+                ? 'Awards'
+                : languageRedux === 3 && '수상'}
             </h3>
           </div>
           {candidate?.profileAwards?.length !== 0 ? (
@@ -1032,8 +1040,8 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Chưa cập nhật'
                 : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+                ? 'Not updated yet'
+                : languageRedux === 3 && '업데이트하지 않음'}
             </div>
           )}
 
@@ -1058,8 +1066,8 @@ const CandidateNewDetail = () => {
               {languageRedux === 1
                 ? 'Sở thích'
                 : languageRedux === 2
-                  ? 'Hobbies'
-                  : languageRedux === 3 && '취미'}
+                ? 'Hobbies'
+                : languageRedux === 3 && '취미'}
             </h3>
           </div>
           <Space
@@ -1102,8 +1110,8 @@ const CandidateNewDetail = () => {
             {languageRedux === 1
               ? 'Bạn đã lưu ứng viên thành công !'
               : languageRedux === 2
-                ? 'You have successfully saved the candidate!'
-                : languageRedux === 3 && '후보자를 성공적으로 저장했습니다!'}
+              ? 'You have successfully saved the candidate!'
+              : languageRedux === 3 && '후보자를 성공적으로 저장했습니다!'}
           </Alert>
         </Snackbar>
       </Stack>
@@ -1123,9 +1131,8 @@ const CandidateNewDetail = () => {
             {languageRedux === 1
               ? 'Bạn đã hủy lưu ứng viên thành công!'
               : languageRedux === 2
-                ? 'You have successfully unsaved the candidate!'
-                : languageRedux === 3 &&
-                '후보자 저장을 성공적으로 취소했습니다.'}
+              ? 'You have successfully unsaved the candidate!'
+              : languageRedux === 3 && '후보자 저장을 성공적으로 취소했습니다.'}
           </Alert>
         </Snackbar>
       </Stack>
