@@ -214,12 +214,12 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                   </Typography>
                 </Tooltip>
                 <div>
-                  {infor?.resource?.company_icon && (
+                  {infor?.companyResourceData?.logo && (
                     <img
                       className="img-resource-company"
                       src={
-                        infor?.resource?.company_icon
-                          ? infor?.resource?.company_icon
+                        infor?.companyResourceData?.logo
+                          ? infor?.companyResourceData?.logo
                           : ''
                       }
                       alt={
@@ -230,7 +230,7 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                           : '이미지가 손상되었습니다'
                       }
                       onError={() =>
-                        handleImageError(infor?.resource?.company_icon)
+                        handleImageError(infor?.companyResourceData?.logo)
                       }
                     />
                   )}
