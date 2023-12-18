@@ -332,6 +332,8 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
               flexDirection: 'column',
             }}
           >
+            {' '}
+            {}
             <div onClick={(e) => handleBookmark(e)}>
               {checkBookMark ? (
                 <SaveIconFill width={24} height={24} />
