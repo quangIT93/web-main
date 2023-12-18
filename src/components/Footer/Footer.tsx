@@ -31,7 +31,7 @@ const WrapFooter = styled('div')({
   width: '100%',
   background: 'white',
   borderTop: '1px solid #ccc',
-  zIndex: '2',
+  zIndex: '10',
   height: '36px',
 
   [`@media (max-width: ${mobile})`]: {

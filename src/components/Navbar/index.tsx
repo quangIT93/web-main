@@ -179,6 +179,7 @@ const Navbar: React.FC = () => {
   const [openLogin, setOpenLogin] = React.useState(false);
   const [spinning, setSpinning] = React.useState(false);
   const [reset, setReset] = React.useState<Boolean>(false);
+  const [selectedSalaryRange, setSelectedSalaryRange] = useState<number | undefined>(1);
 
   // value search
   const [salaryType, setSalaryType] = React.useState<any>();
@@ -233,6 +234,12 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
     setUserFiltered(userFilteredCookies);
+    let selectedSalaryRange = JSON.parse(getCookie('selectedSalaryRange') || '0');
+    setSelectedSalaryRange(
+      selectedSalaryRange !== '0' ?
+        undefined :
+        Number(selectedSalaryRange)
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -587,6 +594,7 @@ const Navbar: React.FC = () => {
     // console.log('salary_max', salary_max);
     // console.log('salary_min', salary_min);
     await setCookie('userFiltered', JSON.stringify(filter), 365);
+    setCookie('selectedSalaryRange', JSON.stringify(selectedSalaryRange), 365);
 
     if (list_dis?.length > 0) {
       list_dis.forEach((item) => {
@@ -966,6 +974,7 @@ const Navbar: React.FC = () => {
     setIsWorkingWeekend(0);
     setIsRemotely(0);
     setReset(true);
+    setSelectedSalaryRange(undefined);
 
     let filter = {
       money_type: 1,
@@ -977,6 +986,7 @@ const Navbar: React.FC = () => {
       is_remotely: 0,
     };
     setCookie('userFiltered', JSON.stringify(filter), 365);
+    setCookie('selectedSalaryRange', '0', 365);
 
     let typeJobReset = {
       id: 6,
@@ -2396,6 +2406,8 @@ const Navbar: React.FC = () => {
                   setSalaryMax={setSalaryMax}
                   reset={reset}
                   setReset={setReset}
+                  setSelectedSalaryRange={setSelectedSalaryRange}
+                  selectedSalaryRange={selectedSalaryRange}
                 />
                 <FilterTimeJob
                   setIsWorkingWeekend={setIsWorkingWeekend}
@@ -2450,6 +2462,8 @@ const Navbar: React.FC = () => {
                   setSalaryMax={setSalaryMax}
                   reset={reset}
                   setReset={setReset}
+                  setSelectedSalaryRange={setSelectedSalaryRange}
+                  selectedSalaryRange={selectedSalaryRange}
                 />
                 <FilterTimeJob
                   setIsWorkingWeekend={setIsWorkingWeekend}
