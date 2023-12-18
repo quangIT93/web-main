@@ -161,6 +161,51 @@
                     justify-content: space-evenly;
                     margin-top: 12px;
                 }
+
+                .hotjob-inputFilter-groupSalary_radio {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    max-height: 90px;
+                    overflow-y: scroll;
+                    width: 100%;
+                    flex: 1;
+
+                    .ant-radio-button-wrapper {
+                        width: 100%;
+                        border: none;
+
+                        .ant-radio-button-checked {
+                            color: #0D99FF !important;
+                            background-color: #F4F5F5 !important;
+                        }
+
+                        &:not(:has(.ant-radio-button-checked)) {
+                            .radio-salary-range {
+                                .radio_checked_ic {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+
+                    .radio-salary-range {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        width: 100%;
+
+                        p {
+                            word-break: break-all;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+
+                }
+
+
             }
 
         }

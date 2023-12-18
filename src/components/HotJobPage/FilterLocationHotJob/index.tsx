@@ -47,7 +47,7 @@ const FilterLocationHotJob: React.FC<ISearchLocation> = (props) => {
                 value :
                 []
         );
-
+        window.scrollTo({ top: 0 });
     };
 
     const DropdownRender = (menus: React.ReactNode) => (
