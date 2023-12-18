@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, memo, useMemo } from 'react';
 import { Collapse, Radio, Input, Typography } from 'antd';
 // import { useSearchParams } from 'react-router-dom';
 
-import { getCookie } from 'cookies';
+import { getCookie, setCookie } from 'cookies';
 
 //@ts-ignore
 import 'intl';
@@ -16,6 +16,7 @@ import { RootState } from 'store';
 
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
+import { CheckOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 
@@ -87,7 +88,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
         //     : 
         0;
     const Type_Money = userFilteredCookies?.money_type;
-    const [selectedValue, setSelectedValue] = useState<number | null>(1);
+    const [selectedValue, setSelectedValue] = useState<number | undefined>(1);
+    const [selectedSalaryRange, setSelectedSalaryRange] = useState<number | undefined>(1);
 
     useEffect(() => {
         if (typeMoney) {
@@ -115,6 +117,70 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
         setTypeMoney(e.target.value);
     };
 
+    const handleSelectSalaryRange = (e: any) => {
+        setCollapseOpen(false);
+        window.scrollTo({ top: 0 });
+        setReset(false);
+        switch (e.target.value) {
+            case 1:
+                setSalaryMin(Number('0'));
+                setSalaryMax(Number('0'));
+                break;
+            case 2:
+                setSalaryMin(Number('0'));
+                setSalaryMax(Number('10000000'));
+                break;
+            case 3:
+                setSalaryMin(Number('10000000'));
+                setSalaryMax(Number('15000000'));
+                break;
+            case 4:
+                setSalaryMin(Number('15000000'));
+                setSalaryMax(Number('20000000'));
+                break;
+            case 5:
+                setSalaryMin(Number('20000000'));
+                setSalaryMax(Number('25000000'));
+                break;
+            case 6:
+                setSalaryMin(Number('25000000'));
+                setSalaryMax(Number('30000000'));
+                break;
+            case 7:
+                setSalaryMin(Number('30000000'));
+                setSalaryMax(Number('50000000'));
+                break;
+            case 8:
+                setSalaryMin(Number('50000000'));
+                setSalaryMax(Number('0'));
+                break;
+            case 9:
+                setSalaryMin(Number('0'));
+                setSalaryMax(Number('300'));
+                break;
+            case 10:
+                setSalaryMin(Number('300'));
+                setSalaryMax(Number('500'));
+                break;
+            case 11:
+                setSalaryMin(Number('500'));
+                setSalaryMax(Number('700'));
+                break;
+            case 12:
+                setSalaryMin(Number('700'));
+                setSalaryMax(Number('1000'));
+                break;
+            case 13:
+                setSalaryMin(Number('1000'));
+                setSalaryMax(Number('0'));
+                break;
+
+            default:
+                break;
+        }
+        setSelectedSalaryRange(e.target.value);
+    };
+
     const handleInputChangeSalaryMin = (e: any) => {
         // setInputValueMin(e.target.value.replace(',', ''))
         const inputValue = e.target.value.replace(',', '');
@@ -123,6 +189,19 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
         if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
             // setInputValueMin(inputValue.replace(',', ''));
             setSalaryMin(Number(inputValue.replace(',', '')));
+        }
+        if (inputValue !== '10000000' ||
+            inputValue !== '15000000' ||
+            inputValue !== '20000000' ||
+            inputValue !== '25000000' ||
+            inputValue !== '30000000' ||
+            inputValue !== '50000000' ||
+            inputValue !== '300' ||
+            inputValue !== '500' ||
+            inputValue !== '700' ||
+            inputValue !== '1000'
+        ) {
+            setSelectedSalaryRange(undefined);
         }
     };
 
@@ -136,6 +215,20 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
         if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
             // setInputValueMax(inputValue.replace(',', ''));
             setSalaryMax(Number(inputValue.replace(',', '')));
+        }
+
+        if (inputValue !== '10000000' ||
+            inputValue !== '15000000' ||
+            inputValue !== '20000000' ||
+            inputValue !== '25000000' ||
+            inputValue !== '30000000' ||
+            inputValue !== '50000000' ||
+            inputValue !== '300' ||
+            inputValue !== '500' ||
+            inputValue !== '700' ||
+            inputValue !== '1000'
+        ) {
+            setSelectedSalaryRange(undefined);
         }
     };
 
@@ -166,21 +259,270 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
                 e.target.closest('.submitValue')
             ) {
                 setCollapseOpen(false);
-            } else if (!e.target.closest('.inputFilterSalaryHotJob')) {
-                setCollapseOpen(false);
-            } else if (e.target.closest('.inputFilterSalaryHotJob')) {
-                setCollapseOpen(true);
-            }
+            } else
+                if (!e.target.closest('.inputFilterSalaryHotJob')) {
+                    setCollapseOpen(false);
+                } else if (e.target.closest('.inputFilterSalaryHotJob')) {
+                    setCollapseOpen(true);
+                } else if (e.target.closest('.hotjob-inputFilter-groupSalary_radio')) {
+                    setCollapseOpen(true);
+                }
         };
         // \ant-collapse-header
 
-        window.addEventListener('click', handleOutsideClick);
+        window.addEventListener('mousedown', handleOutsideClick);
 
         return () => {
-            window.removeEventListener('click', handleOutsideClick);
+            window.removeEventListener('mousedown', handleOutsideClick);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useMemo(() => {
+        if (Number(salaryMin) === 0 && Number(salaryMax) === 0) {
+            setSelectedSalaryRange(1);
+        } else if (Number(salaryMin) === 0 && Number(salaryMax) === 10000000) {
+            setSelectedSalaryRange(2);
+        } else if (Number(salaryMin) === 10000000 && Number(salaryMax) === 15000000) {
+            setSelectedSalaryRange(3);
+        } else if (Number(salaryMin) === 15000000 && Number(salaryMax) === 20000000) {
+            setSelectedSalaryRange(4);
+        } else if (Number(salaryMin) === 20000000 && Number(salaryMax) === 25000000) {
+            setSelectedSalaryRange(5);
+        } else if (Number(salaryMin) === 25000000 && Number(salaryMax) === 30000000) {
+            setSelectedSalaryRange(6);
+        } else if (Number(salaryMin) === 30000000 && Number(salaryMax) === 50000000) {
+            setSelectedSalaryRange(7);
+        } else if (Number(salaryMin) === 50000000 && Number(salaryMax) === 0) {
+            setSelectedSalaryRange(8);
+        } else if (Number(salaryMin) === 0 && Number(salaryMax) === 300) {
+            setSelectedSalaryRange(9);
+        } else if (Number(salaryMin) === 300 && Number(salaryMax) === 500) {
+            setSelectedSalaryRange(10);
+        } else if (Number(salaryMin) === 500 && Number(salaryMax) === 700) {
+            setSelectedSalaryRange(11);
+        } else if (Number(salaryMin) === 700 && Number(salaryMax) === 1000) {
+            setSelectedSalaryRange(12);
+        } else if (Number(salaryMin) === 1000 && Number(salaryMax) === 0) {
+            setSelectedSalaryRange(13);
+        }
+    }, [salaryMin, salaryMax])
+
+    const options = [
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "Tất cả mức lương" :
+                            languageRedux === 2 ?
+                                "All salary" :
+                                "모두"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 1
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "Dưới 10 triệu" :
+                            languageRedux === 2 ?
+                                "Under 10 million" :
+                                "1.000 만동 이하"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 2
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "10 - 15 triệu" :
+                            languageRedux === 2 ?
+                                "10 - 15 million" :
+                                "1.000 ~ 1.500 만동"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 3
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "15 - 20 triệu" :
+                            languageRedux === 2 ?
+                                "15 - 20 million" :
+                                "1.500 ~ 2.000 만동"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 4
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "20 - 25 triệu" :
+                            languageRedux === 2 ?
+                                "20 - 25 million" :
+                                "2.000 ~ 2.500 만동"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 5
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "25 - 30 triệu" :
+                            languageRedux === 2 ?
+                                "25 - 30 million" :
+                                "2.500 ~ 3.000 만동"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 6
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "30 - 50 triệu" :
+                            languageRedux === 2 ?
+                                "30 - 50 million" :
+                                "3.000 ~ 5.000 만동"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 7
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "Trên 50 triệu" :
+                            languageRedux === 2 ?
+                                "Over 50 million" :
+                                "5.000 만동 이상"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 8
+        },
+    ];
+
+    const optionsUsd = [
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "Tất cả mức lương" :
+                            languageRedux === 2 ?
+                                "All salary" :
+                                "모두"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 1
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "Dưới 300" :
+                            languageRedux === 2 ?
+                                "Under 300" :
+                                "300 이하"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 9
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "300 - 500" :
+                            languageRedux === 2 ?
+                                "300 - 500" :
+                                "300 - 500"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 10
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "500 - 700" :
+                            languageRedux === 2 ?
+                                "500 - 700" :
+                                "500 - 700"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 11
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "700 - 1000" :
+                            languageRedux === 2 ?
+                                "700 - 1000" :
+                                "700 - 1000"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 12
+        },
+        {
+            label: <div className='radio-salary-range'>
+                <p>
+                    {
+                        languageRedux === 1 ?
+                            "Trên 1000" :
+                            languageRedux === 2 ?
+                                "Over 1000" :
+                                "1.000 이상"
+                    }
+                </p>
+                <CheckOutlined className={"radio_checked_ic"} />
+            </div>,
+            value: 13
+        },
+    ];
 
     return (
         <div className="filter-input-hotjob">
@@ -287,18 +629,14 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
                     ) : (
                         <></>
                     )}
-                    {/* <div className="wrap-button_filter">
-            <Button type="default" onClick={handleCancleValue}>
-              Đặt lại
-            </Button>
-            <Button
-              type="primary"
-              onClick={handleSubmitValue}
-              className="submitValue"
-            >
-              Áp dụng
-            </Button>
-          </div> */}
+                    <Radio.Group
+                        value={reset ? 1 : selectedSalaryRange}
+                        onChange={handleSelectSalaryRange}
+                        className="hotjob-inputFilter-groupSalary_radio"
+                        options={selectedValue === 1 ? options : optionsUsd}
+                        optionType="button"
+                    >
+                    </Radio.Group>
                 </Panel>
             </Collapse>
         </div>

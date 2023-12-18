@@ -921,6 +921,7 @@
 
       .filter-wrap-respone_bottom {
         display: flex;
+        flex-direction: column;
         gap: 20px
       }
     }
@@ -1091,7 +1092,7 @@
     }
 
     @include breakpoint(tablet) {
-    // @media screen and (max-width: 480px) {
+      // @media screen and (max-width: 480px) {
 
       // }
       // display: flex;
@@ -1575,6 +1576,7 @@
 
       .wrap-btn_notice {
         position: relative;
+
         @media screen and (max-width: 375px) {
           display: none;
         }
@@ -1601,8 +1603,8 @@
         }
 
 
-        
-    
+
+
 
 
       }
@@ -1798,7 +1800,7 @@
       display: none;
     }
 
-    @media screen and (max-width: 480px){
+    @media screen and (max-width: 480px) {
       .notification {
         display: block;
         left: 24px;
@@ -2019,6 +2021,7 @@
     right: -50px;
     // left: 0;
     z-index: 10;
+
     // display: none;
     // visibility: hidden;
     // animation-duration: 0.55s;
@@ -2027,15 +2030,15 @@
     // animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
     // animation-fill-mode: backwards;
     @media screen and (max-width: 1861px) {
-      right: -15px;   
+      right: -15px;
     }
 
     @media screen and (max-width: 1024px) {
-      right: -50px;   
+      right: -50px;
     }
 
     @media screen and (max-width: 768px) {
-      right: -15px;   
+      right: -15px;
     }
 
     .login__hover {
