@@ -6,16 +6,17 @@ import Stack from '@mui/material/Stack';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import { setAlertSave } from 'store/reducer/alertReducer';
-import './style.scss';
 import { RootState } from '../../store/reducer';
-import { home } from 'validations/lang/vi/home';
-import { homeEn } from 'validations/lang/en/home';
-import languageApi from 'api/languageApi';
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  },
-);
+import './style.scss';
+// import { home } from 'validations/lang/vi/home';
+// import { homeEn } from 'validations/lang/en/home';
+// import languageApi from 'api/languageApi';
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 // interface IShowNotificativeSave {
 //   showNofySave: boolean;
@@ -80,8 +81,8 @@ const ShowNotificativeSave: React.FC = () => {
             {languageRedux === 1
               ? 'Bạn đã lưu thành công'
               : languageRedux === 2
-                ? 'Saved successfully'
-                : languageRedux === 3 && '저장됩니다.'}
+              ? 'Saved successfully'
+              : languageRedux === 3 && '저장됩니다.'}
           </Alert>
         </Snackbar>
       </Stack>

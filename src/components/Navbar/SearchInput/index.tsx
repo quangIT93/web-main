@@ -1,97 +1,20 @@
-import React, { useState, useContext } from 'react';
-import { Select, Button } from 'antd';
+import React, { useState, useContext, memo } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import apiTotalJob from 'api/apiTotalJob';
+import searchApi from 'api/searchApi';
+// import { Spin } from 'antd';
+import { RootState } from '../../../store/reducer';
+import { HomeValueContext } from 'context/HomeValueContextProvider';
+// import context
 // import jsonp from 'fetch-jsonp';
 // import qs from 'qs';
-import type { SelectProps } from 'antd';
-import { useLocation } from 'react-router-dom';
-import searchApi from 'api/searchApi';
-import apiTotalJob from 'api/apiTotalJob';
-import './style.scss';
-// import { Spin } from 'antd';
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { SearchIcon, FilterIcon, LightFilterIcon } from '../../Icons/index';
-// import context
-import { HomeValueContext } from 'context/HomeValueContextProvider';
-import { useSelector } from 'react-redux';
-import {
-  // useNavigate,
-  // createSearchParams,
-  useSearchParams,
-} from 'react-router-dom';
-import { RootState } from '../../../store/reducer';
-import languageApi from 'api/languageApi';
-
-import ModalLogin from '../../../components/Home/ModalLogin';
-// let timeout: ReturnType<typeof setTimeout> | null;
-// let currentValue: string | undefined;
-
-// fetch data keywords
-// const fetch = (
-//   value: string | undefined,
-//   callback: Function,
-//   // setFetching: Function
-// ) => {
-//   if (timeout) {
-//     clearTimeout(timeout);
-//     timeout = null;
-//   }
-
-//   currentValue = value;
-//   var response: any = null;
-
-//   const fake = async () => {
-//     const array: any[] = [];
-
-//     callback([]);
-
-//     // check login user
-//     if (localStorage.getItem('accessToken')) {
-//       const result = await searchApi.getHistoryKeyWord(20);
-//       if (result) {
-//         response = result.data.listHistorySearch;
-//       }
-//     } else {
-//       const result = await searchApi.getSuggestKeyWord(20);
-//       if (result) {
-//         response = result.data;
-//       }
-//     }
-//     console.log('response', response);
-//     // filter keywords
-//     if (response) {
-//       if (currentValue === value) {
-//         response?.forEach((item: any) => {
-//           if (
-//             item.keyword
-//               .toLocaleLowerCase()
-//               .includes(value?.toLocaleLowerCase())
-//           ) {
-//             array.push({
-//               value: item.keyword,
-//               text: item.keyword,
-//             });
-//           }
-//         });
-//         // setFetching(false)
-//         callback(array);
-//       }
-//     }
-//   };
-
-//   // check value search then fetching data
-//   if (value !== '') {
-//     // setFetching(true)
-//     timeout = setTimeout(fake, 300);
-//   } else {
-//     searchApi.getSuggestKeyWord(10).then((result) => {
-//       const data = result.data.map((item: any) => ({
-//         value: item.keyword,
-//         text: item.keyword,
-//       }));
-//       callback(data);
-//     });
-//   }
-// };
+import { Select, Button } from 'antd';
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
+import type { SelectProps } from 'antd';
+import './style.scss';
 
 interface SearchProps {
   value: string | undefined | null;
@@ -132,9 +55,9 @@ const SearchInput: React.FC<SearchProps> = ({
   const [isLogin, setIsLogin] = React.useState(false);
   const [totalJob, setTotalJob] = React.useState<number>(0);
 
-  const language = useSelector(
-    (state: RootState) => state.dataLanguage.languages,
-  );
+  // const language = useSelector(
+  //   (state: RootState) => state.dataLanguage.languages,
+  // );
 
   // const [openModalLogin, setOpenModalLogin] = React.useState(false);
   // const inputRef = useRef<InputRef>(null);
@@ -361,8 +284,8 @@ const SearchInput: React.FC<SearchProps> = ({
           {languageRedux === 1
             ? 'Từ khóa phổ biến'
             : languageRedux === 2
-              ? 'Popular keywords'
-              : languageRedux === 3 && '인기 키워드'}
+            ? 'Popular keywords'
+            : languageRedux === 3 && '인기 키워드'}
         </h4>
         <div className="wrap-items-history wrap-items-search">
           {dataSuggest?.map((suggest: any, index: number) => (
@@ -388,8 +311,8 @@ const SearchInput: React.FC<SearchProps> = ({
           {languageRedux === 1
             ? 'Tìm kiếm gần đây'
             : languageRedux === 2
-              ? 'Recently Search'
-              : languageRedux === 3 && '최근 검색'}
+            ? 'Recently Search'
+            : languageRedux === 3 && '최근 검색'}
         </h4>
         <div className="wrap-items-history wrap-items-search">
           {dataHistory?.listHistorySearch?.map(
@@ -434,12 +357,12 @@ const SearchInput: React.FC<SearchProps> = ({
                 'en-US',
               )} công việc tại Việt Nam`
             : languageRedux === 2
-              ? `Search more than ${totalJob.toLocaleString(
-                  'en-US',
-                )} jobs in Vietnam`
-              : languageRedux === 3
-                ? `더 검색 ${totalJob.toLocaleString('en-US')} 베트남의 작업`
-                : ''
+            ? `Search more than ${totalJob.toLocaleString(
+                'en-US',
+              )} jobs in Vietnam`
+            : languageRedux === 3
+            ? `더 검색 ${totalJob.toLocaleString('en-US')} 베트남의 작업`
+            : ''
         }
         // placeholder={
         //   language?.search_over +

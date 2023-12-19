@@ -5,7 +5,7 @@ import CV from '.';
 import RouteProps from '../routes';
 
 const route: RouteProps = {
-  path: '/cv',
+  path: '/testWeb',
   component: <CV />,
 };
 

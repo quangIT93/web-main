@@ -707,10 +707,6 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     },
   ];
 
-  console.log('salary max', salaryMax);
-  // console.log('salary max', salaryMax === 50000000);
-  console.log('salary min', salaryMin);
-
   return (
     <div className="filter-input">
       <div className="filter-input_icon">
