@@ -284,11 +284,11 @@ const Home: React.FC = () => {
               :
               <>
                 <NewestGigWorker />
+                <NewestCompany />
                 <HotJob />
                 <NewJobs />
                 <SuggestJob />
                 <ThemesJob />
-                <NewestCompany />
                 <Community />
               </>
         }
