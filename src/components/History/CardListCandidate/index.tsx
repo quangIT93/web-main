@@ -32,7 +32,7 @@ interface ICardsApplied {
 }
 
 const CardListCandidate: React.FC = () => {
-  const [candidateData, setCandidateData] = useState<any>();
+  const [candidateData, setCandidateData] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
   const [pageNumber, setPageNumber] = React.useState(0);
   const [isVisible, setIsVisible] = useState(true);
