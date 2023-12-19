@@ -46,6 +46,7 @@ import './style.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 import { color } from 'html2canvas/dist/types/css/types/color';
+import { ClockIcon, DolaIcon, LocationHomeIcon } from '#components/Icons';
 // import languageApi from 'api/languageApi';
 // import { candidateDetail } from 'validations/lang/vi/candidateDetail';
 // import { candidateDetailEn } from 'validations/lang/en/cnadidateDetail';
@@ -121,8 +122,8 @@ const CandidateDetail: React.FC = () => {
       languageRedux === 1
         ? 'HiJob - Chi tiết ứng viên'
         : languageRedux === 2
-        ? 'HiJob - Candidate Details'
-        : 'HiJob - 후보자 세부정보';
+          ? 'HiJob - Candidate Details'
+          : 'HiJob - 후보자 세부정보';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_candidate_detail' as string,
@@ -268,7 +269,7 @@ const CandidateDetail: React.FC = () => {
                   style={{ padding: '0', marginLeft: '12px' }}
                   className="div-cart-item-post-candidate-detail"
                 >
-                  <Tooltip placement="top" title="àhakj">
+                  <Tooltip placement="top" title={dataPost?.company_name}>
                     <Typography
                       gutterBottom
                       variant="h6"
@@ -282,7 +283,7 @@ const CandidateDetail: React.FC = () => {
                       {dataPost?.company_name}
                     </Typography>
                   </Tooltip>
-                  <Tooltip placement="top" title="j j  j jj">
+                  <Tooltip placement="top" title={dataPost?.title}>
                     <Typography
                       gutterBottom
                       variant="h1"
@@ -295,11 +296,15 @@ const CandidateDetail: React.FC = () => {
                   <div
                     style={{
                       display: 'flex',
-                      alignItems: 'flex-start',
+                      alignItems: 'center',
                       justifyContent: 'center',
+                      gap: '5px'
                     }}
                   >
-                    <EnvironmentFilled className="icon-cart-item-post" />
+                    {/* <EnvironmentFilled className="icon-cart-item-post" /> */}
+                    <div className="icon-infor-candidate-item-post">
+                      <LocationHomeIcon />
+                    </div>
                     <Typography variant="body2" color="text.secondary">
                       {dataPost?.district}, {dataPost?.province}
                     </Typography>
@@ -309,9 +314,13 @@ const CandidateDetail: React.FC = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      gap: '5px'
                     }}
                   >
-                    <ClockCircleFilled className="icon-cart-item-post" />
+                    {/* <ClockCircleFilled className="icon-cart-item-post" /> */}
+                    <div className="icon-infor-candidate-item-post">
+                      <ClockIcon />
+                    </div>
                     <Typography variant="body2" color="text.secondary">
                       {moment(dataPost?.start_time).format('HH:mm')} :{' '}
                       {moment(dataPost?.end_time).format('HH:mm')}
@@ -322,16 +331,20 @@ const CandidateDetail: React.FC = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      gap: '5px'
                     }}
                   >
-                    <AttachMoneyIcon
+                    {/* <AttachMoneyIcon
                       sx={{
                         fontSize: 20,
                         marginLeft: '-2px',
                         marginRight: '2px',
                         color: '#575757',
                       }}
-                    />
+                    /> */}
+                    <div className="icon-infor-candidate-item-post">
+                      <DolaIcon />
+                    </div>
                     <Typography variant="body2" color="text.secondary">
                       {new Intl.NumberFormat('en-US').format(
                         dataPost?.salary_min,
@@ -378,59 +391,62 @@ const CandidateDetail: React.FC = () => {
                   {languageRedux === 1
                     ? 'Đã đăng vào lúc:'
                     : languageRedux === 2
-                    ? 'Posted on:'
-                    : languageRedux === 3 && '에 게시 됨:'}{' '}
-                  {moment(dataPost?.start_date).format('DD/MM/YY')}
+                      ? 'Posted on:'
+                      : languageRedux === 3 && '에 게시 됨:'}{' '}
+                  {moment(dataPost?.created_at).format('DD/MM/YYYY')}
                 </p>
                 {dataPost?.status === 1 ? (
                   <p
                     style={{
                       background: '#0D99FF',
-                      padding: '4px 12px',
+                      padding: '4px 16px',
                       borderRadius: '15px',
                       color: '#ffffff',
                       marginLeft: '100px',
                       fontStyle: 'italic',
+                      fontSize: '12px'
                     }}
                   >
                     {languageRedux === 1
                       ? 'Đang tuyển'
                       : languageRedux === 2
-                      ? 'Recruiting'
-                      : '현재 모집 중'}
+                        ? 'Recruiting'
+                        : '현재 모집 중'}
                   </p>
                 ) : dataPost?.status === 3 ? (
                   <p
                     style={{
                       background: '#aaaaaa',
-                      padding: '4px 12px',
+                      padding: '4px 16px',
                       borderRadius: '15px',
                       color: '#ffffff',
                       marginLeft: '100px',
                       fontStyle: 'italic',
+                      fontSize: '12px'
                     }}
                   >
                     {languageRedux === 1
                       ? 'Bài đăng đã đóng'
                       : languageRedux === 2
-                      ? 'Post is closed'
-                      : '게시물이 닫혔습니다'}
+                        ? 'Post is closed'
+                        : '게시물이 닫혔습니다'}
                   </p>
                 ) : (
                   <p
                     style={{
                       background: '#aaaaaa',
-                      padding: '4px 12px',
+                      padding: '4px 16px',
                       borderRadius: '15px',
                       color: '#ffffff',
                       fontStyle: 'italic',
+                      fontSize: '12px'
                     }}
                   >
                     {languageRedux === 1
                       ? 'Không chấp nhận'
                       : languageRedux === 2
-                      ? 'Does not accept'
-                      : '수락하지 않음'}
+                        ? 'Does not accept'
+                        : '수락하지 않음'}
                   </p>
                 )}
               </Box>
@@ -452,7 +468,13 @@ const CandidateDetail: React.FC = () => {
                 alt="anh icon"
               />
               <p
-                style={{ fontSize: 13, fontStyle: 'italic', padding: '4px 0' }}
+                style={{
+                  fontSize: 12,
+                  fontStyle: 'italic',
+                  padding: '4px 0',
+                  color: 'rgb(13, 153, 255)',
+                  fontWeight: 500,
+                }}
               >
                 {dataPost?.job_type.job_type_name}
               </p>
@@ -469,8 +491,8 @@ const CandidateDetail: React.FC = () => {
             {languageRedux === 1
               ? 'Hồ sơ ứng viên'
               : languageRedux === 2
-              ? 'Candidate profile'
-              : '후보자 프로필'}
+                ? 'Candidate profile'
+                : '후보자 프로필'}
           </p>
           <Box sx={{ marginTop: '10px' }}>
             <div className="div-profile-avatar">
@@ -493,8 +515,8 @@ const CandidateDetail: React.FC = () => {
                         languageRedux === 1
                           ? 'Hình ảnh bị lỗi'
                           : languageRedux === 2
-                          ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'
+                            ? 'Image is corrupted'
+                            : '이미지가 손상되었습니다'
                       }
                     />
                   </Badge>
@@ -503,10 +525,10 @@ const CandidateDetail: React.FC = () => {
                       {dataCandidate?.applicationProfile?.name
                         ? dataCandidate?.applicationProfile?.name
                         : languageRedux === 1
-                        ? 'Chưa cập nhật'
-                        : languageRedux === 2
-                        ? 'Not updated yet'
-                        : languageRedux === 3 && '업데이트하지 않음'}
+                          ? 'Chưa cập nhật'
+                          : languageRedux === 2
+                            ? 'Not updated yet'
+                            : languageRedux === 3 && '업데이트하지 않음'}
                     </h2>
                   </div>
                 </div>
@@ -531,8 +553,7 @@ const CandidateDetail: React.FC = () => {
                         window.open(
                           `/message?post_id=${searchParams.get(
                             'post-id',
-                          )}&user_id=${
-                            dataCandidate.applicationProfile.account_id
+                          )}&user_id=${dataCandidate.applicationProfile.account_id
                           }&application_id=${searchParams.get(
                             'application_id',
                           )} `,
@@ -559,10 +580,10 @@ const CandidateDetail: React.FC = () => {
                 {dataCandidate?.applicationProfile?.introduction
                   ? dataCandidate?.applicationProfile?.introduction
                   : languageRedux === 1
-                  ? 'Chưa cập nhật'
-                  : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
               </div>
             </div>
             <div className="div-profile-info">
@@ -577,8 +598,8 @@ const CandidateDetail: React.FC = () => {
                   {languageRedux === 1
                     ? 'Thông tin cá nhân'
                     : languageRedux === 2
-                    ? 'Personal Information'
-                    : '개인 정보'}
+                      ? 'Personal Information'
+                      : '개인 정보'}
                 </h3>
               </div>
               <div className="info-detail">
@@ -587,35 +608,35 @@ const CandidateDetail: React.FC = () => {
                     {languageRedux === 1
                       ? 'Ngày sinh'
                       : languageRedux === 2
-                      ? 'Date of birth'
-                      : '생년월일'}
+                        ? 'Date of birth'
+                        : '생년월일'}
                   </p>
                   <p>
                     {languageRedux === 1
                       ? 'Giới tính'
                       : languageRedux === 2
-                      ? 'Gender'
-                      : '성별'}
+                        ? 'Gender'
+                        : '성별'}
                   </p>
                   <p>
                     {languageRedux === 1
                       ? 'Địa chỉ'
                       : languageRedux === 2
-                      ? 'Location'
-                      : '주소'}
+                        ? 'Location'
+                        : '주소'}
                   </p>
                 </div>
                 <div className="div-detail-row right">
                   <p>
                     {dataCandidate?.applicationProfile?.birthday
                       ? moment(
-                          new Date(dataCandidate?.applicationProfile?.birthday),
-                        ).format('DD/MM/yyyy')
+                        new Date(dataCandidate?.applicationProfile?.birthday),
+                      ).format('DD/MM/yyyy')
                       : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                          ? 'Not updated yet'
+                          : languageRedux === 3 && '업데이트하지 않음'}
                   </p>
                   <p>
                     {dataCandidate?.applicationProfile?.gender
@@ -623,27 +644,27 @@ const CandidateDetail: React.FC = () => {
                         ? languageRedux === 1
                           ? 'Nam'
                           : languageRedux === 2
-                          ? 'Male'
-                          : '남성'
+                            ? 'Male'
+                            : '남성'
                         : languageRedux === 1
-                        ? 'Nữ'
-                        : languageRedux === 2
-                        ? 'Female'
-                        : '여성'
+                          ? 'Nữ'
+                          : languageRedux === 2
+                            ? 'Female'
+                            : '여성'
                       : languageRedux === 1
-                      ? 'Nam'
-                      : languageRedux === 2
-                      ? 'Male'
-                      : '남성'}
+                        ? 'Nam'
+                        : languageRedux === 2
+                          ? 'Male'
+                          : '남성'}
                   </p>
                   <p>
                     {dataCandidate?.applicationProfile?.address?.name
                       ? dataCandidate?.applicationProfile?.address?.name
                       : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                          ? 'Not updated yet'
+                          : languageRedux === 3 && '업데이트하지 않음'}
                   </p>
                 </div>
               </div>
@@ -661,10 +682,10 @@ const CandidateDetail: React.FC = () => {
                   {languageRedux === 1
                     ? 'Thông tin liên hệ'
                     : languageRedux === 2
-                    ? 'Contact information'
-                    : languageRedux === 3
-                    ? '연락처'
-                    : 'Thông tin liên hệ'}
+                      ? 'Contact information'
+                      : languageRedux === 3
+                        ? '연락처'
+                        : 'Thông tin liên hệ'}
                 </h3>
               </div>
               <div className="info-detail">
@@ -673,31 +694,31 @@ const CandidateDetail: React.FC = () => {
                     {languageRedux === 1
                       ? 'Số điện thoại'
                       : languageRedux === 2
-                      ? 'Phone number'
-                      : '전화 번호'}
+                        ? 'Phone number'
+                        : '전화 번호'}
                   </p>
                   <p>
                     {languageRedux === 1
                       ? 'Email'
                       : languageRedux === 2
-                      ? 'Email'
-                      : '이메일'}
+                        ? 'Email'
+                        : '이메일'}
                   </p>
 
                   <p>
                     {languageRedux === 1
                       ? 'Facebook'
                       : languageRedux === 2
-                      ? 'Facebook'
-                      : '페이스북'}
+                        ? 'Facebook'
+                        : '페이스북'}
                   </p>
 
                   <p>
                     {languageRedux === 1
                       ? 'LinkedIn'
                       : languageRedux === 2
-                      ? 'LinkedIn'
-                      : '링크드인'}
+                        ? 'LinkedIn'
+                        : '링크드인'}
                   </p>
                 </div>
                 <div className="div-detail-row right">
@@ -705,39 +726,39 @@ const CandidateDetail: React.FC = () => {
                     {dataCandidate?.applicationProfile?.phone
                       ? dataCandidate?.applicationProfile?.phone
                       : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                          ? 'Not updated yet'
+                          : languageRedux === 3 && '업데이트하지 않음'}
                   </p>
                   <p>
                     {dataCandidate?.applicationProfile?.email
                       ? dataCandidate?.applicationProfile?.email
                       : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                          ? 'Not updated yet'
+                          : languageRedux === 3 && '업데이트하지 않음'}
                   </p>
 
                   <p>
                     {dataCandidate?.applicationProfile?.facebook
                       ? dataCandidate?.applicationProfile?.facebook
                       : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                          ? 'Not updated yet'
+                          : languageRedux === 3 && '업데이트하지 않음'}
                   </p>
 
                   <p>
                     {dataCandidate?.applicationProfile?.linkedin
                       ? dataCandidate?.applicationProfile?.linkedin
                       : languageRedux === 1
-                      ? 'Chưa cập nhật'
-                      : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                          ? 'Not updated yet'
+                          : languageRedux === 3 && '업데이트하지 않음'}
                   </p>
                 </div>
               </div>
@@ -755,8 +776,8 @@ const CandidateDetail: React.FC = () => {
                   {languageRedux === 1
                     ? 'CV/ Sơ yếu lý lịch'
                     : languageRedux === 2
-                    ? 'CV/ Resume'
-                    : languageRedux === 3 && '이력서/이력서'}
+                      ? 'CV/ Resume'
+                      : languageRedux === 3 && '이력서/이력서'}
                 </h3>
               </div>
               <Space wrap className="item-info-work">
@@ -773,8 +794,8 @@ const CandidateDetail: React.FC = () => {
                     {languageRedux === 1
                       ? 'Chưa cập nhật'
                       : languageRedux === 2
-                      ? 'Not updated yet'
-                      : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Not updated yet'
+                        : languageRedux === 3 && '업데이트하지 않음'}
                   </>
                 )}
               </Space>
@@ -792,24 +813,24 @@ const CandidateDetail: React.FC = () => {
                   {languageRedux === 1
                     ? 'Lĩnh vực quan tâm'
                     : languageRedux === 2
-                    ? 'Career objective'
-                    : '관심 분야'}
+                      ? 'Career objective'
+                      : '관심 분야'}
                 </h3>
               </div>
               <Space wrap className="item-info-work">
                 {dataCandidate?.categories?.length !== 0
                   ? dataCandidate?.categories?.map(
-                      (item: ICategories, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item.child_category}
-                        </Button>
-                      ),
-                    )
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    ),
+                  )
                   : languageRedux === 1
-                  ? 'Chưa cập nhật'
-                  : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
               </Space>
             </div>
             <div className="div-profile-info">
@@ -824,24 +845,24 @@ const CandidateDetail: React.FC = () => {
                   {languageRedux === 1
                     ? 'Khu vực làm việc'
                     : languageRedux === 2
-                    ? 'Working location'
-                    : languageRedux === 3 && '근무 위치'}
+                      ? 'Working location'
+                      : languageRedux === 3 && '근무 위치'}
                 </h3>
               </div>
               <Space wrap className="item-info-work">
                 {dataCandidate?.locations?.length !== 0
                   ? dataCandidate?.locations?.map(
-                      (item: any, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item?.district}
-                        </Button>
-                      ),
-                    )
+                    (item: any, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item?.district}
+                      </Button>
+                    ),
+                  )
                   : languageRedux === 1
-                  ? 'Chưa cập nhật'
-                  : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
               </Space>
             </div>
 
@@ -857,8 +878,8 @@ const CandidateDetail: React.FC = () => {
                   {languageRedux === 1
                     ? 'Trình độ học vấn'
                     : languageRedux === 2
-                    ? 'Education'
-                    : languageRedux === 3 && '최종학력'}
+                      ? 'Education'
+                      : languageRedux === 3 && '최종학력'}
                 </h3>
               </div>
               {dataCandidate?.educations?.length !== 0 ? (
@@ -872,8 +893,8 @@ const CandidateDetail: React.FC = () => {
                   {languageRedux === 1
                     ? 'Chưa cập nhật'
                     : languageRedux === 2
-                    ? 'Not updated yet'
-                    : languageRedux === 3 && '업데이트하지 않음'}
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
                 </div>
               )}
 
@@ -898,8 +919,8 @@ const CandidateDetail: React.FC = () => {
                   {languageRedux === 1
                     ? 'Kinh nghiệm làm việc'
                     : languageRedux === 2
-                    ? 'Working experience'
-                    : '경력'}
+                      ? 'Working experience'
+                      : '경력'}
                 </h3>
               </div>
               {dataCandidate?.experiences?.length !== 0 ? (
@@ -911,8 +932,8 @@ const CandidateDetail: React.FC = () => {
                   {languageRedux === 1
                     ? 'Chưa cập nhật'
                     : languageRedux === 2
-                    ? 'Not updated yet'
-                    : languageRedux === 3 && '업데이트하지 않음'}
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
                 </div>
               )}
 
@@ -923,6 +944,200 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'center',
                 }}
               ></div>
+            </div>
+
+            {/* Skills */}
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>
+                  {languageRedux === 1
+                    ? 'Kỹ năng'
+                    : languageRedux === 2
+                      ? 'Skills'
+                      : languageRedux === 3
+                        ? '기능'
+                        : 'Kỹ năng'}
+                </h3>
+              </div>
+              <Space wrap className="item-info-work">
+                {dataCandidate?.profilesSkills &&
+                  dataCandidate?.profilesSkills?.length !== 0
+                  ? dataCandidate?.profilesSkills?.map(
+                    (item: any, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        <h3>{item?.skillName}</h3>
+                        <span>{item?.dataLevel.data}</span>
+                      </Button>
+                    ),
+                  )
+                  : languageRedux === 1
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
+              </Space>
+            </div>
+
+            {/* Languages */}
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>
+                  {languageRedux === 1
+                    ? 'Ngoại ngữ'
+                    : languageRedux === 2
+                      ? 'Languages'
+                      : languageRedux === 3 && '언어'}
+                </h3>
+              </div>
+              <Space wrap className="item-info-work">
+                {dataCandidate?.profilesLanguages &&
+                  dataCandidate?.profilesLanguages?.length !== 0
+                  ? dataCandidate?.profilesLanguages?.map(
+                    (item: any, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        <h3>{item?.languageName}</h3>
+                        <span>{item?.dataLevel.data}</span>
+                      </Button>
+                    ),
+                  )
+                  : languageRedux === 1
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
+              </Space>
+            </div>
+
+            {/* Activities */}
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>
+                  {languageRedux === 1
+                    ? 'Các hoạt động'
+                    : languageRedux === 2
+                      ? 'Activities'
+                      : languageRedux === 3 && '활동'}
+                </h3>
+              </div>
+              {dataCandidate?.profileActivities &&
+                dataCandidate?.profileActivities?.length !== 0 ? (
+                dataCandidate?.profileActivities?.map((item: any, index: number) => (
+                  <ItemApply typeItem="experiences" key={index} item={item} />
+                ))
+              ) : (
+                <div style={{ marginTop: '16px', fontSize: '14px' }}>
+                  {languageRedux === 1
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
+                </div>
+              )}
+
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'center',
+                }}
+              ></div>
+            </div>
+
+            {/* Award */}
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>
+                  {languageRedux === 1
+                    ? 'Các giải thưởng'
+                    : languageRedux === 2
+                      ? 'Awards'
+                      : languageRedux === 3 && '수상'}
+                </h3>
+              </div>
+              {dataCandidate?.profileAwards &&
+                dataCandidate?.profileAwards?.length !== 0 ? (
+                dataCandidate?.profileAwards?.map((item: any, index: number) => (
+                  <ItemApply typeItem="experiences" key={index} item={item} />
+                ))
+              ) : (
+                <div style={{ marginTop: '16px', fontSize: '14px' }}>
+                  {languageRedux === 1
+                    ? 'Chưa cập nhật'
+                    : languageRedux === 2
+                      ? 'Not updated yet'
+                      : languageRedux === 3 && '업데이트하지 않음'}
+                </div>
+              )}
+
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'center',
+                }}
+              ></div>
+            </div>
+
+            {/* Hobbies */}
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>
+                  {languageRedux === 1
+                    ? 'Sở thích'
+                    : languageRedux === 2
+                      ? 'Hobbies'
+                      : languageRedux === 3 && '취미'}
+                </h3>
+              </div>
+              <Space
+                wrap
+                className="item-info-work"
+                style={{ width: '100%' }}
+                direction="vertical"
+              >
+                {dataCandidate?.profileHobbies &&
+                  dataCandidate?.profileHobbies ? (
+                  <p className="textArea">
+                    {dataCandidate?.profileHobbies.description}
+                  </p>
+                ) : languageRedux === 1 ? (
+                  'Chưa cập nhật'
+                ) : languageRedux === 2 ? (
+                  'Not updated yet'
+                ) : (
+                  languageRedux === 3 && '업데이트하지 않음'
+                )}
+              </Space>
             </div>
           </Box>
         </Skeleton>

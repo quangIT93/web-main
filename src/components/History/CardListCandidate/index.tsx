@@ -37,7 +37,7 @@ interface ICardsApplied {
 }
 
 const CardListCandidate: React.FC = () => {
-  const [candidateData, setCandidateData] = useState<any>();
+  const [candidateData, setCandidateData] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
   const [pageNumber, setPageNumber] = React.useState(0);
   const [isVisible, setIsVisible] = useState(true);
@@ -57,7 +57,7 @@ const CardListCandidate: React.FC = () => {
       );
 
       if (result) {
-        setCandidateData(result.data);
+        setCandidateData(result.data.candidateBookmarks);
         if (result.data.candidateBookmarks.length < 10) {
           setIsVisible(false);
         }
@@ -167,10 +167,10 @@ const CardListCandidate: React.FC = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      {candidateData?.candidateBookmarks?.length > 0 ? (
+      {candidateData?.length > 0 ? (
         <div className="history-post">
           <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-            {candidateData?.candidateBookmarks?.map(
+            {candidateData?.map(
               (dataBookmark: any, i: number) => (
                 // <Skeleton loading={loading} active>
                 <ListCardSaveCandidate
