@@ -20,21 +20,8 @@ const CV: React.FC = () => {
   return (
     <div className="cv-container">
       <Navbar />
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
-      <div>Test web</div>
+      <div style={{ marginTop: '200px' }}>Test web</div>
+
       <Footer />
     </div>
   );
