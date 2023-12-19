@@ -74,7 +74,6 @@ import {
 // import SalaryFilterSubnav from './components/SalaryFilterSubnav'
 // import PositionFilterSubnav from './components/PositionFilterSubnav'
 // import CareerFilterSubnav from './components/CareerFilterSubnav'
-import SearchInput from './SearchInput';
 import FilterLocationNav from './FilterLocationNav';
 import FilterCateloriesNav from './FilterCateloriesNav';
 import FilterTypeJob from './FilterTypeJob';
@@ -82,15 +81,16 @@ import FilterTypeSalary from './FilterTypeSalary';
 import FilterSalary from './FilterSalary';
 import FilterTimeJob from './FilterTimeJob';
 import Notificate from './Notificate';
-import PostButton from './PostButton';
+import SearchInput from './SearchInput';
+// import PostButton from './PostButton';
 
-import { Avatar, Button, Space, Spin, Badge, Radio, Switch } from 'antd';
+import { Avatar, Button, Space, Spin, Badge, Radio } from 'antd';
 
 import authApi from 'api/authApi';
 import profileApi from 'api/profileApi';
 import messageApi from 'api/messageApi';
 import applitedPostedApi from 'api/apiAppliedPosted';
-import apiCompany from 'api/apiCompany';
+// import apiCompany from 'api/apiCompany';
 
 import {
   Container,
@@ -179,7 +179,9 @@ const Navbar: React.FC = () => {
   const [openLogin, setOpenLogin] = React.useState(false);
   const [spinning, setSpinning] = React.useState(false);
   const [reset, setReset] = React.useState<Boolean>(false);
-  const [selectedSalaryRange, setSelectedSalaryRange] = useState<number | undefined>(1);
+  const [selectedSalaryRange, setSelectedSalaryRange] = useState<
+    number | undefined
+  >(1);
 
   // value search
   const [salaryType, setSalaryType] = React.useState<any>();
@@ -234,11 +236,11 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
     setUserFiltered(userFilteredCookies);
-    let selectedSalaryRange = JSON.parse(getCookie('selectedSalaryRange') || '0');
+    let selectedSalaryRange = JSON.parse(
+      getCookie('selectedSalaryRange') || '0',
+    );
     setSelectedSalaryRange(
-      selectedSalaryRange !== '0' ?
-        undefined :
-        Number(selectedSalaryRange)
+      selectedSalaryRange !== '0' ? undefined : Number(selectedSalaryRange),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // import ReactHtmlParser from 'react-html-parser'
 
-import { Tooltip, Switch, Button, Spin, notification } from 'antd';
+import { Tooltip, Switch, Button, Spin } from 'antd';
 import { DeleteKeywordIcon } from '#components/Icons';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -59,12 +59,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
-import { searchResultVi } from 'validations/lang/vi/searchResult';
-import { searchResultEn } from 'validations/lang/en/searchResult';
-import { postDetail } from 'validations/lang/vi/postDetail';
-import { postDetailEn } from 'validations/lang/en/postDetail';
-import { home } from 'validations/lang/vi/home';
-import { homeEn } from 'validations/lang/en/home';
+// import { searchResultVi } from 'validations/lang/vi/searchResult';
+// import { searchResultEn } from 'validations/lang/en/searchResult';
+// import { postDetail } from 'validations/lang/vi/postDetail';
+// import { postDetailEn } from 'validations/lang/en/postDetail';
+// import { home } from 'validations/lang/vi/home';
+// import { homeEn } from 'validations/lang/en/home';
 
 // scroll data
 import InfiniteScroll from 'react-infinite-scroll-component';
