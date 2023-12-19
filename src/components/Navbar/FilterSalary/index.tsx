@@ -823,7 +823,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           )}
           <Radio.Group
             value={
-              salaryType === 6 ? undefined : reset ? 1 : selectedSalaryRange
+              salaryType === 6
+                ? undefined
+                : reset
+                ? undefined
+                : selectedSalaryRange
             }
             onChange={handleSelectSalaryRange}
             className="navbar-inputFilter-groupSalary_radio"

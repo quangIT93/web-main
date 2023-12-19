@@ -145,7 +145,7 @@ const SeachLocation: React.FC<ISearchLocation> = (props) => {
         style={{
           position: 'absolute',
           zIndex: '8',
-          top: '10px',
+          top: '11px',
           left: '10px',
           display: 'grid',
           placeItems: 'center',
@@ -169,28 +169,28 @@ const SeachLocation: React.FC<ISearchLocation> = (props) => {
         options={
           dataLocations
             ? dataLocations?.map((dataLocation: any) => ({
-                value: dataLocation.province_id,
-                label: dataLocation.province_fullName,
-                children: dataLocation.districts.map(
-                  (child: { district_id: string; district: string }) => {
-                    var dis = false;
-                    // if (disable) {
-                    //   dis = true;
-                    //   for (const elem of locId) {
-                    //     if (elem === child.district_id) {
-                    //       dis = false;
-                    //       break;
-                    //     }
-                    //   }
-                    // }
-                    return {
-                      value: child.district_id,
-                      label: child.district,
-                      disabled: dis,
-                    };
-                  },
-                ),
-              }))
+              value: dataLocation.province_id,
+              label: dataLocation.province_fullName,
+              children: dataLocation.districts.map(
+                (child: { district_id: string; district: string }) => {
+                  var dis = false;
+                  // if (disable) {
+                  //   dis = true;
+                  //   for (const elem of locId) {
+                  //     if (elem === child.district_id) {
+                  //       dis = false;
+                  //       break;
+                  //     }
+                  //   }
+                  // }
+                  return {
+                    value: child.district_id,
+                    label: child.district,
+                    disabled: dis,
+                  };
+                },
+              ),
+            }))
             : []
         }
         placeholder={

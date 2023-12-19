@@ -155,7 +155,14 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
   return (
     <div className="wrap-search_candidate">
       <div
-        style={{ position: 'absolute', zIndex: '8', top: '10px', left: '10px' }}
+        style={{
+          position: 'absolute',
+          zIndex: '8',
+          top: '11px',
+          left: '10px',
+          display: 'grid',
+          placeItems: 'center',
+        }}
       >
         <CateIcon />
       </div>
@@ -174,19 +181,19 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
+              value: parentCategory.parent_category_id,
+              label: parentCategory.parent_category,
+              children: parentCategory.childs.map((child: any) => {
+                var dis = false;
+                //check id child  when disable = true
 
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                return {
+                  value: child.id,
+                  label: child.name,
+                  disabled: dis,
+                };
+              }),
+            }))
             : []
         }
         placeholder={

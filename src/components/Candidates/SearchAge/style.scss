@@ -5,8 +5,10 @@
     .filter-input_candidate {
         position: absolute;
         z-index: 6;
-        top: 8px;
+        top: 11px;
         left: 10px;
+        display: grid;
+        align-items: center;
     }
 
     .ant-select {
