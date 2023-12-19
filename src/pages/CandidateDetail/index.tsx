@@ -322,7 +322,7 @@ const CandidateDetail: React.FC = () => {
                       <ClockIcon />
                     </div>
                     <Typography variant="body2" color="text.secondary">
-                      {moment(dataPost?.start_time).format('HH:mm')} :{' '}
+                      {moment(dataPost?.start_time).format('HH:mm')} -{' '}
                       {moment(dataPost?.end_time).format('HH:mm')}
                     </Typography>
                   </div>
