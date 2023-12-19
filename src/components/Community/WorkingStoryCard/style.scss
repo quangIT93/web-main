@@ -47,13 +47,19 @@
             border-bottom: 1px solid #ccc;
 
             .text-content_postNew {
-                height: 47px;
+                // height: 47px;
                 // overflow: hidden;
                 line-height: 24px;
                 word-wrap: break-word;
                 overflow: hidden;
                 font-size: 14px;
                 text-indent: 12px;
+                white-space: pre-wrap;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+
                 li {
                     color: #000;
                     font-family: Roboto;
@@ -80,6 +86,9 @@
             .text-content_postNew.showText {
                 height: auto;
                 overflow: unset;
+                display: unset !important;
+                -webkit-line-clamp: unset !important;
+                -webkit-box-orient: unset !important;
             }
 
 
