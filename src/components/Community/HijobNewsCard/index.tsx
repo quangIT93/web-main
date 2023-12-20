@@ -1,7 +1,7 @@
-import React from 'react';
-import { Avatar, message } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import './style.scss';
+import React from "react";
+import { Avatar, message } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import "./style.scss";
 
 import {
   EysIcon,
@@ -9,18 +9,18 @@ import {
   LikeIcon,
   SaveIconOutline,
   SaveIconFill,
-} from '#components/Icons';
-import communityApi from 'api/apiCommunity';
-import { Input } from 'antd';
-import ShowNotificativeSave from '#components/ShowNotificativeSave';
-import ShowCancleSave from '#components/ShowCancleSave';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
+} from "#components/Icons";
+import communityApi from "api/apiCommunity";
+import { Input } from "antd";
+import ShowNotificativeSave from "#components/ShowNotificativeSave";
+import ShowCancleSave from "#components/ShowCancleSave";
+import { useDispatch, useSelector } from "react-redux";
+import { setAlertCancleSave, setAlertSave } from "store/reducer/alertReducer";
 //@ts-ignore
-import ModalLogin from '#components/Home/ModalLogin';
-import { RootState } from 'store';
-import { setCookie } from 'cookies';
-import { useLocation } from 'react-router-dom';
+import ModalLogin from "#components/Home/ModalLogin";
+import { RootState } from "store";
+import { setCookie } from "cookies";
+import { useLocation } from "react-router-dom";
 const { TextArea } = Input;
 // interface IHijobNewsCard {
 //   item: any;
@@ -29,19 +29,19 @@ const { TextArea } = Input;
 
 const HijobNewsCard: React.FC<any> = (props) => {
   const language = useSelector(
-    (state: RootState) => state.dataLanguage.languages,
+    (state: RootState) => state.dataLanguage.languages
   );
   const languageRedux = useSelector(
-    (state: RootState) => state.changeLaguage.language,
+    (state: RootState) => state.changeLaguage.language
   );
   const { item, index, setSaveListPost, saveListPost } = props;
   const [like, setLike] = React.useState(item?.liked);
   const [bookmark, setBookmark] = React.useState(item?.bookmarked);
   const [totalLike, setTotalLike] = React.useState(
-    item?.communicationLikesCount,
+    item?.communicationLikesCount
   );
   const [shouldShowMoreButton, setShouldShowMoreButton] = React.useState(false);
-  const [showText, setShowText] = React.useState('');
+  const [showText, setShowText] = React.useState("");
   const contentRef = React.useRef<any>(null);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const dispatch = useDispatch();
@@ -57,7 +57,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
 
   const handleLikeCommunity = async (communicationId: number, e: any) => {
     e.stopPropagation();
-    if (!localStorage.getItem('accessToken')) {
+    if (!localStorage.getItem("accessToken")) {
       setOpenModalLogin(true);
       return;
     }
@@ -71,7 +71,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
           setTotalLike(totalLike - 1);
         }
       } else {
-        message.error('Vui lòng đăng nhập để thực hiện chức năng');
+        message.error("Vui lòng đăng nhập để thực hiện chức năng");
       }
       // console.log(result);
     } catch (error) {
@@ -79,11 +79,11 @@ const HijobNewsCard: React.FC<any> = (props) => {
     }
   };
 
-  React.useEffect(() => { }, [like]);
+  React.useEffect(() => {}, [like]);
 
   const handleClickSave = async (e: any) => {
     e.stopPropagation();
-    if (!localStorage.getItem('accessToken')) {
+    if (!localStorage.getItem("accessToken")) {
       setOpenModalLogin(true);
       return;
     }
@@ -106,16 +106,16 @@ const HijobNewsCard: React.FC<any> = (props) => {
         setOpenModalLogin(true);
       }
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   };
 
   const handleMoveToDetailPage = (id: any, e: any) => {
     e.stopPropagation();
-    location?.pathname === '/history'
-      ? setCookie('fromHistory', '30', 365)
-      : setCookie('fromHistory', '0', 365);
-    window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
+    location?.pathname === "/history"
+      ? setCookie("fromHistory", "30", 365)
+      : setCookie("fromHistory", "0", 365);
+    window.open(`/detail-comunity?post-community=${id}&type=0`, "_parent");
   };
 
   React.useEffect(() => {
@@ -133,7 +133,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
     if (contentRef.current) {
       const contentHeight = contentRef.current.scrollHeight;
       const lineHeight = parseInt(
-        window.getComputedStyle(contentRef.current).lineHeight,
+        window.getComputedStyle(contentRef.current).lineHeight
       );
 
       const numLines = Math.floor(contentHeight / lineHeight);
@@ -149,11 +149,11 @@ const HijobNewsCard: React.FC<any> = (props) => {
 
   const handleAddText = (e: any) => {
     e.stopPropagation();
-    if (showText === '') {
-      setShowText('showText');
+    if (showText === "") {
+      setShowText("showText");
       setShouldShowMoreButton(!shouldShowMoreButton);
     } else {
-      setShowText('');
+      setShowText("");
       setShouldShowMoreButton(!shouldShowMoreButton);
     }
   };
@@ -215,16 +215,17 @@ const HijobNewsCard: React.FC<any> = (props) => {
                 ref={contentRef}
               /> */}
               {shouldShowMoreButton ? (
-                <span onClick={(e) => handleAddText(e)}>
+                <div onClick={(e) => handleAddText(e)} className="more-text">
                   {!showText
-                    ? `${languageRedux === 1
-                      ? 'Xem thêm'
-                      : languageRedux === 2
-                        ? 'See more'
-                        : '더보기'
-                    }...`
-                    : 'Xem ít...'}
-                </span>
+                    ? `${
+                        languageRedux === 1
+                          ? "Xem thêm"
+                          : languageRedux === 2
+                          ? "See more"
+                          : "더보기"
+                      }...`
+                    : "Xem ít..."}
+                </div>
               ) : (
                 <></>
               )}
@@ -242,15 +243,15 @@ const HijobNewsCard: React.FC<any> = (props) => {
                 <div className="info-actor_comunity">
                   <p>
                     {languageRedux === 1
-                      ? 'Tác giả'
+                      ? "Tác giả"
                       : languageRedux === 2
-                        ? 'Author'
-                        : '작가'}
+                      ? "Author"
+                      : "작가"}
                   </p>
                   <p>Hijob</p>
                 </div>
               </div>
-              <p>{new Date(item?.createdAt).toLocaleDateString('en-GB')}</p>
+              <p>{new Date(item?.createdAt).toLocaleDateString("en-GB")}</p>
             </div>
             <div className="comunitypostNew-card-wrap_status">
               <div className="status-item">
@@ -258,7 +259,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
                 <p>{item?.communicationViewsCount}</p>
               </div>
               <div
-                className={like ? 'status-item liked' : 'status-item'}
+                className={like ? "status-item liked" : "status-item"}
                 onClick={(e) => handleLikeCommunity(item?.id, e)}
               >
                 <LikeIcon />
