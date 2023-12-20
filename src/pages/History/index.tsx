@@ -305,11 +305,11 @@ const HistoryPost = () => {
           : languageRedux === 2
             ? 'Saved candidates'
             : languageRedux === 3 && '저장한 구직자.',
-        // languageRedux === 1
-        //   ? 'Ứng viên đã xem'
-        //   : languageRedux === 2
-        //     ? 'Viewed candidates'
-        //     : languageRedux === 3 && '본 구지자.',
+        languageRedux === 1
+          ? 'Ứng viên đã xem'
+          : languageRedux === 2
+            ? 'Viewed candidates'
+            : languageRedux === 3 && '본 구지자.',
         // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
         // language?.history_page?.saved,
         // language?.history_page?.posts_created,
@@ -342,28 +342,28 @@ const HistoryPost = () => {
         //   : languageRedux === 3 && '내 이력서를 저장한 회사 조회 수.',
       ],
     },
-    // {
-    //   id: 6,
-    //   // title: language?.history_page?.list_of_articles,
-    //   title:
-    //     languageRedux === 1
-    //       ? 'Lượt quan tâm công ty của bạn'
-    //       : languageRedux === 2
-    //         ? 'Number of visits to your company'
-    //         : languageRedux === 3 && '회사 방문 횟수',
-    //   childs: [
-    //     languageRedux === 1
-    //       ? 'Lượt ứng viên xem công ty'
-    //       : languageRedux === 2
-    //         ? 'Number of candidates viewed the company'
-    //         : '내 회사정보를 본 구직자 조회 수',
-    //     languageRedux === 1
-    //       ? 'Lượt ứng viên theo dõi công ty'
-    //       : languageRedux === 2
-    //         ? 'Number of candidates following the company'
-    //         : '내 회사 관심하는 구직자 조회 수',
-    //   ],
-    // },
+    {
+      id: 6,
+      // title: language?.history_page?.list_of_articles,
+      title:
+        languageRedux === 1
+          ? 'Lượt quan tâm công ty của bạn'
+          : languageRedux === 2
+            ? 'Number of visits to your company'
+            : languageRedux === 3 && '회사 방문 횟수',
+      childs: [
+        languageRedux === 1
+          ? 'Lượt ứng viên xem công ty'
+          : languageRedux === 2
+            ? 'Number of candidates viewed the company'
+            : '내 회사정보를 본 구직자 조회 수',
+        languageRedux === 1
+          ? 'Lượt ứng viên theo dõi công ty'
+          : languageRedux === 2
+            ? 'Number of candidates following the company'
+            : '내 회사 관심하는 구직자 조회 수',
+      ],
+    },
     // {
     //   id: 7,
     //   // title: language?.history_page?.list_of_articles,
@@ -446,7 +446,7 @@ const HistoryPost = () => {
 
   const CardListCandidates = useMemo(() => {
     if (ItemLeft === 4) {
-      return <CardListCandidate />;
+      return <CardListCandidate activeChild={activeChild} />;
     }
     return null;
   }, [ItemLeft, activeChild]);

@@ -122,8 +122,8 @@ const ItemsChart: React.FC<{
         : dataLogRecruiter?.viewCandidateLogs.total,
       path: dataLog
         ? '/history?viewedJob=11'
-        : //'/history?viewedCandidate=41'
-        '',
+        : '/history?viewedCandidate=41'
+      //'',
     },
     {
       id: 3,

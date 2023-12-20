@@ -226,7 +226,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
                     : 'Xem ít...'}
                 </span>
               ) : (
-                <></>
+                <>'Xem ít...'</>
               )}
             </div>
           </div>

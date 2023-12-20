@@ -31,12 +31,14 @@ import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
 import candidateSearch from 'api/apiCandidates';
 import { useSearchParams } from 'react-router-dom';
+import historyRecruiter from 'api/historyRecruiter';
 
 interface ICardsApplied {
   activeChild: string;
 }
 
-const CardListEmployerCandidate: React.FC<ICardsApplied> = () => {
+const CardListEmployerCandidate: React.FC<ICardsApplied> = (props) => {
+  const { activeChild } = props;
   const [candidateData, setCandidateData] = useState<any>();
   const [uploading, setUploading] = useState(false);
   const [pageNumber, setPageNumber] = React.useState(0);
@@ -48,17 +50,31 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = () => {
     (state: RootState) => state.dataLanguage.languages,
   );
   const [searchParams, setSearchParams] = useSearchParams('');
+
   const dataCandidates = async () => {
     try {
-      const result = await candidateSearch.getBookmarkCandidate(
-        0,
-        10,
-        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-      );
+      let result
+      activeChild === '6-0' ?
+        result = await historyRecruiter.getCandidateViewCompany(
+          0,
+          10,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        ) :
+        result = await historyRecruiter.getCandidateFollowCompany(
+          0,
+          10,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        )
 
       if (result) {
-        setCandidateData(result.data);
-        if (result.data.candidateBookmarks.length < 10) {
+        setCandidateData(
+          activeChild === '6-0' ?
+            result?.data?.data
+            : result?.data?.bookmarkedCompany
+        );
+        if (result?.data?.bookmarkedCompany ?
+          result?.data?.bookmarkedCompany.length < 10 :
+          result?.data?.data.length < 10) {
           setIsVisible(false);
         }
       }
@@ -71,16 +87,30 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = () => {
     try {
       setUploading(true);
       const nextPage = pageNumber + 1;
-      const result = await candidateSearch.getBookmarkCandidate(
-        nextPage,
-        10,
-        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-      );
+      let result: any;
+      activeChild === '6-0' ?
+        result = await historyRecruiter.getCandidateViewCompany(
+          nextPage,
+          10,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        ) :
+        result = await historyRecruiter.getCandidateFollowCompany(
+          0,
+          10,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        )
 
-      if (result && result.data.candidateBookmarks.length !== 0) {
+      if (
+        result?.data?.bookmarkedCompany ?
+          result?.data?.bookmarkedCompany.length !== 0 :
+          result?.data?.data.length !== 0
+      ) {
+        let newData = activeChild === '6-0' ?
+          result?.data?.data
+          : result?.data?.bookmarkedCompany
         setCandidateData((prev: any) => [
           ...prev,
-          ...result?.data?.candidateBookmarks,
+          ...newData,
         ]);
         setPageNumber(nextPage);
         setUploading(false);
@@ -103,7 +133,7 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dataCandidates();
-  }, [languageRedux]);
+  }, [languageRedux, activeChild]);
 
   const hanhleClicKCandleSaveCandidate = async (e: any, accountId: string) => {
     try {
@@ -167,10 +197,10 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      {candidateData?.candidateBookmarks?.length > 0 ? (
+      {candidateData?.length > 0 ? (
         <div className="history-post">
           <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-            {candidateData?.candidateBookmarks?.map(
+            {candidateData?.map(
               (dataBookmark: any, i: number) => (
                 // <Skeleton loading={loading} active>
                 <ListCardSaveCandidate
