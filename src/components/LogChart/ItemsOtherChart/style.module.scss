@@ -4,8 +4,8 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-
     .wrap_row {
+   
         .title_chart {
             color:#001424;
             font-size: 1.5rem;
@@ -28,10 +28,11 @@
                 justify-content: space-evenly;
             }
             gap: 24px;
-    
+            display: flex;
+            align-items: stretch;
             .col {
                 max-width: 100%;
-                // min-height: 152px;
+                min-height: 100px;
                 display: flex;
                 border-radius: 12px;
                 border: 2px solid #AAA;
@@ -45,7 +46,7 @@
         
                 @include breakpoint(mobile){
                     min-width: 100%;
-                    min-height: 100px;
+                    min-height: 80px;
                 }
     
                 
@@ -77,10 +78,10 @@
                         .col_right__topValue3,
                         .col_right__topValue2,
                         .col_right__topValue1 {
-                            font-size: 2.5rem;
+                            font-size: 2rem;
                             font-style: normal;
                             font-weight: 700;
-                            line-height: 3rem; /* 120% */
+                            line-height: 2.5rem; /* 120% */
                         }
         
                         .col_right__topValue1 {
@@ -128,19 +129,19 @@
                         padding-top: 12px;
                         .col_right__bottomText {
                             color:#001424;
-                            font-size: 1.5rem;
+                            font-size: 14px;
                             font-style: normal;
                             font-weight: 600;
-                            line-height: 2rem;
+                            line-height: 1rem;
                                  
                             @include breakpoint(tablet){
-                                line-height: 2rem;
-                                font-size: 1.5rem;
+                                line-height: 1rem;
+                                font-size: 14px;
                             }
         
                             @include breakpoint(mobile){
-                                line-height: 2rem;
-                                font-size: 1rem;
+                                line-height: 1rem;
+                                font-size: 14px;
                             }
                         }
                     }

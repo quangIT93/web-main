@@ -83,7 +83,7 @@ const LogChart = () => {
             </Row>
           )}
         </div>
-        <div className={styles.chart}>
+        <div>
           {dataLog ? (
             <Chartjs dataLog={dataLog} dataLogRecruiter={dataLogRecruiter} />
           ) : dataLogRecruiter ? (

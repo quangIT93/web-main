@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
 
 import { Image, Text, View, StyleSheet, Link } from '@react-pdf/renderer';
-import profileApi from 'api/profileApi';
-import { useSelector } from 'react-redux';
-import { RootState } from 'store';
+
 import null_avatar from '../../images/null_avatar.png';
 import mail from '../../images/mail.png';
 import phone from '../../images/phone.png';
 import home from '../../images/home.png';
 import fb from '../../images/fb.png';
 import linkedin from '../../images/in.png';
-import { backgroundClip } from 'html2canvas/dist/types/css/property-descriptors/background-clip';
 interface ICvHeader {
   color: any;
   profile: any;
