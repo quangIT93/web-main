@@ -1153,6 +1153,7 @@
             h3 {
               font-size: 24px;
               font-family: "Roboto", -apple-system, sans-serif;
+              font-weight: 700;
             }
 
             .div-description-mo-bottom {
@@ -1495,6 +1496,7 @@
           h3 {
             font-size: 24px;
             font-family: "Roboto", -apple-system, sans-serif;
+            font-weight: 700;
           }
 
           @include breakpoint(tablet) {
