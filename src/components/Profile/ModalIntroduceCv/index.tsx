@@ -58,7 +58,7 @@ const ModalIntroduceCv: React.FC<any> = () => {
             gap: '24px',
           }}
         >
-          <h1
+          <h3
             style={{
               fontFamily: 'Roboto',
               fontSize: '24px',
@@ -73,7 +73,7 @@ const ModalIntroduceCv: React.FC<any> = () => {
               : languageRedux === 2
               ? 'Instructions for creating a CV on HiJob'
               : languageRedux === 3 && 'HiJob에서 이력서 작성 지침'}
-          </h1>
+          </h3>
           <img style={{ width: 146 }} src="/cv3 1.png" alt="CV" />
         </div>
       }

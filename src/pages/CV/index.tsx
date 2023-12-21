@@ -18,10 +18,13 @@ const CV: React.FC = () => {
     window.open('/', '_parent');
   }
   return (
-    <div className="cv-container">
+    <div className="mt-20 max-w-full">
       <Navbar />
-      <div style={{ marginTop: '200px' }}>Test web</div>
-
+      <div className="grid grid-flow-col auto-rows-max gap-2">
+        <div className="border-sky-500 border">01</div>
+        <div className="border-sky-500 border">02</div>
+        <div className="border-sky-500 border">03</div>
+      </div>
       <Footer />
     </div>
   );
