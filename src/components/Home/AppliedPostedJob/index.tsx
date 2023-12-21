@@ -399,7 +399,7 @@ const AppliedPostedJob: React.FC = () => {
                 }}
               >
                 <AppliedPostedIcon width={30} height={30} />
-                <h2>
+                <h2 className="title_home">
                   {profile?.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Việc làm đã ứng tuyển'

@@ -9,6 +9,11 @@
     scroll-snap-align: start;
     scroll-snap-stop: normal;
 
+    .title_home {
+        font-size: 24px;
+        font-weight: 700;
+    }
+
     .list-company-home {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;

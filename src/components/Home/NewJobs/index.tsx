@@ -333,7 +333,7 @@ const NewJobs: React.FC = () => {
           <div className="title-container">
             <div className="title">
               <NewJobIcon width={25} height={25} />
-              <h2>
+              <h2 className="title_home">
                 {languageRedux === 1
                   ? 'Công việc mới nhất'
                   : languageRedux === 2
