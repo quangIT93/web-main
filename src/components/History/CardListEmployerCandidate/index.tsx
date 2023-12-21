@@ -67,14 +67,18 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = (props) => {
         )
 
       if (result) {
+        setIsVisible(true);
         setCandidateData(
           activeChild === '6-0' ?
             result?.data?.data
             : result?.data?.bookmarkedCompany
         );
-        if (result?.data?.bookmarkedCompany ?
-          result?.data?.bookmarkedCompany.length < 10 :
-          result?.data?.data.length < 10) {
+        if (
+          // result?.data?.bookmarkedCompany ?
+          // result?.data?.bookmarkedCompany.length < 10 :
+          // result?.data?.data.length < 10
+          result?.data?.is_over
+        ) {
           setIsVisible(false);
         }
       }
@@ -101,9 +105,10 @@ const CardListEmployerCandidate: React.FC<ICardsApplied> = (props) => {
         )
 
       if (
-        result?.data?.bookmarkedCompany ?
-          result?.data?.bookmarkedCompany.length !== 0 :
-          result?.data?.data.length !== 0
+        // result?.data?.bookmarkedCompany ?
+        //   result?.data?.bookmarkedCompany.length !== 0 :
+        //   result?.data?.data.length !== 0
+        !result?.data?.is_over
       ) {
         let newData = activeChild === '6-0' ?
           result?.data?.data

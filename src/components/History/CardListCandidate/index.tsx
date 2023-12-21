@@ -64,8 +64,10 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
           10,
           languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         )
+      // console.log('result?.data?.is_over', result?.data?.is_over);
 
       if (result) {
+        setIsVisible(true)
         setCandidateData(
           activeChild === '4-0' ?
             result?.data?.candidateBookmarks
@@ -75,7 +77,7 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
           result?.data?.candidateBookmarks ?
             result?.data?.candidateBookmarks.length < 10 :
             result?.data?.data.length < 10
-          // !result?.data?.is_over
+          // result?.data?.is_over
         ) {
           setIsVisible(false);
         }
@@ -107,14 +109,17 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
         result?.data?.candidateBookmarks ?
           result?.data?.candidateBookmarks.length !== 0 :
           result?.data?.data.length !== 0
+        // !result?.data?.is_over
       ) {
         let newData = activeChild === '4-0' ?
           result?.data?.candidateBookmarks
           : result?.data?.data
-        setCandidateData((prev: any) => [
-          ...prev,
-          ...newData,
-        ]);
+        setCandidateData((prev: any) => {
+          return [
+            ...prev,
+            ...newData,
+          ]
+        });
         setPageNumber(nextPage);
         setUploading(false);
       } else {

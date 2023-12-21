@@ -53,8 +53,8 @@ const ItemsOtherChart: React.FC<{
           ? dataLog?.saveYourProfileLogs
           : dataLogRecruiter?.viewYourCompanyLogs,
         path: dataLog
-          ? // '/history?companyView=52'
-          ''
+          ? '/history?companyView=52'
+          // ''
           : '/history?activitiesEmployer=60'
         // '',
       },

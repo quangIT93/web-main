@@ -147,6 +147,25 @@ const ItemsChart: React.FC<{
         '/history?saved_jobs=1'
         : '/history?candidate=4',
     },
+    // {
+    //   id: 4,
+    //   title: dataLog
+    //     ? languageRedux === 1
+    //       ? 'Lượt đăng nhập'
+    //       : languageRedux === 2
+    //         ? 'Saved jobs'
+    //         : '저장된 작업'
+    //     : languageRedux === 1
+    //       ? 'Ứng viên đã lưu'
+    //       : languageRedux === 2
+    //         ? 'Saved candidates'
+    //         : '저장한 구직자',
+    //   icon: dataLog ? <ChartCompanySave /> : <ChartStar />,
+    //   total: dataLog
+    //     ? dataLog?.savePostLogs.total
+    //     : dataLogRecruiter?.saveCandidateLogs.total,
+    //   path: '',
+    // },
   ];
 
   return (

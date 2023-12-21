@@ -67,8 +67,8 @@ const LogChart = () => {
             {languageRedux === 1
               ? 'Tổng quan hoạt động'
               : languageRedux === 2
-              ? 'Activity overview'
-              : '활동 대시보드'}
+                ? 'Activity overview'
+                : '활동 대시보드'}
           </h3>
 
           {dataLog ? (
@@ -110,6 +110,7 @@ const LogChart = () => {
             dataLogRecruiter={dataLogRecruiter}
           />
         </div>
+
       </div>
     </div>
   );

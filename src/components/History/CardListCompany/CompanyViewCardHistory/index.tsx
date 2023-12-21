@@ -14,7 +14,7 @@ import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 import {
   LocationHomeIcon,
   IconBellNewestCompany,
-  CateIcon,
+  // CateIcon,
   IconBellSaveNewestCompany,
 } from '#components/Icons';
 
@@ -25,6 +25,7 @@ import bookMarkApi from 'api/bookMarkApi';
 import female_null_avatar from '../../../../img/female_null_avatar.png';
 import { RootState } from 'store';
 import apiCompanyV3 from 'api/apiCompanyV3';
+import { CateIcon } from '#components/Icons/iconCandidate';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
 interface Iprops {
   item: any;
@@ -79,7 +80,7 @@ const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
     }
   };
 
-  console.log('props.item.bookmarked = ', props.item);
+  // console.log('props.item.bookmarked = ', props.item);
 
   return (
     <>
@@ -146,7 +147,7 @@ const CompanyViewCardHistory: React.FC<Iprops> = (props) => {
                   </Typography>
                 </Tooltip>
                 <div onClick={(e: any) => handleSaveCompany(e)}>
-                  {props.item.isBookmarked ? (
+                  {inforCompany?.isBookmarked ? (
                     <IconBellSaveNewestCompany width={24} height={24} />
                   ) : (
                     <IconBellNewestCompany width={24} height={24} />

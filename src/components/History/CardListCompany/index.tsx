@@ -40,6 +40,7 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
   const { activeChild } = props;
   const [companyData, setCompanyData] = useState<any>([]);
   const [companyDataView, setCompanyDataView] = useState<any>([]);
+  const [companyDataSaveProfile, setCompanyDataSaveProfile] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
   const [pageNumber, setPageNumber] = React.useState(0);
   const [isVisible, setIsVisible] = useState(true);
@@ -87,6 +88,27 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
       if (result) {
         setCompanyDataView(result.data.companies);
         if (result.data.companies.length < 20) {
+          setIsVisible(false);
+        } else {
+          setIsVisible(true);
+        }
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const handleGetCompanySaveProfile = async () => {
+    try {
+      const result = await apiCompanyV3.getCompanySaveProfile(
+        0,
+        20,
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+      );
+
+      if (result) {
+        setCompanyDataSaveProfile(result.data.candidateBookmarks);
+        if (result.data.candidateBookmarks.length < 20) {
           setIsVisible(false);
         } else {
           setIsVisible(true);
@@ -163,6 +185,39 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
     }
   };
 
+  const handleGetmoreCompanySaveProfile = async () => {
+    try {
+      setUploading(true);
+      const nextPage = pageNumber + 1;
+      const result = await apiCompanyV3.getCompanySaveProfile(
+        nextPage,
+        20,
+        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        // newOld === 1 ? 'DESC' : 'ASC',
+      );
+
+      if (result && result.data.bookmarkedCompany.length !== 0) {
+        setCompanyDataSaveProfile((prev: any) => [
+          ...prev,
+          ...result?.data?.candidateBookmarks,
+        ]);
+        setPageNumber(nextPage);
+        setUploading(false);
+      } else {
+        setIsVisible(false);
+        setPageNumber(0);
+        setUploading(false);
+        message.error(
+          languageRedux === 1
+            ? 'Không còn công ty để xem'
+            : 'No more company to see',
+        );
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   useEffect(() => {
     switch (activeChild) {
       case '5-0':
@@ -173,7 +228,12 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
         handleGetCompanyView();
         break;
 
+      case '5-2':
+        handleGetCompanySaveProfile();
+        break;
+
       default:
+        handleGetCompany();
         break;
     }
   }, [saveCompanyList, newOld, activeChild]);
@@ -222,28 +282,28 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
           {languageRedux === 1
             ? 'Danh sách công ty'
             : languageRedux === 2
-            ? 'List of companies'
-            : '회사  리스트'}
+              ? 'List of companies'
+              : '회사  리스트'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '5-0'
               ? languageRedux === 1
                 ? ' > Công ty đã lưu'
                 : languageRedux === 2
-                ? ' > Saved comopanies'
-                : ' > 저장된 회사'
+                  ? ' > Saved comopanies'
+                  : ' > 저장된 회사'
               : searchParams.get('c') === '5-1'
-              ? languageRedux === 1
-                ? ' > Nhà tuyển dụng xem hồ sơ'
-                : languageRedux === 2
-                ? ' > Employers view resumes'
-                : ' > 고용주는 이력서를 봅니다.'
-              : searchParams.get('c') === '5-2'
-              ? languageRedux === 1
-                ? ' > Lượt công ty lưu hồ sơ'
-                : languageRedux === 2
-                ? ' > Number of companies saved the profile'
-                : ' > 내 이력서를 저장한 회사 조회 수'
-              : ''}
+                ? languageRedux === 1
+                  ? ' > Nhà tuyển dụng xem hồ sơ'
+                  : languageRedux === 2
+                    ? ' > Employers view resumes'
+                    : ' > 고용주는 이력서를 봅니다.'
+                : searchParams.get('c') === '5-2'
+                  ? languageRedux === 1
+                    ? ' > Lượt công ty lưu hồ sơ'
+                    : languageRedux === 2
+                      ? ' > Number of companies saved the profile'
+                      : ' > 내 이력서를 저장한 회사 조회 수'
+                  : ''}
           </span>
         </Typography>
         <TextField
@@ -258,21 +318,22 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
             width: '120px',
             borderRadius: '24px',
             // height: '48px',
+            display: activeChild === '5-0' ? 'block' : 'none',
           }}
         >
           <MenuItem value={1}>
             {languageRedux === 1
               ? 'Mới nhất'
               : languageRedux === 2
-              ? 'Newest'
-              : languageRedux === 3 && '최신'}
+                ? 'Newest'
+                : languageRedux === 3 && '최신'}
           </MenuItem>
           <MenuItem value={0}>
             {languageRedux === 1
               ? 'Cũ nhất'
               : languageRedux === 2
-              ? 'Oldest'
-              : languageRedux === 3 && '가장 오래된'}
+                ? 'Oldest'
+                : languageRedux === 3 && '가장 오래된'}
           </MenuItem>
         </TextField>
       </Box>
@@ -314,8 +375,8 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
               {languageRedux === 1
                 ? 'Xem thêm'
                 : languageRedux === 2
-                ? 'See more'
-                : '더보기'}
+                  ? 'See more'
+                  : '더보기'}
               {/* Xem thêm */}
             </Button>
           </Box>
@@ -358,8 +419,52 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
               {languageRedux === 1
                 ? 'Xem thêm'
                 : languageRedux === 2
-                ? 'See more'
-                : '더보기'}
+                  ? 'See more'
+                  : '더보기'}
+              {/* Xem thêm */}
+            </Button>
+          </Box>
+        </div>
+      ) : activeChild === '5-2' && companyDataSaveProfile?.length !== 0 ? (
+        <div className="history-post" style={{ marginTop: '16px' }}>
+          <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
+            {companyDataSaveProfile?.map((dataView: any, index: number) => (
+              <Grid item xs={12} sm={6} md={6} lg={6} key={index}>
+                <CompanyViewCardHistory
+                  item={dataView.CompanyData}
+                  index={index}
+                  saveCompanyList={saveCompanyListView}
+                  setSaveCompanyList={setSaveCompanyListView}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Box
+            sx={{
+              margin: '12px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Button
+              style={{
+                width: 130,
+                height: 40,
+                marginBottom: '2rem',
+                backgroundColor: `#0D99FF`,
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                display: isVisible ? 'block' : 'none',
+              }}
+              loading={uploading}
+              onClick={handleGetmoreCompanySaveProfile}
+            >
+              {languageRedux === 1
+                ? 'Xem thêm'
+                : languageRedux === 2
+                  ? 'See more'
+                  : '더보기'}
               {/* Xem thêm */}
             </Button>
           </Box>
@@ -368,22 +473,24 @@ const CardListCompany: React.FC<ICardsApplied> = (props) => {
         <NoCompanyData />
       )}
 
-      {(activeChild === '5-1' && companyDataView?.length !== 0) ||
-      (activeChild === '5-0' && companyData?.length !== 0) ? (
-        <Backdrop
-          sx={{
-            color: '#0d99ff ',
-            backgroundColor: 'transparent',
-            zIndex: (theme: any) => theme.zIndex.drawer + 1,
-          }}
-          open={false}
+      {
+        (activeChild === '5-2' && companyDataSaveProfile?.length !== 0) ||
+          (activeChild === '5-1' && companyDataView?.length !== 0) ||
+          (activeChild === '5-0' && companyData?.length !== 0) ? (
+          <Backdrop
+            sx={{
+              color: '#0d99ff ',
+              backgroundColor: 'transparent',
+              zIndex: (theme: any) => theme.zIndex.drawer + 1,
+            }}
+            open={false}
           // onClick={handleClose}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      ) : (
-        <></>
-      )}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        ) : (
+          <></>
+        )}
     </>
   );
 };

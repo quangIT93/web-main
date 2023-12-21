@@ -95,9 +95,11 @@ const CardListBlogSave = () => {
     try {
       const result = await communityApi.getCommunityBookmarked(
         page,
+        10,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
+        // setIsVisible(true);
         setStories(result?.data?.communications);
         if (result?.data?.communications?.length < 10) {
           setIsVisible(false);
@@ -121,6 +123,7 @@ const CardListBlogSave = () => {
       const nextPage = parseInt(page) + 1;
       const result = await communityApi.getCommunityBookmarked(
         nextPage,
+        10,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
@@ -257,38 +260,38 @@ const CardListBlogSave = () => {
         ) : (
           <></>
         )}
-        {stories && stories.length === 0 ? (
-          <Box
-            sx={{
-              margin: '12px auto',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+        {/* {stories && stories.length === 0 ? ( */}
+        <Box
+          sx={{
+            margin: '12px auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            style={{
+              width: 130,
+              height: 40,
+              backgroundColor: `#0D99FF`,
+              marginBottom: '2rem',
+              color: '#FFFFFF',
+              fontWeight: 'bold',
+              display: isVisible ? 'block' : 'none',
             }}
+            loading={uploading}
+            onClick={handleChange}
           >
-            <Button
-              style={{
-                width: 130,
-                height: 40,
-                backgroundColor: `#0D99FF`,
-                marginBottom: '2rem',
-                color: '#FFFFFF',
-                fontWeight: 'bold',
-                display: isVisible ? 'block' : 'none',
-              }}
-              loading={uploading}
-              onClick={handleChange}
-            >
-              {languageRedux === 1
-                ? 'Xem thêm'
-                : languageRedux === 2
-                  ? 'See more'
-                  : '더보기'}
-            </Button>
-          </Box>
-        ) : (
-          <></>
-        )}
+            {languageRedux === 1
+              ? 'Xem thêm'
+              : languageRedux === 2
+                ? 'See more'
+                : '더보기'}
+          </Button>
+        </Box>
+        {/* // ) : (
+        //   <></>
+        // )} */}
         {stories && stories.length === 0 ? <NoDataComponent /> : <></>}
       </div>
     </>

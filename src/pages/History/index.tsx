@@ -335,11 +335,11 @@ const HistoryPost = () => {
           : languageRedux === 2
             ? 'Employers view resumes'
             : '고용주는 이력서를 봅니다.',
-        // languageRedux === 1
-        //   ? 'Lượt công ty lưu hồ sơ'
-        //   : languageRedux === 2
-        //   ? 'Number of companies saved the profile'
-        //   : languageRedux === 3 && '내 이력서를 저장한 회사 조회 수.',
+        languageRedux === 1
+          ? 'Lượt công ty lưu hồ sơ'
+          : languageRedux === 2
+            ? 'Number of companies saved the profile'
+            : languageRedux === 3 && '내 이력서를 저장한 회사 조회 수.',
       ],
     },
     {
