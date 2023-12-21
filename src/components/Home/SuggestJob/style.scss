@@ -171,6 +171,10 @@
       display: flex;
       gap: 0.5rem;
       align-items: center;
+      .title_home {
+        font-size: 24px;
+        font-weight: 700;
+      }
     }
 
     .view-all {

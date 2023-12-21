@@ -18,9 +18,9 @@ const CV: React.FC = () => {
     window.open('/', '_parent');
   }
   return (
-    <div className="mt-20 max-w-full">
+    <div className="mt-20">
       <Navbar />
-      <div className="grid grid-flow-col auto-rows-max gap-2">
+      <div className="grid grid-flow-col auto-rows-max gap-2 max-w-5xl mx-auto">
         <div className="border-sky-500 border">01</div>
         <div className="border-sky-500 border">02</div>
         <div className="border-sky-500 border">03</div>
