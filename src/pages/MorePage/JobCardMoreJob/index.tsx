@@ -122,7 +122,6 @@ const JobCardMoreJob: React.FC<any> = (props) => {
                   ? `${props.item?.image}?w=164&h=164&fit=crop&auto=format`
                   : `${noImage}`
               }
-              srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               alt={props.item?.title}
               //loading="lazy"
               style={{

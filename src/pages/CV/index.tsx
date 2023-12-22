@@ -15,6 +15,7 @@ import IMG1 from '../../video/1.mp4';
 import IMG2 from '../../video/2.mp4';
 import IMG3 from '../../video/3.mp4';
 import IMG4 from '../../video/4.mp4';
+import IMG5 from '../../video/5.mp4';
 import style from './style.module.scss';
 // import style1 from './style1.module.scss';
 import MyClass, { IDataTiktok } from './data';
@@ -52,6 +53,11 @@ const CV: React.FC = () => {
       urlImg: 'https://example.com/first',
       urlVideo: IMG4,
     },
+    {
+      title: 'TIKTOK 5',
+      urlImg: 'https://example.com/first',
+      urlVideo: IMG5,
+    },
   ];
 
   const dataTiktok = new MyClass(tiktokData);
@@ -59,23 +65,38 @@ const CV: React.FC = () => {
   const swiperRef = React.useRef<any>();
   const videoRef = React.useRef<HTMLVideoElement | null>(null);
 
-  const [isPlaying, setPlaying] = React.useState(false);
+  const [isPlaying, setPlaying] = React.useState(true);
   const [isMuted, setMuted] = React.useState(false);
   const [currentTime, setCurrentTime] = React.useState(0);
   const [duration, setDuration] = React.useState(0);
   const [activeSlideIndex, setActiveSlideIndex] = React.useState<number | null>(
     null,
   );
+  const [videoStates, setVideoStates] = React.useState<{
+    [key: number]: { currentTime: number; duration: number };
+  }>({});
 
-  const togglePlayPause = (index: number) => {
+  const togglePlayPause = (index: number, activeSlideIndex: number | null) => {
     const video = document.getElementById(
       `video_${index}`,
     ) as HTMLVideoElement | null;
-    if (video) {
+
+    const video1 = document.getElementById(
+      `video_${activeSlideIndex !== null ? activeSlideIndex : index + 1}`,
+    ) as HTMLVideoElement | null;
+
+    console.log('play video index', index);
+    console.log('play video activeSlideIndex', activeSlideIndex);
+    console.log('video', video);
+    console.log('video1', video1);
+
+    if (video && video1) {
       if (video.paused) {
         video.play();
+        video1?.pause();
       } else {
         video.pause();
+        video1?.pause();
       }
       setPlaying(!isPlaying);
     }
@@ -92,11 +113,11 @@ const CV: React.FC = () => {
     }
   };
 
-  console.log('currentTime', currentTime);
-  console.log('duration', duration);
-  const updateProgressBar = () => {
-    const video = document.getElementById('video') as HTMLVideoElement | null;
-    console.log('click', video);
+  const updateProgressBar = (index: number) => {
+    const video = document.getElementById(
+      `video_${index}`,
+    ) as HTMLVideoElement | null;
+    // console.log('click', video);
     if (video) {
       setCurrentTime(video.currentTime);
       setDuration(video.duration);
@@ -111,29 +132,19 @@ const CV: React.FC = () => {
     }
   };
 
-  const handleSlideChange = () => {
-    // Pause the currently playing video
-    console.log('scroll');
-
-    if (isPlaying) {
-      togglePlayPause(activeSlideIndex || 0);
-    }
+  const handleSlideChange = (index: any) => {
+    // if (isPlaying) {
+    //   togglePlayPause(index, );
+    // }
   };
 
-  const handleTransition = () => {
+  const handleTransition = (index: any) => {
     // Get the active slide index during the transition
-    const activeIndex = swiperRef.current?.activeIndex;
+    console.log('index', index);
+    console.log('activeSlideIndex', activeSlideIndex);
 
-    // Do something with the activeIndex, e.g., play the video
-    // You can add additional logic based on the activeIndex
-    console.log('Active Slide Index:', activeIndex);
-
-    // Example: Play the video when reaching a specific slide index
-    console.log('scroll handleTransition');
-
-    if (activeIndex === 2) {
-      togglePlayPause(activeIndex);
-    }
+    setActiveSlideIndex(index);
+    togglePlayPause(index, activeSlideIndex);
   };
 
   return (
@@ -153,27 +164,36 @@ const CV: React.FC = () => {
           modules={[Mousewheel, Pagination]}
           className={`${style.content_tiktok__items} mySwiper`}
           ref={swiperRef}
-          onSlideChange={handleSlideChange}
-          onTransitionEnd={handleTransition}
+          // onSlideChange={handleSlideChange}
+          onTransitionEnd={(swiper) => handleTransition(swiper.realIndex)}
+          onSlideChange={(swiper) => handleSlideChange(swiper.realIndex)}
         >
           {dataTiktok.data.map((tikTok, index) => (
             <SwiperSlide key={index}>
-              <div className={style.content_tiktok__items__video}>
+              <div
+                className={style.content_tiktok__items__video}
+                style={{
+                  position: 'relative',
+                  // marginTop: '25%', // Adjust this value to control the amount of overlap
+                  // marginBottom: '25%',
+                }}
+              >
                 <video
-                  id={`video_${index}`} // Make the ID unique
-                  width="576"
-                  height="322"
+                  id={`video_${index}`}
+                  // Make the ID unique
+                  width="322"
+                  height="576"
                   muted={isMuted}
                   onTouchStart={(e) => e.stopPropagation()}
                   onTouchMove={(e) => e.stopPropagation()}
-                  className="mySwiper"
-                  onTimeUpdate={updateProgressBar}
+                  onTimeUpdate={() => updateProgressBar(index)}
+                  className={style.video}
                 >
                   <source src={tikTok.urlVideo} type="video/mp4" />
                 </video>
                 <div id={style.custom_controls}>
                   <div
-                    onClick={() => togglePlayPause(index)}
+                    onClick={() => togglePlayPause(index, null)}
                     id={style.play_pause}
                   >
                     {isPlaying ? '❚❚' : '▶'}
@@ -183,7 +203,9 @@ const CV: React.FC = () => {
                       <div
                         className={style.progress}
                         id={style.progress}
-                        style={{ width: `${(currentTime / duration) * 100}%` }}
+                        style={{
+                          width: `${(currentTime / duration) * 100}%`,
+                        }}
                       ></div>
                     </div>
                   </div>
