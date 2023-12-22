@@ -25,6 +25,7 @@ import bookMarkApi from 'api/bookMarkApi';
 
 import ModalLogin from '../../../components/Home/ModalLogin';
 import { RootState } from 'store';
+import noImage from '../../../img/noImage.png';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
 interface Iprops {
   item: any;
@@ -80,8 +81,11 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
             sx={{ flex: 1, display: 'flex', justifyContent: 'space-between' }}
           >
             <img
-              src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={
+                props.item?.image
+                  ? `${props.item?.image}?w=164&h=164&fit=crop&auto=format`
+                  : `${noImage}`
+              }
               alt={props.item?.title}
               //loading="lazy"
               style={{
@@ -117,7 +121,7 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
                   style={{
                     display:
                       accountId !== localStorage.getItem('accountId') &&
-                        profileInfoV3.typeRoleData === 0
+                      profileInfoV3.typeRoleData === 0
                         ? 'block'
                         : 'none',
                   }}
@@ -188,11 +192,13 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
                           ? props.item?.companyResourceData?.logoPath
                           : ''
                       }
-                      alt={languageRedux === 1
-                        ? 'Hình ảnh bị lỗi'
-                        : languageRedux === 2
+                      alt={
+                        languageRedux === 1
+                          ? 'Hình ảnh bị lỗi'
+                          : languageRedux === 2
                           ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'}
+                          : '이미지가 손상되었습니다'
+                      }
                       onError={handleImageError}
                     />
                   )}

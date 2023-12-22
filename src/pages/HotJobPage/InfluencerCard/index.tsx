@@ -31,7 +31,7 @@ import './styleInfuencer.scss';
 import ModalLogin from '../../../components/Home/ModalLogin';
 import { RootState } from 'store';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
-
+import noImage from '../../../img/noImage.png';
 interface Iprops {
   item: PostHotJob;
 }
@@ -42,7 +42,9 @@ const InfluencerCard: React.FC<Iprops> = (props) => {
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   // console.log('props', props);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
   };
@@ -82,10 +84,13 @@ const InfluencerCard: React.FC<Iprops> = (props) => {
             sx={{ flex: 1, display: 'flex' }}
           >
             <img
-              src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={
+                props.item?.image
+                  ? `${props.item?.image}?w=164&h=164&fit=crop&auto=format`
+                  : `${noImage}`
+              }
               alt={props.item?.title}
-            //loading="lazy"
+              //loading="lazy"
             />
           </ImageListItem>
         </div>
@@ -256,11 +261,13 @@ const InfluencerCard: React.FC<Iprops> = (props) => {
                         ? props.item?.companyResourceData?.logo
                         : ''
                     }
-                    alt={languageRedux === 1
-                      ? 'Hình ảnh bị lỗi'
-                      : languageRedux === 2
+                    alt={
+                      languageRedux === 1
+                        ? 'Hình ảnh bị lỗi'
+                        : languageRedux === 2
                         ? 'Image is corrupted'
-                        : '이미지가 손상되었습니다'}
+                        : '이미지가 손상되었습니다'
+                    }
                     onError={handleImageError}
                   />
                 )}
