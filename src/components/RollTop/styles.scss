@@ -1,4 +1,12 @@
 .roll-top-container {
+    button {
+        span {
+            svg {
+                vertical-align: unset
+            }
+        }
+    }
+
     .roll-top-btn {
         // display: none;
         width: 60px !important;

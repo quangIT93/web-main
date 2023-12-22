@@ -8,6 +8,10 @@
     scroll-padding-top: 30px;
     scroll-snap-align: start;
     scroll-snap-stop: normal;
+    .title_home {
+        font-size: 24px;
+        font-weight: 700;
+    }
 
     .list-candidate-home {
         display: grid;

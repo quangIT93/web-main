@@ -13,22 +13,17 @@ import { message, Button } from 'antd';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 import Nodata from 'utils/NoDataPage';
-import sortData from 'utils/SortDataHistory/sortData';
+// import sortData from 'utils/SortDataHistory/sortData';
 
 // import data
-import historyBookmark from 'api/historyBookmark';
-import bookMarkApi from 'api/bookMarkApi';
 
 import { useDispatch } from 'react-redux';
 
 import { setAlertCancleSave } from 'store/reducer/alertReducer';
 
 import ListCardSaveCandidate from './ListCardSaveCandidate';
-import languageApi from 'api/languageApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
-import { historyVi } from 'validations/lang/vi/history';
-import { historyEn } from 'validations/lang/en/history';
 import candidateSearch from 'api/apiCandidates';
 import { useSearchParams } from 'react-router-dom';
 
@@ -45,9 +40,7 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const language = useSelector(
-    (state: RootState) => state.dataLanguage.languages,
-  );
+
   const [searchParams, setSearchParams] = useSearchParams('');
   const dataCandidates = async () => {
     try {
@@ -130,8 +123,8 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
           languageRedux === 1
             ? 'Không còn ứng cử viên để xem.'
             : languageRedux === 2
-              ? 'No more candidates to see.'
-              : '더 이상 지켜볼 후보자가 없습니다.',
+            ? 'No more candidates to see.'
+            : '더 이상 지켜볼 후보자가 없습니다.',
         );
       }
     } catch (error) {
@@ -176,22 +169,20 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
           {languageRedux === 1
             ? 'Danh sách ứng viên'
             : languageRedux === 2
-              ? 'List of candidates'
-              : ' 지원자 리스트'}
+            ? 'List of candidates'
+            : ' 지원자 리스트'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '4-0'
               ? languageRedux === 1
                 ? ' > Ứng viên đã lưu.'
                 : languageRedux === 2
-                  ? ' > Saved candidates'
-                  : ' > 저장한 구직자.'
-              :
-              languageRedux === 1
-                ? ' > Ứng viên đã xem'
-                : languageRedux === 2
-                  ? ' > Viewed candidates'
-                  : languageRedux === 3 && '본 구지자.'
-            }
+                ? ' > Saved candidates'
+                : ' > 저장한 구직자.'
+              : languageRedux === 1
+              ? ' > Ứng viên đã xem'
+              : languageRedux === 2
+              ? ' > Viewed candidates'
+              : languageRedux === 3 && '본 구지자.'}
           </span>
         </Typography>
       </Box>
@@ -202,30 +193,26 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-      // onClick={handleClose}
+        // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
       {candidateData?.length > 0 ? (
         <div className="history-post">
           <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-            {candidateData?.map(
-              (dataBookmark: any, i: number) => (
-                // <Skeleton loading={loading} active>
-                <ListCardSaveCandidate
-                  item={dataBookmark}
-                  handleDeleteBookmark={() => { }}
-                  index={i}
-                  key={i}
-                  language={[]}
-                  languageRedux={1}
-                  hanhleClicKCandleSaveCandidate={
-                    hanhleClicKCandleSaveCandidate
-                  }
-                />
-                //</Skeleton>
-              ),
-            )}
+            {candidateData?.map((dataBookmark: any, i: number) => (
+              // <Skeleton loading={loading} active>
+              <ListCardSaveCandidate
+                item={dataBookmark}
+                handleDeleteBookmark={() => {}}
+                index={i}
+                key={i}
+                language={[]}
+                languageRedux={1}
+                hanhleClicKCandleSaveCandidate={hanhleClicKCandleSaveCandidate}
+              />
+              //</Skeleton>
+            ))}
           </Grid>
           <Box
             sx={{
@@ -251,8 +238,8 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
               {languageRedux === 1
                 ? 'Xem thêm'
                 : languageRedux === 2
-                  ? 'See more'
-                  : '더보기'}
+                ? 'See more'
+                : '더보기'}
               {/* Xem thêm */}
             </Button>
           </Box>

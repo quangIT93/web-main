@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Skeleton, Space } from 'antd';
+import { Col, Skeleton, Space } from 'antd';
 import './style.scss';
 import { LineChartOutlined } from '@ant-design/icons';
 
@@ -12,7 +12,7 @@ export const CustomSkeleton: React.FC = () => {
         flex: 1,
         border: '1px solid #ccc',
         borderRadius: '12px',
-        padding: '12px',
+        padding: '8px',
       }}
     >
       <Space style={{ display: 'flex' }} className="space_custom__skeleton">

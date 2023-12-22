@@ -707,10 +707,6 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     },
   ];
 
-  // console.log('salary max', salaryMax);
-  // console.log('salary max', salaryMax === 50000000);
-  // console.log('salary min', salaryMin);
-
   return (
     <div className="filter-input">
       <div className="filter-input_icon">
@@ -821,7 +817,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           )}
           <Radio.Group
             value={
-              salaryType === 6 ? undefined : reset ? undefined : selectedSalaryRange
+              salaryType === 6
+                ? undefined
+                : reset
+                  ? undefined
+                  : selectedSalaryRange
             }
             onChange={handleSelectSalaryRange}
             className="navbar-inputFilter-groupSalary_radio"

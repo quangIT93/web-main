@@ -80,12 +80,12 @@ const NewestCompany = () => {
       >
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <IconNewestCompany width={25} height={25} />
-          <h2>
+          <h2 className="title_home">
             {languageRedux === 1
               ? 'Công ty mới nhất'
               : languageRedux === 2
-                ? 'Newest company'
-                : languageRedux === 3 && '최신 회사'}
+              ? 'Newest company'
+              : languageRedux === 3 && '최신 회사'}
           </h2>
         </div>
         {/* {profileV3?.typeRoleData === 1 ? ( */}
@@ -138,8 +138,8 @@ const NewestCompany = () => {
           {languageRedux === 1
             ? 'Xem tất cả'
             : languageRedux === 2
-              ? 'View all'
-              : languageRedux === 3 && '모두보기'}
+            ? 'View all'
+            : languageRedux === 3 && '모두보기'}
         </p>
         <ArrowrightIcon width={20} height={20} />
       </div>

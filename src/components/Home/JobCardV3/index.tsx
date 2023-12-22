@@ -139,9 +139,9 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
                   props.item.image
                     ? `${props.item.image}?w=164&h=164&fit=crop&auto=format`
                     : // : 'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/default-post-image/khach-san-nha-hang.png?w=164&h=164&fit=crop&auto=format'
-                      `${noImage}`
+                    `${noImage}`
                 }
-                srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                // srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 alt={props.item.title}
                 // //loading="lazy"
                 style={{
@@ -366,8 +366,8 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
                       languageRedux === 1
                         ? 'Hình ảnh bị lỗi'
                         : languageRedux === 2
-                        ? 'Image is corrupted'
-                        : '이미지가 손상되었습니다'
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'
                     }
                   />
                 ) : (

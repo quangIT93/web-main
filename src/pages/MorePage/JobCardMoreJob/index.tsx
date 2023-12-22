@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import ImageListItem from '@mui/material/ImageListItem';
 
 import ModalLogin from '#components/Home/ModalLogin';
-
+import noImage from '../../../img/noImage.png';
 //ANT
 
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
@@ -117,7 +117,11 @@ const JobCardMoreJob: React.FC<any> = (props) => {
             sx={{ flex: 1, display: 'flex', justifyContent: 'space-between' }}
           >
             <img
-              src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
+              src={
+                props.item?.image
+                  ? `${props.item?.image}?w=164&h=164&fit=crop&auto=format`
+                  : `${noImage}`
+              }
               srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               alt={props.item?.title}
               //loading="lazy"
@@ -222,8 +226,8 @@ const JobCardMoreJob: React.FC<any> = (props) => {
                         languageRedux === 1
                           ? 'Hình ảnh bị lỗi'
                           : languageRedux === 2
-                            ? 'Image is corrupted'
-                            : '이미지가 손상되었습니다'
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'
                       }
                       onError={handleImageError}
                     />
