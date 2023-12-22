@@ -19,8 +19,21 @@ import { RootState } from 'store';
 import './style.scss';
 import profileApi from 'api/profileApi';
 import { DataLog, DataLogRecuiter } from 'pages/LogChart/typeChart';
+import apiYoutubeShort from 'api/apiYoutubeShort';
+import axios from 'axios';
+
+// Import Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/scrollbar';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+// import required modules
+import { Navigation, Mousewheel, Pagination, Autoplay, A11y } from 'swiper';
 declare global {
-  interface Window {}
+  interface Window { }
 }
 const Login = () => {
   const [dataLog, setDataLog] = useState<DataLog | undefined>(undefined);
@@ -156,7 +169,38 @@ const Login = () => {
   useEffect(() => {
     dataChart();
   }, []);
+  const [youtubeShorts, setYoutubeShorts] = useState<any>([]);
 
+  const userkey = 'AIzaSyDkrJkIxMDQoN8z0UUrHf7IM8vCKThOsEg'
+  const channel_id = 'UC7A7s5HsftARdOAriluA71Q'
+
+  const isShort = async (videoId: any) => {
+    const url = "https://www.youtube.com/shorts/" + videoId
+    const res = await axios.head(url)
+    console.log("isShort", res.status)
+    // if it's a short it ends with "/shorts/videoId"
+    // if it's NOT a short it ends "/watch?=videoId"
+  }
+
+  const getYouTubeShorts = async () => {
+    try {
+      const result = await apiYoutubeShort.getYoutubeShort(channel_id, userkey)
+      if (result) {
+        console.log("videos", result.data.items);
+        const shortVideo = result.data.items.filter((item: any) => {
+          return item?.snippet?.title.includes("#short")
+        })
+        setYoutubeShorts(shortVideo)
+      }
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+  }
+  useEffect(() => {
+    getYouTubeShorts();
+    isShort('toi4pPmp8nc');
+  }, []);
   return (
     <>
       {/* <canvas
@@ -165,7 +209,67 @@ const Login = () => {
         // width={1000}
         // height={1000}
       ></canvas> */}
-      <Chartjs dataLog={dataLog} dataLogRecruiter={dataLogRecruiter} />
+      {/* <Chartjs dataLog={dataLog} dataLogRecruiter={dataLogRecruiter} /> */}
+      <Swiper
+        // rewind={true}
+        // slidesPerView={14}
+        // spaceBetween={10}
+        navigation={true}
+        // mousewheel={true}
+        slidesPerView={5}
+        // spaceBetween={25}
+        // breakpoints={{
+        //   320: {
+        //     slidesPerView: 3,
+        //   },
+        //   640: {
+        //     slidesPerView: 4,
+        //   },
+        //   768: {
+        //     slidesPerView: 7,
+        //   },
+        //   868: {
+        //     slidesPerView: 7,
+        //   },
+        //   963: {
+        //     slidesPerView: 8,
+        //   },
+        //   1024: {
+        //     slidesPerView: 9,
+        //   },
+        //   1440: {
+        //     slidesPerView: 9,
+        //   },
+        //   1920: {
+        //     slidesPerView: 14,
+        //   },
+        //   2560: {
+        //     slidesPerView: 14,
+        //   },
+        // }}
+        modules={[Mousewheel, Navigation, Pagination]}
+        className="mySwiper"
+      >
+        {youtubeShorts?.map((item: any, index: number) => {
+          return (
+            <SwiperSlide
+              key={index}
+              // style={{ width: 'fit-content', marginLeft: '25px' }}
+              className="item-swiperSlide"
+            >
+              <iframe key={index} width="257" height="457"
+                style={{ borderRadius: '10px' }}
+                src={`https://www.youtube.com/embed/${item?.id?.videoId}`}
+                title={item?.snippet?.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; 
+    clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen>
+              </iframe>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
     </>
   );
 };

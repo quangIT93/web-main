@@ -7,7 +7,7 @@ const apiYoutubeShort = {
     getYoutubeShort: (channelId: string, keiApi: string) => {
         const URL = 'https://youtube.googleapis.com/youtube/v3/search?type=short&part=snippet' +
             `&channelId=${channelId}` +
-            `&maxResults=10&order=date&type=video&key=${keiApi}`
+            `&maxResults=5&order=date&type=video&key=${keiApi}`
             ;
         return axios.get(URL, {
             headers: {
