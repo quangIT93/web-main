@@ -5,13 +5,21 @@
 
         .content_tiktok {
             border: 1px solid #ccc;
+            height: calc(100vh - 70px - 40px);
             &__items {
-                background-color: #ccc;
-                height: 400px;
+                height: 100%;
                 &__video {
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    height: 100%;
+              
+
+                    .video {
+                        background-color: black;
+                        border-radius: 12px;
+                        position: relative;
+                    }
                     #custom_controls {
                         position: absolute;
                         bottom: 0;
