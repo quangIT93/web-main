@@ -258,8 +258,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     if (isConnected === false && !socket.current) {
       socket.current = io(
-        'https://aiworks.vn',
-        // 'https://neoworks.vn',
+        // 'https://aiworks.vn',
+        'https://neoworks.vn',
         {
           extraHeaders: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

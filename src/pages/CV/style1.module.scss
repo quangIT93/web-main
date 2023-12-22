@@ -1,0 +1,54 @@
+.container_tiktok {
+    max-width: 1080px;
+    margin: 0 auto;
+    transition: all linear 0.2s;
+    margin-bottom: 36px;
+
+    .subNav__tiktok {
+        padding: 0px 8px;
+        width: 72px;
+        flex: 0 0 72px;
+        box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 8px;
+        border-right: 1px solid rgba(22, 24, 35, 0.12);
+        overflow: hidden auto;
+        overscroll-behavior-y: contain;
+        perspective: 1px;
+        transform-style: preserve-3d;
+        perspective-origin: right top;
+        top: 60px;
+        bottom: 0px;
+        width: 240px;
+        background: rgb(255, 255, 255);
+        position: fixed;
+        z-index: 99;
+        padding-right: 8px;
+        &__content {
+            flex-shrink: 0;
+            padding: 12px 0px 26px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            -webkit-box-align: stretch;
+            align-items: stretch;
+            min-height: 100%;
+            &__items {
+                margin-bottom: 8px;
+                padding: 0px;
+                &__ul {
+                    padding: 0px;
+                    margin: 0px;
+                    list-style-type: none;
+                    &__li {
+                        padding: 0px;
+                        margin: 0px;
+                        list-style-type: none;
+                        
+                    }
+                }
+            }
+        }
+    }
+    .content_tiktok {
+
+    }
+}

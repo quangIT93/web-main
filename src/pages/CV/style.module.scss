@@ -1,0 +1,21 @@
+.container_tiktok {
+    max-width: 1080px;
+    margin: 0 auto;
+    transition: all linear 0.2s;
+    margin-bottom: 36px;
+
+
+        .content_tiktok {
+            border: 1px solid #ccc;
+            &__items {
+                background-color: #ccc;
+                height: 400px;
+                &__video {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        
+    }
+}
