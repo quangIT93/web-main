@@ -90,7 +90,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
       );
 
       if (result) {
-        setLastPostId(result.data[result.data.length - 1].bookmark_id);
+        setLastPostId(result.data[result.data.length - 1].id);
         setDataBookmarks(result.data);
         setIsVisible(true);
         if (result.data.length < 10) {
@@ -213,7 +213,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
             });
           } else if (result.data.length === 10) {
             setIsVisible(true);
-            setLastPostId(result.data[result.data.length - 1].bookmark_id);
+            setLastPostId(result.data[result.data.length - 1].id);
             setDataBookmarks((prev: any) => {
               return [...prev, ...result.data];
               // return sortData.sortDataByDate(newOld, array);

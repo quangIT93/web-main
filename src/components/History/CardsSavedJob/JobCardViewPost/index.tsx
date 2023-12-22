@@ -27,6 +27,7 @@ import bookMarkApi from 'api/bookMarkApi';
 
 import { PropsTypePostNew } from '../JobCardSaveHstory/interfacePostNew';
 import noImage from '../../../../img/noImage.png';
+import moment from 'moment';
 // import { historyVi } from 'validations/lang/vi/history';
 // import { historyEn } from 'validations/lang/en/history';
 // import bookMarkApi from 'api/bookMarkApi';
@@ -204,7 +205,7 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item?.salaryMin)}{' '}
-                  {props?.item?.moneyType}-{' '}
+                  {props?.item?.moneyType}{' - '}
                   {new Intl.NumberFormat('en-US').format(
                     props.item?.salaryMin,
                   ) +
@@ -250,8 +251,10 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
                 : languageRedux === 2
                   ? 'Posted on:'
                   : languageRedux === 3 && '에 게시 됨:'}{' '}
-              {props.item?.createdAtText != null
-                ? props.item?.createdAtText
+              {props.item?.created_at != null
+                ? moment(props.item?.created_at).format('DD/MM/YYYY') +
+                ' ' +
+                moment(new Date(props.item?.created_at)).format('HH:mm')
                 : languageRedux === 1
                   ? 'Chưa cập nhật'
                   : languageRedux === 2

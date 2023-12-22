@@ -58,37 +58,36 @@ const LogChart = () => {
   const userkey = 'AIzaSyDkrJkIxMDQoN8z0UUrHf7IM8vCKThOsEg'
   const channel_id = 'UC7A7s5HsftARdOAriluA71Q'
 
-  const isShort = async (videoId: any) => {
-    const url = "https://www.youtube.com/shorts/" + videoId
-    const res = await axios.head(url)
-    console.log("isShort", res.status)
-    // if it's a short it ends with "/shorts/videoId"
-    // if it's NOT a short it ends "/watch?=videoId"
-  }
+  // const isShort = async (videoId: any) => {
+  //   const url = "https://www.youtube.com/shorts/" + videoId
+  //   const res = await axios.head(url)
+  //   console.log("isShort", res.status)
+  //   // if it's a short it ends with "/shorts/videoId"
+  //   // if it's NOT a short it ends "/watch?=videoId"
+  // }
 
-  const getYouTubeShorts = async () => {
-    try {
-      const result = await apiYoutubeShort.getYoutubeShort(channel_id, userkey)
-      if (result) {
-        console.log("videos", result.data.items);
-        setYoutubeShorts(result?.data?.items)
-      }
-    } catch (error) {
-      console.error(error);
-      return;
-    }
-  }
+  // const getYouTubeShorts = async () => {
+  //   try {
+  //     const result = await apiYoutubeShort.getYoutubeShort(channel_id, userkey)
+  //     if (result) {
+  //       console.log("videos", result.data.items);
+  //       setYoutubeShorts(result?.data?.items)
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     return;
+  //   }
+  // }
   useEffect(() => {
     if (profileV3 && profileV3.typeRoleData === 0) {
       dataChart();
     } else {
       dataChartRecruiter();
     }
-    getYouTubeShorts();
-    isShort('toi4pPmp8nc');
+    // getYouTubeShorts();
+    // isShort('toi4pPmp8nc');
   }, []);
-  console.log('youtubeShorts', youtubeShorts);
-
+  // console.log('youtubeShorts', youtubeShorts);
 
   return (
     <div className={styles.container_chart}>
