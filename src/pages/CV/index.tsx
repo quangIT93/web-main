@@ -5,7 +5,7 @@ import { Navbar } from '#components';
 import Footer from '../../components/Footer/Footer';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -56,14 +56,21 @@ const CV: React.FC = () => {
 
   const dataTiktok = new MyClass(tiktokData);
 
-  const swiperRef = React.useRef(null);
+  const swiperRef = React.useRef<any>();
+  const videoRef = React.useRef<HTMLVideoElement | null>(null);
+
   const [isPlaying, setPlaying] = React.useState(false);
   const [isMuted, setMuted] = React.useState(false);
   const [currentTime, setCurrentTime] = React.useState(0);
   const [duration, setDuration] = React.useState(0);
+  const [activeSlideIndex, setActiveSlideIndex] = React.useState<number | null>(
+    null,
+  );
 
-  const togglePlayPause = () => {
-    const video = document.getElementById('video') as HTMLVideoElement | null;
+  const togglePlayPause = (index: number) => {
+    const video = document.getElementById(
+      `video_${index}`,
+    ) as HTMLVideoElement | null;
     if (video) {
       if (video.paused) {
         video.play();
@@ -104,6 +111,31 @@ const CV: React.FC = () => {
     }
   };
 
+  const handleSlideChange = () => {
+    // Pause the currently playing video
+    console.log('scroll');
+
+    if (isPlaying) {
+      togglePlayPause(activeSlideIndex || 0);
+    }
+  };
+
+  const handleTransition = () => {
+    // Get the active slide index during the transition
+    const activeIndex = swiperRef.current?.activeIndex;
+
+    // Do something with the activeIndex, e.g., play the video
+    // You can add additional logic based on the activeIndex
+    console.log('Active Slide Index:', activeIndex);
+
+    // Example: Play the video when reaching a specific slide index
+    console.log('scroll handleTransition');
+
+    if (activeIndex === 2) {
+      togglePlayPause(activeIndex);
+    }
+  };
+
   return (
     <div className={style.container_tiktok}>
       <Navbar />
@@ -121,15 +153,16 @@ const CV: React.FC = () => {
           modules={[Mousewheel, Pagination]}
           className={`${style.content_tiktok__items} mySwiper`}
           ref={swiperRef}
+          onSlideChange={handleSlideChange}
+          onTransitionEnd={handleTransition}
         >
           {dataTiktok.data.map((tikTok, index) => (
             <SwiperSlide key={index}>
               <div className={style.content_tiktok__items__video}>
                 <video
-                  id={`video`} // Make the ID unique
+                  id={`video_${index}`} // Make the ID unique
                   width="576"
                   height="322"
-                  controls
                   muted={isMuted}
                   onTouchStart={(e) => e.stopPropagation()}
                   onTouchMove={(e) => e.stopPropagation()}
@@ -138,17 +171,25 @@ const CV: React.FC = () => {
                 >
                   <source src={tikTok.urlVideo} type="video/mp4" />
                 </video>
-                <div id="custom-controls">
-                  <div onClick={togglePlayPause}>{isPlaying ? '❚❚' : '▶'}</div>
-                  <div id="progress-bar-container" onClick={seek}>
-                    <div id="progress-bar">
+                <div id={style.custom_controls}>
+                  <div
+                    onClick={() => togglePlayPause(index)}
+                    id={style.play_pause}
+                  >
+                    {isPlaying ? '❚❚' : '▶'}
+                  </div>
+                  <div id={style.progress_bar_container} onClick={seek}>
+                    <div id={style.progress_bar}>
                       <div
-                        className="progress"
+                        className={style.progress}
+                        id={style.progress}
                         style={{ width: `${(currentTime / duration) * 100}%` }}
                       ></div>
                     </div>
                   </div>
-                  <div onClick={toggleMute}>{isMuted ? '🔊' : '🔈'}</div>
+                  <div onClick={toggleMute} id={style.volume_control}>
+                    {isMuted ? '🔊' : '🔈'}
+                  </div>
                 </div>
               </div>
             </SwiperSlide>

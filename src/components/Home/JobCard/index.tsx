@@ -33,6 +33,8 @@ import bookMarkApi from 'api/bookMarkApi';
 
 import { PostNewest } from '../NewJobs';
 import { RootState } from 'store';
+
+import noImage from '../../../img/noImage.png';
 // import { HomeValueContext } from 'context/HomeValueContextProvider';
 
 // import ShowNotificativeSave from '../../ShowNotificativeSave';
@@ -133,8 +135,11 @@ const JobCard: React.FC<Iprops> = (props) => {
               sx={{ flex: 1, display: 'flex' }}
             >
               <img
-                src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                src={
+                  props.item.image
+                    ? `${props.item.image}?w=164&h=164&fit=crop&auto=format`
+                    : `${noImage}`
+                }
                 alt={props.item.title}
                 // //loading="lazy"
                 style={{

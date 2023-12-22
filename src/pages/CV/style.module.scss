@@ -1,9 +1,7 @@
 .container_tiktok {
     max-width: 1080px;
-    margin: 0 auto;
+    margin: 120px auto 36px;
     transition: all linear 0.2s;
-    margin-bottom: 36px;
-
 
         .content_tiktok {
             border: 1px solid #ccc;
@@ -14,6 +12,45 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    #custom_controls {
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                        background-color: rgba(0, 0, 0, 0.7);
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 5px;
+                        #play_pause {
+                            color: white;
+                            cursor: pointer;
+                        }
+
+                        #progress_bar_container {
+                            flex: 1;
+                            display: flex;
+                            align-items: center;
+                            padding: 0 10px;
+                            #progress_bar {
+                                width: 100%;
+                                height: 5px;
+                                background-color: #333;
+                                position: relative;
+                                .progress {
+                                    height: 100%;
+                                    width: 0;
+                                    background-color: #4caf50;
+                                  }
+                              }
+                        }
+
+                        
+                        #volume_control {
+                            margin-left: 10px;
+                            color: white;
+                            cursor: pointer;
+                        }
+                    }
                 }
             }
         
