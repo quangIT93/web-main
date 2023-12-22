@@ -16,8 +16,10 @@ import { LocationHomeIcon, DolaIcon } from '#components/Icons';
 import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
-import { historyVi } from 'validations/lang/vi/history';
-import { historyEn } from 'validations/lang/en/history';
+// import { historyVi } from 'validations/lang/vi/history';
+// import { historyEn } from 'validations/lang/en/history';
+
+import noImage from '../../../img/noImage.png';
 // import bookMarkApi from 'api/bookMarkApi';
 
 // import HomeValueContextProvider, {
@@ -96,8 +98,11 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
             sx={{ flex: 1, display: 'flex' }}
           >
             <img
-              src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={
+                props.item.image
+                  ? `${props.item.image}?w=164&h=164&fit=crop&auto=format`
+                  : `${noImage}`
+              }
               alt={props.item.title}
               //loading="lazy"
               style={{
@@ -267,17 +272,17 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
               {languageRedux === 1
                 ? 'Đã đăng vào lúc:'
                 : languageRedux === 2
-                  ? 'Posted on:'
-                  : languageRedux === 3 && '에 게시 됨:'}{' '}
+                ? 'Posted on:'
+                : languageRedux === 3 && '에 게시 됨:'}{' '}
               {props.item?.created_at != null
                 ? moment(props.item?.created_at).format('DD/MM/YYYY') +
                   ' ' +
                   moment(new Date(props.item?.created_at)).format('HH:mm')
                 : languageRedux === 1
-                  ? 'Chưa cập nhật'
-                  : languageRedux === 2
-                    ? 'Not updated yet'
-                    : languageRedux === 3 && '업데이트하지 않음'}
+                ? 'Chưa cập nhật'
+                : languageRedux === 2
+                ? 'Not updated yet'
+                : languageRedux === 3 && '업데이트하지 않음'}
             </p>
 
             <p
@@ -296,13 +301,13 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                 ? languageRedux === 1
                   ? 'đơn ứng tuyển'
                   : languageRedux === 2
-                    ? 'application'
-                    : '지원서'
+                  ? 'application'
+                  : '지원서'
                 : languageRedux === 1
-                  ? 'đơn ứng tuyển'
-                  : languageRedux === 2
-                    ? 'applications'
-                    : '지원서'}
+                ? 'đơn ứng tuyển'
+                : languageRedux === 2
+                ? 'applications'
+                : '지원서'}
             </p>
             {props.item.status === 1 ? (
               <p
@@ -319,8 +324,8 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Đang tuyển'
                   : languageRedux === 2
-                    ? 'Recruiting'
-                    : '현재 모집 중'}
+                  ? 'Recruiting'
+                  : '현재 모집 중'}
               </p>
             ) : props.item.status === 3 ? (
               <p
@@ -337,8 +342,8 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Đã đóng'
                   : languageRedux === 2
-                    ? 'Closed'
-                    : '닫은'}
+                  ? 'Closed'
+                  : '닫은'}
               </p>
             ) : (
               <p
@@ -354,8 +359,8 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Không chấp nhận'
                   : languageRedux === 2
-                    ? 'Does not accept'
-                    : '수락하지 않음'}
+                  ? 'Does not accept'
+                  : '수락하지 않음'}
               </p>
             )}
           </Box>

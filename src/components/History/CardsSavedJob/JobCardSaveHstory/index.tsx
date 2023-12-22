@@ -18,8 +18,9 @@ import { LocationHomeIcon, DolaIcon, SaveIconFill } from '#components/Icons';
 import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
-import { historyVi } from 'validations/lang/vi/history';
-import { historyEn } from 'validations/lang/en/history';
+// import { historyVi } from 'validations/lang/vi/history';
+// import { historyEn } from 'validations/lang/en/history';
+import noImage from '../../../../img/noImage.png';
 // import bookMarkApi from 'api/bookMarkApi';
 
 // import HomeValueContextProvider, {
@@ -94,8 +95,11 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
             sx={{ flex: 1, display: 'flex' }}
           >
             <img
-              src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={
+                props.item.image
+                  ? `${props.item.image}?w=164&h=164&fit=crop&auto=format`
+                  : `${noImage}`
+              }
               alt={props.item.title}
               //loading="lazy"
               style={{
