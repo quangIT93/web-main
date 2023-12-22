@@ -189,12 +189,12 @@ const HotJob: React.FC = () => {
       <div className="title-container">
         <div className="title">
           <FireIcon width={25} height={25} />
-          <h2>
+          <h2 className="title_home">
             {languageRedux === 1
               ? 'Công việc nổi bật'
               : languageRedux === 2
-                ? 'Hot jobs'
-                : languageRedux === 3 && '핫잡스'}
+              ? 'Hot jobs'
+              : languageRedux === 3 && '핫잡스'}
           </h2>
         </div>
         {/* <div className="view-all" onClick={handleMoveToMoreJob}>
@@ -246,8 +246,8 @@ const HotJob: React.FC = () => {
                         languageRedux === 1
                           ? 'Hình ảnh bị lỗi'
                           : languageRedux === 2
-                            ? 'Image is corrupted'
-                            : '이미지가 손상되었습니다'
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'
                       }
                     />
                   </div>
@@ -275,8 +275,8 @@ const HotJob: React.FC = () => {
             {languageRedux === 1
               ? 'Xem tất cả'
               : languageRedux === 2
-                ? 'View all'
-                : languageRedux === 3 && '모두보기'}
+              ? 'View all'
+              : languageRedux === 3 && '모두보기'}
           </p>
           <ArrowrightIcon width={20} height={20} />
         </div>

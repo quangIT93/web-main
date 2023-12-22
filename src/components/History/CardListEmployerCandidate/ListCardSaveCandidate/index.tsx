@@ -279,6 +279,7 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
             zIndex: 2,
             right: '32px',
             top: '12px',
+            display: 'none'
           }}
           onClick={(e) =>
             hanhleClicKCandleSaveCandidate(

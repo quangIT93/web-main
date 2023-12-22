@@ -261,14 +261,14 @@ const ThemesJob: React.FC = () => {
       <div className="title-container">
         <div className="title">
           <SuggestIcon width={25} height={25} />
-          <h2>
+          <h2 className="title_home">
             {languageRedux === 1
               ? 'Công việc gợi ý'
               : languageRedux === 2
-                ? 'Suggested jobs in your city'
-                : languageRedux === 3
-                  ? '귀하의 도시에서 추천 직업'
-                  : 'Công việc gợi ý'}
+              ? 'Suggested jobs in your city'
+              : languageRedux === 3
+              ? '귀하의 도시에서 추천 직업'
+              : 'Công việc gợi ý'}
           </h2>
         </div>
         {/* <div
@@ -302,9 +302,9 @@ const ThemesJob: React.FC = () => {
               {languageRedux === 1
                 ? 'Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.'
                 : languageRedux === 2
-                  ? 'Quickly find a job that fits your needs.'
-                  : languageRedux === 3 &&
-                    '귀하의 필요에 맞는 일자리를 빠르게 찾으십시오.'}
+                ? 'Quickly find a job that fits your needs.'
+                : languageRedux === 3 &&
+                  '귀하의 필요에 맞는 일자리를 빠르게 찾으십시오.'}
             </p>
           </div>
           <div className="suggest-job-not-loging_right">
@@ -318,8 +318,8 @@ const ThemesJob: React.FC = () => {
               {languageRedux === 1
                 ? 'Đăng nhập ngay'
                 : languageRedux === 2
-                  ? 'Sign in'
-                  : languageRedux === 3 && '로그인'}
+                ? 'Sign in'
+                : languageRedux === 3 && '로그인'}
             </Button>
           </div>
         </div>
@@ -420,8 +420,8 @@ const ThemesJob: React.FC = () => {
               {languageRedux === 1
                 ? 'Xem tất cả'
                 : languageRedux === 2
-                  ? 'View all'
-                  : languageRedux === 3 && '모두보기'}
+                ? 'View all'
+                : languageRedux === 3 && '모두보기'}
             </p>
             <ArrowrightIcon width={20} height={20} />
           </div>

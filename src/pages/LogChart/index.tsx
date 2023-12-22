@@ -19,6 +19,8 @@ import {
   CustomSkeleton,
   ImageChangeSkeleton,
 } from '#components/CustomSkeleton';
+import apiYoutubeShort from 'api/apiYoutubeShort';
+import axios from 'axios';
 
 const LogChart = () => {
   const [dataLog, setDataLog] = useState<DataLog | undefined>(undefined);
@@ -51,13 +53,42 @@ const LogChart = () => {
     }
   };
 
+  const [youtubeShorts, setYoutubeShorts] = useState<any>([]);
+
+  const userkey = 'AIzaSyDkrJkIxMDQoN8z0UUrHf7IM8vCKThOsEg'
+  const channel_id = 'UC7A7s5HsftARdOAriluA71Q'
+
+  const isShort = async (videoId: any) => {
+    const url = "https://www.youtube.com/shorts/" + videoId
+    const res = await axios.head(url)
+    console.log("isShort", res.status)
+    // if it's a short it ends with "/shorts/videoId"
+    // if it's NOT a short it ends "/watch?=videoId"
+  }
+
+  const getYouTubeShorts = async () => {
+    try {
+      const result = await apiYoutubeShort.getYoutubeShort(channel_id, userkey)
+      if (result) {
+        console.log("videos", result.data.items);
+        setYoutubeShorts(result?.data?.items)
+      }
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+  }
   useEffect(() => {
     if (profileV3 && profileV3.typeRoleData === 0) {
       dataChart();
     } else {
       dataChartRecruiter();
     }
+    getYouTubeShorts();
+    isShort('toi4pPmp8nc');
   }, []);
+  console.log('youtubeShorts', youtubeShorts);
+
 
   return (
     <div className={styles.container_chart}>
@@ -67,8 +98,8 @@ const LogChart = () => {
             {languageRedux === 1
               ? 'Tổng quan hoạt động'
               : languageRedux === 2
-              ? 'Activity overview'
-              : '활동 대시보드'}
+                ? 'Activity overview'
+                : '활동 대시보드'}
           </h3>
 
           {dataLog ? (
@@ -83,7 +114,7 @@ const LogChart = () => {
             </Row>
           )}
         </div>
-        <div className={styles.chart}>
+        <div>
           {dataLog ? (
             <Chartjs dataLog={dataLog} dataLogRecruiter={dataLogRecruiter} />
           ) : dataLogRecruiter ? (
@@ -110,6 +141,21 @@ const LogChart = () => {
             dataLogRecruiter={dataLogRecruiter}
           />
         </div>
+        {/* {youtubeShorts?.map((item: any, index: number) => {
+          return (
+            <div>
+              <iframe key={index} width="257" height="457"
+                src={`https://www.youtube.com/embed/${item?.id?.videoId}`}
+                title={item?.snippet?.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; 
+    clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen>
+              </iframe>
+            </div>
+          )
+        })
+        } */}
       </div>
     </div>
   );

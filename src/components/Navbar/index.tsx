@@ -74,6 +74,7 @@ import {
 // import SalaryFilterSubnav from './components/SalaryFilterSubnav'
 // import PositionFilterSubnav from './components/PositionFilterSubnav'
 // import CareerFilterSubnav from './components/CareerFilterSubnav'
+//@ts-ignore
 import FilterLocationNav from './FilterLocationNav';
 import FilterCateloriesNav from './FilterCateloriesNav';
 import FilterTypeJob from './FilterTypeJob';

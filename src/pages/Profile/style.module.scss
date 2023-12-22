@@ -1,0 +1,53 @@
+@import '../../scss/mixins';
+
+.chart_itemsChartProfile {
+    margin: 30px 0;
+    .wrap_title {
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        @include breakpoint(mobile){
+            margin-bottom: 12px;
+        }
+        .title_chartProfile {
+            color:#001424;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 600;
+            
+        }
+
+        
+        &__right {
+            display: flex;
+            gap: 4px;
+            cursor: pointer;
+            .detail_activities {
+                color: #001424;
+                font-family: Roboto;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 1.5rem; /* 150% */
+                text-decoration-line: underline;
+            }
+        }
+
+    }
+    .row {
+        @include breakpoint(largeTablet){
+            justify-content: space-evenly;
+        }
+    
+        @include breakpoint(destop){
+            justify-content: space-evenly;
+        }
+    
+        @include breakpoint(an_order){
+            justify-content: space-evenly;
+        }
+        gap: 24px;
+    }
+}
+
+  

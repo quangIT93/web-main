@@ -194,6 +194,11 @@
           }
         }
       }
+
+      .title_home {
+        font-size: 24px;
+        font-weight: 700;
+      }
     }
 
     .view-all {
@@ -269,7 +274,7 @@
 }
 
 .css-1qcklku-MuiImageListItem-root .MuiImageListItem-img {
-  // min-width: 120px !important;
+  min-width: 120px;
   // max-height: 120px !important;
   width: 120px !important;
   height: 120px !important;
@@ -312,4 +317,6 @@
     width: auto;
     /* 150% */
   }
+
+
 }

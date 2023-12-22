@@ -235,14 +235,14 @@ const ThemesJob: React.FC = () => {
       <div className="title-container">
         <div className="title">
           <TopicJobIcon width={25} height={25} />
-          <h2>
+          <h2 className="title_home">
             {languageRedux === 1
               ? 'Công việc theo chủ đề'
               : languageRedux === 2
-                ? 'Job by hot places'
-                : languageRedux === 3
-                  ? '핫플레이스별작업'
-                  : 'Công việc theo chủ đề'}
+              ? 'Job by hot places'
+              : languageRedux === 3
+              ? '핫플레이스별작업'
+              : 'Công việc theo chủ đề'}
           </h2>
           <div className="help-search" onClick={handleClickHelpSearch}>
             <QuestionMarkIcon />
@@ -253,8 +253,8 @@ const ThemesJob: React.FC = () => {
                     {languageRedux === 1
                       ? 'Mục này sẽ gợi ý cho bạn việc làm gần các địa điểm nổi tiếng trong thành phố của bạn.'
                       : languageRedux === 2
-                        ? 'This section will suggest you some jobs near hot places in your city.'
-                        : '이 섹션에서는 귀하의 도시에서 유명한 장소 근처의 일자리를 제안합니다.'}
+                      ? 'This section will suggest you some jobs near hot places in your city.'
+                      : '이 섹션에서는 귀하의 도시에서 유명한 장소 근처의 일자리를 제안합니다.'}
                   </p>
                 </div>
                 {/* <Button
@@ -295,8 +295,8 @@ const ThemesJob: React.FC = () => {
             {languageRedux === 1
               ? 'Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn.'
               : languageRedux === 2
-                ? 'Search for jobs in famous locations in your city.'
-                : '귀하의 도시 내 인기 있는 장소에서 일자리를 검색해 보세요.'}
+              ? 'Search for jobs in famous locations in your city.'
+              : '귀하의 도시 내 인기 있는 장소에서 일자리를 검색해 보세요.'}
           </p>
         </div>
       ) : (
@@ -367,8 +367,8 @@ const ThemesJob: React.FC = () => {
             {languageRedux === 1
               ? 'Xem tất cả'
               : languageRedux === 2
-                ? 'View all'
-                : languageRedux === 3 && '모두보기'}
+              ? 'View all'
+              : languageRedux === 3 && '모두보기'}
           </p>
           <ArrowrightIcon width={20} height={20} />
         </div>

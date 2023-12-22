@@ -31,7 +31,8 @@ interface ICardsApplied {
   activeChild: string;
 }
 
-const CardListCandidate: React.FC = () => {
+const CardListCandidate: React.FC<ICardsApplied> = (props) => {
+  const { activeChild } = props;
   const [candidateData, setCandidateData] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
   const [pageNumber, setPageNumber] = React.useState(0);
@@ -43,15 +44,34 @@ const CardListCandidate: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams('');
   const dataCandidates = async () => {
     try {
-      const result = await candidateSearch.getBookmarkCandidate(
-        0,
-        10,
-        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-      );
+      let result
+      activeChild === '4-0' ?
+        result = await candidateSearch.getBookmarkCandidate(
+          0,
+          10,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        )
+        :
+        result = await candidateSearch.getViewedCandidate(
+          0,
+          10,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        )
+      // console.log('result?.data?.is_over', result?.data?.is_over);
 
       if (result) {
-        setCandidateData(result.data.candidateBookmarks);
-        if (result.data.candidateBookmarks.length < 10) {
+        setIsVisible(true)
+        setCandidateData(
+          activeChild === '4-0' ?
+            result?.data?.candidateBookmarks
+            : result?.data?.data
+        );
+        if (
+          result?.data?.candidateBookmarks ?
+            result?.data?.candidateBookmarks.length < 10 :
+            result?.data?.data.length < 10
+          // result?.data?.is_over
+        ) {
           setIsVisible(false);
         }
       }
@@ -64,17 +84,35 @@ const CardListCandidate: React.FC = () => {
     try {
       setUploading(true);
       const nextPage = pageNumber + 1;
-      const result = await candidateSearch.getBookmarkCandidate(
-        nextPage,
-        10,
-        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-      );
+      let result: any;
+      activeChild === '4-0' ?
+        result = await candidateSearch.getBookmarkCandidate(
+          nextPage,
+          10,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        )
+        :
+        result = await candidateSearch.getViewedCandidate(
+          nextPage,
+          10,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        )
 
-      if (result && result.data.candidateBookmarks.length !== 0) {
-        setCandidateData((prev: any) => [
-          ...prev,
-          ...result?.data?.candidateBookmarks,
-        ]);
+      if (
+        result?.data?.candidateBookmarks ?
+          result?.data?.candidateBookmarks.length !== 0 :
+          result?.data?.data.length !== 0
+        // !result?.data?.is_over
+      ) {
+        let newData = activeChild === '4-0' ?
+          result?.data?.candidateBookmarks
+          : result?.data?.data
+        setCandidateData((prev: any) => {
+          return [
+            ...prev,
+            ...newData,
+          ]
+        });
         setPageNumber(nextPage);
         setUploading(false);
       } else {
@@ -96,7 +134,8 @@ const CardListCandidate: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dataCandidates();
-  }, [languageRedux]);
+  }, [languageRedux, activeChild]);
+
 
   const hanhleClicKCandleSaveCandidate = async (e: any, accountId: string) => {
     try {

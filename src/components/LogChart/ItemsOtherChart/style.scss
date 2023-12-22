@@ -1,6 +1,8 @@
 @import '../../../scss/mixins';
 
 .col_left__itemsChart {
+    height: 40px;
+    width: 40px;
     svg {
         @include breakpoint(mobile){
             height: 30px;

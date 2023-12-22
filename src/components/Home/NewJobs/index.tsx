@@ -333,14 +333,14 @@ const NewJobs: React.FC = () => {
           <div className="title-container">
             <div className="title">
               <NewJobIcon width={25} height={25} />
-              <h2>
+              <h2 className="title_home">
                 {languageRedux === 1
                   ? 'Công việc mới nhất'
                   : languageRedux === 2
-                    ? 'Newest Jobs'
-                    : languageRedux === 3
-                      ? '최신 작업'
-                      : 'Công việc mới nhất'}
+                  ? 'Newest Jobs'
+                  : languageRedux === 3
+                  ? '최신 작업'
+                  : 'Công việc mới nhất'}
               </h2>
               <div className="help-search" onClick={handleClickHelpSearch}>
                 <QuestionMarkIcon />
@@ -351,8 +351,8 @@ const NewJobs: React.FC = () => {
                         {languageRedux === 1
                           ? 'Công việc mới nhất sẽ xuất hiện dựa theo Lĩnh vực quan tâm của bạn trong phần thông tin cá nhân.'
                           : languageRedux === 2
-                            ? 'Newest Jobs will show jobs rely on your Career Objective in Profile.'
-                            : '귀하의 개인적인 관심사에 따라 최신 채용 기회를 확인할 수 있습니다.'}
+                          ? 'Newest Jobs will show jobs rely on your Career Objective in Profile.'
+                          : '귀하의 개인적인 관심사에 따라 최신 채용 기회를 확인할 수 있습니다.'}
                       </p>
                     </div>
                     {/* <Button
@@ -408,46 +408,14 @@ const NewJobs: React.FC = () => {
                 {languageRedux === 1
                   ? 'Xem tất cả'
                   : languageRedux === 2
-                    ? 'View all'
-                    : languageRedux === 3 && '모두보기'}
+                  ? 'View all'
+                  : languageRedux === 3 && '모두보기'}
               </p>
               <ArrowrightIcon width={20} height={20} />
             </div>
           </Skeleton>
-          {/* <Stack
-            spacing={2}
-            sx={{ display: 'flex', alignItems: 'center', margin: '24px 0' }}
-          >
-            <Space
-              className="div-hover-more"
-              onClick={(e) => {
-                handleChange(e, page);
-              }}
-            >
-              <p>{languageRedux === 1
-            ? 'Xem thêm'
-            : languageRedux === 2
-              ? 'See more'
-              : '더보기'}</p>
-              <MoreICon width={20} height={20} />
-            </Space>
-          </Stack> */}
-          {/* <Backdrop
-            sx={{
-              color: '#0d99ff ',
-              backgroundColor: 'transparent',
-              // boxShadow: 'none',
-              zIndex: (theme: any) => theme.zIndex.drawer + 1,
-            }}
-            open={openBackdrop}
-          //  onClick={handleClose}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop> */}
-          <ShowNotificativeSave
-          // setShowNofySave={setShowNofySave}
-          // showNofySave={showNofySave}
-          />
+
+          <ShowNotificativeSave />
 
           <ShowCancleSave />
         </Box>

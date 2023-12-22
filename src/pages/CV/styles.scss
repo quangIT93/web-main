@@ -1,32 +1,16 @@
-.cv-content {
-    padding: 0 180px;
-    margin: 100px auto 100px;
-
-    .cv-content-page {
-        border: 1px solid #ccc;
-        margin: 10px auto;
-        width: fit-content;
-
-        @page {
-            size: A4;
-            margin: 0;
-        }
-
-        .page {
-            // border: 1px #a6a6a6 solid;
-            width: 210mm;
-            min-height: 297mm;
-            padding: 10mm;
-            margin: 10mm auto;
-            // border-radius: 5px;
-            background: white;
-            // box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-
-            .subpage {
-                // padding: 1cm;
-                // border: 5px red solid;
-                height: 257mm;
-                // outline: 2cm #FFEAEA solid;
+.swiper-container {
+    width: 100%;
+    height: 100vh;
+    max-width: 940px;
+    margin: 0 auto;
+    
+    .swiper-wrapper {
+      
+        .swiper-slide {
+        
+            video {
+                width: 100%;
+                height: 100%;
             }
         }
     }

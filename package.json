@@ -58,8 +58,6 @@
     "html-react-parser": "^5.0.7",
     "html-to-draftjs": "^1.5.0",
     "html-webpack-plugin": "^5.5.0",
-    "html2pdf": "^0.0.11",
-    "html2pdf.js": "^0.10.1",
     "identity-obj-proxy": "^3.0.0",
     "intl": "^1.2.5",
     "jest": "^27.4.3",
@@ -120,7 +118,6 @@
     "stream-browserify": "^3.0.0",
     "style-loader": "^3.3.1",
     "swiper": "^9.4.1",
-    "tailwindcss": "^3.0.2",
     "terser-webpack-plugin": "^5.2.5",
     "typescript": "^4.9.5",
     "util": "^0.12.5",
@@ -162,7 +159,8 @@
     "@types/react-helmet": "^6.1.8",
     "@types/react-slick": "^0.23.10",
     "@types/webpack-env": "^1.18.0",
-    "redux-devtools-extension": "^2.13.9"
+    "redux-devtools-extension": "^2.13.9",
+    "tailwindcss": "^3.4.0"
   },
   "jest": {
     "roots": [

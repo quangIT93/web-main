@@ -62,7 +62,7 @@ const NewestGigWorker = () => {
 
         setListData(result.data.cvFilters);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -100,12 +100,12 @@ const NewestGigWorker = () => {
       >
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <IconNewestWorker width={25} height={25} />
-          <h2>
+          <h2 className="title_home">
             {languageRedux === 1
               ? 'Ứng viên mới nhất'
               : languageRedux === 2
-                ? 'Newest workers'
-                : languageRedux === 3 && '최신 지원자'}
+              ? 'Newest workers'
+              : languageRedux === 3 && '최신 지원자'}
           </h2>
         </div>
         {/* {profileV3?.typeRoleData === 1 ? (
@@ -152,8 +152,8 @@ const NewestGigWorker = () => {
             {languageRedux === 1
               ? 'Xem tất cả'
               : languageRedux === 2
-                ? 'View all'
-                : languageRedux === 3 && '모두보기'}
+              ? 'View all'
+              : languageRedux === 3 && '모두보기'}
           </p>
           <ArrowrightIcon width={20} height={20} />
         </div>

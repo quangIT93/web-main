@@ -1,6 +1,6 @@
 {
-  "arrowParens": "always",
   "bracketSameLine": false,
+  "arrowParens": "always",
   "bracketSpacing": true,
   "semi": true,
   "singleQuote": true,
@@ -19,3 +19,4 @@
   "tabWidth": 2,
   "parser": "typescript"
 }
+

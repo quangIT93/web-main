@@ -22,10 +22,11 @@ import {
 
 import { Space, Tooltip } from 'antd';
 
-import moment from 'moment';
+// import moment from 'moment';
 import bookMarkApi from 'api/bookMarkApi';
 
 import { PropsTypePostNew } from '../JobCardSaveHstory/interfacePostNew';
+import noImage from '../../../../img/noImage.png';
 // import { historyVi } from 'validations/lang/vi/history';
 // import { historyEn } from 'validations/lang/en/history';
 // import bookMarkApi from 'api/bookMarkApi';
@@ -98,8 +99,11 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
             sx={{ flex: 1, display: 'flex' }}
           >
             <img
-              src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={
+                props.item.image
+                  ? `${props.item.image}?w=164&h=164&fit=crop&auto=format`
+                  : `${noImage}`
+              }
               alt={props.item?.title}
               //loading="lazy"
               style={{
@@ -244,15 +248,15 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
               {languageRedux === 1
                 ? 'Đã đăng vào lúc:'
                 : languageRedux === 2
-                ? 'Posted on:'
-                : languageRedux === 3 && '에 게시 됨:'}{' '}
+                  ? 'Posted on:'
+                  : languageRedux === 3 && '에 게시 됨:'}{' '}
               {props.item?.createdAtText != null
                 ? props.item?.createdAtText
                 : languageRedux === 1
-                ? 'Chưa cập nhật'
-                : languageRedux === 2
-                ? 'Not updated yet'
-                : languageRedux === 3 && '업데이트하지 않음'}
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
             </p>
             {/* {props.item?.status === 1 ? (
               <p
@@ -322,18 +326,20 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
           style={{ justifyContent: 'space-between' }}
           direction="vertical"
           align="center"
-          // className="div-card-post-right"
+        // className="div-card-post-right"
         >
           <div
             style={{
-              display: 'flex',
+              // display: 'flex',
               alignItems: 'flex-end',
               justifyContent: 'center',
               flexDirection: 'column',
+              display: props.item.accountId === localStorage.getItem('accountId') ?
+                'none' : 'flex'
             }}
           >
             {' '}
-            {}
+            { }
             <div onClick={(e) => handleBookmark(e)}>
               {checkBookMark ? (
                 <SaveIconFill width={24} height={24} />
@@ -354,8 +360,8 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
                     languageRedux === 1
                       ? 'Hình ảnh bị lỗi'
                       : languageRedux === 2
-                      ? 'Image is corrupted'
-                      : '이미지가 손상되었습니다'
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'
                   }
                   onError={handleImageError}
                 />
