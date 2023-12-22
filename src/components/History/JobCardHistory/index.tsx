@@ -23,8 +23,9 @@ import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
 import bookMarkApi from 'api/bookMarkApi';
-import { historyVi } from 'validations/lang/vi/history';
-import { historyEn } from 'validations/lang/en/history';
+import noImage from '../../../img/noImage.png';
+// import { historyVi } from 'validations/lang/vi/history';
+// import { historyEn } from 'validations/lang/en/history';
 
 // import HomeValueContextProvider, {
 //   HomeValueContext,
@@ -112,8 +113,11 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
             sx={{ flex: 1, display: 'flex' }}
           >
             <img
-              src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={
+                props.item.image
+                  ? `${props.item.image}?w=164&h=164&fit=crop&auto=format`
+                  : `${noImage}`
+              }
               alt={props.item.title}
               //loading="lazy"
               style={{
