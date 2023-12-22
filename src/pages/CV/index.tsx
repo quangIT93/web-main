@@ -94,8 +94,10 @@ const CV: React.FC = () => {
 
   console.log('currentTime', currentTime);
   console.log('duration', duration);
-  const updateProgressBar = () => {
-    const video = document.getElementById('video') as HTMLVideoElement | null;
+  const updateProgressBar = (index: number) => {
+    const video = document.getElementById(
+      `video_${index}`,
+    ) as HTMLVideoElement | null;
     console.log('click', video);
     if (video) {
       setCurrentTime(video.currentTime);
@@ -167,7 +169,7 @@ const CV: React.FC = () => {
                   onTouchStart={(e) => e.stopPropagation()}
                   onTouchMove={(e) => e.stopPropagation()}
                   className="mySwiper"
-                  onTimeUpdate={updateProgressBar}
+                  onTimeUpdate={() => updateProgressBar(index)}
                 >
                   <source src={tikTok.urlVideo} type="video/mp4" />
                 </video>

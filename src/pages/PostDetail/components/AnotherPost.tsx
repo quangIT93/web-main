@@ -15,7 +15,7 @@ import { LocationHomeIcon, DolaIcon } from '#components/Icons';
 import { Tooltip } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-
+import noImage from '../../../img/noImage.png';
 // import moment from 'moment';
 // import bookMarkApi from 'api/bookMarkApi';
 
@@ -27,7 +27,9 @@ import { RootState } from 'store';
 
 const AnotherPost: React.FC<any> = (props) => {
   const [error, setError] = React.useState(false);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
   //   window.open(`/post-detail?post-id=${id}`);
   // };
@@ -57,8 +59,11 @@ const AnotherPost: React.FC<any> = (props) => {
         <div className="anotherPost-content">
           <div className="wrap-anotherPost_info">
             <img
-              src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={
+                props.item?.image
+                  ? `${props.item?.image}?w=164&h=164&fit=crop&auto=format`
+                  : `${noImage}`
+              }
               alt={props.item?.title}
               //loading="lazy"
               className="anotherPost_image"
@@ -176,11 +181,13 @@ const AnotherPost: React.FC<any> = (props) => {
                     ? props.item.resource.company_icon
                     : ''
                 }
-                alt={languageRedux === 1
-                  ? 'Hình ảnh bị lỗi'
-                  : languageRedux === 2
+                alt={
+                  languageRedux === 1
+                    ? 'Hình ảnh bị lỗi'
+                    : languageRedux === 2
                     ? 'Image is corrupted'
-                    : '이미지가 손상되었습니다'}
+                    : '이미지가 손상되었습니다'
+                }
                 onError={() => {
                   setError(true);
                 }}
