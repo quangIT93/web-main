@@ -69,6 +69,7 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
           borderRadius: '5px',
           justifyContent: 'space-between',
           overflow: 'unset',
+          width: '302px',
         }}
         onClick={(e) => {
           handleClickItem(e, props.item?.id);
@@ -102,17 +103,7 @@ const JobOfCompanyCard: React.FC<Iprops> = (props) => {
                     gutterBottom
                     variant="h6"
                     component="div"
-                    sx={{
-                      fontSize: '16px',
-                      margin: 0,
-                      whiteSpace: 'nowrap',
-                      width: '100%',
-                      textOverflow: 'ellipsis',
-                      overflow: 'hidden',
-                      fontWeight: '700',
-                      lineheight: '20px',
-                      color: '#575757',
-                    }}
+                    className={styles.div_card_post_info__title_name}
                   >
                     {props?.item?.title}
                   </Typography>

@@ -161,7 +161,7 @@ const CV: React.FC = () => {
           pagination={{
             clickable: true,
           }}
-          modules={[Mousewheel, Pagination]}
+          modules={[Mousewheel]}
           className={`${style.content_tiktok__items} mySwiper`}
           ref={swiperRef}
           // onSlideChange={handleSlideChange}
@@ -178,39 +178,41 @@ const CV: React.FC = () => {
                   // marginBottom: '25%',
                 }}
               >
-                <video
-                  id={`video_${index}`}
-                  // Make the ID unique
-                  width="322"
-                  height="576"
-                  muted={isMuted}
-                  onTouchStart={(e) => e.stopPropagation()}
-                  onTouchMove={(e) => e.stopPropagation()}
-                  onTimeUpdate={() => updateProgressBar(index)}
-                  className={style.video}
-                >
-                  <source src={tikTok.urlVideo} type="video/mp4" />
-                </video>
-                <div id={style.custom_controls}>
-                  <div
-                    onClick={() => togglePlayPause(index, null)}
-                    id={style.play_pause}
+                <div className={style.wrap_video}>
+                  <video
+                    id={`video_${index}`}
+                    // Make the ID unique
+                    width="322"
+                    height="576"
+                    muted={isMuted}
+                    onTouchStart={(e) => e.stopPropagation()}
+                    onTouchMove={(e) => e.stopPropagation()}
+                    onTimeUpdate={() => updateProgressBar(index)}
+                    className={style.video}
                   >
-                    {isPlaying ? '❚❚' : '▶'}
-                  </div>
-                  <div id={style.progress_bar_container} onClick={seek}>
-                    <div id={style.progress_bar}>
-                      <div
-                        className={style.progress}
-                        id={style.progress}
-                        style={{
-                          width: `${(currentTime / duration) * 100}%`,
-                        }}
-                      ></div>
+                    <source src={tikTok.urlVideo} type="video/mp4" />
+                  </video>
+                  <div id={style.custom_controls}>
+                    <div
+                      onClick={() => togglePlayPause(index, null)}
+                      id={style.play_pause}
+                    >
+                      {isPlaying ? '❚❚' : '▶'}
                     </div>
-                  </div>
-                  <div onClick={toggleMute} id={style.volume_control}>
-                    {isMuted ? '🔊' : '🔈'}
+                    <div id={style.progress_bar_container} onClick={seek}>
+                      <div id={style.progress_bar}>
+                        <div
+                          className={style.progress}
+                          id={style.progress}
+                          style={{
+                            width: `${(currentTime / duration) * 100}%`,
+                          }}
+                        ></div>
+                      </div>
+                    </div>
+                    <div onClick={toggleMute} id={style.volume_control}>
+                      {isMuted ? '🔊' : '🔈'}
+                    </div>
                   </div>
                 </div>
               </div>
