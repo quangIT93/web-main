@@ -151,9 +151,10 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content: languageRedux === 1
-              ? 'Đã hết công việc để hiển thị'
-              : languageRedux === 2
+            content:
+              languageRedux === 1
+                ? 'Đã hết công việc để hiển thị'
+                : languageRedux === 2
                 ? 'Out of job to display'
                 : '보여줄 일이 부족해',
           });
@@ -165,7 +166,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleShowDetail = (
@@ -229,14 +230,14 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
             {languageRedux === 1
               ? 'Các công việc đã đăng tuyển'
               : languageRedux === 2
-                ? 'Posted jobs'
-                : languageRedux === 3 && '게시된 작업'}
+              ? 'Posted jobs'
+              : languageRedux === 3 && '게시된 작업'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
               {searchParams.get('c') === '2-1' && languageRedux === 1
                 ? ' > Các công việc chưa đóng'
                 : languageRedux === 2
-                  ? ' > Unclosed jobs'
-                  : languageRedux === 3 && ' > 마감되지 않은 채용정보'}
+                ? ' > Unclosed jobs'
+                : languageRedux === 3 && ' > 마감되지 않은 채용정보'}
             </span>
           </Typography>
         </div>
@@ -251,16 +252,20 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">{languageRedux === 1
-            ? 'Mới nhất'
-            : languageRedux === 2
+          <MenuItem value="Mới nhất">
+            {languageRedux === 1
+              ? 'Mới nhất'
+              : languageRedux === 2
               ? 'Newest'
-              : languageRedux === 3 && '최신'}</MenuItem>
-          <MenuItem value="Cũ nhất">{languageRedux === 1
-            ? 'Cũ nhất'
-            : languageRedux === 2
+              : languageRedux === 3 && '최신'}
+          </MenuItem>
+          <MenuItem value="Cũ nhất">
+            {languageRedux === 1
+              ? 'Cũ nhất'
+              : languageRedux === 2
               ? 'Oldest'
-              : languageRedux === 3 && '가장 오래된'}</MenuItem>
+              : languageRedux === 3 && '가장 오래된'}
+          </MenuItem>
         </TextField>
       </Box>
 
@@ -274,7 +279,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={loading}
-          // onClick={handleClose}
+            // onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -288,6 +293,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                     isHide={true}
                     language={language}
                     languageRedux={languageRedux}
+                    key={i}
                   />
                 ))}
               </Grid>
@@ -315,8 +321,8 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                   {languageRedux === 1
                     ? 'Xem thêm'
                     : languageRedux === 2
-                      ? 'See more'
-                      : '더보기'}
+                    ? 'See more'
+                    : '더보기'}
                 </Button>
               </Box>
             </div>
