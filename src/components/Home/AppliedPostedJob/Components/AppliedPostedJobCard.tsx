@@ -93,8 +93,8 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               display: 'flex',
               width: '80px !important',
               height: '80px !important',
-              minWidth: '80px',
-              minHeight: '80px',
+              minWidth: '80px !important',
+              minHeight: '80px !important',
             }}
           >
             <img
@@ -103,9 +103,10 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               alt={props.item.title}
               //loading="lazy"
               style={{
-                width: '80px !important',
-                height: '80px !important',
+                width: '80px',
+                height: '80px',
                 borderRadius: 10,
+                minWidth: '80px',
               }}
             />
           </ImageListItem>
@@ -233,11 +234,13 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                           ? props.item.resource.company_icon
                           : ''
                       }
-                      alt={languageRedux === 1
-                        ? 'Hình ảnh bị lỗi'
-                        : languageRedux === 2
+                      alt={
+                        languageRedux === 1
+                          ? 'Hình ảnh bị lỗi'
+                          : languageRedux === 2
                           ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'}
+                          : '이미지가 손상되었습니다'
+                      }
                       onError={handleImageError}
                     />
                   )}
@@ -260,8 +263,8 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               {languageRedux === 1
                 ? 'Đã nộp vào'
                 : languageRedux === 2
-                  ? 'Submitted'
-                  : languageRedux === 3 && '신청일'}
+                ? 'Submitted'
+                : languageRedux === 3 && '신청일'}
               &nbsp;
               {new Date(props.item.created_at).toLocaleDateString('en-GB')}
               ,&nbsp;
@@ -285,8 +288,8 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               {languageRedux === 1
                 ? 'ứng viên đã nộp hồ sơ'
                 : languageRedux === 2
-                  ? 'applied candidate'
-                  : languageRedux === 3 && '지원자가 이력서를 제출했습니다'}
+                ? 'applied candidate'
+                : languageRedux === 3 && '지원자가 이력서를 제출했습니다'}
             </span>
           </div>
           <div
@@ -296,10 +299,10 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 props.item.application_status === 1
                   ? 'rgba(220, 220, 220, 1)'
                   : props.item.application_status === 2
-                    ? 'rgba(92, 178, 101, 1)'
-                    : props.item.application_status === 3
-                      ? 'rgba(189, 49, 49, 1)'
-                      : 'rgba(13, 153, 255, 1)',
+                  ? 'rgba(92, 178, 101, 1)'
+                  : props.item.application_status === 3
+                  ? 'rgba(189, 49, 49, 1)'
+                  : 'rgba(13, 153, 255, 1)',
               color:
                 props.item.application_status === 1
                   ? '#575757'
@@ -312,25 +315,25 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               ? languageRedux === 1
                 ? 'Đã ứng tuyển'
                 : languageRedux === 2
-                  ? 'Applied'
-                  : languageRedux === 3 && '지원되였습니다.'
+                ? 'Applied'
+                : languageRedux === 3 && '지원되였습니다.'
               : props.item.application_status === 2
-                ? languageRedux === 1
-                  ? 'Đã được duyệt'
-                  : languageRedux === 2
-                    ? 'Approved'
-                    : languageRedux === 3 && '승인되였습니다.'
-                : props.item.application_status === 3
-                  ? languageRedux === 1
-                    ? 'Đã từ chối'
-                    : languageRedux === 2
-                      ? 'Rejected'
-                      : languageRedux === 3 && '거부'
-                  : languageRedux === 1
-                    ? 'Đã được tuyển'
-                    : languageRedux === 2
-                      ? 'Hired'
-                      : languageRedux === 3 && '고용됨'}
+              ? languageRedux === 1
+                ? 'Đã được duyệt'
+                : languageRedux === 2
+                ? 'Approved'
+                : languageRedux === 3 && '승인되였습니다.'
+              : props.item.application_status === 3
+              ? languageRedux === 1
+                ? 'Đã từ chối'
+                : languageRedux === 2
+                ? 'Rejected'
+                : languageRedux === 3 && '거부'
+              : languageRedux === 1
+              ? 'Đã được tuyển'
+              : languageRedux === 2
+              ? 'Hired'
+              : languageRedux === 3 && '고용됨'}
           </div>
           <div
             style={{ display: props.type === 'post' ? 'flex' : 'none' }}
@@ -339,8 +342,8 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             {languageRedux === 1
               ? 'Kiểm tra ngay'
               : languageRedux === 2
-                ? 'Check now'
-                : languageRedux === 3 && '지금 확인하세요'}
+              ? 'Check now'
+              : languageRedux === 3 && '지금 확인하세요'}
             <div className="icon">
               <BackIcon fill="white" />
             </div>
