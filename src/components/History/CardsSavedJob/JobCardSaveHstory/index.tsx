@@ -245,17 +245,17 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
               {languageRedux === 1
                 ? 'Đã đăng vào lúc:'
                 : languageRedux === 2
-                ? 'Posted on:'
-                : languageRedux === 3 && '에 게시 됨:'}{' '}
+                  ? 'Posted on:'
+                  : languageRedux === 3 && '에 게시 됨:'}{' '}
               {props.item?.created_at != null
                 ? moment(props.item?.created_at).format('DD/MM/YYYY') +
-                  ' ' +
-                  moment(new Date(props.item?.created_at)).format('HH:mm')
+                ' ' +
+                moment(new Date(props.item?.created_at)).format('HH:mm')
                 : languageRedux === 1
-                ? 'Chưa cập nhật'
-                : languageRedux === 2
-                ? 'Not updated yet'
-                : languageRedux === 3 && '업데이트하지 않음'}
+                  ? 'Chưa cập nhật'
+                  : languageRedux === 2
+                    ? 'Not updated yet'
+                    : languageRedux === 3 && '업데이트하지 않음'}
             </p>
             {props.item?.status === 1 ? (
               <p
@@ -272,8 +272,8 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Đang tuyển'
                   : languageRedux === 2
-                  ? 'Recruiting'
-                  : '현재 모집 중'}
+                    ? 'Recruiting'
+                    : '현재 모집 중'}
               </p>
             ) : props.item?.status === 3 ? (
               <p
@@ -290,8 +290,8 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Đã đóng'
                   : languageRedux === 2
-                  ? 'Closed'
-                  : '닫은'}
+                    ? 'Closed'
+                    : '닫은'}
               </p>
             ) : (
               <p
@@ -308,8 +308,8 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Không chấp nhận'
                   : languageRedux === 2
-                  ? 'Does not accept'
-                  : '수락하지 않음'}
+                    ? 'Does not accept'
+                    : '수락하지 않음'}
               </p>
             )}
             <p
@@ -325,7 +325,7 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
           style={{ justifyContent: 'space-between' }}
           direction="vertical"
           align="center"
-          // className="div-card-post-right"
+        // className="div-card-post-right"
         >
           <div
             style={{
@@ -356,8 +356,8 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                     languageRedux === 1
                       ? 'Hình ảnh bị lỗi'
                       : languageRedux === 2
-                      ? 'Image is corrupted'
-                      : '이미지가 손상되었습니다'
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'
                   }
                   onError={handleImageError}
                 />

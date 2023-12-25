@@ -91,7 +91,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
 
       if (result) {
         setLastPostId(result.data[result.data.length - 1].bookmark_id);
-        setDataBookmarks(sortData.sortDataByDate(newOld, result.data));
+        setDataBookmarks(result.data);
+        setIsVisible(true);
         if (result.data.length < 10) {
           setIsVisible(false);
         }
@@ -104,16 +105,20 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const getViewPost = async () => {
     try {
       const result = await historyBookmark.getViewPost(
-        page,
-        20,
+        0,
+        10,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
-        setPage(page + 1);
+        // setPage(page + 1);
+        setIsVisible(true);
         setDataViewPost(result.data);
         // setDataViewPost(sortData.sortDataByDate(newOld, result.data));
         setLoading(false);
+        if (result.data.length < 10) {
+          setIsVisible(false);
+        }
       }
     } catch (error) {
       console.log('error', error);
@@ -123,6 +128,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   useEffect(() => {
     if (activeChild === '1-1') getViewPost();
   }, [languageRedux, activeChild]);
+  console.log("dataBookmarks", dataBookmarks);
 
   useEffect(() => {
     let isMounted = true;
@@ -162,6 +168,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
     try {
       setUploading(true);
       console.log('lastPostId', lastPostId);
+      const nextPage = page + 1;
       if (activeChild === '1-0') {
         const result = await historyBookmark.getAllBookmark(
           lastPostId,
@@ -183,8 +190,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                 languageRedux === 1
                   ? 'Đã hết công việc để hiển thị'
                   : languageRedux === 2
-                  ? 'Out of job to display'
-                  : '보여줄 일이 부족해',
+                    ? 'Out of job to display'
+                    : '보여줄 일이 부족해',
             });
             return;
           }
@@ -192,22 +199,31 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           if (result.data.length < 10) {
             setIsVisible(false);
             setDataBookmarks((prev: any) => {
-              const array = [...prev, ...result.data];
-              return sortData.sortDataByDate(newOld, array);
+              return [...prev, ...result.data];
+              // return sortData.sortDataByDate(newOld, array);
+            });
+            messageApi.open({
+              type: 'error',
+              content:
+                languageRedux === 1
+                  ? 'Đã hết công việc để hiển thị'
+                  : languageRedux === 2
+                    ? 'Out of job to display'
+                    : '보여줄 일이 부족해',
             });
           } else if (result.data.length === 10) {
             setIsVisible(true);
             setLastPostId(result.data[result.data.length - 1].bookmark_id);
             setDataBookmarks((prev: any) => {
-              const array = [...prev, ...result.data];
-              return sortData.sortDataByDate(newOld, array);
+              return [...prev, ...result.data];
+              // return sortData.sortDataByDate(newOld, array);
             });
           }
         }
       } else {
         const result = await historyBookmark.getViewPost(
-          page,
-          20,
+          nextPage,
+          10,
           languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (result) {
@@ -215,8 +231,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           // setIsVisible(false);
           // return;
           // }
-
-          // setUploading(false);
+          setUploading(false);
           if (result.data.length === 0) {
             setPage(0);
             setIsVisible(false);
@@ -226,21 +241,31 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                 languageRedux === 1
                   ? 'Đã hết công việc để hiển thị'
                   : languageRedux === 2
-                  ? 'Out of job to display'
-                  : '보여줄 일이 부족해',
+                    ? 'Out of job to display'
+                    : '보여줄 일이 부족해',
             });
             return;
           }
 
-          if (result.data.length < 20) {
+          if (result.data.length < 10) {
             setPage(0);
             setIsVisible(false);
-            setDataViewPost([...result.data, ...dataViewPost]);
+            setDataViewPost([...dataViewPost, ...result.data]);
             setUploading(false);
-          } else if (result.data.length >= 20) {
+            messageApi.open({
+              type: 'error',
+              content:
+                languageRedux === 1
+                  ? 'Đã hết công việc để hiển thị'
+                  : languageRedux === 2
+                    ? 'Out of job to display'
+                    : '보여줄 일이 부족해',
+            });
+            return;
+          } else if (result.data.length >= 10) {
             setPage(page + 1);
             setIsVisible(true);
-            setDataViewPost([...result.data, ...dataViewPost]);
+            setDataViewPost([...dataViewPost, ...result.data]);
             setUploading(false);
           }
         }
@@ -301,20 +326,20 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           {languageRedux === 1
             ? 'Công việc của tôi'
             : languageRedux === 2
-            ? 'My jobs'
-            : languageRedux === 3 && '내 일'}
+              ? 'My jobs'
+              : languageRedux === 3 && '내 일'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '1-0'
               ? languageRedux === 1
                 ? ' > Việc làm đã lưu'
                 : languageRedux === 2
-                ? ' > Saved jobs'
-                : languageRedux === 3 && ' > 저장된 작업'
+                  ? ' > Saved jobs'
+                  : languageRedux === 3 && ' > 저장된 작업'
               : languageRedux === 1
-              ? ' > Việc làm đã xem'
-              : languageRedux === 2
-              ? ' > Viewed job'
-              : languageRedux === 3 && ' > 본 채용공고.'}
+                ? ' > Việc làm đã xem'
+                : languageRedux === 2
+                  ? ' > Viewed job'
+                  : languageRedux === 3 && ' > 본 채용공고.'}
           </span>
         </Typography>
         {activeChild === '1-0' ? (
@@ -332,15 +357,15 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
               {languageRedux === 1
                 ? 'Mới nhất'
                 : languageRedux === 2
-                ? 'Newest'
-                : languageRedux === 3 && '최신'}
+                  ? 'Newest'
+                  : languageRedux === 3 && '최신'}
             </MenuItem>
             <MenuItem value="Cũ nhất">
               {languageRedux === 1
                 ? 'Cũ nhất'
                 : languageRedux === 2
-                ? 'Oldest'
-                : languageRedux === 3 && '가장 오래된'}
+                  ? 'Oldest'
+                  : languageRedux === 3 && '가장 오래된'}
             </MenuItem>
           </TextField>
         ) : (
@@ -354,18 +379,65 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={loading}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
       {dataBookmarks?.length > 0 && activeChild === '1-0' ? (
         <div className="history-post">
           <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-            {dataBookmarks?.map((dataBookmark: any, i: number) => (
+            {dataBookmarks?.map((dataBookmark: any, i: number) => {
               // <Skeleton loading={loading} active>
-              <JobCardSaveHistory
-                item={dataBookmark}
-                handleDeleteBookmark={handleDeleteBookmark}
+              console.log("dataBookmark", i, dataBookmark)
+              return (
+                <JobCardSaveHistory
+                  item={dataBookmark}
+                  handleDeleteBookmark={handleDeleteBookmark}
+                  index={i}
+                  key={i}
+                  language={language}
+                  languageRedux={languageRedux}
+                />
+              )
+              //</Skeleton>
+            })}
+          </Grid>
+          <Box
+            sx={{
+              margin: '12px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Button
+              style={{
+                width: 130,
+                height: 40,
+                marginBottom: '2rem',
+                backgroundColor: `#0D99FF`,
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                display: isVisible ? 'block' : 'none',
+              }}
+              loading={uploading}
+              onClick={handleClickAddItem}
+            >
+              {languageRedux === 1
+                ? 'Xem thêm'
+                : languageRedux === 2
+                  ? 'See more'
+                  : '더보기'}
+            </Button>
+          </Box>
+        </div>
+      ) : dataViewPost?.length > 0 && activeChild === '1-1' ? (
+        <div className="history-post">
+          <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
+            {dataViewPost?.map((dataView: any, i: number) => (
+              // <Skeleton loading={loading} active>
+              <JobCardViewPost
+                item={dataView}
                 index={i}
                 key={i}
                 language={language}
@@ -398,54 +470,10 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
               {languageRedux === 1
                 ? 'Xem thêm'
                 : languageRedux === 2
-                ? 'See more'
-                : '더보기'}
+                  ? 'See more'
+                  : '더보기'}
             </Button>
           </Box>
-        </div>
-      ) : dataViewPost?.length > 0 && activeChild === '1-1' ? (
-        <div className="history-post">
-          <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-            {dataViewPost?.map((dataView: any, i: number) => (
-              // <Skeleton loading={loading} active>
-              <JobCardViewPost
-                item={dataView}
-                index={i}
-                key={i}
-                language={language}
-                languageRedux={languageRedux}
-              />
-              //</Skeleton>
-            ))}
-          </Grid>
-          {/* <Box
-            sx={{
-              margin: '12px auto',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Button
-              style={{
-                width: 130,
-                height: 40,
-                marginBottom: '2rem',
-                backgroundColor: `#0D99FF`,
-                color: '#FFFFFF',
-                fontWeight: 'bold',
-                display: isVisible ? 'block' : 'none',
-              }}
-              loading={uploading}
-              onClick={handleClickAddItem}
-            >
-              {languageRedux === 1
-                ? 'Xem thêm'
-                : languageRedux === 2
-                ? 'See more'
-                : '더보기'}
-            </Button>
-          </Box> */}
         </div>
       ) : (
         <Nodata />

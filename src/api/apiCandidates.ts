@@ -20,19 +20,17 @@ const candidateSearch = {
   ) => {
     const URL =
       `/v3/cv-filter/search?` +
-      `${
-        addresses.length !== 0
-          ? `&${addresses
-              ?.map((n: any, index: number) => `addresses=${n[1]}`)
-              .join('&')}`
-          : ``
+      `${addresses.length !== 0
+        ? `&${addresses
+          ?.map((n: any, index: number) => `addresses=${n[1]}`)
+          .join('&')}`
+        : ``
       }` +
-      `${
-        categories.length !== 0
-          ? `&${categories
-              ?.map((n: any, index: number) => `categories=${n[1]}`)
-              .join('&')}`
-          : ``
+      `${categories.length !== 0
+        ? `&${categories
+          ?.map((n: any, index: number) => `categories=${n[1]}`)
+          .join('&')}`
+        : ``
       }` +
       // `${educations.length !== 0
       //   ? `&${educations?.map((n: any, index: number) => `educations=${n}`).join('&')}`
@@ -63,6 +61,15 @@ const candidateSearch = {
 
   getBookmarkCandidate: (page: number, limit: number, lang: string) => {
     const URL = `/v3/candidate-bookmarks?lang=${lang}&page=${page}&limit=${limit}`;
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+  },
+
+  getViewedCandidate: (page: number, limit: number, lang: string) => {
+    const URL = `/v3/view-profiles/by-account?lang=${lang}&page=${page}&limit=${limit}`;
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

@@ -13,7 +13,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 
 //ANT
 
-import { LocationHomeIcon, DolaIcon, SaveIconFill, IconEmail, PhoneIcon } from '#components/Icons';
+import { LocationHomeIcon, DolaIcon, SaveIconFill, IconEmail, PhoneIcon, SaveIconOutline } from '#components/Icons';
 
 import { CandidateHijob } from '#components/Icons/iconCandidate';
 
@@ -76,7 +76,7 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
   const handleImageError = () => {
     setError(true);
   };
-  console.log("info", info.profileData.hidePhone);
+  // console.log("info", info.profileData.hidePhone);
 
   useEffect(() => {
     setInfor(item);
@@ -232,7 +232,8 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   <Tooltip
                     placement="top"
                     title={
-                      info?.profileData.childCategoriesData?.length !== 0
+                      info?.profileData.childCategoriesData &&
+                        info?.profileData.childCategoriesData?.length !== 0
                         ? info?.profileData.childCategoriesData?.map(
                           (value: any) => {
                             return `${value.fullName}, `;
@@ -246,7 +247,8 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                     }
                   >
                     <span className="text-info-candidate">
-                      {info?.profileData.childCategoriesData?.length !== 0
+                      {info?.profileData.childCategoriesData &&
+                        info?.profileData.childCategoriesData?.length !== 0
                         ? info?.profileData.childCategoriesData?.map(
                           (value: any) => {
                             return `${value.fullName}, `;
@@ -279,6 +281,7 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
             zIndex: 2,
             right: '32px',
             top: '12px',
+            display: info?.profileData.isBookmarked ? 'block' : 'none'
           }}
           onClick={(e) =>
             hanhleClicKCandleSaveCandidate(

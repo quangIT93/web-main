@@ -39,5 +39,23 @@ const historyRecruiter = {
       },
     })
   },
+
+  getCandidateViewCompany: (page: number, limit: number, lang: string) => {
+    const URL = `/v3/Company-views/by-company?lang=${lang}&page=${page}&limit=${limit}`;
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+  },
+
+  getCandidateFollowCompany: (page: number, limit: number, lang: string) => {
+    const URL = `/v3/company-bookmarked/by-company?lang=${lang}&page=${page}&limit=${limit}`;
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+  },
 }
 export default historyRecruiter
