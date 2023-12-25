@@ -12,19 +12,17 @@ const apiCompanyV3 = {
   ) => {
     const URL =
       `/v3/companies?` +
-      `${
-        addresses.length !== 0
-          ? `&${addresses
-              ?.map((n: any, index: number) => `addresses=${n[1]}`)
-              .join('&')}`
-          : ``
+      `${addresses.length !== 0
+        ? `&${addresses
+          ?.map((n: any, index: number) => `addresses=${n[1]}`)
+          .join('&')}`
+        : ``
       }` +
-      `${
-        categories.length !== 0
-          ? `&${categories
-              ?.map((n: any, index: number) => `categories=${n[0]}`)
-              .join('&')}`
-          : ``
+      `${categories.length !== 0
+        ? `&${categories
+          ?.map((n: any, index: number) => `categories=${n[0]}`)
+          .join('&')}`
+        : ``
       }` +
       `${companySizeId ? `&companySizeId=${companySizeId}` : ``}` +
       `&${page ? `page=${page}` : ``}` +
@@ -120,6 +118,10 @@ const apiCompanyV3 = {
   },
   getCompanyView: (page: any, limit: any | null, lang: string) => {
     const URL = `/v3/view-profiles/companies-viewed/by-account?lang=${lang}&limit=${limit}&page=${page}`;
+    return axiosClient.get(URL);
+  },
+  getCompanySaveProfile: (page: any, limit: any | null, lang: string) => {
+    const URL = `/v3/candidate-bookmarks/by-candidate?lang=${lang}&limit=${limit}&page=${page}`;
     return axiosClient.get(URL);
   },
 };

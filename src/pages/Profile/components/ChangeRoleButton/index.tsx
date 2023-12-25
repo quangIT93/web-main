@@ -33,8 +33,6 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
             languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
           );
           if (getProfileV3Data) {
-            console.log('profile updated', getProfileV3Data);
-
             dispatch<any>(setProfileMeInformationV3(getProfileV3Data));
           }
         }

@@ -42,8 +42,8 @@ const Box: React.FC<{
               ItemValue.id === 3
                 ? styles.col_right__topValue3
                 : ItemValue.id === 2
-                ? styles.col_right__topValue2
-                : styles.col_right__topValue1
+                  ? styles.col_right__topValue2
+                  : styles.col_right__topValue1
             }
           >
             {ItemValue ? ItemValue?.total : 0}
@@ -87,13 +87,13 @@ const ItemsChart: React.FC<{
         ? languageRedux === 1
           ? 'Việc làm đã ứng tuyển'
           : languageRedux === 2
-          ? 'Applied job'
-          : '지원한 채용공고'
+            ? 'Applied job'
+            : '지원한 채용공고'
         : languageRedux === 1
-        ? 'Ứng viên đã tuyển dụng'
-        : languageRedux === 2
-        ? 'Recruited candidates'
-        : '지원한 구직자',
+          ? 'Ứng viên đã tuyển dụng'
+          : languageRedux === 2
+            ? 'Recruited candidates'
+            : '지원한 구직자',
       icon: <BagChart />,
       total: dataLog
         ? dataLog?.applyLogs.total
@@ -101,7 +101,7 @@ const ItemsChart: React.FC<{
       path: dataLog
         ? '/history'
         : // '/history?activitiesEmployer=60'
-          '/history',
+        '/history',
     },
     {
       id: 2,
@@ -109,21 +109,21 @@ const ItemsChart: React.FC<{
         ? languageRedux === 1
           ? 'Việc làm đã xem'
           : languageRedux === 2
-          ? 'Viewed job'
-          : '본 채용공고'
+            ? 'Viewed job'
+            : '본 채용공고'
         : languageRedux === 1
-        ? 'Ứng viên đã xem'
-        : languageRedux === 2
-        ? 'Viewed candidates'
-        : '본 구지자',
+          ? 'Ứng viên đã xem'
+          : languageRedux === 2
+            ? 'Viewed candidates'
+            : '본 구지자',
       icon: <EyeChart />,
       total: dataLog
         ? dataLog?.viewPostLogs.total
         : dataLogRecruiter?.viewCandidateLogs.total,
       path: dataLog
         ? '/history?viewedJob=11'
-        : //'/history?viewedCandidate=41'
-          '',
+        : '/history?viewedCandidate=41'
+      //'',
     },
     {
       id: 3,
@@ -131,33 +131,52 @@ const ItemsChart: React.FC<{
         ? languageRedux === 1
           ? 'Việc làm đã lưu'
           : languageRedux === 2
-          ? 'Saved jobs'
-          : '저장된 작업'
+            ? 'Saved jobs'
+            : '저장된 작업'
         : languageRedux === 1
-        ? 'Ứng viên đã lưu'
-        : languageRedux === 2
-        ? 'Saved candidates'
-        : '저장한 구직자',
+          ? 'Ứng viên đã lưu'
+          : languageRedux === 2
+            ? 'Saved candidates'
+            : '저장한 구직자',
       icon: dataLog ? <ChartCompanySave /> : <ChartStar />,
       total: dataLog
         ? dataLog?.savePostLogs.total
         : dataLogRecruiter?.saveCandidateLogs.total,
       path: dataLog
         ? // '/history?activitiesCandidate=71'
-          '/history?saved_jobs=1'
+        '/history?saved_jobs=1'
         : '/history?candidate=4',
     },
+    // {
+    //   id: 4,
+    //   title: dataLog
+    //     ? languageRedux === 1
+    //       ? 'Lượt đăng nhập'
+    //       : languageRedux === 2
+    //         ? 'Saved jobs'
+    //         : '저장된 작업'
+    //     : languageRedux === 1
+    //       ? 'Ứng viên đã lưu'
+    //       : languageRedux === 2
+    //         ? 'Saved candidates'
+    //         : '저장한 구직자',
+    //   icon: dataLog ? <ChartCompanySave /> : <ChartStar />,
+    //   total: dataLog
+    //     ? dataLog?.savePostLogs.total
+    //     : dataLogRecruiter?.saveCandidateLogs.total,
+    //   path: '',
+    // },
   ];
 
   return (
     <Row className={styles.row} align="top">
       {(dataLog && !dataLogRecruiter) || (!dataLog && dataLogRecruiter)
         ? ItemValue.map((value, index) => {
-            return <Box key={index} ItemValue={value} />;
-          })
+          return <Box key={index} ItemValue={value} />;
+        })
         : elements.map((value, index: number) => (
-            <CustomSkeleton key={index} />
-          ))}
+          <CustomSkeleton key={index} />
+        ))}
     </Row>
   );
 };

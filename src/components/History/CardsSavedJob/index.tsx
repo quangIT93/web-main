@@ -91,7 +91,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
 
       if (result) {
         setLastPostId(result.data[result.data.length - 1].bookmark_id);
-        setDataBookmarks(sortData.sortDataByDate(newOld, result.data));
+        setDataBookmarks(result.data);
+        setIsVisible(true);
         if (result.data.length < 10) {
           setIsVisible(false);
         }
@@ -104,16 +105,20 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const getViewPost = async () => {
     try {
       const result = await historyBookmark.getViewPost(
-        page,
-        20,
+        0,
+        10,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
       if (result) {
-        setPage(page + 1);
+        // setPage(page + 1);
+        setIsVisible(true);
         setDataViewPost(result.data);
         // setDataViewPost(sortData.sortDataByDate(newOld, result.data));
         setLoading(false);
+        if (result.data.length < 10) {
+          setIsVisible(false);
+        }
       }
     } catch (error) {
       console.log('error', error);
@@ -162,6 +167,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
     try {
       setUploading(true);
       console.log('lastPostId', lastPostId);
+      const nextPage = page + 1;
       if (activeChild === '1-0') {
         const result = await historyBookmark.getAllBookmark(
           lastPostId,
@@ -192,22 +198,31 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           if (result.data.length < 10) {
             setIsVisible(false);
             setDataBookmarks((prev: any) => {
-              const array = [...prev, ...result.data];
-              return sortData.sortDataByDate(newOld, array);
+              return [...prev, ...result.data];
+              // return sortData.sortDataByDate(newOld, array);
+            });
+            messageApi.open({
+              type: 'error',
+              content:
+                languageRedux === 1
+                  ? 'Đã hết công việc để hiển thị'
+                  : languageRedux === 2
+                  ? 'Out of job to display'
+                  : '보여줄 일이 부족해',
             });
           } else if (result.data.length === 10) {
             setIsVisible(true);
             setLastPostId(result.data[result.data.length - 1].bookmark_id);
             setDataBookmarks((prev: any) => {
-              const array = [...prev, ...result.data];
-              return sortData.sortDataByDate(newOld, array);
+              return [...prev, ...result.data];
+              // return sortData.sortDataByDate(newOld, array);
             });
           }
         }
       } else {
         const result = await historyBookmark.getViewPost(
-          page,
-          20,
+          nextPage,
+          10,
           languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
         );
         if (result) {
@@ -215,8 +230,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           // setIsVisible(false);
           // return;
           // }
-
-          // setUploading(false);
+          setUploading(false);
           if (result.data.length === 0) {
             setPage(0);
             setIsVisible(false);
@@ -232,15 +246,25 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
             return;
           }
 
-          if (result.data.length < 20) {
+          if (result.data.length < 10) {
             setPage(0);
             setIsVisible(false);
-            setDataViewPost([...result.data, ...dataViewPost]);
+            setDataViewPost([...dataViewPost, ...result.data]);
             setUploading(false);
-          } else if (result.data.length >= 20) {
+            messageApi.open({
+              type: 'error',
+              content:
+                languageRedux === 1
+                  ? 'Đã hết công việc để hiển thị'
+                  : languageRedux === 2
+                  ? 'Out of job to display'
+                  : '보여줄 일이 부족해',
+            });
+            return;
+          } else if (result.data.length >= 10) {
             setPage(page + 1);
             setIsVisible(true);
-            setDataViewPost([...result.data, ...dataViewPost]);
+            setDataViewPost([...dataViewPost, ...result.data]);
             setUploading(false);
           }
         }
@@ -361,18 +385,20 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
       {dataBookmarks?.length > 0 && activeChild === '1-0' ? (
         <div className="history-post">
           <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-            {dataBookmarks?.map((dataBookmark: any, i: number) => (
+            {dataBookmarks?.map((dataBookmark: any, i: number) => {
               // <Skeleton loading={loading} active>
-              <JobCardSaveHistory
-                item={dataBookmark}
-                handleDeleteBookmark={handleDeleteBookmark}
-                index={i}
-                key={i}
-                language={language}
-                languageRedux={languageRedux}
-              />
+              return (
+                <JobCardSaveHistory
+                  item={dataBookmark}
+                  handleDeleteBookmark={handleDeleteBookmark}
+                  index={i}
+                  key={i}
+                  language={language}
+                  languageRedux={languageRedux}
+                />
+              );
               //</Skeleton>
-            ))}
+            })}
           </Grid>
           <Box
             sx={{
@@ -418,7 +444,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
               //</Skeleton>
             ))}
           </Grid>
-          {/* <Box
+          <Box
             sx={{
               margin: '12px auto',
               display: 'flex',
@@ -445,7 +471,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                 ? 'See more'
                 : '더보기'}
             </Button>
-          </Box> */}
+          </Box>
         </div>
       ) : (
         <Nodata />

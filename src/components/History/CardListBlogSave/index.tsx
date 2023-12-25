@@ -95,9 +95,11 @@ const CardListBlogSave = () => {
     try {
       const result = await communityApi.getCommunityBookmarked(
         page,
+        10,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
+        // setIsVisible(true);
         setStories(result?.data?.communications);
         if (result?.data?.communications?.length < 10) {
           setIsVisible(false);
@@ -121,6 +123,7 @@ const CardListBlogSave = () => {
       const nextPage = parseInt(page) + 1;
       const result = await communityApi.getCommunityBookmarked(
         nextPage,
+        10,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
 
@@ -135,8 +138,8 @@ const CardListBlogSave = () => {
           languageRedux === 1
             ? 'Không còn bài viết để hiển thị'
             : languageRedux === 2
-              ? 'No more posts to show'
-              : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
+            ? 'No more posts to show'
+            : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
         );
         setIsVisible(false);
         // console.log('Đã hết bài viết để hiển thị', result);
@@ -177,14 +180,14 @@ const CardListBlogSave = () => {
             {languageRedux === 1
               ? 'Danh sách bài viết'
               : languageRedux === 2
-                ? 'List of articles'
-                : languageRedux === 3 && '커뮤니티'}
+              ? 'List of articles'
+              : languageRedux === 3 && '커뮤니티'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
               {searchParams.get('c') === '3-0' && languageRedux === 1
                 ? ' > Đã lưu'
                 : languageRedux === 2
-                  ? ' > Saved articles'
-                  : languageRedux === 3 && ' > 저정되기'}
+                ? ' > Saved articles'
+                : languageRedux === 3 && ' > 저정되기'}
             </span>
           </Typography>
         </div>
@@ -240,6 +243,7 @@ const CardListBlogSave = () => {
           stories.map((item: any, index: any) =>
             item?.communicationData?.type === 1 ? (
               <WorkingStoryCard
+                key={index}
                 item={item.communicationData}
                 index={index}
                 setSaveListPost={setSaveListPost}
@@ -247,6 +251,7 @@ const CardListBlogSave = () => {
               />
             ) : (
               <HijobNewsCard
+                key={index}
                 item={item.communicationData}
                 index={index}
                 setSaveListPost={setSaveListPost}
@@ -257,38 +262,38 @@ const CardListBlogSave = () => {
         ) : (
           <></>
         )}
-        {stories && stories.length === 0 ? (
-          <Box
-            sx={{
-              margin: '12px auto',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+        {/* {stories && stories.length === 0 ? ( */}
+        <Box
+          sx={{
+            margin: '12px auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            style={{
+              width: 130,
+              height: 40,
+              backgroundColor: `#0D99FF`,
+              marginBottom: '2rem',
+              color: '#FFFFFF',
+              fontWeight: 'bold',
+              display: isVisible ? 'block' : 'none',
             }}
+            loading={uploading}
+            onClick={handleChange}
           >
-            <Button
-              style={{
-                width: 130,
-                height: 40,
-                backgroundColor: `#0D99FF`,
-                marginBottom: '2rem',
-                color: '#FFFFFF',
-                fontWeight: 'bold',
-                display: isVisible ? 'block' : 'none',
-              }}
-              loading={uploading}
-              onClick={handleChange}
-            >
-              {languageRedux === 1
-                ? 'Xem thêm'
-                : languageRedux === 2
-                  ? 'See more'
-                  : '더보기'}
-            </Button>
-          </Box>
-        ) : (
-          <></>
-        )}
+            {languageRedux === 1
+              ? 'Xem thêm'
+              : languageRedux === 2
+              ? 'See more'
+              : '더보기'}
+          </Button>
+        </Box>
+        {/* // ) : (
+        //   <></>
+        // )} */}
         {stories && stories.length === 0 ? <NoDataComponent /> : <></>}
       </div>
     </>

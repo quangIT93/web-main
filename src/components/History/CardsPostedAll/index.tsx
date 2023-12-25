@@ -192,8 +192,6 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
     setShowDetailPosted(false);
   };
 
-  console.log('props', props);
-
   return (
     <>
       {contextHolder}

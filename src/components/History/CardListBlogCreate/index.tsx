@@ -48,6 +48,7 @@ const CardListBlogCreate = () => {
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
       if (result) {
+        // setIsVisible(true);
         setCreatedPost(result?.data?.communications);
         if (result?.data?.communications?.length < 10) {
           setIsVisible(false);
@@ -312,8 +313,8 @@ const CardListBlogCreate = () => {
                   {item?.createdAtText
                     ? item?.createdAtText
                     : new Date(item?.createdAt).toLocaleDateString('en-GB') +
-                      ', ' +
-                      moment(new Date(item?.createdAt)).format('HH:mm')}
+                    ', ' +
+                    moment(new Date(item?.createdAt)).format('HH:mm')}
                 </p>
               </div>
               <div className="body-item-actions">
@@ -332,38 +333,38 @@ const CardListBlogCreate = () => {
               </div>
             </div>
           ))}
-        {createdPost && createdPost.length === 0 ? (
-          <Box
-            sx={{
-              margin: '12px auto',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+        {/* {createdPost && createdPost.length === 0 ? ( */}
+        <Box
+          sx={{
+            margin: '12px auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            style={{
+              width: 130,
+              height: 40,
+              backgroundColor: `#0D99FF`,
+              marginBottom: '2rem',
+              color: '#FFFFFF',
+              fontWeight: 'bold',
+              display: isVisible ? 'block' : 'none',
             }}
+            loading={uploading}
+            onClick={handleChange}
           >
-            <Button
-              style={{
-                width: 130,
-                height: 40,
-                backgroundColor: `#0D99FF`,
-                marginBottom: '2rem',
-                color: '#FFFFFF',
-                fontWeight: 'bold',
-                display: isVisible ? 'block' : 'none',
-              }}
-              loading={uploading}
-              onClick={handleChange}
-            >
-              {languageRedux === 1
-                ? 'Xem thêm'
-                : languageRedux === 2
-                  ? 'See more'
-                  : '더보기'}
-            </Button>
-          </Box>
-        ) : (
-          <></>
-        )}
+            {languageRedux === 1
+              ? 'Xem thêm'
+              : languageRedux === 2
+                ? 'See more'
+                : '더보기'}
+          </Button>
+        </Box>
+        {/* // ) : (
+        //   <></>
+        // )} */}
         {createdPost && createdPost.length === 0 ? <NoDataComponent /> : <></>}
       </div>
     </>
