@@ -1345,7 +1345,7 @@ const Navbar: React.FC = () => {
                       : languageRedux === 1
                       ? 'Chưa cập nhật thông tin'
                       : languageRedux === 2
-                      ? 'Not updated information"'
+                      ? 'Not updated information'
                       : languageRedux === 3 && '정보 업데이트를 아직 하지 않음'}
                   </h2>
                   <span className="sub-login_text">
@@ -1360,7 +1360,7 @@ const Navbar: React.FC = () => {
                             : languageRedux === 1
                             ? 'Chưa cập nhật thông tin'
                             : languageRedux === 2
-                            ? 'Not updated information"'
+                            ? 'Not updated information'
                             : languageRedux === 3 &&
                               '정보 업데이트를 아직 하지 않음'}
                         </p>
@@ -1379,7 +1379,7 @@ const Navbar: React.FC = () => {
                           : languageRedux === 1
                           ? 'Chưa cập nhật thông tin'
                           : languageRedux === 2
-                          ? 'Not updated information"'
+                          ? 'Not updated information'
                           : languageRedux === 3 &&
                             '정보 업데이트를 아직 하지 않음'
                         : profileV3?.email
@@ -1387,7 +1387,7 @@ const Navbar: React.FC = () => {
                         : languageRedux === 1
                         ? 'Chưa cập nhật thông tin'
                         : languageRedux === 2
-                        ? 'Not updated information"'
+                        ? 'Not updated information'
                         : languageRedux === 3 &&
                           '정보 업데이트를 아직 하지 않음'}
                     </p>
@@ -1401,7 +1401,7 @@ const Navbar: React.FC = () => {
                           : languageRedux === 1
                           ? 'Chưa cập nhật thông tin'
                           : languageRedux === 2
-                          ? 'Not updated information"'
+                          ? 'Not updated information'
                           : languageRedux === 3 &&
                             '정보 업데이트를 아직 하지 않음'}
                       </p>
@@ -1415,7 +1415,7 @@ const Navbar: React.FC = () => {
                           : languageRedux === 1
                           ? 'Chưa cập nhật thông tin'
                           : languageRedux === 2
-                          ? 'Not updated information"'
+                          ? 'Not updated information'
                           : languageRedux === 3 &&
                             '정보 업데이트를 아직 하지 않음'}
                       </p>
@@ -1445,7 +1445,7 @@ const Navbar: React.FC = () => {
                           : languageRedux === 1
                           ? 'Chưa cập nhật thông tin'
                           : languageRedux === 2
-                          ? 'Not updated information"'
+                          ? 'Not updated information'
                           : languageRedux === 3 &&
                             '정보 업데이트를 아직 하지 않음'}
                       </p>
@@ -1464,7 +1464,7 @@ const Navbar: React.FC = () => {
                           : languageRedux === 1
                           ? 'Chưa cập nhật thông tin'
                           : languageRedux === 2
-                          ? 'Not updated information"'
+                          ? 'Not updated information'
                           : languageRedux === 3 &&
                             '정보 업데이트를 아직 하지 않음'}
                       </p>
@@ -1908,7 +1908,7 @@ const Navbar: React.FC = () => {
                         : languageRedux === 1
                         ? 'Chưa cập nhật thông tin'
                         : languageRedux === 2
-                        ? 'Not updated information"'
+                        ? 'Not updated information'
                         : languageRedux === 3 &&
                           '정보 업데이트를 아직 하지 않음'}
                     </p>
@@ -1927,7 +1927,7 @@ const Navbar: React.FC = () => {
                         : languageRedux === 1
                         ? 'Chưa cập nhật thông tin'
                         : languageRedux === 2
-                        ? 'Not updated information"'
+                        ? 'Not updated information'
                         : languageRedux === 3 &&
                           '정보 업데이트를 아직 하지 않음'}
                     </p>

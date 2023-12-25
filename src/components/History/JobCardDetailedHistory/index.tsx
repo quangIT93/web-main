@@ -66,6 +66,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
   const { language, languageRedux } = props;
 
   console.log('props', props);
+  console.log('props', props.item);
 
   return (
     <>
@@ -91,13 +92,13 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
         <div className="detail-history-top">
           <ul className="div-card-post-left">
             <ImageListItem
-              key={props.item?.image}
+              key={props?.item?.image}
               sx={{ flex: 1, display: 'flex' }}
             >
               <img
                 src={
-                  props.item.image
-                    ? `${props.item.image}?w=164&h=164&fit=crop&auto=format`
+                  props?.item?.image
+                    ? `${props?.item?.image}?w=164&h=164&fit=crop&auto=format`
                     : `${noImage}`
                 }
                 alt={props.item?.title}
