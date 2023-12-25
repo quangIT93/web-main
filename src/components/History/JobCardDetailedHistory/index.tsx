@@ -64,10 +64,6 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
 
   // const [error, setError] = React.useState(false);
   const { language, languageRedux } = props;
-
-  console.log('props', props);
-  console.log('props', props.item);
-
   return (
     <>
       <Card

@@ -284,9 +284,6 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     );
   };
 
-  console.log('dataCandidates', dataCandidates);
-  console.log('post', post);
-
   return (
     <div className="history-post">
       <JobCardDetailPostedHistory
