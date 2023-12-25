@@ -59,6 +59,17 @@
                 justify-content: space-between;
                 align-items: center;
                 gap: 8px;
+                &_name {
+                    font-size: 16px;
+                    margin: 0;
+                    white-space: nowrap;
+                    width: 100%;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    font-weight: 700;
+                    line-height: 20px;
+                    color: #575757;
+                }
             }
 
             &__name {
