@@ -157,8 +157,8 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
               languageRedux === 1
                 ? 'Đã hết công việc để hiển thị'
                 : languageRedux === 2
-                  ? 'Out of job to display'
-                  : '보여줄 일이 부족해',
+                ? 'Out of job to display'
+                : '보여줄 일이 부족해',
           });
           return;
         }
@@ -224,14 +224,14 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
             {languageRedux === 1
               ? 'Các công việc đã đăng tuyển'
               : languageRedux === 2
-                ? 'Posted jobs'
-                : '게시된 작업'}
+              ? 'Posted jobs'
+              : '게시된 작업'}
             <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
               {searchParams.get('c') === '2-0' && languageRedux === 1
                 ? ' > Tất cả'
                 : languageRedux === 2
-                  ? ' > All'
-                  : ' > 전부'}
+                ? ' > All'
+                : ' > 전부'}
             </span>
           </Typography>
         </div>
@@ -249,15 +249,15 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
             {languageRedux === 1
               ? 'Mới nhất'
               : languageRedux === 2
-                ? 'Newest'
-                : languageRedux === 3 && '최신'}
+              ? 'Newest'
+              : languageRedux === 3 && '최신'}
           </MenuItem>
           <MenuItem value="Cũ nhất">
             {languageRedux === 1
               ? 'Cũ nhất'
               : languageRedux === 2
-                ? 'Oldest'
-                : languageRedux === 3 && '가장 오래된'}
+              ? 'Oldest'
+              : languageRedux === 3 && '가장 오래된'}
           </MenuItem>
         </TextField>
       </Box>
@@ -272,7 +272,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={loading}
-          // onClick={handleClose}
+            // onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -314,8 +314,8 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                   {languageRedux === 1
                     ? 'Xem thêm'
                     : languageRedux === 2
-                      ? 'See more'
-                      : '더보기'}
+                    ? 'See more'
+                    : '더보기'}
                 </Button>
               </Box>
             </div>

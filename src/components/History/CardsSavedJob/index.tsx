@@ -128,7 +128,6 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   useEffect(() => {
     if (activeChild === '1-1') getViewPost();
   }, [languageRedux, activeChild]);
-  console.log("dataBookmarks", dataBookmarks);
 
   useEffect(() => {
     let isMounted = true;
@@ -190,8 +189,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                 languageRedux === 1
                   ? 'Đã hết công việc để hiển thị'
                   : languageRedux === 2
-                    ? 'Out of job to display'
-                    : '보여줄 일이 부족해',
+                  ? 'Out of job to display'
+                  : '보여줄 일이 부족해',
             });
             return;
           }
@@ -208,8 +207,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                 languageRedux === 1
                   ? 'Đã hết công việc để hiển thị'
                   : languageRedux === 2
-                    ? 'Out of job to display'
-                    : '보여줄 일이 부족해',
+                  ? 'Out of job to display'
+                  : '보여줄 일이 부족해',
             });
           } else if (result.data.length === 10) {
             setIsVisible(true);
@@ -241,8 +240,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                 languageRedux === 1
                   ? 'Đã hết công việc để hiển thị'
                   : languageRedux === 2
-                    ? 'Out of job to display'
-                    : '보여줄 일이 부족해',
+                  ? 'Out of job to display'
+                  : '보여줄 일이 부족해',
             });
             return;
           }
@@ -258,8 +257,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                 languageRedux === 1
                   ? 'Đã hết công việc để hiển thị'
                   : languageRedux === 2
-                    ? 'Out of job to display'
-                    : '보여줄 일이 부족해',
+                  ? 'Out of job to display'
+                  : '보여줄 일이 부족해',
             });
             return;
           } else if (result.data.length >= 10) {
@@ -326,20 +325,20 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           {languageRedux === 1
             ? 'Công việc của tôi'
             : languageRedux === 2
-              ? 'My jobs'
-              : languageRedux === 3 && '내 일'}
+            ? 'My jobs'
+            : languageRedux === 3 && '내 일'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '1-0'
               ? languageRedux === 1
                 ? ' > Việc làm đã lưu'
                 : languageRedux === 2
-                  ? ' > Saved jobs'
-                  : languageRedux === 3 && ' > 저장된 작업'
+                ? ' > Saved jobs'
+                : languageRedux === 3 && ' > 저장된 작업'
               : languageRedux === 1
-                ? ' > Việc làm đã xem'
-                : languageRedux === 2
-                  ? ' > Viewed job'
-                  : languageRedux === 3 && ' > 본 채용공고.'}
+              ? ' > Việc làm đã xem'
+              : languageRedux === 2
+              ? ' > Viewed job'
+              : languageRedux === 3 && ' > 본 채용공고.'}
           </span>
         </Typography>
         {activeChild === '1-0' ? (
@@ -357,15 +356,15 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
               {languageRedux === 1
                 ? 'Mới nhất'
                 : languageRedux === 2
-                  ? 'Newest'
-                  : languageRedux === 3 && '최신'}
+                ? 'Newest'
+                : languageRedux === 3 && '최신'}
             </MenuItem>
             <MenuItem value="Cũ nhất">
               {languageRedux === 1
                 ? 'Cũ nhất'
                 : languageRedux === 2
-                  ? 'Oldest'
-                  : languageRedux === 3 && '가장 오래된'}
+                ? 'Oldest'
+                : languageRedux === 3 && '가장 오래된'}
             </MenuItem>
           </TextField>
         ) : (
@@ -379,7 +378,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={loading}
-      // onClick={handleClose}
+        // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -388,7 +387,6 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
             {dataBookmarks?.map((dataBookmark: any, i: number) => {
               // <Skeleton loading={loading} active>
-              console.log("dataBookmark", i, dataBookmark)
               return (
                 <JobCardSaveHistory
                   item={dataBookmark}
@@ -398,7 +396,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                   language={language}
                   languageRedux={languageRedux}
                 />
-              )
+              );
               //</Skeleton>
             })}
           </Grid>
@@ -426,8 +424,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
               {languageRedux === 1
                 ? 'Xem thêm'
                 : languageRedux === 2
-                  ? 'See more'
-                  : '더보기'}
+                ? 'See more'
+                : '더보기'}
             </Button>
           </Box>
         </div>
@@ -470,8 +468,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
               {languageRedux === 1
                 ? 'Xem thêm'
                 : languageRedux === 2
-                  ? 'See more'
-                  : '더보기'}
+                ? 'See more'
+                : '더보기'}
             </Button>
           </Box>
         </div>
