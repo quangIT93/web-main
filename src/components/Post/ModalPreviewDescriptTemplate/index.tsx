@@ -1,20 +1,64 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Skeleton } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import apiDescriptTemplate from 'api/apiDescriptTemplate';
 
 // import './style.scss';
 
 interface IModalShare {
     openModalPreviewDescriptTemplate: boolean;
     setOpenModalPreviewDescriptTemplate: React.Dispatch<React.SetStateAction<boolean>>;
+    templateId: number;
+    //1: post, 2: company
+    typeModal: number;
 }
 
 const ModalPreviewDescriptTemplate: React.FC<IModalShare> = (props) => {
     const languageRedux = useSelector(
         (state: RootState) => state.changeLaguage.language,
     );
-    const { openModalPreviewDescriptTemplate, setOpenModalPreviewDescriptTemplate } = props;
+    const {
+        openModalPreviewDescriptTemplate,
+        setOpenModalPreviewDescriptTemplate,
+        templateId,
+        typeModal
+    } = props;
+    const [templateItem, setTemplateItem] = useState<any>({
+        title: '',
+        content: ''
+    })
+    const [isLoading, setIsLoading] = React.useState(false);
+    const getDescriptTemplateById = async () => {
+        try {
+            setIsLoading(true);
+            let result;
+            typeModal === 1 ?
+                result = await apiDescriptTemplate.getJobDescriptTemplateById(
+                    templateId,
+                    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+                )
+                :
+                result = await apiDescriptTemplate.getCompanyDescriptTemplateById(
+                    templateId,
+                    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+                )
+            if (result) {
+                const item = {
+                    title: result.data?.title,
+                    content: result.data?.content,
+                }
+                setTemplateItem(item);
+                setIsLoading(false);
+            }
+        } catch (error) {
+
+        }
+    }
+
+    useEffect(() => {
+        getDescriptTemplateById()
+    }, [templateId])
 
     const handleCancel = () => {
         setOpenModalPreviewDescriptTemplate(false);
@@ -26,22 +70,20 @@ const ModalPreviewDescriptTemplate: React.FC<IModalShare> = (props) => {
             zIndex={2000}
             centered
             title={
-                <h3
-                    style={{
-                        fontFamily: 'Roboto',
-                        fontSize: '24px',
-                        // fontWeight: '700',
-                        lineHeight: '24px',
-                        letterSpacing: '0em',
-                        textAlign: 'center',
-                    }}
-                >
-                    {languageRedux === 1
-                        ? 'Vị trí nhân viên kinh doanh'
-                        : languageRedux === 2
-                            ? 'Unable to save CV'
-                            : languageRedux === 3 && 'CV를 저장할 수 없습니다.'}
-                </h3>
+                <Skeleton loading={isLoading} active >
+                    <h3
+                        style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '24px',
+                            // fontWeight: '700',
+                            lineHeight: '24px',
+                            letterSpacing: '0em',
+                            textAlign: 'center',
+                        }}
+                    >
+                        {templateItem.title}
+                    </h3>
+                </Skeleton>
             }
             footer={null}
             open={openModalPreviewDescriptTemplate}
@@ -56,15 +98,15 @@ const ModalPreviewDescriptTemplate: React.FC<IModalShare> = (props) => {
                     lineHeight: '24px',
                     letterSpacing: '0.5px',
                     textAlign: 'left',
-                    whiteSpace: 'pre-wrap'
+                    whiteSpace: 'pre-wrap',
+                    maxHeight: '400px',
+                    overflowY: 'scroll',
+                    paddingRight: '10px',
                 }}
             >
-                {languageRedux === 1
-                    ? `Thúc đẩy hoạt động trao đổi hàng hóa giữa công ty và khách hàng-\nTư vấn, truyền đạt thông tin sản phẩm/ dịch vụ tới khách hàng\nPhát triển mạng lưới khách hàng tiềm năng sử dụng sản phẩm/ dịch vụ\nXây dựng niềm tin, uy tín với khách hàng\nSoạn thảo hợp đồng, thương thảo và ký kết với khách hàng\nGiải quyết vấn đề khiếu nại, phát sinh từ khách hàng\nDuy trì và chăm sóc khách hàng\n\nYêu cầu dành cho vị trí:\nTốt nghiệp đại học, cao đẳng chuyên ngành Quản trị Kinh doanh, Marketing, Kinh tế hoặc có bằng cấp tương đương\nCó X năm kinh nghiệm tại vị trí tương đương\nCó kỹ năng giao tiếp. Có ngoại ngữ là lợi thế\nThành thạo vi tính văn phòng, các phần mềm CRM là lợi thế\nNhiệt tình, năng động, kỹ năng phân tích và xử lý tình huống tốt\nCó phương tiện đi lại cá nhân\nQuyền lợi của vị trí: dựa theo chính sách phúc lợi của công ty`
-                    : languageRedux === 2
-                        ? 'You can only save a maximum of 10 CVs. Please delete unused CV at the CV Management page'
-                        : languageRedux === 3 &&
-                        'CV는 최대 10개까지만 저장할 수 있습니다. CV 관리 페이지에서 사용하지 않은 CV를 삭제해주세요.'}
+                <Skeleton loading={isLoading} active >
+                    {templateItem.content}
+                </Skeleton>
             </p>
             {/* <div className="buttons-over-10-cv-modal">
         <Button

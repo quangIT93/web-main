@@ -1,0 +1,74 @@
+@import '../../../../scss/mixins';
+
+.filter-template {
+    .ant-cascader-dropdown {
+        .ant-cascader-checkbox {
+            display: block !important;
+        }
+    }
+}
+
+.filter-cate-template {
+    width: 100%;
+
+    .ant-cascader-menus {
+
+        // @media screen and (max-width: 375px) {
+        //     flex-direction: column;
+        //     gap: 4px;
+        // }
+
+        .ant-cascader-menu {
+            height: 200px !important;
+            max-width: 200px;
+
+            .ant-cascader-menu-item-active {
+                color: #0d99ff;
+            }
+
+            .ant-cascader-menu-item {
+                .ant-cascader-menu-item-content {
+                    white-space: nowrap;
+                    word-break: break-all;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            @include breakpoint(mobile) {
+                height: 150px !important;
+                width: 120px;
+            }
+        }
+    }
+}
+
+.wrap-filter-cate-template {
+    width: 100%;
+    position: relative;
+
+    .filter-cate-template-icon {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        display: grid;
+        place-items: center;
+        z-index: 1;
+    }
+
+    .ant-select-selector {
+        padding: 1px 30px !important;
+
+        .ant-select-selection-placeholder {
+            padding: 0 !important;
+        }
+    }
+
+    .ant-select-clear {
+        position: absolute;
+        right: 30px;
+        width: 20px !important;
+        height: 20px !important;
+    }
+}

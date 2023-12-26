@@ -14,12 +14,15 @@ import historyRecruiter from 'api/historyRecruiter';
 import postApi from 'api/postApi';
 
 import './style.scss';
-import { Button, Skeleton, Spin } from 'antd';
+import { Button, Empty, Input, Skeleton, Spin } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadingOutlined } from '@ant-design/icons';
 import { CircularProgress } from '@mui/material';
+import apiDescriptTemplate from 'api/apiDescriptTemplate';
+import FilterCategoryTemplate from './FilterCategoryTemplate';
+import NoDataComponent from 'utils/NoDataPage';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -53,6 +56,7 @@ interface IModalFillDataPost {
     //1: post, 2: company
     typeModal: number;
     oldDescription: any;
+    setTemplateId: React.Dispatch<React.SetStateAction<number>>;
 }
 const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
     const {
@@ -62,37 +66,52 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
         setDescription,
         typeModal,
         oldDescription,
+        setTemplateId
     } = props;
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-    const [dataPost, setDataPost] = React.useState<any>([]);
+    const [descriptTemplate, setDescriptTemplate] = React.useState<any>([]);
     const [hasMore, setHasMore] = React.useState(true);
     const [page, setPage] = React.useState<any>('0');
     const [isLoading, setIsLoading] = React.useState(false);
+    const [categories, setCategories] = React.useState<any>([]);
+    const [reset, setReset] = React.useState<boolean>(false);
+    const [keyUp, setKeyUp] = React.useState<boolean>(false);
+    const [title, setTitle] = React.useState<string>('');
     const handleClose = () => {
         setOpenModalFillDescriptTemplate(false);
     };
 
-    const allPost = async () => {
+    const allDescriptTemplate = async () => {
         try {
             setIsLoading(true)
-            // const result = await applitedPostedApi.getAllApplitedPostedApi(0);
-            const result = await historyRecruiter.getAllPosted(
-                0,
-                5,
-                null,
-                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-            );
+            let result;
+            typeModal === 1 ?
+                result = await apiDescriptTemplate.getJobDescriptTemplate(
+                    10,
+                    0,
+                    categories[1] !== null ? categories[1] : null,
+                    title !== '' ? title : null,
+                    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+                )
+                :
+                result = await apiDescriptTemplate.getCompanyDescriptTemplate(
+                    10,
+                    0,
+                    categories[0] !== null ? categories[0] : null,
+                    title !== '' ? title : null,
+                    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+                )
             setHasMore(true);
-            if (result.data.length === 6) {
-                setDataPost(result.data);
+            if (result.data.data.length === 10) {
+                setDescriptTemplate(result.data.data);
                 setIsLoading(false)
-            } else if (result.data.length < 6) {
-                setDataPost(result.data);
+            } else if (result.data.data.length < 10) {
+                setDescriptTemplate(result.data.data);
                 setIsLoading(false)
                 setHasMore(false);
             } else {
-                setDataPost(result.data);
+                setDescriptTemplate(result.data.data);
                 setIsLoading(false)
                 setHasMore(false);
                 setPage('0');
@@ -102,31 +121,41 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
             console.log('error', error);
         }
     };
+    console.log('categories', categories[1]);
 
     const fetchMoreData = async () => {
         setHasMore(true);
         try {
             // const nextPage = (parseInt(page) + 1).toString();
-            const nextPage = dataPost[dataPost.length - 1].id
+            const nextPage = descriptTemplate[descriptTemplate.length - 1].id
             console.log('nextPage', nextPage);
-
-            const result = await historyRecruiter.getAllPosted(
-                nextPage,
-                5,
-                null,
-                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-            );
-
-            if (result && result.data.length >= 6) {
+            let result: any;
+            typeModal === 1 ?
+                result = await apiDescriptTemplate.getJobDescriptTemplate(
+                    10,
+                    nextPage,
+                    categories[1] !== null ? categories[1] : null,
+                    title !== '' ? title : null,
+                    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+                )
+                :
+                result = await apiDescriptTemplate.getCompanyDescriptTemplate(
+                    10,
+                    nextPage,
+                    categories[0] !== null ? categories[0] : null,
+                    title !== '' ? title : null,
+                    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+                )
+            if (result && result.data.data.length >= 10) {
                 setPage(nextPage);
-                setDataPost((prev: any) => [
+                setDescriptTemplate((prev: any) => [
                     ...prev,
-                    ...result?.data,
+                    ...result?.data.data,
                 ]);
-            } else if (result && result.data.length < 6) {
-                setDataPost((prev: any) => [
+            } else if (result && result.data.data.length < 10) {
+                setDescriptTemplate((prev: any) => [
                     ...prev,
-                    ...result?.data,
+                    ...result?.data.data,
                 ]);
                 setHasMore(false);
             } else {
@@ -140,30 +169,21 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
 
     React.useEffect(() => {
         openModalFillDescriptTemplate &&
-            allPost();
+            allDescriptTemplate();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [languageRedux, openModalFillDescriptTemplate]);
+    }, [languageRedux, openModalFillDescriptTemplate, categories, keyUp]);
 
     const [selectedValue, setSelectedValue] = React.useState<number>(0);
 
     const handleRadioChange = async (e: any, itemPost: any) => {
         setSelectedValue(parseInt(e?.target?.value));
 
-        try {
-            const result = await postApi.getById(
-                itemPost.post_id,
-                languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-            );
-            if (result) {
-                // console.log('reuslt', result.data.description);
-                typeModal === 1 ?
-                    setDescription(result.data.description) :
-                    setDescription((preValue: any) => ({
-                        ...preValue,
-                        description: result.data.description,
-                    }));
-            }
-        } catch (error) { }
+        typeModal === 1 ?
+            setDescription(itemPost.content) :
+            setDescription((preValue: any) => ({
+                ...preValue,
+                description: itemPost.content,
+            }));
     };
 
     const handleSubmitValueFill = () => {
@@ -181,6 +201,23 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
             }));
         setSelectedValue(-1)
     };
+
+    const debounce = (func: any, timeout = 1000) => {
+        // Declare a variable called 'timer' to store the timer ID
+        let timer: any;
+        // Return an anonymous function that takes in any number of arguments
+        return (...args: any) => {
+            // Clear the previous timer to prevent the execution of 'mainFunction'
+            clearTimeout(timer);
+            // Set a new timer that will execute 'mainFunction' after the specified delay
+            timer = setTimeout(() => { func.apply(this, args); }, timeout);
+        };
+    }
+    const saveInput = () => {
+        console.log('Saving data');
+        setKeyUp(!keyUp);
+    }
+    const processChange = debounce(() => saveInput());
 
     return (
         <div>
@@ -237,30 +274,52 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                                 : languageRedux === 3 &&
                                 'HiJob이 자동으로 정보를 검색하도록 하려는 채용 게시물'}
                     </p>
+                    <div className="wrap-cate-title-filter-template">
+                        <FilterCategoryTemplate
+                            setCategories={setCategories}
+                            setReset={setReset}
+                            reset={reset}
+                            categories={categories}
+                            typeModal={typeModal}
+                        />
+                        <Input
+                            value={title}
+                            onChange={(e) => {
+                                setTitle(e.target.value);
+                            }}
+                            onKeyUp={processChange}
+                            placeholder={languageRedux === 1 ?
+                                "Nhập tiêu đề mẫu mô tả bạn muốn tìm" :
+                                languageRedux === 2 ?
+                                    "Enter template title that you want to looking for" :
+                                    "원하시는 설명 템플릿 제목을 입력하세요"
+                            }
+                        />
+                    </div>
                     <div className="template_list" id="template_list_scrollable">
                         {
-                            dataPost.length > 0 ?
+                            descriptTemplate.length > 0 ?
                                 (
                                     <InfiniteScroll
-                                        dataLength={dataPost?.length}
+                                        dataLength={descriptTemplate?.length}
                                         next={fetchMoreData}
                                         hasMore={hasMore}
                                         loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
                                         style={{ overflow: 'unset' }}
                                         scrollableTarget="template_list_scrollable"
                                     >
-                                        {
-                                            dataPost.map((itemPost: any, index: number) => (
+                                        {descriptTemplate &&
+                                            descriptTemplate.map((itemPost: any, index: number) => (
                                                 <Skeleton loading={isLoading} active key={index}>
                                                     <div key={index} className="template_item">
                                                         <h3>
-                                                            {index + 1}. {itemPost.title}
+                                                            {index + 1}. {itemPost?.title}
                                                         </h3>
                                                         <ul className="template_description">
                                                             <li>
                                                                 <p>
                                                                     {
-                                                                        `Thúc đẩy hoạt động trao đổi hàng hóa giữa công ty và khách hàng-\nTư vấn, truyền đạt thông tin sản phẩm/ dịch vụ tới khách hàng\nPhát triển mạng lưới khách hàng tiềm năng sử dụng sản phẩm/ dịch vụ\nXây dựng niềm tin, uy tín với khách hàng\nSoạn thảo hợp đồng, thương thảo và ký kết với khách hàng\nGiải quyết vấn đề khiếu nại, phát sinh từ khách hàng\nDuy trì và chăm sóc khách hàng\n\nYêu cầu dành cho vị trí:\nTốt nghiệp đại học, cao đẳng chuyên ngành Quản trị Kinh doanh, Marketing, Kinh tế hoặc có bằng cấp tương đương\nCó X năm kinh nghiệm tại vị trí tương đương\nCó kỹ năng giao tiếp. Có ngoại ngữ là lợi thế\nThành thạo vi tính văn phòng, các phần mềm CRM là lợi thế\nNhiệt tình, năng động, kỹ năng phân tích và xử lý tình huống tốt\nCó phương tiện đi lại cá nhân\nQuyền lợi của vị trí: dựa theo chính sách phúc lợi của công ty`
+                                                                        itemPost?.content
                                                                     }
                                                                 </p>
                                                             </li>
@@ -271,6 +330,7 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                                                                 }}
                                                                     onClick={() => {
                                                                         setOpenModalPreviewDescriptTemplate(true);
+                                                                        setTemplateId(itemPost?.id)
                                                                     }}
                                                                 >
                                                                     {
@@ -290,8 +350,8 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                                                             type="radio"
                                                             // id={`option-${option.id}`}
                                                             name="options"
-                                                            value={itemPost?.post_id}
-                                                            checked={selectedValue === itemPost?.post_id ? true : false}
+                                                            value={itemPost?.id}
+                                                            checked={selectedValue === itemPost?.id ? true : false}
                                                             onChange={(e) => handleRadioChange(e, itemPost)}
                                                             defaultValue={undefined}
                                                         />
@@ -300,7 +360,17 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                                             ))
                                         }
                                     </InfiniteScroll>
-                                ) : <></>
+                                ) :
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    description={
+                                        languageRedux === 1
+                                            ? 'Không có thông tin hiển thị!'
+                                            : languageRedux === 2
+                                                ? 'No display information!'
+                                                : languageRedux === 3 && '표시되는 정보가 없습니다!'
+                                    }
+                                />
                         }
 
                     </div>

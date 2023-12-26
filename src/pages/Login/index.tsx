@@ -32,6 +32,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 // import required modules
 import { Navigation, Mousewheel, Pagination, Autoplay, A11y } from 'swiper';
+import { Mentions } from 'antd';
+import { MentionsOptionProps } from 'antd/es/mentions';
 declare global {
   interface Window { }
 }
@@ -201,6 +203,18 @@ const Login = () => {
     getYouTubeShorts();
     isShort('toi4pPmp8nc');
   }, []);
+  const [mention, setMention] = useState<any>();
+
+  const onChange = (value: string) => {
+    console.log('Change:', value);
+    setMention(value);
+  };
+
+  const onSelect = (option: MentionsOptionProps) => {
+    console.log('select', option);
+    setMention(option.value);
+  };
+
   return (
     <>
       {/* <canvas
@@ -270,6 +284,26 @@ const Login = () => {
           );
         })}
       </Swiper>
+      <Mentions
+        style={{ width: '100%' }}
+        onChange={onChange}
+        onSelect={onSelect}
+        value={mention}
+        options={[
+          {
+            value: 'afc163',
+            label: 'afc163',
+          },
+          {
+            value: 'zombieJ',
+            label: 'zombieJ',
+          },
+          {
+            value: 'yesmeck',
+            label: 'yesmeck',
+          },
+        ]}
+      />
     </>
   );
 };

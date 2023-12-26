@@ -35,6 +35,7 @@ const Description: React.FC<IDescription> = (props) => {
   };
   const [openModalFillDescriptTemplate, setOpenModalFillDescriptTemplate] = useState<boolean>(false);
   const [openModalPreviewDescriptTemplate, setOpenModalPreviewDescriptTemplate] = useState<boolean>(false);
+  const [templateId, setTemplateId] = useState<number>(1);
   // const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return (
     <Box sx={{ marginTop: '24px' }} className="description-post modal-person">
@@ -53,11 +54,11 @@ const Description: React.FC<IDescription> = (props) => {
                 : '업무 설명서'
           } <span style={{ color: 'red' }}>*</span>
         </Typography>
-        {/* <div className='description_template' onClick={
+        <div className='description_template' onClick={
           () => setOpenModalFillDescriptTemplate(true)
         }>
           <FillDataPost />
-        </div> */}
+        </div>
       </div>
       <TextField
         // className={classes.textarea}
@@ -105,10 +106,13 @@ const Description: React.FC<IDescription> = (props) => {
         setDescription={setDescription}
         oldDescription={oldDescription}
         typeModal={1}
+        setTemplateId={setTemplateId}
       />
       <ModalPreviewDescriptTemplate
         openModalPreviewDescriptTemplate={openModalPreviewDescriptTemplate}
         setOpenModalPreviewDescriptTemplate={setOpenModalPreviewDescriptTemplate}
+        typeModal={1}
+        templateId={templateId}
       />
     </Box>
   );
