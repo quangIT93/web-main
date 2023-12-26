@@ -18,11 +18,7 @@
         border-radius: 8px;
         border: 1px solid var(--x-4, #DCDCDC);
         overflow-y: scroll;
-        height: 330px;
-
-        @include breakpoint(mobile) {
-            height: 160px;
-        }
+        height: 160px;
 
         .template_item {
             position: relative;

@@ -76,6 +76,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
     }));
     setIsValid(false);
   };
+
   return (
     <div className="edit-des-company-container modal-person editCompany">
       <div className="edit-des-company">
@@ -147,7 +148,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
         setOpenModalFillDescriptTemplate={setOpenModalFillDescriptTemplate}
         setOpenModalPreviewDescriptTemplate={setOpenModalPreviewDescriptTemplate}
         setDescription={setDataCompany}
-        oldDescription={profileCompanyV3.description}
+        oldDescription={profileCompanyV3?.description ? profileCompanyV3.description : ''}
         typeModal={2}
         setTemplateId={setTemplateId}
       />
