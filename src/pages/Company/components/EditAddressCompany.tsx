@@ -460,7 +460,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
                     ? 'Please enter address'
                     : languageRedux === 3 && '주소를 입력해주세요'}
               </span>
-            ) : dataCompany && dataCompany?.address?.length < 10 ? (
+            ) : dataCompany && dataCompany?.address?.length <= 10 ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Độ dài địa chỉ phải nhiều hơn 10 ký tự'

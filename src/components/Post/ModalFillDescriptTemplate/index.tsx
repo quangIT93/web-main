@@ -205,6 +205,8 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
     const debounce = (func: any, timeout = 1000) => {
         // Declare a variable called 'timer' to store the timer ID
         let timer: any;
+        console.log("timer", timer);
+
         // Return an anonymous function that takes in any number of arguments
         return (...args: any) => {
             // Clear the previous timer to prevent the execution of 'mainFunction'
@@ -214,7 +216,7 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
         };
     }
     const saveInput = () => {
-        console.log('Saving data');
+        // console.log('Saving data');
         setKeyUp(!keyUp);
     }
     const processChange = debounce(() => saveInput());

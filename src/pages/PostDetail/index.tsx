@@ -353,7 +353,7 @@ const Detail = () => {
                 ? 'Edit job posting'
                 : '채용 게시물 수정',
           );
-          setBackgroundButton('gray');
+          setBackgroundButton('#0D99FF');
           setCheckPostUser(true);
         } else if (result.data.status === 3) {
           setBackgroundButton('gray');
@@ -887,7 +887,14 @@ const Detail = () => {
   };
 
   const updateDefaultCountAppliedJobs = false;
-
+  const isValidHttpUrl = (url: string) => {
+    try {
+      const newUrl = new URL(url);
+      return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
+    } catch (err) {
+      return false;
+    }
+  }
   const handleApply = async () => {
     if (
       !profileV3.name ||
@@ -1500,14 +1507,17 @@ const Detail = () => {
                     {/* <h5> */}
                     <a
                       href={
-                        post?.data?.postCompanyInformation
-                          ? post?.data?.postCompanyInformation?.website
-                          : '#'
+                        isValidHttpUrl(post?.data?.postCompanyInformation?.website) ?
+                          post?.data?.postCompanyInformation?.website
+                          : `https://${post?.data?.postCompanyInformation?.website}`
+                        // post?.data?.postCompanyInformation
+                        //   ? post?.data?.postCompanyInformation?.website
+                        //   : '#'
                       }
                       style={{
                         color: `${post?.data?.postCompanyInformation?.website
-                            ? 'rgb(13, 153, 255)'
-                            : ''
+                          ? 'rgb(13, 153, 255)'
+                          : ''
                           }`,
                       }}
                       target="_blank"
@@ -2112,8 +2122,8 @@ const Detail = () => {
                       <AddressDetailPostIcon width={16} height={16} />
                       <span style={{ marginLeft: '8px' }}>
                         {`${post?.data.address}, ${post?.data?.location
-                            ? post?.data?.location?.fullName
-                            : ''
+                          ? post?.data?.location?.fullName
+                          : ''
                           }, ${post?.data?.location?.district
                             ? post?.data?.location?.district?.fullName
                             : ''

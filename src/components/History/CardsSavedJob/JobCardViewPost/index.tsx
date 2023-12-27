@@ -28,6 +28,8 @@ import bookMarkApi from 'api/bookMarkApi';
 import { PropsTypePostNew } from '../JobCardSaveHstory/interfacePostNew';
 import noImage from '../../../../img/noImage.png';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 // import { historyVi } from 'validations/lang/vi/history';
 // import { historyEn } from 'validations/lang/en/history';
 // import bookMarkApi from 'api/bookMarkApi';
@@ -66,7 +68,7 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
   const handleImageError = () => {
     setError(true);
   };
-
+  const dispatch = useDispatch();
   const handleBookmark = async (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
@@ -76,11 +78,13 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
       if (result) {
         setCheckBookMark(!checkBookMark);
         props.item.bookmarked = false;
+        dispatch<any>(setAlertCancleSave(true));
       }
     } else {
       const result = await bookMarkApi.createBookMark(props.item?.id);
       if (result) {
         setCheckBookMark(!checkBookMark);
+        dispatch<any>(setAlertSave(true));
         props.item.bookmarked = true;
       }
     }

@@ -92,7 +92,9 @@ const DetailCompany = () => {
         setPostOfCompany(result.data.posts);
         setPage('0');
       }
-    } catch (error) { }
+    } catch (error) {
+      window.open('/', '_parent');
+    }
   };
 
   const handleFollowCompany = async () => {
