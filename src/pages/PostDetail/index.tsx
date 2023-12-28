@@ -345,7 +345,7 @@ const Detail = () => {
         // setIsLoading(false);
         document.title = result.data.title;
 
-        if (result.data.accountId === accountId) {
+        if (result.data.accountId === accountId && result.data.status !== 3) {
           setTextButton(
             languageRedux === 1
               ? 'Chỉnh sửa bài tuyển dụng'
