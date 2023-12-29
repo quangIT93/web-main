@@ -2,7 +2,7 @@
 
 .applied-posted-jobs-container {
     // margin-top: 15rem !important;
-    margin-top: 141px !important;
+    // margin-top: 141px !important;
     margin-bottom: 24px !important;
 
     .title_home {
@@ -623,6 +623,7 @@
                                 width: 80px !important;
                                 height: 80px !important;
                                 min-width: 80px;
+
                                 @include breakpoint(mobile) {
                                     img {
                                         width: 80px !important;

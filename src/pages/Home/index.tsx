@@ -50,6 +50,7 @@ import { setIsNew } from 'store/reducer/isNewReducer';
 import Advertise from '#components/Home/Advertise';
 import { Helmet } from 'react-helmet';
 import NewestCompany from '#components/Home/NewsetCompany';
+import JobStory from '#components/Home/JobStory';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
@@ -258,6 +259,7 @@ const Home: React.FC = () => {
       <div className="home__main">
         {/* <CategoryCarousel />
         <Breadcrumbs /> */}
+        <JobStory />
         <AppliedPostedJob />
         {
           !localStorage.getItem('accessToken') ?
