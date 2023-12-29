@@ -69,7 +69,7 @@ import { PostNewest } from '#components/Home/NewJobs';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { Avatar } from 'antd';
-import languageApi from 'api/languageApi';
+// import languageApi from 'api/languageApi';
 import IconButton from '@mui/material/IconButton';
 import { CloseIcon } from '#components/Icons';
 // import icon
@@ -102,10 +102,10 @@ import ShowCopy from '#components/ShowCopy';
 //@ts-ignore
 import AnotherPost from './components/AnotherPost';
 // import { height, width } from '@mui/system';
-import { postDetail } from 'validations/lang/vi/postDetail';
-import { postDetailEn } from 'validations/lang/en/postDetail';
+// import { postDetail } from 'validations/lang/vi/postDetail';
+// import { postDetailEn } from 'validations/lang/en/postDetail';
 
-import { setCookie } from 'cookies';
+// import { setCookie } from 'cookies';
 import { Helmet } from 'react-helmet';
 import apiCompany from 'api/apiCompany';
 // import { Language } from '#components/Navbar/Css';
@@ -188,7 +188,7 @@ const Detail = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
+  // const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -236,7 +236,7 @@ const Detail = () => {
         languageRedux === 1
           ? 'Sao chép liên kết'
           : languageRedux === 2
-          ? 'Copy Link'
+          ? 'Copy link'
           : '링크를 복사',
       icon: <CopyIcon />,
       source: '',
@@ -755,6 +755,8 @@ const Detail = () => {
       nameShare === 'Copy link' ||
       nameShare === '링크를 복사'
     ) {
+      console.log('post?.data.shareLink', post?.data.shareLink);
+
       copy(
         post?.data?.companyResourceData?.name === 'HIJOB'
           ? post?.data.shareLink
@@ -1504,8 +1506,8 @@ const Detail = () => {
                   </div>
                   <div className="div-detail-titleItem">
                     {/* <h5> */}
-                    <a
-                      href={
+                    <Link
+                      to={
                         post?.data?.postCompanyInformation
                           ? post?.data?.postCompanyInformation?.website
                           : '#'
@@ -1527,7 +1529,7 @@ const Detail = () => {
                         : languageRedux === 2
                         ? 'Not updated yet'
                         : languageRedux === 3 && '업데이트하지 않음'}
-                    </a>
+                    </Link>
                     {/* </h5> */}
                   </div>
                 </div>

@@ -155,7 +155,7 @@ const CandidateNewDetail = () => {
       return;
     }
 
-    if (profileV3.companyInfo === null) {
+    if (profileV3.companyInfo === null && profileV3.typeRoleData === 1) {
       setOpenModalNoteCreateCompany(true);
       return;
     }

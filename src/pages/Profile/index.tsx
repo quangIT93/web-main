@@ -3,43 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 // @ts-ignore
-import {
-  CameraIcon,
-  PencilIcon,
-  // LoginArrowIcon,
-  // SectionLanguageIcon,
-  // SectionHobbiesIcon,
-  // SectionReferencesIcon,
-  // SectionInternshipsIcon,
-  // SectionActivitiesIcon,
-  // SectionCoursesIcon,
-  // SectionAwardsIcon,
-  // SectionDeleteIcon,
-  // SectionEditIcon,
-  // DownloadCVIcon,
-  // TickIcon,
-} from '#components/Icons';
+import { CameraIcon, PencilIcon } from '#components/Icons';
 
 import './style.scss';
 // import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
-import {
-  Button,
-  Space,
-  Skeleton,
-  Upload,
-  message,
-  Popconfirm,
-  Switch,
-  Row,
-} from 'antd';
-import {
-  PlusCircleOutlined,
-  UploadOutlined,
-  // InstagramFilled,
-} from '@ant-design/icons';
-import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import { Space, Skeleton, Row } from 'antd';
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
@@ -70,8 +40,8 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import profileApi from 'api/profileApi';
 // import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../store/index';
+// import { bindActionCreators } from 'redux';
+// import { actionCreators } from '../../store/index';
 
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 import {
@@ -89,12 +59,9 @@ import CompanyRole from './components/CompanyRole';
 import { setProfileMeCompanyV3 } from 'store/reducer/profileMeCompanyReducerV3';
 import { setProfileMeInformationMoreV3 } from 'store/reducer/profileMeInformationMoreReducerV3';
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
-import Overview from './components/Overview';
+// import Overview from './components/Overview';
 import styles from './style.module.scss';
-import {
-  CustomSkeleton,
-  ImageChangeSkeleton,
-} from '#components/CustomSkeleton';
+import { CustomSkeleton } from '#components/CustomSkeleton';
 
 import { DataLog, DataLogRecuiter } from 'pages/LogChart/typeChart';
 import ItemsChart from '#components/LogChart/ItemsChart';
@@ -107,28 +74,28 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-interface ItemAppy {
-  id?: number | null;
-  company_name?: string;
-  major?: string;
-  start_date?: number;
-  end_date?: number;
-  extra_information?: string;
-  title?: string;
-}
+// interface ItemAppy {
+//   id?: number | null;
+//   company_name?: string;
+//   major?: string;
+//   start_date?: number;
+//   end_date?: number;
+//   extra_information?: string;
+//   title?: string;
+// }
 
-interface ICategories {
-  child_category_id: number;
-  parent_category_id: number;
-  parent_category: string;
-  child_category: string;
-}
+// interface ICategories {
+//   child_category_id: number;
+//   parent_category_id: number;
+//   parent_category: string;
+//   child_category: string;
+// }
 const Profile: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
   const dispatch = useDispatch();
-  const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
+  // const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
   // const [dataProfile, setDataProfile] = useState(null)
 
   // const { profile, error }: any = useSelector(
@@ -164,34 +131,9 @@ const Profile: React.FC = () => {
 
   // const [imageInfo, setImageInfo] = useState<string>('');
   // const [avatarUrl, setAvatarUrl] = useState<string>('');
-  const [companyName, setCompanyName] = useState<string>('');
+
   const [loading, setLoading] = useState<boolean>(false);
-  const [uploading, setUploading] = useState(false);
-  const [open, setOpen] = useState(false);
-  // const [checkRemove, setCheckRemove] = useState(2);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  // const [language, setLanguage] = useState<any>();
-  const [cvHijob, setCvHijob] = useState<any[]>([1, 2]);
-  const [listCv, setListCv] = useState<any[]>([
-    {
-      id: 4,
-      name: 'cv4',
-    },
-    {
-      id: 3,
-      name: 'cv3',
-    },
-    {
-      id: 2,
-      name: 'cv2',
-    },
-    {
-      id: 1,
-      name: 'cv1',
-    },
-  ]);
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
-  const [cvId, setCvId] = useState<any>();
+
   const [dataLog, setDataLog] = useState<DataLog | undefined>(undefined);
   const [dataLogRecruiter, setDataLogRecruiter] = useState<
     DataLogRecuiter | undefined
@@ -298,100 +240,6 @@ const Profile: React.FC = () => {
     }
   };
 
-  const getCompanyInforByAccount = async () => {
-    try {
-      // const result = await apiCompany.getCampanyByAccountApi(
-      //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-      // );
-
-      if (profileComanyV3?.companyInfomation?.id !== null) {
-        setCompanyName(profileComanyV3?.companyInfomation?.name);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getCompanyInforByAccount();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // confirm delete cv
-  const confirm = async () => {
-    try {
-      const result = await profileApi.deleteCV();
-      if (result) {
-        const result = await profileApi.getProfile(
-          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-        );
-        if (result) {
-          setProfileUser(result.data);
-        }
-        setOpen(false);
-        setFileList([]);
-        message.success(
-          languageRedux === 1
-            ? 'Xóa CV thành công'
-            : languageRedux === 2
-            ? 'Successfully deleted CV'
-            : '이력서를 삭제했습니다.',
-        );
-      }
-    } catch (error) {}
-  };
-
-  // cancel delete cv
-  const cancel = () => {
-    setOpen(false);
-    message.error(
-      languageRedux === 1 ? 'Huỷ' : languageRedux === 2 ? 'Cancel' : '취소',
-    );
-  };
-
-  // handle upload cv
-  const handleUpload = async () => {
-    const formData = new FormData();
-
-    formData.append('pdf', fileList[0] as RcFile);
-    setUploading(true);
-    var mess = '';
-    var result;
-    try {
-      if (profileMorev3.cvUrlPath !== null) {
-        result = await profileApi.updateCV(formData);
-        mess =
-          languageRedux === 1
-            ? 'Cập nhật CV thành công'
-            : languageRedux === 2
-            ? 'Successfully updated CV'
-            : '이력서가 업데이트되었습니다.';
-      } else {
-        result = await profileApi.createCV(formData);
-        mess =
-          languageRedux === 1
-            ? 'Thêm CV thành công'
-            : languageRedux === 2
-            ? 'Added CV successfully'
-            : '이력서를 성공적으로 추가했습니다.';
-      }
-
-      if (result) {
-        const result = await profileApi.getProfileInformationV3(
-          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-        );
-        if (result) {
-          setProfileMeInformationV3(result);
-          setFileList([]);
-          setUploading(false);
-          message.success(`${mess}`);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleImageChange = async (e: any) => {
     // const file = e.target.files[0]
     const files = Array.from(e.target.files); // Chuyển đổi FileList thành mảng các đối tượng file
@@ -451,6 +299,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     if (profileV3.length !== 0) getProfileMore();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileV3]);
 
   const alert = useSelector((state: any) => state.alertProfile.alert);
@@ -503,6 +352,7 @@ const Profile: React.FC = () => {
     } else {
       dataChartRecruiter();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const elements: React.ReactNode[] = Array.from({ length: 3 }, (_, index) => (
