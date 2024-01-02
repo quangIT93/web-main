@@ -1,7 +1,7 @@
 import React, { useState, FormEvent, useEffect, useRef } from 'react';
 
-import { Checkbox, Switch, Typography } from 'antd';
-import { Helmet } from 'react-helmet';
+// import { Switch } from 'antd';
+// import { Helmet } from 'react-helmet';
 // @ts-ignore
 
 //@ts-ignore
@@ -61,7 +61,6 @@ import ModalNotiValidateCompany from '#components/Post/ModalNotiValidateCompany'
 //@ts-ignore
 import { FillDataPost } from '#components/Icons';
 import apiCompany from 'api/apiCompany';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 // redux
 // import { RootState } from 'store';
@@ -137,7 +136,7 @@ export interface FormValues {
 //   image: string;
 //   default_post_image: string;
 // }
-const { Text } = Typography;
+
 const Post: React.FC = () => {
   // const { openCollapseFilter } = useContext(HomeValueContext);
 
@@ -271,7 +270,7 @@ const Post: React.FC = () => {
   const [selectedFillImages, setSelectedFillImages] = React.useState<string[]>(
     [],
   );
-  const [createVideo, setCreateVideo] = React.useState<boolean>(false);
+
   const [checkPost, setCheckPost] = React.useState<boolean>(false);
   const [openCheckposted, setOpenCheckposted] = React.useState<boolean>(false);
   const [isValidSubmit, setIsValidSubmit] = useState(true);
@@ -1105,32 +1104,6 @@ const Post: React.FC = () => {
               oldDescription={oldDescription}
             />
             {/* <EditText /> */}
-            <div className='create-video-wrap'>
-              <Checkbox
-                style={{
-                  marginTop: 24
-                }}
-                onChange={(e: any) => {
-                  setCreateVideo(e.target.checked);
-                }}>
-                {
-                  languageRedux === 1 ?
-                    "Tạo video cho bài đăng" :
-                    languageRedux === 2 ?
-                      "Create a video for your post" :
-                      "게시물에 대한 비디오 만들기"
-                }
-              </Checkbox>
-              <Text italic>
-                {
-                  languageRedux === 1 ?
-                    "Hijob sẽ tự động tạo video bài đăng của bạn trên nền tảng Tiktok và Youtube Shorts trong thời gian sớm nhất. Để tạo được video hãy tải lên nhiều hình ảnh trong bài đăng." :
-                    languageRedux === 2 ?
-                      "Hijob will automatically create your video posts on the Tiktok and Youtube Shorts platforms as soon as possible. To create a video, upload multiple images in the post." :
-                      "Hijob은 가능한 한 빨리 Tiktok 및 Youtube Shorts 플랫폼에 비디오 게시물을 자동으로 생성합니다. 동영상을 만들려면 게시물에 여러 이미지를 업로드하세요."
-                }
-              </Text>
-            </div>
             <button
               type="submit"
               onClick={handleSubmit}

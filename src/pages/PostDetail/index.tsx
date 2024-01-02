@@ -69,7 +69,7 @@ import { PostNewest } from '#components/Home/NewJobs';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { Avatar } from 'antd';
-import languageApi from 'api/languageApi';
+// import languageApi from 'api/languageApi';
 import IconButton from '@mui/material/IconButton';
 import { CloseIcon } from '#components/Icons';
 // import icon
@@ -102,10 +102,10 @@ import ShowCopy from '#components/ShowCopy';
 //@ts-ignore
 import AnotherPost from './components/AnotherPost';
 // import { height, width } from '@mui/system';
-import { postDetail } from 'validations/lang/vi/postDetail';
-import { postDetailEn } from 'validations/lang/en/postDetail';
+// import { postDetail } from 'validations/lang/vi/postDetail';
+// import { postDetailEn } from 'validations/lang/en/postDetail';
 
-import { setCookie } from 'cookies';
+// import { setCookie } from 'cookies';
 import { Helmet } from 'react-helmet';
 import apiCompany from 'api/apiCompany';
 // import { Language } from '#components/Navbar/Css';
@@ -188,7 +188,7 @@ const Detail = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
+  // const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -236,7 +236,7 @@ const Detail = () => {
         languageRedux === 1
           ? 'Sao chép liên kết'
           : languageRedux === 2
-            ? 'Copy Link'
+            ? 'Copy link'
             : '링크를 복사',
       icon: <CopyIcon />,
       source: '',
@@ -345,7 +345,7 @@ const Detail = () => {
         // setIsLoading(false);
         document.title = result.data.title;
 
-        if (result.data.accountId === accountId && result.data.status !== 3) {
+        if (result.data.accountId === accountId) {
           setTextButton(
             languageRedux === 1
               ? 'Chỉnh sửa bài tuyển dụng'
@@ -353,7 +353,7 @@ const Detail = () => {
                 ? 'Edit job posting'
                 : '채용 게시물 수정',
           );
-          setBackgroundButton('#0D99FF');
+          setBackgroundButton('gray');
           setCheckPostUser(true);
         } else if (result.data.status === 3) {
           setBackgroundButton('gray');
@@ -504,7 +504,6 @@ const Detail = () => {
   const onclick = async () => {
     // console.log('click', profileV3);
     if (
-      !checkPostUser &&
       post?.data?.companyResourceData?.name === 'HIJOB' &&
       profileV3.typeRoleData === 1
     ) {
@@ -756,6 +755,8 @@ const Detail = () => {
       nameShare === 'Copy link' ||
       nameShare === '링크를 복사'
     ) {
+      console.log('post?.data.shareLink', post?.data.shareLink);
+
       copy(
         post?.data?.companyResourceData?.name === 'HIJOB'
           ? post?.data.shareLink
@@ -887,14 +888,7 @@ const Detail = () => {
   };
 
   const updateDefaultCountAppliedJobs = false;
-  const isValidHttpUrl = (url: string) => {
-    try {
-      const newUrl = new URL(url);
-      return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
-    } catch (err) {
-      return false;
-    }
-  }
+
   const handleApply = async () => {
     if (
       !profileV3.name ||
@@ -1505,19 +1499,16 @@ const Detail = () => {
                   </div>
                   <div className="div-detail-titleItem">
                     {/* <h5> */}
-                    <a
-                      href={
-                        isValidHttpUrl(post?.data?.postCompanyInformation?.website) ?
-                          post?.data?.postCompanyInformation?.website
-                          : `https://${post?.data?.postCompanyInformation?.website}`
-                        // post?.data?.postCompanyInformation
-                        //   ? post?.data?.postCompanyInformation?.website
-                        //   : '#'
+                    <Link
+                      to={
+                        post?.data?.postCompanyInformation
+                          ? post?.data?.postCompanyInformation?.website
+                          : '#'
                       }
                       style={{
                         color: `${post?.data?.postCompanyInformation?.website
-                          ? 'rgb(13, 153, 255)'
-                          : ''
+                            ? 'rgb(13, 153, 255)'
+                            : ''
                           }`,
                       }}
                       target="_blank"
@@ -1530,7 +1521,7 @@ const Detail = () => {
                           : languageRedux === 2
                             ? 'Not updated yet'
                             : languageRedux === 3 && '업데이트하지 않음'}
-                    </a>
+                    </Link>
                     {/* </h5> */}
                   </div>
                 </div>
@@ -2122,8 +2113,8 @@ const Detail = () => {
                       <AddressDetailPostIcon width={16} height={16} />
                       <span style={{ marginLeft: '8px' }}>
                         {`${post?.data.address}, ${post?.data?.location
-                          ? post?.data?.location?.fullName
-                          : ''
+                            ? post?.data?.location?.fullName
+                            : ''
                           }, ${post?.data?.location?.district
                             ? post?.data?.location?.district?.fullName
                             : ''
