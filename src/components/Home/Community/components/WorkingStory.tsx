@@ -44,9 +44,7 @@ const WorkingStory = () => {
       if (result) {
         setStories(result?.data?.communications);
         setLike(false);
-        setTimeout(() => {
-          setLoading(false);
-        }, 3000);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -83,8 +81,8 @@ const WorkingStory = () => {
             {languageRedux === 1
               ? 'Chia sẻ kinh nghiệm làm việc'
               : languageRedux === 2
-                ? 'Working story'
-                : languageRedux === 3 && '워킹스토리'}
+              ? 'Working story'
+              : languageRedux === 3 && '워킹스토리'}
           </h3>
         </div>
         <p
@@ -96,8 +94,8 @@ const WorkingStory = () => {
           {languageRedux === 1
             ? 'Xem tất cả'
             : languageRedux === 2
-              ? 'View all'
-              : languageRedux === 3 && '모두보기'}
+            ? 'View all'
+            : languageRedux === 3 && '모두보기'}
         </p>
       </div>
       <div className="community-content-body">

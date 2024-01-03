@@ -8,7 +8,7 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { NewJobIcon, MoreICon, ArrowrightIcon } from '#components/Icons';
-
+import ModalLogin from '#components/Home/ModalLogin';
 // import redux
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -57,6 +57,7 @@ import { Skeleton } from 'antd';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
 import { getCookie } from 'cookies';
+import ModalVerifyLogin from '../ModalLogin';
 
 export interface PostNewest {
   id: number;
@@ -136,7 +137,7 @@ const NewJobs: React.FC = () => {
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
   // const [isLoading, setIsLoading] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
   const [isAppliedPostedJobs, setIsAppliedPostedJobs] = React.useState(false);
@@ -152,7 +153,9 @@ const NewJobs: React.FC = () => {
     return state.newWestReducerV3;
   });
 
-  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector(
+    (state: RootState) => state.dataProfileInformationV3.data,
+  );
 
   const dispatch = useDispatch();
   const { setPostNewest, setPostNewestMore } = bindActionCreators(
@@ -331,31 +334,33 @@ const NewJobs: React.FC = () => {
           id="new-job"
         >
           <div className="title-container">
-            <div className="title">
-              <NewJobIcon width={25} height={25} />
-              <h2 className="title_home">
-                {languageRedux === 1
-                  ? 'Công việc mới nhất'
-                  : languageRedux === 2
-                  ? 'Newest Jobs'
-                  : languageRedux === 3
-                  ? '최신 작업'
-                  : 'Công việc mới nhất'}
-              </h2>
-              <div className="help-search" onClick={handleClickHelpSearch}>
-                <QuestionMarkIcon />
-                <div className={`login__hover__container `}>
-                  <div className="login__hover">
-                    <div className="login__hover__p">
-                      <p>
-                        {languageRedux === 1
-                          ? 'Công việc mới nhất sẽ xuất hiện dựa theo Lĩnh vực quan tâm của bạn trong phần thông tin cá nhân.'
-                          : languageRedux === 2
-                          ? 'Newest Jobs will show jobs rely on your Career Objective in Profile.'
-                          : '귀하의 개인적인 관심사에 따라 최신 채용 기회를 확인할 수 있습니다.'}
-                      </p>
-                    </div>
-                    {/* <Button
+            <div className="title-container_wrap">
+              <div className="title">
+                <NewJobIcon width={25} height={25} />
+                <h2 className="title_home">
+                  {languageRedux === 1
+                    ? 'Công việc mới nhất'
+                    : languageRedux === 2
+                    ? 'Newest Jobs'
+                    : languageRedux === 3
+                    ? '최신 작업'
+                    : 'Công việc mới nhất'}
+                </h2>
+
+                <div className="help-search" onClick={handleClickHelpSearch}>
+                  <QuestionMarkIcon />
+                  <div className={`login__hover__container `}>
+                    <div className="login__hover">
+                      <div className="login__hover__p">
+                        <p>
+                          {languageRedux === 1
+                            ? 'Công việc mới nhất sẽ xuất hiện dựa theo Lĩnh vực quan tâm của bạn trong phần thông tin cá nhân.'
+                            : languageRedux === 2
+                            ? 'Newest Jobs will show jobs rely on your Career Objective in Profile.'
+                            : '귀하의 개인적인 관심사에 따라 최신 채용 기회를 확인할 수 있습니다.'}
+                        </p>
+                      </div>
+                      {/* <Button
             type="primary"
             onClick={() => {
               setOpenModalLogin(true);
@@ -368,9 +373,46 @@ const NewJobs: React.FC = () => {
                   ? 'Sign in'
                   : languageRedux === 3 && '로그인'}
           </Button> */}
+                    </div>
                   </div>
                 </div>
               </div>
+              {profileV3?.typeRoleData === 0 ? (
+                <div className="title-note">
+                  <p>
+                    {profileV3?.profileCategories?.length === 0 &&
+                    profileV3?.profileLocations?.length === 0
+                      ? languageRedux === 1
+                        ? `Hãy thiết lập Khu vực làm việc và lĩnh vực công việc mà bạn quan tâm.`
+                        : languageRedux === 2
+                        ? 'Set up your work area and areas of work that interest you.'
+                        : '작업 구역과 관심 있는 영역을 설정하세요'
+                      : languageRedux === 1
+                      ? 'Kết quả công việc mới nhất đề xuất dựa theo Khu vực làm việc và Lĩnh vực quan tâm mà bạn đã thiết lập trong Hồ sơ.'
+                      : languageRedux === 2
+                      ? 'The latest job results are suggested based on the Work Area and Areas of Interest that you have set up in your Profile.'
+                      : '당신의 프로필에 설정한 작업 구역 및 관심 영역을 기반으로 최신 채용 결과가 제안됩니다'}
+                  </p>
+                  <p
+                    onClick={() => {
+                      if (profileV3 && profileV3?.length !== 0) {
+                        window.open('profile', '_parent');
+                      } else {
+                        setOpenModalLogin(true);
+                      }
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {languageRedux === 1
+                      ? 'Cài đặt.'
+                      : languageRedux === 2
+                      ? 'Setting'
+                      : '설정'}
+                  </p>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
             {/* <div className="view-all" onClick={handleMoveToMoreJob}>
               <p> {
@@ -418,6 +460,10 @@ const NewJobs: React.FC = () => {
           <ShowNotificativeSave />
 
           <ShowCancleSave />
+          <ModalLogin
+            openModalLogin={openModalLogin}
+            setOpenModalLogin={setOpenModalLogin}
+          />
         </Box>
         // )
       }
