@@ -8,7 +8,7 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { NewJobIcon, MoreICon, ArrowrightIcon } from '#components/Icons';
-
+import ModalLogin from '#components/Home/ModalLogin';
 // import redux
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -57,6 +57,7 @@ import { Skeleton } from 'antd';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
 import { getCookie } from 'cookies';
+import ModalVerifyLogin from '../ModalLogin';
 
 export interface PostNewest {
   id: number;
@@ -136,7 +137,7 @@ const NewJobs: React.FC = () => {
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
   // const [isLoading, setIsLoading] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
   const [isAppliedPostedJobs, setIsAppliedPostedJobs] = React.useState(false);
@@ -393,7 +394,13 @@ const NewJobs: React.FC = () => {
                       : '당신의 프로필에 설정한 작업 구역 및 관심 영역을 기반으로 최신 채용 결과가 제안됩니다'}
                   </p>
                   <p
-                    onClick={() => window.open('profile', '_parent')}
+                    onClick={() => {
+                      if (profileV3 && profileV3?.length !== 0) {
+                        window.open('profile', '_parent');
+                      } else {
+                        setOpenModalLogin(true);
+                      }
+                    }}
                     style={{ cursor: 'pointer' }}
                   >
                     {languageRedux === 1
@@ -453,6 +460,10 @@ const NewJobs: React.FC = () => {
           <ShowNotificativeSave />
 
           <ShowCancleSave />
+          <ModalLogin
+            openModalLogin={openModalLogin}
+            setOpenModalLogin={setOpenModalLogin}
+          />
         </Box>
         // )
       }
