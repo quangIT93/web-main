@@ -259,7 +259,7 @@ const Home: React.FC = () => {
       <div className="home__main">
         {/* <CategoryCarousel />
         <Breadcrumbs /> */}
-        <JobStory />
+        {/* <JobStory /> */}
         <AppliedPostedJob />
         {
           !localStorage.getItem('accessToken') ?

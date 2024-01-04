@@ -20,13 +20,13 @@ const candidateSearch = {
   ) => {
     const URL =
       `/v3/cv-filter/search?` +
-      // `${addresses.length !== 0
-      //   ? `&${addresses
-      //     ?.map((n: any, index: number) => `addresses=${n[1]}`)
-      //     .join('&')}`
-      //   : ``
-      // }` +
-      `${addresses !== undefined ? `&addresses=${addresses}` : ``}` +
+      `${addresses.length !== 0
+        ? `&${addresses
+          ?.map((n: any, index: number) => `addresses=${n[1]}`)
+          .join('&')}`
+        : ``
+      }` +
+      // `${addresses !== undefined ? `&addresses=${addresses}` : ``}` +
       `${categories.length !== 0
         ? `&${categories
           ?.map((n: any, index: number) => `categories=${n[1]}`)

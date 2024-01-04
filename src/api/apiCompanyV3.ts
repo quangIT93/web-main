@@ -12,13 +12,13 @@ const apiCompanyV3 = {
   ) => {
     const URL =
       `/v3/companies?` +
-      // `${addresses.length !== 0
-      //   ? `&${addresses
-      //     ?.map((n: any, index: number) => `addresses=${n[1]}`)
-      //     .join('&')}`
-      //   : ``
-      // }` +
-      `${addresses !== undefined ? `addresses=${addresses}` : ``}` +
+      `${addresses.length !== 0
+        ? `&${addresses
+          ?.map((n: any, index: number) => `addresses=${n[1]}`)
+          .join('&')}`
+        : ``
+      }` +
+      // `${addresses !== undefined ? `addresses=${addresses}` : ``}` +
       `${categories.length !== 0
         ? `&${categories
           ?.map((n: any, index: number) => `categories=${n[0]}`)

@@ -42,8 +42,8 @@ const SearchLocationCompany: React.FC<ISearchLocation> = (props) => {
   );
   const onChange = (value: string[][]) => {
     setReset(false);
-    setAddresses(value !== undefined ? value[0] : value);
-
+    // setAddresses(value !== undefined ? value[0] : value);
+    setAddresses(value)
   };
 
   const DropdownRender = (menus: React.ReactNode) => (
@@ -95,7 +95,7 @@ const SearchLocationCompany: React.FC<ISearchLocation> = (props) => {
         allowClear
         style={{ width: '100%' }}
         onChange={onChange as any}
-        // multiple
+        multiple
         maxTagCount="responsive"
         showCheckedStrategy={SHOW_CHILD}
         inputIcon={<LocationIcon />}
@@ -108,25 +108,25 @@ const SearchLocationCompany: React.FC<ISearchLocation> = (props) => {
             ? dataLocations?.map((dataLocation: any) => ({
               value: dataLocation.province_id,
               label: dataLocation.province_fullName,
-              // children: dataLocation.districts.map(
-              //   (child: { district_id: string; district: string }) => {
-              //     var dis = false;
-              //     // if (disable) {
-              //     //   dis = true;
-              //     //   for (const elem of locId) {
-              //     //     if (elem === child.district_id) {
-              //     //       dis = false;
-              //     //       break;
-              //     //     }
-              //     //   }
-              //     // }
-              //     return {
-              //       value: child.district_id,
-              //       label: child.district,
-              //       disabled: dis,
-              //     };
-              //   },
-              // ),
+              children: dataLocation.districts.map(
+                (child: { district_id: string; district: string }) => {
+                  var dis = false;
+                  // if (disable) {
+                  //   dis = true;
+                  //   for (const elem of locId) {
+                  //     if (elem === child.district_id) {
+                  //       dis = false;
+                  //       break;
+                  //     }
+                  //   }
+                  // }
+                  return {
+                    value: child.district_id,
+                    label: child.district,
+                    disabled: dis,
+                  };
+                },
+              ),
             }))
             : []
         }
