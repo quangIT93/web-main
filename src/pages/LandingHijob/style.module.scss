@@ -196,6 +196,79 @@
 
         }
 
+        .landing_outstanding {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 56px;
+            margin-bottom: 120px;
+            width: 100%;
+
+            .outstanding_title {
+                h3 {
+                    font-family: Roboto;
+                    font-size: 32px;
+                    font-weight: 900;
+                    letter-spacing: 0em;
+                    text-align: center;
+
+                }
+            }
+
+            .outstanding_content {
+                display: flex;
+                width: 100%;
+                gap: 24px;
+                align-items: center;
+                justify-content: space-between;
+
+                @media screen and (max-width: 880px) {
+                    flex-direction: column;
+                    justify-content: center;
+                }
+
+                .outstanding_item {
+                    width: 403px;
+                    height: 579px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 24px;
+                    justify-content: flex-start;
+
+                    img {
+                        height: 403px;
+                        width: 403px;
+                    }
+
+                    .item_bot {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 8px;
+                        width: 304px;
+
+                        h3 {
+                            font-family: Roboto;
+                            font-size: 24px;
+                            font-weight: 700;
+                            letter-spacing: 0em;
+                            text-align: center;
+                        }
+
+                        p {
+                            font-family: Roboto;
+                            font-size: 16px;
+                            font-weight: 400;
+                            letter-spacing: 0em;
+                            text-align: center;
+
+                        }
+                    }
+                }
+            }
+        }
+
         .landing_advantages {
             display: flex;
             flex-direction: column;
