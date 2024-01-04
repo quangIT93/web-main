@@ -83,8 +83,8 @@ const ComunityNews = () => {
         languageRedux === 1
           ? 'Không còn bài viết để hiển thị'
           : languageRedux === 2
-            ? 'No more posts to show'
-            : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
+          ? 'No more posts to show'
+          : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
       );
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
@@ -169,8 +169,8 @@ const ComunityNews = () => {
         languageRedux === 1
           ? 'Không còn bài viết để hiển thị'
           : languageRedux === 2
-            ? 'No more posts to show'
-            : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
+          ? 'No more posts to show'
+          : languageRedux === 3 && '더 이상 표시할 게시물이 없습니다.',
       );
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
@@ -224,8 +224,8 @@ const ComunityNews = () => {
                 {languageRedux === 1
                   ? 'Tin tức'
                   : languageRedux === 2
-                    ? 'Recruitment news'
-                    : languageRedux === 3 && '뉴스'}
+                  ? 'Recruitment news'
+                  : languageRedux === 3 && '뉴스'}
               </h3>
               <p>
                 {
@@ -233,20 +233,20 @@ const ComunityNews = () => {
                     ? languageRedux === 1
                       ? 'Đang tải'
                       : languageRedux === 2
-                        ? 'Loading'
-                        : '로드 중'
+                      ? 'Loading'
+                      : '로드 중'
                     : languageRedux === 1
-                      ? `${new Intl.NumberFormat('en-US').format(
-                          total,
-                        )} bài viết mới`
-                      : languageRedux === 2
-                        ? `${new Intl.NumberFormat('en-US').format(
-                            total,
-                          )} new posts`
-                        : languageRedux &&
-                          `${new Intl.NumberFormat('en-US').format(
-                            total,
-                          )} 새 게시물`
+                    ? `${new Intl.NumberFormat('en-US').format(
+                        total,
+                      )} bài viết mới`
+                    : languageRedux === 2
+                    ? `${new Intl.NumberFormat('en-US').format(
+                        total,
+                      )} new posts`
+                    : languageRedux &&
+                      `${new Intl.NumberFormat('en-US').format(
+                        total,
+                      )} 새 게시물`
                   // : language?.community_page?.today_hijob_has +
                   //   ' ' +
                   //   total +
@@ -279,8 +279,8 @@ const ComunityNews = () => {
                       {languageRedux === 1
                         ? 'Mới nhất'
                         : languageRedux === 2
-                          ? 'Newest'
-                          : languageRedux === 3 && '최신'}
+                        ? 'Newest'
+                        : languageRedux === 3 && '최신'}
                     </p>
                   </li>
                   <li
@@ -299,8 +299,8 @@ const ComunityNews = () => {
                       {languageRedux === 1
                         ? 'Lượt thích'
                         : languageRedux === 2
-                          ? 'Likes"'
-                          : '좋아요'}
+                        ? 'Likes"'
+                        : '좋아요'}
                     </p>
                   </li>
                   <li
@@ -319,8 +319,8 @@ const ComunityNews = () => {
                       {languageRedux === 1
                         ? 'Lượt xem'
                         : languageRedux === 2
-                          ? 'Views"'
-                          : '보다'}
+                        ? 'Views"'
+                        : '보다'}
                     </p>
                   </li>
                   <li
@@ -339,8 +339,8 @@ const ComunityNews = () => {
                       {languageRedux === 1
                         ? 'Lượt bình luận'
                         : languageRedux === 2
-                          ? 'Comments"'
-                          : '댓글'}
+                        ? 'Comments"'
+                        : '댓글'}
                     </p>
                   </li>
                 </ul>

@@ -38,9 +38,7 @@ const HijobNews = () => {
       );
       if (result) {
         setNews(result?.data?.communications);
-        setTimeout(() => {
-          setLoading(false);
-        }, 3000);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -83,16 +81,16 @@ const HijobNews = () => {
             {languageRedux === 1
               ? 'Tin tức'
               : languageRedux === 2
-                ? 'Recruitment news'
-                : languageRedux === 3 && '뉴스'}
+              ? 'Recruitment news'
+              : languageRedux === 3 && '뉴스'}
           </h3>
         </div>
         <p onClick={() => window.open('/news-comunity', '_parent')}>
           {languageRedux === 1
             ? 'Xem tất cả'
             : languageRedux === 2
-              ? 'View all'
-              : languageRedux === 3 && '모두보기'}
+            ? 'View all'
+            : languageRedux === 3 && '모두보기'}
         </p>
       </div>
       <div className="community-content-body">
