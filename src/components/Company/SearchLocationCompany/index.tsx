@@ -42,7 +42,7 @@ const SearchLocationCompany: React.FC<ISearchLocation> = (props) => {
   );
   const onChange = (value: string[][]) => {
     setReset(false);
-    setAddresses(value[0]);
+    setAddresses(value !== undefined ? value[0] : value);
 
   };
 

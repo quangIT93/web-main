@@ -339,7 +339,7 @@ const CandidatesAll = () => {
         gender,
         ageMin,
         ageMax,
-        19,
+        18,
         nextPage,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
