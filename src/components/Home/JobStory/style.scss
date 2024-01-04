@@ -1,0 +1,135 @@
+@import '../../../scss/mixins';
+@import '../../../scss/variable';
+
+.job-story-container {
+    margin: 0 0 24px 0 !important;
+    padding-bottom: 0 !important;
+
+    .job-story-swiper {
+        z-index: 0;
+        margin-top: 24px;
+
+        .swiper-wrapper {
+            .swiper-slide {
+                cursor: pointer;
+                height: 250px;
+                width: 160px;
+
+                .job-story-slide-item {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+
+                    .job-story-info {
+                        // margin-top: -55px;
+                        position: absolute;
+                        text-align: left;
+                        color: white;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        height: 100%;
+                        width: 100%;
+                        top: 0;
+                        background: linear-gradient(180deg, rgba(217, 217, 217, 0.00) 0%, rgba(255, 255, 255, 0.00) 43.23%, rgba(0, 0, 0, 0.61) 100%);
+                        border-radius: 10px;
+                        display: flex;
+                        align-items: flex-start;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        padding: 10px;
+
+                        .ant-badge {
+                            .ant-avatar {
+                                img {
+                                    border: 3px solid #0d99ff;
+                                    border-radius: 50%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .swiper-button-prev,
+        .swiper-button-next {
+            width: 40px !important;
+            height: 100% !important;
+            top: 0 !important;
+            margin-top: 0 !important;
+            background-color: transparent;
+
+            &:hover {
+
+                &:after {
+                    transform: scale(1.1);
+                }
+
+                &:active {
+                    &:after {
+                        transform: scale(0.8);
+                    }
+                }
+            }
+
+            &:after {
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 50%;
+                color: #000;
+                font-size: 18px;
+                height: 30px;
+                width: 10px;
+                line-height: 30px;
+                padding: 0px 10px;
+                transition: 0.3s linear all;
+            }
+
+            @include breakpoint(mobile) {
+                &:after {
+                    background-color: #fff;
+                    border: 1px solid #ccc;
+                    border-radius: 50%;
+                    color: #000;
+                    font-size: 10px;
+                    height: 24px;
+                    width: 4px;
+                    line-height: 24px;
+                    padding: 0px 10px;
+                    transition: 0.3s linear all;
+                }
+            }
+        }
+
+        .swiper-button-prev {
+            left: 0;
+            background: linear-gradient(90deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
+
+            @include breakpoint(mobile) {
+                background: none;
+            }
+
+            @include breakpoint(tablet) {
+                background: none;
+            }
+        }
+
+        .swiper-button-next {
+            background: linear-gradient(270deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
+            right: 0;
+
+            @include breakpoint(mobile) {
+                background: none;
+            }
+
+            @include breakpoint(tablet) {
+                background: none;
+            }
+        }
+
+        .swiper-button-disabled {
+            display: none !important;
+        }
+
+    }
+}

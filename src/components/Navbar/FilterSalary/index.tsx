@@ -141,6 +141,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     }
   };
 
+
   // console.log('salaryMin', Number(salaryMin) === 0);
   // console.log('salaryMax', Number(salaryMax) === 0);
 
@@ -733,7 +734,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
                   ? new Intl.NumberFormat('en-US').format(
                     Number(salaryMax?.toString().replace(',', '')),
                   )
-                  : 'Đến'
+                  : languageRedux === 1
+                    ? 'Đến'
+                    : languageRedux === 2
+                      ? 'To'
+                      : languageRedux === 3 && '까지'
               }`
               : languageRedux === 1
                 ? 'Mức lương'

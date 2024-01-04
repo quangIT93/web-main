@@ -332,8 +332,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? 'Tất cả mức lương'
               : languageRedux === 2
-              ? 'All salary'
-              : '모두'}
+                ? 'All salary'
+                : '모두'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -347,8 +347,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? 'Dưới 10 triệu'
               : languageRedux === 2
-              ? 'Under 10 million'
-              : '1.000 만동 이하'}
+                ? 'Under 10 million'
+                : '1.000 만동 이하'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -362,8 +362,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? '10 - 15 triệu'
               : languageRedux === 2
-              ? '10 - 15 million'
-              : '1.000 ~ 1.500 만동'}
+                ? '10 - 15 million'
+                : '1.000 ~ 1.500 만동'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -377,8 +377,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? '15 - 20 triệu'
               : languageRedux === 2
-              ? '15 - 20 million'
-              : '1.500 ~ 2.000 만동'}
+                ? '15 - 20 million'
+                : '1.500 ~ 2.000 만동'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -392,8 +392,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? '20 - 25 triệu'
               : languageRedux === 2
-              ? '20 - 25 million'
-              : '2.000 ~ 2.500 만동'}
+                ? '20 - 25 million'
+                : '2.000 ~ 2.500 만동'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -407,8 +407,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? '25 - 30 triệu'
               : languageRedux === 2
-              ? '25 - 30 million'
-              : '2.500 ~ 3.000 만동'}
+                ? '25 - 30 million'
+                : '2.500 ~ 3.000 만동'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -422,8 +422,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? '30 - 50 triệu'
               : languageRedux === 2
-              ? '30 - 50 million'
-              : '3.000 ~ 5.000 만동'}
+                ? '30 - 50 million'
+                : '3.000 ~ 5.000 만동'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -437,8 +437,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? 'Trên 50 triệu'
               : languageRedux === 2
-              ? 'Over 50 million'
-              : '5.000 만동 이상'}
+                ? 'Over 50 million'
+                : '5.000 만동 이상'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -455,8 +455,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? 'Tất cả mức lương'
               : languageRedux === 2
-              ? 'All salary'
-              : '모두'}
+                ? 'All salary'
+                : '모두'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -470,8 +470,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? 'Dưới 300'
               : languageRedux === 2
-              ? 'Under 300'
-              : '300 이하'}
+                ? 'Under 300'
+                : '300 이하'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -485,8 +485,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? '300 - 500'
               : languageRedux === 2
-              ? '300 - 500'
-              : '300 - 500'}
+                ? '300 - 500'
+                : '300 - 500'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -500,8 +500,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? '500 - 700'
               : languageRedux === 2
-              ? '500 - 700'
-              : '500 - 700'}
+                ? '500 - 700'
+                : '500 - 700'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -515,8 +515,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? '700 - 1000'
               : languageRedux === 2
-              ? '700 - 1000'
-              : '700 - 1000'}
+                ? '700 - 1000'
+                : '700 - 1000'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -530,8 +530,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? 'Trên 1000'
               : languageRedux === 2
-              ? 'Over 1000'
-              : '1.000 이상'}
+                ? 'Over 1000'
+                : '1.000 이상'}
           </p>
           <CheckOutlined className={'radio_checked_ic'} />
         </div>
@@ -546,9 +546,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
         <MoneyFilterIcon width={16} height={16} />
       </div>
       <Collapse
-        className={`inputFilterSalaryHotJob input-filter_nav ${
-          inputValueMin || salaryMax ? 'activeSalaryHotJob' : ''
-        }`}
+        className={`inputFilterSalaryHotJob input-filter_nav ${inputValueMin || salaryMax ? 'activeSalaryHotJob' : ''
+          }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -558,23 +557,26 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
           header={
             salaryMax || salaryMin
               ? `${new Intl.NumberFormat('en-US').format(
-                  Number(salaryMin?.toString().replace(',', '')),
-                )} - ${
-                  salaryMax !== 0 && salaryMin !== 50000000
-                    ? new Intl.NumberFormat('en-US').format(
-                        Number(salaryMax?.toString().replace(',', '')),
-                      )
-                    : salaryMax !== 0 && salaryMin !== 1000
-                    ? new Intl.NumberFormat('en-US').format(
-                        Number(salaryMax?.toString().replace(',', '')),
-                      )
-                    : 'Đến'
-                }`
+                Number(salaryMin?.toString().replace(',', '')),
+              )} - ${salaryMax !== 0 && salaryMin !== 50000000
+                ? new Intl.NumberFormat('en-US').format(
+                  Number(salaryMax?.toString().replace(',', '')),
+                )
+                : salaryMax !== 0 && salaryMin !== 1000
+                  ? new Intl.NumberFormat('en-US').format(
+                    Number(salaryMax?.toString().replace(',', '')),
+                  )
+                  : languageRedux === 1
+                    ? 'Đến'
+                    : languageRedux === 2
+                      ? 'To'
+                      : languageRedux === 3 && '까지'
+              }`
               : languageRedux === 1
-              ? 'Mức lương'
-              : languageRedux === 2
-              ? 'Salary'
-              : languageRedux === 3 && '샐러리/급여'
+                ? 'Mức lương'
+                : languageRedux === 2
+                  ? 'Salary'
+                  : languageRedux === 3 && '샐러리/급여'
           }
           key="1"
         >
@@ -582,14 +584,14 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
             {languageRedux === 1
               ? 'Mức lương'
               : languageRedux === 2
-              ? 'Salary'
-              : languageRedux === 3 && '샐러리/급여'}
+                ? 'Salary'
+                : languageRedux === 3 && '샐러리/급여'}
           </Text>
           <Radio.Group
             value={reset ? 1 : selectedValue}
             onChange={handleRadioChange}
             className="inputFilter-groupSalary_radio"
-            // defaultValue={Type_Money}
+          // defaultValue={Type_Money}
           >
             <Radio value={1}>VND</Radio>
             <Radio value={2}>USD</Radio>
@@ -606,11 +608,11 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
               //   :
               salaryMin
                 ? new Intl.NumberFormat('en-US').format(
-                    Number(salaryMin.toString().replace(',', '')),
-                  )
+                  Number(salaryMin.toString().replace(',', '')),
+                )
                 : new Intl.NumberFormat('en-US').format(
-                    Number(salaryMin?.toString().replace(',', '')),
-                  )
+                  Number(salaryMin?.toString().replace(',', '')),
+                )
             }
             onChange={handleInputChangeSalaryMin}
             className="input-text_salary"
@@ -628,11 +630,11 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
               //   :
               salaryMax
                 ? new Intl.NumberFormat('en-US').format(
-                    Number(salaryMax.toString().replace(',', '')),
-                  )
+                  Number(salaryMax.toString().replace(',', '')),
+                )
                 : new Intl.NumberFormat('en-US').format(
-                    Number(salaryMax?.toString().replace(',', '')),
-                  )
+                  Number(salaryMax?.toString().replace(',', '')),
+                )
             }
             onChange={handleInputChangeSalaryMax}
             className="input-text_salary"
@@ -644,8 +646,8 @@ const FilterSalaryHotJob: React.FC<IFilterSalary> = (props) => {
               {languageRedux === 1
                 ? 'Lương tối thiểu không được lớn hơn lương tối đa'
                 : languageRedux === 2
-                ? 'Minimum cannot be greater than maximum'
-                : '최소 금액은 최대 금액보다 클 수 없습니다.'}
+                  ? 'Minimum cannot be greater than maximum'
+                  : '최소 금액은 최대 금액보다 클 수 없습니다.'}
             </i>
           ) : (
             <></>

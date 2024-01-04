@@ -78,7 +78,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
       //   'i',
       // ); // fragment locator
       var pattern = new RegExp(
-        /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/,
+        /^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/,
       ); // fragment locator
 
       return !!pattern.test(str);

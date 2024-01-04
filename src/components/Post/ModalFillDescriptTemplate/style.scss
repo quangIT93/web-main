@@ -1,11 +1,24 @@
+@import '../../../scss/mixins';
+
 .box-modal_filterTemplate {
+    .wrap-cate-title-filter-template {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 12px;
+
+        .ant-input {
+            height: 40px;
+        }
+    }
+
     .template_list {
         // height: 800px;
         padding: 12px 0px 12px 8px;
         border-radius: 8px;
         border: 1px solid var(--x-4, #DCDCDC);
         overflow-y: scroll;
-        height: 330px;
+        height: 160px;
 
         .template_item {
             position: relative;
@@ -21,7 +34,7 @@
                 font-style: normal;
                 font-weight: 700;
                 line-height: 24px;
-                width: 340px;
+                // width: 340px;
                 overflow-x: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -55,7 +68,7 @@
 
             input {
                 position: absolute;
-                z-index: 10;
+                z-index: 1;
                 right: 20px;
                 top: 50%;
                 transform: translateY(-50%);

@@ -14,6 +14,7 @@ export interface PropsTypePostNew {
   salaryMin: number;
   salaryType: PropsSalaryType;
   title: string;
+  created_at: number;
 }
 
 interface PropsTypeCompanyResourceData {

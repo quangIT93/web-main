@@ -26,6 +26,7 @@ const candidateSearch = {
           .join('&')}`
         : ``
       }` +
+      // `${addresses !== undefined ? `&addresses=${addresses}` : ``}` +
       `${categories.length !== 0
         ? `&${categories
           ?.map((n: any, index: number) => `categories=${n[1]}`)

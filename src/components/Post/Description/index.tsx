@@ -27,14 +27,19 @@ const Description: React.FC<IDescription> = (props) => {
     language,
     languageRedux,
     setIsValidSubmit,
-    oldDescription
+    oldDescription,
   } = props;
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
     setIsValidSubmit(false);
   };
-  const [openModalFillDescriptTemplate, setOpenModalFillDescriptTemplate] = useState<boolean>(false);
-  const [openModalPreviewDescriptTemplate, setOpenModalPreviewDescriptTemplate] = useState<boolean>(false);
+  const [openModalFillDescriptTemplate, setOpenModalFillDescriptTemplate] =
+    useState<boolean>(false);
+  const [
+    openModalPreviewDescriptTemplate,
+    setOpenModalPreviewDescriptTemplate,
+  ] = useState<boolean>(false);
+  const [templateId, setTemplateId] = useState<number>(1);
   // const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return (
     <Box sx={{ marginTop: '24px' }} className="description-post modal-person">
@@ -45,13 +50,12 @@ const Description: React.FC<IDescription> = (props) => {
           component="label"
           htmlFor="startTime"
         >
-          {
-            languageRedux === 1
-              ? "Mô tả công việc"
-              : languageRedux === 2
-                ? "Job description"
-                : '업무 설명서'
-          } <span style={{ color: 'red' }}>*</span>
+          {languageRedux === 1
+            ? 'Mô tả công việc'
+            : languageRedux === 2
+            ? 'Job description'
+            : '업무 설명서'}{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         {/* <div className='description_template' onClick={
           () => setOpenModalFillDescriptTemplate(true)
@@ -68,10 +72,10 @@ const Description: React.FC<IDescription> = (props) => {
         // label="Một số đặc điểm nhận diện công ty"
         placeholder={
           languageRedux === 1
-            ? "Mô tả công việc"
+            ? 'Mô tả công việc'
             : languageRedux === 2
-              ? "Job description"
-              : '업무 설명서'
+            ? 'Job description'
+            : '업무 설명서'
         }
         value={description}
         id="post_job_description"
@@ -82,16 +86,16 @@ const Description: React.FC<IDescription> = (props) => {
             {languageRedux === 1
               ? 'Mô tả không được vượt quá 4000 ký tự'
               : languageRedux === 2
-                ? 'Description cannot exceed 4000 characters'
-                : languageRedux === 3 && '설명은 4,000자를 초과할 수 없습니다'}
+              ? 'Description cannot exceed 4000 characters'
+              : languageRedux === 3 && '설명은 4,000자를 초과할 수 없습니다'}
           </span>
         ) : description.length === 0 ? (
           <span className="helper-text">
             {languageRedux === 1
               ? 'Mô tả không được để trống'
               : languageRedux === 2
-                ? 'Description cannot be blank'
-                : languageRedux === 3 && '설명은 비워둘 수 없습니다.'}
+              ? 'Description cannot be blank'
+              : languageRedux === 3 && '설명은 비워둘 수 없습니다.'}
           </span>
         ) : (
           <></>
@@ -101,14 +105,21 @@ const Description: React.FC<IDescription> = (props) => {
       <ModalFillDescriptTemplate
         openModalFillDescriptTemplate={openModalFillDescriptTemplate}
         setOpenModalFillDescriptTemplate={setOpenModalFillDescriptTemplate}
-        setOpenModalPreviewDescriptTemplate={setOpenModalPreviewDescriptTemplate}
+        setOpenModalPreviewDescriptTemplate={
+          setOpenModalPreviewDescriptTemplate
+        }
         setDescription={setDescription}
         oldDescription={oldDescription}
         typeModal={1}
+        setTemplateId={setTemplateId}
       />
       <ModalPreviewDescriptTemplate
         openModalPreviewDescriptTemplate={openModalPreviewDescriptTemplate}
-        setOpenModalPreviewDescriptTemplate={setOpenModalPreviewDescriptTemplate}
+        setOpenModalPreviewDescriptTemplate={
+          setOpenModalPreviewDescriptTemplate
+        }
+        typeModal={1}
+        templateId={templateId}
       />
     </Box>
   );

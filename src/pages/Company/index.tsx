@@ -265,15 +265,18 @@ const Company: React.FC<ICompany> = (props) => {
   }, [isValid]);
 
   const validURL = (str: string) => {
+    // var pattern = new RegExp(
+    //   '^(https?:\\/\\/)?' + // protocol
+    //   '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    //   '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    //   '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    //   '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    //   '(\\#[-a-z\\d_]*)?$',
+    //   'i',
+    // ); // fragment locator
     var pattern = new RegExp(
-      '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
-      'i',
-    ); // fragment locator
+      /^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/,
+    );
     return !!pattern.test(str);
   };
 
@@ -547,14 +550,14 @@ const Company: React.FC<ICompany> = (props) => {
         idError: 13,
       };
     }
-    if (dataCompany?.description.length > 1000) {
+    if (dataCompany?.description.length > 4000) {
       return {
         message:
           languageRedux === 1
-            ? 'Mô tả không được quá 1000 ký tự.'
+            ? 'Mô tả không được quá 4000 ký tự.'
             : languageRedux === 2
-              ? 'Description must not exceed 1000 characters.'
-              : languageRedux === 3 && '설명은 1,000자를 초과할 수 없습니다.',
+              ? 'Description must not exceed 4000 characters.'
+              : languageRedux === 3 && '설명은 4,000자를 초과할 수 없습니다.',
         checkForm: false,
         idError: 13,
       };

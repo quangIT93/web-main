@@ -82,6 +82,15 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
     }
   }, [company]);
 
+  const isValidHttpUrl = (url: string) => {
+    try {
+      const newUrl = new URL(url);
+      return newUrl.protocol === 'http:' || newUrl.protocol === 'https:';
+    } catch (err) {
+      return false;
+    }
+  }
+
   return (
     <div className={styles.contact_info_container}>
       <div className={styles.contact_info_content}>
@@ -233,31 +242,27 @@ const ContactInfo: React.FC<IContactInfo> = (props) => {
                       : languageRedux === 2
                         ? 'Website: '
                         : languageRedux === 3 && '웹사이트: '}
-                    <span
-                      style={
-                        company?.website
-                          ? { cursor: 'pointer', color: '#0D99FF' }
-                          : {}
-                      }
-                    >
-                      <Link
-                        style={
-                          company?.website
-                            ? { cursor: 'pointer', color: '#0D99FF' }
-                            : {}
-                        }
-                        to={company?.website ? company?.website : '#'}
-                        target="_blank"
-                      >
-                        {company?.website
-                          ? company.website
-                          : languageRedux === 1
+                    <span>
+                      {
+                        !company?.website ?
+                          languageRedux === 1
                             ? 'Thông tin công ty chưa cập nhật'
                             : languageRedux === 2
                               ? 'Company information not updated yet'
                               : languageRedux === 3 &&
-                              '회사정보가 업데이트되지 않았습니다.'}
-                      </Link>
+                              '회사정보가 업데이트되지 않았습니다.'
+                          :
+                          <Link
+                            className={styles.url}
+                            to={
+                              isValidHttpUrl(company?.website) ?
+                                company?.website
+                                : `https://${company?.website}`}
+                            target="_blank"
+                          >
+                            {company?.website}
+                          </Link>
+                      }
                       {/* {company?.website
                         ? company.website
                         :languageRedux === 1

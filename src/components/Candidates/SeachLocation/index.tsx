@@ -118,6 +118,7 @@ const SeachLocation: React.FC<ISearchLocation> = (props) => {
 
   const onChange = (value: string[][]) => {
     setReset(false);
+    // setAddresses(value !== undefined ? value[0] : value);
     setAddresses(value);
   };
 

@@ -123,8 +123,8 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
           languageRedux === 1
             ? 'Không còn ứng cử viên để xem.'
             : languageRedux === 2
-            ? 'No more candidates to see.'
-            : '더 이상 지켜볼 후보자가 없습니다.',
+              ? 'No more candidates to see.'
+              : '더 이상 지켜볼 후보자가 없습니다.',
         );
       }
     } catch (error) {
@@ -169,20 +169,20 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
           {languageRedux === 1
             ? 'Danh sách ứng viên'
             : languageRedux === 2
-            ? 'List of candidates'
-            : ' 지원자 리스트'}
+              ? 'List of candidates'
+              : ' 지원자 리스트'}
           <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
             {searchParams.get('c') === '4-0'
               ? languageRedux === 1
                 ? ' > Ứng viên đã lưu.'
                 : languageRedux === 2
-                ? ' > Saved candidates'
-                : ' > 저장한 구직자.'
+                  ? ' > Saved candidates'
+                  : ' > 저장한 구직자.'
               : languageRedux === 1
-              ? ' > Ứng viên đã xem'
-              : languageRedux === 2
-              ? ' > Viewed candidates'
-              : languageRedux === 3 && '본 구지자.'}
+                ? ' > Ứng viên đã xem'
+                : languageRedux === 2
+                  ? ' > Viewed candidates'
+                  : languageRedux === 3 && '본 구지자.'}
           </span>
         </Typography>
       </Box>
@@ -193,7 +193,7 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -204,7 +204,7 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
               // <Skeleton loading={loading} active>
               <ListCardSaveCandidate
                 item={dataBookmark}
-                handleDeleteBookmark={() => {}}
+                handleDeleteBookmark={() => { }}
                 index={i}
                 key={i}
                 language={[]}
@@ -238,8 +238,8 @@ const CardListCandidate: React.FC<ICardsApplied> = (props) => {
               {languageRedux === 1
                 ? 'Xem thêm'
                 : languageRedux === 2
-                ? 'See more'
-                : '더보기'}
+                  ? 'See more'
+                  : '더보기'}
               {/* Xem thêm */}
             </Button>
           </Box>

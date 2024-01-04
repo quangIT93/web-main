@@ -27,6 +27,9 @@ import bookMarkApi from 'api/bookMarkApi';
 
 import { PropsTypePostNew } from '../JobCardSaveHstory/interfacePostNew';
 import noImage from '../../../../img/noImage.png';
+import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 // import { historyVi } from 'validations/lang/vi/history';
 // import { historyEn } from 'validations/lang/en/history';
 // import bookMarkApi from 'api/bookMarkApi';
@@ -65,7 +68,7 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
   const handleImageError = () => {
     setError(true);
   };
-
+  const dispatch = useDispatch();
   const handleBookmark = async (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
@@ -75,11 +78,13 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
       if (result) {
         setCheckBookMark(!checkBookMark);
         props.item.bookmarked = false;
+        dispatch<any>(setAlertCancleSave(true));
       }
     } else {
       const result = await bookMarkApi.createBookMark(props.item?.id);
       if (result) {
         setCheckBookMark(!checkBookMark);
+        dispatch<any>(setAlertSave(true));
         props.item.bookmarked = true;
       }
     }
@@ -204,7 +209,7 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item?.salaryMin)}{' '}
-                  {props?.item?.moneyType}-{' '}
+                  {props?.item?.moneyType}{' - '}
                   {new Intl.NumberFormat('en-US').format(
                     props.item?.salaryMin,
                   ) +
@@ -250,8 +255,10 @@ const JobCardViewPost: React.FC<IitemNewJob> = (props) => {
                 : languageRedux === 2
                   ? 'Posted on:'
                   : languageRedux === 3 && '에 게시 됨:'}{' '}
-              {props.item?.createdAtText != null
-                ? props.item?.createdAtText
+              {props.item?.created_at != null
+                ? moment(props.item?.created_at).format('DD/MM/YYYY') +
+                ' ' +
+                moment(new Date(props.item?.created_at)).format('HH:mm')
                 : languageRedux === 1
                   ? 'Chưa cập nhật'
                   : languageRedux === 2
