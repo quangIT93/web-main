@@ -62,8 +62,12 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
   const profileCompanyV3 = useSelector(
     (state: RootState) => state.dataProfileCompanyV3.data,
   );
-  const [openModalFillDescriptTemplate, setOpenModalFillDescriptTemplate] = useState<boolean>(false);
-  const [openModalPreviewDescriptTemplate, setOpenModalPreviewDescriptTemplate] = useState<boolean>(false);
+  const [openModalFillDescriptTemplate, setOpenModalFillDescriptTemplate] =
+    useState<boolean>(false);
+  const [
+    openModalPreviewDescriptTemplate,
+    setOpenModalPreviewDescriptTemplate,
+  ] = useState<boolean>(false);
   const [templateId, setTemplateId] = useState<number>(1);
   const handleEditCompanyDes = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -90,15 +94,15 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
             {languageRedux === 1
               ? 'Mô tả công ty'
               : languageRedux === 2
-                ? "Company's description"
-                : '회사소개'}{' '}
+              ? "Company's description"
+              : '회사소개'}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
-          <div className='description_template' onClick={
+          {/* <div className='description_template' onClick={
             () => setOpenModalFillDescriptTemplate(true)
           }>
             <FillDataPost />
-          </div>
+          </div> */}
         </div>
         <TextField
           disabled={is_profile ? true : false}
@@ -114,10 +118,10 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
             languageRedux === 1
               ? 'Mô tả công ty'
               : languageRedux === 2
-                ? "Company's description"
-                : '회사소개'
+              ? "Company's description"
+              : '회사소개'
           }
-        //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
           {dataCompany?.description?.length === 0 ? (
@@ -125,16 +129,16 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
               {languageRedux === 1
                 ? 'Thông tin thêm không được bỏ trống'
                 : languageRedux === 2
-                  ? 'Additional information cannot be empty'
-                  : languageRedux === 3 && '추가 정보는 비워둘 수 없습니다.'}
+                ? 'Additional information cannot be empty'
+                : languageRedux === 3 && '추가 정보는 비워둘 수 없습니다.'}
             </span>
           ) : dataCompany?.description?.length > 4000 ? (
             <span className="helper-text">
               {languageRedux === 1
                 ? 'Thông tin thêm không được vượt quá 4000 ký tự'
                 : languageRedux === 2
-                  ? 'Additional information cannot exceed 4000 characters'
-                  : languageRedux === 3 &&
+                ? 'Additional information cannot exceed 4000 characters'
+                : languageRedux === 3 &&
                   '추가 정보는 1000자를 초과할 수 없습니다.'}
             </span>
           ) : (
@@ -146,15 +150,21 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
       <ModalFillDescriptTemplate
         openModalFillDescriptTemplate={openModalFillDescriptTemplate}
         setOpenModalFillDescriptTemplate={setOpenModalFillDescriptTemplate}
-        setOpenModalPreviewDescriptTemplate={setOpenModalPreviewDescriptTemplate}
+        setOpenModalPreviewDescriptTemplate={
+          setOpenModalPreviewDescriptTemplate
+        }
         setDescription={setDataCompany}
-        oldDescription={profileCompanyV3?.description ? profileCompanyV3.description : ''}
+        oldDescription={
+          profileCompanyV3?.description ? profileCompanyV3.description : ''
+        }
         typeModal={2}
         setTemplateId={setTemplateId}
       />
       <ModalPreviewDescriptTemplate
         openModalPreviewDescriptTemplate={openModalPreviewDescriptTemplate}
-        setOpenModalPreviewDescriptTemplate={setOpenModalPreviewDescriptTemplate}
+        setOpenModalPreviewDescriptTemplate={
+          setOpenModalPreviewDescriptTemplate
+        }
         typeModal={2}
         templateId={templateId}
       />
