@@ -194,6 +194,7 @@ const BreadcrumbMenuItems: React.FC = () => {
                 ? 'Hot jobs'
                 : languageRedux === 3 && '핫잡스',
           href: `/more-jobs`,
+          onClick: () => { localStorage.setItem('job-type', 'hot-job'); }
         },
         {
           title:

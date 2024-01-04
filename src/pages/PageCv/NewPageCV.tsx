@@ -552,7 +552,7 @@ const NewPageCV = () => {
 
                     </div>
                 </div>
-                <div className={styles.new_page_cv_question}>
+                {/* <div className={styles.new_page_cv_question}>
                     <div className={styles.new_page_cv_question_content}>
                         <h3>
                             {
@@ -621,7 +621,7 @@ const NewPageCV = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
             <RollTop />
             <Footer />

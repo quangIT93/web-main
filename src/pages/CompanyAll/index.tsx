@@ -258,6 +258,7 @@ const CompanyAll = () => {
   }, [languageRedux]);
 
   console.log(listData);
+  console.log("addresses", addresses)
 
   return (
     <div className="company-all-container">
