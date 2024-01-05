@@ -243,7 +243,7 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
             }}
           >
             {languageRedux === 1
-              ? `HiJob sẽ tự động điền mẫu mổ tả ${
+              ? `HiJob sẽ tự động điền mẫu mô tả ${
                   typeModal === 1 ? 'công việc' : 'công ty'
                 } theo thông tin ${
                   typeModal === 1 ? 'bài đăng' : 'công ty'
