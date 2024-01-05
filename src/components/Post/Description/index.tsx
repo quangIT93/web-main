@@ -57,11 +57,12 @@ const Description: React.FC<IDescription> = (props) => {
             : '업무 설명서'}{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
-        {/* <div className='description_template' onClick={
-          () => setOpenModalFillDescriptTemplate(true)
-        }>
+        <div
+          className="description_template"
+          onClick={() => setOpenModalFillDescriptTemplate(true)}
+        >
           <FillDataPost />
-        </div> */}
+        </div>
       </div>
       <TextField
         // className={classes.textarea}
