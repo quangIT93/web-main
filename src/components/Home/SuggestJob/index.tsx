@@ -183,13 +183,13 @@ const ThemesJob: React.FC = () => {
         // null,
         // Number(searchParams.get('categories-id')),
         profile.length !== 0 &&
-          profile?.profileLocations?.length > 0 &&
-          profile?.profileLocations?.map((item: any) => {
-            return item.province.id;
-          }),
+        profile?.profileLocations?.length > 0 &&
+        profile?.profileLocations?.map((item: any) => {
+          return item.province.id;
+        }),
         null,
         null,
-        20,
+        10,
         null,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
@@ -265,10 +265,10 @@ const ThemesJob: React.FC = () => {
             {languageRedux === 1
               ? 'Công việc gợi ý'
               : languageRedux === 2
-              ? 'Suggested jobs in your city'
-              : languageRedux === 3
-              ? '귀하의 도시에서 추천 직업'
-              : 'Công việc gợi ý'}
+                ? 'Suggested jobs in your city'
+                : languageRedux === 3
+                  ? '귀하의 도시에서 추천 직업'
+                  : 'Công việc gợi ý'}
           </h2>
         </div>
         {/* <div
@@ -302,8 +302,8 @@ const ThemesJob: React.FC = () => {
               {languageRedux === 1
                 ? 'Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.'
                 : languageRedux === 2
-                ? 'Quickly find a job that fits your needs.'
-                : languageRedux === 3 &&
+                  ? 'Quickly find a job that fits your needs.'
+                  : languageRedux === 3 &&
                   '귀하의 필요에 맞는 일자리를 빠르게 찾으십시오.'}
             </p>
           </div>
@@ -318,8 +318,8 @@ const ThemesJob: React.FC = () => {
               {languageRedux === 1
                 ? 'Đăng nhập ngay'
                 : languageRedux === 2
-                ? 'Sign in'
-                : languageRedux === 3 && '로그인'}
+                  ? 'Sign in'
+                  : languageRedux === 3 && '로그인'}
             </Button>
           </div>
         </div>
@@ -335,7 +335,7 @@ const ThemesJob: React.FC = () => {
                 container
                 spacing={3}
                 columns={{ xs: 12, sm: 4, md: 12 }}
-                // sx={{ marginTop: '-8px' }}
+              // sx={{ marginTop: '-8px' }}
               >
                 {nearJob.map((item: PostNewestV3, index: number) => (
                   <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
@@ -397,7 +397,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>
@@ -409,8 +409,8 @@ const ThemesJob: React.FC = () => {
             style={{
               display:
                 !nearJob ||
-                nearJob.length === 0 ||
-                !localStorage.getItem('accessToken')
+                  nearJob.length === 0 ||
+                  !localStorage.getItem('accessToken')
                   ? 'none'
                   : 'flex',
             }}
@@ -420,8 +420,8 @@ const ThemesJob: React.FC = () => {
               {languageRedux === 1
                 ? 'Xem tất cả'
                 : languageRedux === 2
-                ? 'View all'
-                : languageRedux === 3 && '모두보기'}
+                  ? 'View all'
+                  : languageRedux === 3 && '모두보기'}
             </p>
             <ArrowrightIcon width={20} height={20} />
           </div>

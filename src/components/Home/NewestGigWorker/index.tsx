@@ -52,7 +52,7 @@ const NewestGigWorker = () => {
         //   : profileV3.length === 0
         //     ? 6
         //     : 18,
-        18,
+        9,
         page,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
@@ -62,7 +62,7 @@ const NewestGigWorker = () => {
 
         setListData(result.data.cvFilters);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -104,8 +104,8 @@ const NewestGigWorker = () => {
             {languageRedux === 1
               ? 'Ứng viên mới nhất'
               : languageRedux === 2
-              ? 'Newest workers'
-              : languageRedux === 3 && '최신 지원자'}
+                ? 'Newest workers'
+                : languageRedux === 3 && '최신 지원자'}
           </h2>
         </div>
         {/* {profileV3?.typeRoleData === 1 ? (
@@ -152,8 +152,8 @@ const NewestGigWorker = () => {
             {languageRedux === 1
               ? 'Xem tất cả'
               : languageRedux === 2
-              ? 'View all'
-              : languageRedux === 3 && '모두보기'}
+                ? 'View all'
+                : languageRedux === 3 && '모두보기'}
           </p>
           <ArrowrightIcon width={20} height={20} />
         </div>
