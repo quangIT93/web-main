@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // @ts-ignore
 import copy from 'clipboard-copy';
 import moment from 'moment';
@@ -1600,8 +1600,16 @@ const Detail = () => {
 
   // console.log('latitude ', post?.data?.postCompanyInformation?.latitude);
   // console.log('longitude ', post?.data?.postCompanyInformation?.longitude);
-  const videoOfPost = videos.find((video) => Number(video.id) === POST_ID)
-  const videoLink = videoOfPost?.link
+  const [videoLink, setVideoLink] = useState<any>();
+
+  useEffect(() => {
+    const videoOfPost = videos.find((video) => Number(video.id) === Number(searchParams.get('post-id')))
+    const link = videoOfPost?.link
+    setVideoLink(link);
+  }, [])
+
+  console.log("videoLink", videoLink);
+
 
   return (
     <>
@@ -1759,7 +1767,7 @@ const Detail = () => {
                 <div className="video-tiktok-youtube">
                   <div className="tiktok-youtub_item"
                     style={{
-                      display: videoLink?.youtube !== null ? 'flex' : 'none'
+                      display: videoLink && videoLink?.youtube !== null ? 'flex' : 'none'
                     }}
                     onClick={() => {
                       videoLink?.youtube &&
@@ -1779,7 +1787,7 @@ const Detail = () => {
                   </div>
                   <div className="tiktok-youtub_item"
                     style={{
-                      display: videoLink?.tiktok !== null ? 'flex' : 'none'
+                      display: videoLink && videoLink?.tiktok !== null ? 'flex' : 'none'
                     }}
                     onClick={() => {
                       videoLink?.tiktok &&
