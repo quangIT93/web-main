@@ -169,7 +169,7 @@
           align-items: center;
           flex-wrap: nowrap;
           column-gap: 10px;
-          
+
           @include breakpoint(tablet) {
             justify-content: space-between;
           }
@@ -330,6 +330,33 @@
                 width: 24px;
                 height: 24px;
               }
+            }
+          }
+        }
+
+        .video-tiktok-youtube {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+
+          .tiktok-youtub_item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+
+            .item-icon {
+              display: grid;
+              place-items: center;
+              width: 24px;
+              height: 24px;
+              min-width: 24px;
+            }
+
+            h3 {
+              font-size: 14px;
+              font-weight: 400;
+              text-decoration: underline;
             }
           }
         }

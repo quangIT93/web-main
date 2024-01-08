@@ -1,0 +1,19 @@
+@import '../../../scss/mixins';
+.items_profile {
+    margin-bottom: 12px;
+    &_setting {
+        color: #0D99FF;
+        cursor: pointer;
+    }
+
+    &_wrapItem {
+        display: flex;
+        gap: 12px;
+        margin: 12px 0;
+        @include breakpoint(mobile) {
+            flex-direction: column;
+    
+        }
+
+    }
+}
