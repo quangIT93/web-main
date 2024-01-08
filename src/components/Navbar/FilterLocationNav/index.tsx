@@ -93,8 +93,8 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
         {languageRedux === 1
           ? 'Chọn địa điểm'
           : languageRedux === 2
-            ? 'Select location'
-            : languageRedux === 3 && '위치를  선택합니다'}
+          ? 'Select location'
+          : languageRedux === 3 && '위치를  선택합니다'}
       </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
@@ -102,8 +102,8 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
           ? languageRedux === 1
             ? 'Chỉ có thể tối đa 10 khu vực'
             : languageRedux === 2
-              ? 'Only up to 10 areas can be'
-              : languageRedux === 3 && '최대 10개 영역까지만 가능합니다'
+            ? 'Only up to 10 areas can be'
+            : languageRedux === 3 && '최대 10개 영역까지만 가능합니다'
           : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
@@ -216,8 +216,8 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
               languageRedux === 1
                 ? 'Chọn địa điểm'
                 : languageRedux === 2
-                  ? 'Select location'
-                  : languageRedux === 3 && '위치를  선택합니다'
+                ? 'Select location'
+                : languageRedux === 3 && '위치를  선택합니다'
             }
             inputIcon={<EnvironmentOutlined />}
             suffixIcon={<ArrowFilterIcon width={14} height={10} />}
@@ -229,12 +229,12 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
               userProfile.length !== 0
                 ? listLocation.current
                 : listLocation.current?.length === 0 &&
-                    location?.pathname === '/search-results'
-                  ? []
-                  : userProfile?.profileLocations?.map((profile: any) => [
-                      profile?.province?.id,
-                      profile?.id,
-                    ])
+                  location?.pathname === '/search-results'
+                ? []
+                : userProfile?.profileLocations?.map((profile: any) => [
+                    profile?.province?.id,
+                    profile?.id,
+                  ])
             }
             options={
               dataLocations

@@ -50,6 +50,7 @@ import { setIsNew } from 'store/reducer/isNewReducer';
 import Advertise from '#components/Home/Advertise';
 import { Helmet } from 'react-helmet';
 import NewestCompany from '#components/Home/NewsetCompany';
+import ItemsProfile from '#components/Home/ItemsProfile';
 import JobStory from '#components/Home/JobStory';
 
 const Home: React.FC = () => {
@@ -107,9 +108,9 @@ const Home: React.FC = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Tìm việc làm, tuyển dụng'
-        : languageRedux === 2 ?
-          'HiJob - Find a job, recruit' :
-          'HiJob - 일자리 찾기, 채용';
+        : languageRedux === 2
+        ? 'HiJob - Find a job, recruit'
+        : 'HiJob - 일자리 찾기, 채용';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
@@ -260,40 +261,39 @@ const Home: React.FC = () => {
         {/* <CategoryCarousel />
         <Breadcrumbs /> */}
         {/* <JobStory /> */}
+        <ItemsProfile />
         <AppliedPostedJob />
-        {
-          !localStorage.getItem('accessToken') ?
-            <>
-              <HotJob />
-              <NewestGigWorker />
-              <NewestCompany />
-              <NewJobs />
-              <SuggestJob />
-              <ThemesJob />
-              <Community />
-            </>
-            :
-            profileV3.typeRoleData === 0 ?
-              <>
-                <HotJob />
-                <NewJobs />
-                <SuggestJob />
-                <ThemesJob />
-                <NewestGigWorker />
-                <NewestCompany />
-                <Community />
-              </>
-              :
-              <>
-                <NewestGigWorker />
-                <NewestCompany />
-                <HotJob />
-                <NewJobs />
-                <SuggestJob />
-                <ThemesJob />
-                <Community />
-              </>
-        }
+        {!localStorage.getItem('accessToken') ? (
+          <>
+            <HotJob />
+            <NewestGigWorker />
+            <NewestCompany />
+            <NewJobs />
+            <SuggestJob />
+            <ThemesJob />
+            <Community />
+          </>
+        ) : profileV3.typeRoleData === 0 ? (
+          <>
+            <HotJob />
+            <NewJobs />
+            <SuggestJob />
+            <ThemesJob />
+            <NewestGigWorker />
+            <NewestCompany />
+            <Community />
+          </>
+        ) : (
+          <>
+            <NewestGigWorker />
+            <NewestCompany />
+            <HotJob />
+            <NewJobs />
+            <SuggestJob />
+            <ThemesJob />
+            <Community />
+          </>
+        )}
         <Advertise />
         {/* {reachedEndShowSubjectJob ? (
           <>
@@ -306,12 +306,12 @@ const Home: React.FC = () => {
         openModalSelectRole={openModalSelectRole}
         setOpenModalSelectRole={setOpenModalSelectRole}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-      // setRole={setRole}
+        // setRole={setRole}
       />
       <ModalUpdateInfo
         openModalUpdateInfo={openModalUpdateInfo}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-      // role={role}
+        // role={role}
       />
       {/* <RollTop />
       <Footer /> */}
