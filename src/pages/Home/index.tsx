@@ -50,6 +50,7 @@ import { setIsNew } from 'store/reducer/isNewReducer';
 import Advertise from '#components/Home/Advertise';
 import { Helmet } from 'react-helmet';
 import NewestCompany from '#components/Home/NewsetCompany';
+//@ts-ignore
 import ItemsProfile from '#components/Home/ItemsProfile';
 import JobStory from '#components/Home/JobStory';
 
@@ -262,6 +263,7 @@ const Home: React.FC = () => {
         <Breadcrumbs /> */}
         {/* <JobStory /> */}
         <ItemsProfile />
+        <JobStory />
         <AppliedPostedJob />
         {!localStorage.getItem('accessToken') ? (
           <>

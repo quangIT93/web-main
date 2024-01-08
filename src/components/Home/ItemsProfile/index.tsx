@@ -92,14 +92,14 @@ const ItemsProfile = () => {
   }, []);
 
   useEffect(() => {
-    if (profileV3?.length !== 0) {
+    if (listLocation?.current?.length !== 0) {
       setActive(false);
     } else {
       setTimeout(() => {
         setActive(true);
-      }, 3000);
+      }, 2000);
     }
-  }, [profileV3]);
+  }, [listLocation]);
 
   console.log('profileV3', profileV3);
   const handleChange = (value: string) => {

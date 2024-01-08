@@ -5,6 +5,25 @@
     margin: 0 0 24px 0 !important;
     padding-bottom: 0 !important;
 
+    .job-story-title-wrapper {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 16px;
+
+        .job-story-title {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+
+            .ant-btn {
+                background: #0D99FF;
+
+            }
+        }
+    }
+
     .job-story-swiper {
         z-index: 0;
         margin-top: 24px;
@@ -38,14 +57,23 @@
                         justify-content: space-between;
                         padding: 10px;
 
-                        .ant-badge {
-                            .ant-avatar {
-                                img {
-                                    border: 3px solid #0d99ff;
-                                    border-radius: 50%;
-                                }
+                        h5,
+                        h6 {
+                            display: -webkit-box !important;
+                            -webkit-line-clamp: 2 !important;
+                            -webkit-box-orient: vertical !important;
+                            overflow: hidden !important;
+                        }
+
+                        // .ant-badge {
+                        .ant-avatar {
+                            img {
+                                border: 3px solid #0d99ff !important;
+                                border-radius: 50%;
                             }
                         }
+
+                        // }
                     }
                 }
             }
@@ -132,4 +160,8 @@
         }
 
     }
+}
+
+.ant-popover {
+    max-width: 200px;
 }

@@ -63,7 +63,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalLogin from '../../components/Home/ModalLogin';
 
 import { FormOutlined, ExclamationCircleFilled } from '@ant-design/icons';
-import { SaveIconOutline, SaveIconFill, ShareIcon } from '#components/Icons';
+import { SaveIconOutline, SaveIconFill, ShareIcon, YoutubeShort, Tiktok } from '#components/Icons';
 import { PostNewest } from '#components/Home/NewJobs';
 
 import { Tabs } from 'antd';
@@ -109,7 +109,7 @@ import AnotherPost from './components/AnotherPost';
 import { Helmet } from 'react-helmet';
 import apiCompany from 'api/apiCompany';
 // import { Language } from '#components/Navbar/Css';
-
+import { videos } from '#components/Home/JobStory';
 // const itemsShare = [
 //   {
 //     nameShare: 'Sao chép liên kết',
@@ -1507,8 +1507,8 @@ const Detail = () => {
                       }
                       style={{
                         color: `${post?.data?.postCompanyInformation?.website
-                            ? 'rgb(13, 153, 255)'
-                            : ''
+                          ? 'rgb(13, 153, 255)'
+                          : ''
                           }`,
                       }}
                       target="_blank"
@@ -1600,6 +1600,8 @@ const Detail = () => {
 
   // console.log('latitude ', post?.data?.postCompanyInformation?.latitude);
   // console.log('longitude ', post?.data?.postCompanyInformation?.longitude);
+  const videoOfPost = videos.find((video) => Number(video.id) === POST_ID)
+  const videoLink = videoOfPost?.link
 
   return (
     <>
@@ -1753,6 +1755,50 @@ const Detail = () => {
                     </div>
                   </div>
                 </div>
+
+                <div className="video-tiktok-youtube">
+                  <div className="tiktok-youtub_item"
+                    style={{
+                      display: videoLink?.youtube !== null ? 'flex' : 'none'
+                    }}
+                    onClick={() => {
+                      videoLink?.youtube &&
+                        window.open(videoLink?.youtube)
+                    }}
+                  >
+                    <div className="item-icon">
+                      <YoutubeShort width={24} height={24} />
+                    </div>
+                    <h3>
+                      {languageRedux === 1
+                        ? 'Video tuyển dụng'
+                        : languageRedux === 2
+                          ? 'Recruitment video'
+                          : languageRedux === 3 && '채용 비디오'}
+                    </h3>
+                  </div>
+                  <div className="tiktok-youtub_item"
+                    style={{
+                      display: videoLink?.tiktok !== null ? 'flex' : 'none'
+                    }}
+                    onClick={() => {
+                      videoLink?.tiktok &&
+                        window.open(videoLink?.tiktok)
+                    }}
+                  >
+                    <div className="item-icon">
+                      <Tiktok width={20} height={20} />
+                    </div>
+                    <h3>
+                      {languageRedux === 1
+                        ? 'Video tuyển dụng'
+                        : languageRedux === 2
+                          ? 'Recruitment video'
+                          : languageRedux === 3 && '채용 비디오'}
+                    </h3>
+                  </div>
+                </div>
+
               </div>
               <div className="img-container">
                 <div className="div-job-img" ref={componentRef}>
@@ -2113,8 +2159,8 @@ const Detail = () => {
                       <AddressDetailPostIcon width={16} height={16} />
                       <span style={{ marginLeft: '8px' }}>
                         {`${post?.data.address}, ${post?.data?.location
-                            ? post?.data?.location?.fullName
-                            : ''
+                          ? post?.data?.location?.fullName
+                          : ''
                           }, ${post?.data?.location?.district
                             ? post?.data?.location?.district?.fullName
                             : ''
