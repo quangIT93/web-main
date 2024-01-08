@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // @ts-ignore
 import copy from 'clipboard-copy';
 import moment from 'moment';
@@ -63,7 +63,13 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalLogin from '../../components/Home/ModalLogin';
 
 import { FormOutlined, ExclamationCircleFilled } from '@ant-design/icons';
-import { SaveIconOutline, SaveIconFill, ShareIcon, YoutubeShort, Tiktok } from '#components/Icons';
+import {
+  SaveIconOutline,
+  SaveIconFill,
+  ShareIcon,
+  YoutubeShort,
+  Tiktok,
+} from '#components/Icons';
 import { PostNewest } from '#components/Home/NewJobs';
 
 import { Tabs } from 'antd';
@@ -207,8 +213,8 @@ const Detail = () => {
     languageRedux === 1
       ? 'Ứng tuyển'
       : languageRedux === 2
-        ? 'Apply'
-        : '신병 모집',
+      ? 'Apply'
+      : '신병 모집',
   );
   const [key, setKeyTab] = React.useState<string>('1');
   const [backgroundButton, setBackgroundButton] =
@@ -236,8 +242,8 @@ const Detail = () => {
         languageRedux === 1
           ? 'Sao chép liên kết'
           : languageRedux === 2
-            ? 'Copy link'
-            : '링크를 복사',
+          ? 'Copy link'
+          : '링크를 복사',
       icon: <CopyIcon />,
       source: '',
     },
@@ -246,8 +252,8 @@ const Detail = () => {
         languageRedux === 1
           ? 'Email'
           : languageRedux === 2
-            ? 'Email'
-            : '이메일',
+          ? 'Email'
+          : '이메일',
       icon: <MailIcon />,
       source: '',
     },
@@ -256,8 +262,8 @@ const Detail = () => {
         languageRedux === 1
           ? 'Facebook'
           : languageRedux === 2
-            ? 'Facebook'
-            : '페이스북',
+          ? 'Facebook'
+          : '페이스북',
       icon: <FacebookIcon />,
       source: '',
     },
@@ -316,7 +322,7 @@ const Detail = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -350,8 +356,8 @@ const Detail = () => {
             languageRedux === 1
               ? 'Chỉnh sửa bài tuyển dụng'
               : languageRedux === 2
-                ? 'Edit job posting'
-                : '채용 게시물 수정',
+              ? 'Edit job posting'
+              : '채용 게시물 수정',
           );
           setBackgroundButton('gray');
           setCheckPostUser(true);
@@ -361,8 +367,8 @@ const Detail = () => {
             languageRedux === 1
               ? 'Bài đăng đã đóng'
               : languageRedux === 2
-                ? 'Post is closed'
-                : '게시물이 닫혔습니다',
+              ? 'Post is closed'
+              : '게시물이 닫혔습니다',
           );
           // setBackgroundButton('#0D99FF');
           result.data.applied = true;
@@ -372,8 +378,8 @@ const Detail = () => {
             languageRedux === 1
               ? 'Đã ứng tuyển'
               : languageRedux === 2
-                ? 'Applied'
-                : '지원되였습니다',
+              ? 'Applied'
+              : '지원되였습니다',
           );
         } else {
           if (profileV3.length !== 0) {
@@ -382,16 +388,16 @@ const Detail = () => {
                 languageRedux === 1
                   ? 'Ứng tuyển ngay'
                   : languageRedux === 2
-                    ? 'Apply now'
-                    : '지원하기',
+                  ? 'Apply now'
+                  : '지원하기',
               );
             } else {
               setTextButton(
                 languageRedux === 1
                   ? 'Xem'
                   : languageRedux === 2
-                    ? 'View'
-                    : '보다',
+                  ? 'View'
+                  : '보다',
               );
             }
           } else {
@@ -399,12 +405,12 @@ const Detail = () => {
               languageRedux === 1
                 ? 'Ứng tuyển ngay'
                 : languageRedux === 2
-                  ? 'Apply now'
-                  : '지원하기',
+                ? 'Apply now'
+                : '지원하기',
             );
           }
           result?.data?.companyResourceData?.name === 'HIJOB' &&
-            profileV3.typeRoleData === 1
+          profileV3.typeRoleData === 1
             ? setBackgroundButton('gray')
             : setBackgroundButton('#0D99FF');
           // setCheckPostUser(true);
@@ -535,14 +541,14 @@ const Detail = () => {
             languageRedux === 1
               ? 'Bạn đã ứng tuyển công việc này!'
               : languageRedux === 2
-                ? 'You have applied for this job!'
-                : '이 직무에 지원하셨습니다!',
+              ? 'You have applied for this job!'
+              : '이 직무에 지원하셨습니다!',
           description:
             languageRedux === 1
               ? 'Nhà tuyển dụng sẽ liên hệ bạn sớm nếu hồ sơ đạt yêu cầu.'
               : languageRedux === 2
-                ? 'The employer will contact you soon if the profile meets the requirements.'
-                : '귀하의 신청서가 요구 사항을 충족하면 고용주가 곧 귀하에게 연락할 것입니다.',
+              ? 'The employer will contact you soon if the profile meets the requirements.'
+              : '귀하의 신청서가 요구 사항을 충족하면 고용주가 곧 귀하에게 연락할 것입니다.',
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'blue' }} />,
         });
@@ -579,14 +585,14 @@ const Detail = () => {
             languageRedux === 1
               ? 'Cập nhật thông tin'
               : languageRedux === 2
-                ? 'Update information'
-                : '정보 업데이트',
+              ? 'Update information'
+              : '정보 업데이트',
           description:
             languageRedux === 1
               ? 'Vui lòng cập nhật thông tin để ứng tuyển công việc'
               : languageRedux === 2
-                ? 'Please update your information to apply for the job'
-                : '해당 직무에 지원하려면 정보를 업데이트하세요.',
+              ? 'Please update your information to apply for the job'
+              : '해당 직무에 지원하려면 정보를 업데이트하세요.',
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
         });
@@ -679,14 +685,14 @@ const Detail = () => {
         languageRedux === 1
           ? 'HiJob đề xuất công việc dành cho bạn'
           : languageRedux === 2
-            ? 'HiJob recommends jobs for you'
-            : 'HiJob이 당신에게 일자리를 추천해 드립니다';
+          ? 'HiJob recommends jobs for you'
+          : 'HiJob이 당신에게 일자리를 추천해 드립니다';
       const title =
         languageRedux === 1
           ? 'Hãy nhập nội dung email tại đây.'
           : languageRedux === 2
-            ? 'Please enter email content here.'
-            : '여기에 이메일 내용을 입력하세요.';
+          ? 'Please enter email content here.'
+          : '여기에 이메일 내용을 입력하세요.';
 
       const content =
         languageRedux === 1
@@ -695,9 +701,9 @@ const Detail = () => {
       Hãy nhấn vào link đính kèm để xem thêm thông tin chi tiết về công việc.
       `
           : languageRedux === 2
-            ? `HiJob hopes to help you find your dream job. We have found the latest jobs that may be suitable for you.
+          ? `HiJob hopes to help you find your dream job. We have found the latest jobs that may be suitable for you.
         Click on the attached link to see more detailed information about the job.`
-            : `HiJob은 귀하가 꿈의 직업을 찾는 데 도움이 되기를 바랍니다. 우리는 귀하에게 적합한 최신 직업을 찾았습니다.
+          : `HiJob은 귀하가 꿈의 직업을 찾는 데 도움이 되기를 바랍니다. 우리는 귀하에게 적합한 최신 직업을 찾았습니다.
         첨부된 링크를 클릭하시면 해당 직무에 대한 자세한 내용을 보실 수 있습니다.`;
       const emailBody = encodeURIComponent(
         `${title} ${content} ${post?.data.shareLink}`,
@@ -735,8 +741,8 @@ const Detail = () => {
         languageRedux === 1
           ? 'HiJob chia sẻ công việc cho bạn'
           : languageRedux === 2
-            ? 'HiJob shares jobs for you'
-            : 'HiJob이 당신을 위해 일자리를 공유합니다';
+          ? 'HiJob shares jobs for you'
+          : 'HiJob이 당신을 위해 일자리를 공유합니다';
 
       const url = `https://www.facebook.com/sharer/sharer.php?u=https://hijob.site/post-đetail/post-id=${postId}&quote=${encodeURIComponent(
         titleShare,
@@ -811,14 +817,17 @@ const Detail = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
-      }, ${post?.data?.location?.district
-        ? post?.data?.location?.district?.fullName
-        : ''
-      }, ${post?.data?.location?.district?.province
-        ? post?.data.district?.province?.fullName
-        : ''
-      }`,
+        `${post?.data.address}, ${
+          post?.data.location ? post?.data.location.fullName : ''
+        }, ${
+          post?.data?.location?.district
+            ? post?.data?.location?.district?.fullName
+            : ''
+        }, ${
+          post?.data?.location?.district?.province
+            ? post?.data.district?.province?.fullName
+            : ''
+        }`,
     );
   };
 
@@ -841,8 +850,8 @@ const Detail = () => {
           languageRedux === 1
             ? 'Đã ứng tuyển'
             : languageRedux === 2
-              ? 'Applied'
-              : '지원되였습니다.',
+            ? 'Applied'
+            : '지원되였습니다.',
         );
         setBackgroundButton('gray');
         setCheckApply(true);
@@ -854,8 +863,8 @@ const Detail = () => {
           languageRedux === 1
             ? 'Đã ứng tuyển'
             : languageRedux === 2
-              ? 'Applied'
-              : '지원되였습니다.',
+            ? 'Applied'
+            : '지원되였습니다.',
         );
         setBackgroundButton('gray');
         setCheckApply(true);
@@ -877,8 +886,8 @@ const Detail = () => {
         languageRedux === 1
           ? 'Đã ứng tuyển'
           : languageRedux === 2
-            ? 'Applied'
-            : '지원되였습니다.',
+          ? 'Applied'
+          : '지원되였습니다.',
       );
       // setBackgroundButton('gray');
       setCheckApply(true);
@@ -904,14 +913,14 @@ const Detail = () => {
           languageRedux === 1
             ? 'Cập nhật thông tin'
             : languageRedux === 2
-              ? 'Update information'
-              : '정보 업데이트',
+            ? 'Update information'
+            : '정보 업데이트',
         description:
           languageRedux === 1
             ? 'Vui lòng cập nhật thông tin để ứng tuyển công việc'
             : languageRedux === 2
-              ? 'Please update your information to apply for the job'
-              : '해당 직무에 지원하려면 정보를 업데이트하세요.',
+            ? 'Please update your information to apply for the job'
+            : '해당 직무에 지원하려면 정보를 업데이트하세요.',
         placement: 'top',
         icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
       });
@@ -931,8 +940,8 @@ const Detail = () => {
           languageRedux === 1
             ? 'Đã ứng tuyển'
             : languageRedux === 2
-              ? 'Applied'
-              : '지원되였습니다',
+            ? 'Applied'
+            : '지원되였습니다',
         );
         setBackgroundButton('gray');
         setCheckApply(true);
@@ -972,19 +981,22 @@ const Detail = () => {
   const handleClickMapCompany = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-      `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation
-        ? post?.data?.postCompanyInformation?.companyLocation.fullName
-        : ''
-      }, ${post?.data?.postCompanyInformation?.companyLocation?.district
-        ? post?.data?.postCompanyInformation?.companyLocation?.district
-          ?.fullName
-        : ''
-      }, ${post?.data?.postCompanyInformation?.companyLocation?.district
-        ?.province
-        ? post?.data?.postCompanyInformation?.companyLocation?.district
-          ?.province?.fullName
-        : ''
-      }`,
+        `${post?.data?.postCompanyInformation?.address}, ${
+          post?.data?.postCompanyInformation?.companyLocation
+            ? post?.data?.postCompanyInformation?.companyLocation.fullName
+            : ''
+        }, ${
+          post?.data?.postCompanyInformation?.companyLocation?.district
+            ? post?.data?.postCompanyInformation?.companyLocation?.district
+                ?.fullName
+            : ''
+        }, ${
+          post?.data?.postCompanyInformation?.companyLocation?.district
+            ?.province
+            ? post?.data?.postCompanyInformation?.companyLocation?.district
+                ?.province?.fullName
+            : ''
+        }`,
     );
   };
 
@@ -1015,8 +1027,8 @@ const Detail = () => {
         languageRedux === 1
           ? 'Thông tin việc làm'
           : languageRedux === 2
-            ? 'Job information'
-            : '채용정보',
+          ? 'Job information'
+          : '채용정보',
       children: (
         <>
           <div
@@ -1041,8 +1053,8 @@ const Detail = () => {
                     {languageRedux === 1
                       ? 'Loại công việc'
                       : languageRedux === 2
-                        ? 'Job types'
-                        : '직업종류'}
+                      ? 'Job types'
+                      : '직업종류'}
                   </p>
                 </div>
                 <div className="div-detail-row-titleItem">
@@ -1056,8 +1068,8 @@ const Detail = () => {
                     {languageRedux === 1
                       ? 'Giờ làm việc'
                       : languageRedux === 2
-                        ? 'Working hours'
-                        : '근무시간'}
+                      ? 'Working hours'
+                      : '근무시간'}
                   </p>
                 </div>
                 <div className="div-detail-row-titleItem">
@@ -1082,8 +1094,8 @@ const Detail = () => {
                     {languageRedux === 1
                       ? 'Thời gian làm việc'
                       : languageRedux === 2
-                        ? 'Working period'
-                        : '근무 기간'}
+                      ? 'Working period'
+                      : '근무 기간'}
                   </p>
                 </div>
                 <div className="div-detail-row-titleItem">
@@ -1103,8 +1115,8 @@ const Detail = () => {
                     {languageRedux === 1
                       ? 'Làm việc cuối tuần'
                       : languageRedux === 2
-                        ? 'Working on the weekend'
-                        : '주말 근무'}
+                      ? 'Working on the weekend'
+                      : '주말 근무'}
                   </p>
                 </div>
                 <div className="div-detail-row-titleItem">
@@ -1113,13 +1125,13 @@ const Detail = () => {
                       ? languageRedux === 1
                         ? 'Không làm việc cuối tuần'
                         : languageRedux === 2
-                          ? 'Do not work weekends'
-                          : '주말 근무하지 않음'
+                        ? 'Do not work weekends'
+                        : '주말 근무하지 않음'
                       : languageRedux === 1
-                        ? 'Làm việc cuối tuần'
-                        : languageRedux === 2
-                          ? 'Weekend work available'
-                          : '주말 근무'}
+                      ? 'Làm việc cuối tuần'
+                      : languageRedux === 2
+                      ? 'Weekend work available'
+                      : '주말 근무'}
                   </h5>
                 </div>
               </div>
@@ -1130,8 +1142,8 @@ const Detail = () => {
                     {languageRedux === 1
                       ? 'Làm việc từ xa'
                       : languageRedux === 2
-                        ? 'Remote work'
-                        : '원격 근무'}
+                      ? 'Remote work'
+                      : '원격 근무'}
                   </p>
                 </div>
                 <div className="div-detail-row-titleItem">
@@ -1140,13 +1152,13 @@ const Detail = () => {
                       ? languageRedux === 1
                         ? 'Không làm việc từ xa'
                         : languageRedux === 2
-                          ? 'Does not work remotely'
-                          : '원격으로 일하지 않음'
+                        ? 'Does not work remotely'
+                        : '원격으로 일하지 않음'
                       : languageRedux === 1
-                        ? 'Làm việc từ xa'
-                        : languageRedux === 2
-                          ? 'Remote work is available'
-                          : '원격 근무'}
+                      ? 'Làm việc từ xa'
+                      : languageRedux === 2
+                      ? 'Remote work is available'
+                      : '원격 근무'}
                   </h5>
                 </div>
               </div>
@@ -1157,8 +1169,8 @@ const Detail = () => {
                     {languageRedux === 1
                       ? 'Mức lương'
                       : languageRedux === 2
-                        ? 'Salary'
-                        : '샐러리/급여'}
+                      ? 'Salary'
+                      : '샐러리/급여'}
                   </p>
                 </div>
                 <div className="div-detail-row-titleItem">
@@ -1184,8 +1196,8 @@ const Detail = () => {
                     {languageRedux === 1
                       ? 'Danh mục nghề nghiệp'
                       : languageRedux === 2
-                        ? 'Category'
-                        : '직업 카테고리'}
+                      ? 'Category'
+                      : '직업 카테고리'}
                   </p>
                 </div>
                 <div
@@ -1223,8 +1235,8 @@ const Detail = () => {
                     {languageRedux === 1
                       ? 'Ngày hết hạn'
                       : languageRedux === 2
-                        ? 'Expiration date'
-                        : '마감일'}
+                      ? 'Expiration date'
+                      : '마감일'}
                   </p>
                 </div>
                 <div
@@ -1234,13 +1246,13 @@ const Detail = () => {
                   <h5>
                     {post?.data.expiredDate
                       ? `${new Date(post?.data.expiredDate).toLocaleDateString(
-                        'en-GB',
-                      )}`
+                          'en-GB',
+                        )}`
                       : languageRedux === 1
-                        ? 'Vô thời hạn'
-                        : languageRedux === 2
-                          ? 'Indefinitely'
-                          : '무기한'}
+                      ? 'Vô thời hạn'
+                      : languageRedux === 2
+                      ? 'Indefinitely'
+                      : '무기한'}
                   </h5>
                 </div>
               </div>
@@ -1268,14 +1280,15 @@ const Detail = () => {
                   return;
                 }
                 window.open(
-                  `/message?post_id=${searchParams.get('post-id')}&user_id=${post?.data?.accountId
+                  `/message?post_id=${searchParams.get('post-id')}&user_id=${
+                    post?.data?.accountId
                   } `,
                   '_parent',
                 );
               }}
-            // onClick={() => {
-            //   console.log(post?.data);
-            // }}
+              // onClick={() => {
+              //   console.log(post?.data);
+              // }}
             ></Button>
             <Button
               onClick={onclick}
@@ -1289,7 +1302,7 @@ const Detail = () => {
                 fontWeight: 'normal',
                 cursor:
                   post?.data?.companyResourceData?.name === 'HIJOB' &&
-                    profileV3.typeRoleData === 1
+                  profileV3.typeRoleData === 1
                     ? 'no-drop'
                     : 'pointer',
                 // position: 'absolute',
@@ -1309,8 +1322,8 @@ const Detail = () => {
         languageRedux === 1
           ? 'Thông tin công ty'
           : languageRedux === 2
-            ? "Company's information"
-            : '회사 정보',
+          ? "Company's information"
+          : '회사 정보',
       style: {
         display:
           post?.data?.postCompanyInformation && key === '2' ? 'flex' : 'none',
@@ -1359,18 +1372,18 @@ const Detail = () => {
                   {languageRedux === 1
                     ? 'Mô tả'
                     : languageRedux === 2
-                      ? 'Describe'
-                      : '묘사'}
+                    ? 'Describe'
+                    : '묘사'}
                 </h3>
                 <div className="div-detail_descCompany">
                   <p>
                     {post?.data.postCompanyInformation
                       ? post?.data.postCompanyInformation?.description
                       : languageRedux === 1
-                        ? 'Chưa cập nhật'
-                        : languageRedux === 2
-                          ? 'Not updated yet'
-                          : '업데이트하지 않음'}
+                      ? 'Chưa cập nhật'
+                      : languageRedux === 2
+                      ? 'Not updated yet'
+                      : '업데이트하지 않음'}
                   </p>
                 </div>
               </div>
@@ -1379,8 +1392,8 @@ const Detail = () => {
                   {languageRedux === 1
                     ? 'Thông tin cơ bản'
                     : languageRedux === 2
-                      ? 'Basic information'
-                      : '기준 정부'}
+                    ? 'Basic information'
+                    : '기준 정부'}
                 </h3>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
@@ -1389,8 +1402,8 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Mã số thuế'
                         : languageRedux === 2
-                          ? 'Tax code'
-                          : '세금 코드'}
+                        ? 'Tax code'
+                        : '세금 코드'}
                     </p>
                   </div>
                   <div className="div-detail-titleItem">
@@ -1398,10 +1411,10 @@ const Detail = () => {
                       {post?.data?.postCompanyInformation.taxCode
                         ? post?.data?.postCompanyInformation?.taxCode
                         : languageRedux === 1
-                          ? 'Chưa cập nhật'
-                          : languageRedux === 2
-                            ? 'Not updated yet'
-                            : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                        ? 'Not updated yet'
+                        : languageRedux === 3 && '업데이트하지 않음'}
                     </h5>
                   </div>
                 </div>
@@ -1412,8 +1425,8 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Địa chỉ'
                         : languageRedux === 2
-                          ? 'Address'
-                          : '주소'}
+                        ? 'Address'
+                        : '주소'}
                     </p>
                   </div>
                   <div className="div-detail-titleItem">
@@ -1423,13 +1436,13 @@ const Detail = () => {
                     >
                       {post?.data?.postCompanyInformation
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
-                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
-                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
                         : languageRedux === 1
-                          ? 'Chưa cập nhật'
-                          : languageRedux === 2
-                            ? 'Not updated yet'
-                            : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                        ? 'Not updated yet'
+                        : languageRedux === 3 && '업데이트하지 않음'}
                     </h5>
                   </div>
                 </div>
@@ -1440,8 +1453,8 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Email'
                         : languageRedux === 2
-                          ? 'Email'
-                          : '이메일'}
+                        ? 'Email'
+                        : '이메일'}
                     </p>
                   </div>
                   <div className="div-detail-titleItem">
@@ -1456,10 +1469,10 @@ const Detail = () => {
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.email
                         : languageRedux === 1
-                          ? 'Chưa cập nhật'
-                          : languageRedux === 2
-                            ? 'Not updated yet'
-                            : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                        ? 'Not updated yet'
+                        : languageRedux === 3 && '업데이트하지 않음'}
                     </h5>
                   </div>
                 </div>
@@ -1470,8 +1483,8 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Số điện thoại'
                         : languageRedux === 2
-                          ? 'Phone number'
-                          : '전화 번호'}
+                        ? 'Phone number'
+                        : '전화 번호'}
                     </p>
                   </div>
                   <div className="div-detail-titleItem">
@@ -1479,10 +1492,10 @@ const Detail = () => {
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.phone
                         : languageRedux === 1
-                          ? 'Chưa cập nhật'
-                          : languageRedux === 2
-                            ? 'Not updated yet'
-                            : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                        ? 'Not updated yet'
+                        : languageRedux === 3 && '업데이트하지 않음'}
                     </h5>
                   </div>
                 </div>
@@ -1493,8 +1506,8 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Trang web'
                         : languageRedux === 2
-                          ? 'Website'
-                          : '웹사이트'}
+                        ? 'Website'
+                        : '웹사이트'}
                     </p>
                   </div>
                   <div className="div-detail-titleItem">
@@ -1506,21 +1519,22 @@ const Detail = () => {
                           : '#'
                       }
                       style={{
-                        color: `${post?.data?.postCompanyInformation?.website
-                          ? 'rgb(13, 153, 255)'
-                          : ''
-                          }`,
+                        color: `${
+                          post?.data?.postCompanyInformation?.website
+                            ? 'rgb(13, 153, 255)'
+                            : ''
+                        }`,
                       }}
                       target="_blank"
                     >
                       {post?.data?.postCompanyInformation &&
-                        post?.data?.postCompanyInformation?.website
+                      post?.data?.postCompanyInformation?.website
                         ? post?.data?.postCompanyInformation?.website
                         : languageRedux === 1
-                          ? 'Chưa cập nhật'
-                          : languageRedux === 2
-                            ? 'Not updated yet'
-                            : languageRedux === 3 && '업데이트하지 않음'}
+                        ? 'Chưa cập nhật'
+                        : languageRedux === 2
+                        ? 'Not updated yet'
+                        : languageRedux === 3 && '업데이트하지 않음'}
                     </Link>
                     {/* </h5> */}
                   </div>
@@ -1551,10 +1565,10 @@ const Detail = () => {
                     {languageRedux === 1
                       ? 'Xem chi tiết'
                       : languageRedux === 2
-                        ? 'View details'
-                        : languageRedux === 3
-                          ? '자세히 보기 '
-                          : 'Xem chi tiết'}
+                      ? 'View details'
+                      : languageRedux === 3
+                      ? '자세히 보기 '
+                      : 'Xem chi tiết'}
                   </div>
                 </div>
                 {/* {Object.keys(positionMap).length !== 0 && (
@@ -1600,8 +1614,17 @@ const Detail = () => {
 
   // console.log('latitude ', post?.data?.postCompanyInformation?.latitude);
   // console.log('longitude ', post?.data?.postCompanyInformation?.longitude);
-  const videoOfPost = videos.find((video) => Number(video.id) === POST_ID)
-  const videoLink = videoOfPost?.link
+  const [videoLink, setVideoLink] = useState<any>();
+
+  useEffect(() => {
+    const videoOfPost = videos.find(
+      (video) => Number(video.id) === Number(searchParams.get('post-id')),
+    );
+    const link = videoOfPost?.link;
+    setVideoLink(link);
+  }, [searchParams.get('post-id')]);
+
+  console.log('videoLink', videoLink);
 
   return (
     <>
@@ -1670,20 +1693,23 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Xem tất cả'
                         : languageRedux === 2
-                          ? 'View all'
-                          : languageRedux === 3 && '모두보기'}
+                        ? 'View all'
+                        : languageRedux === 3 && '모두보기'}
                     </h3>
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${post?.data?.location ? post?.data?.location?.fullName : ''
-                      }, ${post?.data?.location?.district
+                    <h3>{`${post?.data.address}, ${
+                      post?.data?.location ? post?.data?.location?.fullName : ''
+                    }, ${
+                      post?.data?.location?.district
                         ? post?.data?.location?.district?.fullName
                         : ''
-                      }, ${post?.data?.location?.district?.province
+                    }, ${
+                      post?.data?.location?.district?.province
                         ? post?.data?.location?.district?.province?.fullName
                         : ''
-                      }`}</h3>
+                    }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -1693,8 +1719,8 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Xem trên bản đồ'
                         : languageRedux === 2
-                          ? 'View on map'
-                          : languageRedux === 3 && '지도에서 보기'}
+                        ? 'View on map'
+                        : languageRedux === 3 && '지도에서 보기'}
                     </h3>
                   </div>
                 </div>
@@ -1734,8 +1760,8 @@ const Detail = () => {
                         {languageRedux === 1
                           ? 'Chia sẻ'
                           : languageRedux === 2
-                            ? 'Share'
-                            : '공유하다'}
+                          ? 'Share'
+                          : '공유하다'}
                       </h3>
                     </div>
                     <div className="actions-item" onClick={handleClickSave}>
@@ -1749,21 +1775,24 @@ const Detail = () => {
                         {languageRedux === 1
                           ? 'Lưu'
                           : languageRedux === 2
-                            ? 'Save'
-                            : '저장'}
+                          ? 'Save'
+                          : '저장'}
                       </h3>
                     </div>
                   </div>
                 </div>
 
                 <div className="video-tiktok-youtube">
-                  <div className="tiktok-youtub_item"
+                  <div
+                    className="tiktok-youtub_item"
                     style={{
-                      display: videoLink?.youtube !== null ? 'flex' : 'none'
+                      display:
+                        videoLink && videoLink?.youtube !== null
+                          ? 'flex'
+                          : 'none',
                     }}
                     onClick={() => {
-                      videoLink?.youtube &&
-                        window.open(videoLink?.youtube)
+                      videoLink?.youtube && window.open(videoLink?.youtube);
                     }}
                   >
                     <div className="item-icon">
@@ -1773,17 +1802,20 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Video tuyển dụng'
                         : languageRedux === 2
-                          ? 'Recruitment video'
-                          : languageRedux === 3 && '채용 비디오'}
+                        ? 'Recruitment video'
+                        : languageRedux === 3 && '채용 비디오'}
                     </h3>
                   </div>
-                  <div className="tiktok-youtub_item"
+                  <div
+                    className="tiktok-youtub_item"
                     style={{
-                      display: videoLink?.tiktok !== null ? 'flex' : 'none'
+                      display:
+                        videoLink && videoLink?.tiktok !== null
+                          ? 'flex'
+                          : 'none',
                     }}
                     onClick={() => {
-                      videoLink?.tiktok &&
-                        window.open(videoLink?.tiktok)
+                      videoLink?.tiktok && window.open(videoLink?.tiktok);
                     }}
                   >
                     <div className="item-icon">
@@ -1793,12 +1825,11 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Video tuyển dụng'
                         : languageRedux === 2
-                          ? 'Recruitment video'
-                          : languageRedux === 3 && '채용 비디오'}
+                        ? 'Recruitment video'
+                        : languageRedux === 3 && '채용 비디오'}
                     </h3>
                   </div>
                 </div>
-
               </div>
               <div className="img-container">
                 <div className="div-job-img" ref={componentRef}>
@@ -1871,8 +1902,8 @@ const Detail = () => {
                                 languageRedux === 1
                                   ? 'Hình ảnh bị lỗi'
                                   : languageRedux === 2
-                                    ? 'Image is corrupted'
-                                    : '이미지가 손상되었습니다'
+                                  ? 'Image is corrupted'
+                                  : '이미지가 손상되었습니다'
                               }
                             />
                           </SwiperSlide>
@@ -1887,8 +1918,8 @@ const Detail = () => {
                             languageRedux === 1
                               ? 'Hình ảnh bị lỗi'
                               : languageRedux === 2
-                                ? 'Image is corrupted'
-                                : '이미지가 손상되었습니다'
+                              ? 'Image is corrupted'
+                              : '이미지가 손상되었습니다'
                           }
                           style={{ objectFit: 'cover' }}
                         />
@@ -1948,8 +1979,8 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Mô tả công việc'
                         : languageRedux === 2
-                          ? 'Job description'
-                          : '업무 설명서'}
+                        ? 'Job description'
+                        : '업무 설명서'}
                     </h3>
                     <div
                       style={{
@@ -1966,7 +1997,7 @@ const Detail = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                        // onClick={handlePreviousPost}
+                          // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -1975,8 +2006,8 @@ const Detail = () => {
                             {languageRedux === 1
                               ? 'Công việc trước'
                               : languageRedux === 2
-                                ? 'Prev job'
-                                : '이전 직업'}
+                              ? 'Prev job'
+                              : '이전 직업'}
                           </span>
                         </div>
                         <div
@@ -1990,8 +2021,8 @@ const Detail = () => {
                             {languageRedux === 1
                               ? 'Công việc sau'
                               : languageRedux === 2
-                                ? 'Next job'
-                                : '다음 직업'}
+                              ? 'Next job'
+                              : '다음 직업'}
                           </span>
                           <div
                             className="icon"
@@ -2037,16 +2068,16 @@ const Detail = () => {
                 <div className="div-suggest">
                   <div className="div-suggest__map">
                     {post &&
-                      post.data &&
-                      post.data.postCompanyInformation &&
-                      post.data.postCompanyInformation.longitude ? (
+                    post.data &&
+                    post.data.postCompanyInformation &&
+                    post.data.postCompanyInformation.longitude ? (
                       <>
                         <h3>
                           {languageRedux === 1
                             ? 'Xem bản đồ'
                             : languageRedux === 2
-                              ? 'View the map'
-                              : languageRedux === 3 && '지도 보기'}
+                            ? 'View the map'
+                            : languageRedux === 3 && '지도 보기'}
                         </h3>
                         <MapContainer
                           className="leaf_let_map"
@@ -2070,7 +2101,7 @@ const Detail = () => {
                               click: () => {
                                 window.open(
                                   'https://www.google.com/maps/place/' +
-                                  `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`,
+                                    `${post?.data?.postCompanyInformation?.address}, ${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`,
                                 );
                               },
                             }}
@@ -2088,8 +2119,8 @@ const Detail = () => {
                       {languageRedux === 1
                         ? 'Việc làm tương tự'
                         : languageRedux === 2
-                          ? 'Similar job'
-                          : '비슷한 직업'}
+                        ? 'Similar job'
+                        : '비슷한 직업'}
                     </h3>
                     <div className="item">
                       {postNewest?.data?.posts.map(
@@ -2123,8 +2154,8 @@ const Detail = () => {
                 {languageRedux === 1
                   ? 'Chia sẻ công việc này'
                   : languageRedux === 2
-                    ? 'Share this job'
-                    : '이 직업을 공유하세요'}
+                  ? 'Share this job'
+                  : '이 직업을 공유하세요'}
                 <IconButton
                   aria-label="close"
                   onClick={handleCloseModalShare}
@@ -2158,16 +2189,19 @@ const Detail = () => {
                     <Typography sx={{ ml: 2 }}>
                       <AddressDetailPostIcon width={16} height={16} />
                       <span style={{ marginLeft: '8px' }}>
-                        {`${post?.data.address}, ${post?.data?.location
-                          ? post?.data?.location?.fullName
-                          : ''
-                          }, ${post?.data?.location?.district
+                        {`${post?.data.address}, ${
+                          post?.data?.location
+                            ? post?.data?.location?.fullName
+                            : ''
+                        }, ${
+                          post?.data?.location?.district
                             ? post?.data?.location?.district?.fullName
                             : ''
-                          }, ${post?.data?.location?.district?.province
+                        }, ${
+                          post?.data?.location?.district?.province
                             ? post?.data?.location?.district?.province?.fullName
                             : ''
-                          }`}
+                        }`}
                       </span>
                     </Typography>
                     {/* <div className="mid-title_companyName">
@@ -2250,13 +2284,13 @@ const Detail = () => {
                   ? languageRedux === 1
                     ? 'Ứng tuyển cho công việc này'
                     : languageRedux === 2
-                      ? 'Apply for this job'
-                      : '이 직업에 지원하세요'
+                    ? 'Apply for this job'
+                    : '이 직업에 지원하세요'
                   : languageRedux === 1
-                    ? 'Xem công việc này'
-                    : languageRedux === 2
-                      ? 'View this job'
-                      : '이 직업 보기'}
+                  ? 'Xem công việc này'
+                  : languageRedux === 2
+                  ? 'View this job'
+                  : '이 직업 보기'}
               </Typography>
               <Typography
                 id="modal-modal-title"
@@ -2268,19 +2302,19 @@ const Detail = () => {
                   ? languageRedux === 1
                     ? 'Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Ứng tuyển cho công việc này?'
                     : languageRedux === 2
-                      ? 'Your information will be sent to employers. Apply for this job?'
-                      : '귀하의 정보가 고용주에게 전송됩니다. 이 직업에 지원하시겠습니까?'
+                    ? 'Your information will be sent to employers. Apply for this job?'
+                    : '귀하의 정보가 고용주에게 전송됩니다. 이 직업에 지원하시겠습니까?'
                   : isApplied
-                    ? languageRedux === 1
-                      ? 'Bạn đã ứng tuyển công việc này chưa?'
-                      : languageRedux === 2
-                        ? 'Have you applied for this job?'
-                        : '아직 이 직업에 지원하셨나요?'
-                    : languageRedux === 1
-                      ? 'Bạn có muốn chuyển sang trang của bài đăng này không?'
-                      : languageRedux === 2
-                        ? "Do you want to switch to this post's page?"
-                        : '이 게시물의 페이지로 전환하시겠습니까?'}
+                  ? languageRedux === 1
+                    ? 'Bạn đã ứng tuyển công việc này chưa?'
+                    : languageRedux === 2
+                    ? 'Have you applied for this job?'
+                    : '아직 이 직업에 지원하셨나요?'
+                  : languageRedux === 1
+                  ? 'Bạn có muốn chuyển sang trang của bài đăng này không?'
+                  : languageRedux === 2
+                  ? "Do you want to switch to this post's page?"
+                  : '이 게시물의 페이지로 전환하시겠습니까?'}
               </Typography>
 
               <Box
@@ -2304,13 +2338,13 @@ const Detail = () => {
                     ? languageRedux === 1
                       ? 'Chưa'
                       : languageRedux === 2
-                        ? 'Not yet'
-                        : '아직 아님'
+                      ? 'Not yet'
+                      : '아직 아님'
                     : languageRedux === 1
-                      ? 'Không'
-                      : languageRedux === 2
-                        ? 'No'
-                        : '아니요'}
+                    ? 'Không'
+                    : languageRedux === 2
+                    ? 'No'
+                    : '아니요'}
                 </Button>
                 <Button
                   type="primary"
@@ -2318,8 +2352,8 @@ const Detail = () => {
                     post?.data?.companyResourceData?.name === 'HIJOB'
                       ? handleApply
                       : isApplied
-                        ? handleChangeStatus
-                        : handleClickChangePage
+                      ? handleChangeStatus
+                      : handleClickChangePage
                   }
                   style={{
                     width: '300px',
@@ -2329,13 +2363,13 @@ const Detail = () => {
                     ? languageRedux === 1
                       ? 'Rồi'
                       : languageRedux === 2
-                        ? 'Already'
-                        : '이미'
+                      ? 'Already'
+                      : '이미'
                     : languageRedux === 1
-                      ? 'Có'
-                      : languageRedux === 2
-                        ? 'Yes'
-                        : '확인'}
+                    ? 'Có'
+                    : languageRedux === 2
+                    ? 'Yes'
+                    : '확인'}
                 </Button>
               </Box>
             </Box>
