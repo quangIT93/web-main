@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import './style.scss';
 import styles from './style.module.scss';
 import Header_create_video from '../../img/langdingPage/Header_create_video.png';
 import Illustration_1 from '../../img/langdingPage/Illustration_1.png';
@@ -83,7 +84,11 @@ const LandingVideo = () => {
     const handleCancelNoteWorker = () => {
         setOpenModalNoteWorker(false);
     };
-
+    let options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5
+    };
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             const square = entry.target.querySelector('.curve_arrow_animation') as HTMLElement;
@@ -96,17 +101,18 @@ const LandingVideo = () => {
             // We're not intersecting, so remove the class!
             square.classList.remove('curve_arrow_animation_active');
         });
-    });
+    }, options);
 
-    const a = document.querySelector('.curve_arrow_wrapper') as HTMLElement
-    a &&
-        observer.observe(a);
+    const curve_arrow_wrappers = document.querySelectorAll('.curve_arrow_wrapper')
+    curve_arrow_wrappers.forEach(element => {
+        observer.observe(element)
+    })
 
     return (
-        <div className={styles.landing_video_container}>
-            <div className={styles.landing_video_content}>
-                <div className={styles.landing_video_header}>
-                    <div className={styles.landing_video_header_left}>
+        <div className="landing_video_container">
+            <div className="landing_video_content">
+                <div className="landing_video_header">
+                    <div className="landing_video_header_left">
                         <h3>
                             {languageRedux === 1
                                 ? 'Video tuyển dụng có thể là sự bổ sung tuyệt vời cho tin tuyển dụng công ty bạn!'
@@ -125,7 +131,7 @@ const LandingVideo = () => {
                     <img src={Header_create_video} alt="Header_create_video" />
                 </div>
 
-                <div className={styles.landing_video_illustration}>
+                <div className="landing_video_illustration">
                     <h3>
                         {languageRedux === 1
                             ? 'HiJob sẽ hỗ trợ đăng video tuyển dụng của bạn trên nền tảng Tiktok và Youtube Shorts'
@@ -134,10 +140,10 @@ const LandingVideo = () => {
                                 : languageRedux === 3 &&
                                 'Hijob은 당신의 채용 동영상을 Tiktok과 Youtube Shorts 플랫폼에 게시하도록 지원할 것이다.'}
                     </h3>
-                    <div className={styles.landing_video_illustration_content}>
-                        <div className={styles.landing_video_illustration_item}>
+                    <div className="landing_video_illustration_content">
+                        <div className="landing_video_illustration_item">
                             <img src={Illustration_1} alt="Illustration_1" />
-                            <div className={styles.item_bot}>
+                            <div className="item_bot">
                                 <p>
                                     {languageRedux === 1
                                         ? 'Tăng số lượng ứng viên tiềm nắng ứng tuyển công việc tại công ty.'
@@ -148,9 +154,9 @@ const LandingVideo = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className={styles.landing_video_illustration_item}>
+                        <div className="landing_video_illustration_item">
                             <img src={Illustration_2} alt="Illustration_2" />
-                            <div className={styles.item_bot}>
+                            <div className="item_bot">
                                 <p>
                                     {languageRedux === 1
                                         ? 'Thể hiện văn hóa tốt đẹp của công ty bạn đến với những ứng viên tiềm năng.'
@@ -161,9 +167,9 @@ const LandingVideo = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className={styles.landing_video_illustration_item}>
+                        <div className="landing_video_illustration_item">
                             <img src={Illustration_3} alt="Illustration_3" />
-                            <div className={styles.item_bot}>
+                            <div className="item_bot">
                                 <p>
                                     {languageRedux === 1
                                         ? 'Thu hút nhiều sự chú ý hơn thông qua các lượt chia sẻ trên mạng xã hội.'
@@ -177,7 +183,7 @@ const LandingVideo = () => {
                     </div>
                 </div>
 
-                <div className={styles.landing_video_steps}>
+                <div className="landing_video_steps">
                     <h3>
                         {languageRedux === 1
                             ? 'Các bước cần thiết để tạo ra một video tuyển dụng'
@@ -186,12 +192,12 @@ const LandingVideo = () => {
                                 : languageRedux === 3 &&
                                 '채용 비디오를 만들기 위한 단계'}
                     </h3>
-                    <div className={styles.landing_video_steps_content}>
-                        <div className={styles.landing_video_steps_item}>
-                            <div className={styles.item_top}>
-                                <div className={styles.steps_item_circle_wrap}>
-                                    <div className={styles.steps_item_circle_out}>
-                                        <div className={styles.steps_item_circle_in}>
+                    <div className="landing_video_steps_content">
+                        <div className="landing_video_steps_item">
+                            <div className="item_top">
+                                <div className="steps_item_circle_wrap">
+                                    <div className="steps_item_circle_out">
+                                        <div className="steps_item_circle_in">
                                             <p>
                                                 {
                                                     languageRedux === 1
@@ -205,19 +211,19 @@ const LandingVideo = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={styles.curve_arrow_wrapper}>
-                                    <div className={styles.curve_arrow_content}>
-                                        <div className={styles.curve}>
+                                <div className="curve_arrow_wrapper">
+                                    <div className="curve_arrow_content">
+                                        <div className="curve">
                                             <Curve />
                                         </div>
-                                        <div className={styles.arrow}>
+                                        <div className="arrow">
                                             <Triangle />
                                         </div>
                                     </div>
-                                    {/* <div className={styles.curve_arrow_animation}></div> */}
+                                    <div className="curve_arrow_animation"></div>
                                 </div>
                             </div>
-                            <div className={styles.item_bot}>
+                            <div className="item_bot">
                                 <p>
                                     {languageRedux === 1
                                         ? 'Điền đầy đủ và chính xác thông tin cần thiết trong Đăng tin tuyển dụng của Hijob'
@@ -229,11 +235,11 @@ const LandingVideo = () => {
                             </div>
                         </div>
 
-                        <div className={styles.landing_video_steps_item}>
-                            <div className={styles.item_top}>
-                                <div className={styles.steps_item_circle_wrap}>
-                                    <div className={styles.steps_item_circle_out}>
-                                        <div className={styles.steps_item_circle_in}>
+                        <div className="landing_video_steps_item">
+                            <div className="item_top">
+                                <div className="steps_item_circle_wrap">
+                                    <div className="steps_item_circle_out">
+                                        <div className="steps_item_circle_in">
                                             <p>
                                                 {
                                                     languageRedux === 1
@@ -247,19 +253,19 @@ const LandingVideo = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={styles.curve_arrow_wrapper}>
-                                    <div className={styles.curve_arrow_content}>
-                                        <div className={styles.curve}>
+                                <div className="curve_arrow_wrapper">
+                                    <div className="curve_arrow_content">
+                                        <div className="curve">
                                             <Curve />
                                         </div>
-                                        <div className={styles.arrow}>
+                                        <div className="arrow">
                                             <Triangle />
                                         </div>
                                     </div>
-                                    {/* <div className={styles.curve_arrow_animation}></div> */}
+                                    <div className="curve_arrow_animation"></div>
                                 </div>
                             </div>
-                            <div className={styles.item_bot}>
+                            <div className="item_bot">
                                 <p>
                                     {languageRedux === 1
                                         ? 'Mô tả chi tiết về công việc, yêu cầu về ứng viên'
@@ -271,11 +277,11 @@ const LandingVideo = () => {
                             </div>
                         </div>
 
-                        <div className={styles.landing_video_steps_item}>
-                            <div className={styles.item_top}>
-                                <div className={styles.steps_item_circle_wrap}>
-                                    <div className={styles.steps_item_circle_out}>
-                                        <div className={styles.steps_item_circle_in}>
+                        <div className="landing_video_steps_item">
+                            <div className="item_top">
+                                <div className="steps_item_circle_wrap">
+                                    <div className="steps_item_circle_out">
+                                        <div className="steps_item_circle_in">
                                             <p>
                                                 {
                                                     languageRedux === 1
@@ -289,19 +295,19 @@ const LandingVideo = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={styles.curve_arrow_wrapper}>
-                                    <div className={styles.curve_arrow_content}>
-                                        <div className={styles.curve}>
+                                <div className="curve_arrow_wrapper">
+                                    <div className="curve_arrow_content">
+                                        <div className="curve">
                                             <Curve />
                                         </div>
-                                        <div className={styles.arrow}>
+                                        <div className="arrow">
                                             <Triangle />
                                         </div>
                                     </div>
-                                    {/* <div className={styles.curve_arrow_animation}></div> */}
+                                    <div className="curve_arrow_animation"></div>
                                 </div>
                             </div>
-                            <div className={styles.item_bot}>
+                            <div className="item_bot">
                                 <p>
                                     {languageRedux === 1
                                         ? 'Thêm thật nhiều hình ảnh công ty để video thêm sinh động nhằm thu hút ứng viên quan tâm'
@@ -313,11 +319,11 @@ const LandingVideo = () => {
                             </div>
                         </div>
 
-                        <div className={styles.landing_video_steps_item}>
-                            <div className={styles.item_top}>
-                                <div className={styles.steps_item_circle_wrap}>
-                                    <div className={styles.steps_item_circle_out}>
-                                        <div className={styles.steps_item_circle_in}>
+                        <div className="landing_video_steps_item">
+                            <div className="item_top">
+                                <div className="steps_item_circle_wrap">
+                                    <div className="steps_item_circle_out">
+                                        <div className="steps_item_circle_in">
                                             <p>
                                                 {
                                                     languageRedux === 1
@@ -331,19 +337,19 @@ const LandingVideo = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={styles.curve_arrow_wrapper}>
-                                    <div className={styles.curve_arrow_content}>
-                                        <div className={styles.curve}>
+                                <div className="curve_arrow_wrapper">
+                                    <div className="curve_arrow_content">
+                                        <div className="curve">
                                             <Curve />
                                         </div>
-                                        <div className={styles.arrow}>
+                                        <div className="arrow">
                                             <Triangle />
                                         </div>
                                     </div>
-                                    {/* <div className={styles.curve_arrow_animation}></div> */}
+                                    <div className="curve_arrow_animation"></div>
                                 </div>
                             </div>
-                            <div className={styles.item_bot}>
+                            <div className="item_bot">
                                 <p>
                                     {languageRedux === 1
                                         ? 'Gửi yêu cầu tạo tin video tới hijob'
@@ -357,8 +363,8 @@ const LandingVideo = () => {
                     </div>
                 </div>
 
-                <div className={styles.landing_video_description}>
-                    <div className={styles.landing_video_description_content}>
+                <div className="landing_video_description">
+                    <div className="landing_video_description_content">
                         <p>
                             {
                                 languageRedux === 1 ?
@@ -368,25 +374,25 @@ const LandingVideo = () => {
                                         : "Hijob에게 회사와 관련된 많은 이미지(직원 이미지, 팀 뷰들링, 회사 외부, 사무실 내부, 작업 환경, 주변 환경 등)를 제공하십시오. Hijob이 가장 생생하게 채용 비디오를 만들어 지원자들에게 어필할 수 있도록 하겠습니다"
                             }
                         </p>
-                        <div className={styles.landing_video_tiktok_youtube}>
-                            <div className={styles.tiktok_youtube_item}>
-                                <div className={styles.tiktok_youtube_icon}>
+                        <div className="landing_video_tiktok_youtube">
+                            <div className="tiktok_youtube_item">
+                                <div className="tiktok_youtube_icon">
                                     <img src={tiktok} alt="tiktok" />
                                 </div>
                                 <Link
-                                    className={styles.tiktok_youtube_url}
+                                    className="tiktok_youtube_url"
                                     to="https://www.tiktok.com/@hijob.site"
                                     target="_blank"
                                 >
                                     /hijob.site
                                 </Link>
                             </div>
-                            <div className={styles.tiktok_youtube_item}>
-                                <div className={styles.tiktok_youtube_icon}>
+                            <div className="tiktok_youtube_item">
+                                <div className="tiktok_youtube_icon">
                                     <img src={youtube_shorts} alt="youtube_shorts" />
                                 </div>
                                 <Link
-                                    className={styles.tiktok_youtube_url}
+                                    className="tiktok_youtube_url"
                                     to="https://www.youtube.com/@HiJob-rz1xm"
                                     target="_blank"
                                 >
@@ -397,9 +403,9 @@ const LandingVideo = () => {
                     </div>
                 </div>
 
-                <div className={styles.landing_video_create}>
+                <div className="landing_video_create">
                     <img src={Element_create_video} alt="Element_create_video" />
-                    <div className={styles.landing_video_create_right}>
+                    <div className="landing_video_create_right">
                         <p>
                             {languageRedux === 1
                                 ? 'Trong khoảng thời gian ngắn nhất tin tuyển dụng của bạn sẽ có video tuyển dụng ở cả 2 nền tảng Tiktok và Youtube Shorts và lan truyền đến thật nhiều ứng viên.'
@@ -488,7 +494,7 @@ const LandingVideo = () => {
                             : languageRedux === 3 &&
                             '고용주만이 위의 작업을 수행할 수 있습니다!'}
                 </p>
-                <div className={styles.button_send_request_success_modal}>
+                <div className="button_send_request_success_modal">
                     <Button type="primary" shape="round" onClick={handleCancelNoteWorker}>
                         {languageRedux === 1
                             ? 'OK'
