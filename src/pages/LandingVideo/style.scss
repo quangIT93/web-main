@@ -172,6 +172,7 @@
                     grid-template-columns: repeat(2, 1fr);
                     justify-items: center;
                     row-gap: 60px;
+                    align-items: center;
                 }
 
                 @media screen and (max-width: 650px) {
@@ -349,18 +350,18 @@
 
                             .curve_arrow_animation {
                                 position: absolute;
-                                width: 100%;
+                                // width: 100%;
+                                // left: 0;
+                                // right: 0;
                                 top: 0;
-                                left: 0;
                                 bottom: 0;
-                                right: 0;
                                 z-index: 1;
                                 background: #ffffff;
                             }
 
                             @media (prefers-reduced-motion: no-preference) {
                                 .curve_arrow_animation_active {
-                                    animation: wipe-enter 3000ms infinite;
+                                    animation: wipe-enter 3000ms 1;
 
                                 }
                             }
