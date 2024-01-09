@@ -1624,7 +1624,7 @@ const Detail = () => {
     setVideoLink(link);
   }, [searchParams.get('post-id')]);
 
-  console.log('videoLink', videoLink);
+  // console.log('videoLink', videoLink);
 
   return (
     <>

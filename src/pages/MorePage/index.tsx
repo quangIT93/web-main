@@ -214,8 +214,8 @@ const MoreJobsPage: React.FC = () => {
     getProvinces();
     document.title =
       typeJob === 'new'
-        ? languageRedux === 2
-          ? 'HiJob - Newest Jobs'
+        ? languageRedux === 1
+          ? 'HiJob - Công việc mới nhất'
           : languageRedux === 2
             ? 'HiJob - Newest Jobs'
             : 'HiJob - 최신 직업'
