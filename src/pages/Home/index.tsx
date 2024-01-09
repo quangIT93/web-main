@@ -261,12 +261,11 @@ const Home: React.FC = () => {
       <div className="home__main">
         {/* <CategoryCarousel />
         <Breadcrumbs /> */}
-        {/* <JobStory /> */}
-        {localStorage.getItem('accessToken') && profileV3.typeRoleData === 0 ? (
+        {/* {localStorage.getItem('accessToken') && profileV3.typeRoleData === 0 ? (
           <ItemsProfile />
         ) : (
           <></>
-        )}
+        )} */}
         <JobStory />
         <AppliedPostedJob />
         {!localStorage.getItem('accessToken') ? (
