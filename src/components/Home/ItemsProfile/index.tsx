@@ -90,7 +90,7 @@ const ItemsProfile = () => {
     if (dataLocations.length === 0) {
       getAllLocaitions();
     }
-  }, []);
+  }, [languageRedux]);
 
   useEffect(() => {
     if (dataLocations?.length === 0 && dataCategories?.length === 0) {
