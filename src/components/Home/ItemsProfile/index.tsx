@@ -107,10 +107,10 @@ const ItemsProfile = () => {
         <>
           <h3 className="">
             {languageRedux === 1
-              ? 'Hãy thiết lập Khu vực làm việc và lĩnh vực công việc mà bạn quan tâm'
+              ? 'Hãy thiết lập Khu vực làm việc và lĩnh vực công việc mà bạn quan tâm:'
               : languageRedux === 2
-              ? `Set up your Work Area and the areas of work you're interested in`
-              : '작업 구역과 관심 있는 영역을 설정하세요'}
+              ? `Set up your Work Area and the areas of work you're interested in:`
+              : '작업 구역과 관심 있는 영역을 설정하세요:'}
             <span
               className={style.items_profile_setting}
               onClick={() => window.open('/profile', '_parent')}
@@ -127,10 +127,10 @@ const ItemsProfile = () => {
         <>
           <h3 className="">
             {languageRedux === 1
-              ? `Kết quả công việc được đề xuất dựa theo Khu vực làm việc và Lĩnh vực quan tâm mà bạn đã thiết lập trong Hồ sơ`
+              ? `Kết quả công việc được đề xuất dựa theo Khu vực làm việc và Lĩnh vực quan tâm mà bạn đã thiết lập trong Hồ sơ:`
               : languageRedux === 2
               ? `Suggested job outcomes are based on the Work Area and Areas of Interest you set up in your Profile:`
-              : '당신의 프로필에 설정한 작업 구역 및 관심 영역을 기반으로 채용 결과가 제안됩니다'}{' '}
+              : '당신의 프로필에 설정한 작업 구역 및 관심 영역을 기반으로 채용 결과가 제안됩니다:'}{' '}
             <span
               className={style.items_profile_setting}
               onClick={() => window.open('/profile', '_parent')}
@@ -206,14 +206,12 @@ const ItemsProfile = () => {
               />
             ) : (
               <Cascader
-                expandTrigger="hover"
                 allowClear={false}
                 open={false}
                 removeIcon={null}
                 onClick={() => {
                   window.open('/profile', '_parent');
                 }}
-                loadData={(selectedOptions) => console.log('selectedOptions')}
                 autoFocus={true}
                 getPopupContainer={(triggerNode) => triggerNode.parentElement}
                 suffixIcon={<ArrowFilterIcon width={14} height={10} />}
