@@ -146,7 +146,7 @@ const LandingVideo = () => {
                             <div className="item_bot">
                                 <p>
                                     {languageRedux === 1
-                                        ? 'Tăng số lượng ứng viên tiềm nắng ứng tuyển công việc tại công ty.'
+                                        ? 'Tăng số lượng ứng viên tiềm năng ứng tuyển công việc tại công ty.'
                                         : languageRedux === 2
                                             ? 'Increase the number of potential candidates applying for jobs at the company.'
                                             : languageRedux === 3 &&
@@ -368,7 +368,7 @@ const LandingVideo = () => {
                         <p>
                             {
                                 languageRedux === 1 ?
-                                    "Hãy cung cấp cho Hijob thật nhiều hình ảnh liên quan công ty của bạn (hình ảnh nhân viên, team building, bên ngoài công ty, bên trong văn phòng, môi trường làm việc, môi trường xung quanh,... ) để Hijob có thể tạo Video tuyển dụng một cách sống động nhất nhằm thu hút các ứng viên tìm năng!"
+                                    "Hãy cung cấp cho Hijob thật nhiều hình ảnh liên quan công ty của bạn (hình ảnh nhân viên, team building, bên ngoài công ty, bên trong văn phòng, môi trường làm việc, môi trường xung quanh,... ) để Hijob có thể tạo Video tuyển dụng một cách sống động nhất nhằm thu hút các ứng viên tiềm năng!"
                                     : languageRedux === 2 ?
                                         "Please provide Hijob with lots of images related to your company (images of employees, team building, outside the company, inside the office, working environment, surrounding environment,...) for Hijob. You can create the most vivid recruitment videos to attract potential candidates!"
                                         : "Hijob에게 회사와 관련된 많은 이미지(직원 이미지, 팀 뷰들링, 회사 외부, 사무실 내부, 작업 환경, 주변 환경 등)를 제공하십시오. Hijob이 가장 생생하게 채용 비디오를 만들어 지원자들에게 어필할 수 있도록 하겠습니다"
