@@ -235,6 +235,10 @@
                             top: -20%;
                         }
 
+                        .curve_arrow_animation {
+                            animation-delay: 900ms !important;
+                        }
+
                         .curve,
                         .arrow {
                             color: #f4ca52;
@@ -248,6 +252,10 @@
 
                         .curve_arrow_wrapper {
                             top: 50%;
+                        }
+
+                        .curve_arrow_animation {
+                            animation-delay: 1800ms !important;
                         }
 
                         .curve,
@@ -264,6 +272,10 @@
                         .curve_arrow_wrapper {
                             transform: scaleX(-1) rotate(180deg);
                             top: -20%;
+                        }
+
+                        .curve_arrow_animation {
+                            animation-delay: 2700ms !important;
                         }
 
                         .curve,
@@ -314,6 +326,7 @@
                         }
 
                         @keyframes wipe-enter {
+
                             0% {
                                 left: 0;
                                 right: 0;
@@ -321,7 +334,7 @@
                                 // z-index: 0;
                             }
 
-                            50% {
+                            100% {
                                 left: 115%;
                                 right: -15;
                                 width: 0;
@@ -350,19 +363,32 @@
 
                             .curve_arrow_animation {
                                 position: absolute;
-                                // width: 100%;
-                                // left: 0;
-                                // right: 0;
+                                width: 100%;
+                                left: 0;
+                                right: 0;
                                 top: 0;
                                 bottom: 0;
                                 z-index: 1;
                                 background: #ffffff;
+
+                                @include breakpoint(mobile) {
+                                    animation-delay: 0ms !important;
+                                }
                             }
 
                             @media (prefers-reduced-motion: no-preference) {
                                 .curve_arrow_animation_active {
-                                    animation: wipe-enter 3000ms 1;
-
+                                    animation: wipe-enter 1800ms 1;
+                                    -webkit-animation-fill-mode: forwards;
+                                    /* Chrome 16+, Safari 4+ */
+                                    -moz-animation-fill-mode: forwards;
+                                    /* FF 5+ */
+                                    -o-animation-fill-mode: forwards;
+                                    /* Not implemented yet */
+                                    -ms-animation-fill-mode: forwards;
+                                    /* IE 10+ */
+                                    animation-fill-mode: forwards;
+                                    /* When the spec is finished */
                                 }
                             }
                         }
