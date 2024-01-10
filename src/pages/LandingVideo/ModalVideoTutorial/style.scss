@@ -1,0 +1,26 @@
+.buttons-create-video-tutorial-modal {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+
+    @media screen and (max-width: 320px) {
+        flex-direction: column;
+    }
+
+    button {
+        width: 200px;
+        height: 42px;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 18px;
+        letter-spacing: 0em;
+        text-align: center;
+
+        &:last-child {
+            background: #0D99FF;
+        }
+    }
+}
