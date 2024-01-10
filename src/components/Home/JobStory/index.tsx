@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import Tabs from '@mui/material/Tabs'
 // import Tab from '@mui/material/Tab'
 
@@ -40,6 +40,7 @@ import { RootState } from '../../../store/reducer';
 import { getCookie } from 'cookies';
 import themesApi from 'api/themesApi';
 import { NewJobIcon } from '#components/Icons';
+import apiVideoShort from 'api/apiVideoShort';
 
 interface ItemTheme {
   id: number;
@@ -157,11 +158,32 @@ const JobStory = () => {
   const dispatch = useDispatch();
   const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
   const location = useLocation();
-  const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
+  const [listVideo, setListVideo] = React.useState<any>([]);
   const postNewestV3: any = useSelector((state: RootState) => {
     // console.log('state', state);
     return state.newWestReducerV3;
   });
+
+  const getVideoShort = async () => {
+    try {
+      const result = await apiVideoShort.getVideoShortList(
+        0,
+        10
+      )
+
+      if (result) {
+        console.log("result: ", result.data.data);
+        setListVideo(result.data.data)
+      }
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+
+  useEffect(() => {
+    getVideoShort();
+  }, [])
 
   return (
     <Box
@@ -180,8 +202,8 @@ const JobStory = () => {
             {languageRedux === 1
               ? 'Video tuyển dụng'
               : languageRedux === 2
-              ? 'Recruitment videos'
-              : languageRedux === 3 && '채용 비디오'}
+                ? 'Recruitment videos'
+                : languageRedux === 3 && '채용 비디오'}
           </h2>
           <Popover
             content={
@@ -189,8 +211,8 @@ const JobStory = () => {
                 {languageRedux === 1
                   ? 'Công ty muốn đăng ký video tuyển dụng? Quý khách vui lòng đăng ký thông tin công ty ở website và gửi yêu cầu qua địa chỉ Email CSKH: '
                   : languageRedux === 2
-                  ? 'Does the company want to register a recruitment video? Please register company information on the website and send a request via Customer Service Email: '
-                  : '회사에서 채용영상을 등록하고 싶으십니까? 웹사이트에 회사 정보를 등록하시고 다음 주소로 영상 요청을 보내주십시오. 고객관리 이메일: '}
+                    ? 'Does the company want to register a recruitment video? Please register company information on the website and send a request via Customer Service Email: '
+                    : '회사에서 채용영상을 등록하고 싶으십니까? 웹사이트에 회사 정보를 등록하시고 다음 주소로 영상 요청을 보내주십시오. 고객관리 이메일: '}
                 <span>
                   <Link
                     to="mailto:contact.hijob@gmail.com"
@@ -214,15 +236,15 @@ const JobStory = () => {
             //             ""
             // }
             trigger="click"
-            // open={true}
-            //   onOpenChange={handleOpenChange}
+          // open={true}
+          //   onOpenChange={handleOpenChange}
           >
             <Button type="primary" shape="round">
               {languageRedux === 1
                 ? 'Đăng ký'
                 : languageRedux === 2
-                ? 'Register'
-                : languageRedux === 3 && '등록하세요'}
+                  ? 'Register'
+                  : languageRedux === 3 && '등록하세요'}
             </Button>
           </Popover>
         </div>
@@ -234,24 +256,24 @@ const JobStory = () => {
         modules={[Mousewheel, Navigation, Pagination]}
         className="job-story-swiper"
       >
-        {videos &&
-          videos?.map((item: any, index: number) => {
+        {listVideo &&
+          listVideo?.map((item: any, index: number) => {
             return (
               <SwiperSlide
                 key={index}
                 onClick={() => {
-                  window.open(`post-detail?post-id=${item?.id}`);
+                  window.open(`post-detail?post-id=${item?.postId}`);
                 }}
               >
                 <div className="job-story-slide-item">
                   <img
-                    src={item?.image}
+                    src={item?.imageThumb}
                     alt={
                       languageRedux === 1
                         ? 'Hình ảnh bị lỗi'
                         : languageRedux === 2
-                        ? 'Image is corrupted'
-                        : '이미지가 손상되었습니다'
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'
                     }
                     style={{
                       width: '100%',
@@ -263,13 +285,13 @@ const JobStory = () => {
                   <div className="job-story-info">
                     {/* <Badge dot status="success" offset={[-5, 33]}> */}
                     <Avatar
-                      src={item?.companyResourceData?.logo}
+                      src={item?.company?.logo}
                       size="large"
                     />
                     {/* </Badge> */}
                     <Space size={3} direction={'vertical'}>
-                      <h5>{item.title}</h5>
-                      <h6>{item.companyName}</h6>
+                      <h5>{item?.post?.title}</h5>
+                      <h6>{item?.company?.name}</h6>
                     </Space>
                   </div>
                 </div>

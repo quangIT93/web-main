@@ -61,6 +61,7 @@ import ModalNotiValidateCompany from '#components/Post/ModalNotiValidateCompany'
 //@ts-ignore
 import { FillDataPost } from '#components/Icons';
 import apiCompany from 'api/apiCompany';
+import apiVideoShort from 'api/apiVideoShort';
 
 // redux
 // import { RootState } from 'store';
@@ -675,6 +676,10 @@ const Post: React.FC = () => {
               setIsValidSubmit(true);
               setOpenModalPost(true);
               setCheckPost(true);
+              if (createVideo) {
+                createVideoPost(result?.data?.postId)
+
+              }
             }
           }
         } else if (profileV3 && !profileV3.companyInfo && !checkPost) {
@@ -800,6 +805,23 @@ const Post: React.FC = () => {
       }
     }
   };
+
+  //create video
+  const createVideoPost = async (postId: any) => {
+    const formData = new FormData();
+    formData.append('postId ', postId);
+    // formData.append('linkTiktok ', null);
+    // formData.append('linkYoutube ', null);
+    // formData.append('image ', null);
+    if (formData) {
+      try {
+        const result = await apiVideoShort.createVideoShort(formData)
+      } catch (error) {
+        console.log(error);
+
+      }
+    }
+  }
 
   const analytics: any = getAnalytics();
 
