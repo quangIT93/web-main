@@ -350,6 +350,12 @@ const Post: React.FC = () => {
     //   setNotiCreateCompany(true)
     //   return;
     // }
+    console.log('startTime', startTime);
+    console.log(
+      'endTime',
+      new Date(new Date().setHours(23, 59, 59, 999)).getTime(),
+    );
+
     const formData = new FormData();
     formData.append('title', titleJob);
     formData.append('companyName', companyName);
