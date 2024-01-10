@@ -1,3 +1,5 @@
+@import '../../../scss/mixins';
+
 .banner-container {
     margin-bottom: 24px !important;
 
@@ -32,6 +34,40 @@
                         object-fit: fill
                     }
                 }
+            }
+
+            .banner_img_error {
+                min-height: 301px;
+                align-items: center;
+                justify-content: center;
+                border-radius: 12px;
+                background-color: #edebeb;
+                display: flex;
+                border: 1px solid #ccc;
+                @include breakpoint(mobile) {
+                    min-height: 72px;
+                }
+
+                @include breakpoint(tablet) {
+                    min-height: 120px;
+                }
+
+                @include breakpoint(largeTablet) {
+                    min-height: 200px;
+                }
+
+                @include breakpoint(mobile) {
+                    min-height: 200px;
+                }
+
+                @include breakpoint(destop) {
+                    min-height: 250px;
+                }
+
+                @include breakpoint(an_order) {
+                    min-height: 310px;
+                }
+            
             }
         }
     }
