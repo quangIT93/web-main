@@ -21,6 +21,7 @@ import { Backdrop, CircularProgress } from '@mui/material';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import { Curve, Triangle } from './icon';
 import { Link } from 'react-router-dom';
+import ModalVideoTutorial from './ModalVideoTutorial';
 const LandingVideo = () => {
     const languageRedux = useSelector(
         (state: RootState) => state.changeLaguage.language,
@@ -35,6 +36,7 @@ const LandingVideo = () => {
         React.useState<any>(false);
     const [openBackdrop, setOpenBackdrop] = React.useState(false);
     const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
+    const [openModalVideoTutorial, setOpenModalVideoTutorial] = React.useState(false);
 
     const analytics: any = getAnalytics();
     React.useEffect(() => {
@@ -52,10 +54,12 @@ const LandingVideo = () => {
 
     const handleCreateVideo = () => {
         if (!localStorage.getItem('accessToken')) {
+            setOpenModalVideoTutorial(false);
             setOpenModalLogin(true);
             return;
         }
         if (profileV3 && profileV3.typeRoleData === 0) {
+            setOpenModalVideoTutorial(false);
             setOpenModalNoteWorker(true);
             return;
         }
@@ -65,6 +69,7 @@ const LandingVideo = () => {
             localStorage.getItem('refreshToken')
         ) {
             if (profileV3.companyInfo === null) {
+                setOpenModalVideoTutorial(false);
                 setOpenModalNoteCreateCompany(true);
                 return;
             }
@@ -73,6 +78,7 @@ const LandingVideo = () => {
                 profileV3.companyInfo !== null &&
                 profileV3.companyInfo.status === 0
             ) {
+                setOpenModalVideoTutorial(false);
                 setOpenModalNoteValidateCompany(true);
                 return;
             } else {
@@ -125,7 +131,7 @@ const LandingVideo = () => {
                                     : languageRedux === 3 &&
                                     '채용 비디오는 귀하 회사의 채용골고에 큰 도움이 될 수 있습니다'}
                         </h3>
-                        <Button type="primary" onClick={handleCreateVideo}>
+                        <Button type="primary" onClick={() => setOpenModalVideoTutorial(true)}>
                             {languageRedux === 1
                                 ? 'Tạo video tuyển dụng ngay'
                                 : languageRedux === 2
@@ -404,7 +410,7 @@ const LandingVideo = () => {
                                     : languageRedux === 3 &&
                                     '당신의 채용 공고가 가장 짧은 시간 내에 틱톡과 유튜브의 두 플랫폼에서 비디오를 있을 수 있고 많은 지원자들에게 전파될 것이다.'}
                         </p>
-                        <Button type="primary" shape="round" onClick={handleCreateVideo}>
+                        <Button type="primary" shape="round" onClick={() => setOpenModalVideoTutorial(true)}>
                             {languageRedux === 1
                                 ? 'Tạo video ngay '
                                 : languageRedux === 2
@@ -491,6 +497,12 @@ const LandingVideo = () => {
                     </Button>
                 </div>
             </Modal>
+
+            <ModalVideoTutorial
+                openModalVideoTutorial={openModalVideoTutorial}
+                setOpenModalVideoTutorial={setOpenModalVideoTutorial}
+                handleCreateVideo={handleCreateVideo}
+            />
         </div>
     );
 };
