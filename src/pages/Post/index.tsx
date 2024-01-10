@@ -1104,7 +1104,7 @@ const Post: React.FC = () => {
               oldDescription={oldDescription}
             />
             {/* <EditText /> */}
-            {/* <div className='create-video-wrap'>
+            <div className='create-video-wrap'>
               <Checkbox
                 style={{
                   marginTop: 24
@@ -1129,7 +1129,7 @@ const Post: React.FC = () => {
                       "Hijob은 가능한 한 빨리 Tiktok 및 Youtube Shorts 플랫폼에 비디오 게시물을 자동으로 생성합니다. 동영상을 만들려면 게시물에 여러 이미지를 업로드하세요."
                 }
               </Text>
-            </div> */}
+            </div>
             <button
               type="submit"
               onClick={handleSubmit}
