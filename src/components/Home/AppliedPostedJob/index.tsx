@@ -144,17 +144,17 @@ const AppliedPostedJob: React.FC = () => {
       const result =
         profile?.typeRoleData === 0
           ? await historyApplicator.getAllSubmitedApplied(
-              null,
-              10,
-              1,
-              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-            )
+            null,
+            10,
+            1,
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+          )
           : await historyRecruiter.GetInformationAndCandidatesCount(
-              0,
-              10,
-              '1',
-              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-            );
+            0,
+            10,
+            '1',
+            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+          );
       // const result = await applitedPostedApi.getAllApplitedPostedApi(
       //   0,
       //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
@@ -230,7 +230,7 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -240,157 +240,20 @@ const AppliedPostedJob: React.FC = () => {
             maxWidth: { xs: 320, sm: 480 },
             bgcolor: 'background.paper',
             position: 'relative',
-            paddingBottom: '24px',
+            // paddingBottom: '24px',
             flexDirection: 'column',
             padding:
               profile?.typeRoleData === 0 && appliedPostedJob.length !== 0
                 ? '1px 0 0 0'
-                : '1px 0 0 0',
+                : '0',
+            marginBottom: appliedPostedJob.length !== 0 ? '24px' : '0',
           }}
           className="applied-posted-jobs-container"
           id="applied-posted-jobs-container"
         >
-          <div
-            className="advertisement-job-not-loging"
-            style={{
-              display: cvHijob.length !== 0 ? 'flex' : 'none',
-              marginBottom: appliedPostedJob.length !== 0 ? '24px' : '0',
-              flexDirection: 'column',
-              gap: '24px',
-            }}
-          >
-            {/* <AdsCVIcon /> */}
-            <div className="advertisement-job-not-loging-content">
-              {/* <h3 style={{ marginTop: '12px' }}>
-                {languageRedux === 1
-                  ? 'Dễ dàng tạo cv của riêng bạn'
-                  : 'Easily create your own resume'}
-              </h3>
-              <div className="advertisement-job-content-bottom">
-                <p>
-                  {languageRedux === 1
-                    ? 'Chúng tôi cung cấp cho bạn các mẫu sơ yếu lý lịch được cá nhân hóa:'
-                    : 'We offer you personalized resume templates:'}
-                </p>
-                <ul>
-                  <li>
-                    {languageRedux === 1
-                      ? 'Đa dạng theo chủng loại'
-                      : 'Diverse by category'}
-                  </li>
-                  <li>
-                    {languageRedux === 1
-                      ? 'Chỉnh sửa thông tin dễ dàng'
-                      : 'Edit information easily'}
-                  </li>
-                  <li>
-                    {languageRedux === 1
-                      ? 'Chia sẻ nhanh chóng trên nền tảng xã hội'
-                      : 'Share quickly on social platforms'}
-                  </li>
-                </ul>
-              </div> */}
-              {profile.length !== 0 ? (
-                profile?.typeRoleData === 0 ? (
-                  <Swiper
-                    spaceBetween={30}
-                    centeredSlides={true}
-                    // autoplay={{
-                    //   delay: 3500,
-                    //   disableOnInteraction: false,
-                    //   pauseOnMouseEnter: true,
-                    //   waitForTransition: true,
-                    //   stopOnLastSlide: false,
-                    // }}
-                    // navigation={true}
-                    autoplay={{
-                      delay: 3500,
-                      disableOnInteraction: false,
-                    }}
-                    pagination={{ clickable: true }}
-                    modules={[Autoplay, Pagination]}
-                    className="banner-rescruit-swiper mySwiper"
-                    loop={true}
-                    style={{ height: '100%' }}
-                  >
-                    {banner?.map((value: any, index: number) => {
-                      if (value?.order === 1) {
-                        return (
-                          <SwiperSlide key={index}>
-                            <img
-                              onClick={() => {
-                                window.open(value?.redirect_url, '_parent');
-                              }}
-                              src={value?.image}
-                              alt=""
-                            />
-                          </SwiperSlide>
-                        );
-                      } else {
-                        return <React.Fragment key={index}></React.Fragment>;
-                      }
-                    })}
-                  </Swiper>
-                ) : (
-                  <Swiper
-                    spaceBetween={30}
-                    centeredSlides={true}
-                    autoplay={{
-                      delay: 3500,
-                      disableOnInteraction: false,
-                    }}
-                    pagination={true}
-                    // navigation={true}
-                    modules={[Autoplay, Navigation, Pagination]}
-                    className="banner-rescruit-swiper"
-                    loop={true}
-                  >
-                    {banner?.map((value: any, index: number) => {
-                      if (value?.order === 2) {
-                        return (
-                          <SwiperSlide key={index}>
-                            <img
-                              onClick={() => {
-                                if (
-                                  profile?.companyInfo &&
-                                  profile?.companyInfo?.status === 0 &&
-                                  value?.redirect_url ===
-                                    'https://hijob.site/post'
-                                ) {
-                                  setOpenModalNoteValidateCompany(true);
-                                } else if (
-                                  profile?.companyInfo === null &&
-                                  value?.redirect_url ===
-                                    'https://hijob.site/post'
-                                ) {
-                                  setOpenModalNoteCreateCompany(true);
-                                } else {
-                                  window.open(value?.redirect_url, '_parent');
-                                }
-                              }}
-                              src={value?.image}
-                              alt="errorimg"
-                            />
-                          </SwiperSlide>
-                        );
-                      } else {
-                        return <React.Fragment key={index}></React.Fragment>;
-                      }
-                    })}
-                  </Swiper>
-                )
-              ) : (
-                <Skeleton.Button
-                  style={{ height: '301px' }}
-                  active={true}
-                  block={true}
-                />
-              )}
-            </div>
-          </div>
           <Skeleton loading={loading} active>
             {appliedPostedJob.length !== 0 &&
-            localStorage.getItem('accessToken') ? (
+              localStorage.getItem('accessToken') ? (
               <div
                 style={{
                   display: 'flex',
@@ -404,13 +267,13 @@ const AppliedPostedJob: React.FC = () => {
                     ? languageRedux === 1
                       ? 'Việc làm đã ứng tuyển'
                       : languageRedux === 2
-                      ? 'Apllied Jobs'
-                      : languageRedux === 3 && '어플라이드 잡스'
+                        ? 'Apllied Jobs'
+                        : languageRedux === 3 && '어플라이드 잡스'
                     : languageRedux === 1
-                    ? 'Đã đăng tuyển'
-                    : languageRedux === 2
-                    ? 'Posted job'
-                    : languageRedux === 3 && '등록되기'}
+                      ? 'Đã đăng tuyển'
+                      : languageRedux === 2
+                        ? 'Posted job'
+                        : languageRedux === 3 && '등록되기'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -423,8 +286,8 @@ const AppliedPostedJob: React.FC = () => {
                         trong vòng 30 ngày, sau 30 ngày bạn có thể kiểm tra các
                         công việc đã Ứng tuyển/Đăng tuyển trong lịch sử.`
                             : languageRedux === 2
-                            ? `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`
-                            : languageRedux === 3 &&
+                              ? `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`
+                              : languageRedux === 3 &&
                               '지원/게시된 채용공고는 30일 이내에 현황이 표시되며, 30일 이후에는 지원/게시된 채용공고 현황을 히스토리에서 확인할 수 있습니다.'}
                         </p>
                       </div>
@@ -564,109 +427,11 @@ const AppliedPostedJob: React.FC = () => {
             setOpenModalLogin={setOpenModalLogin}
           />
         </Box>
-        <ModalNotiValidateCompany
-          openModalNoteValidateCompany={openModalNoteValidateCompany}
-          setOpenModalNoteValidateCompany={setOpenModalNoteValidateCompany}
-        />
-        <ModalNoteCreateCompany
-          openModalNoteCreateCompany={openModalNoteCreateCompany}
-          setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
-        />
       </>
     );
   } else {
     return (
-      <>
-        <Box
-          sx={{
-            maxWidth: { xs: 320, sm: 480 },
-            bgcolor: 'background.paper',
-            position: 'relative',
-            paddingBottom: '24px',
-            flexDirection: 'column',
-          }}
-          className="applied-posted-jobs-container"
-        >
-          {/* <div
-          className="advertisement-job-not-loging"
-          style={{ display: !isLogined ? 'flex' : 'none' }}
-        >
-          <Advertisement />
-          <div className="advertisement-job-not-loging-content">
-            <h3 style={{ marginTop: '12px' }}>
-              {language?.applied_posted_jobs?.are_you_a_recruiter}
-            </h3>
-            <p style={{ marginBottom: '12px' }}>
-              {languageRedux === 1
-                ? 'Đăng tin tuyển dụng nhanh chóng và có thể tìm kiếm hồ sơ các ứng viên'
-                : "Post job postings quickly and searchable candidates' profiles"}
-            </p>
-            <h3>{language?.applied_posted_jobs?.are_you_looking_for_job}</h3>
-            <p>
-              {languageRedux === 1
-                ? 'Bạn có thể xem tin tuyển dụng và ứng tuyển vào các công việc mới nhất theo danh mục, có thể tạo và quản lý CV của bạn.'
-                : 'You can view job postings and apply for the latest jobs by category, can create and manage your CV.'}
-            </p>
-          </div>
-          <Button type="primary" onClick={() => setOpenModalLogin(true)}>
-            <LoginArrowIcon />
-            {language?.sign_in}
-          </Button>
-        </div> */}
-
-          {/* <Avatar
-          sx={{
-            width: '100%',
-            maxHeight: '301px',
-            height: 'auto',
-            marginTop: '24px',
-            cursor: 'pointer',
-          }}
-          variant="square"
-          src={banner1}
-          onClick={() => {
-            window.open('/page-cv', '_parent');
-          }}
-        >
-          Banner1
-        </Avatar> */}
-          <Swiper
-            spaceBetween={30}
-            centeredSlides={true}
-            autoplay={{
-              delay: 3500,
-              disableOnInteraction: false,
-            }}
-            // navigation={true}
-            pagination={true}
-            modules={[Autoplay, Pagination]}
-            className="banner-rescruit-swiper"
-            loop={true}
-          >
-            {banner?.map((value: any, index: number) => {
-              if (value?.order === 1) {
-                return (
-                  <SwiperSlide key={index}>
-                    <img
-                      onClick={() => {
-                        window.open(value?.redirect_url, '_parent');
-                      }}
-                      src={value?.image}
-                      alt=""
-                    />
-                  </SwiperSlide>
-                );
-              } else {
-                return <React.Fragment key={index}></React.Fragment>;
-              }
-            })}
-          </Swiper>
-          <ModalLogin
-            openModalLogin={openModalLogin}
-            setOpenModalLogin={setOpenModalLogin}
-          />
-        </Box>
-      </>
+      <></>
     );
   }
 };

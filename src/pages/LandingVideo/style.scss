@@ -236,7 +236,7 @@
                         }
 
                         .curve_arrow_animation {
-                            animation-delay: 900ms !important;
+                            animation-delay: 700ms !important;
                         }
 
                         .curve,
@@ -255,7 +255,7 @@
                         }
 
                         .curve_arrow_animation {
-                            animation-delay: 1800ms !important;
+                            animation-delay: 1400ms !important;
                         }
 
                         .curve,
@@ -275,7 +275,7 @@
                         }
 
                         .curve_arrow_animation {
-                            animation-delay: 2700ms !important;
+                            animation-delay: 2100ms !important;
                         }
 
                         .curve,
@@ -378,7 +378,7 @@
 
                             @media (prefers-reduced-motion: no-preference) {
                                 .curve_arrow_animation_active {
-                                    animation: wipe-enter 1800ms 1;
+                                    animation: wipe-enter 1400ms 1;
                                     -webkit-animation-fill-mode: forwards;
                                     /* Chrome 16+, Safari 4+ */
                                     -moz-animation-fill-mode: forwards;
