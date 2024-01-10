@@ -317,7 +317,7 @@ const NewJobs: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
 
   return (
     <>
@@ -341,10 +341,10 @@ const NewJobs: React.FC = () => {
                   {languageRedux === 1
                     ? 'Công việc mới nhất'
                     : languageRedux === 2
-                      ? 'Newest Jobs'
-                      : languageRedux === 3
-                        ? '최신 작업'
-                        : 'Công việc mới nhất'}
+                    ? 'Newest Jobs'
+                    : languageRedux === 3
+                    ? '최신 작업'
+                    : 'Công việc mới nhất'}
                 </h2>
 
                 <div className="help-search" onClick={handleClickHelpSearch}>
@@ -356,8 +356,8 @@ const NewJobs: React.FC = () => {
                           {languageRedux === 1
                             ? 'Công việc mới nhất sẽ xuất hiện dựa theo Lĩnh vực quan tâm của bạn trong phần thông tin cá nhân.'
                             : languageRedux === 2
-                              ? 'Newest Jobs will show jobs rely on your Career Objective in Profile.'
-                              : '귀하의 개인적인 관심사에 따라 최신 채용 기회를 확인할 수 있습니다.'}
+                            ? 'Newest Jobs will show jobs rely on your Career Objective in Profile.'
+                            : '귀하의 개인적인 관심사에 따라 최신 채용 기회를 확인할 수 있습니다.'}
                         </p>
                       </div>
                       {/* <Button
@@ -377,42 +377,6 @@ const NewJobs: React.FC = () => {
                   </div>
                 </div>
               </div>
-              {profileV3?.typeRoleData === 0 ? (
-                <div className="title-note">
-                  <p>
-                    {profileV3?.profileCategories?.length === 0 &&
-                      profileV3?.profileLocations?.length === 0
-                      ? languageRedux === 1
-                        ? `Hãy thiết lập Khu vực làm việc và lĩnh vực công việc mà bạn quan tâm.`
-                        : languageRedux === 2
-                          ? 'Set up your work area and areas of work that interest you.'
-                          : '작업 구역과 관심 있는 영역을 설정하세요'
-                      : languageRedux === 1
-                        ? 'Kết quả công việc mới nhất đề xuất dựa theo Khu vực làm việc và Lĩnh vực quan tâm mà bạn đã thiết lập trong Hồ sơ.'
-                        : languageRedux === 2
-                          ? 'The latest job results are suggested based on the Work Area and Areas of Interest that you have set up in your Profile.'
-                          : '당신의 프로필에 설정한 작업 구역 및 관심 영역을 기반으로 최신 채용 결과가 제안됩니다'}
-                  </p>
-                  <p
-                    onClick={() => {
-                      if (profileV3 && profileV3?.length !== 0) {
-                        window.open('profile', '_parent');
-                      } else {
-                        setOpenModalLogin(true);
-                      }
-                    }}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {languageRedux === 1
-                      ? 'Cài đặt.'
-                      : languageRedux === 2
-                        ? 'Setting'
-                        : '설정'}
-                  </p>
-                </div>
-              ) : (
-                <></>
-              )}
             </div>
             {/* <div className="view-all" onClick={handleMoveToMoreJob}>
               <p> {
@@ -450,8 +414,8 @@ const NewJobs: React.FC = () => {
                 {languageRedux === 1
                   ? 'Xem tất cả'
                   : languageRedux === 2
-                    ? 'View all'
-                    : languageRedux === 3 && '모두보기'}
+                  ? 'View all'
+                  : languageRedux === 3 && '모두보기'}
               </p>
               <ArrowrightIcon width={20} height={20} />
             </div>
