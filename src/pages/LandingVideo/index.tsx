@@ -119,6 +119,20 @@ const LandingVideo = () => {
     observer.observe(element);
   });
 
+  const senMail = () => {
+    const subject = 'Hãy tải lên bài đăng của tôi đã đăng ký hôm nay dưới dạng video tiktok hoặc youtube';
+    const content = `Lời khuyên của HIJob:\n
+    1. Nội dung video sẽ được tải lên thông tin công việc đăng ký bằng tài khoản email của bạn (có thể mất tới 2 ngày làm việc).\n
+    2. Nếu bạn quay một video chi tiết (10-20 giây) và gửi cho chúng tôi, chúng tôi có thể tạo một video tuyển dụng tốt hơn.\n
+    3. Nếu không có đủ hình ảnh cho thông tin công việc thì việc tạo video sẽ khó khăn.`;
+    const emailBody = encodeURIComponent(
+      `${content}`,
+    );
+    window.location.href = `mailto:?subject=${encodeURIComponent(
+      subject,
+    )}&body=${emailBody}`;
+  }
+
   return (
     <div className="landing_video_container">
       <div className="landing_video_content">
@@ -455,7 +469,7 @@ const LandingVideo = () => {
           </div>
         </div>
 
-        {/* <div className="landing_video_tutoriral">
+        <div className="landing_video_tutoriral">
           <div className="landing_video_tutoriral_content">
             <p>
               {languageRedux === 1
@@ -465,12 +479,13 @@ const LandingVideo = () => {
                   : '회사에서 채용영상을 등록하고 싶으십니까? 웹사이트에 회사 정보를 등록하시고 다음 주소로 영상 요청을 보내주십시오. 고객관리 이메일: '}
               <span>
                 <Link
-                  to="mailto:contact.hijob@gmail.com"
+                  to="#"
                   target='_blank'
                   style={{
                     color: '#0d99ff',
                     textDecoration: 'underline',
                   }}
+                  onClick={senMail}
                 >
                   contact.hijob@gmail.com
                 </Link>
@@ -479,7 +494,7 @@ const LandingVideo = () => {
               <span>+84 93 8901794</span>
             </p>
           </div>
-        </div> */}
+        </div>
 
         <div className="landing_video_create">
           <img src={Element_create_video} alt="Element_create_video" />
