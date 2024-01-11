@@ -22,6 +22,8 @@ import { SuggestJob } from '#components';
 // @ts-ignore
 import { NewestGigWorker } from '#components';
 
+import LocationCateProfile from '#components/Home/LocationCateProfile';
+
 import HotJob from '#components/Home/HotJob';
 
 import Box from '@mui/material/Box';
@@ -111,8 +113,8 @@ const Home: React.FC = () => {
       languageRedux === 1
         ? 'HiJob - Tìm việc làm, tuyển dụng'
         : languageRedux === 2
-          ? 'HiJob - Find a job, recruit'
-          : 'HiJob - 일자리 찾기, 채용';
+        ? 'HiJob - Find a job, recruit'
+        : 'HiJob - 일자리 찾기, 채용';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
@@ -283,6 +285,7 @@ const Home: React.FC = () => {
         ) : profileV3.typeRoleData === 0 ? (
           <>
             <HotJob />
+            <LocationCateProfile />
             <NewJobs />
             <SuggestJob />
             <ThemesJob />
@@ -313,12 +316,12 @@ const Home: React.FC = () => {
         openModalSelectRole={openModalSelectRole}
         setOpenModalSelectRole={setOpenModalSelectRole}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-      // setRole={setRole}
+        // setRole={setRole}
       />
       <ModalUpdateInfo
         openModalUpdateInfo={openModalUpdateInfo}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-      // role={role}
+        // role={role}
       />
       {/* <RollTop />
       <Footer /> */}
