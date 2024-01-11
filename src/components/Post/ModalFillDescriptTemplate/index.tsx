@@ -94,19 +94,19 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
       let result;
       typeModal === 1
         ? (result = await apiDescriptTemplate.getJobDescriptTemplate(
-            10,
-            0,
-            categories[1] !== null ? categories[1] : null,
-            title !== '' ? title : null,
-            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-          ))
+          10,
+          0,
+          categories[1] !== null ? categories[1] : null,
+          title !== '' ? title : null,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        ))
         : (result = await apiDescriptTemplate.getCompanyDescriptTemplate(
-            10,
-            0,
-            categories[0] !== null ? categories[0] : null,
-            title !== '' ? title : null,
-            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-          ));
+          10,
+          0,
+          categories[0] !== null ? categories[0] : null,
+          title !== '' ? title : null,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        ));
       setHasMore(true);
       if (result.data.data.length === 10) {
         setDescriptTemplate(result.data.data);
@@ -138,19 +138,19 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
       let result: any;
       typeModal === 1
         ? (result = await apiDescriptTemplate.getJobDescriptTemplate(
-            10,
-            nextPage,
-            categories[1] !== null ? categories[1] : null,
-            title !== '' ? title : null,
-            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-          ))
+          10,
+          nextPage,
+          categories[1] !== null ? categories[1] : null,
+          title !== '' ? title : null,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        ))
         : (result = await apiDescriptTemplate.getCompanyDescriptTemplate(
-            10,
-            nextPage,
-            categories[0] !== null ? categories[0] : null,
-            title !== '' ? title : null,
-            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-          ));
+          10,
+          nextPage,
+          categories[0] !== null ? categories[0] : null,
+          title !== '' ? title : null,
+          languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+        ));
       if (result && result.data.data.length >= 10) {
         setPage(nextPage);
         setDescriptTemplate((prev: any) => [...prev, ...result?.data.data]);
@@ -181,9 +181,9 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
     typeModal === 1
       ? setDescription(itemPost.content)
       : setDescription((preValue: any) => ({
-          ...preValue,
-          description: itemPost.content,
-        }));
+        ...preValue,
+        description: itemPost.content,
+      }));
   };
 
   const handleSubmitValueFill = () => {
@@ -196,9 +196,9 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
     typeModal === 1
       ? setDescription(oldDescription)
       : setDescription((preValue: any) => ({
-          ...preValue,
-          description: oldDescription,
-        }));
+        ...preValue,
+        description: oldDescription,
+      }));
     setSelectedValue(-1);
   };
 
@@ -243,14 +243,12 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
             }}
           >
             {languageRedux === 1
-              ? `HiJob sẽ tự động điền mẫu mô tả ${
-                  typeModal === 1 ? 'công việc' : 'công ty'
-                } theo thông tin ${
-                  typeModal === 1 ? 'bài đăng' : 'công ty'
-                } của bạn!`
+              ? `HiJob sẽ tự động điền mẫu mô tả ${typeModal === 1 ? 'công việc' : 'công ty'
+              } theo thông tin ${typeModal === 1 ? 'bài đăng' : 'công ty'
+              } của bạn!`
               : languageRedux === 2
-              ? 'HiJob will automatically fill all your previous job information!'
-              : languageRedux === 3 &&
+                ? 'HiJob will automatically fill all your previous job information!'
+                : languageRedux === 3 &&
                 'HiJob이 자동으로 귀하의 이전 직업 정보를 전부 채워드립니다!'}
             {/* <IconButton
               aria-label="close"
@@ -274,8 +272,8 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
             {languageRedux === 1
               ? 'Mẫu mô tả mà bạn muốn HiJob lấy thông tin tự động'
               : languageRedux === 2
-              ? 'Select job post that you want HiJob to get information automatically'
-              : languageRedux === 3 &&
+                ? 'Select job post that you want HiJob to get information automatically'
+                : languageRedux === 3 &&
                 'HiJob이 자동으로 정보를 검색하도록 하려는 채용 게시물'}
           </p>
           <div className="wrap-cate-title-filter-template">
@@ -296,8 +294,8 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                 languageRedux === 1
                   ? 'Nhập tiêu đề mẫu mô tả bạn muốn tìm'
                   : languageRedux === 2
-                  ? 'Enter template title that you want to looking for'
-                  : '원하시는 설명 템플릿 제목을 입력하세요'
+                    ? 'Enter template title that you want to looking for'
+                    : '원하시는 설명 템플릿 제목을 입력하세요'
               }
             />
           </div>
@@ -336,10 +334,10 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                               {languageRedux === 1
                                 ? 'Xem chi tiết'
                                 : languageRedux === 2
-                                ? 'View details'
-                                : languageRedux === 3
-                                ? '자세히 보기 '
-                                : 'Xem chi tiết'}
+                                  ? 'View details'
+                                  : languageRedux === 3
+                                    ? '자세히 보기 '
+                                    : 'Xem chi tiết'}
                             </p>
                           </li>
                         </ul>
@@ -366,8 +364,8 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
                   languageRedux === 1
                     ? 'Không có thông tin hiển thị!'
                     : languageRedux === 2
-                    ? 'No display information!'
-                    : languageRedux === 3 && '표시되는 정보가 없습니다!'
+                      ? 'No display information!'
+                      : languageRedux === 3 && '표시되는 정보가 없습니다!'
                 }
               />
             )}
@@ -378,15 +376,15 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
               {languageRedux === 1
                 ? 'Xác nhận'
                 : languageRedux === 2
-                ? 'Ok'
-                : languageRedux === 3 && '확인'}
+                  ? 'Ok'
+                  : languageRedux === 3 && '확인'}
             </Button>
             <Button block onClick={handleCancleFillData}>
               {languageRedux === 1
                 ? 'Hủy'
                 : languageRedux === 2
-                ? 'Cancel'
-                : languageRedux === 3 && '취소'}
+                  ? 'Cancel'
+                  : languageRedux === 3 && '취소'}
             </Button>
           </div>
 
