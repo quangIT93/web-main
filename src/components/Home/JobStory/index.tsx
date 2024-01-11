@@ -51,97 +51,111 @@ interface ItemTheme {
 
 export const videos = [
   {
-    id: '146387',
-    image:
+    postId: '146387',
+    imageThumb:
       'https://p9-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/3bd3cbe209a5400796827a83b5b9f498_1704352142?x-expires=1704870000&x-signature=NxxOiuevTUunne%2BGqxYs77q%2FaYA%3D',
-    companyResourceData: {
+    company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/355/1703824996634-730e46f3-754e-4c5c-b38c-aa6b742f9670.png',
+      name: 'CÔNG TY TNHH MỘT THÀNH VIÊN CHOPP',
     },
-    title: 'Nhân viên Giao Hàng',
-    companyName: 'CÔNG TY TNHH MỘT THÀNH VIÊN CHOPP',
+    post: {
+      title: 'Nhân viên Giao Hàng',
+    },
     link: {
       youtube: 'https://www.youtube.com/shorts/3nJmowmWK0Q',
       tiktok: 'https://www.tiktok.com/@hijob.site/video/7320136226630061313',
     },
   },
   {
-    id: '146178',
-    image:
+    postId: '146178',
+    imageThumb:
       'https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/9fd4da6089e74aaf8f9532ddb59daea3_1704270307~tplv-photomode-zoomcover:480:480.avif?x-expires=1704870000&x-signature=tCGAM2w2DV0s2Uqr801%2B74%2BYuuo%3D',
-    companyResourceData: {
+    company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/358/1704258155964-2c66afdc-5182-487a-940b-e85c2ca4305f.png',
+      name: 'CÔNG TY TNHH GIÁO DỤC QUỐC TẾ TDP',
     },
-    title: 'CHUYÊN VIÊN TƯ VẤN GIÁO DỤC/ SENIOR EDUCATIONAL CONSULTANT',
-    companyName: 'CÔNG TY TNHH GIÁO DỤC QUỐC TẾ TDP',
+    post: {
+      title: 'CHUYÊN VIÊN TƯ VẤN GIÁO DỤC/ SENIOR EDUCATIONAL CONSULTANT',
+    },
     link: {
       youtube: 'https://www.youtube.com/shorts/uzux2AKPm9E',
       tiktok: 'https://www.tiktok.com/@hijob.site/video/7319785178602245377',
     },
   },
   {
-    id: '146067',
-    image:
+    postId: '146067',
+    imageThumb:
       'https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/aeec2b79eec8496bbed6173ada323ffc_1704264855~tplv-photomode-zoomcover:480:480.avif?x-expires=1704870000&x-signature=JrMxumGBjAHeGT6SWauKaPmPVhM%3D',
-    companyResourceData: {
+    company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/356/1704179936945-aeae7cf1-4783-4bc4-8225-5662bd825f3c.png',
+      name: 'MASS RECRUITMENT COMPANY LIMITED',
     },
-    title: 'NHÂN VIÊN VẬN HÀNH MÁY NHÀ MÁY KẸO PERFETTI',
-    companyName: 'MASS RECRUITMENT COMPANY LIMITED',
+    post: {
+      title: 'NHÂN VIÊN VẬN HÀNH MÁY NHÀ MÁY KẸO PERFETTI',
+    },
     link: {
       youtube: 'https://www.youtube.com/shorts/FToPD0Fa3Z8',
       tiktok: 'https://www.tiktok.com/@hijob.site/video/7319748486595906818',
     },
   },
   {
-    id: '145981',
-    image:
+    postId: '145981',
+    imageThumb:
       'https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/e4a254ad7eec439b97adeb539c47007b_1704188373~tplv-photomode-zoomcover:480:480.avif?x-expires=1704870000&x-signature=3remBSYuBLDkoZIOR6apuk%2BHqMU%3D',
-    companyResourceData: {
+    company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/355/1703824996634-730e46f3-754e-4c5c-b38c-aa6b742f9670.png',
+      name: 'CÔNG TY TNHH MỘT THÀNH VIÊN CHOPP',
     },
-    title: 'Senior Backend Engineer',
-    companyName: 'CÔNG TY TNHH MỘT THÀNH VIÊN CHOPP',
+    post: {
+      title: 'Senior Backend Engineer',
+    },
     link: {
       youtube: null,
       tiktok: 'https://www.tiktok.com/@hijob.site/video/7319433282700037377',
     },
   },
   {
-    id: '144815',
-    image:
+    postId: '144815',
+    imageThumb:
       'https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/779cc00de0c94d93ba7786d48ebddcfe_1704264872~tplv-photomode-zoomcover:480:480.avif?x-expires=1704870000&x-signature=FL7jWfShhM%2BIPoqJNfSTwnAVwJ8%3D',
-    companyResourceData: {
+    company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/331/1703169466081-1d6451c2-1ee9-4ed6-a855-b615d8219656.png',
+      name: 'Hưng Thịnh',
     },
-    title: 'Việc làm Tết, việc làm parttime, fulltime tại Hồ Chí Minh',
-    companyName: 'Hưng Thịnh',
+    post: {
+      title: 'Việc làm Tết, việc làm parttime, fulltime tại Hồ Chí Minh',
+    },
     link: {
       youtube: null,
       tiktok: 'https://www.tiktok.com/@hijob.site/video/7319321556344114434',
     },
   },
   {
-    id: '144532',
-    image:
+    postId: '144532',
+    imageThumb:
       'https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/e789438c41ea4dd4919c55a08e0af9b1_1703743980~tplv-photomode-zoomcover:480:480.avif?x-expires=1704870000&x-signature=2VdciPrm5bkguZFI2WI0tQ%2BDy6g%3D',
-    companyResourceData: {
+    company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/352/1703661962777-b75da335-115e-4e66-8485-f7a1b22d9c1e.png',
+      name: 'KHU VUI CHƠI TUYẾT SNOW TOWN SÀI GÒN',
     },
-    title: 'TUYỂN NHÂN VIÊN PARTTIME - THỜI VỤ TẾT',
-    companyName: 'KHU VUI CHƠI TUYẾT SNOW TOWN SÀI GÒN',
+    post: {
+      title: 'TUYỂN NHÂN VIÊN PARTTIME - THỜI VỤ TẾT',
+    },
     link: {
       youtube: 'https://www.youtube.com/shorts/IVxZXhWssXg',
       tiktok: 'https://www.tiktok.com/@hijob.site/video/7317524575317806338',
     },
   },
   {
-    id: '142273',
-    image: 'https://i.ytimg.com/vi_webp/yr19OcyvSf0/oar2.webp',
-    companyResourceData: {
+    postId: '142273',
+    imageThumb: 'https://i.ytimg.com/vi_webp/yr19OcyvSf0/oar2.webp',
+    company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/341/1703215468790-897f7d14-727c-4dc4-aaf8-b2b71274cfa5.png',
+      name: 'Xu Shop',
     },
-    title: 'Trực quầy phụ bán đồ uống cho khách',
-    companyName: 'Xu Shop',
+    post: {
+      title: 'Trực quầy phụ bán đồ uống cho khách',
+    },
     link: {
       youtube: 'https://www.youtube.com/shorts/yr19OcyvSf0',
       tiktok: 'https://www.tiktok.com/@hijob.site/video/7316389598089841922',
@@ -164,26 +178,26 @@ const JobStory = () => {
     return state.newWestReducerV3;
   });
 
-  const getVideoShort = async () => {
-    try {
-      const result = await apiVideoShort.getVideoShortList(
-        0,
-        10
-      )
+  // const getVideoShort = async () => {
+  //   try {
+  //     const result = await apiVideoShort.getVideoShortList(
+  //       0,
+  //       10
+  //     )
 
-      if (result) {
-        console.log("result: ", result.data.data);
-        setListVideo(result.data.data)
-      }
-    } catch (error) {
-      console.log(error);
+  //     if (result) {
+  //       console.log("result: ", result.data.data);
+  //       setListVideo(result.data.data)
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
 
-    }
-  }
+  //   }
+  // }
 
-  useEffect(() => {
-    getVideoShort();
-  }, [])
+  // useEffect(() => {
+  //   getVideoShort();
+  // }, [])
 
   return (
     <Box
@@ -205,7 +219,7 @@ const JobStory = () => {
                 ? 'Recruitment videos'
                 : languageRedux === 3 && '채용 비디오'}
           </h2>
-          <Popover
+          {/* <Popover
             content={
               <p>
                 {languageRedux === 1
@@ -238,15 +252,19 @@ const JobStory = () => {
             trigger="click"
           // open={true}
           //   onOpenChange={handleOpenChange}
+          > */}
+          <Button type="primary" shape="round"
+            onClick={() => {
+              window.open(`/landing-video`)
+            }}
           >
-            <Button type="primary" shape="round">
-              {languageRedux === 1
-                ? 'Đăng ký'
-                : languageRedux === 2
-                  ? 'Register'
-                  : languageRedux === 3 && '등록하세요'}
-            </Button>
-          </Popover>
+            {languageRedux === 1
+              ? 'Đăng ký'
+              : languageRedux === 2
+                ? 'Register'
+                : languageRedux === 3 && '등록하세요'}
+          </Button>
+          {/* </Popover> */}
         </div>
       </div>
       <Swiper
@@ -256,8 +274,8 @@ const JobStory = () => {
         modules={[Mousewheel, Navigation, Pagination]}
         className="job-story-swiper"
       >
-        {listVideo &&
-          listVideo?.map((item: any, index: number) => {
+        {videos &&
+          videos?.map((item: any, index: number) => {
             return (
               <SwiperSlide
                 key={index}

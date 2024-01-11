@@ -1609,31 +1609,31 @@ const Detail = () => {
   // console.log('longitude ', post?.data?.postCompanyInformation?.longitude);
   const [videoLink, setVideoLink] = useState<any>();
 
-  const getVideoLinkByPost = async () => {
-    try {
-      const postId = Number(searchParams.get('post-id'));
-      const result = await apiVideoShort.getVieoShortByPostId(postId);
-      if (result) {
-        const link = {
-          youtube: result?.data?.linkYoutube,
-          tiktok: result?.data?.linkTiktok
-        }
-        setVideoLink(link);
-        // console.log("link: ", link);
-      }
-    } catch (error) {
-      console.log(error);
+  // const getVideoLinkByPost = async () => {
+  //   try {
+  //     const postId = Number(searchParams.get('post-id'));
+  //     const result = await apiVideoShort.getVieoShortByPostId(postId);
+  //     if (result) {
+  //       const link = {
+  //         youtube: result?.data?.linkYoutube,
+  //         tiktok: result?.data?.linkTiktok
+  //       }
+  //       setVideoLink(link);
+  //       // console.log("link: ", link);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
 
-    }
-  }
+  //   }
+  // }
 
   useEffect(() => {
-    // const videoOfPost = videos.find(
-    //   (video) => Number(video.id) === Number(searchParams.get('post-id')),
-    // );
-    // const link = videoOfPost?.link;
-    // setVideoLink(link);
-    getVideoLinkByPost();
+    const videoOfPost = videos.find(
+      (video) => Number(video.postId) === Number(searchParams.get('post-id')),
+    );
+    const link = videoOfPost?.link;
+    setVideoLink(link);
+    // getVideoLinkByPost();
   }, [searchParams.get('post-id')]);
 
   // console.log('videoLink', videoLink);
@@ -1796,7 +1796,7 @@ const Detail = () => {
                     className="tiktok-youtub_item"
                     style={{
                       display:
-                        videoLink && videoLink?.youtube !== ""
+                        videoLink && videoLink?.youtube !== null
                           ? 'flex'
                           : 'none',
                     }}
@@ -1819,7 +1819,7 @@ const Detail = () => {
                     className="tiktok-youtub_item"
                     style={{
                       display:
-                        videoLink && videoLink?.tiktok !== ""
+                        videoLink && videoLink?.tiktok !== null
                           ? 'flex'
                           : 'none',
                     }}
