@@ -1796,7 +1796,7 @@ const Detail = () => {
                     className="tiktok-youtub_item"
                     style={{
                       display:
-                        videoLink && videoLink?.youtube !== null
+                        videoLink && videoLink?.youtube !== ""
                           ? 'flex'
                           : 'none',
                     }}
@@ -1819,7 +1819,7 @@ const Detail = () => {
                     className="tiktok-youtub_item"
                     style={{
                       display:
-                        videoLink && videoLink?.tiktok !== null
+                        videoLink && videoLink?.tiktok !== ""
                           ? 'flex'
                           : 'none',
                     }}
