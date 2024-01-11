@@ -60,10 +60,8 @@
                     background: #0D99FF;
 
                     @include breakpoint(mobile) {
-                        button {
-                            width: 300px;
-                            text-wrap: wrap;
-                        }
+                        width: 300px;
+                        text-wrap: wrap;
                     }
                 }
             }
