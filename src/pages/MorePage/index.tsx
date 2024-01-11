@@ -379,10 +379,10 @@ const MoreJobsPage: React.FC = () => {
             // null,
             // profile && profile?.profileLocations?.length > 0 &&
             profileV3.length !== 0 ? profileV3?.profileLocations : null,
-            profileV3.length !== 0
-              ? profileV3?.profileLocations[0]?.province?.id
-              : null,
-            // null,
+            // profileV3.length !== 0
+            //   ? profileV3?.profileLocations[0]?.province?.id
+            //   : null,
+            null,
             20,
             null,
             languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
@@ -490,7 +490,7 @@ const MoreJobsPage: React.FC = () => {
             // profile?.profileLocations?.map((item: any) => {
             //     return item.id
             // }),
-            null,
+            profileV3.length !== 0 ? profileV3?.profileLocations : null,
             null,
             20,
             thersholdId,
