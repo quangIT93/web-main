@@ -403,6 +403,31 @@ const LandingVideo = () => {
           </div>
         </div>
 
+        <div className="landing_video_tutoriral">
+          <div className="landing_video_tutoriral_content">
+            <p>
+              {languageRedux === 1
+                ? 'Công ty muốn đăng ký video tuyển dụng? Quý khách vui lòng đăng ký thông tin công ty ở website và gửi yêu cầu qua địa chỉ Email CSKH: '
+                : languageRedux === 2
+                ? 'Does the company want to register a recruitment video? Please register company information on the website and send a request via Customer Service Email: '
+                : '회사에서 채용영상을 등록하고 싶으십니까? 웹사이트에 회사 정보를 등록하시고 다음 주소로 영상 요청을 보내주십시오. 고객관리 이메일: '}
+              <span>
+                <Link
+                  to="mailto:contact.hijob@gmail.com"
+                  style={{
+                    color: '#0d99ff',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  contact.hijob@gmail.com
+                </Link>
+              </span>
+              {', '}
+              <span>+84 93 8901794</span>
+            </p>
+          </div>
+        </div>
+
         <div className="landing_video_create">
           <img src={Element_create_video} alt="Element_create_video" />
           <div className="landing_video_create_right">
@@ -501,7 +526,7 @@ const LandingVideo = () => {
               ? 'OK'
               : languageRedux === 2
               ? 'OK'
-              : '이해했습니다'}
+              : '이해했다'}
           </Button>
         </div>
       </Modal>
