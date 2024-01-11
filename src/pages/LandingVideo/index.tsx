@@ -120,18 +120,17 @@ const LandingVideo = () => {
   });
 
   const senMail = () => {
-    const subject = 'Hãy tải lên bài đăng của tôi đã đăng ký hôm nay dưới dạng video tiktok hoặc youtube';
+    const subject =
+      'Hãy tải lên bài đăng của tôi đã đăng ký hôm nay dưới dạng video tiktok hoặc youtube';
     const content = `Lời khuyên của HIJob:\n
     1. Nội dung video sẽ được tải lên thông tin công việc đăng ký bằng tài khoản email của bạn (có thể mất tới 2 ngày làm việc).\n
     2. Nếu bạn quay một video chi tiết (10-20 giây) và gửi cho chúng tôi, chúng tôi có thể tạo một video tuyển dụng tốt hơn.\n
     3. Nếu không có đủ hình ảnh cho thông tin công việc thì việc tạo video sẽ khó khăn.`;
-    const emailBody = encodeURIComponent(
-      `${content}`,
-    );
+    const emailBody = encodeURIComponent(`${content}`);
     window.location.href = `mailto:contact.hijob@gmail.com?subject=${encodeURIComponent(
       subject,
     )}&body=${emailBody}`;
-  }
+  };
 
   return (
     <div className="landing_video_container">
@@ -329,11 +328,11 @@ const LandingVideo = () => {
               <div className="item_bot">
                 <p>
                   {languageRedux === 1
-                    ? 'Thêm thật nhiều hình ảnh công ty để video thêm sinh động nhằm thu hút ứng viên quan tâm'
+                    ? 'Sau khi đăng bài tuyển dụng ở HiJob. Hãy gửi nhiều hình ảnh hoặc video qua địa chỉ email bên dưới'
                     : languageRedux === 2
-                      ? 'Add lots of company images to make the video more vivid to attract interested candidates'
+                      ? 'After posting a recruitment post at HiJob. Please send multiple photos or videos via the email address below'
                       : languageRedux === 3 &&
-                      '더 활기찬 영상을 위해서 회사 사진을 많이 올려주세요.'}
+                      'HiJob에 채용 게시물을 게시한 후 아래 이메일 주소로 여러 장의 사진이나 동영상을 보내주세요.'}
                 </p>
               </div>
             </div>
@@ -368,14 +367,41 @@ const LandingVideo = () => {
               <div className="item_bot">
                 <p>
                   {languageRedux === 1
-                    ? 'Gửi yêu cầu tạo tin video tới HiJob'
+                    ? 'HiJob sẽ tạo và tải video tuyển dụng của công ty bạn lên TikTok, Youtube Shorts trong thời gian sớm nhất'
                     : languageRedux === 2
-                      ? 'Send a request to create a video message to HiJob.'
+                      ? "HiJob will create and upload your company's recruitment videos to TikTok, Youtube Shorts as soon as possible"
                       : languageRedux === 3 &&
-                      'HiJob에게 채용 비디오를 요청하세요'}
+                      'HiJob는 당신의 채용 동영상을 제작하여 가능한 한 빨리 TikTok, Youtube Shorts에 업로드합니다.'}
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="landing_video_tutoriral">
+          <div className="landing_video_tutoriral_content">
+            <p>
+              {languageRedux === 1
+                ? 'Công ty muốn đăng ký video tuyển dụng? Quý khách vui lòng đăng ký thông tin công ty ở website và gửi yêu cầu qua địa chỉ Email CSKH: '
+                : languageRedux === 2
+                  ? 'Does the company want to register a recruitment video? Please register company information on the website and send a request via Customer Service Email: '
+                  : '회사에서 채용영상을 등록하고 싶으십니까? 웹사이트에 회사 정보를 등록하시고 다음 주소로 영상 요청을 보내주십시오. 고객관리 이메일: '}
+              <span>
+                <Link
+                  to="#"
+                  target="_blank"
+                  style={{
+                    color: '#0d99ff',
+                    textDecoration: 'underline',
+                  }}
+                  onClick={senMail}
+                >
+                  contact.hijob@gmail.com
+                </Link>
+              </span>
+              {', '}
+              <span>+84 93 8901794</span>
+            </p>
           </div>
         </div>
 
@@ -428,7 +454,10 @@ const LandingVideo = () => {
           <div className="landing_video_link_content">
             <div className="landing_video_link_item">
               <p>Video 1:</p>
-              <Link to="https://www.tiktok.com/@hijob.site/video/7319321556344114434" target='_blank'>
+              <Link
+                to="https://www.tiktok.com/@hijob.site/video/7322772019068554497?is_from_webapp=1&sender_device=pc"
+                target="_blank"
+              >
                 {languageRedux === 1
                   ? 'Video tuyển dụng 1'
                   : languageRedux === 2
@@ -436,63 +465,6 @@ const LandingVideo = () => {
                     : languageRedux === 3 && '채용 비디오'}
               </Link>
             </div>
-            <div className="landing_video_link_item">
-              <p>Video 2: </p>
-              <Link to="https://www.tiktok.com/@hijob.site/video/7322756961307462913?lang=vi-VN" target='_blank'>
-                {languageRedux === 1
-                  ? 'Video tuyển dụng 2'
-                  : languageRedux === 2
-                    ? 'Recruitment video 2'
-                    : languageRedux === 3 && '채용 비디오'}
-              </Link>
-            </div>
-            <div className="landing_video_link_item">
-              <p>Video 3: </p>
-              <Link to="https://www.tiktok.com/@hijob.site/video/7317524575317806338?is_from_webapp=1&sender_device=pc" target='_blank'>
-                {languageRedux === 1
-                  ? 'Video tuyển dụng 3'
-                  : languageRedux === 2
-                    ? 'Recruitment video 3'
-                    : languageRedux === 3 && '채용 비디오'}
-              </Link>
-            </div>
-            <div className="landing_video_link_item">
-              <p>Video 4: </p>
-              <Link to="https://www.tiktok.com/@hijob.site/video/7319748486595906818?is_from_webapp=1&sender_device=pc" target='_blank'>
-                {languageRedux === 1
-                  ? 'Video tuyển dụng 4'
-                  : languageRedux === 2
-                    ? 'Recruitment video 4'
-                    : languageRedux === 3 && '채용 비디오'}
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className="landing_video_tutoriral">
-          <div className="landing_video_tutoriral_content">
-            <p>
-              {languageRedux === 1
-                ? 'Công ty muốn đăng ký video tuyển dụng? Quý khách vui lòng đăng ký thông tin công ty ở website và gửi yêu cầu qua địa chỉ Email CSKH: '
-                : languageRedux === 2
-                  ? 'Does the company want to register a recruitment video? Please register company information on the website and send a request via Customer Service Email: '
-                  : '회사에서 채용영상을 등록하고 싶으십니까? 웹사이트에 회사 정보를 등록하시고 다음 주소로 영상 요청을 보내주십시오. 고객관리 이메일: '}
-              <span>
-                <Link
-                  to="#"
-                  target='_blank'
-                  style={{
-                    color: '#0d99ff',
-                    textDecoration: 'underline',
-                  }}
-                  onClick={senMail}
-                >
-                  contact.hijob@gmail.com
-                </Link>
-              </span>
-              {', '}
-              <span>+84 93 8901794</span>
-            </p>
           </div>
         </div>
 

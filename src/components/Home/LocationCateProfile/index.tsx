@@ -58,16 +58,17 @@ const LocationCateProfile = () => {
                     profileV3?.profileLocations.length > 1
                       ? `+${profileV3?.profileLocations.length - 1}`
                       : ''
-                  } - `}
+                  }`}
                 </Tooltip>
               ) : languageRedux === 1 ? (
-                ' Chưa chọn khu vực làm việc'
+                ' none'
               ) : languageRedux === 2 ? (
-                ' Working location has not been selected'
+                ' none'
               ) : (
-                ' 근무 위치를 설정하지 않았습니다'
+                ' none'
               )}
             </span>
+            <span className={style.div_loca_title}>-</span>
             <span className={style.div_loca_title}>
               {languageRedux === 1
                 ? ' Lĩnh vực quan tâm của bạn: '
@@ -97,11 +98,11 @@ const LocationCateProfile = () => {
                   }`}
                 </Tooltip>
               ) : languageRedux === 1 ? (
-                ' Chưa chọn khu vực làm việc'
+                ' none'
               ) : languageRedux === 2 ? (
-                ' Career objective has not been selected'
+                ' none'
               ) : (
-                ' 관심 분야를 설정하지 않았습니다'
+                ' none'
               )}
             </span>
           </Box>
