@@ -284,8 +284,8 @@ const Home: React.FC = () => {
           </>
         ) : profileV3.typeRoleData === 0 ? (
           <>
-            <HotJob />
             <LocationCateProfile />
+            <HotJob />
             <NewJobs />
             <SuggestJob />
             <ThemesJob />

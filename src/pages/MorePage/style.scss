@@ -1,5 +1,5 @@
-
 @import '../../scss/mixins';
+
 .more-job-page-container {
     // margin: 100px auto;
     // margin: 176px auto 100px;
@@ -62,4 +62,12 @@
     // @media screen and (min-width: 300px) and (max-width: 1080px) {
     //     padding: 0px 24px;
     // }
+}
+
+.MuiMenu-list {
+    height: 50%;
+
+    li {
+        font-size: 14px;
+    }
 }

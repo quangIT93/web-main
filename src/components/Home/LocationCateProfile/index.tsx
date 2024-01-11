@@ -6,7 +6,8 @@ import { RootState } from 'store';
 import style from './style.module.scss';
 import { NewJobIcon } from '#components/Icons';
 import { Link } from 'react-router-dom';
-
+import { SettingOutlined } from '@ant-design/icons';
+import { Space, Tooltip } from 'antd';
 const LocationCateProfile = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -14,147 +15,101 @@ const LocationCateProfile = () => {
   const profileV3 = useSelector(
     (state: RootState) => state.dataProfileInformationV3.data,
   );
-  console.log('profileV3', profileV3);
 
   return (
-    // <Box className={style.container_loca}>
-    //   <Box className={style.div_loca}>
-    //     <svg
-    //       width="24"
-    //       height="25"
-    //       viewBox="0 0 24 25"
-    //       fill="none"
-    //       xmlns="http://www.w3.org/2000/svg"
-    //     >
-    //       <path
-    //         d="M13.0462 2.27812C12.7169 1.26467 11.2831 1.26468 10.9538 2.27812L8.86991 8.6918H2.12616C1.06057 8.6918 0.617516 10.0554 1.4796 10.6817L6.9354 14.6456L4.85147 21.0593C4.52218 22.0727 5.68211 22.9154 6.5442 22.2891L12 18.3252L17.4558 22.2891C18.3179 22.9154 19.4778 22.0727 19.1485 21.0593L17.0646 14.6456L22.5204 10.6817C23.3825 10.0554 22.9394 8.6918 21.8738 8.6918H15.1301L13.0462 2.27812Z"
-    //         fill="#FBBC04"
-    //         stroke="#FBBC04"
-    //         stroke-width="1.2"
-    //       />
-    //     </svg>
-
-    //     <h2 className={style.title_loca}>
-    //       {languageRedux === 1
-    //         ? 'Khu vực làm việc và lĩnh vực quan tâm'
-    //         : languageRedux === 2
-    //         ? 'Newest Jobs'
-    //         : languageRedux === 3
-    //         ? '최신 작업'
-    //         : 'Công việc mới nhất'}
-    //     </h2>
-
-    //     <h2 className={style.title_setting}>
-    //       {languageRedux === 1
-    //         ? 'Cài đặt'
-    //         : languageRedux === 2
-    //         ? 'Setting'
-    //         : '설정'}
-    //     </h2>
-    //   </Box>
-    //   <Box className={style.div_content}>
-    //     <Box className={style.div_content_loca}>
-    //       <h3 className={style.div_content_loca_title}>Khu vực làm việc:</h3>
-    //       <p className={style.div_content_loca_items}>
-    //         {profileV3?.profileLocations?.length !== 0
-    //           ? profileV3?.profileLocations
-    //               ?.map((value: any, index: number, array: any[]) =>
-    //                 index === array.length - 1
-    //                   ? value.fullName
-    //                   : `${value.fullName}, `,
-    //               )
-    //               .join('')
-    //           : 'Chưa chọn khu vực làm việc'}
-    //       </p>
-    //     </Box>
-    //     <Box className={style.div_content_loca}>
-    //       <h3 className={style.div_content_loca_title}>Lĩnh vực quan tâm:</h3>
-    //       <p className={style.div_content_loca_items}>
-    //         {profileV3?.profileCategories?.length !== 0
-    //           ? profileV3?.profileCategories
-    //               ?.map((value: any, index: number, array: any[]) =>
-    //                 index === array.length - 1
-    //                   ? value.fullName
-    //                   : `${value.fullName}, `,
-    //               )
-    //               .join('')
-    //           : 'Chưa chọn khu vực làm việc'}
-    //       </p>
-    //     </Box>
-    //   </Box>
-    // </Box>
-
     <Box className={style.container_loca}>
       <Box className={style.container_loca_div}>
-        <Box className={style.div_loca}>
-          <span className={style.div_loca_title}>
-            {languageRedux === 1
-              ? 'Khu vực làm việc của bạn: '
-              : languageRedux === 2
-              ? 'Your working location: '
-              : '당신의 근무 위치: '}
-          </span>
-          <span className={style.div_loca_content}>
-            {profileV3?.profileLocations?.length !== 0
-              ? profileV3?.profileLocations
-                  ?.map((value: any, index: number, array: any[]) =>
-                    index === array.length - 1
-                      ? value.fullName
-                      : `${value.province.fullName}  (${value.fullName}), `,
-                  )
-                  .join('')
-              : languageRedux === 1
-              ? 'Chưa chọn khu vực làm việc'
-              : languageRedux === 2
-              ? 'Working location has not been selected'
-              : '근무 위치를 설정하지 않았습니다'}
-          </span>
-        </Box>
-        <Box className={style.div_loca}>
-          <span className={style.div_loca_title}>
-            {languageRedux === 1
-              ? ' Lĩnh vực quan tâm của bạn: '
-              : languageRedux === 2
-              ? 'Your career objective: '
-              : '당신의 관심 분야: '}
-          </span>
-          <span className={style.div_loca_content}>
-            {profileV3?.profileCategories?.length !== 0
-              ? profileV3?.profileCategories
-                  ?.map((value: any, index: number, array: any[]) =>
-                    index === array.length - 1
-                      ? value.fullName
-                      : `${value.fullName}, `,
-                  )
-                  .join('')
-              : languageRedux === 1
-              ? 'Chưa chọn lĩnh vực quan tâm'
-              : languageRedux === 2
-              ? 'Career objective has not been selected'
-              : '관심 분야를 설정하지 않았습니다'}
-          </span>
-        </Box>
-      </Box>
-      <Box>
-        <Link to="/profile" className={style.icon_loca}>
+        <Box sx={{ display: 'flex', gap: '8px' }}>
           <svg
-            width="28"
-            height="28"
-            viewBox="0 0 22 20"
+            width="24"
+            height="24"
+            viewBox="0 0 28 28"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M12.24 13.62L8.82999 14.35C8.69706 14.3646 8.56292 14.3646 8.42999 14.35C7.95697 14.3541 7.50245 14.1665 7.16999 13.83C6.74272 13.3917 6.5659 12.7672 6.69999 12.17L7.42999 8.77001C7.58507 8.10146 7.93274 7.49303 8.42999 7.02001L14.13 1.32001H5.12999C4.01463 1.30645 2.941 1.74355 2.15226 2.53228C1.36353 3.32102 0.926434 4.39465 0.939988 5.51001V15.86C0.939988 18.1465 2.79353 20 5.07999 20H15.44C17.7264 20 19.58 18.1465 19.58 15.86V7.07001L14 12.66C13.5195 13.1448 12.9077 13.4785 12.24 13.62Z"
-              fill="#0d99ff"
-            />
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M15.77 1.11001C16.9273 -0.217726 18.9367 -0.369209 20.28 0.770014C20.843 1.41829 21.1238 2.26458 21.06 3.12084C20.9961 3.9771 20.5929 4.7724 19.94 5.33001L13.27 12C12.9182 12.3328 12.4767 12.5552 12 12.64L8.61999 13.4C8.3419 13.4811 8.04185 13.3992 7.84345 13.1882C7.64505 12.9771 7.58189 12.6726 7.67999 12.4L8.40999 9.00001C8.52152 8.53688 8.76055 8.11425 9.09999 7.78001L15.77 1.11001ZM16.18 5.77001L18.42 3.53001C18.6953 3.2345 18.6872 2.774 18.4016 2.48839C18.116 2.20278 17.6555 2.19465 17.36 2.47001L15.12 4.71001C14.8275 5.00283 14.8275 5.4772 15.12 5.77001C15.4128 6.06247 15.8872 6.06247 16.18 5.77001Z"
-              fill="#0d99ff"
+              d="M30 26.0003H28V12.0003C28 11.4699 27.7893 10.9612 27.4142 10.5861C27.0391 10.211 26.5304 10.0003 26 10.0003H18V4.00032C18.0002 3.63815 17.9021 3.28272 17.7161 2.97195C17.5301 2.66118 17.2633 2.40675 16.944 2.23581C16.6247 2.06487 16.265 1.98384 15.9032 2.00137C15.5415 2.01889 15.1913 2.13432 14.89 2.33532L4.89 9.00032C4.61567 9.18335 4.39086 9.43137 4.23558 9.7223C4.0803 10.0132 3.99937 10.338 4 10.6678V26.0003H2C1.73478 26.0003 1.48043 26.1057 1.29289 26.2932C1.10536 26.4808 1 26.7351 1 27.0003C1 27.2655 1.10536 27.5199 1.29289 27.7074C1.48043 27.895 1.73478 28.0003 2 28.0003H30C30.2652 28.0003 30.5196 27.895 30.7071 27.7074C30.8946 27.5199 31 27.2655 31 27.0003C31 26.7351 30.8946 26.4808 30.7071 26.2932C30.5196 26.1057 30.2652 26.0003 30 26.0003ZM26 12.0003V26.0003H18V12.0003H26ZM6 10.6678L16 4.00032V26.0003H6V10.6678ZM14 14.0003V16.0003C14 16.2655 13.8946 16.5199 13.7071 16.7074C13.5196 16.895 13.2652 17.0003 13 17.0003C12.7348 17.0003 12.4804 16.895 12.2929 16.7074C12.1054 16.5199 12 16.2655 12 16.0003V14.0003C12 13.7351 12.1054 13.4808 12.2929 13.2932C12.4804 13.1057 12.7348 13.0003 13 13.0003C13.2652 13.0003 13.5196 13.1057 13.7071 13.2932C13.8946 13.4808 14 13.7351 14 14.0003ZM10 14.0003V16.0003C10 16.2655 9.89464 16.5199 9.70711 16.7074C9.51957 16.895 9.26522 17.0003 9 17.0003C8.73478 17.0003 8.48043 16.895 8.29289 16.7074C8.10536 16.5199 8 16.2655 8 16.0003V14.0003C8 13.7351 8.10536 13.4808 8.29289 13.2932C8.48043 13.1057 8.73478 13.0003 9 13.0003C9.26522 13.0003 9.51957 13.1057 9.70711 13.2932C9.89464 13.4808 10 13.7351 10 14.0003ZM10 21.0003V23.0003C10 23.2655 9.89464 23.5199 9.70711 23.7074C9.51957 23.895 9.26522 24.0003 9 24.0003C8.73478 24.0003 8.48043 23.895 8.29289 23.7074C8.10536 23.5199 8 23.2655 8 23.0003V21.0003C8 20.7351 8.10536 20.4808 8.29289 20.2932C8.48043 20.1057 8.73478 20.0003 9 20.0003C9.26522 20.0003 9.51957 20.1057 9.70711 20.2932C9.89464 20.4808 10 20.7351 10 21.0003ZM14 21.0003V23.0003C14 23.2655 13.8946 23.5199 13.7071 23.7074C13.5196 23.895 13.2652 24.0003 13 24.0003C12.7348 24.0003 12.4804 23.895 12.2929 23.7074C12.1054 23.5199 12 23.2655 12 23.0003V21.0003C12 20.7351 12.1054 20.4808 12.2929 20.2932C12.4804 20.1057 12.7348 20.0003 13 20.0003C13.2652 20.0003 13.5196 20.1057 13.7071 20.2932C13.8946 20.4808 14 20.7351 14 21.0003Z"
+              fill="#001424"
             />
           </svg>
+          <Box className={style.div_loca}>
+            <span className={style.div_loca_title}>
+              {languageRedux === 1
+                ? 'Khu vực làm việc của bạn: '
+                : languageRedux === 2
+                ? 'Your working location: '
+                : '당신의 근무 위치: '}
+            </span>
+            <span className={style.div_loca_content}>
+              {profileV3?.profileLocations?.length !== 0 ? (
+                <Tooltip
+                  placement="top"
+                  title={profileV3?.profileLocations
+                    ?.map((value: any, index: number, array: any[]) =>
+                      index === array.length - 1
+                        ? value.fullName
+                        : `${value.province.fullName}  (${value.fullName}), `,
+                    )
+                    .join('')}
+                >
+                  {`${profileV3?.profileLocations[0].province.fullName} (${
+                    profileV3?.profileLocations[0].fullName
+                  }) ${
+                    profileV3?.profileLocations.length > 1
+                      ? `+${profileV3?.profileLocations.length - 1}`
+                      : ''
+                  } - `}
+                </Tooltip>
+              ) : languageRedux === 1 ? (
+                ' Chưa chọn khu vực làm việc'
+              ) : languageRedux === 2 ? (
+                ' Working location has not been selected'
+              ) : (
+                ' 근무 위치를 설정하지 않았습니다'
+              )}
+            </span>
+            <span className={style.div_loca_title}>
+              {languageRedux === 1
+                ? ' Lĩnh vực quan tâm của bạn: '
+                : languageRedux === 2
+                ? ' Your career objective: '
+                : ' 당신의 관심 분야: '}
+            </span>
+
+            <span className={style.div_loca_content}>
+              {profileV3?.profileCategories?.length !== 0 ? (
+                <Tooltip
+                  placement="top"
+                  title={profileV3?.profileCategories
+                    ?.map((value: any, index: number, array: any[]) =>
+                      index === array.length - 1
+                        ? value.fullName
+                        : `${value.parentCategory.fullName}  (${value.fullName}), `,
+                    )
+                    .join('')}
+                >
+                  {`${
+                    profileV3?.profileCategories[0].parentCategory.fullName
+                  } (${profileV3?.profileCategories[0].fullName}) ${
+                    profileV3?.profileCategories.length > 1
+                      ? `+${profileV3?.profileCategories.length - 1}`
+                      : ''
+                  }`}
+                </Tooltip>
+              ) : languageRedux === 1 ? (
+                ' Chưa chọn khu vực làm việc'
+              ) : languageRedux === 2 ? (
+                ' Career objective has not been selected'
+              ) : (
+                ' 관심 분야를 설정하지 않았습니다'
+              )}
+            </span>
+          </Box>
+        </Box>
+      </Box>
+      <Box>
+        <Link to="/profile" className={style.icon_loca}>
+          <SettingOutlined style={{ fontSize: '24px', color: '#000000' }} />
         </Link>
       </Box>
     </Box>

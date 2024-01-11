@@ -216,8 +216,8 @@ const JobStory = () => {
             {languageRedux === 1
               ? 'Video tuyển dụng'
               : languageRedux === 2
-              ? 'Recruitment videos'
-              : languageRedux === 3 && '채용 비디오'}
+                ? 'Recruitment videos'
+                : languageRedux === 3 && '채용 비디오'}
           </h2>
           {/* <Popover
             content={
@@ -261,10 +261,10 @@ const JobStory = () => {
             }}
           >
             {languageRedux === 1
-              ? 'Đăng ký'
+              ? 'Bắt đầu ngay'
               : languageRedux === 2
-              ? 'Register'
-              : languageRedux === 3 && '등록하세요'}
+                ? 'Start now'
+                : languageRedux === 3 && '바로시작'}
           </Button>
           {/* </Popover> */}
         </div>
@@ -292,8 +292,8 @@ const JobStory = () => {
                       languageRedux === 1
                         ? 'Hình ảnh bị lỗi'
                         : languageRedux === 2
-                        ? 'Image is corrupted'
-                        : '이미지가 손상되었습니다'
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'
                     }
                     style={{
                       width: '100%',

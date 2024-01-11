@@ -49,16 +49,24 @@
                     }
                 }
 
+                @include breakpoint(mobile) {
+                    button {
+                        width: 300px;
+                    }
+                }
+
                 button {
                     // width: 317px;
-                    height: 49px;
+                    height: fit-content;
                     font-family: Roboto;
-                    font-size: 16px;
+                    font-size: 32px;
                     font-weight: 500;
                     letter-spacing: 0em;
                     text-align: center;
 
+                    text-wrap: wrap;
                     background: #0D99FF;
+
                 }
             }
 
