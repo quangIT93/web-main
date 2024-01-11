@@ -56,16 +56,12 @@
                     font-weight: 500;
                     letter-spacing: 0em;
                     text-align: center;
-                    display: -webkit-box !important;
-                    -webkit-line-clamp: 2 !important;
-                    -webkit-box-orient: vertical !important;
-                    overflow: hidden !important;
-                    word-break: break-word;
+
                     background: #0D99FF;
-                    
+
                     @include breakpoint(mobile) {
-                        text-wrap: wrap;
                         width: 300px;
+                        text-wrap: wrap;
                     }
                 }
             }
