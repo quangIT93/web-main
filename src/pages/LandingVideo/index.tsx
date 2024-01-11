@@ -128,7 +128,7 @@ const LandingVideo = () => {
     const emailBody = encodeURIComponent(
       `${content}`,
     );
-    window.location.href = `mailto:?subject=${encodeURIComponent(
+    window.location.href = `mailto:contact.hijob@gmail.com?subject=${encodeURIComponent(
       subject,
     )}&body=${emailBody}`;
   }
