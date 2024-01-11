@@ -60,7 +60,13 @@
 
                     background: #0D99FF;
 
-                    @include breakpoint(mobile) {
+                    // @include breakpoint(mobile) {
+                    //     text-wrap: wrap;
+                    //     width: 300px;
+                    // }
+
+                    
+                    @media screen and (max-width: 400px) {
                         text-wrap: wrap;
                         width: 300px;
                     }

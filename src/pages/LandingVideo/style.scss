@@ -62,6 +62,11 @@
                     overflow: hidden !important;
                     word-break: break-word;
                     background: #0D99FF;
+                    
+                    @include breakpoint(mobile) {
+                        text-wrap: wrap;
+                        width: 300px;
+                    }
                 }
             }
 
