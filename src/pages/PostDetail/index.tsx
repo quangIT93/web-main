@@ -1629,14 +1629,13 @@ const Detail = () => {
         if (result?.data?.linkTiktok !== null) {
           setVideoLinkTiktok(result?.data?.linkTiktok);
         } else {
-          setVideoLinkYoutube(videoOfPost?.linkTiktok);
+          setVideoLinkTiktok(videoOfPost?.linkTiktok);
         }
         if (result?.data?.linkYoutube !== null) {
-          setVideoLinkTiktok(result?.data?.linkYoutube);
+          setVideoLinkYoutube(result?.data?.linkYoutube);
         } else {
           setVideoLinkYoutube(videoOfPost?.linkYoutube);
         }
-        // console.log("link: ", link);
       }
     } catch (error) {
       console.log(error);
