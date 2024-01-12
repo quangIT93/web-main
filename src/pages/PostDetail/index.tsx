@@ -1625,7 +1625,7 @@ const Detail = () => {
       const videoOfPost = videos.find(
         (video) => Number(video.postId) === Number(searchParams.get('post-id')),
       );
-      if (result) {
+      if (result.status === 200) {
         if (result?.data?.linkTiktok !== null) {
           setVideoLinkTiktok(result?.data?.linkTiktok);
         } else {
@@ -1642,6 +1642,7 @@ const Detail = () => {
       const videoOfPost = videos.find(
         (video) => Number(video.postId) === Number(searchParams.get('post-id')),
       );
+
       setVideoLinkYoutube(videoOfPost?.linkYoutube);
       setVideoLinkTiktok(videoOfPost?.linkTiktok);
     }
