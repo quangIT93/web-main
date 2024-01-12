@@ -23,7 +23,8 @@ const SubIcon: React.FC<ISubicon> = (props) => {
   // const [closed, setClosed] = React.useState('');
   const [openModalClosePost, setOpenModalClosePost] = React.useState(false);
 
-  const handleClickClosePost = async () => {
+  const handleClickClosePost = async (e: any) => {
+    e.stopPropagation();
     // try {
     //   const result = await postApi.updateStatusPost(postId, 3);
     //   if (result) {
@@ -36,7 +37,8 @@ const SubIcon: React.FC<ISubicon> = (props) => {
     setOpenModalClosePost(true);
   };
 
-  const handleClickEditPost = async () => {
+  const handleClickEditPost = async (e: any) => {
+    e.stopPropagation();
     // const result = await postApi.updateStatusPost(postId, 1);
     window.open(`/edit-posted?postId=${postId}`, '_parent');
   };
@@ -79,13 +81,13 @@ const SubIcon: React.FC<ISubicon> = (props) => {
           ? languageRedux === 1
             ? 'Bài tuyển dụng đã đóng'
             : languageRedux === 2
-              ? 'The job posting is closed"'
-              : '채용공고가 마감되었습니다'
+            ? 'The job posting is closed"'
+            : '채용공고가 마감되었습니다'
           : languageRedux === 1
-            ? 'Đóng bài tuyển dụng'
-            : languageRedux === 2
-              ? 'Close job posting"'
-              : '채용 공고 닫기'}
+          ? 'Đóng bài tuyển dụng'
+          : languageRedux === 2
+          ? 'Close job posting"'
+          : '채용 공고 닫기'}
       </div>
 
       <ModalClosePost

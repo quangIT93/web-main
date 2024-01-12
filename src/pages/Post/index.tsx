@@ -682,10 +682,9 @@ const Post: React.FC = () => {
               setIsValidSubmit(true);
               setOpenModalPost(true);
               setCheckPost(true);
-              // if (createVideo) {
-              //   createVideoPost(result?.data?.postId)
-
-              // }
+              if (createVideo) {
+                createVideoPost(result?.data?.postId);
+              }
             }
           }
         } else if (profileV3 && !profileV3.companyInfo && !checkPost) {
@@ -813,21 +812,20 @@ const Post: React.FC = () => {
   };
 
   //create video
-  // const createVideoPost = async (postId: any) => {
-  //   const formData = new FormData();
-  //   formData.append('postId ', postId);
-  //   // formData.append('linkTiktok ', null);
-  //   // formData.append('linkYoutube ', null);
-  //   // formData.append('image ', null);
-  //   if (formData) {
-  //     try {
-  //       const result = await apiVideoShort.createVideoShort(formData)
-  //     } catch (error) {
-  //       console.log(error);
-
-  //     }
-  //   }
-  // }
+  const createVideoPost = async (postId: any) => {
+    const formData = new FormData();
+    formData.append('postId ', postId);
+    // formData.append('linkTiktok ', null);
+    // formData.append('linkYoutube ', null);
+    // formData.append('image ', null);
+    if (formData) {
+      try {
+        const result = await apiVideoShort.createVideoShort(formData);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   const analytics: any = getAnalytics();
 
@@ -1132,32 +1130,29 @@ const Post: React.FC = () => {
               oldDescription={oldDescription}
             />
             {/* <EditText /> */}
-            {/* <div className='create-video-wrap'>
+            <div className="create-video-wrap">
               <Checkbox
                 style={{
-                  marginTop: 24
+                  marginTop: 24,
                 }}
                 onChange={(e: any) => {
                   setCreateVideo(e.target.checked);
-                }}>
-                {
-                  languageRedux === 1 ?
-                    "Tạo video cho bài đăng" :
-                    languageRedux === 2 ?
-                      "Create a video for your post" :
-                      "게시물에 대한 비디오 만들기"
-                }
+                }}
+              >
+                {languageRedux === 1
+                  ? 'Tạo video cho bài đăng'
+                  : languageRedux === 2
+                  ? 'Create a video for your post'
+                  : '게시물에 대한 비디오 만들기'}
               </Checkbox>
               <Text italic>
-                {
-                  languageRedux === 1 ?
-                    "Hijob sẽ tự động tạo video bài đăng của bạn trên nền tảng Tiktok và Youtube Shorts trong thời gian sớm nhất. Để tạo được video hãy tải lên nhiều hình ảnh trong bài đăng." :
-                    languageRedux === 2 ?
-                      "Hijob will automatically create your video posts on the Tiktok and Youtube Shorts platforms as soon as possible. To create a video, upload multiple images in the post." :
-                      "Hijob은 가능한 한 빨리 Tiktok 및 Youtube Shorts 플랫폼에 비디오 게시물을 자동으로 생성합니다. 동영상을 만들려면 게시물에 여러 이미지를 업로드하세요."
-                }
+                {languageRedux === 1
+                  ? 'Hijob sẽ tự động tạo video bài đăng của bạn trên nền tảng Tiktok và Youtube Shorts trong thời gian sớm nhất. Để tạo được video hãy tải lên nhiều hình ảnh trong bài đăng.'
+                  : languageRedux === 2
+                  ? 'Hijob will automatically create your video posts on the Tiktok and Youtube Shorts platforms as soon as possible. To create a video, upload multiple images in the post.'
+                  : 'Hijob은 가능한 한 빨리 Tiktok 및 Youtube Shorts 플랫폼에 비디오 게시물을 자동으로 생성합니다. 동영상을 만들려면 게시물에 여러 이미지를 업로드하세요.'}
               </Text>
-            </div> */}
+            </div>
             <button
               type="submit"
               onClick={handleSubmit}
