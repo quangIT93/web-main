@@ -37,8 +37,8 @@ const LocationCateProfile = () => {
               {languageRedux === 1
                 ? 'Khu vực làm việc của bạn: '
                 : languageRedux === 2
-                ? 'Your working location: '
-                : '당신의 근무 위치: '}
+                  ? 'Location: '
+                  : '당신의 근무 위치: '}
             </span>
             <span className={style.div_loca_content}>
               {profileV3?.profileLocations?.length !== 0 ? (
@@ -52,13 +52,11 @@ const LocationCateProfile = () => {
                     )
                     .join('')}
                 >
-                  {`${profileV3?.profileLocations[0].province.fullName} (${
-                    profileV3?.profileLocations[0].fullName
-                  }) ${
-                    profileV3?.profileLocations.length > 1
+                  {`${profileV3?.profileLocations[0].province.fullName} (${profileV3?.profileLocations[0].fullName
+                    }) ${profileV3?.profileLocations.length > 1
                       ? `+${profileV3?.profileLocations.length - 1}`
                       : ''
-                  }`}
+                    }`}
                 </Tooltip>
               ) : languageRedux === 1 ? (
                 ' none'
@@ -73,8 +71,8 @@ const LocationCateProfile = () => {
               {languageRedux === 1
                 ? ' Lĩnh vực quan tâm của bạn: '
                 : languageRedux === 2
-                ? ' Your career objective: '
-                : ' 당신의 관심 분야: '}
+                  ? ' Career: '
+                  : ' 당신의 관심 분야: '}
             </span>
 
             <span className={style.div_loca_content}>
@@ -89,13 +87,11 @@ const LocationCateProfile = () => {
                     )
                     .join('')}
                 >
-                  {`${
-                    profileV3?.profileCategories[0].parentCategory.fullName
-                  } (${profileV3?.profileCategories[0].fullName}) ${
-                    profileV3?.profileCategories.length > 1
+                  {`${profileV3?.profileCategories[0].parentCategory.fullName
+                    } (${profileV3?.profileCategories[0].fullName}) ${profileV3?.profileCategories.length > 1
                       ? `+${profileV3?.profileCategories.length - 1}`
                       : ''
-                  }`}
+                    }`}
                 </Tooltip>
               ) : languageRedux === 1 ? (
                 ' none'
