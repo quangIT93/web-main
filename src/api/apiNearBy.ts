@@ -10,18 +10,18 @@ const nearByApi = {
     limit: Number,
     threshold: Number | null,
     lang: string
-  ) => { 
+  ) => {
     if (pvId && Array.isArray(pvId)) {
       pvId = [...new Set(pvId)] as string[];
     } else {
       // Handle the case when pvId is null or not an array
       pvId = ['79'];  // Default value when pvId is not usable
     }
-    
+
     const URL = `/v1/posts/nearby?${pvId.map((n: any, index) => `pvid=${n}`).join('&')}&` +
-    `${pcid ? `pcid=${pcid}&` : ''}` +
-    `${ccid ? `ccid=${ccid}&` : ''}` +
-    `limit=${limit}&threshold=${threshold ? threshold : ''}&lang=${lang}`;
+      `${pcid ? `pcid=${pcid}&` : ''}` +
+      `${ccid ? `ccid=${ccid}&` : ''}` +
+      `limit=${limit}&threshold=${threshold ? threshold : ''}&lang=${lang}`;
 
     return axiosClient.get(URL, {
       headers: {
@@ -43,11 +43,11 @@ const nearByApi = {
       // Handle the case when pvId is null or not an array
       pvId = ['79'];  // Default value when pvId is not usable
     }
-    
+
     const URL = `/v3/posts/nearby?${pvId.map((n: any, index) => `provinceId=${n}`).join('&')}&` +
-    `${pcid ? `parentCategoryId=${pcid}&` : ''}` +
-    `${ccid ? `childrenCategoryId=${ccid}&` : ''}` +
-    `limit=${limit}&page=${page ? page : ''}&lang=${lang}`;
+      `${pcid ? `parentCategoryId=${pcid}&` : ''}` +
+      `${ccid ? `childrenCategoryId=${ccid}&` : ''}` +
+      `limit=${limit}&page=${page ? page : ''}&lang=${lang}`;
 
     return axiosClient.get(URL, {
       headers: {
