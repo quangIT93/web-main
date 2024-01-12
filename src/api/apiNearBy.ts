@@ -47,7 +47,6 @@ const nearByApi = {
       // Handle the case when pvId is null or not an array
       pvId = ['79']; // Default value when pvId is not usable
     }
-    console.log('page', page);
 
     const URL =
       `/v3/posts/nearby?${pvId
@@ -55,7 +54,7 @@ const nearByApi = {
         .join('&')}&` +
       `${pcid ? `parentCategoryId=${pcid}&` : ''}` +
       `${ccid ? `childrenCategoryId=${ccid}&` : ''}` +
-      `limit=${limit}&page=${page || page === 0 ? page : ''}&lang=${lang}`;
+      `limit=${limit}&page=${page ? page : ''}&lang=${lang}`;
 
     return axiosClient.get(URL, {
       headers: {

@@ -51,38 +51,51 @@ interface ItemTheme {
 
 export const videos = [
   {
-    postId: '146387',
-    imageThumb:
-      'https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/3bd3cbe209a5400796827a83b5b9f498_1704352142~tplv-photomode-zoomcover:480:480.avif?x-expires=1705057200&x-signature=DupjCVjFCgxLbNVM6AcFghCKGFc%3D',
     company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/355/1703824996634-730e46f3-754e-4c5c-b38c-aa6b742f9670.png',
       name: 'CÔNG TY TNHH MỘT THÀNH VIÊN CHOPP',
+      id: 71,
     },
+    companyId: 71,
+    createdAt: 1705040635000,
+    id: 1,
+    imageThumb:
+      'https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/3bd3cbe209a5400796827a83b5b9f498_1704352142~tplv-photomode-zoomcover:480:480.avif?x-expires=1705057200&x-signature=DupjCVjFCgxLbNVM6AcFghCKGFc%3D',
     post: {
       title: 'Nhân viên Giao Hàng',
+      id: 146387,
     },
-    link: {
-      youtube: 'https://www.youtube.com/shorts/3nJmowmWK0Q',
-      tiktok: 'https://www.tiktok.com/@hijob.site/video/7320136226630061313',
-    },
+    linkTiktok: 'https://www.tiktok.com/@hijob.site/video/7320136226630061313',
+    linkYoutube: 'https://www.youtube.com/shorts/3nJmowmWK0Q',
+    postId: 146387,
+    status: 1,
+    updatedAt: 1705040933000,
+    video: null,
   },
   {
-    postId: '146178',
-    imageThumb:
-      'https://p16-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/9fd4da6089e74aaf8f9532ddb59daea3_1704270307?x-expires=1705057200&x-signature=7sCFiyKFM6OEEMjgLKY07gK2Nus%3D',
     company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/358/1704258155964-2c66afdc-5182-487a-940b-e85c2ca4305f.png',
       name: 'CÔNG TY TNHH GIÁO DỤC QUỐC TẾ TDP',
     },
+    companyId: 71,
+    createdAt: 1705040635000,
+    id: 1,
+    imageThumb:
+      'https://p16-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/9fd4da6089e74aaf8f9532ddb59daea3_1704270307?x-expires=1705057200&x-signature=7sCFiyKFM6OEEMjgLKY07gK2Nus%3D',
     post: {
       title: 'CHUYÊN VIÊN TƯ VẤN GIÁO DỤC/ SENIOR EDUCATIONAL CONSULTANT',
     },
-    link: {
-      youtube: 'https://www.youtube.com/shorts/uzux2AKPm9E',
-      tiktok: 'https://www.tiktok.com/@hijob.site/video/7319785178602245377',
-    },
+    postId: '146178',
+    linkTiktok: 'https://www.tiktok.com/@hijob.site/video/7319785178602245377',
+    linkYoutube: 'https://www.youtube.com/shorts/uzux2AKPm9E',
+    status: 1,
+    updatedAt: 1705040933000,
+    video: null,
   },
   {
+    companyId: 71,
+    createdAt: 1705040635000,
+    id: 1,
     postId: '146067',
     imageThumb:
       'https://p16-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/aeec2b79eec8496bbed6173ada323ffc_1704264855?x-expires=1705057200&x-signature=RCztWQX%2B%2F8iHH3QmiaDdDfvaMAI%3D',
@@ -93,12 +106,16 @@ export const videos = [
     post: {
       title: 'NHÂN VIÊN VẬN HÀNH MÁY NHÀ MÁY KẸO PERFETTI',
     },
-    link: {
-      youtube: 'https://www.youtube.com/shorts/FToPD0Fa3Z8',
-      tiktok: 'https://www.tiktok.com/@hijob.site/video/7319748486595906818',
-    },
+    linkTiktok: 'https://www.tiktok.com/@hijob.site/video/7319748486595906818',
+    linkYoutube: 'https://www.youtube.com/shorts/FToPD0Fa3Z8',
+    status: 1,
+    updatedAt: 1705040933000,
+    video: null,
   },
   {
+    companyId: 71,
+    createdAt: 1705040635000,
+    id: 1,
     postId: '145981',
     imageThumb:
       'https://p9-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/e4a254ad7eec439b97adeb539c47007b_1704188373?x-expires=1705057200&x-signature=iJAMy1AsfwmzF6ADQn7CBCjGtNs%3D',
@@ -109,12 +126,16 @@ export const videos = [
     post: {
       title: 'Senior Backend Engineer',
     },
-    link: {
-      youtube: null,
-      tiktok: 'https://www.tiktok.com/@hijob.site/video/7319433282700037377',
-    },
+    linkTiktok: 'https://www.tiktok.com/@hijob.site/video/7319433282700037377',
+    linkYoutube: null,
+    status: 1,
+    updatedAt: 1705040933000,
+    video: null,
   },
   {
+    companyId: 71,
+    createdAt: 1705040635000,
+    id: 1,
     postId: '144815',
     imageThumb:
       'https://p16-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/779cc00de0c94d93ba7786d48ebddcfe_1704264872?x-expires=1705057200&x-signature=qKZSTZrw7i5ouiiqLJIOIAXTRg8%3D',
@@ -125,12 +146,16 @@ export const videos = [
     post: {
       title: 'Việc làm Tết, việc làm parttime, fulltime tại Hồ Chí Minh',
     },
-    link: {
-      youtube: null,
-      tiktok: 'https://www.tiktok.com/@hijob.site/video/7319321556344114434',
-    },
+    linkTiktok: 'https://www.tiktok.com/@hijob.site/video/7319321556344114434',
+    linkYoutube: null,
+    status: 1,
+    updatedAt: 1705040933000,
+    video: null,
   },
   {
+    companyId: 71,
+    createdAt: 1705040635000,
+    id: 1,
     postId: '144532',
     imageThumb:
       'https://p16-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/e789438c41ea4dd4919c55a08e0af9b1_1703743980?x-expires=1705057200&x-signature=9S5eoZiIGtZ%2FEgq71egAyw%2F%2BDV8%3D',
@@ -141,12 +166,16 @@ export const videos = [
     post: {
       title: 'TUYỂN NHÂN VIÊN PARTTIME - THỜI VỤ TẾT',
     },
-    link: {
-      youtube: 'https://www.youtube.com/shorts/IVxZXhWssXg',
-      tiktok: 'https://www.tiktok.com/@hijob.site/video/7317524575317806338',
-    },
+    linkTiktok: 'https://www.tiktok.com/@hijob.site/video/7317524575317806338',
+    linkYoutube: 'https://www.youtube.com/shorts/IVxZXhWssXg',
+    status: 1,
+    updatedAt: 1705040933000,
+    video: null,
   },
   {
+    companyId: 71,
+    createdAt: 1705040635000,
+    id: 1,
     postId: '142273',
     imageThumb: 'https://i.ytimg.com/vi_webp/yr19OcyvSf0/oar2.webp',
     company: {
@@ -156,10 +185,11 @@ export const videos = [
     post: {
       title: 'Trực quầy phụ bán đồ uống cho khách',
     },
-    link: {
-      youtube: 'https://www.youtube.com/shorts/yr19OcyvSf0',
-      tiktok: 'https://www.tiktok.com/@hijob.site/video/7316389598089841922',
-    },
+    linkTiktok: 'https://www.tiktok.com/@hijob.site/video/7316389598089841922',
+    linkYoutube: 'https://www.youtube.com/shorts/yr19OcyvSf0',
+    status: 1,
+    updatedAt: 1705040933000,
+    video: null,
   },
 ];
 
@@ -178,26 +208,23 @@ const JobStory = () => {
     return state.newWestReducerV3;
   });
 
-  // const getVideoShort = async () => {
-  //   try {
-  //     const result = await apiVideoShort.getVideoShortList(
-  //       0,
-  //       10
-  //     )
+  const getVideoShort = async () => {
+    try {
+      const result = await apiVideoShort.getVideoShortList(0, 10);
 
-  //     if (result) {
-  //       console.log("result: ", result.data.data);
-  //       setListVideo(result.data.data)
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
+      if (result) {
+        setListVideo([...result.data.data, ...videos]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  //   }
-  // }
+  useEffect(() => {
+    getVideoShort();
+  }, []);
 
-  // useEffect(() => {
-  //   getVideoShort();
-  // }, [])
+  console.log('list', listVideo);
 
   return (
     <Box
@@ -216,8 +243,8 @@ const JobStory = () => {
             {languageRedux === 1
               ? 'Video tuyển dụng'
               : languageRedux === 2
-                ? 'Recruitment videos'
-                : languageRedux === 3 && '채용 비디오'}
+              ? 'Recruitment videos'
+              : languageRedux === 3 && '채용 비디오'}
           </h2>
           {/* <Popover
             content={
@@ -263,8 +290,8 @@ const JobStory = () => {
             {languageRedux === 1
               ? 'Bắt đầu ngay'
               : languageRedux === 2
-                ? 'Start now'
-                : languageRedux === 3 && '바로시작'}
+              ? 'Start now'
+              : languageRedux === 3 && '바로시작'}
           </Button>
           {/* </Popover> */}
         </div>
@@ -276,8 +303,8 @@ const JobStory = () => {
         modules={[Mousewheel, Navigation, Pagination]}
         className="job-story-swiper"
       >
-        {videos &&
-          videos?.map((item: any, index: number) => {
+        {listVideo &&
+          listVideo?.map((item: any, index: number) => {
             return (
               <SwiperSlide
                 key={index}
@@ -292,8 +319,8 @@ const JobStory = () => {
                       languageRedux === 1
                         ? 'Hình ảnh bị lỗi'
                         : languageRedux === 2
-                          ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'
                     }
                     style={{
                       width: '100%',

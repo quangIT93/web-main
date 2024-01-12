@@ -149,7 +149,7 @@ const MoreJobsPage: React.FC = () => {
   const profileV3 = useSelector(
     (state: RootState) => state.dataProfileInformationV3.data,
   );
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState<number>(0);
   const analytics: any = getAnalytics();
 
   const location = useLocation();
@@ -368,6 +368,7 @@ const MoreJobsPage: React.FC = () => {
       setOpenBackdrop(true);
 
       let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
+      console.log('profileV3', profileV3);
 
       const result =
         typeJob === 'new' || typeJob === 'hot-job'
@@ -389,6 +390,19 @@ const MoreJobsPage: React.FC = () => {
             )
           : typeJob === 'suggested'
           ? await nearByApi.getNearByJobV3(
+              !idFilterProvinces && Object.keys(profileV3).length !== 0
+                ? [profileV3.addressText.id]
+                : idFilterProvinces
+                ? [idFilterProvinces]
+                : ['79'],
+              null,
+              null,
+              20,
+              0,
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+            )
+          : typeJob === 'suggested'
+          ? await nearByApi.getNearByJobV3(
               !idFilterProvinces && profileV3.length !== 0
                 ? profileV3.addressText.id
                 : idFilterProvinces
@@ -406,7 +420,7 @@ const MoreJobsPage: React.FC = () => {
               0,
               languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             );
-      console.log('result', result);
+      // console.log('result', result);
 
       setHasMore(true);
       if (result) {
@@ -424,6 +438,7 @@ const MoreJobsPage: React.FC = () => {
                 ? result.data
                 : result.data.posts,
             );
+            setPage(0);
             setHasMore(false);
             setOpenBackdrop(false);
             return;
@@ -437,12 +452,14 @@ const MoreJobsPage: React.FC = () => {
               ? result.data
               : result.data.posts,
           );
+          setPage(0);
           setHasMore(false);
           setOpenBackdrop(false);
           return;
         } else if (
           result.data &&
-          (result.data.length !== 0 || result.data.posts.length !== 0)
+          (result.data.length !== 0 ||
+            (result.data.posts && result.data.posts.length !== 0))
         ) {
           setMoreJob(
             typeJob === 'new' ||
@@ -457,6 +474,7 @@ const MoreJobsPage: React.FC = () => {
           setMoreJob([]);
           setHasMore(false);
           setOpenBackdrop(false);
+          setPage(0);
         }
       }
     } catch (error) {
@@ -499,8 +517,8 @@ const MoreJobsPage: React.FC = () => {
             )
           : typeJob === 'suggested'
           ? await nearByApi.getNearByJobV3(
-              !idFilterProvinces && profileV3.length !== 0
-                ? profileV3.addressText.id
+              !idFilterProvinces && Object.keys(profileV3).length !== 0
+                ? [profileV3.addressText.id]
                 : idFilterProvinces
                 ? [idFilterProvinces]
                 : ['79'],
@@ -519,15 +537,33 @@ const MoreJobsPage: React.FC = () => {
 
       if (
         result &&
-        (result.data.length !== 0 || result.data.posts.length !== 0)
+        (result.data.length !== 0 ||
+          (result.data.posts && result.data.posts.length !== 0))
       ) {
         typeJob === 'new' || typeJob === 'hot-job' || typeJob === 'suggested'
           ? setMoreJob((prev: any) => [...prev, ...result?.data])
           : setMoreJob((prev: any) => [...prev, ...result?.data.posts]);
-        if (result.data.posts.length < 20) {
+        setPage(nextPage);
+        if (
+          result.data.length < 20 ||
+          (result.data.posts && result.data.posts.length < 20)
+        ) {
           setHasMore(false);
+          message.config({
+            top: 750,
+            duration: 2,
+            maxCount: 3,
+          });
+          message.error(
+            languageRedux === 1
+              ? 'Không còn công việc để hiện thị'
+              : languageRedux === 2
+              ? 'No more job to show'
+              : languageRedux === 3 && '더 이상 표시할 채용정보가 없습니다.',
+          );
         }
       } else {
+        setPage(0);
         setHasMore(false);
         message.config({
           top: 750,
