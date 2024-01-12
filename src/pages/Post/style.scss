@@ -175,6 +175,11 @@
             font-weight: 600;
           }
         }
+        
+        &_sentMail {
+          color: #0d99ff;
+          cursor: pointer;
+        }
       }
 
       .btn-submitForm {
