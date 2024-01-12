@@ -1618,32 +1618,44 @@ const Detail = () => {
   const [videoLinkTiktok, setVideoLinkTiktok] = useState<any>();
   const [videoLinkYoutube, setVideoLinkYoutube] = useState<any>();
 
-  // const getVideoLinkByPost = async () => {
-  //   try {
-  //     const postId = Number(searchParams.get('post-id'));
-  //     const result = await apiVideoShort.getVieoShortByPostId(postId);
-  //     if (result) {
-  //       const link = {
-  //         youtube: result?.data?.linkYoutube,
-  //         tiktok: result?.data?.linkTiktok
-  //       }
-  //       setVideoLink(link);
-  //       // console.log("link: ", link);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-
-  //   }
-  // }
+  const getVideoLinkByPost = async () => {
+    try {
+      const postId = Number(searchParams.get('post-id'));
+      const result = await apiVideoShort.getVieoShortByPostId(postId);
+      const videoOfPost = videos.find(
+        (video) => Number(video.postId) === Number(searchParams.get('post-id')),
+      );
+      if (result) {
+        if (result?.data?.linkTiktok !== null) {
+          setVideoLinkTiktok(result?.data?.linkTiktok);
+        } else {
+          setVideoLinkYoutube(videoOfPost?.linkTiktok);
+        }
+        if (result?.data?.linkYoutube !== null) {
+          setVideoLinkTiktok(result?.data?.linkYoutube);
+        } else {
+          setVideoLinkYoutube(videoOfPost?.linkYoutube);
+        }
+        // console.log("link: ", link);
+      }
+    } catch (error) {
+      console.log(error);
+      const videoOfPost = videos.find(
+        (video) => Number(video.postId) === Number(searchParams.get('post-id')),
+      );
+      setVideoLinkYoutube(videoOfPost?.linkYoutube);
+      setVideoLinkTiktok(videoOfPost?.linkTiktok);
+    }
+  };
 
   useEffect(() => {
-    const videoOfPost = videos.find(
-      (video) => Number(video.postId) === Number(searchParams.get('post-id')),
-    );
+    // const videoOfPost = videos.find(
+    //   (video) => Number(video.postId) === Number(searchParams.get('post-id')),
+    // );
     // const link = videoOfPost?.link;
-    setVideoLinkTiktok(videoOfPost?.linkTiktok);
-    setVideoLinkYoutube(videoOfPost?.linkYoutube);
-    // getVideoLinkByPost();
+    // setVideoLinkTiktok(videoOfPost?.linkTiktok);
+    // setVideoLinkYoutube(videoOfPost?.linkYoutube);
+    getVideoLinkByPost();
   }, [searchParams.get('post-id')]);
 
   // console.log('videoLink', videoLink);
