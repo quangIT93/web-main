@@ -102,9 +102,6 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
           borderRadius: '5px',
           justifyContent: 'space-between',
         }}
-        onClick={(e) => {
-          handleClickItem(e, props.item.post_id);
-        }}
         className="JobCardHistory"
       >
         <ul className="div-card-post-left">
@@ -145,6 +142,10 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                     fontWeight: '700',
                     lineheight: '20px',
                     color: '#575757',
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClickItem(e, props.item.post_id);
                   }}
                 >
                   {/* {props?.item?.title?.length > 50
@@ -267,17 +268,17 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               {languageRedux === 1
                 ? 'Đã đăng vào lúc:'
                 : languageRedux === 2
-                  ? 'Posted on:'
-                  : languageRedux === 3 && '에 게시 됨:'}{' '}
+                ? 'Posted on:'
+                : languageRedux === 3 && '에 게시 됨:'}{' '}
               {props.item?.created_at != null
                 ? moment(props.item?.created_at).format('DD/MM/YYYY') +
-                ' ' +
-                moment(new Date(props.item?.created_at)).format('HH:mm')
+                  ' ' +
+                  moment(new Date(props.item?.created_at)).format('HH:mm')
                 : languageRedux === 1
-                  ? 'Chưa cập nhật'
-                  : languageRedux === 2
-                    ? 'Not updated yet'
-                    : languageRedux === 3 && '업데이트하지 않음'}
+                ? 'Chưa cập nhật'
+                : languageRedux === 2
+                ? 'Not updated yet'
+                : languageRedux === 3 && '업데이트하지 않음'}
             </p>
             {props.item?.status === 1 ? (
               <p
@@ -294,8 +295,8 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Đang tuyển'
                   : languageRedux === 2
-                    ? 'Recruiting'
-                    : '현재 모집 중'}
+                  ? 'Recruiting'
+                  : '현재 모집 중'}
               </p>
             ) : props.item?.status === 3 ? (
               <p
@@ -312,8 +313,8 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Đã đóng'
                   : languageRedux === 2
-                    ? 'Closed'
-                    : '닫은'}
+                  ? 'Closed'
+                  : '닫은'}
               </p>
             ) : (
               <p
@@ -330,8 +331,8 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                 {languageRedux === 1
                   ? 'Không chấp nhận'
                   : languageRedux === 2
-                    ? 'Does not accept'
-                    : '수락하지 않음'}
+                  ? 'Does not accept'
+                  : '수락하지 않음'}
               </p>
             )}
             <p

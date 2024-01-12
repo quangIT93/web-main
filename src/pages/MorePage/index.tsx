@@ -149,7 +149,7 @@ const MoreJobsPage: React.FC = () => {
   const profileV3 = useSelector(
     (state: RootState) => state.dataProfileInformationV3.data,
   );
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState<number>(0);
   const analytics: any = getAnalytics();
 
   const location = useLocation();
@@ -217,25 +217,25 @@ const MoreJobsPage: React.FC = () => {
         ? languageRedux === 1
           ? 'HiJob - Công việc mới nhất'
           : languageRedux === 2
-            ? 'HiJob - Newest Jobs'
-            : 'HiJob - 최신 직업'
+          ? 'HiJob - Newest Jobs'
+          : 'HiJob - 최신 직업'
         : typeJob === 'hot-job'
-          ? languageRedux === 1
-            ? 'HiJob - Xem tất cả loại công việc'
-            : languageRedux === 2
-              ? 'HiJob - View all category jobs'
-              : 'HiJob - 모든 직업 유형 보기'
-          : typeJob === 'suggested'
-            ? languageRedux === 1
-              ? 'HiJob - Công việc gợi ý'
-              : languageRedux === 2
-                ? 'HiJob - Suggested jobs in your city'
-                : 'HiJob - 귀하의 도시에서 추천 직업'
-            : languageRedux === 1
-              ? 'HiJob - Công việc theo chủ đề'
-              : languageRedux === 2
-                ? 'HiJob - job by hot places'
-                : 'HiJob - 테마 작품';
+        ? languageRedux === 1
+          ? 'HiJob - Xem tất cả loại công việc'
+          : languageRedux === 2
+          ? 'HiJob - View all category jobs'
+          : 'HiJob - 모든 직업 유형 보기'
+        : typeJob === 'suggested'
+        ? languageRedux === 1
+          ? 'HiJob - Công việc gợi ý'
+          : languageRedux === 2
+          ? 'HiJob - Suggested jobs in your city'
+          : 'HiJob - 귀하의 도시에서 추천 직업'
+        : languageRedux === 1
+        ? 'HiJob - Công việc theo chủ đề'
+        : languageRedux === 2
+        ? 'HiJob - job by hot places'
+        : 'HiJob - 테마 작품';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
@@ -368,45 +368,59 @@ const MoreJobsPage: React.FC = () => {
       setOpenBackdrop(true);
 
       let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
+      console.log('profileV3', profileV3);
 
       const result =
         typeJob === 'new' || typeJob === 'hot-job'
           ? await postApi.getPostNewestV3(
-            childCateloriesArray,
-            // userSelectedId,
-            userSelected.userSelectedId,
-            // null,
-            // null,
-            // profile && profile?.profileLocations?.length > 0 &&
-            profileV3.length !== 0 ? profileV3?.profileLocations : null,
-            // profileV3.length !== 0
-            //   ? profileV3?.profileLocations[0]?.province?.id
-            //   : null,
-            null,
-            20,
-            null,
-            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-          )
-          : typeJob === 'suggested'
-            ? await nearByApi.getNearByJobV3(
-              !idFilterProvinces && profileV3.length !== 0
-                ? profileV3.addressText.id
-                : idFilterProvinces
-                  ? [idFilterProvinces]
-                  : ['79'],
-              null,
+              childCateloriesArray,
+              // userSelectedId,
+              userSelected.userSelectedId,
+              // null,
+              // null,
+              // profile && profile?.profileLocations?.length > 0 &&
+              profileV3.length !== 0 ? profileV3?.profileLocations : null,
+              // profileV3.length !== 0
+              //   ? profileV3?.profileLocations[0]?.province?.id
+              //   : null,
               null,
               20,
               null,
               languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             )
-            : await postApi.getPostByThemeId(
+          : typeJob === 'suggested'
+          ? await nearByApi.getNearByJobV3(
+              !idFilterProvinces && Object.keys(profileV3).length !== 0
+                ? [profileV3.addressText.id]
+                : idFilterProvinces
+                ? [idFilterProvinces]
+                : ['79'],
+              null,
+              null,
+              20,
+              0,
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+            )
+          : typeJob === 'suggested'
+          ? await nearByApi.getNearByJobV3(
+              !idFilterProvinces && profileV3.length !== 0
+                ? profileV3.addressText.id
+                : idFilterProvinces
+                ? [idFilterProvinces]
+                : ['79'],
+              null,
+              null,
+              20,
+              0,
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+            )
+          : await postApi.getPostByThemeId(
               storedSettings?.placeId ? storedSettings?.placeId : placeIdRedux,
               19,
               0,
               languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             );
-      console.log('result', result);
+      // console.log('result', result);
 
       setHasMore(true);
       if (result) {
@@ -424,6 +438,7 @@ const MoreJobsPage: React.FC = () => {
                 ? result.data
                 : result.data.posts,
             );
+            setPage(0);
             setHasMore(false);
             setOpenBackdrop(false);
             return;
@@ -437,12 +452,14 @@ const MoreJobsPage: React.FC = () => {
               ? result.data
               : result.data.posts,
           );
+          setPage(0);
           setHasMore(false);
           setOpenBackdrop(false);
           return;
         } else if (
           result.data &&
-          (result.data.length !== 0 || result.data.posts.length !== 0)
+          (result.data.length !== 0 ||
+            (result.data.posts && result.data.posts.length !== 0))
         ) {
           setMoreJob(
             typeJob === 'new' ||
@@ -457,6 +474,7 @@ const MoreJobsPage: React.FC = () => {
           setMoreJob([]);
           setHasMore(false);
           setOpenBackdrop(false);
+          setPage(0);
         }
       }
     } catch (error) {
@@ -472,6 +490,7 @@ const MoreJobsPage: React.FC = () => {
   const fetchMoreData = async () => {
     try {
       const nextPage = page + 1;
+      setPage(nextPage);
       let userSelected = JSON.parse(
         getCookie('userSelected') || '{}',
       ) as UserSelected;
@@ -482,34 +501,34 @@ const MoreJobsPage: React.FC = () => {
       const result =
         typeJob === 'new' || typeJob === 'hot-job'
           ? await postApi.getPostNewestV3(
-            childCateloriesArray,
-            userSelected.userSelectedId,
-            // null,
-            // null,
-            // profile && profile?.profileLocations?.length > 0 &&
-            // profile?.profileLocations?.map((item: any) => {
-            //     return item.id
-            // }),
-            profileV3.length !== 0 ? profileV3?.profileLocations : null,
-            null,
-            20,
-            thersholdId,
-            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-          )
+              childCateloriesArray,
+              userSelected.userSelectedId,
+              // null,
+              // null,
+              // profile && profile?.profileLocations?.length > 0 &&
+              // profile?.profileLocations?.map((item: any) => {
+              //     return item.id
+              // }),
+              profileV3.length !== 0 ? profileV3?.profileLocations : null,
+              null,
+              20,
+              thersholdId,
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+            )
           : typeJob === 'suggested'
-            ? await nearByApi.getNearByJobV3(
-              !idFilterProvinces && profileV3.length !== 0
-                ? profileV3.addressText.id
+          ? await nearByApi.getNearByJobV3(
+              !idFilterProvinces && Object.keys(profileV3).length !== 0
+                ? [profileV3.addressText.id]
                 : idFilterProvinces
-                  ? [idFilterProvinces]
-                  : ['79'],
+                ? [idFilterProvinces]
+                : ['79'],
               null,
               null,
               20,
               nextPage,
               languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             )
-            : await postApi.getPostByThemeId(
+          : await postApi.getPostByThemeId(
               storedSettings?.placeId ? storedSettings?.placeId : placeIdRedux,
               20,
               thersholdId,
@@ -518,15 +537,33 @@ const MoreJobsPage: React.FC = () => {
 
       if (
         result &&
-        (result.data.length !== 0 || result.data.posts.length !== 0)
+        (result.data.length !== 0 ||
+          (result.data.posts && result.data.posts.length !== 0))
       ) {
         typeJob === 'new' || typeJob === 'hot-job' || typeJob === 'suggested'
           ? setMoreJob((prev: any) => [...prev, ...result?.data])
           : setMoreJob((prev: any) => [...prev, ...result?.data.posts]);
-        if (result.data.posts.length < 20) {
+        setPage(nextPage);
+        if (
+          result.data.length < 20 ||
+          (result.data.posts && result.data.posts.length < 20)
+        ) {
           setHasMore(false);
+          message.config({
+            top: 750,
+            duration: 2,
+            maxCount: 3,
+          });
+          message.error(
+            languageRedux === 1
+              ? 'Không còn công việc để hiện thị'
+              : languageRedux === 2
+              ? 'No more job to show'
+              : languageRedux === 3 && '더 이상 표시할 채용정보가 없습니다.',
+          );
         }
       } else {
+        setPage(0);
         setHasMore(false);
         message.config({
           top: 750,
@@ -537,11 +574,11 @@ const MoreJobsPage: React.FC = () => {
           languageRedux === 1
             ? 'Không còn công việc để hiện thị'
             : languageRedux === 2
-              ? 'No more job to show'
-              : languageRedux === 3 && '더 이상 표시할 채용정보가 없습니다.',
+            ? 'No more job to show'
+            : languageRedux === 3 && '더 이상 표시할 채용정보가 없습니다.',
         );
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   React.useEffect(() => {
     let userSelected = JSON.parse(
@@ -679,25 +716,25 @@ const MoreJobsPage: React.FC = () => {
                     ? languageRedux === 1
                       ? 'Công việc mới nhất'
                       : languageRedux === 2
-                        ? 'Newest jobs'
-                        : languageRedux === 3 && '최신 작업'
+                      ? 'Newest jobs'
+                      : languageRedux === 3 && '최신 작업'
                     : typeJob === 'hot-job'
-                      ? languageRedux === 1
-                        ? 'Xem tất cả loại công việc'
-                        : languageRedux === 2
-                          ? 'View all category jobs'
-                          : languageRedux === 3 && '모든 유형의 채용정보 보기'
-                      : typeJob === 'suggested'
-                        ? languageRedux === 1
-                          ? 'Công việc gợi ý'
-                          : languageRedux === 2
-                            ? 'Suggested jobs in your city'
-                            : languageRedux === 3 && '지역내 모든 추천'
-                        : languageRedux === 1
-                          ? 'Công việc theo Chủ đề'
-                          : languageRedux === 2
-                            ? 'Job by hot places'
-                            : languageRedux === 3 && '지역내 모든 추천'}
+                    ? languageRedux === 1
+                      ? 'Xem tất cả loại công việc'
+                      : languageRedux === 2
+                      ? 'View all category jobs'
+                      : languageRedux === 3 && '모든 유형의 채용정보 보기'
+                    : typeJob === 'suggested'
+                    ? languageRedux === 1
+                      ? 'Công việc gợi ý'
+                      : languageRedux === 2
+                      ? 'Suggested jobs in your city'
+                      : languageRedux === 3 && '지역내 모든 추천'
+                    : languageRedux === 1
+                    ? 'Công việc theo Chủ đề'
+                    : languageRedux === 2
+                    ? 'Job by hot places'
+                    : languageRedux === 3 && '지역내 모든 추천'}
                 </h3>
                 {typeJob === 'suggested' ? (
                   <div className="filter-hotjob">
@@ -709,7 +746,7 @@ const MoreJobsPage: React.FC = () => {
                           // value={'01'}
                           defaultValue={
                             Object.keys(profileV3).length !== 0 &&
-                              profileV3.addressText !== null
+                            profileV3.addressText !== null
                               ? profileV3.addressText.id
                               : '79'
                           }
@@ -718,10 +755,10 @@ const MoreJobsPage: React.FC = () => {
                             languageRedux === 1
                               ? 'Chọn địa chỉ'
                               : languageRedux === 2
-                                ? 'Select address'
-                                : languageRedux === 3
-                                  ? '지역내 모든 추천'
-                                  : 'Chọn địa chỉ'
+                              ? 'Select address'
+                              : languageRedux === 3
+                              ? '지역내 모든 추천'
+                              : 'Chọn địa chỉ'
                           }
                           sx={{
                             fontSize: '14px',
@@ -802,8 +839,8 @@ const MoreJobsPage: React.FC = () => {
                       <Skeleton loading={loading} active>
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                           {typeJob === 'new' ||
-                            typeJob === 'hot-job' ||
-                            typeJob === 'suggested' ? (
+                          typeJob === 'hot-job' ||
+                          typeJob === 'suggested' ? (
                             <JobCardMoreNewJob item={item} />
                           ) : (
                             <JobCardMoreJob item={item} />

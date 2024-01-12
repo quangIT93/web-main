@@ -37,7 +37,7 @@ const LocationCateProfile = () => {
               {languageRedux === 1
                 ? 'Khu vực làm việc của bạn: '
                 : languageRedux === 2
-                ? 'Your working location: '
+                ? 'Location: '
                 : '당신의 근무 위치: '}
             </span>
             <span className={style.div_loca_content}>
@@ -68,12 +68,12 @@ const LocationCateProfile = () => {
                 ' none'
               )}
             </span>
-            <span className={style.div_loca_title}>-</span>
+            <span className={style.div_loca_title}> -</span>
             <span className={style.div_loca_title}>
               {languageRedux === 1
                 ? ' Lĩnh vực quan tâm của bạn: '
                 : languageRedux === 2
-                ? ' Your career objective: '
+                ? ' Career: '
                 : ' 당신의 관심 분야: '}
             </span>
 
