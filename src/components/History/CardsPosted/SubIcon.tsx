@@ -43,16 +43,16 @@ const SubIcon: React.FC<ISubicon> = (props) => {
     window.open(`/edit-posted?postId=${postId}`, '_parent');
   };
 
-  const handleClickOpenPost = async () => {
-    try {
-      const result = await postApi.updateStatusPost(postId, 1);
-      if (result) {
-        setStatus(1);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleClickOpenPost = async () => {
+  //   try {
+  //     const result = await postApi.updateStatusPost(postId, 1);
+  //     if (result) {
+  //       setStatus(1);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // console.lo
 
@@ -97,7 +97,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
         setStatus={setStatus}
       />
 
-      {status === 3 ? (
+      {/* {status === 3 ? (
         <div
           className="sub-icon_moreOutlined sub-open_post"
           onClick={handleClickOpenPost}
@@ -115,7 +115,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
         </div>
       ) : (
         <></>
-      )}
+      )} */}
     </div>
   );
 };
