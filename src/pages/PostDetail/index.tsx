@@ -1628,7 +1628,6 @@ const Detail = () => {
         } else {
           setVideoLinkYoutube(videoOfPost?.linkYoutube);
         }
-        // console.log("link: ", link);
       }
     } catch (error) {
       console.log(error);
