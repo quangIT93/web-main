@@ -227,7 +227,7 @@ const Company: React.FC<ICompany> = (props) => {
       getCompanyInforByAccount();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux, profileCompanyV3]);
+  }, [languageRedux, profileCompanyV3, ShowModalFisnishCreateCompany]);
 
   useEffect(() => {
     if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
@@ -265,18 +265,18 @@ const Company: React.FC<ICompany> = (props) => {
   }, [isValid]);
 
   const validURL = (str: string) => {
-    // var pattern = new RegExp(
-    //   '^(https?:\\/\\/)?' + // protocol
-    //   '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-    //   '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-    //   '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-    //   '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-    //   '(\\#[-a-z\\d_]*)?$',
-    //   'i',
-    // ); // fragment locator
     var pattern = new RegExp(
-      /^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/,
-    );
+      '^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+      'i',
+    ); // fragment locator
+    // var pattern = new RegExp(
+    //   /^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/,
+    // );
     return !!pattern.test(str);
   };
 
@@ -858,7 +858,11 @@ const Company: React.FC<ICompany> = (props) => {
     formData.append('taxCode', String(dataCompany?.taxCode));
     formData.append('phone', String(dataCompany?.phone));
     formData.append('email', String(dataCompany?.email));
-    formData.append('website', String(dataCompany?.website));
+    if (dataCompany?.website.includes('http://') || dataCompany?.website.includes('https://')) {
+      formData.append('website', String(dataCompany?.website));
+    } else {
+      formData.append('website', String("http://" + dataCompany?.website));
+    }
     formData.append('description', String(dataCompany?.description));
     formData.append(
       'companyRoleId',
