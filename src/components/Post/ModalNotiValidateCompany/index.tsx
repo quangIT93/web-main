@@ -103,8 +103,8 @@ const ModalNotiValidateCompany: React.FC<IPropModalNotiValidateCompany> = (
             {languageRedux === 1
               ? 'Bạn không thể đăng bài tuyển dụng'
               : languageRedux === 2
-              ? 'You cannot post a job advertisement'
-              : languageRedux === 3 && '채용공고 게시 실패'}
+                ? 'You cannot post a job advertisement'
+                : languageRedux === 3 && '채용공고 게시 실패'}
           </h2>
           <div className="wrap-imagePost_guide">
             <img
@@ -118,18 +118,18 @@ const ModalNotiValidateCompany: React.FC<IPropModalNotiValidateCompany> = (
               {languageRedux === 1
                 ? 'HiJob rất tiếc phải thông báo tài khoản nhà tuyển dụng của Quý khách hàng không thể đăng tin tuyển dụng. Lí do vì thông tin công tin bị thiếu hoặc nội dung chưa hợp lệ, Quý khách vui lòng liên hệ:'
                 : languageRedux === 2
-                ? 'HiJob regrets to inform you that your employer account cannot post job ads. If the information is missing or the content is invalid, please contact:'
-                : languageRedux === 3 &&
+                  ? 'HiJob regrets to inform you that your employer account cannot post job ads. If the information is missing or the content is invalid, please contact:'
+                  : languageRedux === 3 &&
                   'HiJob에서는 이 계정이 채용 광고를 게시할 수 없음을 알려드리게 되어 유감스럽습니다. 그 이유는 회사 정보가 누락되었거나 내용이 유효하지 않기 때문입니다. 문의하시기 바랍니다.'}
             </p>
             <p>
               {' '}
               {languageRedux === 1
-                ? 'Email CSKH: contact.hijob@gmail.com'
+                ? 'Email CSKH: hijob.contact1@gmail.com'
                 : languageRedux === 2
-                ? 'Customer care email: contact.hijob@gmail.com'
-                : languageRedux === 3 &&
-                  '고객 관리 이메일: contact.hijob@gmail.com'}
+                  ? 'Customer care email: hijob.contact1@gmail.com'
+                  : languageRedux === 3 &&
+                  '고객 관리 이메일: hijob.contact1@gmail.com'}
             </p>
           </div>
           {/* <div className="wrap-button_haveCompany">

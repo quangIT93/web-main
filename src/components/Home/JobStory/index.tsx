@@ -243,8 +243,8 @@ const JobStory = () => {
             {languageRedux === 1
               ? 'Video tuyển dụng'
               : languageRedux === 2
-              ? 'Recruitment videos'
-              : languageRedux === 3 && '채용 비디오'}
+                ? 'Recruitment videos'
+                : languageRedux === 3 && '채용 비디오'}
           </h2>
           {/* <Popover
             content={
@@ -256,13 +256,13 @@ const JobStory = () => {
                     : '회사에서 채용영상을 등록하고 싶으십니까? 웹사이트에 회사 정보를 등록하시고 다음 주소로 영상 요청을 보내주십시오. 고객관리 이메일: '}
                 <span>
                   <Link
-                    to="mailto:contact.hijob@gmail.com"
+                    to="mailto:hijob.contact1@gmail.com"
                     style={{
                       color: '#0d99ff',
                       textDecoration: 'underline',
                     }}
                   >
-                    contact.hijob@gmail.com
+                    hijob.contact1@gmail.com
                   </Link>
                 </span>
                 {', '}
@@ -271,7 +271,7 @@ const JobStory = () => {
             }
             // title={
             //     languageRedux === 1 ?
-            //         "Công ty muốn đăng ký video tuyển dụng? Quý khách vui lòng đăng ký thông tin công ty ở website và gửi yêu cầu qua địa chỉ: Email CSKH : contact.hijob@gmail.com" :
+            //         "Công ty muốn đăng ký video tuyển dụng? Quý khách vui lòng đăng ký thông tin công ty ở website và gửi yêu cầu qua địa chỉ: Email CSKH : hijob.contact1@gmail.com" :
             //         languageRedux === 2 ?
             //             "" :
             //             ""
@@ -290,8 +290,8 @@ const JobStory = () => {
             {languageRedux === 1
               ? 'Bắt đầu ngay'
               : languageRedux === 2
-              ? 'Start now'
-              : languageRedux === 3 && '바로시작'}
+                ? 'Start now'
+                : languageRedux === 3 && '바로시작'}
           </Button>
           {/* </Popover> */}
         </div>
@@ -319,8 +319,8 @@ const JobStory = () => {
                       languageRedux === 1
                         ? 'Hình ảnh bị lỗi'
                         : languageRedux === 2
-                        ? 'Image is corrupted'
-                        : '이미지가 손상되었습니다'
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'
                     }
                     style={{
                       width: '100%',
