@@ -74,7 +74,7 @@ const ModalMaxUnlock: React.FC<IModalMaxUnlock> = (props) => {
           : languageRedux === 2
             ? 'Your account currently does not have enough Points/turns to unlock candidate information.\n\nPlease contact support staff to resolve this issue.'
             : languageRedux === 3 &&
-              '현재 귀하의 계정에는 후보자 정보를 잠금 해제할 만큼 충분한 포인트/턴이 없습니다.\n\n이 문제를 처리하려면 지원 담당자에게 문의하십시오.'}
+            '현재 귀하의 계정에는 후보자 정보를 잠금 해제할 만큼 충분한 포인트/턴이 없습니다.\n\n이 문제를 처리하려면 지원 담당자에게 문의하십시오.'}
       </p>
       <div className="unlock-candidate-info-modal">
         <div className="unlock-candidate-info-item">
@@ -88,7 +88,7 @@ const ModalMaxUnlock: React.FC<IModalMaxUnlock> = (props) => {
             <IconEmail />
           </div>
           <p className="unlock-candidate-info-content">
-            contact.hijob@gmail.com
+            hijob.contact1@gmail.com
           </p>
         </div>
       </div>

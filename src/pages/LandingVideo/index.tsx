@@ -127,7 +127,7 @@ const LandingVideo = () => {
     2. Nếu bạn quay một video chi tiết (10-20 giây) và gửi cho chúng tôi, chúng tôi có thể tạo một video tuyển dụng tốt hơn.\n
     3. Nếu không có đủ hình ảnh cho thông tin công việc thì việc tạo video sẽ khó khăn.`;
     const emailBody = encodeURIComponent(`${content}`);
-    window.location.href = `mailto:contact.hijob@gmail.com?subject=${encodeURIComponent(
+    window.location.href = `mailto:hijob.contact1@gmail.com?subject=${encodeURIComponent(
       subject,
     )}&body=${emailBody}`;
   };
@@ -396,7 +396,7 @@ const LandingVideo = () => {
                   }}
                   onClick={senMail}
                 >
-                  contact.hijob@gmail.com
+                  hijob.contact1@gmail.com
                 </Link>
               </span>
               {', '}

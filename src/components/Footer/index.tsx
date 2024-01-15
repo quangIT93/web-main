@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 
 const Footer: React.FC = () => {
-  // const mail = 'contact.hijob@gmail.com';
+  // const mail = 'hijob.contact1@gmail.com';
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -147,14 +147,14 @@ const Footer: React.FC = () => {
         </div>
 
         <Link
-          to={`mailto:contact.hijob@gmail.com`}
+          to={`mailto:hijob.contact1@gmail.com`}
           style={{
             color: '#0d99ff',
             textDecoration: 'underline',
             fontSize: '12px',
           }}
         >
-          Email: contact.hijob@gmail.com
+          Email: hijob.contact1@gmail.com
         </Link>
       </div>
     </div>

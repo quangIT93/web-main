@@ -247,9 +247,13 @@ const ModalFillDescriptTemplate: React.FC<IModalFillDataPost> = (props) => {
               } theo thông tin ${typeModal === 1 ? 'bài đăng' : 'công ty'
               } của bạn!`
               : languageRedux === 2
-                ? 'HiJob will automatically fill all your previous job information!'
+                ? `HiJob will automatically fill in the ${typeModal === 1 ? 'job' : 'company'
+                } description form according to your ${typeModal === 1 ? 'post' : 'company'
+                } information!`
                 : languageRedux === 3 &&
-                'HiJob이 자동으로 귀하의 이전 직업 정보를 전부 채워드립니다!'}
+                `HiJob은 당신의 ${typeModal === 1 ? '게시물' : '회사'
+                } 정보에 따라 자동으로 ${typeModal === 1 ? '작업 설명서를 작성할 것입니다!' : '정보에 따라 자동으로 회사 묘사을 작성할 것입니다!'
+                }`}
             {/* <IconButton
               aria-label="close"
               sx={{
