@@ -9,6 +9,13 @@ import { AxiosResponse } from 'axios';
 // import api
 import postApi from 'api/postApi';
 
+import media1 from '../../../img/media/media1.jpg';
+import media2 from '../../../img/media/media2.jpg';
+import media3 from '../../../img/media/media3.jpg';
+import media4 from '../../../img/media/media4.jpg';
+import media5 from '../../../img/media/media5.jpg';
+import media6 from '../../../img/media/media6.jpg';
+
 // Import Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -59,8 +66,7 @@ export const videos = [
     companyId: 71,
     createdAt: 1705040635000,
     id: 1,
-    imageThumb:
-      'https://p16-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/3bd3cbe209a5400796827a83b5b9f498_1704352142?x-expires=1705413600&x-signature=2ftIo5VzA6SZoXyCovmYmA1KnSQ%3D',
+    imageThumb: media1,
     post: {
       title: 'Nhân viên Giao Hàng',
       id: 146387,
@@ -80,8 +86,7 @@ export const videos = [
     companyId: 71,
     createdAt: 1705040635000,
     id: 2,
-    imageThumb:
-      'https://p9-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/9fd4da6089e74aaf8f9532ddb59daea3_1704270307?x-expires=1705413600&x-signature=O61mKQbLlOcfNW9wRYKDZCfvqCY%3D',
+    imageThumb: media2,
     post: {
       title: 'CHUYÊN VIÊN TƯ VẤN GIÁO DỤC/ SENIOR EDUCATIONAL CONSULTANT',
     },
@@ -97,8 +102,7 @@ export const videos = [
     createdAt: 1705040635000,
     id: 3,
     postId: '146067',
-    imageThumb:
-      'https://p16-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/aeec2b79eec8496bbed6173ada323ffc_1704264855?x-expires=1705413600&x-signature=zEeiMmH9eFitw%2BTEMdRBQt45pyo%3D',
+    imageThumb: media3,
     company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/356/1704179936945-aeae7cf1-4783-4bc4-8225-5662bd825f3c.png',
       name: 'MASS RECRUITMENT COMPANY LIMITED',
@@ -117,8 +121,7 @@ export const videos = [
     createdAt: 1705040635000,
     id: 4,
     postId: '145981',
-    imageThumb:
-      'https://p16-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/e4a254ad7eec439b97adeb539c47007b_1704188373?x-expires=1705413600&x-signature=LxbmIRj47Z5pC5xLWHPnoR8i8AI%3D',
+    imageThumb: media4,
     company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/355/1703824996634-730e46f3-754e-4c5c-b38c-aa6b742f9670.png',
       name: 'CÔNG TY TNHH MỘT THÀNH VIÊN CHOPP',
@@ -137,8 +140,7 @@ export const videos = [
     createdAt: 1705040635000,
     id: 5,
     postId: '144815',
-    imageThumb:
-      'https://p16-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/779cc00de0c94d93ba7786d48ebddcfe_1704264872?x-expires=1705413600&x-signature=rRblJsN4QelsNqJsaBFFLgj43BU%3D',
+    imageThumb: media5,
     company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/331/1703169466081-1d6451c2-1ee9-4ed6-a855-b615d8219656.png',
       name: 'Hưng Thịnh',
@@ -157,8 +159,7 @@ export const videos = [
     createdAt: 1705040635000,
     id: 6,
     postId: '144532',
-    imageThumb:
-      'https://p16-sign-sg.tiktokcdn.com/obj/tos-alisg-p-0037/e789438c41ea4dd4919c55a08e0af9b1_1703743980?x-expires=1705413600&x-signature=2b5PmB%2BpzIY0X7QVFtQg7qADvZU%3D',
+    imageThumb: media6,
     company: {
       logo: 'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/companies-logo/352/1703661962777-b75da335-115e-4e66-8485-f7a1b22d9c1e.png',
       name: 'KHU VUI CHƠI TUYẾT SNOW TOWN SÀI GÒN',
@@ -243,8 +244,8 @@ const JobStory = () => {
             {languageRedux === 1
               ? 'Video tuyển dụng'
               : languageRedux === 2
-                ? 'Recruitment videos'
-                : languageRedux === 3 && '채용 비디오'}
+              ? 'Recruitment videos'
+              : languageRedux === 3 && '채용 비디오'}
           </h2>
           {/* <Popover
             content={
@@ -290,8 +291,8 @@ const JobStory = () => {
             {languageRedux === 1
               ? 'Bắt đầu ngay'
               : languageRedux === 2
-                ? 'Start now'
-                : languageRedux === 3 && '바로시작'}
+              ? 'Start now'
+              : languageRedux === 3 && '바로시작'}
           </Button>
           {/* </Popover> */}
         </div>
@@ -319,8 +320,8 @@ const JobStory = () => {
                       languageRedux === 1
                         ? 'Hình ảnh bị lỗi'
                         : languageRedux === 2
-                          ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'
                     }
                     style={{
                       width: '100%',
