@@ -492,6 +492,32 @@ const LandingVideo = () => {
             </Button>
           </div>
         </div>
+
+        {/* <div className="landing_video_tree_view">
+          <div className="landing_video_tree_view_content">
+            <h1 className="level_1 rectangle">CEO</h1>
+            <ol className="level_2_wrapper">
+              <li>
+                <h2 className="level_2 rectangle">Director A</h2>
+                <p className="level_2_text">
+                  Trong khoảng thời gian ngắn nhất tin tuyển dụng của bạn sẽ có video tuyển dụng ở cả 2 nền tảng Tiktok và Youtube Shorts và lan truyền đến thật nhiều ứng viên.
+                </p>
+              </li>
+              <li>
+                <h2 className="level_2 rectangle">Director B</h2>
+                <p className="level_2_text">
+                  Trong khoảng thời gian ngắn nhất tin tuyển dụng của bạn sẽ có video tuyển dụng ở cả 2 nền tảng Tiktok và Youtube Shorts và lan truyền đến thật nhiều ứng viên.
+                </p>
+              </li>
+              <li>
+                <h2 className="level_2 rectangle">Director C</h2>
+                <p className="level_2_text">
+                  Trong khoảng thời gian ngắn nhất tin tuyển dụng của bạn sẽ có video tuyển dụng ở cả 2 nền tảng Tiktok và Youtube Shorts và lan truyền đến thật nhiều ứng viên.
+                </p>
+              </li>
+            </ol>
+          </div>
+        </div> */}
       </div>
       <ModalLogin
         openModalLogin={openModalLogin}
