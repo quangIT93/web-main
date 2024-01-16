@@ -20,6 +20,7 @@ import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
 import noImage from '../../../img/noImage.png';
+import { Link } from 'react-router-dom';
 // import { historyVi } from 'validations/lang/vi/history';
 // import { historyEn } from 'validations/lang/en/history';
 // import bookMarkApi from 'api/bookMarkApi';
@@ -86,9 +87,6 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
           borderRadius: '5px',
           justifyContent: 'space-between',
         }}
-        onClick={() => {
-          window.open(`/post-detail?post-id=${props.item.id}`)
-        }}
       >
         <div className="detail-history-top">
           <ul className="div-card-post-left">
@@ -117,28 +115,40 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                     gutterBottom
                     variant="h6"
                     component="div"
+                    onClick={() => {
+                      window.open(`/post-detail?post-id=${props?.item?.id}`);
+                    }}
                     sx={{
-                      fontSize: '16px',
-                      margin: 0,
+                      fontSize: '12px',
                       whiteSpace: 'nowrap',
                       width: '100%',
                       textOverflow: 'ellipsis',
                       overflow: 'hidden',
-                      fontWeight: '700',
-                      lineheight: '20px',
-                      color: '#575757',
+                      lineheight: '16px',
                     }}
                   >
                     {/* {props?.item?.title?.length > 50
                     ? `${props.item.title.substring(0, 50)} ...`
                     : props.item.title} */}
-                    {props?.item?.title}
+                    <Link
+                      to={`/post-detail?post-id=${props?.item?.id}`}
+                      style={{
+                        color: '#575757',
+                        fontWeight: '700',
+                        lineHeight: '20px',
+                        fontSize: '16px',
+                        margin: 0,
+                        whiteSpace: 'nowrap',
+                        width: '100%',
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {props?.item?.title ? props?.item?.title : 'loading...'}
+                    </Link>
                   </Typography>
                 </Tooltip>
-                <Tooltip
-                  placement="top"
-                  title={props.item?.postCompanyInformation?.name}
-                >
+                <Tooltip placement="top" title={props.item?.companyName}>
                   <Typography
                     gutterBottom
                     variant="h6"
@@ -157,7 +167,10 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                     {/* {props?.item?.company_name?.length > 50
                     ? `${props.item.company_name.substring(0, 50)} ...`
                     : props.item.company_name} */}
-                    {props?.item?.companyName}
+
+                    {props?.item?.companyName
+                      ? props?.item?.companyName
+                      : 'loading...'}
                   </Typography>
                 </Tooltip>
                 <div
@@ -181,8 +194,10 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                       fontWeight: '400',
                     }}
                   >
-                    {`${props.item?.location?.district?.fullName}, 
-                    ${props.item?.location?.district?.province?.fullName}`}
+                    {props.item?.location?.district?.fullName
+                      ? `${props.item?.location?.district?.fullName}, 
+                    ${props.item?.location?.district?.province?.fullName}`
+                      : 'Loading...'}
                   </Typography>
                 </div>
                 <div
@@ -212,7 +227,12 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                     {/* {props.item?.money_type_text} */}-{' '}
                     {new Intl.NumberFormat('en-US').format(
                       props.item?.salaryMax,
-                    ) + `/${props.item?.postSalaryType?.fullName}`}
+                    ) +
+                      `/${
+                        props.item?.postSalaryType?.fullName
+                          ? props.item?.postSalaryType?.fullName
+                          : 'Loading...'
+                      }`}
                   </Typography>
                 </div>
                 <div
@@ -236,13 +256,16 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                       fontWeight: '400',
                     }}
                   >
-                    {props.item?.postCategories.map(
-                      (cate: any, index: any) =>
-                        `${cate.parentCategory.fullName}${index < props.item.postCategories.length - 1
-                          ? ', '
-                          : ''
-                        }`,
-                    )}
+                    {props.item?.postCategories
+                      ? props.item?.postCategories.map(
+                          (cate: any, index: any) =>
+                            `${cate.parentCategory.fullName}${
+                              index < props.item.postCategories.length - 1
+                                ? ', '
+                                : ''
+                            }`,
+                        )
+                      : 'Loading...'}
 
                     {/* {`${props.item?.location?.district?.fullName}, 
                     ${props.item?.location?.district?.province?.fullName}`} */}
@@ -261,7 +284,9 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                       fontWeight: '400',
                     }}
                   >
-                    {props.item?.createdAtText}
+                    {props.item?.createdAtText
+                      ? props.item?.createdAtText
+                      : 'Loading...'}
                   </p>
                 </div>
               </div>
@@ -295,18 +320,19 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
             {languageRedux === 1
               ? 'Đã đăng vào lúc:'
               : languageRedux === 2
-                ? 'Posted on:'
-                : languageRedux === 3 && '에 게시 됨:'}{' '}
+              ? 'Posted on:'
+              : languageRedux === 3 && '에 게시 됨:'}{' '}
             {props.item?.createdAt != null
-              ? `${moment(props.item?.createdAt).format('DD/MM/YYYY') +
-              ' ' +
-              moment(new Date(props.item?.createdAt)).format('HH:mm')
-              }`
+              ? `${
+                  moment(props.item?.createdAt).format('DD/MM/YYYY') +
+                  ' ' +
+                  moment(new Date(props.item?.createdAt)).format('HH:mm')
+                }`
               : languageRedux === 1
-                ? 'Chưa cập nhật'
-                : languageRedux === 2
-                  ? 'Not updated yet'
-                  : languageRedux === 3 && '업데이트하지 않음'}
+              ? 'Chưa cập nhật'
+              : languageRedux === 2
+              ? 'Not updated yet'
+              : languageRedux === 3 && '업데이트하지 않음'}
           </p>
           <p
             style={{
@@ -318,19 +344,24 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
               fontSize: '12px',
             }}
           >
-            {`${props.dataCandidates?.applications.length}
-            ${props.dataCandidates?.applications.length <= 1
+            {`${
+              props.dataCandidates?.applications
+                ? props.dataCandidates?.applications.length
+                : 0
+            }
+            ${
+              props.dataCandidates?.applications.length <= 1
                 ? languageRedux === 1
                   ? 'đơn ứng tuyển'
                   : languageRedux === 2
-                    ? 'application'
-                    : '지원서'
+                  ? 'application'
+                  : '지원서'
                 : languageRedux === 1
-                  ? 'đơn ứng tuyển'
-                  : languageRedux === 2
-                    ? 'applications'
-                    : '지원서'
-              }`}
+                ? 'đơn ứng tuyển'
+                : languageRedux === 2
+                ? 'applications'
+                : '지원서'
+            }`}
           </p>
 
           {props.status === 1 ? (
@@ -346,8 +377,8 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
               {languageRedux === 1
                 ? 'Đang tuyển'
                 : languageRedux === 2
-                  ? 'Recruiting'
-                  : '현재 모집 중'}
+                ? 'Recruiting'
+                : '현재 모집 중'}
             </p>
           ) : props.status === 3 ? (
             <p
@@ -362,8 +393,8 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
               {languageRedux === 1
                 ? 'Đã đóng'
                 : languageRedux === 2
-                  ? 'Closed'
-                  : '닫은'}
+                ? 'Closed'
+                : '닫은'}
             </p>
           ) : (
             <p
@@ -378,8 +409,8 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
               {languageRedux === 1
                 ? 'Không chấp nhận'
                 : languageRedux === 2
-                  ? 'Does not accept'
-                  : '수락하지 않음'}
+                ? 'Does not accept'
+                : '수락하지 않음'}
             </p>
           )}
         </Box>

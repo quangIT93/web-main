@@ -82,7 +82,7 @@ const AppliedPostedJob: React.FC = () => {
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [cvHijob, setCvHijob] = React.useState<any>([1]);
-  const [banner, setBanner] = React.useState<any>([]);
+
   const [openModalNoteValidateCompany, setOpenModalNoteValidateCompany] =
     React.useState<any>(false);
   const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
@@ -94,24 +94,6 @@ const AppliedPostedJob: React.FC = () => {
   // const [searchParams, setSearchParams] = useSearchParams();
   // const dispatch = useDispatch();
   // const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
-
-  const getBannerRoleUser = async () => {
-    try {
-      const result = await bannersApi.getBannersApi(
-        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-        null,
-      );
-      if (result) {
-        setBanner(result.data);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  useEffect(() => {
-    getBannerRoleUser();
-  }, []);
 
   const handleClickItem = (
     event: any,
@@ -144,17 +126,17 @@ const AppliedPostedJob: React.FC = () => {
       const result =
         profile?.typeRoleData === 0
           ? await historyApplicator.getAllSubmitedApplied(
-            null,
-            10,
-            1,
-            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-          )
+              null,
+              10,
+              1,
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+            )
           : await historyRecruiter.GetInformationAndCandidatesCount(
-            0,
-            10,
-            '1',
-            languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-          );
+              0,
+              10,
+              '1',
+              languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
+            );
       // const result = await applitedPostedApi.getAllApplitedPostedApi(
       //   0,
       //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
@@ -230,7 +212,7 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -253,7 +235,7 @@ const AppliedPostedJob: React.FC = () => {
         >
           <Skeleton loading={loading} active>
             {appliedPostedJob.length !== 0 &&
-              localStorage.getItem('accessToken') ? (
+            localStorage.getItem('accessToken') ? (
               <div
                 style={{
                   display: 'flex',
@@ -267,13 +249,13 @@ const AppliedPostedJob: React.FC = () => {
                     ? languageRedux === 1
                       ? 'Việc làm đã ứng tuyển'
                       : languageRedux === 2
-                        ? 'Apllied Jobs'
-                        : languageRedux === 3 && '어플라이드 잡스'
+                      ? 'Apllied Jobs'
+                      : languageRedux === 3 && '어플라이드 잡스'
                     : languageRedux === 1
-                      ? 'Đã đăng tuyển'
-                      : languageRedux === 2
-                        ? 'Posted job'
-                        : languageRedux === 3 && '등록되기'}
+                    ? 'Đã đăng tuyển'
+                    : languageRedux === 2
+                    ? 'Posted job'
+                    : languageRedux === 3 && '등록되기'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -286,8 +268,8 @@ const AppliedPostedJob: React.FC = () => {
                         trong vòng 30 ngày, sau 30 ngày bạn có thể kiểm tra các
                         công việc đã Ứng tuyển/Đăng tuyển trong lịch sử.`
                             : languageRedux === 2
-                              ? `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`
-                              : languageRedux === 3 &&
+                            ? `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`
+                            : languageRedux === 3 &&
                               '지원/게시된 채용공고는 30일 이내에 현황이 표시되며, 30일 이후에는 지원/게시된 채용공고 현황을 히스토리에서 확인할 수 있습니다.'}
                         </p>
                       </div>
@@ -430,9 +412,7 @@ const AppliedPostedJob: React.FC = () => {
       </>
     );
   } else {
-    return (
-      <></>
-    );
+    return <></>;
   }
 };
 
