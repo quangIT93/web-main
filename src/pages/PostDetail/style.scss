@@ -283,6 +283,8 @@
         .bot-title {
           display: flex;
           justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 10px;
 
           @media screen and (max-width: 320px) {
             flex-direction: column;
@@ -307,7 +309,8 @@
             display: flex;
             align-items: center;
             flex-wrap: nowrap;
-            column-gap: 16px;
+            // column-gap: 16px;
+            column-gap: 100px;
 
             h3 {
               font-size: 16px;
@@ -1181,6 +1184,95 @@
               font-size: 24px;
               font-family: "Roboto", -apple-system, sans-serif;
               font-weight: 700;
+            }
+
+            .post_actions_wrapper {
+              margin: 18px 0 0;
+              width: fit-content;
+              height: fit-content;
+
+              .ant-space {
+
+                .ant-space-item {
+                  &:first-child {
+                    .ant-btn {
+                      &:hover {
+                        background-color: #0866FF;
+                      }
+                    }
+                  }
+
+                  &:nth-child(2) {
+                    .ant-btn {
+                      svg {
+                        path {
+                          fill: #000000;
+                        }
+                      }
+
+                      &:hover {
+                        background-color: #FF0000;
+
+                        svg {
+                          path {
+                            fill: #FFFFFF;
+                          }
+                        }
+                      }
+                    }
+                  }
+
+                  &:nth-child(3) {
+                    .ant-btn {
+                      &:hover {
+                        background-color: #0D99FF;
+                      }
+                    }
+                  }
+
+                  &:nth-child(4) {
+                    .ant-btn {
+                      &:hover {
+                        background-color: #FBBC04 !important;
+                      }
+                    }
+                  }
+
+                  &:nth-child(5) {
+                    .ant-btn {
+                      &:hover {
+                        background-color: #000000;
+                      }
+                    }
+                  }
+
+                  &:last-child {
+                    .ant-btn {
+                      &:hover {
+                        background-color: #FF0000;
+                      }
+                    }
+                  }
+
+
+                  .ant-btn {
+                    min-width: 40px !important;
+                    width: 40px;
+                    height: 40px;
+                    display: grid;
+                    place-items: center;
+                    background: rgba(241, 240, 240, 1);
+                    border: none;
+                    color: #000000;
+                    transition: all 0.3s ease-in-out;
+
+                    &:hover {
+                      color: #FFFFFF !important;
+                    }
+                  }
+                }
+              }
+
             }
 
             .div-description-mo-bottom {

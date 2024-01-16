@@ -27,7 +27,7 @@ import ShowNotificativeSave from '#components/ShowNotificativeSave';
 
 import noImage from '../../img/noImage.png';
 // @ts-ignore
-import { Button, Space, notification } from 'antd';
+import { Button, Space, Tooltip, notification } from 'antd';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -110,13 +110,15 @@ import AnotherPost from './components/AnotherPost';
 // import { height, width } from '@mui/system';
 // import { postDetail } from 'validations/lang/vi/postDetail';
 // import { postDetailEn } from 'validations/lang/en/postDetail';
-
+import youtube_shorts from '../../img/langdingPage/youtube_shorts.png';
+import tiktok from '../../img/langdingPage/tiktok.png';
 // import { setCookie } from 'cookies';
 import { Helmet } from 'react-helmet';
 import apiCompany from 'api/apiCompany';
 // import { Language } from '#components/Navbar/Css';
 import { videos } from '#components/Home/JobStory';
 import apiVideoShort from 'api/apiVideoShort';
+import { CopyLinkPostDetailIcon, FaceSharePostDetailIcon, SavePostDetailIcon, TiktokPostDetailIcon, YoutubePostDetailIcon } from './post_detail_icon';
 // const itemsShare = [
 //   {
 //     nameShare: 'Sao chép liên kết',
@@ -1768,18 +1770,8 @@ const Detail = () => {
                       <h3>{post?.data.resource.company_resource_name}</h3>
                     </div> */}
 
-                    <div className="actions-item" onClick={handleClickShare}>
+                    {/* <div className="actions-item" onClick={handleClickShare}>
                       <ShareIcon width={24} height={24} />
-                      {/* <div className="items-share">
-                          <Link
-                            to="#"
-                            onClick={() => {
-                              window.location.href = `mailto:kalsjkahsjkfasjfkajkshfjkashkj@gmail.com`;
-                            }}
-                          >
-                            send
-                          </Link>
-                        </div> */}
                       <h3>
                         {languageRedux === 1
                           ? 'Chia sẻ'
@@ -1790,7 +1782,6 @@ const Detail = () => {
                     </div>
                     <div className="actions-item" onClick={handleClickSave}>
                       {bookmarked ? (
-                        // <SaveIcon width={24} height={24} />
                         <SaveIconFill width={24} height={24} />
                       ) : (
                         <SaveIconOutline width={24} height={24} />
@@ -1802,7 +1793,28 @@ const Detail = () => {
                             ? 'Save'
                             : '저장'}
                       </h3>
+                    </div> */}
+
+                    {/* <div className="action-item"
+                      style={{
+                        display: videoLinkTiktok ? 'flex' : 'none',
+                      }}
+                      onClick={() => {
+                        videoLinkTiktok && window.open(videoLinkTiktok);
+                      }}
+                    >
+                      <img src={tiktok} alt="tiktok" />
                     </div>
+                    <div className="action-item"
+                      style={{
+                        display: videoLinkYoutube ? 'flex' : 'none',
+                      }}
+                      onClick={() => {
+                        videoLinkYoutube && window.open(videoLinkYoutube);
+                      }}
+                    >
+                      <img src={youtube_shorts} alt="youtube_shorts" />
+                    </div> */}
                   </div>
                 </div>
 
@@ -2011,6 +2023,107 @@ const Detail = () => {
                     >
                       {post?.data.description}
                     </div>
+
+                    <div className="post_actions_wrapper">
+                      <Space style={{ width: '100%' }} size={12} wrap={true}>
+                        <Tooltip title={
+                          languageRedux === 1
+                            ? 'Chia sẻ qua Facebook'
+                            : languageRedux === 2
+                              ? 'Share by Facebook'
+                              : '페이스북으로 공유하기'
+                        }>
+                          <Button shape="circle" icon={<FaceSharePostDetailIcon />}
+                            onClick={() =>
+                              handleClickShareSource(
+                                'Facebook',
+                                Number(searchParams.get('post-id')),
+                              )
+                            }
+                          />
+                        </Tooltip>
+                        <Tooltip title={
+                          languageRedux === 1
+                            ? 'Chia sẻ qua Email'
+                            : languageRedux === 2
+                              ? 'Share by Email'
+                              : '이메일로 공유하기'
+                        }>
+                          <Button shape="circle" icon={<MailDetailPostIcon />}
+                            onClick={() =>
+                              handleClickShareSource(
+                                'Email',
+                                Number(searchParams.get('post-id')),
+                              )
+                            }
+                          />
+                        </Tooltip>
+                        <Tooltip title={
+                          languageRedux === 1
+                            ? 'Sao chép liên kết công việc'
+                            : languageRedux === 2
+                              ? 'Copy the job link'
+                              : '작업 링크를 복사하기'
+                        }>
+                          <Button shape="circle" icon={<CopyLinkPostDetailIcon />}
+                            onClick={() =>
+                              handleClickShareSource(
+                                'Copy link',
+                                Number(searchParams.get('post-id')),
+                              )
+                            }
+                          />
+                        </Tooltip>
+                        <Tooltip title={
+                          languageRedux === 1
+                            ? 'Lưu công việc'
+                            : languageRedux === 2
+                              ? 'Save this job'
+                              : '저장하기'
+                        }>
+                          <Button shape="circle" icon={<SavePostDetailIcon />}
+                            style={{
+                              background: bookmarked ? '#FBBC04' : 'rgba(241, 240, 240, 1)',
+                              color: bookmarked ? '#FFFFFF' : '#000000'
+                            }}
+                            onClick={handleClickSave}
+                          />
+                        </Tooltip>
+                        <Tooltip title={
+                          languageRedux === 1
+                            ? 'Xem video tuyển dụng'
+                            : languageRedux === 2
+                              ? 'Watch the recruitment video'
+                              : '채용 비디오를 보기'
+                        }>
+                          <Button shape="circle" icon={<TiktokPostDetailIcon />}
+                            onClick={() => {
+                              videoLinkTiktok && window.open(videoLinkTiktok);
+                            }}
+                            style={{
+                              display: videoLinkTiktok ? 'grid' : 'none',
+                            }}
+                          />
+                        </Tooltip>
+                        <Tooltip title={
+                          languageRedux === 1
+                            ? 'Xem video tuyển dụng'
+                            : languageRedux === 2
+                              ? 'Watch the recruitment video'
+                              : '채용 비디오를 보기'
+                        }>
+                          <Button shape="circle" icon={<YoutubePostDetailIcon />}
+                            onClick={() => {
+                              videoLinkYoutube && window.open(videoLinkYoutube);
+                            }}
+                            style={{
+                              display: videoLinkYoutube ? 'grid' : 'none',
+                            }}
+                          />
+                        </Tooltip>
+                      </Space>
+                    </div>
+
                     <div className="div-description-mo-bottom">
                       <div className="description-buttons">
                         <div
