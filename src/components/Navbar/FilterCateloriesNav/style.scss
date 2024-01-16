@@ -38,6 +38,15 @@
     }
 }
 
+.filter_cate {
+    .ant-cascader-menu-item-expand {
+      .ant-cascader-checkbox {
+        display: none;
+      }
+    }
+}
+
+
 .ant-select-dropdown:has(.filter-candidate) {
     z-index: 8 !important;
 }

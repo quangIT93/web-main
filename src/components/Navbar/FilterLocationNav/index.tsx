@@ -98,12 +98,12 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
       </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {proviId.length === 2
+        {proviId.length === 3
           ? languageRedux === 1
-            ? 'Chỉ có thể tối đa 10 khu vực'
+            ? 'Chỉ có thể tối đa 3 khu vực'
             : languageRedux === 2
-            ? 'Only up to 10 areas can be'
-            : languageRedux === 3 && '최대 10개 영역까지만 가능합니다'
+            ? 'Only up to 3 areas can be'
+            : languageRedux === 3 && '최대 3개 영역까지만 가능합니다'
           : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
@@ -219,7 +219,6 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             <AddressFilterIcon width={20} height={20} />
           </div>
           <Cascader
-            open
             getPopupContainer={(triggerNode) => triggerNode.parentElement}
             multiple
             maxTagCount="responsive"
