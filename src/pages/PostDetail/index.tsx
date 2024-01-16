@@ -342,6 +342,7 @@ const Detail = () => {
         POST_ID,
         languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
       );
+      setCheckPostUser(false);
       // console.log('result', result2);
       if (result && profileV3) {
         // const list = result?.data.categories.map((category: any) =>
@@ -360,7 +361,7 @@ const Detail = () => {
                 ? 'Edit job posting'
                 : '채용 게시물 수정',
           );
-          setBackgroundButton('gray');
+          setBackgroundButton('#0D99FF');
           setCheckPostUser(true);
         } else if (result.data.status === 3) {
           setBackgroundButton('gray');
@@ -510,6 +511,11 @@ const Detail = () => {
   // handle click button
   const onclick = async () => {
     // console.log('click', profileV3);
+    // navigate to edit post
+    if (checkPostUser) {
+      window.open(`edit-posted/?postId=${POST_ID}`, 'width=800,height=600');
+      return;
+    }
     if (
       post?.data?.companyResourceData?.name === 'HIJOB' &&
       profileV3.typeRoleData === 1
@@ -565,11 +571,6 @@ const Detail = () => {
         (checkApply && post?.data?.companyResourceData?.name !== 'HIJOB')
       ) {
         window.open(post?.data?.companyResourceData?.postUrl, '_blank');
-        return;
-      }
-      // navigate to edit post
-      if (checkPostUser) {
-        window.open(`edit-posted/?postId=${POST_ID}`, 'width=800,height=600');
         return;
       }
       if (
@@ -1514,8 +1515,8 @@ const Detail = () => {
                       }
                       style={{
                         color: `${post?.data?.postCompanyInformation?.website
-                            ? 'rgb(13, 153, 255)'
-                            : ''
+                          ? 'rgb(13, 153, 255)'
+                          : ''
                           }`,
                       }}
                       target="_blank"
@@ -2207,8 +2208,8 @@ const Detail = () => {
                       <AddressDetailPostIcon width={16} height={16} />
                       <span style={{ marginLeft: '8px' }}>
                         {`${post?.data.address}, ${post?.data?.location
-                            ? post?.data?.location?.fullName
-                            : ''
+                          ? post?.data?.location?.fullName
+                          : ''
                           }, ${post?.data?.location?.district
                             ? post?.data?.location?.district?.fullName
                             : ''
