@@ -15,8 +15,8 @@ import mockup2 from '../../img/langdingPage/Mockup_CV2.png';
 import mockup3 from '../../img/langdingPage/Mockup_CV1.png';
 import nofitication from '../../img/langdingPage/Notification.png';
 import frame from '../../img/langdingPage/Frame-34799.png';
-import Outstanding_features_1 from '../../img/langdingPage/Outstanding_features_1.png';
-import Outstanding_features_2 from '../../img/langdingPage/Outstanding_features_2.png';
+import Outstanding_features_1_new from '../../img/langdingPage/Outstanding_features_1_new.png';
+import Outstanding_features_2_new from '../../img/langdingPage/Outstanding_features_2_new.png';
 
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
@@ -314,6 +314,62 @@ const LandingHijob = () => {
           </div>
           <img src={hijobRecruitment} alt="hijobRecruitment" />
         </div>
+
+        <div className={styles.landing_outstanding}>
+          <div className={styles.outstanding_title}>
+            <h3>
+              {languageRedux === 1
+                ? 'Đặc trưng nổi bật của HIJOB'
+                : languageRedux === 2
+                  ? 'Outstanding features of HIJOB'
+                  : languageRedux === 3 &&
+                  'HIJOB의 특징'}
+            </h3>
+          </div>
+          <div className={styles.outstanding_content}>
+            <div className={styles.outstanding_item}>
+              <img src={Outstanding_features_1_new} alt="Outstanding_features_1_new" />
+              <div className={styles.item_bot}>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Nguồn tin tuyển dụng đa dạng nhất'
+                    : languageRedux === 2
+                      ? 'The most diverse source of recruitment information'
+                      : languageRedux === 3 && '제일 다양한 재용공고'}
+                </h3>
+                <p>
+                  {languageRedux === 1
+                    ? 'Nơi tập hợp các tin tuyển dụng đa dạng từ nhiều nền tảng khác nhau (Facebook, Chợ tốt, Vietnamworks, Careerlink...).'
+                    : languageRedux === 2
+                      ? 'A place that gathers diverse job postings from many different platforms (Facebook, Cho Tot, Vietnamworks, Careerlink...).'
+                      : languageRedux === 3 &&
+                      '다양한 플랫폼의 다양한 채용 정보를 모아 놓은 곳 (facebook, chợ tốt, vietnamworks, careerlink...).'}
+                </p>
+              </div>
+            </div>
+            <div className={styles.outstanding_item}>
+              <img src={Outstanding_features_2_new} alt="Outstanding_features_2_new" />
+              <div className={styles.item_bot}>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Tạo video tuyển dụng miễn phí'
+                    : languageRedux === 2
+                      ? 'Create free recruitment videos'
+                      : languageRedux === 3 && '무료 채용 비디오 만들기'}
+                </h3>
+                <p>
+                  {languageRedux === 1
+                    ? 'Khi đăng tin tuyển dụng tại Hijob, Hijob hổ trợ giúp bạn tạo video quảng cáo tin tuyển dụng miễn phí trên nền tảng Tiktok và Youtube short.'
+                    : languageRedux === 2
+                      ? 'When posting a recruitment ad at Hijob, Hijob supports you in creating free recruitment advertisement videos on Tiktok and Youtube short platforms.'
+                      : languageRedux === 3 &&
+                      'Hijob에서 채용 공고를 게시할 때, hojob은 틱톡과 유투브 소셜 플랫폼에서 무료 채용 비디오를 만드는 것을 돕는다.'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className={styles.landing_propose}>
           <h3>
             {languageRedux === 1
@@ -355,60 +411,7 @@ const LandingHijob = () => {
             </div>
           </div>
         </div>
-        <div className={styles.landing_outstanding}>
-          <div className={styles.outstanding_title}>
-            <h3>
-              {languageRedux === 1
-                ? 'Đặc trưng nổi bật của HIJOB'
-                : languageRedux === 2
-                  ? 'Outstanding features of HIJOB'
-                  : languageRedux === 3 &&
-                  'HIJOB의 특징'}
-            </h3>
-          </div>
-          <div className={styles.outstanding_content}>
-            <div className={styles.outstanding_item}>
-              <img src={Outstanding_features_1} alt="Outstanding_features_1" />
-              <div className={styles.item_bot}>
-                <h3>
-                  {languageRedux === 1
-                    ? 'Nguồn tin tuyển dụng đa dạng nhất'
-                    : languageRedux === 2
-                      ? 'The most diverse source of recruitment information'
-                      : languageRedux === 3 && '제일 다양한 재용공고'}
-                </h3>
-                <p>
-                  {languageRedux === 1
-                    ? 'Nơi tập hợp các tin tuyển dụng đa dạng từ nhiều nền tảng khác nhau (Facebook, Chợ tốt, Vietnamworks, Careerlink...).'
-                    : languageRedux === 2
-                      ? 'A place that gathers diverse job postings from many different platforms (Facebook, Cho Tot, Vietnamworks, Careerlink...).'
-                      : languageRedux === 3 &&
-                      '다양한 플랫폼의 다양한 채용 정보를 모아 놓은 곳 (facebook, chợ tốt, vietnamworks, careerlink...).'}
-                </p>
-              </div>
-            </div>
-            <div className={styles.outstanding_item}>
-              <img src={Outstanding_features_2} alt="Outstanding_features_2" />
-              <div className={styles.item_bot}>
-                <h3>
-                  {languageRedux === 1
-                    ? 'Tạo video tuyển dụng miễn phí'
-                    : languageRedux === 2
-                      ? 'Create free recruitment videos'
-                      : languageRedux === 3 && '무료 채용 비디오 만들기'}
-                </h3>
-                <p>
-                  {languageRedux === 1
-                    ? 'Khi đăng tin tuyển dụng tại Hijob, Hijob hổ trợ giúp bạn tạo video quảng cáo tin tuyển dụng miễn phí trên nền tảng Tiktok và Youtube short.'
-                    : languageRedux === 2
-                      ? 'When posting a recruitment ad at Hijob, Hijob supports you in creating free recruitment advertisement videos on Tiktok and Youtube short platforms.'
-                      : languageRedux === 3 &&
-                      'Hijob에서 채용 공고를 게시할 때, hojob은 틱톡과 유투브 소셜 플랫폼에서 무료 채용 비디오를 만드는 것을 돕는다.'}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <div className={styles.landing_advantages}>
           <div className={styles.advantages_title}>
             <h3>
