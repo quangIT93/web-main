@@ -12,7 +12,7 @@ import { ArrowFilterIcon } from '#components/Icons';
 import { CateIcon } from '#components/Icons/iconCandidate';
 // import ant
 import { Button, Cascader, Divider, Typography } from 'antd';
-
+import './style.scss';
 // interface Option {
 //   value: string | number;
 //   label: string;
@@ -153,7 +153,7 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
   );
 
   return (
-    <div className="wrap-search_candidate">
+    <div className="wrap-search_cate">
       <div
         style={{
           position: 'absolute',

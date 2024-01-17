@@ -1,6 +1,5 @@
-.wrap-search_company {
+.wrap-search_cate {
     position: relative;
-    width: 100%;
 
     .ant-select {
         .ant-select-selector {
@@ -11,7 +10,7 @@
             }
 
             .ant-select-selection-placeholder {
-                // padding-left: 24px;
+                padding-left: 24px;
                 font-size: 12px;
             }
         }
