@@ -57,7 +57,7 @@ const LogChart = () => {
     } else {
       dataChartRecruiter();
     }
-  }, []);
+  }, [profileV3]);
   // console.log('youtubeShorts', youtubeShorts);
 
   return (

@@ -87,7 +87,7 @@ const SearchCateCompany: React.FC<ISearchCate> = (props) => {
   );
 
   return (
-    <div className="wrap-search_company" style={{ width: '100%' }}>
+    <div className="wrap-search_cate" style={{ width: '100%' }}>
       <div
         style={{ position: 'absolute', zIndex: '1', top: '10px', left: '10px' }}
       >
@@ -108,19 +108,19 @@ const SearchCateCompany: React.FC<ISearchCate> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                // children: parentCategory.childs.map((child: any) => {
-                //     var dis = false;
-                //     //check id child  when disable = true
+              value: parentCategory.parent_category_id,
+              label: parentCategory.parent_category,
+              // children: parentCategory.childs.map((child: any) => {
+              //     var dis = false;
+              //     //check id child  when disable = true
 
-                //     return {
-                //         value: child.id,
-                //         label: child.name,
-                //         disabled: dis,
-                //     };
-                // }),
-              }))
+              //     return {
+              //         value: child.id,
+              //         label: child.name,
+              //         disabled: dis,
+              //     };
+              // }),
+            }))
             : []
         }
         placeholder={
