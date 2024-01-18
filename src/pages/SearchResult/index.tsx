@@ -1002,7 +1002,7 @@ const NewJobs: React.FC = () => {
                         : languageRedux === 3 && '찾기'}
                     </span>
                     <h4 style={{ margin: '0 10px' }}>
-                      {searchData ? searchData?.total.toLocaleString() : 0}
+                      {searchData ? searchData?.total?.toLocaleString() : 0}
                     </h4>
                     <span className="title-last-search">
                       {/* {language?.search_results_page.suitable_job} */}
@@ -1033,7 +1033,7 @@ const NewJobs: React.FC = () => {
                 }}
                 onClick={handleShowCreateKeywork}
               >
-                {searchData?.posts.length !== 0 && QUERY ? (
+                {searchData?.posts?.length !== 0 && QUERY ? (
                   <>
                     <CreateKeywordIconSmall />
                     <span style={{ marginLeft: '4px', fontSize: '20px' }}>
@@ -1050,10 +1050,10 @@ const NewJobs: React.FC = () => {
               </div>
             </div>
 
-            {searchData?.posts.length > 0 ? (
+            {searchData?.posts?.length > 0 ? (
               <>
                 <InfiniteScroll
-                  dataLength={searchData.posts?.length}
+                  dataLength={searchData?.posts?.length}
                   next={fetchMoreData}
                   hasMore={hasMore}
                   loader={
@@ -1066,7 +1066,7 @@ const NewJobs: React.FC = () => {
                     spacing={3}
                     columns={{ xs: 6, sm: 4, md: 12 }}
                   >
-                    {searchData?.posts.map(
+                    {searchData?.posts?.map(
                       (item: PostNewest, index: number) => (
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                           <JobCard item={item} />
