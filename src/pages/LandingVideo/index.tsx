@@ -465,6 +465,19 @@ const LandingVideo = () => {
                     : languageRedux === 3 && '채용 비디오'}
               </Link>
             </div>
+            <div className="landing_video_link_item">
+              <p>Video 2:</p>
+              <Link
+                to="https://www.tiktok.com/@hijob.site/video/7325330821504650498"
+                target="_blank"
+              >
+                {languageRedux === 1
+                  ? 'Video tuyển dụng 2'
+                  : languageRedux === 2
+                    ? 'Recruitment video 2'
+                    : languageRedux === 3 && '채용 비디오'}
+              </Link>
+            </div>
           </div>
         </div>
 
