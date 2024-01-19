@@ -159,7 +159,7 @@ const Footer: React.FC = () => {
     // console.log('Current window width:', currentWidth);
   });
 
-  useEffect(() => { }, [languageRedux]);
+  useEffect(() => {}, [languageRedux]);
 
   useEffect(() => {
     if (windowWidth) {
@@ -207,15 +207,15 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-              transform: 'translateY(calc(-100% - 36px))',
-              borderTop: '1px solid #ccc',
-            }
+                transform: 'translateY(calc(-100% - 36px))',
+                borderTop: '1px solid #ccc',
+              }
             : !open && !windowWidth
-              ? {
+            ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-              : { transform: 'none' }
+            : { transform: 'none' }
         }
       >
         <div
@@ -243,8 +243,8 @@ const Footer: React.FC = () => {
                   languageRedux === 1
                     ? 'Hình ảnh bị lỗi'
                     : languageRedux === 2
-                      ? 'Image is corrupted'
-                      : '이미지가 손상되었습니다'
+                    ? 'Image is corrupted'
+                    : '이미지가 손상되었습니다'
                 }
               />
             </div>
@@ -253,53 +253,66 @@ const Footer: React.FC = () => {
               {languageRedux === 1
                 ? 'Kết nối tài năng'
                 : languageRedux === 2
-                  ? 'Connect talent'
-                  : languageRedux === 3 && '인재 모임'}
+                ? 'Connect talent'
+                : languageRedux === 3 && '인재 모임'}
             </h3>
             <p>
               {languageRedux === 1
                 ? 'Công ty TNHH NeoWorks., LTD'
                 : languageRedux === 2
-                  ? 'NeoWorks Co., LTD'
-                  : languageRedux === 3 && 'NeoWorks 주식회사, LTD'}
+                ? 'NeoWorks Co., LTD'
+                : languageRedux === 3 && 'NeoWorks 주식회사, LTD'}
             </p>
             <p>
               {languageRedux === 1
                 ? 'Địa chỉ: 131 Nguyễn Khoái, P.1, Quận 4, TP HCM'
                 : languageRedux === 2
-                  ? 'Address: 131 Nguyen Khoai, Ward 1, District 4, HCMC'
-                  : languageRedux === 3 &&
+                ? 'Address: 131 Nguyen Khoai, Ward 1, District 4, HCMC'
+                : languageRedux === 3 &&
                   '주소: 131 Nguyen Khoai, 1군, 4군, HCM시'}
             </p>
             <p>
               {languageRedux === 1
                 ? 'Đại diện pháp luật: Kim Dongha'
                 : languageRedux === 2
-                  ? 'Legal representative: Kim Dongha'
-                  : languageRedux === 3 && '법인대표 : 김동하'}
+                ? 'Legal representative: Kim Dongha'
+                : languageRedux === 3 && '법인대표 : 김동하'}
             </p>
             <p>
               {languageRedux === 1
                 ? 'Chức vụ: Giám đốc'
                 : languageRedux === 2
-                  ? 'Position: Director'
-                  : languageRedux === 3 && '직무: 사장'}
+                ? 'Position: Director'
+                : languageRedux === 3 && '직무: 사장'}
             </p>
+            <div className="link-facebook-mobile">
+              <Link to="https://www.facebook.com/hijobOfficial" target="_blank">
+                <FaceBookIcon />
+              </Link>
+
+              <Link to="https://www.youtube.com/@HiJob-rz1xm" target="_blank">
+                <YoutubeShort width={24} height={24} />
+              </Link>
+
+              <Link to="https://www.tiktok.com/@hijob.site" target="_blank">
+                <Tiktok width={20} height={20} />
+              </Link>
+            </div>
           </div>
           <div className="footer-center">
             <h4>
               {languageRedux === 1
                 ? 'Về HiJob'
                 : languageRedux === 2
-                  ? 'About HiJob'
-                  : languageRedux === 3 && 'Hi Job에 대해서'}
+                ? 'About HiJob'
+                : languageRedux === 3 && 'Hi Job에 대해서'}
             </h4>
             <Link to="/policy#about-us" target="_seft">
               {languageRedux === 1
                 ? 'Về HiJob'
                 : languageRedux === 2
-                  ? 'About HiJob'
-                  : languageRedux === 3 && 'Hi Job에 대해서'}
+                ? 'About HiJob'
+                : languageRedux === 3 && 'Hi Job에 대해서'}
             </Link>
 
             <Link to="/policy#privacy-policy" target="_seft">
@@ -307,8 +320,8 @@ const Footer: React.FC = () => {
               {languageRedux === 1
                 ? 'Chính sách bảo mật'
                 : languageRedux === 2
-                  ? 'Privacy Policy'
-                  : languageRedux === 3 && '보안 정책'}{' '}
+                ? 'Privacy Policy'
+                : languageRedux === 3 && '보안 정책'}{' '}
             </Link>
 
             <Link to="/policy#terms-of-use" target="_seft">
@@ -316,15 +329,15 @@ const Footer: React.FC = () => {
               {languageRedux === 1
                 ? 'Điều khoản sử dụng'
                 : languageRedux === 2
-                  ? 'Terms of Use'
-                  : languageRedux === 3 && '이용약관'}{' '}
+                ? 'Terms of Use'
+                : languageRedux === 3 && '이용약관'}{' '}
             </Link>
             <h4>
               {languageRedux === 1
                 ? 'Liên kết'
                 : languageRedux === 2
-                  ? 'Link'
-                  : languageRedux === 3 && '연결'}
+                ? 'Link'
+                : languageRedux === 3 && '연결'}
             </h4>
             <div className="link-facebook">
               <Link to="https://www.facebook.com/hijobOfficial" target="_blank">
@@ -346,8 +359,8 @@ const Footer: React.FC = () => {
                 {languageRedux === 1
                   ? 'Tải Ứng dụng HiJob!'
                   : languageRedux === 2
-                    ? 'Download HiJob App!'
-                    : languageRedux === 3 && 'HiJob 앱 다운로드!'}
+                  ? 'Download HiJob App!'
+                  : languageRedux === 3 && 'HiJob 앱 다운로드!'}
               </h4>
               <div className="div-img-footer">
                 <img
@@ -358,8 +371,8 @@ const Footer: React.FC = () => {
                     languageRedux === 1
                       ? 'Hình ảnh bị lỗi'
                       : languageRedux === 2
-                        ? 'Image is corrupted'
-                        : '이미지가 손상되었습니다'
+                      ? 'Image is corrupted'
+                      : '이미지가 손상되었습니다'
                   }
                 />
                 <img
@@ -371,8 +384,8 @@ const Footer: React.FC = () => {
                     languageRedux === 1
                       ? 'Hình ảnh bị lỗi'
                       : languageRedux === 2
-                        ? 'Image is corrupted'
-                        : '이미지가 손상되었습니다'
+                      ? 'Image is corrupted'
+                      : '이미지가 손상되었습니다'
                   }
                 />
               </div>
@@ -390,8 +403,8 @@ const Footer: React.FC = () => {
                       languageRedux === 1
                         ? 'Hình ảnh bị lỗi'
                         : languageRedux === 2
-                          ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'
                     }
                   />
                 </Link>
@@ -407,8 +420,8 @@ const Footer: React.FC = () => {
                       languageRedux === 1
                         ? 'Hình ảnh bị lỗi'
                         : languageRedux === 2
-                          ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'
                     }
                   />
                 </Link>
@@ -419,8 +432,8 @@ const Footer: React.FC = () => {
                 {languageRedux === 1
                   ? 'Liên kết'
                   : languageRedux === 2
-                    ? 'Link'
-                    : languageRedux === 3 && '연결'}
+                  ? 'Link'
+                  : languageRedux === 3 && '연결'}
               </h4>
               <div id="div-img-socal">
                 <Link to="https://www.facebook.com/hijobOfficial/">
@@ -430,8 +443,8 @@ const Footer: React.FC = () => {
                       languageRedux === 1
                         ? 'Hình ảnh bị lỗi'
                         : languageRedux === 2
-                          ? 'Image is corrupted'
-                          : '이미지가 손상되었습니다'
+                        ? 'Image is corrupted'
+                        : '이미지가 손상되었습니다'
                     }
                   />
                 </Link>
@@ -477,8 +490,8 @@ const Footer: React.FC = () => {
                 languageRedux === 1
                   ? 'Chính sách sử dụng'
                   : languageRedux === 2
-                    ? 'Terms & Policies'
-                    : languageRedux === 3 && '이용약관'
+                  ? 'Terms & Policies'
+                  : languageRedux === 3 && '이용약관'
               }
             </p>
           </Link>
@@ -496,8 +509,8 @@ const Footer: React.FC = () => {
                   languageRedux === 1
                     ? 'Tổng đài CSKH'
                     : languageRedux === 2
-                      ? 'Customer Call Center'
-                      : languageRedux === 3 && '고객관리 교환국'
+                    ? 'Customer Call Center'
+                    : languageRedux === 3 && '고객관리 교환국'
                 }
               </p>
               <p style={{ color: '#575757', marginLeft: '5px' }}>
