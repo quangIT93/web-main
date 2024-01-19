@@ -73,8 +73,9 @@ import languageApi from 'api/languageApi';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import { searchResultVi } from 'validations/lang/vi/searchResult';
 import { searchResultEn } from 'validations/lang/en/searchResult';
-import JobCardSearh from './JobCardSearch';
-import { IitemNewJob } from './JobCardSearch';
+// import JobCardSearh from './JobCardSearch';
+import { IitemNewJob } from './SearchResultCard';
+import SearchResultCard from './SearchResultCard';
 const { SHOW_CHILD } = Cascader;
 
 // const ITEM_HEIGHT = 48;
@@ -146,11 +147,11 @@ const NewJobs: React.FC = () => {
     // openNotificate,
     search,
   }: // setRefNav,
-  {
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-    search: boolean;
-  } = useContext(HomeValueContext);
+    {
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+      search: boolean;
+    } = useContext(HomeValueContext);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -251,8 +252,8 @@ const NewJobs: React.FC = () => {
       languageRedux === 1
         ? 'HiJob - Tìm kiếm công việc'
         : languageRedux === 2
-        ? 'HiJob - Job Search'
-        : 'HiJob - 채용 정보 검색';
+          ? 'HiJob - Job Search'
+          : 'HiJob - 채용 정보 검색';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_search' as string,
@@ -314,7 +315,7 @@ const NewJobs: React.FC = () => {
 
   const LIST_DIS_ID =
     userFilteredCookies?.list_dis?.length > 0 ||
-    userFilteredCookies?.list_dis?.length !== undefined
+      userFilteredCookies?.list_dis?.length !== undefined
       ? userFilteredCookies?.list_dis?.map((dis: any) => dis[1])
       : [];
 
@@ -327,7 +328,7 @@ const NewJobs: React.FC = () => {
   //   .map((dis) => dis[1]);
   const LIST_CATEGORIES_ID =
     userFilteredCookies?.list_cate?.length !== 0 ||
-    userFilteredCookies?.list_cate !== undefined
+      userFilteredCookies?.list_cate !== undefined
       ? userFilteredCookies?.list_cate?.map((cate: any) => cate[1])
       : [];
   // searchParams
@@ -370,10 +371,10 @@ const NewJobs: React.FC = () => {
         languageRedux === 1
           ? 'vi'
           : languageRedux === 2
-          ? 'en'
-          : languageRedux === 3
-          ? 'ko'
-          : 'vi',
+            ? 'en'
+            : languageRedux === 3
+              ? 'ko'
+              : 'vi',
       );
       if (result) {
         setDataCategories(result.data);
@@ -455,8 +456,8 @@ const NewJobs: React.FC = () => {
         {languageRedux === 1
           ? 'Chọn địa điểm'
           : languageRedux === 2
-          ? 'Select location'
-          : languageRedux === 3 && '위치를  선택합니다'}
+            ? 'Select location'
+            : languageRedux === 3 && '위치를  선택합니다'}
       </Text>
       {menus}
       <Divider style={{ margin: 5 }}>
@@ -464,8 +465,8 @@ const NewJobs: React.FC = () => {
           ? languageRedux === 1
             ? 'Chỉ có thể tối đa 10 khu vực'
             : languageRedux === 2
-            ? 'Only up to 10 areas can be'
-            : languageRedux === 3 && '최대 10개 영역까지만 가능합니다'
+              ? 'Only up to 10 areas can be'
+              : languageRedux === 3 && '최대 10개 영역까지만 가능합니다'
           : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
@@ -485,8 +486,8 @@ const NewJobs: React.FC = () => {
         {languageRedux === 1
           ? 'Chọn danh mục nghề nghiệp'
           : languageRedux === 2
-          ? 'Select a career category'
-          : languageRedux === 3 && '카테고리를 선택합니다'}
+            ? 'Select a career category'
+            : languageRedux === 3 && '카테고리를 선택합니다'}
       </Text>
       {menus}
       <Divider style={{ margin: 5 }}>
@@ -494,8 +495,8 @@ const NewJobs: React.FC = () => {
           ? languageRedux === 1
             ? 'Chỉ có thể tối đa 10 danh mục'
             : languageRedux === 2
-            ? 'Only up to 10 categories can be'
-            : languageRedux === 3 && '최대 10개의 카테고리만 가능합니다'
+              ? 'Only up to 10 categories can be'
+              : languageRedux === 3 && '최대 10개의 카테고리만 가능합니다'
           : ''}
       </Divider>
     </div>
@@ -590,8 +591,8 @@ const NewJobs: React.FC = () => {
             languageRedux === 1
               ? 'Tạo từ khóa công việc không thành công.'
               : languageRedux === 2
-              ? 'Generate job keyword failed.'
-              : '채용정보 키워드 생성에 실패했습니다.',
+                ? 'Generate job keyword failed.'
+                : '채용정보 키워드 생성에 실패했습니다.',
         });
       }
     } catch (error: any) {
@@ -605,8 +606,8 @@ const NewJobs: React.FC = () => {
             languageRedux === 1
               ? 'Bạn chỉ có thể tạo 10 từ khóa.'
               : languageRedux === 2
-              ? 'You can only create 10 keywords.'
-              : '키워드는 10개까지만 만들 수 있습니다.',
+                ? 'You can only create 10 keywords.'
+                : '키워드는 10개까지만 만들 수 있습니다.',
         });
       }
     }
@@ -655,10 +656,10 @@ const NewJobs: React.FC = () => {
           languageRedux === 1
             ? 'vi'
             : languageRedux === 2
-            ? 'en'
-            : languageRedux === 3
-            ? 'ko'
-            : 'vi',
+              ? 'en'
+              : languageRedux === 3
+                ? 'ko'
+                : 'vi',
           20,
         );
 
@@ -800,10 +801,10 @@ const NewJobs: React.FC = () => {
       languageRedux === 1
         ? 'vi'
         : languageRedux === 2
-        ? 'en'
-        : languageRedux === 3
-        ? 'ko'
-        : 'vi',
+          ? 'en'
+          : languageRedux === 3
+            ? 'ko'
+            : 'vi',
       20,
     );
     // const result = await searchApi.getSearchByQueryV2(
@@ -882,8 +883,8 @@ const NewJobs: React.FC = () => {
                       {languageRedux === 1
                         ? 'Tìm thấy'
                         : languageRedux === 2
-                        ? 'Found'
-                        : languageRedux === 3 && '찾기'}
+                          ? 'Found'
+                          : languageRedux === 3 && '찾기'}
                     </span>
                     <h4 style={{ margin: '0 10px' }}>
                       {searchData?.posts?.length !== 0
@@ -895,8 +896,8 @@ const NewJobs: React.FC = () => {
                       {languageRedux === 1
                         ? 'công việc phù hợp'
                         : languageRedux === 2
-                        ? 'suitable jobs'
-                        : languageRedux === 3 && '어울리는 직업'}
+                          ? 'suitable jobs'
+                          : languageRedux === 3 && '어울리는 직업'}
                     </span>
                   </>
                 ) : (
@@ -904,8 +905,8 @@ const NewJobs: React.FC = () => {
                     {languageRedux === 1
                       ? 'Đang tải'
                       : languageRedux === 2
-                      ? 'Loading'
-                      : languageRedux === 3 && '로드 중'}
+                        ? 'Loading'
+                        : languageRedux === 3 && '로드 중'}
                   </span>
                 )}
               </div>
@@ -926,8 +927,8 @@ const NewJobs: React.FC = () => {
                       {languageRedux === 1
                         ? 'Tạo thông báo từ khóa'
                         : languageRedux === 2
-                        ? 'Create keyword notifications'
-                        : languageRedux === 3 && '키워드 알림 만들기'}
+                          ? 'Create keyword notifications'
+                          : languageRedux === 3 && '키워드 알림 만들기'}
                     </span>
                   </>
                 ) : (
@@ -956,7 +957,8 @@ const NewJobs: React.FC = () => {
                       (item: IitemNewJob, index: number) => (
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                           {/* <JobCard item={item} /> */}
-                          <JobCardSearh item={item} />
+                          {/* <JobCardSearh item={item} /> */}
+                          <SearchResultCard item={item} />
                         </Grid>
                       ),
                     )}
@@ -995,7 +997,7 @@ const NewJobs: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -1027,8 +1029,8 @@ const NewJobs: React.FC = () => {
               {languageRedux === 1
                 ? 'Thông báo từ khóa'
                 : languageRedux === 2
-                ? 'Keyword announcement'
-                : languageRedux === 3 && '키워드 알림'}
+                  ? 'Keyword announcement'
+                  : languageRedux === 3 && '키워드 알림'}
             </p>
 
             {locationOneItem.length !== 0 && cateloryOneItem.length !== 0 ? (
@@ -1036,8 +1038,8 @@ const NewJobs: React.FC = () => {
                 {languageRedux === 1
                   ? 'Thêm từ khóa liên quan đến công việc hoặc tên công ty bạn muốn'
                   : languageRedux === 2
-                  ? 'Add keywords related to the job or company name you want'
-                  : languageRedux === 3 &&
+                    ? 'Add keywords related to the job or company name you want'
+                    : languageRedux === 3 &&
                     '원하는 회사 이름이나 업무 관련 키워드를 추가'}
               </p>
             ) : (
@@ -1045,8 +1047,8 @@ const NewJobs: React.FC = () => {
                 {languageRedux === 1
                   ? 'Vui lòng nhập vị trí và danh mục'
                   : languageRedux === 2
-                  ? 'Please enter Location and Category'
-                  : '위치와 카테고리를 입력해주세요'}
+                    ? 'Please enter Location and Category'
+                    : '위치와 카테고리를 입력해주세요'}
               </p>
             )}
 
@@ -1059,8 +1061,8 @@ const NewJobs: React.FC = () => {
                 languageRedux === 1
                   ? 'Từ khóa'
                   : languageRedux === 2
-                  ? 'Keyword'
-                  : '키워드'
+                    ? 'Keyword'
+                    : '키워드'
               }
               // allowClear
               size="large"
@@ -1081,8 +1083,8 @@ const NewJobs: React.FC = () => {
                 languageRedux === 1
                   ? 'Chọn địa điểm'
                   : languageRedux === 2
-                  ? 'Select location'
-                  : languageRedux === 3 && '위치를  선택합니다'
+                    ? 'Select location'
+                    : languageRedux === 3 && '위치를  선택합니다'
               }
               inputIcon={<EnvironmentOutlined />}
               dropdownRender={DropdownRenderLocation}
@@ -1100,29 +1102,29 @@ const NewJobs: React.FC = () => {
               options={
                 dataAllLocation
                   ? dataAllLocation?.map((dataLocation: any) => ({
-                      value: dataLocation.province_id,
-                      label: dataLocation.province_fullName,
-                      children: dataLocation.districts.map(
-                        (child: { district_id: string; district: string }) => {
-                          var dis = false;
-                          // setLocId([]);
-                          if (disableLocation) {
-                            dis = true;
-                            for (const elem of locId) {
-                              if (elem === child.district_id) {
-                                dis = false;
-                                break;
-                              }
+                    value: dataLocation.province_id,
+                    label: dataLocation.province_fullName,
+                    children: dataLocation.districts.map(
+                      (child: { district_id: string; district: string }) => {
+                        var dis = false;
+                        // setLocId([]);
+                        if (disableLocation) {
+                          dis = true;
+                          for (const elem of locId) {
+                            if (elem === child.district_id) {
+                              dis = false;
+                              break;
                             }
                           }
-                          return {
-                            value: child.district_id,
-                            label: child.district,
-                            disabled: dis,
-                          };
-                        },
-                      ),
-                    }))
+                        }
+                        return {
+                          value: child.district_id,
+                          label: child.district,
+                          disabled: dis,
+                        };
+                      },
+                    ),
+                  }))
                   : []
               }
               onChange={onChangeLocation}
@@ -1143,27 +1145,27 @@ const NewJobs: React.FC = () => {
               options={
                 dataCategories
                   ? dataCategories.map((parentCategory: any) => ({
-                      value: parentCategory.parent_category_id,
-                      label: parentCategory.parent_category,
-                      children: parentCategory.childs.map((child: any) => {
-                        var dis = false;
-                        //check id child  when disable = true
-                        if (disableCatelory) {
-                          dis = true;
-                          for (const elem of categoriesId) {
-                            if (elem === child.id) {
-                              dis = false;
-                              break;
-                            }
+                    value: parentCategory.parent_category_id,
+                    label: parentCategory.parent_category,
+                    children: parentCategory.childs.map((child: any) => {
+                      var dis = false;
+                      //check id child  when disable = true
+                      if (disableCatelory) {
+                        dis = true;
+                        for (const elem of categoriesId) {
+                          if (elem === child.id) {
+                            dis = false;
+                            break;
                           }
                         }
-                        return {
-                          value: child.id,
-                          label: child.name,
-                          disabled: dis,
-                        };
-                      }),
-                    }))
+                      }
+                      return {
+                        value: child.id,
+                        label: child.name,
+                        disabled: dis,
+                      };
+                    }),
+                  }))
                   : []
               }
               onChange={onChangeCateLory}
@@ -1182,8 +1184,8 @@ const NewJobs: React.FC = () => {
                 languageRedux === 1
                   ? 'Chọn danh mục nghề nghiệp'
                   : languageRedux === 2
-                  ? 'Select a career category'
-                  : languageRedux === 3 && '카테고리를 선택합니다'
+                    ? 'Select a career category'
+                    : languageRedux === 3 && '카테고리를 선택합니다'
               }
             />
 
@@ -1238,8 +1240,8 @@ const NewJobs: React.FC = () => {
                 {languageRedux === 1
                   ? 'Áp dụng'
                   : languageRedux === 2
-                  ? 'Apply'
-                  : languageRedux === 3 && '적용'}
+                    ? 'Apply'
+                    : languageRedux === 3 && '적용'}
               </Button>
               {/* <Button
                 sx={{
@@ -1289,8 +1291,8 @@ const NewJobs: React.FC = () => {
               {languageRedux === 1
                 ? 'Hoàn thành'
                 : languageRedux === 2
-                ? 'Complete'
-                : languageRedux === 3 && '완성'}
+                  ? 'Complete'
+                  : languageRedux === 3 && '완성'}
             </p>
             <p
               className="text-modal_createKeySuccess"
@@ -1303,16 +1305,16 @@ const NewJobs: React.FC = () => {
               {languageRedux === 1
                 ? 'Bạn đã thành công thêm từ khoá, có thể các thông báo sẽ làm phiền, bạn có thể tắt thông báo trong mục Thông báo từ khoá.'
                 : languageRedux === 2
-                ? 'You have successfully added keywords, maybe notifications will bother you, you can turn off notifications in Keyword Notifications.'
-                : languageRedux === 3 &&
+                  ? 'You have successfully added keywords, maybe notifications will bother you, you can turn off notifications in Keyword Notifications.'
+                  : languageRedux === 3 &&
                   '키워드 추가에 성공했고, 알림이 방해가 될 수 있으며, 키워드 알림란의 알림을 키워드 알림란에 알림을 꺼도 됩니다.'}
             </p>
             <p className="text-modal_createKeySuccess">
               {languageRedux === 1
                 ? 'Bạn có muốn chuyển đến mục thông báo từ khoá không?'
                 : languageRedux === 2
-                ? 'Do you want to go to keyword notifications?'
-                : languageRedux === 3 &&
+                  ? 'Do you want to go to keyword notifications?'
+                  : languageRedux === 3 &&
                   '키워드 알림 항목으로 이동하시겠습니까?'}
             </p>
             <div
@@ -1337,8 +1339,8 @@ const NewJobs: React.FC = () => {
                 {languageRedux === 1
                   ? 'Xác nhận'
                   : languageRedux === 2
-                  ? 'Confirm'
-                  : languageRedux === 3 && '확인'}
+                    ? 'Confirm'
+                    : languageRedux === 3 && '확인'}
               </Button>
               {/* <Button
                 sx={{

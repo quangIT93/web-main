@@ -47,34 +47,30 @@ const searchApi = {
       `${salary_max ? `&salary_max=${salary_max}` : ``}` +
       `${salary_type ? `&salary_type=${[salary_type]}` : ``}` +
       `${money_type ? `&money_type=${money_type}` : ``}` +
-      `${
-        is_working_weekend ? `&is_working_weekend=${is_working_weekend}` : ``
+      `${is_working_weekend ? `&is_working_weekend=${is_working_weekend}` : ``
       }` +
       `${is_remotely ? `&is_remotely=${is_remotely}` : ``}` +
       `${jobTypeId.length > 0 ? `&jobTypeId=${jobTypeId}` : ``}` +
-      `${
-        district_ids != null
-          ? `${
-              district_ids.length > 0
-                ? `&${district_ids
-                    ?.map((n, index) => `districtId=${n}`)
-                    .join('&')}`
-                : `&districtId`
-            }`
-          : ''
+      `${district_ids != null
+        ? `${district_ids.length > 0
+          ? `&${district_ids
+            ?.map((n, index) => `districtId=${n}`)
+            .join('&')}`
+          : `&districtId`
+        }`
+        : ''
       }` +
-      `${
-        category_ids != null
-          ? `${
-              category_ids.length > 0
-                ? `&${category_ids
-                    ?.map((n, index) => `categories[${index}]=${n}`)
-                    .join('&')}`
-                : `&categories`
-            }`
-          : ''
+      `${category_ids != null
+        ? `${category_ids.length > 0
+          ? `&${category_ids
+            ?.map((n, index) => `categories[${index}]=${n}`)
+            .join('&')}`
+          : `&categories`
+        }`
+        : ''
       }` +
-      `${lang ? `&lang=${lang}` : 'vi'}`;
+      `${lang ? `&lang=${lang}` : 'vi'}` +
+      `${limit ? `&limit=${limit}` : 20}`;
 
     return axiosClient.get(URL, {
       headers: {
@@ -108,35 +104,30 @@ const searchApi = {
       `${salary_max ? `&salary_max=${salary_max}` : ``}` +
       `${salary_type ? `&salary_type=${[salary_type]}` : ``}` +
       `${money_type ? `&money_type=${money_type}` : ``}` +
-      `${
-        is_working_weekend ? `&is_working_weekend=${is_working_weekend}` : ``
+      `${is_working_weekend ? `&is_working_weekend=${is_working_weekend}` : ``
       }` +
       `${is_remotely ? `&is_remotely=${is_remotely}` : ``}` +
       `${only_company ? `&only_company=${only_company}` : ``}` +
       `${start_date ? `&start_date=${start_date}` : ``}` +
       `${end_date ? `&end_date=${end_date}` : ``}` +
       `${jobTypeId.length > 0 ? `&jobTypeId=${jobTypeId}` : ``}` +
-      `${
-        district_ids != null
-          ? `${
-              district_ids.length > 0
-                ? `&${district_ids
-                    ?.map((n, index) => `district_ids[${index}]=${n}`)
-                    .join('&')}`
-                : `&district_ids`
-            }`
-          : ''
+      `${district_ids != null
+        ? `${district_ids.length > 0
+          ? `&${district_ids
+            ?.map((n, index) => `district_ids[${index}]=${n}`)
+            .join('&')}`
+          : `&district_ids`
+        }`
+        : ''
       }` +
-      `${
-        category_ids != null
-          ? `${
-              category_ids.length > 0
-                ? `&${category_ids
-                    ?.map((n, index) => `category_ids[${index}]=${n}`)
-                    .join('&')}`
-                : `&category_ids`
-            }`
-          : ''
+      `${category_ids != null
+        ? `${category_ids.length > 0
+          ? `&${category_ids
+            ?.map((n, index) => `category_ids[${index}]=${n}`)
+            .join('&')}`
+          : `&category_ids`
+        }`
+        : ''
       }` +
       `${lang ? `&lang=${lang}` : 'vi'}`;
 
