@@ -74,6 +74,11 @@
       }
     }
 
+    .link-facebook-mobile { 
+      display: none;
+      margin: 12px 0;
+    }
+
     @include breakpoint(mobile) {
       justify-content: center;
 
@@ -82,6 +87,10 @@
       padding-top: 10px;
       width: 100%;
       border-top: 1px solid #dcdcdc;
+      .link-facebook-mobile {
+        display: flex;
+        gap: 16px;
+      }
     }
 
     @include breakpoint(tablet) {
@@ -91,6 +100,10 @@
       padding-top: 10px;
       width: 100%;
       border-top: 1px solid #dcdcdc;
+      .link-facebook-mobile {
+        display: flex;
+        gap: 16px;
+      }
     }
   }
 

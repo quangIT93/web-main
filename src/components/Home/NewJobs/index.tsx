@@ -132,7 +132,7 @@ const NewJobs: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState(0);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
@@ -205,7 +205,7 @@ const NewJobs: React.FC = () => {
     //    languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     // );
 
-    const result2 = await postApi.getPostNewestV3(
+    const result2 = await postApi.getPostNewestV3New(
       // childCateloriesArray,
       // Number(categoryId),
       // profileV3?.profileLocations,
@@ -215,7 +215,7 @@ const NewJobs: React.FC = () => {
       null,
       null,
       10,
-      thersholdId,
+      page,
       languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
     );
 

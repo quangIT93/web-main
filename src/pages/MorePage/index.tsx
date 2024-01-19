@@ -609,6 +609,12 @@ const MoreJobsPage: React.FC = () => {
     // )?.userSelectedId
   ]);
 
+  console.log('idFilterProvinces', idFilterProvinces);
+  console.log('typeJob', typeJob);
+  console.log('childCateloriesArray', childCateloriesArray);
+  console.log('placeIdRedux', placeIdRedux);
+  console.log('languageRedux', languageRedux);
+
   const [provincesData, setProvincesData] = React.useState<
     [
       {
