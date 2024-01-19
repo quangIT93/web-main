@@ -692,7 +692,7 @@ const NewJobs: React.FC = () => {
         // console.log('resut', result);
         setHasMore(true);
 
-        if (result1.status === 200 && result1.data.posts.length <= 20) {
+        if (result1.status === 200 && result1.data.posts.length < 20) {
           setSearchData(result1.data);
           // setIsVisible(true);
           // setHotJobTotal(hotjob.data.length);
