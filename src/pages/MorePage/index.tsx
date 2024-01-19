@@ -368,7 +368,6 @@ const MoreJobsPage: React.FC = () => {
       setOpenBackdrop(true);
 
       let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
-      console.log('profileV3', profileV3);
 
       const result =
         typeJob === 'new' || typeJob === 'hot-job'
