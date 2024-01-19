@@ -73,7 +73,8 @@ import languageApi from 'api/languageApi';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import { searchResultVi } from 'validations/lang/vi/searchResult';
 import { searchResultEn } from 'validations/lang/en/searchResult';
-
+import JobCardSearh from './JobCardSearch';
+import { IitemNewJob } from './JobCardSearch';
 const { SHOW_CHILD } = Cascader;
 
 // const ITEM_HEIGHT = 48;
@@ -396,156 +397,6 @@ const NewJobs: React.FC = () => {
 
   // handle change paginaton
 
-  const handleChange = async (
-    event: React.ChangeEvent<unknown>,
-    value: number,
-  ) => {
-    // listRef.current?.scrollIntoView();
-    // const array = [1, 2, 3]
-    // // const e = createSearchParams({ name: `${array}` })
-    // setSearchParams({ 'name': `${array}` })
-    // // console.log("newest: ", result)
-    // const test = searchParams.get('name')?.toString().split(",").map(Number)
-    // console.log(test)
-    // //    window.open(`/home?${e}`)
-    // const result = await searchApi.getSearchByQueryV2(
-    //   !dataProfile && !QUERY //không có profile và value
-    //     ? ''
-    //     : !dataProfile && QUERY //không có profile nhưng có value
-    //     ? QUERY
-    //     : dataProfile && !QUERY //Có profile nhưng không có value
-    //     ? '' // Lấy profile
-    //     : dataProfile && QUERY // Có profile và value
-    //     ? QUERY
-    //     : '',
-    //   page,
-    //   !dataProfile && !MONEY_TYPE //không có profile và value
-    //     ? 1
-    //     : !dataProfile && MONEY_TYPE //không có profile nhưng có value
-    //     ? MONEY_TYPE
-    //     : dataProfile && !MONEY_TYPE //Có profile nhưng không có value
-    //     ? 1 // Lấy profile
-    //     : dataProfile && MONEY_TYPE // Có profile và value
-    //     ? MONEY_TYPE
-    //     : 1,
-    //   !dataProfile && !IS_WORKING_WEEKEND //không có profile và value
-    //     ? null
-    //     : !dataProfile && IS_WORKING_WEEKEND //không có profile nhưng có value
-    //     ? IS_WORKING_WEEKEND
-    //     : dataProfile && !IS_WORKING_WEEKEND //Có profile nhưng không có value
-    //     ? null // Lấy profile
-    //     : dataProfile && IS_WORKING_WEEKEND // Có profile và value
-    //     ? IS_WORKING_WEEKEND
-    //     : null,
-    //   !dataProfile && !IS_REMOTELY //không có profile và value
-    //     ? null
-    //     : !dataProfile && IS_REMOTELY //không có profile nhưng có value
-    //     ? IS_REMOTELY
-    //     : dataProfile && !IS_REMOTELY //Có profile nhưng không có value
-    //     ? null // Lấy profile
-    //     : dataProfile && IS_REMOTELY // Có profile và value
-    //     ? IS_REMOTELY
-    //     : null,
-    //   null,
-    //   !dataProfile && !SALARY_MIN //không có profile và value
-    //     ? 6000000
-    //     : !dataProfile && SALARY_MIN //không có profile nhưng có value
-    //     ? SALARY_MIN
-    //     : dataProfile && !SALARY_MIN //Có profile nhưng không có value
-    //     ? 6000000 // Lấy profile
-    //     : dataProfile && SALARY_MIN // Có profile và value
-    //     ? SALARY_MIN
-    //     : 6000000,
-    //   !dataProfile && !SALARY_MAX //không có profile và value
-    //     ? 12000000
-    //     : !dataProfile && SALARY_MAX //không có profile nhưng có value
-    //     ? SALARY_MAX
-    //     : dataProfile && !SALARY_MAX //Có profile nhưng không có value
-    //     ? 12000000 // Lấy profile
-    //     : dataProfile && SALARY_MAX // Có profile và value
-    //     ? SALARY_MAX
-    //     : 12000000,
-    //   null,
-    //   null,
-    //   !dataProfile && !JOB_TYPE //không có profile và value
-    //     ? []
-    //     : !dataProfile && JOB_TYPE //không có profile nhưng có value
-    //     ? JOB_TYPE
-    //     : dataProfile && !JOB_TYPE //Có profile nhưng không có value
-    //     ? [] // Lấy profile
-    //     : dataProfile && JOB_TYPE // Có profile và value
-    //     ? JOB_TYPE
-    //     : [],
-    //   !dataProfile && LIST_CATEGORIES_ID.length === 0 //không có profile và value
-    //     ? null
-    //     : !dataProfile && LIST_CATEGORIES_ID //không có profile nhưng có value
-    //     ? LIST_CATEGORIES_ID
-    //     : dataProfile && LIST_CATEGORIES_ID.length === 0 //Có profile nhưng không có value
-    //     ? dataProfile.categories.map(
-    //         (categorie: any) => categorie.child_category_id
-    //       ) || null // Lấy profile
-    //     : dataProfile && LIST_CATEGORIES_ID // Có profile và value
-    //     ? LIST_CATEGORIES_ID
-    //     : null,
-    //   !dataProfile && !LIST_DIS_ID //không có profile và value
-    //     ? []
-    //     : !dataProfile && LIST_DIS_ID //không có profile nhưng có value
-    //     ? LIST_DIS_ID
-    //     : dataProfile && !LIST_DIS_ID //Có profile nhưng không có value
-    //     ? dataProfile.locations.map((location: any) => location.district_id) ||
-    //       null // Lấy profile
-    //     : dataProfile && LIST_DIS_ID // Có profile và value
-    //     ? LIST_DIS_ID
-    //     : [],
-    //   !dataProfile && !SALARY_TYPE //không có profile và value
-    //     ? null
-    //     : !dataProfile && SALARY_TYPE //không có profile nhưng có value
-    //     ? SALARY_TYPE
-    //     : dataProfile && !SALARY_TYPE //Có profile nhưng không có value
-    //     ? null // Lấy profile
-    //     : dataProfile && SALARY_TYPE // Có profile và value
-    //     ? SALARY_TYPE
-    //     : null
-    // )
-    // console.log('checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
-    const result = await searchApi.getSearchByQueryV2(
-      QUERY,
-      page,
-      MONEY_TYPE,
-      IS_WORKING_WEEKEND,
-      IS_REMOTELY,
-      null,
-      SALARY_MIN,
-      SALARY_MAX,
-      null,
-      null,
-      JOB_TYPE,
-      LIST_CATEGORIES_ID,
-      LIST_DIS_ID,
-      SALARY_TYPE,
-      languageRedux === 1
-        ? 'vi'
-        : languageRedux === 2
-        ? 'en'
-        : languageRedux === 3
-        ? 'ko'
-        : 'vi',
-    );
-
-    //
-    if (result && result?.data?.posts.length !== 0) {
-      setSearchData((prev: any) => {
-        return {
-          posts: [...prev.posts, ...result.data.posts],
-          total: result.data.total,
-        };
-      });
-      setPage(page + 1);
-    } else {
-      console.log('Đã hết bài viết để hiển thị', result);
-    }
-  };
-
   // handle close backdrop
   // const handleClose = () => {
   //   setOpenBackdrop(false);
@@ -788,20 +639,18 @@ const NewJobs: React.FC = () => {
         // console.log('LIST_CATEGORIES_ID', LIST_CATEGORIES_ID);
         // console.log('LIST_DIS_ID', LIST_DIS_ID);
         // console.log('SALARY_TYPE', SALARY_TYPE);
-        const result = await searchApi.getSearchByQueryV2(
+        const result1 = await searchApi.getSearchByQueryV3(
           QUERY,
           null,
           MONEY_TYPE,
           IS_WORKING_WEEKEND,
           IS_REMOTELY,
-          null,
           SALARY_MIN,
           SALARY_MAX,
-          null,
-          null,
           JOB_TYPE[0] !== 6 ? JOB_TYPE : [],
           LIST_CATEGORIES_ID,
           LIST_DIS_ID,
+          null,
           SALARY_TYPE !== -1 ? SALARY_TYPE : null,
           languageRedux === 1
             ? 'vi'
@@ -810,9 +659,13 @@ const NewJobs: React.FC = () => {
             : languageRedux === 3
             ? 'ko'
             : 'vi',
+          20,
         );
+
+        console.log('result1', result1);
+
         // const result = await searchApi.getSearchByQueryV2(
-        //   'null',
+        //   QUERY,
         //   null,
         //   MONEY_TYPE,
         //   IS_WORKING_WEEKEND,
@@ -822,17 +675,24 @@ const NewJobs: React.FC = () => {
         //   SALARY_MAX,
         //   null,
         //   null,
-        //   JOB_TYPE,
+        //   JOB_TYPE[0] !== 6 ? JOB_TYPE : [],
         //   LIST_CATEGORIES_ID,
-        //   null,
-        //   SALARY_TYPE,
+        //   LIST_DIS_ID,
+        //   SALARY_TYPE !== -1 ? SALARY_TYPE : null,
+        //   languageRedux === 1
+        //     ? 'vi'
+        //     : languageRedux === 2
+        //     ? 'en'
+        //     : languageRedux === 3
+        //     ? 'ko'
+        //     : 'vi',
         // );
 
         // console.log('resut', result);
         setHasMore(true);
 
-        if (result && result.data.posts.length < 20) {
-          setSearchData(result.data);
+        if (result1.status === 200 && result1.data.posts.length <= 20) {
+          setSearchData(result1.data);
           // setIsVisible(true);
           // setHotJobTotal(hotjob.data.length);
           setHasMore(false);
@@ -840,8 +700,8 @@ const NewJobs: React.FC = () => {
           setOpenBackdrop(false);
           setLoading(false);
           return;
-        } else if (result && result.data.posts.length !== 0) {
-          setSearchData(result.data);
+        } else if (result1 && result1.data.posts.length !== 0) {
+          setSearchData(result1.data);
           // setHotJobType(hotjobtype);
           // setIsVisible(true);
           // setHotJobTotal(hotjob.data.length);
@@ -924,20 +784,18 @@ const NewJobs: React.FC = () => {
 
   const fetchMoreData = async () => {
     const nextPage = page + 1;
-    const result = await searchApi.getSearchByQueryV2(
+    const result1 = await searchApi.getSearchByQueryV3(
       QUERY,
       nextPage,
       MONEY_TYPE,
       IS_WORKING_WEEKEND,
       IS_REMOTELY,
-      null,
       SALARY_MIN,
       SALARY_MAX,
-      null,
-      null,
       JOB_TYPE[0] !== 6 ? JOB_TYPE : [],
       LIST_CATEGORIES_ID,
       LIST_DIS_ID,
+      null,
       SALARY_TYPE !== -1 ? SALARY_TYPE : null,
       languageRedux === 1
         ? 'vi'
@@ -946,14 +804,38 @@ const NewJobs: React.FC = () => {
         : languageRedux === 3
         ? 'ko'
         : 'vi',
+      20,
     );
+    // const result = await searchApi.getSearchByQueryV2(
+    //   QUERY,
+    //   nextPage,
+    //   MONEY_TYPE,
+    //   IS_WORKING_WEEKEND,
+    //   IS_REMOTELY,
+    //   null,
+    //   SALARY_MIN,
+    //   SALARY_MAX,
+    //   null,
+    //   null,
+    //   JOB_TYPE[0] !== 6 ? JOB_TYPE : [],
+    //   LIST_CATEGORIES_ID,
+    //   LIST_DIS_ID,
+    //   SALARY_TYPE !== -1 ? SALARY_TYPE : null,
+    //   languageRedux === 1
+    //     ? 'vi'
+    //     : languageRedux === 2
+    //     ? 'en'
+    //     : languageRedux === 3
+    //     ? 'ko'
+    //     : 'vi',
+    // );
 
-    if (result && result?.data?.length !== 0) {
+    if (result1.status === 200 && result1.data.posts?.length !== 0) {
       // setStories((prev: any) => [...prev, ...result?.data?.communications]);
       setSearchData((prev: any) => {
         return {
-          posts: [...prev.posts, ...result.data.posts],
-          total: result.data.total,
+          posts: [...prev.posts, ...result1.data.posts],
+          total: result1.data?.total,
         };
       });
       setPage(nextPage);
@@ -981,6 +863,8 @@ const NewJobs: React.FC = () => {
     });
   }, []); // Chạy chỉ một lần sau khi thành phần render
 
+  console.log('searchData', searchData);
+
   return (
     <>
       {/* <Navbar />
@@ -992,7 +876,7 @@ const NewJobs: React.FC = () => {
           <Box sx={{ flexGrow: 1 }} ref={listRef}>
             <div className="title-search">
               <div className="total-search">
-                {searchData ? (
+                {searchData?.posts?.length !== 0 ? (
                   <>
                     <span>
                       {languageRedux === 1
@@ -1002,7 +886,9 @@ const NewJobs: React.FC = () => {
                         : languageRedux === 3 && '찾기'}
                     </span>
                     <h4 style={{ margin: '0 10px' }}>
-                      {searchData ? searchData?.total?.toLocaleString() : 0}
+                      {searchData?.posts?.length !== 0
+                        ? searchData?.total?.toLocaleString()
+                        : 0}
                     </h4>
                     <span className="title-last-search">
                       {/* {language?.search_results_page.suitable_job} */}
@@ -1067,9 +953,10 @@ const NewJobs: React.FC = () => {
                     columns={{ xs: 6, sm: 4, md: 12 }}
                   >
                     {searchData?.posts?.map(
-                      (item: PostNewest, index: number) => (
+                      (item: IitemNewJob, index: number) => (
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                          <JobCard item={item} />
+                          {/* <JobCard item={item} /> */}
+                          <JobCardSearh item={item} />
                         </Grid>
                       ),
                     )}
