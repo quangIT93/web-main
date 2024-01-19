@@ -79,7 +79,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
     }
   };
 
-  React.useEffect(() => {}, [like]);
+  React.useEffect(() => { }, [like]);
 
   const handleClickSave = async (e: any) => {
     e.stopPropagation();
@@ -217,17 +217,16 @@ const HijobNewsCard: React.FC<any> = (props) => {
               {shouldShowMoreButton ? (
                 <div onClick={(e) => handleAddText(e)} className="more-text">
                   {!showText
-                    ? `${
-                        languageRedux === 1
-                          ? "Xem thêm"
-                          : languageRedux === 2
-                          ? "See more"
-                          : "더보기"
-                      }...`
+                    ? `${languageRedux === 1
+                      ? "Xem thêm"
+                      : languageRedux === 2
+                        ? "See more"
+                        : "더보기"
+                    }...`
                     : "Xem ít..."}
                 </div>
               ) : (
-                <>'Xem ít...'</>
+                <></>
               )}
             </div>
           </div>
@@ -245,8 +244,8 @@ const HijobNewsCard: React.FC<any> = (props) => {
                     {languageRedux === 1
                       ? "Tác giả"
                       : languageRedux === 2
-                      ? "Author"
-                      : "작가"}
+                        ? "Author"
+                        : "작가"}
                   </p>
                   <p>Hijob</p>
                 </div>

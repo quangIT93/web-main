@@ -1188,10 +1188,23 @@
 
             .post_actions_wrapper {
               margin: 18px 0 0;
-              width: fit-content;
+              width: 100%;
               height: fit-content;
 
-              .ant-space {
+              .media-wrapper {
+                .ant-btn {
+                  min-width: 40px !important;
+                  width: 40px;
+                  height: 40px;
+                  display: grid;
+                  place-items: center;
+                  background: rgba(241, 240, 240, 1);
+                  border: none;
+                  transition: all 0.3s ease-in-out;
+                }
+              }
+
+              .share-save-wrapper {
 
                 .ant-space-item {
                   &:first-child {
