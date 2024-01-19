@@ -372,7 +372,7 @@ const MoreJobsPage: React.FC = () => {
 
       const result =
         typeJob === 'new' || typeJob === 'hot-job'
-          ? await postApi.getPostNewestV3(
+          ? await postApi.getPostNewestV3New(
               childCateloriesArray,
               // userSelectedId,
               userSelected.userSelectedId,
@@ -500,7 +500,7 @@ const MoreJobsPage: React.FC = () => {
       const thersholdId = moreJob[moreJob.length - 1]?.id;
       const result =
         typeJob === 'new' || typeJob === 'hot-job'
-          ? await postApi.getPostNewestV3(
+          ? await postApi.getPostNewestV3New(
               childCateloriesArray,
               userSelected.userSelectedId,
               // null,
@@ -512,7 +512,7 @@ const MoreJobsPage: React.FC = () => {
               profileV3.length !== 0 ? profileV3?.profileLocations : null,
               null,
               20,
-              thersholdId,
+              nextPage,
               languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
             )
           : typeJob === 'suggested'
