@@ -368,7 +368,6 @@ const MoreJobsPage: React.FC = () => {
       setOpenBackdrop(true);
 
       let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
-      console.log('profileV3', profileV3);
 
       const result =
         typeJob === 'new' || typeJob === 'hot-job'
@@ -608,12 +607,6 @@ const MoreJobsPage: React.FC = () => {
     //   getCookie('userSelected') || '{}',
     // )?.userSelectedId
   ]);
-
-  console.log('idFilterProvinces', idFilterProvinces);
-  console.log('typeJob', typeJob);
-  console.log('childCateloriesArray', childCateloriesArray);
-  console.log('placeIdRedux', placeIdRedux);
-  console.log('languageRedux', languageRedux);
 
   const [provincesData, setProvincesData] = React.useState<
     [
