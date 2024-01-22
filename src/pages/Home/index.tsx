@@ -253,7 +253,7 @@ const Home: React.FC = () => {
 
         <meta
           property="og:image"
-          content="https://hijob.site/images/searchJob.png"
+          content="https://hijob.site/images/share_job_image.jpg"
         />
       </Helmet>
       <h1 style={{ visibility: 'hidden', display: 'none' }}>
