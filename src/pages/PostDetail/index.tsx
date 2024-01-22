@@ -1854,7 +1854,7 @@ const Detail = () => {
                       videoLinkTiktok && window.open(videoLinkTiktok);
                     }}
                   >
-                    <div className="item-icon">
+                    <div className="item-icon">//icon
                       <Tiktok width={20} height={20} />
                     </div>
                     <h3>
