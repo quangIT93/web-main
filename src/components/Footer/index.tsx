@@ -26,11 +26,13 @@ const Footer: React.FC = () => {
               width={66}
               height={80}
               src={require('../../img/langdingPage/logoHiJob.png')}
-              alt={languageRedux === 1
-                ? 'Hình ảnh bị lỗi'
-                : languageRedux === 2
+              alt={
+                languageRedux === 1
+                  ? 'Hình ảnh bị lỗi'
+                  : languageRedux === 2
                   ? 'Image is corrupted'
-                  : '이미지가 손상되었습니다'}
+                  : '이미지가 손상되었습니다'
+              }
             />
           </div>
 
@@ -97,8 +99,8 @@ const Footer: React.FC = () => {
               {languageRedux === 1
                 ? 'Liên kết'
                 : languageRedux === 2
-                  ? 'Link'
-                  : languageRedux === 3 && '연결'}
+                ? 'Link'
+                : languageRedux === 3 && '연결'}
             </h4>
             <div id="div-img-socal">
               <Link to="https://www.facebook.com/hijobOfficial/">
