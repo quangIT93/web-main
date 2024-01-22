@@ -255,7 +255,7 @@ const NewJobs: React.FC = () => {
 
       // console.log('storeduserSelectedSettings', userSelected.userSelectedId);
 
-      const result2 = await postApi.getPostNewestV3(
+      const result2 = await postApi.getPostNewestV3New(
         // profileCategories,
         // userSelected.userSelectedId,
         // profileV3.length !== 0 ? profileV3?.profileCategories : null,

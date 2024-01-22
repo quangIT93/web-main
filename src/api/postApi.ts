@@ -97,7 +97,7 @@ const postApi = {
     lang: string,
   ) => {
     const URL =
-      `/v3/posts/newestv2?` +
+      `/v3/posts/newest/v2?` +
       `${
         childrenCategoryId
           ? `${childrenCategoryId
