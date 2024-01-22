@@ -754,7 +754,7 @@ const Detail = () => {
             ? 'HiJob shares jobs for you'
             : 'HiJob이 당신을 위해 일자리를 공유합니다';
 
-      const url = `https://www.facebook.com/sharer/sharer.php?u=https://hijob.site/post-đetail/post-id=${postId}&quote=${encodeURIComponent(
+      const url = `https://www.facebook.com/sharer/sharer.php?u=https://hijob.site/post-detail/post-id=${postId}&quote=${encodeURIComponent(
         titleShare,
       )}}&display=iframe`;
       window.open(url);
