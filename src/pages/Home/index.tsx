@@ -113,8 +113,8 @@ const Home: React.FC = () => {
       languageRedux === 1
         ? 'HiJob - Tìm việc làm, tuyển dụng'
         : languageRedux === 2
-        ? 'HiJob - Find a job, recruit'
-        : 'HiJob - 일자리 찾기, 채용';
+          ? 'HiJob - Find a job, recruit'
+          : 'HiJob - 일자리 찾기, 채용';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
@@ -253,7 +253,7 @@ const Home: React.FC = () => {
 
         <meta
           property="og:image"
-          content="https://hijob.site/images/searchJob.png"
+          content="https://hijob.site/images/share_job_image.jpg"
         />
       </Helmet>
       <h1 style={{ visibility: 'hidden', display: 'none' }}>
@@ -316,12 +316,12 @@ const Home: React.FC = () => {
         openModalSelectRole={openModalSelectRole}
         setOpenModalSelectRole={setOpenModalSelectRole}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        // setRole={setRole}
+      // setRole={setRole}
       />
       <ModalUpdateInfo
         openModalUpdateInfo={openModalUpdateInfo}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        // role={role}
+      // role={role}
       />
       {/* <RollTop />
       <Footer /> */}

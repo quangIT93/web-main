@@ -242,10 +242,10 @@ const JobStory = () => {
           <NewJobIcon width={25} height={25} />
           <h2 className="title_home">
             {languageRedux === 1
-              ? 'Video tuyển dụng'
+              ? 'Video tuyển dụng mới nhất'
               : languageRedux === 2
-              ? 'Recruitment videos'
-              : languageRedux === 3 && '채용 비디오'}
+                ? 'Newest recruitment video'
+                : languageRedux === 3 && '최신 채용 비디오'}
           </h2>
           {/* <Popover
             content={
@@ -291,8 +291,8 @@ const JobStory = () => {
             {languageRedux === 1
               ? 'Bắt đầu ngay'
               : languageRedux === 2
-              ? 'Start now'
-              : languageRedux === 3 && '바로시작'}
+                ? 'Start now'
+                : languageRedux === 3 && '바로시작'}
           </Button>
           {/* </Popover> */}
         </div>
@@ -320,8 +320,8 @@ const JobStory = () => {
                       languageRedux === 1
                         ? 'Hình ảnh bị lỗi'
                         : languageRedux === 2
-                        ? 'Image is corrupted'
-                        : '이미지가 손상되었습니다'
+                          ? 'Image is corrupted'
+                          : '이미지가 손상되었습니다'
                     }
                     style={{
                       width: '100%',
