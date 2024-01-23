@@ -20,3 +20,11 @@
 .ant-tree-select-dropdown {
   z-index: 1300 !important;
 }
+
+.filter_cate {
+  .ant-cascader-menu-item-expand {
+    .ant-cascader-checkbox {
+      display: none;
+    }
+  }
+}

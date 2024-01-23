@@ -98,12 +98,12 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
       </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {proviId.length === 2
+        {proviId.length === 3
           ? languageRedux === 1
-            ? 'Chỉ có thể tối đa 10 khu vực'
+            ? 'Chỉ có thể tối đa 3 khu vực'
             : languageRedux === 2
-            ? 'Only up to 10 areas can be'
-            : languageRedux === 3 && '최대 10개 영역까지만 가능합니다'
+            ? 'Only up to 3 areas can be'
+            : languageRedux === 3 && '최대 3개 영역까지만 가능합니다'
           : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
@@ -177,27 +177,38 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
     setReset(false);
     setDisable(false);
     const secondValues = value?.map((item: any) => item[1]);
-    // const provinceValues = value?.map((item: any) => item[0]);
-    // const uniqueArr = [...new Set(provinceValues)] as string[];
+    const provinceValues = value?.map((item: any) => item[0]);
+    const uniqueArr = [...new Set(provinceValues)] as string[];
+    // console.log('value', value);
+    console.log('secondValues', secondValues);
+    console.log('provinceValues', provinceValues);
+    console.log('uniqueArr', uniqueArr);
 
-    // if (uniqueArr?.length <= 2) {
-    //   setLocId(secondValues);
-    //   setListDis(value);
-    //   setProviId(uniqueArr);
-    // }
-
-    // if (uniqueArr?.length >= 3) {
-    //   setDisable(true);
-    // }
-    if (secondValues?.length <= 10) {
+    if (uniqueArr?.length <= 3) {
       setLocId(secondValues);
       setListDis(value);
+      setProviId(uniqueArr);
     }
 
-    if (value?.length > 9) {
+    if (uniqueArr?.length >= 3) {
       setDisable(true);
     }
+    // if (secondValues?.length <= 10) {
+    //   setLocId(secondValues);
+    //   setListDis(value);
+    // }
+
+    // setLocId(secondValues);
+    // setListDis(value);
+
+    // if (value?.length > 9) {
+    //   setDisable(true);
+    // }
   };
+
+  // console.log('LocId', locId);
+  // console.log('listDis', listDis);
+  // console.log('disable', disable);
 
   if (userProfile.length !== 0 || dataLocations) {
     return (
@@ -241,29 +252,29 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
                 ? dataLocations?.map((dataLocation: any) => ({
                     value: dataLocation.province_id,
                     label: dataLocation.province_fullName,
-                    // disabled:
-                    //   proviId.length < 2
-                    //     ? false
-                    //     : proviId.length <= 2 &&
-                    //       proviId.includes(dataLocation.province_id)
-                    //     ? false
-                    //     : true,
+                    disabled:
+                      proviId.length < 3
+                        ? false
+                        : proviId.length <= 3 &&
+                          proviId.includes(dataLocation.province_id)
+                        ? false
+                        : true,
                     children: dataLocation.districts.map(
                       (child: { district_id: string; district: string }) => {
-                        var dis = false;
-                        if (disable) {
-                          dis = true;
-                          for (const elem of locId) {
-                            if (elem === child.district_id) {
-                              dis = false;
-                              break;
-                            }
-                          }
-                        }
+                        // var dis = false;
+                        // if (disable) {
+                        //   dis = true;
+                        //   for (const elem of locId) {
+                        //     if (elem === child.district_id) {
+                        //       dis = false;
+                        //       break;
+                        //     }
+                        //   }
+                        // }
                         return {
                           value: child.district_id,
                           label: child.district,
-                          disabled: dis,
+                          // disabled: dis,
                         };
                       },
                     ),

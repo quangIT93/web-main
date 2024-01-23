@@ -34,6 +34,7 @@ import './style.scss';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { setProfileMeInformationV3 } from 'store/reducer/profileMeInformationReducerV3';
 import { setAlertEditInfo } from 'store/reducer/profileReducer/alertProfileReducer';
+import CascaderFilter from './CascaderFilter';
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -86,46 +87,10 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const language = useSelector(
-    (state: RootState) => state.dataLanguage.languages,
-  );
+
   const { openModalLocation, setOpenModalLocation, locations } = props;
-  // const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
-  // const [open, setOpen] = React.useState<any>([]);
-  const [treeData, setTransformedData] = React.useState<any>(null);
 
-  const dataAllLocation = useSelector(
-    (state: RootState) => state.dataLocation.data,
-  );
-  // const [language, setLanguageState] = React.useState<any>();
-
-  // const getlanguageApi = async () => {
-  //   try {
-  //     const result = await languageApi.getLanguage(
-  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-  //     );
-  //     if (result) {
-  //       setLanguageState(result.data);
-  //       // setUser(result);
-  //     }
-  //   } catch (error) {
-  //     // setLoading(false);
-  //   }
-  // };
-
-  // React.useEffect(() => {
-  //   getlanguageApi();
-  // }, [languageRedux]);
-
-  const [value, setValue] = React.useState(locations?.map((v: any, i) => v.id));
-
-  // const [location, setLocation] = React.useState<any>(
-  //   locations?.map((v: any, i) => v.district),
-  // );
-
-  // const [locationId, setLocationId] = React.useState<any>(
-  //   locations?.map((v: any, i) => v.district_id),
-  // );
+  const [listDis, setListDis] = React.useState<any>([]);
 
   const dispatch = useDispatch();
 
@@ -133,135 +98,26 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     handleSubmit();
     setOpenModalLocation(false);
   };
-  // const allLocation = async () => {
-  //   try {
-  //     const allLocation = await locationApi.getAllLocation(
-  //        languageRedux === 3 ? 'ko' : languageRedux === 2 ? 'en' : 'vi',
-  //     );
-
-  //     if (allLocation) {
-  //       setDataAllLocation(allLocation.data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // React.useEffect(() => {
-  // allLocation();
-  // getAllLocations()
-  // delete param when back to page
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [languageRedux]);
-
-  React.useEffect(() => {
-    if (dataAllLocation.length !== 0) {
-      const transformedData = dataAllLocation.map((item: any) => {
-        return {
-          title: item?.province_name,
-          value: item?.province_id,
-          key: item?.province_id,
-          children: item.districts.map((child: any) => {
-            return {
-              title: child.district,
-              value: child.district_id,
-              key: child.district_id,
-            };
-          }),
-        };
-      });
-
-      setTransformedData(transformedData);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataAllLocation]);
-
-  useEffect(() => {
-    setValue(locations?.map((v: any, i) => v.id) || []);
-
-    if (dataAllLocation && dataAllLocation.length > 0) {
-      // setOpen(Array(dataAllLocation.length).fill(false));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataAllLocation]);
-
-  // console.log('dataAllLocation', dataAllLocation)
-
-  // const handleClickProvince = (event: any, index: number) => {
-  //   event.stopPropagation();
-  //   const newOpen = open.map((value: boolean, i: number) =>
-  //     i === index ? !value : false,
-  //   );
-  //   setOpen(newOpen);
-  // };
-
-  // const handleClickDistrict = (value: any) => {
-  //   setLocation((prevValues: number[]) => {
-  //     if (prevValues.includes(value.district)) {
-  //       // Nếu giá trị đã tồn tại, xoá nó khỏi
-  //       const newValues = prevValues.filter((item) => item !== value.district);
-  //       return newValues;
-  //     } else {
-  //       // Nếu giá trị chưa tồn tại, thêm nó vào mảng
-  //       const newValues = [...prevValues, value.district];
-  //       return newValues;
-  //     }
-  //   });
-
-  //   setLocationId((prevValuesId: number[]) => {
-  //     if (prevValuesId.includes(value.district_id)) {
-  //       // Nếu giá trị đã tồn tại, xoá nó khỏi
-  //       const newValues = prevValuesId.filter(
-  //         (item: number) => item !== value.district_id,
-  //       );
-  //       return newValues;
-  //     } else {
-  //       // Nếu giá trị chưa tồn tại, thêm nó vào mảng
-  //       const newValues = [...prevValuesId, value.district_id];
-  //       return newValues;
-  //     }
-  //   });
-  // };
-
-  // const renderOptions = () => {
-  //   return dataAllLocation?.map((item: any, index: number) => (
-  //     <div key={index}>
-  //       <ListItemButton onClick={(event) => handleClickProvince(event, index)}>
-  //         <ListItemText primary={item.province_fullName} />
-  //         {open[index] ? <ExpandLess /> : <ExpandMore />}
-  //       </ListItemButton>
-  //       <Collapse in={open[index]} timeout="auto" unmountOnExit>
-  //         {item.districts.map((v: any, i: number) => (
-  //           <MenuItem
-  //             key={i}
-  //             value={v.district}
-  //             onClick={() => handleClickDistrict(v)}
-  //           >
-  //             <Checkbox checked={location?.indexOf(v.district) > -1} />
-  //             <ListItemText primary={v.district} />
-  //           </MenuItem>
-  //         ))}
-  //       </Collapse>
-  //     </div>
-  //   ));
-  // };
 
   const handleSubmit = async () => {
+    const provinceValues = listDis?.map((item: any) => item[0]);
+    const uniqueArr = [...new Set(provinceValues)] as string[];
+
     try {
-      if (value.length > 10) {
+      if (uniqueArr.length > 3) {
         message.error(
           languageRedux === 1
-            ? 'Chỉ có thể tối đa 10 khu vực'
+            ? 'Chỉ có thể tối đa 3 khu vực'
             : languageRedux === 2
-            ? 'Only up to 10 areas can be'
-            : '영역은 최대 10개까지만 있을 수 있습니다.',
+            ? 'Only up to 3 areas can be'
+            : '영역은 최대 3개까지만 있을 수 있습니다.',
         );
 
-        setValue(locations?.map((v: any, i) => v.id));
+        setListDis(locations?.map((v: any, i) => [v.province.id, v.id]));
         return;
       }
       const result = await profileApi.updateProfileLocation(
-        value,
+        listDis?.map((v: [string, string]) => v[1]),
         // locationId,
       );
       if (result) {
@@ -275,75 +131,6 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const renderTreeNode = (data: any) => {
-    return (
-      data &&
-      data?.map((node: any) => {
-        if (node.children) {
-          return {
-            ...node,
-            disableCheckbox: true,
-            selectable: true,
-            checkable: false,
-
-            // Set the value of disableCheckbox
-          };
-        }
-
-        // console.log('node location', node);
-        return node.children;
-        // <TreeNode key={node.value} value={node.value} title={node.title} />
-      })
-    );
-  };
-
-  const tProps: any = {
-    // treeData,
-    treeData: renderTreeNode(treeData),
-    showCheckbox: true, // Ẩn checkbox cho tất cả các nút
-    // treeCheckStrictly: true,
-    // treeDefaultExpandAll: true,
-    // showSearch: true, // Chỉ cho phép chọn các nút lá
-    showSearch: false,
-    value,
-    treeCheckable: true,
-    onChange: (newValue: string[]) => {
-      if (newValue.length > 10) {
-        message.error(
-          languageRedux === 1
-            ? 'Chỉ có thể tối đa 10 khu vực'
-            : languageRedux === 2
-            ? 'Only up to 10 areas can be'
-            : '영역은 최대 10개까지만 있을 수 있습니다.',
-        );
-
-        return;
-      } else {
-        setValue(newValue);
-      }
-    },
-    // treeCheckStrictly: true,
-    // Enable strict checking
-    // Disable the "All" checkbox at the root level
-    showCheckedStrategy: SHOW_PARENT,
-    // treeDefaultExpandAll,
-    placeholder:
-      languageRedux === 1
-        ? 'Khu vực làm việc'
-        : languageRedux === 2
-        ? 'Working location'
-        : languageRedux === 3 && '근무 위치',
-    style: {
-      width: '100%',
-      zIndex: '1302',
-      margin: '12px auto',
-    },
-    className: 'modal-localtion_profile',
-    size: 'Giờ làm việc large',
-    treeIcon: false,
-    // dropdownRender: CustomRenderCatelory,
   };
 
   return (
@@ -381,44 +168,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
             : languageRedux === 3 && '근무 위치'}
         </Typography>
 
-        {/* <FormControl sx={{ width: '100%', margin: '12px auto' }} size="small">
-          <Select
-            multiple
-            displayEmpty
-            value={location}
-            input={<OutlinedInput placeholder="Quận, Tỉnh/Thành Phố" />}
-            renderValue={(selected) => {
-              if (selected.length === 0) {
-                return (
-                  <p style={{ color: ' #aaaaaa', padding: '4px 0' }}>
-                    Quận, Tỉnh/Thành Phố
-                  </p>
-                );
-              } else {
-                return (
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: 0.5,
-                    }}
-                  >
-                    {selected.map((value: string, i: number) => (
-                      <Chip key={i} label={value} />
-                    ))}
-                  </Box>
-                );
-              }
-            }}
-            MenuProps={MenuProps}
-          >
-            {renderOptions()}
-          </Select>
-        </FormControl> */}
-        <TreeSelect
-          getPopupContainer={(triggerNode) => triggerNode.parentElement}
-          {...tProps}
-        />
+        <CascaderFilter listDis={listDis} setListDis={setListDis} />
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {languageRedux === 1
