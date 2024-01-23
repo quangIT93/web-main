@@ -89,9 +89,9 @@ const CascaderFilter: React.FC<DistrictProps> = (props) => {
     }
   };
 
-  //   React.useEffect(() => {
-  //     onChange(listLocation.current);
-  //   }, [languageRedux]);
+  React.useEffect(() => {
+    onChange(listLocation.current);
+  }, [languageRedux]);
 
   return (
     <Box sx={{ margin: '12px 0' }}>
