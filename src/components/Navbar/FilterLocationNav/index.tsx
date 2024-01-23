@@ -180,9 +180,6 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
     const provinceValues = value?.map((item: any) => item[0]);
     const uniqueArr = [...new Set(provinceValues)] as string[];
     // console.log('value', value);
-    console.log('secondValues', secondValues);
-    console.log('provinceValues', provinceValues);
-    console.log('uniqueArr', uniqueArr);
 
     if (uniqueArr?.length <= 3) {
       setLocId(secondValues);
